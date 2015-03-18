@@ -1,0 +1,29 @@
+{
+  "name": "cp-zen-platform",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.2.26",
+    "angular-bootstrap": "~0.11.2",
+    "angular-loading": "~0.1.4",
+    "angular-moment": "~0.8.2",
+    "angular-route": "1.2.26",
+    "angular-ui-select": "~0.8.1",
+    "angular-ui-utils": "~0.1.1",
+    "async": "~0.9.0",
+    "bootbox": "~4.3.0",
+    "bootstrap": "~3.2.0",
+    "dustjs-linkedin": "~2.4.2",
+    "dustjs-linkedin-helpers": "~1.2.0",
+    "font-awesome": "4.2.0",
+    "jquery": "~2.1.1",
+    "moment": "~2.8.3",
+    "spin.js": "~2.0.1",
+    "underscore": "~1.7.0"
+  },
+  "resolutions": {
+    "angular": "1.2.26",
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "spin.js": "~2.0.1"
+  }
+}

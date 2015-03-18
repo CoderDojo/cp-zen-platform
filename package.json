@@ -1,0 +1,53 @@
+{
+  "name": "cp-zen-platform",
+  "version": "0.0.0",
+  "description": "cp-zen-platform",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node_modules/.bin/migrate",
+    "start": "node web/index.js",
+    "postinstall": "cd web && npm install && cd .. && node scripts/install-git-hook",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CoderDojo/cp-zen-platform.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/CoderDojo/cp-zen-platform/issues"
+  },
+  "dependencies": {
+    "async": "0.9.x",
+    "byline": "4.1.x",
+    "ejs": "^1.0.0",
+    "lodash": "^2.4.1",
+    "migrate": "git://github.com/alexanderpa/node-migrate.git",
+    "mocha": "1.20.x",
+    "mongodb": "^1.4.18",
+    "optimist": "0.6.x",
+    "q": "1.0.x",
+    "request": "2.40.x",
+    "seneca": "0.5.20",
+    "seneca-account": "~0.1.8",
+    "seneca-admin": "~0.1.4",
+    "seneca-auth": "0.2.10",
+    "seneca-data-editor": "~0.1.6",
+    "seneca-mail": "git://github.com/iantocristian/seneca-mail.git#0.1.6",
+    "seneca-mongo-store": "~0.1.10",
+    "seneca-ng-web": "^0.1.2",
+    "seneca-perm": "git://github.com/iantocristian/seneca-perm.git",
+    "seneca-user": "~0.2.10",
+    "seneca-user-roles": "~0.1.0",
+    "seneca-web-access": "~0.1.0",
+    "serve-static": "^1.4.0"
+  },
+  "devDependencies": {
+    "fs-extra": "~0.13.0",
+    "glob": "~4.3.1",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-mocha-cli": "~1.11.0"
+  },
+  "homepage": "https://github.com/CoderDojo/cp-zen-platform"
+}

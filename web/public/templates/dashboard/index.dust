@@ -1,0 +1,9 @@
+{>"layouts/dashboard" /}
+{<body}
+  {>"common/header" /}
+  <div class="main-container">
+    <div class="cd-dashboard">
+      
+    </div>
+  </div>
+{/body}
