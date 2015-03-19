@@ -26,3 +26,11 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+.build
+
+web/.build
+
+.pt
+
+.DS_Store
