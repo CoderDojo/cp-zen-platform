@@ -41,3 +41,34 @@
   cursor: pointer;
   margin-left: 5px;
 }
+/* line 40, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/header.less */
+.cd-header-text {
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  text-decoration: none;
+}
+/* line 45, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/header.less */
+.cd-header-text:hover {
+  text-decoration: none;
+  color: white;
+}
+/* line 49, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/header.less */
+.cd-header-text:focus {
+  text-decoration: none;
+  color: white;
+}
+/* line 1, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/dashboard.less */
+body {
+  background: #D8D8D8;
+}
+/* line 4, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/dashboard.less */
+.main-container {
+  padding: 46px 50px 0 100px;
+}
+/* line 7, /Users/davidcahill/Desktop/nearForm/cp-zen-platform/web/public/css/dashboard.less */
+.cd-dashboard {
+  background: white;
+  padding: 15px;
+  margin-top: 40px;
+}

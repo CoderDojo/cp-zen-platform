@@ -211,7 +211,6 @@ angular.module('cpZenPlatform').service('auth', function($http) {
 
   return {
     login: function(creds,win,fail){
-      console.log("creds == " + JSON.stringify(creds))
       $http({method:'POST', url: '/auth/login', data:creds, cache:false}).
         success(win).error(fail||topfail)
     },
