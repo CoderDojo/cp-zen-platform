@@ -84,38 +84,5 @@ angular.module('cpZenPlatform').controller('login', function($scope, $location, 
       $scope.show('login')
     }
   })
-
-
-  /*
-  function show_login() {
-    $scope.show_account = false
-    $scope.show_login   = true
-  }
-
-  function show_user( user ) {
-    $scope.show_account = true
-    $scope.show_login   = false
-    $scope.name = user.name
-
-    if( user.roles && 1 < user.roles.length ) {
-      $scope.show_roles = true
-      $scope.roles = []
-
-      var homemap = {
-        student: 'learn',
-        teacher: 'teach',
-        manager: 'manage'
-      }
-
-      _.each(user.roles,function(role){
-        $scope.roles.push({
-          name:role,
-          home:homemap[role]
-        })
-      })
-    }
-
-    console.log(user,$scope.name)
-  }
-  */
+  
 })

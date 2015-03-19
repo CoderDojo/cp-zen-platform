@@ -6,13 +6,8 @@ var app = angular.module('cpZenPlatform', [
 ]);
 
 require('./services/auth-service');
-//require('./services/alert-service');
 require('./controllers/login-controller');
-//require('./controllers/create-account-controller');
-//require('./controllers/confirm-account-controller');
-//require('./controllers/reset-password-controller');
 require('./controllers/header-controller');
-//require('./controllers/left-navigation-controller');
 
 function ApiHttpInterceptor($provide, $httpProvider) {
   // Intercept http calls.
