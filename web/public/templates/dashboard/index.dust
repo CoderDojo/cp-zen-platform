@@ -1,9 +1,9 @@
 {>"layouts/dashboard" /}
 {<body}
   {>"common/header" /}
-  <div class="main-container">
-    <div class="cd-dashboard">
-      Dojo List
+  <div class="container">
+    <div class="dojo-list-dashboard">
+      <cd-dojo-list></cd-dojo-list>
     </div>
   </div>
 {/body}
