@@ -1,0 +1,9 @@
+<div class="row cd-dojo-list-container">  
+  <div ng-repeat="(country, data) in dojoData">
+    <legend style="margin-bottom:5px;">{{ country }}</legend>
+    <ul ng-repeat="dojo in data.dojos">
+      <li><a href="/dojo/{{dojo.id}}">{{dojo.name}}</a></li>
+    </ul>
+  </div>
+
+</div>

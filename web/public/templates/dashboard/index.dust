@@ -3,7 +3,7 @@
   {>"common/header" /}
   <div class="main-container">
     <div class="cd-dashboard">
-      Dojo List
+      <cd-dojo-list></cd-dojo-list>
     </div>
   </div>
 {/body}

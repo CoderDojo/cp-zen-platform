@@ -4,7 +4,8 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap',
   'ui.bootstrap.tpls',
   'cdAuth',
-  'cdCharter'
+  'cdCharter',
+  'cdDojos'
 ]);
 
 require('./services/auth-service');
