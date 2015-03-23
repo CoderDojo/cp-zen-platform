@@ -4,6 +4,7 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap',
   'ui.bootstrap.tpls',
   'cdAuth',
+  'cdCharter'
 ]);
 
 require('./services/auth-service');
@@ -18,6 +19,6 @@ app
   .config(function($locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
   })
-  .controller('dashboard', ['$scope', 'auth', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
+  .controller('dashboard', ['$scope', 'auth', cdDashboardCtrl])
 ;

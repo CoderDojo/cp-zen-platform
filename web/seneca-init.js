@@ -26,6 +26,7 @@ seneca
   .use('web-access')
   .use('perm')
   .use('../lib/auth/cd-auth.js')
+  .use('../lib/charter/cd-charter.js')
 ;
 
 

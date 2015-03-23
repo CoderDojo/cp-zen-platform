@@ -29,6 +29,8 @@ node_modules
 
 .build
 
+web/.build
+
 .pt
 
 .DS_Store
