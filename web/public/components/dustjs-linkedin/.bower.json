@@ -29,6 +29,6 @@
     "commit": "7748476de87794c55edac2c827183327a904bd0d"
   },
   "_source": "git://github.com/linkedin/dustjs.git",
-  "_target": "~2.4.2",
+  "_target": "2.4.2",
   "_originalSource": "dustjs-linkedin"
 }
