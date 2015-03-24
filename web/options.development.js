@@ -12,6 +12,10 @@ module.exports = _.defaults({
   },
 
   auth: {
+    restrict: ['/api', '/dashboard', '/charter', '/my-dojos'],
+    redirect:{
+      restrict: '/'
+    },
     sendemail: false,
     email: {
       code: {
