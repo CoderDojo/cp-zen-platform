@@ -22,6 +22,6 @@
     "commit": "4de42da954a083ef230f8a88eab645808aab9186"
   },
   "_source": "git://github.com/makeusabrew/bootbox.git",
-  "_target": "~4.3.0",
+  "_target": "4.3.0",
   "_originalSource": "bootbox"
 }

@@ -32,6 +32,6 @@
     "commit": "f0d01a8ddefccdf18403f2913576bf2c1f727cc4"
   },
   "_source": "git://github.com/darthwade/angular-loading.git",
-  "_target": "~0.1.4",
+  "_target": "0.1.4",
   "_originalSource": "angular-loading"
 }
