@@ -11,6 +11,8 @@ var app = angular.module('cpZenPlatform', [
 require('./services/auth-service');
 require('./controllers/login-controller');
 require('./controllers/header-controller');
+require('./services/alert-service');
+require('./services/table-utils');
 
 function cdDashboardCtrl($scope, auth) {
 
@@ -21,5 +23,5 @@ app
     $locationProvider.html5Mode(true).hashPrefix('!');
   })
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
-  .controller('dashboard', ['$scope', 'auth', cdDashboardCtrl])
+  .controller('dashboard', ['$scope', 'auth', 'alertService', cdDashboardCtrl])
 ;
