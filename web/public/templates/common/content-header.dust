@@ -12,5 +12,5 @@
         <div><a class="cd-header-text" ng-click="navigateTo('my-dojos')">My Dojos</a></div>
     </div>
     <div class="col-md-2 cd-logo-container">
-        <div><a class="cd-header-text" href="#">Create a Dojo</a></div>
+        <div><a class="cd-header-text" ng-click="navigateTo('create-dojo')">Create a Dojo</a></div>
     </div>
