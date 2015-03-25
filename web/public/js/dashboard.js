@@ -7,7 +7,8 @@ var app = angular.module('cpZenPlatform', [
   'cdCharter',
   'cdDojos',
   'cdCountrySelect',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'ngCkeditor'
 ]);
 
 require('./services/auth-service');

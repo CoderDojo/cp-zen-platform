@@ -45,9 +45,9 @@
 
           <div class="row">
             <div class="form-group">
-              <label for="dojoLocation" ng-model="dojo.location" class="col-lg-4">Location*</label>
+              <label for="dojoLocation" class="col-lg-4">Location*</label>
                 <div class="col-lg-6">
-                  <input type="text" class="form-control" name="dojoLocation" id="dojoLocation">
+                  <input type="text" ng-model="dojo.location" class="form-control" name="dojoLocation" id="dojoLocation">
                   <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
                 </div>
             </div>
@@ -71,9 +71,9 @@
 
           <div class="row">
             <div class="form-group">
-              <label for="dojoCoordinates" ng-model="dojo.coordinates" class="col-lg-4">Coordinates</label>
+              <label for="dojoCoordinates" class="col-lg-4">Coordinates</label>
                 <div class="col-lg-6">
-                  <input type="button" class="btn-primary" value="Get location from address">
+                  <input type="button" ng-model="dojo.coordinates" class="btn-primary" value="Get location from address">
                 </div>
                 <div class="col-lg-8 pull-right google-map">
                   <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
@@ -91,6 +91,74 @@
                   <input type="button" class="btn-primary" value="Get from map">
                 </div>
             </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoNotes" ng-model="dojo.coordinates" class="col-lg-4">Notes</label>
+              <div class="col-lg-8">
+                <textarea ckeditor="editorOptions" ng-model="dojo.notes"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="other-information">
+            <legend>Other Information</legend>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="dojoGoogleGroup" class="col-lg-4">Google Group URL</label>
+                  <div class="col-lg-6">
+                    <input type="text" ng-model="dojo.google_group" class="form-control" name="dojoGoogleGroup" id="dojoGoogleGroup">
+                    <p>We recommend setting up a Discussion group so people can sign up for the latest
+                       happenings and news and contribute.</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="dojoGoogleGroup" class="col-lg-4">Website</label>
+                  <div class="col-lg-6">
+                    <input type="text" ng-model="dojo.website" class="form-control" name="dojoWebsite" id="dojoWebsite">
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="dojoTwitter" class="col-lg-4">Twitter</label>
+                  <div class="col-lg-6">
+                    <input type="text" ng-model="dojo.twitter" class="form-control" name="dojoTwitter" id="dojoTwitter">
+                    <p>Again, a useful way for sharing information and being found. We can also
+                      help share messages to followers.</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="dojoMailingList" class="col-lg-4">Mailing List</label>
+                  <div class="col-lg-4 mailingListCheckbox">
+                    <div class="checkbox">
+                      <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
+                      <label for="mailingListCheckbox"></label>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row center-block">
+              <div class="form-group">
+                <div class="col-lg-6">
+                 
+                </div>
+                <div class="col-lg-4 col-lg-offset-5">
+                  <input class="btn-primary" type="submit" value="Create Dojo">
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </form>
