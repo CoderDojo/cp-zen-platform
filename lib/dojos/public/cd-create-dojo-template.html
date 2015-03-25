@@ -1,7 +1,85 @@
 <div class="row">
-  <div class="cd-dojo-list-container"> 
-    <div id="main">
-      
+  <div class="col-lg-8">
+    <div class="cd-create-dojo-container">
+      <div class="pre-game-warning center-block">
+        <span>Pre-game warning!</span>
+        <p>Before you sign up to create a listing for your Dojo please complete our <a href="#">New Champion Registration Form</a>,
+          if you have not already.</p>
+      </div>
+      <div class="create-dojo-form center-block">
+        <legend>Dojo Information</legend>
+        <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoName" class="col-lg-4">Dojo Name*</label>
+                <div class="col-lg-6">
+                  <input type="text" ng-model="dojo.name" class="form-control" name="dojoName" id="dojoName">
+                  <p>Normally after an area, like "Cork" or multiple Dojos are in your area "San Fran @ GitHub".
+                    Try refrain from prefixing the name with "CoderDojo".</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoEmail" class="col-lg-4">Email*</label>
+                <div class="col-lg-6">
+                  <input type="text" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
+                  <p>This should be different to the personal email you signed up for an account here with.
+                    For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and
+                    leave this field blank.</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoTimes" class="col-lg-4">Times*</label>
+                <div class="col-lg-6">
+                  <input type="text" ng-model="dojo.time" class="form-control" name="dojoTimes" id="dojoTimes">
+                  <p>State whether it's every week or on a certain day (Eg. "Every Friday, 
+                    5.30pm - 8pm or "Saturday 25th, 12pm - 3pm")</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoLocation" ng-model="dojo.location" class="col-lg-4">Location*</label>
+                <div class="col-lg-6">
+                  <input type="text" class="form-control" name="dojoLocation" id="dojoLocation">
+                  <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoCountry" class="col-lg-4">Country</label>
+              <div class="col-lg-6">
+                <div country-select=""
+                     name="dojoCountry"
+                     id="dojoCountry"
+                     class="form-control"
+                     ng-model="dojo.country"
+                     required-message="'Choose a country, please'"
+                     required="true">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="dojoCoordinates" ng-model="dojo.coordinates" class="col-lg-4">Coordinates</label>
+                <div class="col-lg-6">
+                  <input type="button" class="btn-primary center-block" value="Get location from address"></a>
+                </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -5,7 +5,8 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap.tpls',
   'cdAuth',
   'cdCharter',
-  'cdDojos'
+  'cdDojos',
+  'cdCountrySelect'
 ]);
 
 require('./services/auth-service');
@@ -14,6 +15,7 @@ require('./controllers/header-controller');
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./directives/country-select');
 
 function cdDashboardCtrl($scope, auth) {
 
@@ -40,6 +42,6 @@ app
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
-  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
+  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
 ;
