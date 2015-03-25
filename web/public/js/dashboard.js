@@ -5,7 +5,10 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap.tpls',
   'cdAuth',
   'cdCharter',
-  'cdDojos'
+  'cdDojos',
+  'cdCountrySelect',
+  'uiGmapgoogle-maps',
+  'ngCkeditor'
 ]);
 
 require('./services/auth-service');
@@ -14,6 +17,7 @@ require('./controllers/header-controller');
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./directives/country-select');
 
 function cdDashboardCtrl($scope, auth) {
 
@@ -26,6 +30,13 @@ app
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
     paginationConfig.rotate = false;
+  })
+  .config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
   })
   .factory('authHttpResponseInterceptor',['$q','$window',function($q, $window){
     return {
@@ -40,6 +51,6 @@ app
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
-  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
+  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
 ;

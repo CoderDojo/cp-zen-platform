@@ -18,7 +18,11 @@
     "jquery": "2.1.3",
     "moment": "2.8.4",
     "spin.js": "2.0.2",
-    "underscore": "1.7.0"
+    "underscore": "1.7.0",
+    "angular-google-maps": "2.0.17",
+    "awesome-bootstrap-checkbox": "0.3.3",
+    "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
+    "ng-ckeditor": "0.2.1"
   },
   "resolutions": {
     "angular": "1.2.26",

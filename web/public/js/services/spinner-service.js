@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('spinnerService', ['$loading', function($loading) {
+angular.module('cpZenPlatform').factory('spinnerService', ['$loading', function($rootScope, $loading) {
   var concat = Array.prototype.concat;
   var slice = Array.prototype.slice;
 
