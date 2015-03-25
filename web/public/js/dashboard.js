@@ -6,7 +6,8 @@ var app = angular.module('cpZenPlatform', [
   'cdAuth',
   'cdCharter',
   'cdDojos',
-  'cdCountrySelect'
+  'cdCountrySelect',
+  'uiGmapgoogle-maps'
 ]);
 
 require('./services/auth-service');
@@ -28,6 +29,13 @@ app
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
     paginationConfig.rotate = false;
+  })
+  .config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //    key: 'your api key',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
   })
   .factory('authHttpResponseInterceptor',['$q','$window',function($q, $window){
     return {

@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-lg-8">
-    <div class="cd-create-dojo-container">
+  <div class="cd-create-dojo-container">
+    <div id="main">
       <div class="pre-game-warning center-block">
         <span>Pre-game warning!</span>
         <p>Before you sign up to create a listing for your Dojo please complete our <a href="#">New Champion Registration Form</a>,
@@ -73,7 +73,22 @@
             <div class="form-group">
               <label for="dojoCoordinates" ng-model="dojo.coordinates" class="col-lg-4">Coordinates</label>
                 <div class="col-lg-6">
-                  <input type="button" class="btn-primary center-block" value="Get location from address"></a>
+                  <input type="button" class="btn-primary" value="Get location from address">
+                </div>
+                <div class="col-lg-8 pull-right google-map">
+                  <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+                </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+                <div class="col-lg-5 col-lg-offset-4">
+                  <input type="text" class="form-control" name="dojoLocation" id="dojoLocation">
+                  <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
+                </div>
+                <div class="col-lg-3">
+                  <input type="button" class="btn-primary" value="Get from map">
                 </div>
             </div>
           </div>
