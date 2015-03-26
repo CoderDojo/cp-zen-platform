@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var env = process.env.NODE_ENV || 'development';
 
 var options = require('./options.' + env + '.js');
@@ -30,6 +32,9 @@ seneca
   .use('../lib/dojos/cd-dojos.js')
 ;
 
+_.each(options.client, function(opts) {
+   seneca.client(opts);
+});
 
 // add some test data if running with in-memory store
 if (!options['mongo-store']) {
