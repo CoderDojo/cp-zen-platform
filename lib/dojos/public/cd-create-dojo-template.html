@@ -13,7 +13,7 @@
             <div class="form-group">
               <label for="dojoName" class="col-lg-4">Dojo Name*</label>
                 <div class="col-lg-6">
-                  <input type="text" ng-model="dojo.name" class="form-control" name="dojoName" id="dojoName">
+                  <input type="text" required required-message="'Name is empty'" ng-model="dojo.name" class="form-control" name="dojoName" id="dojoName">
                   <p>Normally after an area, like "Cork" or multiple Dojos are in your area "San Fran @ GitHub".
                     Try refrain from prefixing the name with "CoderDojo".</p>
                 </div>
@@ -24,7 +24,7 @@
             <div class="form-group">
               <label for="dojoEmail" class="col-lg-4">Email*</label>
                 <div class="col-lg-6">
-                  <input type="text" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
+                  <input type="text" required required-message="'Email is empty'" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
                   <p>This should be different to the personal email you signed up for an account here with.
                     For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and
                     leave this field blank.</p>
@@ -36,7 +36,7 @@
             <div class="form-group">
               <label for="dojoTimes" class="col-lg-4">Times*</label>
                 <div class="col-lg-6">
-                  <input type="text" ng-model="dojo.time" class="form-control" name="dojoTimes" id="dojoTimes">
+                  <input type="text" required required-message="'Times are empty'" ng-model="dojo.time" class="form-control" name="dojoTimes" id="dojoTimes">
                   <p>State whether it's every week or on a certain day (Eg. "Every Friday, 
                     5.30pm - 8pm or "Saturday 25th, 12pm - 3pm")</p>
                 </div>
@@ -47,7 +47,7 @@
             <div class="form-group">
               <label for="dojoLocation" class="col-lg-4">Location*</label>
                 <div class="col-lg-6">
-                  <input type="text" ng-model="dojo.location" class="form-control" name="dojoLocation" id="dojoLocation">
+                  <input type="text" required required-message="'Location is empty'" ng-model="dojo.location" class="form-control" name="dojoLocation" id="dojoLocation">
                   <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
                 </div>
             </div>
