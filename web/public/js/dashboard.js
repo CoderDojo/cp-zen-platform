@@ -8,7 +8,9 @@ var app = angular.module('cpZenPlatform', [
   'cdDojos',
   'cdCountrySelect',
   'uiGmapgoogle-maps',
-  'ngCkeditor'
+  'ngCkeditor',
+  'angularValidator',
+  'ngRoute' 
 ]);
 
 require('./services/auth-service');
