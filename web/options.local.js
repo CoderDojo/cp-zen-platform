@@ -47,8 +47,8 @@ module.exports = _.defaults({
     }
   },
 
-  ckeditor_wiris : {
-    url_prefix: ''
-  }
+  client: [
+    {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'}
+  ]
 
 }, base);
