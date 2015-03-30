@@ -4,30 +4,49 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap',
   'ui.bootstrap.tpls',
   'cdAuth',
-  'cdCharter',
-  'cdDojos',
   'cdCountrySelect',
   'uiGmapgoogle-maps',
   'ngCkeditor',
   'angularValidator',
-  'ngRoute' 
+  'ui.router'
 ]);
 
 require('./services/auth-service');
+require('./services/cd-charter-service');
+require('./services/cd-dojo-service');
+
 require('./controllers/login-controller');
 require('./controllers/header-controller');
+require('./controllers/charter-controller');
+require('./controllers/dojo-list-controller');
+
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
 require('./directives/country-select');
+require('./directives/cd-charter');
+require('./directives/cd-dojo-list');
 
 function cdDashboardCtrl($scope, auth) {
-
+  
 }
 
 app
-  .config(function($locationProvider) {
-    $locationProvider.html5Mode(true).hashPrefix('!');
+  .config(function($stateProvider, $urlRouterProvider) {
+     $urlRouterProvider
+        .when('/dashboard', '/dojo-list')
+        .otherwise('/dojo-list');
+    $stateProvider
+        .state("dojo-list", {
+          url: "/dojo-list",
+          templateUrl: '/dojo-list/template/index',
+          controller:'dojo-list-controller'
+        })
+        .state("charter", {
+          url: "/charter",
+          templateUrl:'/charter/template/index',
+          controller:'charter-controller'
+        });
   })
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;

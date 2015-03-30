@@ -2,7 +2,8 @@
 
 var app = angular.module('cpZenPlatform', [
   'ui.bootstrap',
-  'ui.bootstrap.tpls'
+  'ui.bootstrap.tpls',
+  'ngRoute'
 ]);
 
 require('./services/auth-service');

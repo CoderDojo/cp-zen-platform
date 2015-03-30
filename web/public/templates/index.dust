@@ -1,8 +1,9 @@
 {>"layouts/master" /}
-
 {<body}
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+{>"common/cd-menu" /}
+
+<div class="navbar navbar-inverse navbar-top" role="navigation">
   <div class="container">
    <div class="col-lg-6 cd-logo-container">
       <div class="cd-logo"></div>

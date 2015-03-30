@@ -1,9 +1,4 @@
-{>"layouts/dashboard" /}
-{<body}
-  {>"common/header" /}
-  <div class="main-container">
+ 
     <div class="cd-dashboard">
       <cd-charter></cd-charter>
     </div>
-  </div>
-{/body}

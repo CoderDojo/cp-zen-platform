@@ -19,7 +19,7 @@ module.exports = {
       },
       'manager': {
         prefixmap: {
-          '/dashboard': 1,
+          '/dojo-list': 1,
           '/charter': 1,
           '/my-dojos': 1
         }
@@ -30,7 +30,7 @@ module.exports = {
   'web-access': {
     prefixlist: [
       '/admin',
-      '/dashboard',
+      '/dojo-list',
       '/charter',
       '/my-dojos'
     ]

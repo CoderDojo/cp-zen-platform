@@ -1,16 +1,12 @@
 <div class="row" ng-controller="header">
-    <div class="col-md-2 cd-logo-container">
-        <div class="cd-logo"></div>
+  <div class="col-md-2 cd-logo-container">
+      <div class="cd-logo"></div>
+  </div>
+    <div class="top-menu-links">
+      <span><a ng-href="#/dojo-list">Dojo List</a></span>
+      <span><a ng-href="#/charter">Charter</a></span>
+      <span><a ng-href="#/my-dojos">My Dojos</a></span>
+      <span><a ng-href="#/create-dojo">Create Dojo</a></span>
     </div>
-    <div class="col-md-2 cd-logo-container">
-        <div><a class="cd-header-text" ng-click="navigateTo('dashboard')">Dojo List</a></div>
-    </div>
-    <div class="col-md-2 cd-logo-container">
-        <div><a class="cd-header-text" ng-click="navigateTo('charter')">Charter</a></div>
-    </div>
-    <div class="col-md-2 cd-logo-container">
-        <div><a class="cd-header-text" ng-click="navigateTo('my-dojos')">My Dojos</a></div>
-    </div>
-    <div class="col-md-2 cd-logo-container">
-        <div><a class="cd-header-text" ng-click="navigateTo('create-dojo')">Create a Dojo</a></div>
-    </div>
+</div>
+

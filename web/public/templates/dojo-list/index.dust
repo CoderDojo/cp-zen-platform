@@ -1,0 +1,3 @@
+<div class="cd-dashboard">
+	<cd-dojo-list></cd-dojo-list>
+</div>
