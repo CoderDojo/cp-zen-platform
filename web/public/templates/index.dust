@@ -3,7 +3,7 @@
 
 {>"common/cd-menu" /}
 
-<div class="navbar navbar-inverse navbar-top" role="navigation">
+<div class="navbar navbar-inverse navbar-relative-top" role="navigation">
   <div class="container">
    <div class="col-lg-6 cd-logo-container">
       <div class="cd-logo"></div>
