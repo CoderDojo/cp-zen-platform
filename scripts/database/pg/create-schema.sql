@@ -1,6 +1,3 @@
-
-
-
 DROP TABLE IF EXISTS sys_entity;
 
 CREATE TABLE sys_entity
@@ -27,7 +24,7 @@ CREATE TABLE sys_account
   name character varying,
   origuser character varying,
   active boolean,
-  users character varying
+  users character varying,
   CONSTRAINT pk_sys_account_id PRIMARY KEY (id)
 )
 WITH (
@@ -76,8 +73,7 @@ CREATE TABLE sys_user
   pass character varying,
   admin boolean,
   accounts character varying[],
-  locale character varying
-
+  locale character varying,
   CONSTRAINT pk_sys_user_id PRIMARY KEY (id)
 )
 WITH (
@@ -100,6 +96,3 @@ CREATE TABLE sys_reset
 WITH (
   OIDS=FALSE
 );
-
-
-
