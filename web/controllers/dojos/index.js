@@ -1,5 +1,5 @@
 'use strict';
-//TO DO:update res.render to one dojos folder
+
 module.exports = function (router) {
   router.get('/template/dojo-list', function (req, res) {
     res.render('dojos/dojo-list');
