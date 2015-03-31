@@ -7,6 +7,7 @@ CREATE TABLE sys_entity
   name character varying,
   "zone" character varying,
   seneca json,
+  fields character varying,
   CONSTRAINT pk_sys_entity_id PRIMARY KEY (id)
 )
 WITH (
