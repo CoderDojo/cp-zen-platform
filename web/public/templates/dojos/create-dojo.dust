@@ -1,0 +1,15 @@
+<div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+
+    <div id="sidebar" class="col-lg-4">
+      <div class="widget">
+        <legend>Status Messages</legend>
+      </div>
+      <div class="widget">
+        <legend>Supporters Image URL</legend>
+        
+      </div>
+    </div>
+    <cd-create-dojo></cd-create-dojo> 
+  </div>
+</div>
