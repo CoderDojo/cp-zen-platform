@@ -105,7 +105,8 @@ CREATE TABLE cd_countries(
   alpha2 character varying,
   alpha3 character varying,
   "number" character varying,
-  country_name character varying
+  country_name character varying,
+  CONSTRAINT pk_cd_countries_id PRIMARY KEY (id)
 )
 
 WITH (
@@ -139,7 +140,8 @@ CREATE TABLE cd_dojos(
   deleted_by character varying NOT NULL,
   deleted_at timestamp with time zone,
   private smallint NOT NULL DEFAULT 0,
-  url_slug character varying
+  url_slug character varying,
+  CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
 )
 
 WITH (
