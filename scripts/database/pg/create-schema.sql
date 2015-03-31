@@ -7,6 +7,7 @@ CREATE TABLE sys_entity
   name character varying,
   "zone" character varying,
   seneca json,
+  fields character varying,
   CONSTRAINT pk_sys_entity_id PRIMARY KEY (id)
 )
 WITH (
@@ -93,6 +94,57 @@ CREATE TABLE sys_reset
   active boolean,
   CONSTRAINT pk_sys_reset_id PRIMARY KEY (id)
 )
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_countries CASCADE;
+
+CREATE TABLE cd_countries(
+  id character varying NOT NULL,
+  continent character varying NOT NULL,
+  alpha2 character varying,
+  alpha3 character varying,
+  "number" character varying,
+  country_name character varying,
+  CONSTRAINT pk_cd_countries_id PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_dojos CASCADE;
+
+CREATE TABLE cd_dojos(
+  id character varying NOT NULL,
+  name character varying NOT NULL,
+  creator character varying,
+  created timestamp with time zone,
+  verified_at timestamp with time zone,
+  verified_by character varying,
+  verified smallint NOT NULL DEFAULT 0,
+  need_mentors smallint NOT NULL DEFAULT 0,
+  stage smallint NOT NULL DEFAULT 0,
+  "time" character varying,
+  "country" char(2),
+  location character varying,
+  coordinates character varying,
+  notes text,
+  email character varying,
+  website character varying,
+  twitter character varying,
+  google_group character varying,
+  eb_id character varying,
+  supporter_image character varying,
+  deleted smallint NOT NULL DEFAULT 0,
+  deleted_by character varying NOT NULL,
+  deleted_at timestamp with time zone,
+  private smallint NOT NULL DEFAULT 0,
+  url_slug character varying,
+  CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
+)
+
 WITH (
   OIDS=FALSE
 );
