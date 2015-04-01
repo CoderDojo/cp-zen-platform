@@ -22,6 +22,7 @@ require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/create-dojo-controller');
+require('./controllers/edit-dojo-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -62,6 +63,11 @@ app
         url: "/create-dojo",
         templateUrl:'/dojos/template/create-dojo',
         controller:'create-dojo-controller'
+      })
+      .state("edit-dojo", {
+        url: "/edit-dojo",
+        templateUrl:'/dojos/template/edit-dojo',
+        controller:'edit-dojo-controller'
       });
   })
   .config(function(paginationConfig){

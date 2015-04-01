@@ -8,7 +8,16 @@ function cdMyDojosCtrl($scope, $window, cdDojoService, $location, auth, tableUti
   }
 
   $scope.editDojo = function(dojo) {
-    $window.location.href = '/edit-dojo/'+dojo.id;
+    cdDojoService.addDojoToEdit(dojo, function(response) {
+      $location.path('/edit-dojo');
+    }, function (err){
+      if(err){
+        alertService.showError(
+          'An error has occurred while editing dojo: <br /> '+
+          (err.error || JSON.stringify(err))
+        );
+      }
+    });
   }
 
   $scope.loadPage = function(currentUser, resetFlag, cb){
