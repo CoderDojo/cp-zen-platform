@@ -97,9 +97,6 @@ label {
   #sidebar {
     float: right;
     margin-top: 30px;
-    .widget {
-      padding-bottom:55px;
-    }
   }
 }
 
@@ -130,8 +127,10 @@ label {
 
 .cd-create-dojo-container {
   padding:20px;
-  #main {
-    width: 590px;
+  .create-dojo-sidebar {
+    position: relative;
+    float: right;
+    left: 20px;
   }
   .pre-game-warning {
     background-color: #FBF9E4;
@@ -150,9 +149,11 @@ label {
       color:#C09853;
     }
   }
-  .create-dojo-form {
-    width:550px;
+  #createDojoForm {
     margin-top:20px;
+    #main {
+      width: 590px;
+    }
     label {
       font-weight:normal;
     }
@@ -173,6 +174,20 @@ label {
     }
     .mailingListCheckbox {
       margin-top:-22px;
+      p {
+        padding-top:10px;
+      }
+    }
+    .widget {
+      padding-bottom:55px;
+      .widget-block {
+        padding-top:20px;
+      }
+      .current-stage-radios {
+        padding-right: 25px;
+        margin-top: -8px;
+        float: right;
+      }
     }
   }
 }
