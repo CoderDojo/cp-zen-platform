@@ -38,7 +38,6 @@
 
   <body ng-app="cpZenPlatform" ng-cloak ng-class="{'lock-view':blockUI}" lock-view>
     {+body /}
-
     <script src="/components/jquery/dist/jquery.min.js"></script>
     <script src="/components/underscore/underscore.js"></script>
     <script src="/components/angular/angular.min.js"></script>
@@ -48,12 +47,14 @@
     <script src="/components/angular-ui-utils/ui-utils.min.js"></script>
     <script src="/components/moment/min/moment.min.js"></script>
     <script src="/components/angular-moment/angular-moment.min.js"></script>
-    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+    <script src="/components/angular-ui-map/ui-map.min.js"></script>
     <script src="/components/lodash/dist/lodash.min.js"></script>
     <script src="/components/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <script src="/components/tg-angular-validator/dist/angular-validator.min.js"></script>
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
+    <script src="/components/ngstorage/ngStorage.min.js"></script>
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     <script src="/components/bootbox/bootbox.js"></script>
     <script src="/components/spin.js/spin.js"></script>
     <script src="/components/angular-loading/angular-loading.min.js"></script>
@@ -64,6 +65,5 @@
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
     <script src="/seneca/init.js"></script>
     <script src="/js/dashboard.js"></script>
-
   </body>
 </html>

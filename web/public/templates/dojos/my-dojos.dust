@@ -5,17 +5,17 @@
       <table id="myDojosTable" class="table cd-grid-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Dojo</th>
+            <th>Address</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="myDojo in myDojos" class="pointer">
-            <td>{{ myDojo.id }}</td>
             <td>{{ myDojo.name }}</td>
-            <td ng-click="editDojo(myDojo)">Edit</td>
+            <td>{{ myDojo.address1 }}, {{ myDojo.address2 }}</td>
+            <td class="pointer" ng-click="editDojo(myDojo)">Edit</td>
             <td>Delete</td>
           </tr>
         </tbody>

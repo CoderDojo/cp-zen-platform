@@ -5,33 +5,38 @@ var app = angular.module('cpZenPlatform', [
   'ui.bootstrap.tpls',
   'cdAuth',
   'cdCountrySelect',
-  'uiGmapgoogle-maps',
   'ngCkeditor',
   'angularValidator',
-  'ui.router'
+  'ui.router',
+  'ngStorage',
+  'ui.map'
 ]);
 
 require('./services/auth-service');
 require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
 require('./services/cd-load-my-dojos-service');
+require('./services/geocoder-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
 require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
+
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+
 require('./directives/country-select');
 require('./directives/cd-charter');
 require('./directives/cd-dojo-list');
 require('./directives/cd-my-dojos');
 require('./directives/cd-create-dojo');
+
 
 
 function cdDashboardCtrl($scope, auth) {
@@ -73,13 +78,6 @@ app
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
     paginationConfig.rotate = false;
-  })
-  .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        //    key: 'your api key',
-        v: '3.17',
-        libraries: 'weather,geometry,visualization'
-    });
   })
   .factory('authHttpResponseInterceptor',['$q','$window',function($q, $window){
     return {

@@ -8,7 +8,7 @@
     "angular-moment": "0.8.3",
     "angular-route": "1.2.26",
     "angular-ui-select": "0.8.4",
-    "angular-ui-utils": "0.1.1",
+    "angular-ui-utils": "0.2.3",
     "angular-ui-router": "~0.2.13",
     "async": "0.9.2",
     "bootbox": "4.3.0",
@@ -20,10 +20,11 @@
     "moment": "2.8.4",
     "spin.js": "2.0.2",
     "underscore": "1.7.0",
-    "angular-google-maps": "2.0.17",
+    "angular-ui-map": "0.5.0",
     "awesome-bootstrap-checkbox": "0.3.3",
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
-    "ng-ckeditor": "0.2.1"
+    "ng-ckeditor": "https://github.com/david-cahill/ng-ckeditor.git#master",
+    "ngstorage": "0.3.0"
   },
   "resolutions": {
     "angular": "1.2.26",

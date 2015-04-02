@@ -28,10 +28,8 @@
         var err = new Error('Edit Dojo Failed');
         fail(err);
       },
-      getDojoToEdit: function(win, fail) {
-        if(! _.isEmpty(editDojo)) return win(editDojo);
-        var err = new Error('Edit Dojo Failed');
-        if(fail) return fail(err);
+      getDojoToEdit: function() {
+        return editDojo;
       }
     }
   }

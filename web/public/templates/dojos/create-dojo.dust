@@ -68,6 +68,9 @@
 
             <div class="widget">
               <legend>Supporters Image URL</legend>
+              <div class="col-lg-11">
+                <input type="text" ng-model="dojo.supporter_image" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
+              </div>
             </div>
 
           </div>
@@ -95,8 +98,7 @@
                       <div class="col-lg-6">
                         <input type="text" required required-message="'Email is empty'" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
                         <p>This should be different to the personal email you signed up for an account here with.
-                          For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and
-                          leave this field blank.</p>
+                          For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank.</p>
                       </div>
                   </div>
                 
@@ -110,14 +112,20 @@
                   </div>
                 
                   <div class="form-group">
-                    <label for="dojoLocation" class="col-lg-4">Location*</label>
+                    <label for="dojoAddress1" class="col-lg-4">Address Line 1*</label>
                       <div class="col-lg-6">
-                        <input type="text" required required-message="'Location is empty'" ng-model="dojo.location" class="form-control" name="dojoLocation" id="dojoLocation">
-                        <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
+                        <input type="text" required required-message="'Address Line 1 is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
+                        <p>Address Line 1 of the Dojo (Eg. LIT Downtown Centre)</p>
                       </div>
                   </div>
                 
-
+                  <div class="form-group">
+                    <label for="dojoAddress2" class="col-lg-4">Address Line 2*</label>
+                      <div class="col-lg-6">
+                        <input type="text" required required-message="'Address Line 2 is empty'" ng-model="dojo.address2" class="form-control" name="dojoAddress2" id="dojoAddress2">
+                        <p>Address Line 2 of the Dojo (Eg. Kinsale, Co. Cork)</p>
+                      </div>
+                  </div>
                 
                   <div class="form-group">
                     <label for="dojoCountry" class="col-lg-4">Country</label>
@@ -134,22 +142,21 @@
                   </div>
                 
                   <div class="form-group">
-                    <label for="dojoCoordinates" class="col-lg-4">Coordinates</label>
+                    <label class="col-lg-4">Coordinates</label>
                       <div class="col-lg-6">
-                        <input type="button" ng-model="dojo.coordinates" class="btn-primary" value="Get location from address">
+                        <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn-primary" value="Get location from address">
                       </div>
                       <div class="col-lg-8 pull-right google-map">
-                        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+                        <section id="map">
+                          <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                          <div id="googleMap" ui-map="map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
+                        </section>
                       </div>
                   </div>
                 
                   <div class="form-group">
-                      <div class="col-lg-5 col-lg-offset-4">
-                        <input type="text" class="form-control" name="dojoLocation" id="dojoLocation">
-                        <p>Address of the Dojo (Eg. LIT Downtown Centre, George's Quay, Limerick)</p>
-                      </div>
-                      <div class="col-lg-3">
-                        <input type="button" class="btn-primary" value="Get from map">
+                      <div class="col-lg-8 col-lg-offset-4">
+                        <input type="text" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
                       </div>
                   </div>
                 
@@ -198,11 +205,13 @@
                   <div class="row">
                     <div class="form-group">
                       <label for="dojoMailingList" class="col-lg-4">Mailing List</label>
-                        <div class="col-lg-4 mailingListCheckbox">
+                        <div class="col-lg-6 mailingListCheckbox">
                           <div class="checkbox">
                             <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
                             <label for="mailingListCheckbox"></label>
                           </div>
+                          <p>Receive monthly updates to your user email address from the CoderDojo community around the world that keep you
+                          informed and help you with running your Dojo.</p>
                         </div>
                     </div>
                   </div>
