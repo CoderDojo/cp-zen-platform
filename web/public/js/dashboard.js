@@ -40,6 +40,30 @@ function cdDashboardCtrl($scope, auth) {
   
 }
 
+var gmap = function($q, $window) {
+  var dfd = $q.defer();
+  var doc = $window.document;
+  var scriptId = 'gmapScript';
+  var scriptTag = doc.getElementById(scriptId);
+  if (scriptTag) {
+    dfd.resolve(true);
+    return true;
+  }
+  scriptTag = doc.createElement('script');
+  scriptTag.id = scriptId;
+  scriptTag.setAttribute('src', 
+    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
+  doc.head.appendChild(scriptTag);
+  $window.mapReady = (function(dfd) {
+    return function() {
+      dfd.resolve(true);
+      delete $window.mapReady;
+    };
+  }(dfd));
+  
+  return dfd.promise;
+}
+
 app
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider
@@ -65,29 +89,7 @@ app
         url: "/create-dojo",
         templateUrl:'/dojos/template/create-dojo',
         resolve: {
-          gmap: function($q, $window) {
-            var dfd = $q.defer();
-            var doc = $window.document;
-            var scriptId = 'gmapScript';
-            var scriptTag = doc.getElementById(scriptId);
-            if (scriptTag) {
-              dfd.resolve(true);
-              return true;
-            }
-            scriptTag = doc.createElement('script');
-            scriptTag.id = scriptId;
-            scriptTag.setAttribute('src', 
-              'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
-            doc.head.appendChild(scriptTag);
-            $window.mapReady = (function(dfd) {
-              return function() {
-                dfd.resolve(true);
-                delete $window.mapReady;
-              };
-            }(dfd));
-            
-            return dfd.promise;
-          }
+          gmap: gmap
         },
         controller:'create-dojo-controller'
       })
@@ -95,35 +97,16 @@ app
         url: "/edit-dojo",
         templateUrl:'/dojos/template/edit-dojo',
         resolve: {
-          gmap: function($q, $window) {
-            var dfd = $q.defer();
-            var doc = $window.document;
-            var scriptId = 'gmapScript';
-            var scriptTag = doc.getElementById(scriptId);
-            if (scriptTag) {
-              dfd.resolve(true);
-              return true;
-            }
-            scriptTag = doc.createElement('script');
-            scriptTag.id = scriptId;
-            scriptTag.setAttribute('src', 
-              'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
-            doc.head.appendChild(scriptTag);
-            $window.mapReady = (function(dfd) {
-              return function() {
-                dfd.resolve(true);
-                delete $window.mapReady;
-              };
-            }(dfd));
-            
-            return dfd.promise;
-          }
+          gmap:gmap
         },
         controller:'edit-dojo-controller'
       })
       .state("dojo-detail", {
         url: "/dojo/:id",
         templateUrl: '/dojos/template/dojo-detail',
+        resolve: {
+          gmap:gmap
+        },
         controller:'dojo-detail-controller'
       });
   })

@@ -10,6 +10,26 @@
 
           <div class="widget">
             <legend>Contact</legend>
+            <table class="table">
+                <tbody>
+                  <tr ng-if="dojo.email">
+                    <td><b>Email</b></td>
+                    <td><a href="mailto:{{ dojo.email }}">{{ dojo.email }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.twitter">
+                    <td><b>Twitter</b></td>
+                    <td><a href="http://twitter.com/{{ dojo.twitter }}a">@{{ dojo.twitter }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.website">
+                    <td><b>Website</b></td>
+                    <td><a href="{{ dojo.website }}">{{ dojo.website }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.google_group">
+                    <td><b>Google Group</b></td>
+                    <td><a href="{{ dojo.google_group }}">{{ dojo.google_group }}</a></td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
 
         </div>
@@ -39,6 +59,10 @@
           </table>
 
           <legend>Map</legend>
+          <section ng-if="mapLoaded" id="map">
+            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+          </section>
         </div>
       </div>
     </div>

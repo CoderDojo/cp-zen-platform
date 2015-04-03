@@ -23,25 +23,25 @@
                 <label class="col-lg-5">Current Stage</label>
                 <div class="current-stage-radios">
                   <div class="radio">
-                    <input type="radio" name="currentStage" id="inPlanning" value="In Planning" checked>
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="In Planning" checked>
                     <label for="inPlanning">
                         In Planning
                     </label>
                   </div>
                   <div class="radio">
-                    <input type="radio" name="currentStage" id="openComeAlong" value="Open, Come Along">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="openComeAlong" value="Open, Come Along">
                     <label for="openComeAlong">
                         Open, come along
                     </label>
                   </div>
                   <div class="radio">
-                    <input type="radio" name="currentStage" id="registerAhead" value="Register Ahead">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="registerAhead" value="Register Ahead">
                     <label for="registerAhead">
                         Register Ahead
                     </label>
                   </div>
                   <div class="radio">
-                    <input type="radio" name="currentStage" id="fullUp" value="Full Up">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="Full Up">
                     <label for="Full Up">
                         Full Up
                     </label>
