@@ -25,6 +25,17 @@ ul {
   color:white;
 }
 
+.top-menu-links {
+  margin-top:12px;
+  span {
+    padding-left:20px;
+    padding-right:20px;
+    a { 
+      color:white;
+    }
+  }
+}
+
 .cp-login {
 	background: url(../img/main-bg.png) repeat-y #ffffff;
   box-shadow: 0 0 4px #bbbbbb;
@@ -33,7 +44,7 @@ ul {
   min-height: 350px;
   margin:0 auto;
   width:80%;
-  margin-top:100px;
+  margin-top:80px;
   #main {
     width: 590px;
     padding: 40px 30px 20px 30px;
@@ -64,7 +75,7 @@ label {
   	padding: 20px;
   	width: 90%;
   	margin: 0 auto;
-  	margin-top: 40px;
+  	margin-top: 20px;
     a {
       color:#315169;
     }
@@ -73,18 +84,19 @@ label {
     }
 }
 
+.cd-dashboard2 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .dojo-list-dashboard {
   background: url(../img/main-bg.png) repeat-y;
   min-height: 350px;
   margin:0 auto;
   width:975px;
-  margin-top:100px;
   #sidebar {
     float: right;
     margin-top: 30px;
-    .widget {
-      padding-bottom:55px;
-    }
   }
 }
 
@@ -115,8 +127,10 @@ label {
 
 .cd-create-dojo-container {
   padding:20px;
-  #main {
-    width: 590px;
+  .create-dojo-sidebar {
+    position: relative;
+    float: right;
+    left: 20px;
   }
   .pre-game-warning {
     background-color: #FBF9E4;
@@ -135,13 +149,18 @@ label {
       color:#C09853;
     }
   }
-  .create-dojo-form {
-    width:550px;
+  #createDojoForm {
     margin-top:20px;
+    #main {
+      width: 590px;
+    }
     label {
       font-weight:normal;
     }
     .form-group {
+      margin-top:15px;
+    }
+    input[type="button"] {
       margin-top:15px;
     }
     p {
@@ -158,6 +177,25 @@ label {
     }
     .mailingListCheckbox {
       margin-top:-22px;
+      p {
+        padding-top:10px;
+      }
+    }
+    .widget {
+      padding-bottom:55px;
+      .widget-block {
+        padding-top:20px;
+      }
+      .current-stage-radios {
+        padding-right: 25px;
+        margin-top: -8px;
+        float: right;
+      }
+    }
+    .map-canvas { height: 400px; }
+    input[name="dojoCoordinates"] {
+      margin-top:15px;
+      margin-bottom:15px;
     }
   }
 }
@@ -166,4 +204,54 @@ label {
   thead {
     background-color:#C9C9C9;
   }
+}
+
+.cd-tabset {
+  .nav.nav-tabs {
+    color: #000000;
+    width:80%;
+    padding-left: 0;
+    font-size: 18px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border:none;
+    li {
+      margin: 0 0px 0 0;
+      a, a:hover, a:focus {
+        font-size: 16px;
+        font-weight: normal;
+        border: none;
+        cursor: pointer;
+        color: #ffffff;
+        padding-left:30px;
+        padding-right:30px;
+        border-radius: 0;
+        margin-right: 0;
+      }
+      &.active {
+        border: none;
+        a, a:hover, a:focus {
+          color: #FFFFFF;
+          font-size: 16px;
+          font-weight: normal;
+          background-color:#46A0CA;
+          box-shadow: none;
+          margin-top: 0 !important;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+  .tab-content {
+    padding-top: 20px;
+    .tab-pane {
+      &.active {
+        border: none;
+      }
+    }
+  }
+}
+
+.pointer {
+  cursor:pointer;
 }

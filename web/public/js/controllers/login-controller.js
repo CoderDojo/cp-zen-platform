@@ -37,7 +37,7 @@ angular.module('cpZenPlatform').controller('login', function($scope, $location, 
 
     auth.login($scope.login,
       function(data){
-        $window.location.href = '/dashboard';
+        $window.location.href = '/dashboard/#/dojo-list';
       },
       function(){
         $scope.errorMessage = 'Invalid email or password!'

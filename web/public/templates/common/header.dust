@@ -1,3 +1,4 @@
+{>"common/cd-menu" /}
 <header id="header" ng-controller="login">
     <div class="container">
         {>"common/content-header" /}
@@ -6,5 +7,4 @@
                 <span class="cd-user-name">{{ user.name }} |</span>
             </div>
         </div>
-    </div>
 </header>
