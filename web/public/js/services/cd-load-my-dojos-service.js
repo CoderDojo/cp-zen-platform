@@ -4,7 +4,6 @@ function loadMyDojosService(cdDojoService) {
     var totalItems, fail;
     
     var loadMyDojos = function(config, currentUser, cb){
-    
       fail = function(err) {
         cb(err);
       }

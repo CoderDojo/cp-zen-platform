@@ -9,6 +9,7 @@ var app = angular.module('cpZenPlatform', [
   'angularValidator',
   'ui.router',
   'ngStorage',
+  'ngRoute',
   'ui.map'
 ]);
 
@@ -23,6 +24,7 @@ require('./controllers/header-controller');
 require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
+require('./controllers/dojo-detail-controller');
 
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
@@ -32,12 +34,6 @@ require('./services/spinner-service');
 require('./services/table-utils');
 
 require('./directives/country-select');
-require('./directives/cd-charter');
-require('./directives/cd-dojo-list');
-require('./directives/cd-my-dojos');
-require('./directives/cd-create-dojo');
-
-
 
 function cdDashboardCtrl($scope, auth) {
   
@@ -123,6 +119,11 @@ app
           }
         },
         controller:'edit-dojo-controller'
+      })
+      .state("dojo-detail", {
+        url: "/dojo/:id",
+        templateUrl: '/dojos/template/dojo-detail',
+        controller:'dojo-detail-controller'
       });
   })
   .config(function(paginationConfig){

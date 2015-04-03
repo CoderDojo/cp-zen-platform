@@ -1,7 +1,7 @@
 'use strict';
 
 function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService, Geocoder, gmap) {
-  $scope.dojo = cdDojoService.getDojoToEdit();
+  $scope.dojo = cdDojoService.getDojo();
   $scope.model = {};
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';

@@ -12,11 +12,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="myDojo in myDojos" class="pointer">
+          <tr ng-repeat="myDojo in myDojos">
             <td>{{ myDojo.name }}</td>
             <td>{{ myDojo.address1 }}, {{ myDojo.address2 }}</td>
             <td class="pointer" ng-click="editDojo(myDojo)">Edit</td>
-            <td>Delete</td>
+            <td class="pointer" ng-click="deleteDojo(myDojo)">Delete</td>
           </tr>
         </tbody>
       </table>
