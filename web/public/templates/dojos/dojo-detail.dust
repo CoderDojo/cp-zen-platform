@@ -1,0 +1,70 @@
+<div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+    <div class="row">
+      <div class="dojo-detail">
+        <div class="dojo-detail-sidebar col-lg-4">
+          <div class="widget">
+            <legend>Status</legend>
+
+          </div>
+
+          <div class="widget">
+            <legend>Contact</legend>
+            <table class="table">
+                <tbody>
+                  <tr ng-if="dojo.email">
+                    <td><b>Email</b></td>
+                    <td><a href="mailto:{{ dojo.email }}">{{ dojo.email }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.twitter">
+                    <td><b>Twitter</b></td>
+                    <td><a href="http://twitter.com/{{ dojo.twitter }}a">@{{ dojo.twitter }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.website">
+                    <td><b>Website</b></td>
+                    <td><a href="{{ dojo.website }}">{{ dojo.website }}</a></td>
+                  </tr>
+                  <tr ng-if="dojo.google_group">
+                    <td><b>Google Group</b></td>
+                    <td><a href="{{ dojo.google_group }}">{{ dojo.google_group }}</a></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
+        </div>
+
+        <div class="main">
+          <legend><b>{{ dojo.name }}</b></legend>
+          <table class="table" style="margin-left: 30px;">
+            <tbody>
+              <tr>
+                <td class="col-lg-2"><b>Time</b></td>
+                <td>{{ dojo.time }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Location</b></td>
+                <td ng-if="dojo.address1">{{ dojo.address1 }}, {{ dojo.address2 }}</td>
+                <td ng-if="dojo.location">{{ dojo.location }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Country</b></td>
+                <td>{{ dojo.country }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Notes</b></td>
+                <td><div ng-bind-html="dojo.notes"></div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <legend>Map</legend>
+          <section ng-if="mapLoaded" id="map">
+            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

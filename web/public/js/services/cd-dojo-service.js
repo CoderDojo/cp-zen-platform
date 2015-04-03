@@ -3,7 +3,7 @@
     function topfail(err){
       console.log(err);
     }
-    var editDojo = {};
+    var currentDojo = {};
     return {
       list: function(win, fail){
         cdApi.get('dojos', win, fail || topfail);
@@ -22,14 +22,17 @@
           cdApi.post('dojos', { dojo: dojo }, win, fail || topfail);
         } 
       },
-      addDojoToEdit: function(dojo, win, fail) {
-        editDojo = dojo;
-        if(editDojo) return win(editDojo); 
-        var err = new Error('Edit Dojo Failed');
+      setDojo: function(dojo, win, fail) {
+        currentDojo = dojo;
+        if(currentDojo) return win(currentDojo); 
+        var err = new Error('Set Dojo Failed');
         fail(err);
       },
-      getDojoToEdit: function() {
-        return editDojo;
+      getDojo: function() {
+        return currentDojo;
+      },
+      delete: function(id, win, fail) {
+        cdApi.delete('dojos/' + id, win, fail);
       }
     }
   }

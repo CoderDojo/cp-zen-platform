@@ -49,19 +49,14 @@ angular.module('cpZenPlatform').service('auth', function($http) {
     },
 
     get_loggedin_user: function (win, fail) {
-      if (loggedin_user) {
-        win(loggedin_user);
-      }
-      else {
-        this.instance(function (data) {
-          if (!data.user) {
-            return (fail || topfail)('cannot get logged in user');
-          }
+      this.instance(function (data) {
+        if (!data.user) {
+          return (fail || topfail)('cannot get logged in user');
+        }
 
-          loggedin_user = data.user;
-          win(loggedin_user);
-        });
-      }
+        loggedin_user = data.user;
+        win(loggedin_user);
+      });
     }
   }
 

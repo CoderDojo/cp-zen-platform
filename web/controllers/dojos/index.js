@@ -16,4 +16,8 @@ module.exports = function (router) {
   router.get('/template/edit-dojo', function (req, res) {
     res.render('dojos/create-dojo');
   });
+
+  router.get('/template/dojo-detail', function (req, res) {
+    res.render('dojos/dojo-detail');
+  });
 };

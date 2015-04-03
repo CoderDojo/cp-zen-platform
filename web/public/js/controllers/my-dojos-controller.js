@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, cdDojoService, $location, auth, tableUtils, alertService, loadMyDojosService) {
+function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, loadMyDojosService) {
   $scope.itemsPerPage = 10;
 
   $scope.pageChanged = function(){
@@ -8,12 +8,25 @@ function cdMyDojosCtrl($scope, $window, cdDojoService, $location, auth, tableUti
   }
 
   $scope.editDojo = function(dojo) {
-    cdDojoService.addDojoToEdit(dojo, function(response) {
+    cdDojoService.setDojo(dojo, function(response) {
       $location.path('/edit-dojo');
     }, function (err){
       if(err){
         alertService.showError(
           'An error has occurred while editing dojo: <br /> '+
+          (err.error || JSON.stringify(err))
+        );
+      }
+    });
+  }
+
+  $scope.deleteDojo = function(dojo) {
+    cdDojoService.delete(dojo.id, function(response) {
+      $state.transitionTo($state.current, $stateParams, { reload: true, inherit: false, notify: true });
+    }, function (err){
+      if(err){
+        alertService.showError(
+          'An error has occurred while deleting dojo: <br /> '+
           (err.error || JSON.stringify(err))
         );
       }
@@ -35,7 +48,6 @@ function cdMyDojosCtrl($scope, $window, cdDojoService, $location, auth, tableUti
       }
       $scope.totalItems = +results.totalItems;
       $scope.myDojos = results.myDojos;
-
       return cb();
     });
   };
@@ -48,4 +60,4 @@ function cdMyDojosCtrl($scope, $window, cdDojoService, $location, auth, tableUti
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', 'loadMyDojosService', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', 'loadMyDojosService', cdMyDojosCtrl]);

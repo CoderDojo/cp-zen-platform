@@ -9,6 +9,8 @@ var app = angular.module('cpZenPlatform', [
   'angularValidator',
   'ui.router',
   'ngStorage',
+  'ngRoute',
+  'ngSanitize',
   'ui.map'
 ]);
 
@@ -23,6 +25,7 @@ require('./controllers/header-controller');
 require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
+require('./controllers/dojo-detail-controller');
 
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
@@ -32,15 +35,33 @@ require('./services/spinner-service');
 require('./services/table-utils');
 
 require('./directives/country-select');
-require('./directives/cd-charter');
-require('./directives/cd-dojo-list');
-require('./directives/cd-my-dojos');
-require('./directives/cd-create-dojo');
-
-
 
 function cdDashboardCtrl($scope, auth) {
   
+}
+
+var gmap = function($q, $window) {
+  var dfd = $q.defer();
+  var doc = $window.document;
+  var scriptId = 'gmapScript';
+  var scriptTag = doc.getElementById(scriptId);
+  if (scriptTag) {
+    dfd.resolve(true);
+    return true;
+  }
+  scriptTag = doc.createElement('script');
+  scriptTag.id = scriptId;
+  scriptTag.setAttribute('src', 
+    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
+  doc.head.appendChild(scriptTag);
+  $window.mapReady = (function(dfd) {
+    return function() {
+      dfd.resolve(true);
+      delete $window.mapReady;
+    };
+  }(dfd));
+  
+  return dfd.promise;
 }
 
 app
@@ -68,29 +89,7 @@ app
         url: "/create-dojo",
         templateUrl:'/dojos/template/create-dojo',
         resolve: {
-          gmap: function($q, $window) {
-            var dfd = $q.defer();
-            var doc = $window.document;
-            var scriptId = 'gmapScript';
-            var scriptTag = doc.getElementById(scriptId);
-            if (scriptTag) {
-              dfd.resolve(true);
-              return true;
-            }
-            scriptTag = doc.createElement('script');
-            scriptTag.id = scriptId;
-            scriptTag.setAttribute('src', 
-              'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
-            doc.head.appendChild(scriptTag);
-            $window.mapReady = (function(dfd) {
-              return function() {
-                dfd.resolve(true);
-                delete $window.mapReady;
-              };
-            }(dfd));
-            
-            return dfd.promise;
-          }
+          gmap: gmap
         },
         controller:'create-dojo-controller'
       })
@@ -98,31 +97,17 @@ app
         url: "/edit-dojo",
         templateUrl:'/dojos/template/edit-dojo',
         resolve: {
-          gmap: function($q, $window) {
-            var dfd = $q.defer();
-            var doc = $window.document;
-            var scriptId = 'gmapScript';
-            var scriptTag = doc.getElementById(scriptId);
-            if (scriptTag) {
-              dfd.resolve(true);
-              return true;
-            }
-            scriptTag = doc.createElement('script');
-            scriptTag.id = scriptId;
-            scriptTag.setAttribute('src', 
-              'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
-            doc.head.appendChild(scriptTag);
-            $window.mapReady = (function(dfd) {
-              return function() {
-                dfd.resolve(true);
-                delete $window.mapReady;
-              };
-            }(dfd));
-            
-            return dfd.promise;
-          }
+          gmap:gmap
         },
         controller:'edit-dojo-controller'
+      })
+      .state("dojo-detail", {
+        url: "/dojo/:id",
+        templateUrl: '/dojos/template/dojo-detail',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'dojo-detail-controller'
       });
   })
   .config(function(paginationConfig){
