@@ -8,6 +8,9 @@
       list: function(win, fail){
         cdApi.get('dojos', win, fail || topfail);
       },
+      load: function(id, win, fail) {
+        cdApi.get('dojos/' + id, win, fail || topfail);
+      },
       count: function(currentUser, win, fail){
         cdApi.post('dojos/my_dojos_count', {user: currentUser}, win, fail || topfail);
       },

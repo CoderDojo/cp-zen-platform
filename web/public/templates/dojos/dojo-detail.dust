@@ -1,3 +1,46 @@
 <div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+    <div class="row">
+      <div class="dojo-detail">
+        <div class="dojo-detail-sidebar col-lg-4">
+          <div class="widget">
+            <legend>Status</legend>
 
+          </div>
+
+          <div class="widget">
+            <legend>Contact</legend>
+          </div>
+
+        </div>
+
+        <div class="main">
+          <legend><b>{{ dojo.name }}</b></legend>
+          <table class="table" style="margin-left: 30px;">
+            <tbody>
+              <tr>
+                <td class="col-lg-2"><b>Time</b></td>
+                <td>{{ dojo.time }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Location</b></td>
+                <td ng-if="dojo.address1">{{ dojo.address1 }}, {{ dojo.address2 }}</td>
+                <td ng-if="dojo.location">{{ dojo.location }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Country</b></td>
+                <td>{{ dojo.country }}</td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>Notes</b></td>
+                <td><div ng-bind-html="dojo.notes"></div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <legend>Map</legend>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

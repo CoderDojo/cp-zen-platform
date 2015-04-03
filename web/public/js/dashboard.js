@@ -10,6 +10,7 @@ var app = angular.module('cpZenPlatform', [
   'ui.router',
   'ngStorage',
   'ngRoute',
+  'ngSanitize',
   'ui.map'
 ]);
 
