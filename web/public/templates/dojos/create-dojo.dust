@@ -147,9 +147,9 @@
                         <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn-primary" value="Get location from address">
                       </div>
                       <div class="col-lg-8 pull-right google-map">
-                        <section id="map">
+                        <section ng-if="mapLoaded" id="map">
                           <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
-                          <div id="googleMap" ui-map="map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
+                          <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
                         </section>
                       </div>
                   </div>
@@ -222,7 +222,7 @@
                        
                       </div>
                       <div class="col-lg-4 col-lg-offset-5">
-                        <button class="btn-primary" type="submit">Create Dojo</button>
+                        <button class="btn-primary" type="submit">{{ saveButtonText }}</button>
                       </div>
                     </div>
                   </div>
