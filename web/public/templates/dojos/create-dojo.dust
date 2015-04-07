@@ -112,28 +112,64 @@
                   </div>
                 
                   <div class="form-group">
-                    <label for="dojoAddress1" class="col-lg-4">Address Line 1*</label>
+                    <label for="dojoAddress1" class="col-lg-4">Address 1*</label>
                       <div class="col-lg-6">
-                        <input type="text" required required-message="'Address Line 1 is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
-                        <p>Address Line 1 of the Dojo (Eg. LIT Downtown Centre)</p>
+                        <input type="text" required required-message="'Address 1 is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
+                        <p>Address 1 of the Dojo (Eg. LIT Downtown Centre)</p>
                       </div>
                   </div>
                 
                   <div class="form-group">
-                    <label for="dojoAddress2" class="col-lg-4">Address Line 2*</label>
+                    <label for="dojoAddress2" class="col-lg-4">Address 2*</label>
                       <div class="col-lg-6">
-                        <input type="text" required required-message="'Address Line 2 is empty'" ng-model="dojo.address2" class="form-control" name="dojoAddress2" id="dojoAddress2">
-                        <p>Address Line 2 of the Dojo (Eg. Kinsale, Co. Cork)</p>
+                        <input type="text" required required-message="'Address 2 is empty'" ng-model="dojo.address2" class="form-control" name="dojoAddress2" id="dojoAddress2">
+                        <p>Address 2 of the Dojo (Eg. Kinsale, Co. Cork)</p>
                       </div>
                   </div>
-                
+
                   <div class="form-group">
                     <label for="dojoCountry" class="col-lg-4">Country</label>
                     <div class="col-lg-6">
-                      <ui-select ng-model="dojo.country" ng-disabled="disabled">
-                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected }}</ui-select-match>
-                        <ui-select-choices repeat="country in countries | filter: $select.search">
-                          <span ng-bind-html="country | highlight: $select.search"></span>
+                      <ui-select ng-model="dojo.country" ng-disabled="disabled" on-select="getGeonameData($item,'states')">
+                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+                        <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                          <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoCountry" class="col-lg-4">State/Province</label>
+                    <div class="col-lg-6">
+                      <ui-select ng-model="dojo.state" ng-disabled="disabled" on-select="getGeonameData($item, 'counties')">
+                        <ui-select-match placeholder="Select or search a state in the list...">{{ $select.selected.toponymName }}</ui-select-match>
+                        <ui-select-choices repeat="state in states | filter: $select.search">
+                          <span ng-bind-html="state.toponymName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoCountry" class="col-lg-4">County/Region</label>
+                    <div class="col-lg-6">
+                      <ui-select ng-model="dojo.county" ng-disabled="disabled" on-select="getGeonameData($item, 'cities')">
+                        <ui-select-match placeholder="Select or search a county in the list...">{{ $select.selected.toponymName }}</ui-select-match>
+                        <ui-select-choices repeat="county in counties | filter: $select.search">
+                          <span ng-bind-html="county.toponymName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoCountry" class="col-lg-4">City</label>
+                    <div class="col-lg-6">
+                      <ui-select ng-model="dojo.city" ng-disabled="disabled">
+                        <ui-select-match placeholder="Select or search a city in the list...">{{ $select.selected.toponymName }}</ui-select-match>
+                        <ui-select-choices repeat="city in cities | filter: $select.search">
+                          <span ng-bind-html="city.toponymName | highlight: $select.search"></span>
                         </ui-select-choices>
                       </ui-select>
                     </div>

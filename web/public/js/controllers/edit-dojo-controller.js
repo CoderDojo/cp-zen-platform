@@ -9,13 +9,42 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   cdCountriesService.list(function(response) {
     var countries = [];
     async.each(response, function(country, cb) {
-      countries.push(country.countryName);
+      countries.push({countryName:country.countryName, geonameId:country.geonameId});
       cb();
     }, function() {
       $scope.countries = countries;
     });
     
   });
+
+  $scope.getGeonameData = function($item, type) {
+    var geonameId = $item.geonameId;
+    cdCountriesService.loadChildren(geonameId, function(response) {
+      var children = [];
+      async.each(response, function(child, cb) {
+        children.push({toponymName:child.toponymName, geonameId:child.geonameId});
+        cb();
+      }, function () {
+        switch(type) {
+          case 'states':
+            $scope.dojo.state = undefined;
+            $scope.dojo.county = undefined;
+            $scope.dojo.city = undefined;
+            $scope.states = children;
+            break;
+          case 'counties':
+            $scope.dojo.county = undefined;
+            $scope.dojo.city = undefined;
+            $scope.counties = children;
+            break;
+          case 'cities':
+            $scope.dojo.city = undefined;
+            $scope.cities = children;
+            break;
+        }
+      });
+    });
+  }
   
   $scope.$watch('model.map', function(map){
     if(map) {
@@ -70,8 +99,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     if(dojo) {
       if(!dojo.address1) dojo.address1 = '';
       if(!dojo.address2) dojo.address2 = '';
+      if(!dojo.city) dojo.city = '';
+      if(!dojo.county) dojo.county = '';
+      if(!dojo.state) dojo.state = '';
       if(!dojo.country)  dojo.country  = '';
-      var address = dojo.address1 + ', ' + dojo.address2 + ', ' + dojo.country;
+      var address = dojo.city.toponymName + ', ' + dojo.county.toponymName + ', ' + dojo.state.toponymName + ', ' + dojo.country.countryName;
       Geocoder.latLngForAddress(address).then(function (data) {
         $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
         $scope.model.map.panTo($scope.mapOptions.center);
