@@ -26,18 +26,18 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       }, function () {
         switch(type) {
           case 'states':
-            $scope.dojo.state = undefined;
-            $scope.dojo.county = undefined;
-            $scope.dojo.city = undefined;
+            $scope.dojo.state = '';
+            $scope.dojo.county = '';
+            $scope.dojo.city = '';
             $scope.states = children;
             break;
           case 'counties':
-            $scope.dojo.county = undefined;
-            $scope.dojo.city = undefined;
+            $scope.dojo.county = '';
+            $scope.dojo.city = '';
             $scope.counties = children;
             break;
           case 'cities':
-            $scope.dojo.city = undefined;
+            $scope.dojo.city = '';
             $scope.cities = children;
             break;
         }

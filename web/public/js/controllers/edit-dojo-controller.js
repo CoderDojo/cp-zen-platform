@@ -13,6 +13,37 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       cb();
     }, function() {
       $scope.countries = countries;
+
+      cdCountriesService.loadChildren($scope.dojo.country.geonameId, function(response) {
+        var states = [];
+        async.each(response, function(state, cb) {
+          states.push({toponymName:state.toponymName, geonameId:state.geonameId});
+          cb();
+        }, function() {
+          $scope.states = states;
+        });
+      });
+
+      cdCountriesService.loadChildren($scope.dojo.state.geonameId, function(response) {
+        var counties = [];
+        async.each(response, function(county, cb) {
+          counties.push({toponymName:county.toponymName, geonameId:county.geonameId});
+          cb();
+        }, function() {
+          $scope.counties = counties;
+        });
+      });
+
+      cdCountriesService.loadChildren($scope.dojo.county.geonameId, function(response) {
+        var cities = [];
+        async.each(response, function(city, cb) {
+          cities.push({toponymName:city.toponymName, geonameId:city.geonameId});
+          cb();
+        }, function() {
+          $scope.cities = cities;
+        });
+      });
+
     });
     
   });
@@ -27,18 +58,18 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       }, function () {
         switch(type) {
           case 'states':
-            $scope.dojo.state = undefined;
-            $scope.dojo.county = undefined;
-            $scope.dojo.city = undefined;
+            $scope.dojo.state = '';
+            $scope.dojo.county = '';
+            $scope.dojo.city = '';
             $scope.states = children;
             break;
           case 'counties':
-            $scope.dojo.county = undefined;
-            $scope.dojo.city = undefined;
+            $scope.dojo.county = '';
+            $scope.dojo.city = '';
             $scope.counties = children;
             break;
           case 'cities':
-            $scope.dojo.city = undefined;
+            $scope.dojo.city = '';
             $scope.cities = children;
             break;
         }
