@@ -1,11 +1,22 @@
 'use strict';
 
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService, Geocoder, gmap) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap) {
   $scope.dojo = cdDojoService.getDojo();
   $scope.model = {};
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';
 
+  cdCountriesService.list(function(response) {
+    var countries = [];
+    async.each(response, function(country, cb) {
+      countries.push(country.countryName);
+      cb();
+    }, function() {
+      $scope.countries = countries;
+    });
+    
+  });
+  
   $scope.$watch('model.map', function(map){
     if(map) {
       var marker = new google.maps.Marker({
@@ -77,4 +88,4 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService,
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'alertService', 'Geocoder', 'gmap', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', cdEditDojoCtrl]);

@@ -130,14 +130,12 @@
                   <div class="form-group">
                     <label for="dojoCountry" class="col-lg-4">Country</label>
                     <div class="col-lg-6">
-                      <div country-select=""
-                           name="dojoCountry"
-                           id="dojoCountry"
-                           class="form-control"
-                           ng-model="dojo.country"
-                           required-message="'Choose a country, please'"
-                           required="true">
-                      </div>
+                      <ui-select ng-model="dojo.country" ng-disabled="disabled">
+                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected }}</ui-select-match>
+                        <ui-select-choices repeat="country in countries | filter: $select.search">
+                          <span ng-bind-html="country | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
                     </div>
                   </div>
                 

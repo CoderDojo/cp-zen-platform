@@ -30,6 +30,7 @@ seneca
   .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
+  .use('../lib/countries/cd-countries.js')
 ;
 
 _.each(options.client, function(opts) {
