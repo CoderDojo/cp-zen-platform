@@ -1,9 +1,21 @@
 'use strict';
 
-function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, alertService, Geocoder, gmap) {
+function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.saveButtonText = 'Create Dojo';
+
+  cdCountriesService.list(function(response) {
+    var countries = [];
+    async.each(response, function(country, cb) {
+      countries.push(country.countryName);
+      cb();
+    }, function() {
+      $scope.countries = countries;
+    });
+    
+  });
+
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
       alertService.showAlert("Your Dojo has been successfully saved", function() {
@@ -69,4 +81,4 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, alertServic
 }
 
 angular.module('cpZenPlatform')
-  .controller('create-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'alertService', 'Geocoder', 'gmap', cdCreateDojoCtrl]);
+  .controller('create-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', cdCreateDojoCtrl]);

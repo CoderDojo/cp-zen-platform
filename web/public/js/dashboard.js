@@ -10,6 +10,7 @@ var app = angular.module('cpZenPlatform', [
   'ui.router',
   'ngStorage',
   'ngRoute',
+  'ui.select',
   'ngSanitize',
   'ui.map'
 ]);
@@ -19,6 +20,7 @@ require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
 require('./services/cd-load-my-dojos-service');
 require('./services/geocoder-service');
+require('./services/cd-countries-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
