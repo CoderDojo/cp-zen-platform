@@ -8,6 +8,9 @@ function cdCountriesService(cdApi){
     return {
       list: function(win, fail){
         cdApi.get('countries', win, fail || topfail);
+      },
+      loadChildren: function(geonameId, win, fail) {
+        cdApi.get('countries/' + geonameId, win, fail || topfail);
       }
     }
   }
