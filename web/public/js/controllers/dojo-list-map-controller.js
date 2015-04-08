@@ -1,8 +1,13 @@
 'use strict';
 
-function cdDojoListMapCtrl($window, $scope, cdDojoService, Geocoder, gmap) {
+function cdDojoListMapCtrl($window, $scope, cdDojoService, cdCountriesService, gmap) {
   $scope.model = {};
   $scope.markers = [];
+  var latLongData;
+  
+  cdCountriesService.loadLatLongData(function(response) {
+    latLongData = response;
+  });
 
   if(gmap) {
     $scope.mapLoaded = true;
@@ -16,29 +21,19 @@ function cdDojoListMapCtrl($window, $scope, cdDojoService, Geocoder, gmap) {
   $scope.$watch('model.map', function(map){
     if(map) {
       cdDojoService.dojosCountryCount(function(response) {
-        var latLngData = [];
-        async.eachSeries(response, function(country, cb) {
+        async.each(response, function(country, cb) {
           var countryName = Object.keys(country);
           countryName = countryName[0];
           var countryDojoCount = country[countryName];
-          Geocoder.latLngForAddress(countryName).then(function (data) {
-            latLngData.push({name:countryName, count:countryDojoCount, lat:data.lat, lng:data.lng});
-            cb();
-          }).catch(function(error) {
-            console.log('Error occurred!', error);
-            return cb(error);
+          var latitude = latLongData[countryName][0];
+          var longitude = latLongData[countryName][1];
+          var marker = new google.maps.Marker({
+            map:$scope.model.map,
+            position: new google.maps.LatLng(latitude, longitude),
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + countryDojoCount + '|FF0000|000000'
           });
-        }, function() {
-          console.log("latLngData " + JSON.stringify(latLngData));
-          async.eachSeries(latLngData, function(location, cb) {
-            var marker = new google.maps.Marker({
-              map: $scope.model.map,
-              position: new google.maps.LatLng(location.lat, location.lng),
-              icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + location.count + '|FF0000|000000'
-            });
-            $scope.markers.push(marker);
-            cb();
-          });
+          $scope.markers.push(marker);
+          cb();
         });
       });
     }
@@ -46,4 +41,4 @@ function cdDojoListMapCtrl($window, $scope, cdDojoService, Geocoder, gmap) {
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-map-controller', ['$window', '$scope', 'cdDojoService', 'Geocoder', 'gmap', cdDojoListMapCtrl]);
+  .controller('dojo-list-map-controller', ['$window', '$scope', 'cdDojoService', 'cdCountriesService', 'gmap', cdDojoListMapCtrl]);

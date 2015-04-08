@@ -11,6 +11,9 @@ function cdCountriesService(cdApi){
       },
       loadChildren: function(geonameId, win, fail) {
         cdApi.get('countries/' + geonameId, win, fail || topfail);
+      },
+      loadLatLongData: function(win, fail) {
+        cdApi.get('countries_lat_long', win, fail || topfail);
       }
     }
   }

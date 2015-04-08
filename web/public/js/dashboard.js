@@ -55,7 +55,7 @@ var gmap = function($q, $window) {
   scriptTag = doc.createElement('script');
   scriptTag.id = scriptId;
   scriptTag.setAttribute('src', 
-    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
+    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDlOskoHwHF560s_WgZzEP3_u4OWbWuec0');
   doc.head.appendChild(scriptTag);
   $window.mapReady = (function(dfd) {
     return function() {
