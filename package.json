@@ -37,6 +37,7 @@
     "seneca-mongo-store": "0.2.0",
     "seneca-ng-web": "git://github.com/iantocristian/seneca-ng-web.git",
     "seneca-perm": "git://github.com/iantocristian/seneca-perm.git",
+    "seneca-postgresql-store": "^0.6.0",
     "seneca-user": "0.2.10",
     "seneca-user-roles": "0.1.0",
     "seneca-web-access": "0.1.0",

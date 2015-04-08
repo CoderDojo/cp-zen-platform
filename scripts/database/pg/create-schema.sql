@@ -1,3 +1,5 @@
+--CREATE DATABASE "cd-zen-platform-development";
+
 DROP TABLE IF EXISTS sys_entity;
 
 CREATE TABLE sys_entity
@@ -5,9 +7,9 @@ CREATE TABLE sys_entity
   id character varying NOT NULL,
   base character varying,
   name character varying,
+  fields character varying,
   "zone" character varying,
   seneca json,
-  fields character varying,
   CONSTRAINT pk_sys_entity_id PRIMARY KEY (id)
 )
 WITH (
@@ -63,6 +65,9 @@ CREATE TABLE sys_user
   nick character varying,
   email character varying,
   name character varying,
+  username character varying,
+  level smallint,
+  mysql_user_id int,
   first_name character varying,
   last_name character varying,
   roles character varying[],
@@ -73,8 +78,11 @@ CREATE TABLE sys_user
   salt character varying,
   pass character varying,
   admin boolean,
+  modified timestamp with time zone,
   accounts character varying[],
   locale character varying,
+  banned smallint,
+  ban_reason character varying,
   CONSTRAINT pk_sys_user_id PRIMARY KEY (id)
 )
 WITH (
@@ -118,6 +126,7 @@ DROP TABLE IF EXISTS cd_dojos CASCADE;
 
 CREATE TABLE cd_dojos(
   id character varying NOT NULL,
+  mysql_dojo_id int,
   name character varying NOT NULL,
   creator character varying,
   created timestamp with time zone,
@@ -138,11 +147,66 @@ CREATE TABLE cd_dojos(
   eb_id character varying,
   supporter_image character varying,
   deleted smallint NOT NULL DEFAULT 0,
-  deleted_by character varying NOT NULL,
+  deleted_by character varying,
   deleted_at timestamp with time zone,
   private smallint NOT NULL DEFAULT 0,
   url_slug character varying,
+  continent character varying,
+  alpha2 character varying,
+  alpha3 character varying,
+  address1 character varying,
+  address2 character varying,
+  country_number int,
+  country_name character varying,
   CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_usersdojos CASCADE;
+
+CREATE TABLE cd_usersdojos(
+  id character varying NOT NULL,
+  mysql_user_id int,
+  mysql_dojo_id int,
+  owner smallint,
+  user_id character varying NOT NULL,
+  dojo_id character varying NOT NULL,
+  CONSTRAINT pk_cd_userdojos PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_profiles CASCADE;
+
+CREATE TABLE cd_profiles(
+  id character varying NOT NULL,
+  mysql_user_id int,
+  role int,
+  user_id character varying NOT NULL,
+  mysql_dojo_id character varying NOT NULL,
+  CONSTRAINT pk_cd_profiles PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_agreements CASCADE;
+
+CREATE TABLE cd_agreements(
+  mysql_user_id int,
+  full_name character varying,
+  ip_address character varying,
+  "timestamp" timestamp with time zone,
+  agreement_version smallint,
+  user_id character varying,
+  id character varying NOT NULL,
+  CONSTRAINT pk_cd_agreements PRIMARY KEY (id)
 )
 
 WITH (
