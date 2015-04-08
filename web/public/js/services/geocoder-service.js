@@ -20,7 +20,6 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
   var executeNext = function () {
     var task = queue[0],
       geocoder = new google.maps.Geocoder();
-
     geocoder.geocode({ address : task.address }, function (result, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         var latLng = {

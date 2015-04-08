@@ -28,6 +28,7 @@ require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/dojo-detail-controller');
+require('./controllers/dojo-list-map-controller');
 
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
@@ -54,7 +55,7 @@ var gmap = function($q, $window) {
   scriptTag = doc.createElement('script');
   scriptTag.id = scriptId;
   scriptTag.setAttribute('src', 
-    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
+    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDlOskoHwHF560s_WgZzEP3_u4OWbWuec0');
   doc.head.appendChild(scriptTag);
   $window.mapReady = (function(dfd) {
     return function() {
@@ -76,6 +77,14 @@ app
         url: "/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
         controller:'dojo-list-controller'
+      })
+      .state("dojo-list-map", {
+        url: "/dojo-list-map",
+        templateUrl: '/dojos/template/dojo-list-map',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'dojo-list-map-controller'
       })
       .state("charter", {
         url: "/charter",
