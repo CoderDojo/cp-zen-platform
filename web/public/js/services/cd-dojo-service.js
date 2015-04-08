@@ -33,6 +33,9 @@
       },
       delete: function(id, win, fail) {
         cdApi.delete('dojos/' + id, win, fail);
+      },
+      dojosCountryCount: function(win, fail) {
+        cdApi.get('dojos/dojos_country_count', win, fail || topfail);
       }
     }
   }

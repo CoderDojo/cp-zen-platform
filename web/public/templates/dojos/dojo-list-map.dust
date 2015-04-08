@@ -1,0 +1,7 @@
+<section ng-if="mapLoaded" id="map">
+  <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+  <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+</section>
+<div class="cd-dashboard">
+
+</div>
