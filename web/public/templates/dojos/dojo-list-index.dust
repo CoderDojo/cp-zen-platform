@@ -1,0 +1,25 @@
+<div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+    <div id="sidebar" class="col-lg-4">
+      <div class="widget">
+        <legend>Register a Dojo</legend>
+        <p>To register a Dojo you first need an account. Sign up here:</p>
+        <a href="#"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="Register"></a>
+      </div>
+      <div class="widget">
+        <legend>Dojos</legend>
+        <p>The Dojos listed here are all verified by the CoderDojo team. <a href="http://kata.coderdojo.com/index.php?title=Unverified_Dojo_Listing" target="_blank">Learn more...</a></p>
+      </div>
+    </div>
+    <div dw-loading="main" class="cd-dojo-list-container">
+      <div id="main">
+        <div ng-repeat="(country, data) in dojoData">
+          <legend style="margin-bottom:5px;">{{ country }}</legend>
+          <ul ng-repeat="dojo in data.dojos">
+            <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
