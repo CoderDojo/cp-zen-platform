@@ -1,7 +1,7 @@
 'use strict';
 
 function cdDojoListCtrl($scope, $location, cdDojoService) {
-  cdDojoService.list(function(response) {
+  cdDojoService.list({}, function(response) {
     $scope.dojoData = response;
   });
 

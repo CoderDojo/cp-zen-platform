@@ -19,7 +19,7 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
    */
   var executeNext = function () {
     var task = queue[0],
-      geocoder = new google.maps.Geocoder();
+    geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address : task.address }, function (result, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         var latLng = {
@@ -81,6 +81,26 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
         }
       }
 
+      return d.promise;
+    },
+    boundsForCountry: function(country) {
+      var d = $q.defer();
+      var geocoder = new google.maps.Geocoder();
+      
+      geocoder.geocode({address:country}, function (results, status) {
+        if(status === google.maps.GeocoderStatus.OK) {
+          var resultBounds = new google.maps.LatLngBounds(
+            results[0].geometry.viewport.getSouthWest(), 
+            results[0].geometry.viewport.getNorthEast()
+          );
+          d.resolve(resultBounds);
+        } else {
+          d.reject({
+            type: 'error',
+            message: 'Error getting bounds for ' + country
+          });
+        }
+      });
       return d.promise;
     }
   };

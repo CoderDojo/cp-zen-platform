@@ -1,12 +1,21 @@
 'use strict';
 
-function cdDojoListMapCtrl($window, $scope, cdDojoService, cdCountriesService, gmap) {
+function cdDojoListMapCtrl($window, $scope, $location, cdDojoService, cdCountriesService, Geocoder, gmap) {
   $scope.model = {};
   $scope.markers = [];
   var latLongData;
   
   cdCountriesService.loadLatLongData(function(response) {
     latLongData = response;
+  });
+
+  cdDojoService.list({alpha2:"IE"}, function(response) {
+    $scope.countryName = Object.keys(response)[0];
+    $scope.dojos = response[$scope.countryName].dojos;
+  });
+
+  Geocoder.boundsForCountry('country:IE').then(function (data) {
+    $scope.model.map.fitBounds(data);
   });
 
   if(gmap) {
@@ -29,6 +38,7 @@ function cdDojoListMapCtrl($window, $scope, cdDojoService, cdCountriesService, g
           var longitude = latLongData[countryName][1];
           var marker = new google.maps.Marker({
             map:$scope.model.map,
+            country:countryName,
             position: new google.maps.LatLng(latitude, longitude),
             icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + countryDojoCount + '|FF0000|000000'
           });
@@ -38,7 +48,33 @@ function cdDojoListMapCtrl($window, $scope, cdDojoService, cdCountriesService, g
       });
     }
   });
+
+  $scope.showCountryDojos = function(marker) {
+    var countrySelected = marker.country;
+    Geocoder.boundsForCountry('country:'+countrySelected).then(function (data) {
+      $scope.model.map.fitBounds(data);
+    });
+
+    cdDojoService.list({alpha2:countrySelected}, function(response) {
+      $scope.countryName = Object.keys(response)[0];
+      $scope.dojos = response[$scope.countryName].dojos;
+    });
+  }
+
+  $scope.viewDojo = function(dojo) {
+    cdDojoService.setDojo(dojo, function(response) {
+      $location.path('/dojo/' + dojo.id);
+    }, function (err){
+      if(err){
+        alertService.showError(
+          'An error has occurred while viewing dojo: <br /> '+
+          (err.error || JSON.stringify(err))
+        );
+      }
+    });
+  }
+
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-map-controller', ['$window', '$scope', 'cdDojoService', 'cdCountriesService', 'gmap', cdDojoListMapCtrl]);
+  .controller('dojo-list-map-controller', ['$window', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'Geocoder', 'gmap', cdDojoListMapCtrl]);

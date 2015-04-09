@@ -5,8 +5,8 @@
     }
     var currentDojo = {};
     return {
-      list: function(win, fail){
-        cdApi.get('dojos', win, fail || topfail);
+      list: function(query, win, fail){
+        cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
       count: function(currentUser, win, fail){
         cdApi.post('dojos/my_dojos_count', {user: currentUser}, win, fail || topfail);
