@@ -28,7 +28,7 @@ require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/dojo-detail-controller');
-require('./controllers/dojo-list-map-controller');
+require('./controllers/dojo-list-index-controller');
 
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
@@ -73,18 +73,18 @@ app
       .when('/dashboard', '/dojo-list')
       .otherwise('/dojo-list');
     $stateProvider
+      .state("dojo-list-index", {
+        url: "/dojo-list-index",
+        templateUrl: '/dojos/template/dojo-list-index',
+        controller:'dojo-list-index-controller'
+      })
       .state("dojo-list", {
         url: "/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
-        controller:'dojo-list-controller'
-      })
-      .state("dojo-list-map", {
-        url: "/dojo-list-map",
-        templateUrl: '/dojos/template/dojo-list-map',
         resolve: {
           gmap:gmap
         },
-        controller:'dojo-list-map-controller'
+        controller:'dojo-list-controller'
       })
       .state("charter", {
         url: "/charter",
