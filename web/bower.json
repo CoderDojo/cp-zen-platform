@@ -28,7 +28,8 @@
     "ngstorage": "0.3.0",
     "spin.js": "2.0.2",
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
-    "underscore": "1.7.0"
+    "underscore": "1.7.0",
+    "googlemaps-js-marker-clusterer": "1.0.0"
   },
   "resolutions": {
     "angular": "1.2.26",

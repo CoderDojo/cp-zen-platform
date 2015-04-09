@@ -65,6 +65,7 @@
     <script src="/components/async/lib/async.js"></script>
     <script src="/components/ckeditor/ckeditor.js"></script>
     <script src="/components/ng-ckeditor/ng-ckeditor.js"></script>
+    <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
     <script src="/content/auth/auth-front.js"></script>
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
     <script src="/seneca/init.js"></script>

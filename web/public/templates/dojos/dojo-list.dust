@@ -1,6 +1,10 @@
 <div class="cd-dashboard">
   <section ng-if="mapLoaded" id="map">
+    <div ui-map-info-window="model.markerInfoWindow">
+      <h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojo }}</a></h3>
+    </div>
     <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'showCountryDojos(marker)'}"></div>
+    <div ng-repeat="countryMarker in countryMarkers" ui-map-marker="countryMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(countryMarker)'}"></div>
     <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
