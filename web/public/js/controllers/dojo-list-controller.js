@@ -112,9 +112,9 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         if($scope.markersHidden.length === 2) {
           var markerToShow = _.find($scope.markers, function(marker) { return marker.country === $scope.markersHidden[0].country });
           if(markerToShow) {
-            markerToShow.setMap($scope.model.map); 
-            $scope.markersHidden.splice(0, 1);
+            markerToShow.setMap($scope.model.map);  
           }
+          $scope.markersHidden.splice(0, 1);
         }
       });
 
