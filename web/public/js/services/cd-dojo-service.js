@@ -22,7 +22,7 @@
           cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
         }
         else {
-          cdApi.post('dojos', { dojo: dojo }, win, fail || topfail);
+          cdApi.post('dojo_create', { dojo: dojo }, win, fail || topfail);
         } 
       },
       setDojo: function(dojo, win, fail) {
@@ -39,6 +39,9 @@
       },
       dojosCountryCount: function(win, fail) {
         cdApi.get('dojos_country_count', win, fail || topfail);
+      },
+      dojoCount: function(win, fail) {
+        cdApi.get('dojos_count', win, fail || topfail);
       }
     }
   }
