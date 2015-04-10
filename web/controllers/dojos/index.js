@@ -20,4 +20,8 @@ module.exports = function (router) {
   router.get('/template/dojo-detail', function (req, res) {
     res.render('dojos/dojo-detail');
   });
+
+  router.get('/template/dojo-list-index', function (req, res) {
+    res.render('dojos/dojo-list-index');
+  });
 };

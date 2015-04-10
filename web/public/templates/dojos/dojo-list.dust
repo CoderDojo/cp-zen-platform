@@ -1,25 +1,20 @@
 <div class="cd-dashboard">
-  <div class="dojo-list-dashboard">
-    <div id="sidebar" class="col-lg-4">
-      <div class="widget">
-        <legend>Register a Dojo</legend>
-        <p>To register a Dojo you first need an account. Sign up here:</p>
-        <a href="#"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="Register"></a>
-      </div>
-      <div class="widget">
-        <legend>Dojos</legend>
-        <p>The Dojos listed here are all verified by the CoderDojo team. <a href="http://kata.coderdojo.com/index.php?title=Unverified_Dojo_Listing" target="_blank">Learn more...</a></p>
-      </div>
+  <section ng-if="mapLoaded" id="map">
+    <div ui-map-info-window="model.markerInfoWindow">
+      <h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojo }}</a></h3>
     </div>
-    <div dw-loading="main" class="cd-dojo-list-container">
-      <div id="main">
-        <div ng-repeat="(country, data) in dojoData">
-          <legend style="margin-bottom:5px;">{{ country }}</legend>
-          <ul ng-repeat="dojo in data.dojos">
-            <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-          </ul>
-        </div>
-      </div>
+    <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'showCountryDojos(marker)'}"></div>
+    <div ng-repeat="countryMarker in countryMarkers" ui-map-marker="countryMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(countryMarker)'}"></div>
+    <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+  </section>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <legend><h2>{{ countryName }}</h2></legend>
+
+      <ul ng-repeat="dojo in dojos">
+        <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+      </ul>
     </div>
-  </div>
+  </div> 
 </div>

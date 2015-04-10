@@ -10,6 +10,7 @@ var app = angular.module('cpZenPlatform', [
   'ui.router',
   'ngStorage',
   'ngRoute',
+  'ui.select',
   'ngSanitize',
   'ui.map'
 ]);
@@ -19,6 +20,7 @@ require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
 require('./services/cd-load-my-dojos-service');
 require('./services/geocoder-service');
+require('./services/cd-countries-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
@@ -26,6 +28,7 @@ require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/dojo-detail-controller');
+require('./controllers/dojo-list-index-controller');
 
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
@@ -52,7 +55,7 @@ var gmap = function($q, $window) {
   scriptTag = doc.createElement('script');
   scriptTag.id = scriptId;
   scriptTag.setAttribute('src', 
-    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady');
+    'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDlOskoHwHF560s_WgZzEP3_u4OWbWuec0');
   doc.head.appendChild(scriptTag);
   $window.mapReady = (function(dfd) {
     return function() {
@@ -70,9 +73,17 @@ app
       .when('/dashboard', '/dojo-list')
       .otherwise('/dojo-list');
     $stateProvider
+      .state("dojo-list-index", {
+        url: "/dojo-list-index",
+        templateUrl: '/dojos/template/dojo-list-index',
+        controller:'dojo-list-index-controller'
+      })
       .state("dojo-list", {
         url: "/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
+        resolve: {
+          gmap:gmap
+        },
         controller:'dojo-list-controller'
       })
       .state("charter", {

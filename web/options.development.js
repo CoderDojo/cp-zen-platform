@@ -54,7 +54,8 @@ module.exports = _.defaults({
   },
 
   client: [
-    {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'}
+    {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
+    {type: 'web', host: '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'}
   ]
 
 }, base);

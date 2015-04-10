@@ -5,8 +5,11 @@
     }
     var currentDojo = {};
     return {
-      list: function(win, fail){
-        cdApi.get('dojos', win, fail || topfail);
+      load: function(id, win, fail) {
+        cdApi.get('dojos/' + id, win, fail || topfail);
+      },
+      list: function(query, win, fail){
+        cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
       count: function(currentUser, win, fail){
         cdApi.post('dojos/my_dojos_count', {user: currentUser}, win, fail || topfail);
@@ -33,6 +36,9 @@
       },
       delete: function(id, win, fail) {
         cdApi.delete('dojos/' + id, win, fail);
+      },
+      dojosCountryCount: function(win, fail) {
+        cdApi.get('dojos_country_count', win, fail || topfail);
       }
     }
   }
