@@ -7,6 +7,14 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
 
   var queue = [];
 
+  var continentBounds = {"AF":["-4.699616","1.582031", "29.912091", "33.398438"],
+                         "AN":["-84.499924","-20.742187", "-67.443336", "97.382813"],
+                         "AS":["18.832216", "44.033203", "39.671256", "140.800781"],
+                         "EU":["40.320896", "-3.735352", "52.193719", "19.335938"],
+                         "NA":["26.625363", "-113.203125", "50.74949", "-68.203125"],
+                         "OC":["-45.922498", "99.667969", "-12.170911", "171.035156"],
+                         "SA":["-34.852129", "-66.09375", "-4.194399", "-40.341797"]
+                        };
   // Amount of time (in milliseconds) to pause between each trip to the
   // Geocoding API, which places limits on frequency.
   var queryPause = 250;
@@ -101,6 +109,17 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
           });
         }
       });
+      return d.promise;
+    },
+    boundsForContinent: function(continent) {
+      var d = $q.defer();
+      var southWestCoordinates = new google.maps.LatLng(continentBounds[continent][0], continentBounds[continent][1]);
+      var northEastCoordinates = new google.maps.LatLng(continentBounds[continent][2], continentBounds[continent][3]); 
+      var resultBounds  = new google.maps.LatLngBounds(
+        southWestCoordinates,
+        northEastCoordinates        
+      );
+      d.resolve(resultBounds);
       return d.promise;
     }
   };
