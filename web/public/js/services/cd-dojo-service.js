@@ -17,6 +17,9 @@
       search: function (query, currentUser, win, fail) {
         cdApi.post('dojos/my_dojos_search', {query: query, user:currentUser}, win, fail || topfail);
       },
+      searchDojos: function(query, win, fail) {
+        cdApi.post('dojos/my_dojos_search', {query: query}, win, fail || topfail);
+      },
       save: function(dojo, win, fail) {
         if (dojo.id) {
           cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
