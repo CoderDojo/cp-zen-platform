@@ -6,6 +6,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
   $scope.continentMarkers = [];
   var countriesLatLongData;
   var continentsLatLongData;
+  var countriesContinentsData;
   var dojoCountData;
 
   cdCountriesService.loadContinentsLatLongData(function(response) {
@@ -14,6 +15,10 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   cdCountriesService.loadCountriesLatLongData(function(response) {
     countriesLatLongData = response;
+  });
+
+  cdCountriesService.loadCountriesContinents(function(response) {
+    countriesContinentsData = response;
   });
 
   if(gmap) {
@@ -25,34 +30,91 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     };
   }
 
+  function resetAllMarkers() {
+    clearMarkerArrays();
+    cdDojoService.dojoCount(function(response) {
+      dojoCountData = response;
+      var dojosByContinent = response.dojos.continents;
+      async.each(Object.keys(dojosByContinent), function(continent, cb) {
+        var latitude = continentsLatLongData[continent][0];
+        var longitude = continentsLatLongData[continent][1];
+        var continentDojoCount = dojosByContinent[continent].total;
+        var marker = new google.maps.Marker({
+          map:$scope.model.map,
+          continent:continent,
+          position: new google.maps.LatLng(latitude, longitude),
+          icon: 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FF0000|14|_|'+continentDojoCount
+        });
+        $scope.continentMarkers.push(marker);
+        cb();
+      });
+    }); 
+  }
+
+  function clearMarkerArrays() {
+    if($scope.markerClusterer) $scope.markerClusterer.clearMarkers();
+    if($scope.dojos) $scope.dojos = [];
+    if($scope.dojoData) $scope.dojoData = [];
+    $scope.countryName = '';
+    $scope.continentName = '';
+
+    if($scope.continentMarkers) {
+      async.each($scope.continentMarkers, function(marker, cb) {
+        marker.setMap(null);
+        cb();
+      }, function () {
+        $scope.continentMarkers = [];
+      });
+    }
+
+    if($scope.markers) {
+      async.each($scope.markers, function(marker, cb) {
+        marker.setMap(null);
+        cb();
+      }, function() {
+        $scope.markers = [];
+      });
+    }
+
+    if($scope.countryMarkers) {
+      async.each($scope.countryMarkers, function(marker, cb) {
+        marker.setMap(null);
+        cb();
+      }, function() {
+        $scope.countryMarkers = [];
+      });
+    }
+  }
+
   $scope.$watch('model.map', function(map) {
     if(map) {
-      cdDojoService.dojoCount(function(response) {
-        dojoCountData = response;
-        var dojosByContinent = response.dojos.continents;
-        async.each(Object.keys(dojosByContinent), function(continent, cb) {
-          var latitude = continentsLatLongData[continent][0];
-          var longitude = continentsLatLongData[continent][1];
-          var continentDojoCount = dojosByContinent[continent].total;
-          var marker = new google.maps.Marker({
-            map:$scope.model.map,
-            continent:continent,
-            position: new google.maps.LatLng(latitude, longitude),
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FF0000|14|_|'+continentDojoCount
-          });
-          $scope.continentMarkers.push(marker);
-          cb();
-        });
-      }); 
+      var originalZoom = $scope.model.map.getZoom();
+      google.maps.event.addListener($scope.model.map, 'zoom_changed', function() {
+        var newZoom = $scope.model.map.getZoom();
+        if(newZoom < originalZoom) {
+          if(newZoom <= 3) {
+            resetAllMarkers();
+          }
+        }
+        originalZoom = newZoom;
+      });
+      resetAllMarkers();
     }
   });
 
   $scope.showContinentDojos = function(marker) {
+    $scope.countrySelected = false;
     var continentSelected = marker.continent;
     Geocoder.boundsForContinent(continentSelected).then(function (data) {
       $scope.model.map.fitBounds(data);
     });
 
+    var continentCountries = dojoCountData.dojos.continents[continentSelected].countries;
+    $scope.continentName = countriesContinentsData.continents[continentSelected];
+    cdDojoService.dojosByCountry(continentCountries, function(response) {
+      $scope.dojoData = response;
+    });
+    
     if($scope.continentMarkersHidden && $scope.continentMarkersHidden.length === 1) {
       async.each($scope.markers, function(marker, cb) {
         marker.setMap(null);
@@ -92,6 +154,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.showCountryDojos = function(marker) {
+    $scope.countrySelected = true;
     var countrySelected = marker.country;
     Geocoder.boundsForCountry('country:'+countrySelected).then(function (data) {
       $scope.model.map.fitBounds(data);
@@ -112,9 +175,9 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         if($scope.markersHidden.length === 2) {
           var markerToShow = _.find($scope.markers, function(marker) { return marker.country === $scope.markersHidden[0].country });
           if(markerToShow) {
-            markerToShow.setMap($scope.model.map); 
-            $scope.markersHidden.splice(0, 1);
+            markerToShow.setMap($scope.model.map);  
           }
+          $scope.markersHidden.splice(0, 1);
         }
       });
 
@@ -165,6 +228,14 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
           (err.error || JSON.stringify(err))
         );
       }
+    });
+  }
+
+  $scope.searchForDojo = function() {
+    var dojoName = $scope.search.dojo;
+    cdDojoService.search({name:dojoName}, {}, function(response) {
+      $scope.dojos = response;
+      $scope.countrySelected = true;
     });
   }
 

@@ -17,6 +17,9 @@
       search: function (query, currentUser, win, fail) {
         cdApi.post('dojos/my_dojos_search', {query: query, user:currentUser}, win, fail || topfail);
       },
+      searchDojos: function(query, win, fail) {
+        cdApi.post('dojos/my_dojos_search', {query: query}, win, fail || topfail);
+      },
       save: function(dojo, win, fail) {
         if (dojo.id) {
           cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
@@ -37,11 +40,11 @@
       delete: function(id, win, fail) {
         cdApi.delete('dojos/' + id, win, fail);
       },
-      dojosCountryCount: function(win, fail) {
-        cdApi.get('dojos_country_count', win, fail || topfail);
-      },
       dojoCount: function(win, fail) {
         cdApi.get('dojos_count', win, fail || topfail);
+      },
+      dojosByCountry: function(countries, win, fail) {
+        cdApi.post('dojos_by_country', {countries:countries}, win, fail || topfail);
       }
     }
   }

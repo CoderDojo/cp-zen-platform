@@ -9,13 +9,36 @@
     <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <legend><h2>{{ countryName }}</h2></legend>
+  <form name="dojoSearch" ng-submit="searchForDojo()">
+    <div id="find-dojo-form" class="input-group">
+      <input id="location" ng-model="search.dojo" placeholder="Search for a Dojo" type="text" class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Go!</button>
+      </span>
+    </div>
+  </form>
 
+  <div ng-if="countrySelected" class="row">
+    <div class="col-lg-12">
+      <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
+      <legend ng-if="!countryName"><h2>Search Results</h2></legend>
       <ul ng-repeat="dojo in dojos">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
+    </div>
+  </div>
+
+  <div ng-if="!countrySelected" class="row">
+    <div class="col-lg-12">
+      <legend><h2>{{ continentName }}</h2></legend>
+        <div ng-repeat="data in dojoData">
+          <div ng-repeat="(country, dojos) in data">
+            <legend style="margin-bottom:5px;">{{ country }}</legend>
+            <ul ng-repeat="dojo in dojos.dojos">
+              <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+            </ul>
+          </div>
+        </div>
     </div>
   </div> 
 </div>
