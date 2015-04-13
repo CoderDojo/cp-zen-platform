@@ -5,42 +5,29 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   $scope.model = {};
   $scope.saveButtonText = 'Create Dojo';
 
-  cdCountriesService.list(function(response) {
+  cdCountriesService.listCountries(function(response) {
     var countries = [];
     async.each(response, function(country, cb) {
-      countries.push({countryName:country.countryName, geonameId:country.geonameId});
+      countries.push({country_name:country.country_name, alpha2:country.alpha2});
       cb();
     }, function() {
       $scope.countries = countries;
     });
-    
   });
 
-  $scope.getGeonameData = function($item, type) {
-    var geonameId = $item.geonameId;
-    cdCountriesService.loadChildren(geonameId, function(response) {
-      var children = [];
-      async.each(response, function(child, cb) {
-        children.push({toponymName:child.toponymName, geonameId:child.geonameId});
+  $scope.getPlaces = function(countryCode, search) {
+    if (!countryCode || !search.length || search.length < 3) {
+      $scope.places = [];
+      return;
+    }
+
+    cdCountriesService.listPlaces(countryCode, search, function(response) {
+      var places = [];
+      async.each(response, function(place, cb) {
+        places.push({toponymName:place.toponymName, geonameId:place.geonameId});
         cb();
       }, function () {
-        switch(type) {
-          case 'states':
-            $scope.dojo.state = '';
-            $scope.dojo.county = '';
-            $scope.dojo.city = '';
-            $scope.states = children;
-            break;
-          case 'counties':
-            $scope.dojo.county = '';
-            $scope.dojo.city = '';
-            $scope.counties = children;
-            break;
-          case 'cities':
-            $scope.dojo.city = '';
-            $scope.cities = children;
-            break;
-        }
+        $scope.places = places;
       });
     });
   }
@@ -58,7 +45,7 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       );
     });
   }
- 
+
   $scope.markers = [];
 
   if(gmap) {
@@ -95,21 +82,16 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   };
 
   $scope.getLocationFromAddress = function(dojo) {
-    if(dojo) {
-      if(!dojo.address1) dojo.address1 = '';
-      if(!dojo.address2) dojo.address2 = '';
-      if(!dojo.city) dojo.city = '';
-      if(!dojo.county) dojo.county = '';
-      if(!dojo.state) dojo.state = '';
-      if(!dojo.country)  dojo.country  = '';
-      var address = dojo.city.toponymName + ', ' + dojo.county.toponymName + ', ' + dojo.state.toponymName + ', ' + dojo.country.countryName;
-      Geocoder.latLngForAddress(address).then(function (data) {
-        $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-        $scope.model.map.panTo($scope.mapOptions.center);
-      });
+    if(dojo && dojo.place) {
+      // TODO: build full address from dojo
+      //var address = dojo.city.toponymName + ', ' + dojo.county.toponymName + ', ' + dojo.state.toponymName + ', ' + dojo.country.countryName;
+      //Geocoder.latLngForAddress(address).then(function (data) {
+      //  $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+      //  $scope.model.map.panTo($scope.mapOptions.center);
+      //});
     }
   }
-  
+
 }
 
 angular.module('cpZenPlatform')
