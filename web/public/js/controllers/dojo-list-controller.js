@@ -80,11 +80,15 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.$watch('model.map', function(map) {
     if(map) {
+      var originalZoom = $scope.model.map.getZoom();
       google.maps.event.addListener($scope.model.map, 'zoom_changed', function() {
-        var zoomLevel = $scope.model.map.getZoom();
-        if(zoomLevel === 3) {
-          resetAllMarkers();
+        var newZoom = $scope.model.map.getZoom();
+        if(newZoom < originalZoom) {
+          if(newZoom <= 3) {
+            resetAllMarkers();
+          }
         }
+        originalZoom = newZoom;
       });
       resetAllMarkers();
     }
