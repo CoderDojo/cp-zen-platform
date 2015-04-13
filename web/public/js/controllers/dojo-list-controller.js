@@ -231,6 +231,14 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     });
   }
 
+  $scope.searchForDojo = function() {
+    var dojoName = $scope.search.dojo;
+    cdDojoService.search({name:dojoName}, {}, function(response) {
+      $scope.dojos = response;
+      $scope.countrySelected = true;
+    });
+  }
+
 }
 
 angular.module('cpZenPlatform')
