@@ -37,11 +37,11 @@
       delete: function(id, win, fail) {
         cdApi.delete('dojos/' + id, win, fail);
       },
-      dojosCountryCount: function(win, fail) {
-        cdApi.get('dojos_country_count', win, fail || topfail);
-      },
       dojoCount: function(win, fail) {
         cdApi.get('dojos_count', win, fail || topfail);
+      },
+      dojosByCountry: function(countries, win, fail) {
+        cdApi.post('dojos_by_country', {countries:countries}, win, fail || topfail);
       }
     }
   }
