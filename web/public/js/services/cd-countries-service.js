@@ -17,6 +17,9 @@ function cdCountriesService(cdApi){
       },
       loadCountriesLatLongData: function(win, fail) {
         cdApi.get('countries_lat_long', win, fail || topfail);
+      },
+      loadCountriesContinents: function(win, fail) {
+        cdApi.get('countries_continents', win, fail || topfail);
       }
     }
   }

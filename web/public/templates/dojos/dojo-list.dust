@@ -9,13 +9,27 @@
     <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
-  <div class="row">
+  <div ng-if="countrySelected" class="row">
     <div class="col-lg-12">
       <legend><h2>{{ countryName }}</h2></legend>
 
       <ul ng-repeat="dojo in dojos">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
+    </div>
+  </div>
+
+  <div ng-if="!countrySelected" class="row">
+    <div class="col-lg-12">
+      <legend><h2>{{ continentName }}</h2></legend>
+        <div ng-repeat="data in dojoData">
+          <div ng-repeat="(country, dojos) in data">
+            <legend style="margin-bottom:5px;">{{ country }}</legend>
+            <ul ng-repeat="dojo in dojos.dojos">
+              <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+            </ul>
+          </div>
+        </div>
     </div>
   </div> 
 </div>
