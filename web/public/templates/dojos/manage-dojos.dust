@@ -1,0 +1,40 @@
+<div class="cd-dasboard">
+  <div class="row">
+    <div class="legend">Manage Dojos</div>
+    <table id="manageDojos" class="table cd-grid-table">
+      <thead>
+        <tr>
+          <th>ID (d)</th>
+          <th>Dojo</th>
+          <th>Stage</th>
+          <th>Country</th>
+          <th>Email</th>
+          <th>User</th>
+          <th>Edit</th>
+          <th>Verify</th>
+          <th>Delete</th>
+        </tr>
+        <tbody>
+          <tr ng-repeat="dojo in dojos">
+            <td>{{dojo.id}}</td>
+            <td>{{dojo.name}}</td>
+            <td>{{dojo.stage}}</td>
+            <td>{{dojo.country}}</td>
+            <td>{{dojo.email}}</td>
+            <td>{{dojo.userEmail}}</td>
+            <td><a href="" ng-click="editDojo(dojo)">Edit</a></td>
+            <td>
+              <select name="verfied" id="verifiedSelectBox">
+                <options>Verified</options>
+                <options>Unverified</options>
+                <options>Previous</options>
+              </select>
+            </td>
+            <td><input type="checkbox" ng-model="deleteDojo"></td>
+          </tr>
+        </tbody>
+      </thead>
+    </table>
+    <!-- Insert pagination here -->
+  </div>
+</div>
