@@ -24,4 +24,8 @@ module.exports = function (router) {
   router.get('/template/dojo-list-index', function (req, res) {
     res.render('dojos/dojo-list-index');
   });
+
+  router.get('/template/manage-dojos', function (req, res){
+    res.render('dojos/manage-dojos');
+  });
 };

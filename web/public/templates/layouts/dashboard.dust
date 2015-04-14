@@ -24,7 +24,7 @@
 
     <!-- Awesome Bootstrap Checkbox -->
     <link href="/components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    
+
     <!-- Angular UI Select -->
     <link href="/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
@@ -63,7 +63,7 @@
     <script src="/components/spin.js/spin.js"></script>
     <script src="/components/angular-loading/angular-loading.min.js"></script>
     <script src="/components/async/lib/async.js"></script>
-    <script src="/components/ng-ckeditor/libs/ckeditor/ckeditor.js"></script>
+    <script src="/components/ckeditor/ckeditor.js"></script>
     <script src="/components/ng-ckeditor/ng-ckeditor.js"></script>
     <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
     <script src="/content/auth/auth-front.js"></script>
