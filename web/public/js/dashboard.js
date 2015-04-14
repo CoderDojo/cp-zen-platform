@@ -29,13 +29,14 @@ require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/dojo-detail-controller');
 require('./controllers/dojo-list-index-controller');
-require('./controllers/manage-dojo-controller');
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
+require('./controllers/manage-dojo-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./services/cd-manage-dojos-service');
 
 
 require('./directives/country-select');
@@ -124,8 +125,8 @@ app
       .state("manage-dojos", {
         url: "/manage-dojos",
         templateUrl: '/dojos/template/manage-dojos',
-        contoller: 'manage-dojo-controller'
-      })
+        controller: 'manage-dojo-controller'
+      });
   })
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
