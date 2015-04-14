@@ -1,8 +1,8 @@
 'use strict';
 
 function manageDojosService(cdDojoService){
-  var loadDojos = function(verfied, cb){
-    cdDojoService.searchDojos({verified: 1}, function(response){
+  var loadDojos = function(verified, cb){
+    cdDojoService.searchDojos({verified: verified}, function(response){
       return cb(null, response);
     },function(err){
       cb(err);

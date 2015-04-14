@@ -1,9 +1,16 @@
 'use strict';
 
 function manageDojos($scope, dojoManagementService, alertService, auth) {
-  $scope.loadPage = function(currentUser, verified, resetFlag, cb){
+  $scope.filterValue = 1;
+
+  $scope.verficationStates = [
+    {label: 'Verified', value: 1},
+    {label: 'Unverified', value: 0},
+    {label: 'Previous', value: 2}
+  ];
+
+  $scope.loadPage = function(verified, resetFlag, cb){
     cb = cb || function(){};
-    console.log("requested dojos");
 
     dojoManagementService.loadDojos(verified, function(err, results){
       if(err){
@@ -13,14 +20,16 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
       }
 
       $scope.dojos = results;
-      console.log(results[0]);
-      console.log(results[1]);
       return cb();
     });
   };
 
+  $scope.filterDojos =  function(){
+    $scope.loadPage(+$scope.filterValue, true);
+  };
+
   auth.get_loggedin_user(function(user){
-    $scope.loadPage(user, true);
+    $scope.loadPage(1, true);
   });
 }
 
