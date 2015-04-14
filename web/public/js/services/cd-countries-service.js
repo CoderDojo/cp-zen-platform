@@ -20,6 +20,9 @@ function cdCountriesService(cdApi){
       },
       loadCountriesContinents: function(win, fail) {
         cdApi.get('countries_continents', win, fail || topfail);
+      },
+      countyFromCoordinates: function(coordinates, win, fail) {
+        cdApi.get('county_from_coordinates/' + coordinates, win, fail || topfail);
       }
     }
   }
