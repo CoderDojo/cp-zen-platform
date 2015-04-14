@@ -21,7 +21,7 @@
   <div ng-if="countrySelected" class="row">
     <div class="col-lg-12">
       <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
-      <legend ng-if="!countryName"><h2>Search Results</h2></legend>
+      <legend ng-if="!countryName && dojos"><h2>Search Results</h2></legend>
       <ul ng-repeat="dojo in dojos">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
