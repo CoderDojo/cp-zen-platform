@@ -3,11 +3,15 @@
 function manageDojos($scope, dojoManagementService, alertService, auth) {
   $scope.filterValue = 1;
 
-  $scope.verficationStates = [
-    {label: 'Verified', value: 1},
+  var verficationStates = [
     {label: 'Unverified', value: 0},
+    {label: 'Verified', value: 1},
     {label: 'Previous', value: 2}
-  ];
+  ]
+
+  $scope.getVerificationStates = function(isSigned){
+    return isSigned ? verficationStates : [verficationStates[0], verficationStates[2]];
+  }
 
   $scope.loadPage = function(verified, resetFlag, cb){
     cb = cb || function(){};
@@ -19,7 +23,11 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
         );
       }
 
-      $scope.dojos = results;
+      $scope.dojos = _.map(results, function(dojo){
+        dojo.verified = _.findWhere(verficationStates, {value: dojo.verified});
+        return dojo;
+      }); 
+
       return cb();
     });
   };
@@ -36,3 +44,4 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller', 
   ['$scope', 'dojoManagementService', 'alertService', 'auth', manageDojos]);
+

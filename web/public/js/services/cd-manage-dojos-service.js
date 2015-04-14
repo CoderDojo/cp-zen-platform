@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO: return charter agreement
+
 function manageDojosService(cdDojoService){
   var loadDojos = function(verified, cb){
     cdDojoService.searchDojos({verified: verified}, function(response){
