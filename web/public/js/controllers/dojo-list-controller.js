@@ -29,7 +29,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
   }
-
+  
   function resetAllMarkers() {
     clearMarkerArrays();
     cdDojoService.dojoCount(function(response) {
@@ -160,6 +160,11 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       $scope.model.map.fitBounds(data);
     });
 
+    // dojo county count:
+    //cdDojoService.dojosCountyCount(countrySelected, function(response) {
+    //  console.log('****'+JSON.stringify(response));
+    //});
+
     cdDojoService.list({alpha2:countrySelected}, function(response) {
       $scope.countryName = Object.keys(response)[0];
       $scope.dojos = response[$scope.countryName].dojos;
@@ -233,9 +238,10 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.searchForDojo = function() {
     var dojoName = $scope.search.dojo;
+    $scope.countrySelected = true;
+    $scope.countryName = '';
     cdDojoService.search({name:dojoName}, {}, function(response) {
       $scope.dojos = response;
-      $scope.countrySelected = true;
     });
   }
 
