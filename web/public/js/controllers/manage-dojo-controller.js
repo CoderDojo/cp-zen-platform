@@ -9,9 +9,11 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
     {label: 'Previous', value: 2}
   ]
 
+  var changedDojos = [];
+
   $scope.getVerificationStates = function(isSigned){
     return isSigned ? verficationStates : [verficationStates[0], verficationStates[2]];
-  }
+  };
 
   $scope.loadPage = function(verified, resetFlag, cb){
     cb = cb || function(){};
@@ -34,6 +36,44 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
 
   $scope.filterDojos =  function(){
     $scope.loadPage(+$scope.filterValue, true);
+    changedDojos = [];
+  };
+
+  $scope.updateDojos = function(){
+    var dojosToBeDeleted, dojosToBeUpdated;
+
+    dojosToBeDeleted = _.filter(changedDojos, function(changedDojo){
+      return changedDojo.toBeDeleted;
+    });
+
+    dojosToBeUpdated = _.filter(changedDojos, function(changedDojo){
+      return !changedDojo.toBeDeleted;
+    });
+
+    console.log("dojosToBeUpdated", dojosToBeUpdated);
+    console.log("dojosToBeDeleted", dojosToBeDeleted);
+  };
+
+  $scope.pushChangedDojo = function(dojo){
+    var exists = !!(_.find(changedDojos, function(changedDojo){ 
+                      return dojo.id === changedDojo.id;
+                    }));
+
+    
+
+
+    if((dojo.verified.value !== $scope.filterValue) || (dojo.toBeDeleted)){
+      if(!exists){
+        changedDojos.push(dojo);
+      }
+
+    } else if(dojo.verified.value === $scope.filterValue && !dojo.toBeDeleted) {
+      changedDojos =  _.filter(changedDojos, function(filteredDojo){
+                        return dojo.id !== filteredDojo.id;
+                      }); 
+    }
+
+    console.log("changedDojos", changedDojos);
   };
 
   auth.get_loggedin_user(function(user){

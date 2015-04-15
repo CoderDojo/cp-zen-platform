@@ -7,6 +7,8 @@
         <option value="0">Unverified</option>
       </select>
     </div>
+    <div class="clearfix"></div>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos()">Done</button></div>
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
@@ -32,14 +34,15 @@
             <!--hide is verified if agreement version is undefined
             https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->
             <td class="ten-percent-width">
-              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" class="form-control" ng-options="state as state.label for state in getVerificationStates(true)">
+              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(true)">
               </select>
             </td>
-            <td><input type="checkbox" ng-model="deleteDojo"></td>
+            <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
           </tr>
         </tbody>
       </thead>
     </table>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos()">Done</button></div>
     <!-- Insert pagination here -->
   </div>
 </div>
