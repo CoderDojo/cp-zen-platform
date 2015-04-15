@@ -12,13 +12,13 @@ var env = process.env.NODE_ENV || 'development';
 var options = require('../web/options.' + env + '.js');
 seneca.options(options);
 
-seneca.use('mongo-store');
+seneca.use('postgresql-store');
 
 seneca.ready(function() {
 
   function run(done) {
     var dojosEntity = seneca.make$('cd/dojos');
-    dojosEntity.list$(function(err, response) {
+    dojosEntity.list$({limit$:'NULL'}, function(err, response) {
       if(err) return cb(err);
       async.eachSeries(response, function(dojo, cb) {
         if(!dojo.coordinates) return cb();
@@ -31,6 +31,10 @@ seneca.ready(function() {
             dojo.state = {toponymName:geonamesData.adminName1};
             dojo.county = {toponymName:geonamesData.adminName2};
             dojo.city = {toponymName:geonamesData.adminName3};
+            for (var adminidx=1; adminidx<=4; adminidx++) {
+              dojo['admin'+adminidx+'Code'] = geonamesData['adminCode' + adminidx] || '';
+              dojo['admin'+adminidx+'Name'] = geonamesData['adminName' + adminidx] || '';
+            }
             dojosEntity.save$(dojo, function(err, response) {
               if(err) return cb(err);
               console.log("saved dojo..." + JSON.stringify(response.id + ':' + response.name));

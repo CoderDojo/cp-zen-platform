@@ -10,6 +10,9 @@
     <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
+  <ol id="map-breadcrumbs" class="breadcrumb">
+    <li class="{{ currentLevel.style }}" ng-repeat="currentLevel in currentLevels"><a ng-click="resetMap(currentLevel.type, currentLevel.text)">{{ currentLevel.text }}</a></li>
+  </ol>
   <form name="dojoSearch" ng-submit="searchForDojo()">
     <div id="find-dojo-form" class="input-group">
       <input id="location" ng-model="search.dojo" placeholder="Search for a Dojo" type="text" class="form-control">

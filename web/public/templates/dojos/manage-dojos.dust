@@ -1,6 +1,14 @@
-<div class="cd-dasboard">
+<div class="cd-dashboard">
   <div class="row">
-    <div class="legend">Manage Dojos</div>
+    <legend>Manage Dojos</legend>
+    <div class="pull-right data-filter-wrapper">
+      <select name="dojosDataFilter" class="form-control" id="dojosDataFilter" ng-model="filterValue" ng-change="filterDojos()">
+        <option value="1">Verified</option>
+        <option value="0">Unverified</option>
+      </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos($event)">Done</button></div>
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
@@ -16,25 +24,25 @@
         </tr>
         <tbody>
           <tr ng-repeat="dojo in dojos">
-            <td>{{dojo.id}}</td>
-            <td>{{dojo.name}}</td>
-            <td>{{dojo.stage}}</td>
-            <td>{{dojo.country}}</td>
-            <td>{{dojo.email}}</td>
-            <td>{{dojo.userEmail}}</td>
+            <td>{{ dojo.id }}</td>
+            <td>{{ dojo.name }}</td>
+            <td>{{ dojo.stage }}</td>
+            <td>{{ dojo.country }}</td>
+            <td>{{ dojo.email }}</td>
+            <td>{{ dojo.userEmail }}</td>
             <td><a href="" ng-click="editDojo(dojo)">Edit</a></td>
-            <td>
-              <select name="verfied" id="verifiedSelectBox">
-                <options>Verified</options>
-                <options>Unverified</options>
-                <options>Previous</options>
+            <!--hide is verified if agreement version is undefined
+            https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->
+            <td class="ten-percent-width">
+              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(true)">
               </select>
             </td>
-            <td><input type="checkbox" ng-model="deleteDojo"></td>
+            <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
           </tr>
         </tbody>
       </thead>
     </table>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos()">Done</button></div>
     <!-- Insert pagination here -->
   </div>
 </div>

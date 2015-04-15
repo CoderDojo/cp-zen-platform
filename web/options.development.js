@@ -10,7 +10,13 @@ module.exports = _.defaults({
      host: '127.0.0.1',
      port: 27017
   },
-
+  'postgresql-store': {
+    name: 'cd-zen-platform-development',
+    host: '127.0.0.1',
+    port: 5432,
+    username: 'postgres',
+    password: 'test'
+  },
   auth: {
     restrict: ['/api', '/dashboard', '/charter', '/my-dojos'],
     redirect:{

@@ -18,7 +18,7 @@
         cdApi.post('dojos/my_dojos_search', {query: query, user:currentUser}, win, fail || topfail);
       },
       searchDojos: function(query, win, fail) {
-        cdApi.post('dojos/my_dojos_search', {query: query}, win, fail || topfail);
+        cdApi.post('dojos/search', {query: query}, win, fail || topfail);
       },
       save: function(dojo, win, fail) {
         if (dojo.id) {
@@ -48,6 +48,9 @@
       },
       dojosStateCount: function(country, win, fail) {
         cdApi.get('dojos_state_count/' + country, win, fail || topfail);
+      },
+      bulkUpdate: function(dojos, win, fail) {
+        cdApi.post('dojos/bulk_update', dojos, win, fail || topfail);
       }
     }
   }
