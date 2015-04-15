@@ -8,7 +8,7 @@
       </select>
     </div>
     <div class="clearfix"></div>
-    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos()">Done</button></div>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos($event)">Done</button></div>
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
