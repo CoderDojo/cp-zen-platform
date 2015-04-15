@@ -11,7 +11,18 @@ function manageDojosService(cdDojoService){
     });
   };
 
-  return {loadDojos: loadDojos};
+  var bulkUpdate = function(dojos, cb){
+    cdDojoService.bulkUpdate({dojos:dojos}, function(response){
+      return cb(null, response);
+    }, function(err){
+      cb(err);
+    });
+  };
+
+  return {
+    loadDojos: loadDojos,
+    bulkUpdate: bulkUpdate
+  };
 }
 
 angular.module('cpZenPlatform')

@@ -48,6 +48,9 @@
       },
       dojosCountyCount: function(country, win, fail) {
         cdApi.get('dojos_county_count/' + country, win, fail || topfail);
+      },
+      bulkUpdate: function(dojos, win, fail) {
+        cdApi.post('dojos/bulk_update', dojos, win, fail || topfail);
       }
     }
   }

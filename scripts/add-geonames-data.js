@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV || 'development';
 var options = require('../web/options.' + env + '.js');
 seneca.options(options);
 
-seneca.use('mongo-store');
+seneca.use('postgresql-store');
 
 seneca.ready(function() {
 

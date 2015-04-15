@@ -23,7 +23,9 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
         alertService.showError('An error has occurred while loading Dojos: <br>' +
           (err.error || JSON.stringify(err))
         );
+        return; 
       }
+      console.log("no of results found: ", results.length);
 
       $scope.dojos = _.map(results, function(dojo){
         dojo.verified = _.findWhere(verficationStates, {value: dojo.verified});
@@ -39,7 +41,8 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
     changedDojos = [];
   };
 
-  $scope.updateDojos = function(){
+  $scope.updateDojos = function(event){
+    //event.preventDefault();
     var dojosToBeDeleted, dojosToBeUpdated;
 
     dojosToBeDeleted = _.filter(changedDojos, function(changedDojo){
@@ -52,6 +55,27 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
 
     console.log("dojosToBeUpdated", dojosToBeUpdated);
     console.log("dojosToBeDeleted", dojosToBeDeleted);
+
+    if(!_.isEmpty(dojosToBeUpdated)){
+      var dojosToBeUpdated = _.map(dojosToBeUpdated, function(dojo){
+        dojo.verified = dojo.verified.value;
+
+        return dojo;
+      });
+
+      dojoManagementService.bulkUpdate(dojosToBeUpdated, function(err, response){
+        if(err){
+          // alertService.showError('An error has occurred while loading Dojos: <br>' +
+          //   (err.error || JSON.stringify(err)));
+          console.log(err);
+          return;
+        }
+
+        $scope.loadPage(+$scope.filterValue, true);
+      });
+    }
+    
+      
   };
 
   $scope.pushChangedDojo = function(dojo){
