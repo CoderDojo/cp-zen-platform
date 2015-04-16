@@ -27,7 +27,7 @@
             <td>{{ dojo.id }}</td>
             <td>{{ dojo.name }}</td>
             <td>{{ dojo.stage }}</td>
-            <td>{{ dojo.country }}</td>
+            <td>{{ dojo.country.countryName }}</td>
             <td>{{ dojo.email }}</td>
             <td>{{ dojo.userEmail }}</td>
             <td><a href="" ng-click="editDojo(dojo)">Edit</a></td>
