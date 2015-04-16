@@ -121,6 +121,15 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
       );
       d.resolve(resultBounds);
       return d.promise;
+    },
+    boundsMinMax: function(min, max) {
+      var d = $q.defer();
+      var resultBounds  = new google.maps.LatLngBounds(
+        min,
+        max    
+      );
+      d.resolve(resultBounds);
+      return d.promise;
     }
   };
 });

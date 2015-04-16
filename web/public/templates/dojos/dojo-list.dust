@@ -6,9 +6,13 @@
     <div ng-repeat="continentMarker in continentMarkers" ui-map-marker="continentMarkers[$index]" ui-event="{'map-click': 'showContinentDojos(continentMarker)'}"></div>
     <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'showCountryDojos(marker)'}"></div>
     <div ng-repeat="countryMarker in countryMarkers" ui-map-marker="countryMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(countryMarker)'}"></div>
+    <div ng-repeat="stateMarker in stateMarkers" ui-map-marker="stateMarkers[$index]" ui-event="{'map-click': 'showStateMarkers(stateMarker)'}"></div>
     <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
+  <ol id="map-breadcrumbs" class="breadcrumb">
+    <li class="{{ currentLevel.style }}" ng-repeat="currentLevel in currentLevels"><a ng-click="resetMap(currentLevel.type, currentLevel.text)">{{ currentLevel.text }}</a></li>
+  </ol>
   <form name="dojoSearch" ng-submit="searchForDojo()">
     <div id="find-dojo-form" class="input-group">
       <input id="location" ng-model="search.dojo" placeholder="Search for a Dojo" type="text" class="form-control">
