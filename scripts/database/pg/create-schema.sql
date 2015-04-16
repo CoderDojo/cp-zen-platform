@@ -162,6 +162,14 @@ CREATE TABLE cd_dojos(
   address2 character varying,
   country_number int,
   country_name character varying,
+  admin1_code character varying,
+  admin1_name character varying,
+  admin2_code character varying,
+  admin2_name character varying,
+  admin3_code character varying,
+  admin3_name character varying,
+  admin4_code character varying,
+  admin4_name character varying,
   CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
 )
 
