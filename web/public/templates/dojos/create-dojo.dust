@@ -112,44 +112,38 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="dojoAddress1" class="col-lg-4">Address 1*</label>
-                      <div class="col-lg-6">
-                        <input type="text" required required-message="'Address 1 is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
-                        <p>Address 1 of the Dojo (Eg. LIT Downtown Centre)</p>
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="dojoAddress2" class="col-lg-4">Address 2*</label>
-                      <div class="col-lg-6">
-                        <input type="text" required required-message="'Address 2 is empty'" ng-model="dojo.address2" class="form-control" name="dojoAddress2" id="dojoAddress2">
-                        <p>Address 2 of the Dojo (Eg. Kinsale, Co. Cork)</p>
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="dojoCountry" class="col-lg-4">Country</label>
+                    <label for="dojoCountry" class="col-lg-4">Country*</label>
                     <div class="col-lg-6">
-                      <ui-select ng-model="dojo.country" ng-disabled="disabled">
-                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.country_name }}</ui-select-match>
-                        <ui-select-choices repeat="country in countries | filter: { country_name: $select.search }">
-                          <span ng-bind-html="country.country_name | highlight: $select.search"></span>
+                      <ui-select ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
+                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+                        <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                          <span ng-bind-html="country.countryName | highlight: $select.search"></span>
                         </ui-select-choices>
                       </ui-select>
+                      <p>Country</p>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="dojoPlace" class="col-lg-4">Place</label>
+                    <label for="dojoPlace" class="col-lg-4">Place*</label>
                     <div class="col-lg-6">
-                      <ui-select ng-model="dojo.place" ng-disabled="disabled">
-                        <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.toponymName }}</ui-select-match>
+                      <ui-select ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required required-message="'Select a place'">
+                        <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
                             refresh="getPlaces(dojo.country.alpha2, $select.search)"
                             refresh-delay="500">
-                          <span ng-bind-html="place.toponymName | highlight: $select.search"></span>
+                          <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
                         </ui-select-choices>
                       </ui-select>
+                      <p>City/Town/</p>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoAddress1" class="col-lg-4">Address*</label>
+                    <div class="col-lg-6">
+                      <input type="text" required required-message="'Address is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
+                      <p>Address of the Dojo (Eg. LIT Downtown Centre)</p>
                     </div>
                   </div>
 

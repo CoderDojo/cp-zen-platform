@@ -5,13 +5,9 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   $scope.model = {};
   $scope.saveButtonText = 'Create Dojo';
 
-  cdCountriesService.listCountries(function(response) {
-    var countries = [];
-    async.each(response, function(country, cb) {
-      countries.push({country_name:country.country_name, alpha2:country.alpha2});
-      cb();
-    }, function() {
-      $scope.countries = countries;
+  cdCountriesService.listCountries(function(countries) {
+    $scope.countries = _.map(countries, function(country) {
+      return _.omit(country, 'entity$');
     });
   });
 
@@ -21,16 +17,32 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       return;
     }
 
-    cdCountriesService.listPlaces(countryCode, search, function(response) {
-      var places = [];
-      async.each(response, function(place, cb) {
-        places.push({toponymName:place.toponymName, geonameId:place.geonameId});
-        cb();
-      }, function () {
-        $scope.places = places;
+    cdCountriesService.listPlaces(countryCode, search, function(places) {
+      $scope.places = _.map(places, function(place) {
+        return _.omit(place, 'entity$');
       });
     });
-  }
+  };
+
+  $scope.setCountry = function(dojo, country) {
+    dojo.countryName = country.countryName;
+    dojo.countryNumber = country.countryNumber;
+    dojo.continent = country.continent;
+    dojo.alpha2 = country.alpha2;
+    dojo.alpha3 = country.alpha3;
+  };
+
+  $scope.setPlace = function(dojo, place) {
+    dojo.placeName = place.name;
+    dojo.placeGeonameId = place.geonameId;
+    dojo.county = {};
+    dojo.state = {};
+    dojo.city = {};
+    for (var adminidx=1; adminidx<=4; adminidx++) {
+      dojo['admin'+ adminidx + 'Code'] = place['admin'+ adminidx + 'Code'];
+      dojo['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
+    }
+  };
 
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
@@ -83,12 +95,17 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
 
   $scope.getLocationFromAddress = function(dojo) {
     if(dojo && dojo.place) {
-      // TODO: build full address from dojo
-      //var address = dojo.city.toponymName + ', ' + dojo.county.toponymName + ', ' + dojo.state.toponymName + ', ' + dojo.country.countryName;
-      //Geocoder.latLngForAddress(address).then(function (data) {
-      //  $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-      //  $scope.model.map.panTo($scope.mapOptions.center);
-      //});
+      var address = dojo.placeName;
+      for (var adminidx=4; adminidx >= 1; adminidx--) {
+        if (dojo['admin'+adminidx+'Name']) {
+          address = address + ', ' + dojo['admin'+adminidx+'Name'];
+        }
+      }
+      address = address + ', ' + dojo['countryName'];
+      Geocoder.latLngForAddress(address).then(function (data) {
+        $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+        $scope.model.map.panTo($scope.mapOptions.center);
+      });
     }
   }
 
