@@ -5,6 +5,10 @@
 function manageDojosService(cdDojoService){
   var loadDojos = function(verified, cb){
     cdDojoService.searchDojos({verified: verified}, function(response){
+      var userIds = _.pluck(response, "creator");
+      console.log(userIds);
+      
+
       return cb(null, response);
     },function(err){
       cb(err);
