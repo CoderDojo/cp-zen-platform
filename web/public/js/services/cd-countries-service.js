@@ -6,17 +6,17 @@ function cdCountriesService(cdApi){
     }
 
     return {
-      list: function(win, fail){
-        cdApi.get('countries', win, fail || topfail);
+      listCountries: function(win, fail){
+        cdApi.get('geo/countries', win, fail || topfail);
       },
-      loadChildren: function(geonameId, win, fail) {
-        cdApi.get('countries/' + geonameId, win, fail || topfail);
+      listPlaces: function(countryCode, search, win, fail) {
+        cdApi.get('geo/places/' + countryCode + '?search=' + search, win, fail || topfail);
       },
       loadContinentsLatLongData: function(win, fail) {
-        cdApi.get('continents_lat_long', win, fail || topfail);
+        cdApi.get('geo/continents_lat_long', win, fail || topfail);
       },
       loadCountriesLatLongData: function(win, fail) {
-        cdApi.get('countries_lat_long', win, fail || topfail);
+        cdApi.get('geo/countries_lat_long', win, fail || topfail);
       },
       loadCountriesContinents: function(win, fail) {
         cdApi.get('countries_continents', win, fail || topfail);
