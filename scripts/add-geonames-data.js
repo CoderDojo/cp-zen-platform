@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var url = require('url');
 var async = require('async');
 var request = require('request');
 var seneca = require('seneca')({
@@ -15,6 +16,28 @@ seneca.options(options);
 seneca.use('postgresql-store');
 
 seneca.ready(function() {
+
+  function call_geonames(method, params, done) {
+    var geonamesurl = url.format({
+      protocol: 'http',
+      host: 'api.geonames.org',
+      pathname: method + 'JSON',
+      query: _.extend({username: 'davidc'}, params)
+    });
+    request({
+      url: geonamesurl,
+      json: true
+    }, function(err, res, body) {
+      if (err) { return done(err); }
+      if (res.statusCode !== 200) {
+        return done(new Error('Geonames responded with', res.statusCode));
+      }
+      if (body.status) {
+        return done(new Error(body.status.message));
+      }
+      return done(null, body);
+    });
+  }
 
   function run(cb) {
     var dojosEntity = seneca.make$('cd/dojos');
@@ -31,9 +54,11 @@ seneca.ready(function() {
           var longitude = dojo.coordinates.split(',')[1];
           async.series([
             function(done) {
-              request('http://api.geonames.org/countrySubdivisionJSON?lat='+latitude+'&lng='+longitude+'&level=4&username=davidc', function(err, res, body) {
-                if (!err && res.statusCode == 200) {
-                  var geonamesData = JSON.parse(body);
+              async.waterfall([
+                function(done) {
+                  call_geonames('countrySubdivision', {lat: latitude, lng: longitude, level: 4}, done);
+                },
+                function(geonamesData, done) {
                   dojo.country = {
                     countryName: geonamesData.countryName,
                     geonameId: '' + geonamesData.countryId,
@@ -48,21 +73,21 @@ seneca.ready(function() {
                   dojo.county = {toponymName: geonamesData.adminName2};
                   dojo.city = {toponymName: geonamesData.adminName3};
                   return done();
-                } else {
-                  return done(err || new Error('status:', res.statusCode));
                 }
-              });
+              ], done);
             },
             function(done) {
-              request('http://api.geonames.org/findNearbyPlaceNameJSON?lat='+latitude+'&lng='+longitude+'&radius=50&username=davidc', function(err, res, body) {
-                if (!err && res.statusCode == 200) {
-                  var data = JSON.parse(body);
+              async.waterfall([
+                function(done) {
+                  call_geonames('findNearbyPlaceName', {lat: latitude, lng: longitude, radius: 50}, done);
+                },
+                function(data, done) {
                   if (!data.geonames || !data.geonames.length) {
                     console.warn('No place found for', dojo.mysqlDojoId, dojo.name);
                     return done();
                   }
                   if (data.geonames.length > 1) {
-                    console.warn('Multiple places found for', dojo.mysqlDojoId, dojo.name);
+                    //console.warn('Multiple places found for', dojo.mysqlDojoId, dojo.name);
                   }
                   var geonamesData = data.geonames[0];
                   dojo.country = {
@@ -81,15 +106,13 @@ seneca.ready(function() {
                     geonameId: '' + geonamesData['geonameId']
                   }
                   return done();
-                } else {
-                  return done(err || new Error('status:', res.statusCode));
                 }
-              });
+              ], done);
             },
             function(done) {
               dojosEntity.save$(dojo, function (err, response) {
                 if (err) { return done(err); }
-                console.log("saved dojo..." + JSON.stringify(response.id + ':' + response.name));
+                //console.log("saved dojo..." + JSON.stringify(response.id + ':' + response.name));
                 done();
               });
             }
