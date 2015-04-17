@@ -11,7 +11,7 @@
   </section>
 
   <ol id="map-breadcrumbs" class="breadcrumb">
-    <li class="{{ currentLevel.style }}" ng-repeat="currentLevel in currentLevels"><a ng-click="resetMap(currentLevel.type, currentLevel.text)">{{ currentLevel.text }}</a></li>
+    <li class="{{ currentLevel.style }}" ng-repeat="currentLevel in currentLevels"><a class="pointer" ng-click="resetMap(currentLevel.type, currentLevel.text)">{{ currentLevel.text }}</a></li>
   </ol>
   <form name="dojoSearch" ng-submit="searchForDojo()">
     <div id="find-dojo-form" class="input-group">
@@ -26,21 +26,37 @@
     <div class="col-lg-12">
       <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
       <legend ng-if="!countryName && dojos"><h2>Search Results</h2></legend>
+      <div ng-repeat="(state, dojos) in dojosByCountry">
+        <legend style="margin-bottom:5px;">{{ state }}</legend>
+        <ul ng-repeat="dojo in dojos">
+          <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="stateSelected" class="row">
+    <div class="col-lg-12">
+      <legend><h1>{{ continentName }}</h1></legend>
+      <legend ng-if="stateName"><h2>{{ stateName }}, {{ countryName }}</h2></legend>
       <ul ng-repeat="dojo in dojos">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
     </div>
   </div>
 
-  <div ng-if="!countrySelected" class="row">
+  <div ng-if="!countrySelected && !stateSelected" class="row">
     <div class="col-lg-12">
       <legend><h2>{{ continentName }}</h2></legend>
         <div ng-repeat="data in dojoData">
-          <div ng-repeat="(country, dojos) in data">
+          <div ng-repeat="(country, statesData) in data">
             <legend style="margin-bottom:5px;">{{ country }}</legend>
-            <ul ng-repeat="dojo in dojos.dojos">
-              <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-            </ul>
+            <div ng-repeat="(state, dojos) in statesData.states">
+              <h5 class="state-heading">{{ state }}</h5>
+              <ul ng-repeat="dojo in dojos">
+                <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+              </ul>
+            </div>
           </div>
         </div>
     </div>
