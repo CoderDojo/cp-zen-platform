@@ -174,10 +174,11 @@ CREATE TABLE cd_dojos(
   need_mentors smallint NOT NULL DEFAULT 0,
   stage smallint NOT NULL DEFAULT 0,
   "time" character varying,
-  "country" JSON,
-  county JSON,
-  state JSON,
-  city JSON,
+  "country" json,
+  county json,
+  state json,
+  city json,
+  place json,
   location character varying,
   coordinates character varying,
   notes text,
@@ -207,6 +208,8 @@ CREATE TABLE cd_dojos(
   admin3_name character varying,
   admin4_code character varying,
   admin4_name character varying,
+  place_geoname_id character varying,
+  place_name character varying,
   CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
 )
 
