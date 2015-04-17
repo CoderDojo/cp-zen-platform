@@ -106,6 +106,30 @@ seneca.ready(function() {
                     geonameId: '' + geonamesData['geonameId']
                   }
                   return done();
+                },
+                function(done) {
+                  if (dojo.placeGeonameId) {
+                    seneca.make('cd/geonames').load$({}, done);
+                  }
+                  else {
+                    return done(null, null);
+                  }
+                },
+                function(placeGeoname, done) {
+                  if (placeGeoname) {
+                    for (var adminidx = 1; adminidx <= 4; adminidx++) {
+                      if (placeGeoname['admin' + adminidx + 'Code']) {
+                        dojo['admin' + adminidx + 'Code'] = placeGeoname['admin' + adminidx + 'Code'];
+                      }
+                      if (placeGeoname['admin' + adminidx + 'Name']) {
+                        dojo['admin' + adminidx + 'Name'] = placeGeoname['admin' + adminidx + 'Name'];
+                      }
+                    }
+                  }
+                  if (dojo.alpha2 === 'IE' && !dojo.admin2Code) {
+                    console.warn('No admin code for', dojo.mysqlDojoId, dojo.placeGeonameId, dojo.placeName, dojo.name);
+                  }
+                  return done();
                 }
               ], done);
             },
