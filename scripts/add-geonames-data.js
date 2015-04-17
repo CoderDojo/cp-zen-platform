@@ -10,6 +10,12 @@ var seneca = require('seneca')({
 
 var env = process.env.NODE_ENV || 'development';
 
+var args = require('yargs')
+  .usage('reverse geocode and add geonames data to existing dojos based on coordinates')
+  .default('throttle', 100)
+  .describe('throttle', 'throttle geonames request in milliseconds')
+  .argv;
+
 var options = require('../web/options.' + env + '.js');
 seneca.options(options);
 
@@ -35,7 +41,9 @@ seneca.ready(function() {
       if (body.status) {
         return done(new Error(body.status.message));
       }
-      return done(null, body);
+      setTimeout(function() {
+        return done(null, body);
+      }, args.throttle);
     });
   }
 
