@@ -51,6 +51,11 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       case 'country':
         removeBreadcrumbs(2);
         showStatesMarkers(text);
+        break;
+      case 'state':
+        removeBreadcrumbs(3);
+        showMarkersInState(text);
+        break;
     }
   }
 
@@ -69,6 +74,14 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       country:alpha2Code
     });
     $scope.showCountryDojos(marker);
+  }
+
+  function showMarkersInState(state) {
+    clearMarkerArrays();
+    var marker = new google.maps.Marker({
+      state:state
+    });
+    $scope.showStateMarkers(marker);
   }
   
   function resetAllMarkers() {
@@ -143,8 +156,8 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.showContinentDojos = function(marker) {
     $scope.countrySelected = false;
+    $scope.stateSelected = false;
     var continentSelected = marker.continent;
-
     Geocoder.boundsForContinent(continentSelected).then(function (data) {
       $scope.model.map.fitBounds(data);
     });
@@ -182,20 +195,23 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       $scope.markers.push(marker);
     }); 
 
-    var markerToHide = _.find($scope.continentMarkers, marker, function() { return marker.continent === continentSelected; });
-    if(markerToHide) {
-      if(!$scope.continentMarkersHidden) $scope.continentMarkersHidden = [];
-      $scope.continentMarkersHidden.push(markerToHide);
-      markerToHide.setMap(null);
-    }
+    _.each($scope.continentMarkers, function(marker) {
+      marker.setMap(null);
+    });
 
   }
 
   $scope.showCountryDojos = function(marker) {
     $scope.countrySelected = true;
+    $scope.stateSelected = false;
     var countrySelected = marker.country;
     Geocoder.boundsForCountry('country:'+countrySelected).then(function (data) {
       $scope.model.map.fitBounds(data);
+    });
+
+    cdDojoService.list({alpha2:countrySelected}, function(response) {
+      $scope.countryName = Object.keys(response)[0];
+      $scope.dojosByCountry = response[$scope.countryName].states;
     });
 
     cdDojoService.dojosStateCount(countrySelected, function(response) {
@@ -227,37 +243,26 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       });
     }
 
-    var markerToHide = _.find($scope.markers, marker, function() { return marker.country === countrySelected; });
-    if(markerToHide) {
-      if(!$scope.markersHidden) $scope.markersHidden = [];
-      $scope.markersHidden.push(markerToHide);
-      markerToHide.setMap(null);
-    }
-  }
-
-  $scope.resetStateMarkers = function(country) {
-    _.each($scope.stateMarkers, function(marker) {
+    _.each($scope.markers, function(marker) {
       marker.setMap(null);
     });
-    $scope.stateMarkers = [];
-    var marker = new google.maps.Marker({
-      country:country
-    });
-    $scope.showCountryDojos(marker);
+
   }
 
   $scope.showStateMarkers = function(marker) {
-    var stateSelected = marker.state;
+    $scope.stateSelected = true;
+    $scope.countrySelected = false;
+    $scope.stateName = marker.state;
 
     cdDojoService.list({admin1Name:marker.state}, function(response) {
-      var markerToHide = _.find($scope.stateMarkers, marker, function() { return marker.state === stateSelected; });
-      if(!$scope.stateMarkersHidden) $scope.stateMarkersHidden = [];
-      $scope.stateMarkersHidden.push(markerToHide);
-      markerToHide.setMap(null);
+      
+      _.each($scope.stateMarkers, function(marker) {
+        marker.setMap(null);
+      });
 
       if(!$scope.countryMarkers) $scope.countryMarkers = [];
       $scope.countryName = Object.keys(response)[0];
-      $scope.dojos = response[$scope.countryName].dojos;
+      $scope.dojos = response[$scope.countryName].states[$scope.stateName];
       if($scope.markerClusterer) $scope.markerClusterer.clearMarkers();
 
       _.each($scope.dojos, function(dojo) {
@@ -272,6 +277,19 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
           $scope.countryMarkers.push(marker);
         }
       });
+
+      if($scope.currentLevels.length < 4) {
+        _.each($scope.currentLevels, function(currentLevel) {
+          currentLevel.style = '';
+        })
+
+        $scope.currentLevels.push({
+          text:$scope.stateName,
+          type:'state',
+          style:'active'
+        });
+      }
+
       $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.countryMarkers);
       var coords = _.map($scope.dojos, function(dojo) { 
         var pair = dojo.coordinates.split(',');
