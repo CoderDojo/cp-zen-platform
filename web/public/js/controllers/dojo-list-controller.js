@@ -197,8 +197,6 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
     _.each($scope.continentMarkers, function(marker) {
       marker.setMap(null);
-      if(!$scope.continentMarkersHidden) $scope.continentMarkersHidden = [];
-      $scope.continentMarkersHidden.push(marker);
     });
 
   }
@@ -247,21 +245,8 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
     _.each($scope.markers, function(marker) {
       marker.setMap(null);
-      if(!$scope.markersHidden) $scope.markersHidden = [];
-      $scope.markersHidden.push(marker);
     });
 
-  }
-
-  $scope.resetStateMarkers = function(country) {
-    _.each($scope.stateMarkers, function(marker) {
-      marker.setMap(null);
-    });
-    $scope.stateMarkers = [];
-    var marker = new google.maps.Marker({
-      country:country
-    });
-    $scope.showCountryDojos(marker);
   }
 
   $scope.showStateMarkers = function(marker) {
@@ -273,8 +258,6 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       
       _.each($scope.stateMarkers, function(marker) {
         marker.setMap(null);
-        if(!$scope.stateMarkersHidden) $scope.stateMarkersHidden = [];
-        $scope.stateMarkersHidden.push(marker);
       });
 
       if(!$scope.countryMarkers) $scope.countryMarkers = [];
