@@ -111,12 +111,49 @@ DROP TABLE IF EXISTS cd_countries CASCADE;
 
 CREATE TABLE cd_countries(
   id character varying NOT NULL,
-  continent character varying NOT NULL,
   alpha2 character varying,
   alpha3 character varying,
+  fips character varying,
   "number" character varying,
+  name character varying,
   country_name character varying,
+  continent character varying,
+  geoname_id character varying,
   CONSTRAINT pk_cd_countries_id PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_geonames CASCADE;
+
+CREATE TABLE cd_geonames(
+  id character varying NOT NULL,
+  name character varying NOT NULL,
+  asciiname character varying NOT NULL,
+  alternatenames character varying[],
+  latitude character varying,
+  longitude character varying,
+  feature_class character varying,
+  feature_code character varying,
+  country_code character varying,
+  cc2 character varying,
+  admin1_code character varying,
+  admin1_name character varying,
+  admin2_code character varying,
+  admin2_name character varying,
+  admin3_code character varying,
+  admin3_name character varying,
+  admin4_code character varying,
+  admin4_name character varying,
+  population character varying,
+  elevation character varying,
+  dem character varying,
+  timezone character varying,
+  modification_date character varying,
+  geoname_id character varying,
+  CONSTRAINT pk_cd_geonames_id PRIMARY KEY (id)
 )
 
 WITH (
@@ -137,10 +174,11 @@ CREATE TABLE cd_dojos(
   need_mentors smallint NOT NULL DEFAULT 0,
   stage smallint NOT NULL DEFAULT 0,
   "time" character varying,
-  "country" JSON,
-  county JSON,
-  state JSON,
-  city JSON,
+  "country" json,
+  county json,
+  state json,
+  city json,
+  place json,
   location character varying,
   coordinates character varying,
   notes text,
@@ -162,6 +200,16 @@ CREATE TABLE cd_dojos(
   address2 character varying,
   country_number int,
   country_name character varying,
+  admin1_code character varying,
+  admin1_name character varying,
+  admin2_code character varying,
+  admin2_name character varying,
+  admin3_code character varying,
+  admin3_name character varying,
+  admin4_code character varying,
+  admin4_name character varying,
+  place_geoname_id character varying,
+  place_name character varying,
   CONSTRAINT pk_cd_dojos_id PRIMARY KEY (id)
 )
 

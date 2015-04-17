@@ -34,3 +34,5 @@ web/.build
 .pt
 
 .DS_Store
+
+.idea

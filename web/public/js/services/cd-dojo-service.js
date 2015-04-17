@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
   function cdDojoService(cdApi){
     function topfail(err){
       console.log(err);
@@ -21,16 +21,17 @@
         cdApi.post('dojos/search', {query: query}, win, fail || topfail);
       },
       save: function(dojo, win, fail) {
+        dojo = angular.copy(dojo);
         if (dojo.id) {
           cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
         }
         else {
           cdApi.post('dojo_create', { dojo: dojo }, win, fail || topfail);
-        } 
+        }
       },
       setDojo: function(dojo, win, fail) {
         currentDojo = dojo;
-        if(currentDojo) return win(currentDojo); 
+        if(currentDojo) return win(currentDojo);
         var err = new Error('Set Dojo Failed');
         fail(err);
       },
@@ -46,8 +47,8 @@
       dojosByCountry: function(countries, win, fail) {
         cdApi.post('dojos_by_country', {countries:countries}, win, fail || topfail);
       },
-      dojosCountyCount: function(country, win, fail) {
-        cdApi.get('dojos_county_count/' + country, win, fail || topfail);
+      dojosStateCount: function(country, win, fail) {
+        cdApi.get('dojos_state_count/' + country, win, fail || topfail);
       },
       bulkUpdate: function(dojos, win, fail) {
         cdApi.post('dojos/bulk_update', dojos, win, fail || topfail);
