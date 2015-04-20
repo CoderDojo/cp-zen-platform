@@ -8,7 +8,7 @@
       </select>
     </div>
     <div class="clearfix"></div>
-    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos($event)">Done</button></div>
+    <div class="pull-right"><button class="btn btn-primary" ng-click="processDojos($event)">Done</button></div>
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
@@ -34,7 +34,7 @@
             <!--hide is verified if agreement version is undefined
             https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->
             <td class="ten-percent-width">
-              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(true)">
+              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
               </select>
             </td>
             <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
@@ -42,7 +42,9 @@
         </tbody>
       </thead>
     </table>
-    <div class="pull-right"><button class="btn btn-primary" ng-click="updateDojos()">Done</button></div>
-    <!-- Insert pagination here -->
+    <div class="pull-right"><button class="btn btn-primary" ng-click="processDojos()">Done</button></div>
+    <div class="row col-lg-6 col-lg-offset-4">
+      <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+    </div>
   </div>
 </div>

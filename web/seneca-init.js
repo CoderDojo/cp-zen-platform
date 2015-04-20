@@ -33,6 +33,7 @@ seneca
   .use('../lib/countries/cd-countries.js')
   .use('../lib/geonames/cd-geonames.js')
   .use('../lib/users/cd-users.js')
+  .use('../lib/agreements/cd-agreements.js')
 ;
 
 _.each(options.client, function(opts) {
