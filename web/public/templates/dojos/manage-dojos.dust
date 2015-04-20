@@ -27,9 +27,9 @@
             <td>{{ dojo.id }}</td>
             <td>{{ dojo.name }}</td>
             <td>{{ dojo.stage }}</td>
-            <td>{{ dojo.country }}</td>
+            <td>{{ dojo.country.countryName }}</td>
             <td>{{ dojo.email }}</td>
-            <td>{{ dojo.userEmail }}</td>
+            <td>{{ dojo.creatorEmail }}</td>
             <td><a href="" ng-click="editDojo(dojo)">Edit</a></td>
             <!--hide is verified if agreement version is undefined
             https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->

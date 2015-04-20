@@ -36,6 +36,7 @@ require('./controllers/manage-dojo-controller');
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./services/cd-users-service');
 require('./services/cd-manage-dojos-service');
 
 

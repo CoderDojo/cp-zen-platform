@@ -2,10 +2,27 @@
 
 //TODO: return charter agreement
 
-function manageDojosService(cdDojoService){
+function manageDojosService(cdDojoService, cdUsersService){
   var loadDojos = function(verified, cb){
-    cdDojoService.searchDojos({verified: verified}, function(response){
-      return cb(null, response);
+    cdDojoService.searchDojos({verified: verified}, function(dojos){
+      var userIds = _.pluck(dojos, "creator");
+      
+      cdUsersService.getEmailsByIds(userIds, function(users){
+        
+        var emailsIdx = _.indexBy(users, 'id');
+        
+        var mappedDojos = _.map(dojos, function(dojo){
+          dojo.creatorEmail = emailsIdx[dojo.creator].email;
+          return dojo;
+        });
+
+        console.log(mappedDojos);
+        return cb(null, mappedDojos);
+
+      }, function(response){
+        console.log(response);
+      });
+
     },function(err){
       cb(err);
     });
@@ -19,6 +36,7 @@ function manageDojosService(cdDojoService){
     });
   };
 
+
   return {
     loadDojos: loadDojos,
     bulkUpdate: bulkUpdate
@@ -26,4 +44,4 @@ function manageDojosService(cdDojoService){
 }
 
 angular.module('cpZenPlatform')
-  .service('dojoManagementService', ['cdDojoService', manageDojosService]);
+  .service('dojoManagementService', ['cdDojoService', 'cdUsersService', manageDojosService]);
