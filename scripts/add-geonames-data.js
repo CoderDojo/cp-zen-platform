@@ -12,8 +12,14 @@ var env = process.env.NODE_ENV || 'development';
 
 var args = require('yargs')
   .usage('reverse geocode and add geonames data to existing dojos based on coordinates')
-  .default('throttle', 100)
+  .example('node add-geonames-data.js --throttle 50 --username davidc')
+  .string('username')
+  .describe('username', 'geonames api username')
+  .default('username', 'davidc')
+  .alias('username', 'u')
   .describe('throttle', 'throttle geonames request in milliseconds')
+  .alias('throttle', 't')
+  .default('throttle', 100)
   .argv;
 
 var options = require('../web/options.' + env + '.js');
@@ -28,7 +34,7 @@ seneca.ready(function() {
       protocol: 'http',
       host: 'api.geonames.org',
       pathname: method + 'JSON',
-      query: _.extend({username: 'davidc'}, params)
+      query: _.extend({username: args.username}, params)
     });
     request({
       url: geonamesurl,
@@ -39,6 +45,20 @@ seneca.ready(function() {
         return done(new Error('Geonames responded with', res.statusCode));
       }
       if (body.status) {
+        if (body.status.value === 14) {
+          console.warn('Geonames', method, 'called with invalid parameters', JSON.stringify(params));
+          return done(null, null);
+        }
+        // not results found
+        if (body.status.value === 15) {
+          return done(null, null);
+        }
+        // hourly limit exceeded
+        if (body.status.value === 19) {
+          // wait?
+        }
+        console.error(JSON.stringify(body.status));
+        console.log(JSON.stringify(params));
         return done(new Error(body.status.message));
       }
       setTimeout(function() {
@@ -51,13 +71,18 @@ seneca.ready(function() {
     var dojosEntity = seneca.make$('cd/dojos');
     async.waterfall([
       function(done) {
-        dojosEntity.list$({limit$:'NULL'}, done);
+        dojosEntity.list$({limit$:'NULL', placeGeonameId: null}, done);
       },
       function(dojos, done) {
+        console.log('processing', dojos.length, 'dojos');
         async.eachSeries(dojos, function(dojo, done) {
           if(!dojo.coordinates) {
             return done();
           }
+          // skip dojos that are already resolved
+          //if (dojo.placeGeonameId) {
+          //  return done();
+          //}
           var latitude = dojo.coordinates.split(',')[0];
           var longitude = dojo.coordinates.split(',')[1];
           async.series([
@@ -67,19 +92,24 @@ seneca.ready(function() {
                   call_geonames('countrySubdivision', {lat: latitude, lng: longitude, level: 4}, done);
                 },
                 function(geonamesData, done) {
-                  dojo.country = {
-                    countryName: geonamesData.countryName,
-                    geonameId: '' + geonamesData.countryId,
-                    alpha2: geonamesData.countryCode
-                  };
-                  for (var adminidx = 1; adminidx <= 4; adminidx++) {
-                    dojo['admin' + adminidx + 'Code'] = geonamesData['adminCode' + adminidx] || '';
-                    dojo['admin' + adminidx + 'Name'] = geonamesData['adminName' + adminidx] || '';
+                  if (geonamesData) {
+                    dojo.country = {
+                      countryName: geonamesData.countryName,
+                      geonameId: '' + geonamesData.countryId,
+                      alpha2: geonamesData.countryCode
+                    };
+                    for (var adminidx = 1; adminidx <= 4; adminidx++) {
+                      dojo['admin' + adminidx + 'Code'] = geonamesData['adminCode' + adminidx] || '';
+                      dojo['admin' + adminidx + 'Name'] = geonamesData['adminName' + adminidx] || '';
+                    }
+                    //TODO: get rid of state/county/city
+                    dojo.state = {toponymName: geonamesData.adminName1};
+                    dojo.county = {toponymName: geonamesData.adminName2};
+                    dojo.city = {toponymName: geonamesData.adminName3};
                   }
-                  //TODO: get rid of state/county/city
-                  dojo.state = {toponymName: geonamesData.adminName1};
-                  dojo.county = {toponymName: geonamesData.adminName2};
-                  dojo.city = {toponymName: geonamesData.adminName3};
+                  else {
+                    console.warn('No administrative country subdivision found for', dojo.mysqlDojoId, dojo.name);
+                  }
                   return done();
                 }
               ], done);
@@ -90,7 +120,7 @@ seneca.ready(function() {
                   call_geonames('findNearbyPlaceName', {lat: latitude, lng: longitude, radius: 50}, done);
                 },
                 function(data, done) {
-                  if (!data.geonames || !data.geonames.length) {
+                  if (!data || !data.geonames || !data.geonames.length) {
                     console.warn('No place found for', dojo.mysqlDojoId, dojo.name);
                     return done();
                   }
@@ -117,7 +147,7 @@ seneca.ready(function() {
                 },
                 function(done) {
                   if (dojo.placeGeonameId) {
-                    seneca.make('cd/geonames').load$({}, done);
+                    seneca.make('cd/geonames').load$({geonameId: dojo.placeGeonameId}, done);
                   }
                   else {
                     return done(null, null);
@@ -126,16 +156,16 @@ seneca.ready(function() {
                 function(placeGeoname, done) {
                   if (placeGeoname) {
                     for (var adminidx = 1; adminidx <= 4; adminidx++) {
-                      if (placeGeoname['admin' + adminidx + 'Code']) {
+                      if (!dojo['admin' + adminidx + 'Code'] && placeGeoname['admin' + adminidx + 'Code']) {
                         dojo['admin' + adminidx + 'Code'] = placeGeoname['admin' + adminidx + 'Code'];
                       }
-                      if (placeGeoname['admin' + adminidx + 'Name']) {
+                      if (!dojo['admin' + adminidx + 'Name'] && placeGeoname['admin' + adminidx + 'Name']) {
                         dojo['admin' + adminidx + 'Name'] = placeGeoname['admin' + adminidx + 'Name'];
                       }
                     }
                   }
                   if (dojo.alpha2 === 'IE' && !dojo.admin2Code) {
-                    console.warn('No admin code for', dojo.mysqlDojoId, dojo.placeGeonameId, dojo.placeName, dojo.name);
+                    console.warn('Missing admin 2 code for', dojo.mysqlDojoId, dojo.placeGeonameId, dojo.placeName, dojo.name);
                   }
                   return done();
                 }
