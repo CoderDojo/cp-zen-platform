@@ -30,7 +30,9 @@ function manageDojos($scope, dojoManagementService, alertService, auth) {
       $scope.dojos = _.map(results, function(dojo){
         dojo.verified = _.findWhere(verficationStates, {value: dojo.verified});
         return dojo;
-      }); 
+      });
+
+      console.log("scope dojos", $scope.dojos);
 
       return cb();
     });
