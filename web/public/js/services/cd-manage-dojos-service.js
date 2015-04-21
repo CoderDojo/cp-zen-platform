@@ -1,11 +1,42 @@
 'use strict';
 
-//TODO: return charter agreement
+function manageDojosService(cdDojoService, cdUsersService, cdAgreementsService){
+ 
+  var loadDojos = function(query, cb){
+    cdDojoService.searchDojos(query, function(dojos){
+      var userIds = _.pluck(dojos, "creator");
+      
+      cdUsersService.getEmailsByIds(userIds, function(users){
+        
+        var emailsIdx = _.indexBy(users, 'id');
 
-function manageDojosService(cdDojoService){
-  var loadDojos = function(verified, cb){
-    cdDojoService.searchDojos({verified: verified}, function(response){
-      return cb(null, response);
+        cdAgreementsService.getAgreementsByIds(userIds, function(agreements){
+          var mappedAgreements = _.map(agreements, function(agreement){
+            return agreement ? agreement : {};
+          }); 
+
+          var mappedDojos = _.map(dojos, function(dojo){
+            dojo.creatorEmail = emailsIdx[dojo.creator] && emailsIdx[dojo.creator].email;
+            dojo.agreements = _.findWhere(mappedAgreements, {userId: dojo.creator});
+            return dojo;
+          });
+
+          cdDojoService.dojoSearchCount({query: { verified: query.verified}}, function(results){
+            return cb(null, {dojos: mappedDojos, totalItems: results.totalItems});
+
+          }, function(err){
+            cb(err);
+          });
+
+        }, function(err){
+          cb(err);
+        });
+        
+
+      }, function(err){
+        cb(err);
+      });
+
     },function(err){
       cb(err);
     });
@@ -19,11 +50,21 @@ function manageDojosService(cdDojoService){
     });
   };
 
+  var bulkDelete = function(dojos, cb){
+    cdDojoService.bulkDelete(dojos, function(response){
+      return cb(null, response);
+    }, function(err){
+      return cb(err);
+    });
+  };
+
+
   return {
     loadDojos: loadDojos,
-    bulkUpdate: bulkUpdate
+    bulkUpdate: bulkUpdate,
+    bulkDelete: bulkDelete
   };
 }
 
 angular.module('cpZenPlatform')
-  .service('dojoManagementService', ['cdDojoService', manageDojosService]);
+  .service('dojoManagementService', ['cdDojoService', 'cdUsersService', 'cdAgreementsService', manageDojosService]);

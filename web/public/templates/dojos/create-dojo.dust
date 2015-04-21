@@ -3,7 +3,15 @@
 
     <div class="row">
       <div class="cd-create-dojo-container">
-        <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+        <div ng-if="!user">
+          <h2>Create a Dojo</h2>
+          <div class="pre-game-warning">
+            <p>You are currently not signed in.</p>
+            <p>Please <a href="#/login">Login here</a> or <a href="#/register">Create an Account</a></p>
+          </div>
+        </div>
+
+        <form ng-if="user" id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
           <div class="create-dojo-sidebar col-lg-4">
             <div class="widget">
               <legend>Status Messages</legend>

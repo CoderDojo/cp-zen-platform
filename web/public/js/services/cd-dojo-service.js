@@ -52,6 +52,12 @@
       },
       bulkUpdate: function(dojos, win, fail) {
         cdApi.post('dojos/bulk_update', dojos, win, fail || topfail);
+      },
+      dojoSearchCount: function(query, win, fail){
+        cdApi.post('dojos/search_count', query, win, fail || topfail);
+      },
+      bulkDelete: function(dojos, win, fail){
+        cdApi.post('dojos/bulk_delete',{dojos: dojos}, win, fail);
       }
     }
   }

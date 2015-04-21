@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="cp-login">
+      <div id="main">
+
+        <form name="registerForm" role="form">
+          <legend>Register</legend>
+          <div class="row">
+            <div class="input-group col-lg-6 col-md-offset-3">
+              <input type="text" class="form-control" required ng-model="registerUser.name" placeholder="NAME">
+            </div>
+          </div>
+          <span class="help-block"></span>
+
+          <div class="row">
+            <div class="input-group col-lg-6 col-md-offset-3">
+              <span class="input-group-addon"><span>@</span></span>
+              <input type="email" class="form-control" required ng-model="registerUser.email" placeholder="EMAIL">
+            </div>
+          </div>
+          <span class="help-block"></span>
+          <div class="row">
+            <div class="input-group col-lg-6 col-md-offset-3">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <input type="password" class="form-control" name="password" ng-model="registerUser.password" placeholder="PASSWORD"/>
+            </div>
+          </div>
+          <span class="help-block"></span>
+          <div class="row">
+            <div class="input-group col-lg-6 col-md-offset-3">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <input type="password" class="form-control" ng-model="passwordConfirm" name="passConfirmField" placeholder="CONFIRM PASSWORD"/>
+            </div>
+          </div>
+          <span class="help-block"></span>
+
+          <button class="btn btn-primary col-lg-6 col-lg-offset-3" ng-click="doRegister(registerUser)" type="submit">Register</button>
+          <div class="row">
+            <div class="input-group center-block text-center back-button">
+              <a ng-href="#/dojo-list">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

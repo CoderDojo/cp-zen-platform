@@ -1,0 +1,18 @@
+<div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+    <div class="row">
+      <div class="cd-create-dojo-container">
+        <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
+          <div id="main">
+            <h3>CoderDojo Champion Registration Form</h3>
+            <div class="pre-game-warning center-block">
+              <p>Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.</p>
+              <p>The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!</p>
+              <p>If you wish to learn more about starting a CoderDojo in your area please see: <a href="http://kata.coderdojo.com"</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

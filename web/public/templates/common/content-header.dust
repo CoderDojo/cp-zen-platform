@@ -1,12 +1,12 @@
 <div class="col-lg-8" ng-controller="header">
   <div class="col-md-2 cd-logo-container">
-      <div class="cd-logo"></div>
+      <a href="/"><div class="cd-logo"></div></a>
   </div>
     <div class="top-menu-links center-block text-center">
-      <span><a ng-href="#/dojo-list">Dojo List</a></span>
-      <span><a ng-href="#/charter">Charter</a></span>
-      <span><a ng-href="#/my-dojos">My Dojos</a></span>
-      <span><a ng-href="#/create-dojo">Create Dojo</a></span>
+      <span ng-if="user"><a ng-href="#/dojo-list">Dojo List</a></span>
+      <span ng-if="user"><a ng-href="#/charter">Charter</a></span>
+      <span ng-if="user"><a ng-href="#/my-dojos">My Dojos</a></span>
+      <span ng-if="user"><a ng-href="#/create-dojo">Create Dojo</a></span>
     </div>
 </div>
 

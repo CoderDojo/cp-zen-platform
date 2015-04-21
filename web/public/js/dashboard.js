@@ -7,12 +7,14 @@ var app = angular.module('cpZenPlatform', [
   'cdCountrySelect',
   'ngCkeditor',
   'angularValidator',
+  'validation.match',
   'ui.router',
   'ngStorage',
   'ngRoute',
   'ui.select',
   'ngSanitize',
-  'ui.map'
+  'ui.map',
+  'truncate'
 ]);
 
 require('./services/auth-service');
@@ -32,11 +34,15 @@ require('./controllers/dojo-list-index-controller');
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
 require('./controllers/manage-dojo-controller');
+require('./controllers/champion-onboarding-controller');
+
 
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./services/cd-users-service');
 require('./services/cd-manage-dojos-service');
+require('./services/cd-agreements-service');
 
 
 require('./directives/country-select');
@@ -75,6 +81,16 @@ app
       .when('/dashboard', '/dojo-list')
       .otherwise('/dojo-list');
     $stateProvider
+      .state("login", {
+        url: "/login",
+        templateUrl: '/login',
+        controller:'login'
+      })
+      .state("register-account", {
+        url: "/register",
+        templateUrl: '/register',
+        controller: 'login'
+      })
       .state("dojo-list-index", {
         url: "/dojo-list-index",
         templateUrl: '/dojos/template/dojo-list-index',
@@ -126,6 +142,11 @@ app
         url: "/manage-dojos",
         templateUrl: '/dojos/template/manage-dojos',
         controller: 'manage-dojo-controller'
+      })
+      .state("champion-onboarding", {
+        url: "/champion-onboarding",
+        templateUrl: '/champion/template/create',
+        controller: 'champion-onboarding-controller'
       });
   })
   .config(function(paginationConfig){
