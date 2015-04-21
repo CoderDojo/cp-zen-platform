@@ -6,7 +6,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';
 
-  cdCountriesService.list(function(response) {
+  cdCountriesService.listCountries(function(response) {
     var countries = [];
     async.each(response, function(country, cb) {
       countries.push({countryName:country.countryName, geonameId:country.geonameId});

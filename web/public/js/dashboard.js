@@ -12,7 +12,8 @@ var app = angular.module('cpZenPlatform', [
   'ngRoute',
   'ui.select',
   'ngSanitize',
-  'ui.map'
+  'ui.map',
+  'truncate'
 ]);
 
 require('./services/auth-service');
@@ -36,7 +37,9 @@ require('./controllers/manage-dojo-controller');
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
+require('./services/cd-users-service');
 require('./services/cd-manage-dojos-service');
+require('./services/cd-agreements-service');
 
 
 require('./directives/country-select');
