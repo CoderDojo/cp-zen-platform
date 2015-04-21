@@ -12,7 +12,8 @@ var app = angular.module('cpZenPlatform', [
   'ngRoute',
   'ui.select',
   'ngSanitize',
-  'ui.map'
+  'ui.map',
+  'truncate'
 ]);
 
 require('./services/auth-service');

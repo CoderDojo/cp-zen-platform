@@ -24,12 +24,12 @@
         </tr>
         <tbody>
           <tr ng-repeat="dojo in dojos">
-            <td>{{ dojo.id }}</td>
+            <td><span title="{{ dojo.id }}">{{ dojo.id | characters:10 }}</span></td>
             <td>{{ dojo.name }}</td>
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.country.countryName }}</td>
-            <td>{{ dojo.email }}</td>
-            <td>{{ dojo.creatorEmail }}</td>
+            <td><span title="{{ dojo.email }}">{{ dojo.email | characters:10 }}</span></td>
+            <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:10 }}</span></td>
             <td><a href="" ng-click="editDojo(dojo)">Edit</a></td>
             <!--hide is verified if agreement version is undefined
             https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->
