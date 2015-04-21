@@ -118,6 +118,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     if($scope.dojoData) $scope.dojoData = [];
     $scope.countryName = '';
     $scope.continentName = '';
+    $scope.searchSelected = false;
 
     if($scope.continentMarkers) {
       _.each($scope.continentMarkers, function(marker) {
@@ -217,7 +218,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     cdDojoService.dojosStateCount(countrySelected, function(response) {
       var states = response[countrySelected];
       _.each(Object.keys(states), function(state) {
-        if(state !== 'undefined') {
+        if(state !== 'undefined' && state !== 'null' && state !== '') {
           var stateData = states[state];
           var marker = new google.maps.Marker({
             map:$scope.model.map,
@@ -338,7 +339,9 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.searchForDojo = function() {
     var dojoName = $scope.search.dojo;
-    $scope.countrySelected = true;
+    $scope.searchSelected = true;
+    $scope.countrySelected = false;
+    $scope.stateSelected = false;
     $scope.countryName = '';
     cdDojoService.search({name:dojoName}, {}, function(response) {
       $scope.dojos = response;
