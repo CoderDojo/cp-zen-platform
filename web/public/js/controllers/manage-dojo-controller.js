@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojos($scope, dojoManagementService, alertService, auth, tableUtils) {
+function manageDojos($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location) {
   $scope.filterValue = 1;
   $scope.itemsPerPage = 10;
 
@@ -18,6 +18,19 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
 
   $scope.getVerificationStates = function(isSigned){
     return isSigned ? verficationStates : [verficationStates[0], verficationStates[2]];
+  };
+
+  $scope.editDojo = function(dojo) {
+    cdDojoService.setDojo(dojo, function(response) {
+      $location.path('/edit-dojo');
+    }, function (err){
+      if(err){
+        alertService.showError(
+          'An error has occurred while editing dojo: <br /> '+
+          (err.error || JSON.stringify(err))
+        );
+      }
+    });
   };
 
   $scope.loadPage = function(verified, resetFlag, cb){
@@ -76,7 +89,6 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
     var self = this;
 
     function updateDojos(cb){
-      //var dojosToBeUpdated = self.dojosToBeUpdated;
       if(!_.isEmpty($scope.dojosToBeUpdated)){
         var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function(dojo){
           dojo.verified = dojo.verified.value;
@@ -101,9 +113,7 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
     }
 
     function deleteDojos(cb){
-      //var dojosToBeDeleted = self.dojosToBeDeleted;
       if(!_.isEmpty($scope.dojosToBeDeleted)){
-        //var ids = _.pluck(dojosToBeDeleted, 'id');
         var dojos = _.map($scope.dojosToBeDeleted, function(dojo){
           return {id: dojo.id, creator: dojo.creator};
         });
@@ -165,5 +175,5 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller', 
-  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', manageDojos]);
+  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', manageDojos]);
 
