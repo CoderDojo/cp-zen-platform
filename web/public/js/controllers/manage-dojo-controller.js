@@ -86,8 +86,6 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
       return !changedDojo.toBeDeleted;
     });
 
-    var self = this;
-
     function updateDojos(cb){
       if(!_.isEmpty($scope.dojosToBeUpdated)){
         var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function(dojo){

@@ -1,5 +1,5 @@
 <div class="cd-dashboard">
-  <div class="row">
+  <div class="row manage-dojo-wrapper">
     <legend>Manage Dojos</legend>
     <div class="pull-right data-filter-wrapper">
       <select name="dojosDataFilter" class="form-control" id="dojosDataFilter" ng-model="filterValue" ng-change="filterDojos()">
@@ -8,7 +8,7 @@
       </select>
     </div>
     <div class="clearfix"></div>
-    <div class="pull-right"><button class="btn btn-primary" ng-click="processDojos($event)">Done</button></div>
+    <div class="pull-right"><button class="btn btn-primary done-btn" ng-click="processDojos($event)">Done</button></div>
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
@@ -28,11 +28,9 @@
             <td>{{ dojo.name }}</td>
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.country.countryName }}</td>
-            <td><span title="{{ dojo.email }}">{{ dojo.email | characters:10 }}</span></td>
+            <td><span title="{{ dojo.email }}">{{ dojo.email | characters:8 }}</span></td>
             <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:10 }}</span></td>
-            <td><button ng-click="editDojo(dojo)">Edit</button></td>
-            <!--hide is verified if agreement version is undefined
-            https://github.com/CoderDojo/Zen/blob/aaf77f29a340331a4f1fffff9a7bb4efdd247aae/application/views/admin/dojo.php#L32 -->
+            <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
             <td class="ten-percent-width">
               <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
               </select>
@@ -42,7 +40,8 @@
         </tbody>
       </thead>
     </table>
-    <div class="pull-right"><button class="btn btn-primary" ng-click="processDojos()">Done</button></div>
+    <div class="pull-right"><button class="btn btn-primary done-btn" ng-click="processDojos()">Done</button></div>
+    <div class="clearfix"></div>
     <div class="row col-lg-6 col-lg-offset-4">
       <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
