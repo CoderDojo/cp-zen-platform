@@ -1,6 +1,6 @@
  'use strict';
 
-function cdChampionOnboardingCtrl($scope, auth) {
+function cdChampionOnboardingCtrl($scope, auth, cdUsersService) {
   $scope.champion = {};
 
   auth.get_loggedin_user(function(user) {
@@ -27,9 +27,11 @@ function cdChampionOnboardingCtrl($scope, auth) {
   $scope.answers = ['Yes', 'No'];
 
   $scope.save = function(champion) {
-    console.log(JSON.stringify(champion));
+    cdUsersService.promoteUser($scope.user.id, ['champion'], function(response) {
+      console.log("response = " + JSON.stringify(response));
+    });
   }
 }
 
 angular.module('cpZenPlatform')
-    .controller('champion-onboarding-controller', ['$scope', 'auth', cdChampionOnboardingCtrl]);
+    .controller('champion-onboarding-controller', ['$scope', 'auth', 'cdUsersService', cdChampionOnboardingCtrl]);
