@@ -10,7 +10,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
   var countriesContinentsData;
   var dojoCountData;
   $scope.currentLevels = [];
-  //test
+
   cdCountriesService.loadContinentsLatLongData(function(response) {
     continentsLatLongData = response;
   });

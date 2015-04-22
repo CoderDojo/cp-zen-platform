@@ -7,7 +7,6 @@ var app = angular.module('cpZenPlatform', [
   'cdCountrySelect',
   'ngCkeditor',
   'angularValidator',
-  'validation.match',
   'ui.router',
   'ngStorage',
   'ngRoute',
