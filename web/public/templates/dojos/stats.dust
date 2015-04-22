@@ -1,0 +1,22 @@
+<div class="cd-dashboard">
+  <div class="row manage-dojo-wrapper">
+    <legend>Charter</legend>
+    <div>{{ count.noOfAgreements }} persons have signed the current version of the charter</div>
+  </div>
+  <div class="row manage-dojo-wrapper">
+    <legend>Dojos</legend>
+    <table class="table cd-grid-table">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Active</th>
+          <th>Verified</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
