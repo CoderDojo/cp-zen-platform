@@ -24,7 +24,7 @@ angular.module('cpZenPlatform').service('auth', function($http) {
     },
 
     register: function(details,win,fail){
-      $http({method:'POST', url: '/auth/register', data:details, cache:false}).
+      $http({method:'POST', url: '/api/1.0/users/register', data:details, cache:false}).
         success(win).error(fail||topfail)
     },
 
