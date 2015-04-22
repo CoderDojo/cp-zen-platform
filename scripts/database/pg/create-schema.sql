@@ -48,6 +48,7 @@ CREATE TABLE sys_login
   why character varying,
   token character varying,
   active boolean,
+  auto boolean,
   ended character varying,
   CONSTRAINT pk_sys_login_id PRIMARY KEY (id)
 )

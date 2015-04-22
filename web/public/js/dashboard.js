@@ -34,6 +34,7 @@ require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
 require('./controllers/manage-dojo-controller');
 require('./controllers/stats-controller');
+require('./controllers/champion-onboarding-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -78,6 +79,16 @@ app
       .when('/dashboard', '/dojo-list')
       .otherwise('/dojo-list');
     $stateProvider
+      .state("login", {
+        url: "/login",
+        templateUrl: '/login',
+        controller:'login'
+      })
+      .state("register-account", {
+        url: "/register",
+        templateUrl: '/register',
+        controller: 'login'
+      })
       .state("dojo-list-index", {
         url: "/dojo-list-index",
         templateUrl: '/dojos/template/dojo-list-index',
@@ -134,6 +145,11 @@ app
         url: "/stats",
         templateUrl: '/dojos/template/stats',
         controller: 'stats-controller'
+      })
+      .state("champion-onboarding", {
+        url: "/champion-onboarding",
+        templateUrl: '/champion/template/create',
+        controller: 'champion-onboarding-controller'
       });
   })
   .config(function(paginationConfig){

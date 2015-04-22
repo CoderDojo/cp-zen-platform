@@ -1,23 +1,10 @@
-{>"layouts/master" /}
-{<body}
-
-{>"common/cd-menu" /}
-
-<div class="navbar navbar-inverse navbar-relative-top" role="navigation">
-  <div class="container">
-   <div class="col-lg-6 cd-logo-container">
-      <div class="cd-logo"></div>
-    </div>
-  </div>
-</div>
-
 <div class="container" ng-controller="login">
   <div class="row">
     <div class="cp-login">
       <div id="main">
-        <legend>Login</legend>
+        
         <form class="login-form" role="form" name="loginForm" ng-show="isVisible('login')">
-
+          <legend>Login</legend>
           <div class="row">
             <div class="input-group col-lg-6 col-md-offset-3">
               <span class="input-group-addon"><span>@</span></span>
@@ -74,7 +61,7 @@
             <a ng-click="show('forgot-password')">Forgot password?</a>
           </div>
           <div class="create-account">
-            <a href="#" target="_self">Register</a>
+            <a ng-href="#/register">Register</a>
           </div>
         </div>
       </div>
@@ -84,18 +71,6 @@
   </div>
 </div> <!-- /container -->
 
-<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-  <div class="container">
-   <div class="col-lg-6 cd-logo-container">
-      <p class="footer-text">Copyright CoderDojo 2015</p>
-    </div>
-  </div>
-</div>
 
-
-
-  
-
-{/body}
 
 
