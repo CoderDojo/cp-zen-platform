@@ -12,7 +12,7 @@ module.exports = function (router) {
     router.get('/', function (req, res) {
         
         
-        res.render('index', model);
+        res.render('dashboard/index', model);
         
         
     });
@@ -23,4 +23,9 @@ module.exports = function (router) {
 
     });
 
+    router.get('/register', function (req, res) {
+
+        res.render('accounts/register', model);
+
+    });
 };
