@@ -15,8 +15,8 @@ module.exports = _.defaults({
     name: 'cd-zen-platform-development',
     host: '127.0.0.1',
     port: 5432,
-    username: 'postgres',
-    password: 'test'
+    username: 'platform',
+    password: 'QdYx3D5y'
   },
   auth: {
     restrict: ['/dashboard', '/charter', '/my-dojos'],
