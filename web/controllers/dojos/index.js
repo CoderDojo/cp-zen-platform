@@ -28,4 +28,8 @@ module.exports = function (router) {
   router.get('/template/manage-dojos', function (req, res){
     res.render('dojos/manage-dojos');
   });
+
+  router.get('/template/stats', function(req, res){
+    res.render('dojos/stats');
+  });
 };

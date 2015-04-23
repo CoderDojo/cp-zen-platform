@@ -33,8 +33,8 @@ require('./controllers/dojo-list-index-controller');
 require('./controllers/create-dojo-controller');
 require('./controllers/edit-dojo-controller');
 require('./controllers/manage-dojo-controller');
+require('./controllers/stats-controller');
 require('./controllers/champion-onboarding-controller');
-
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -42,7 +42,6 @@ require('./services/table-utils');
 require('./services/cd-users-service');
 require('./services/cd-manage-dojos-service');
 require('./services/cd-agreements-service');
-
 
 require('./directives/country-select');
 
@@ -141,6 +140,11 @@ app
         url: "/manage-dojos",
         templateUrl: '/dojos/template/manage-dojos',
         controller: 'manage-dojo-controller'
+      })
+      .state("stats", {
+        url: "/stats",
+        templateUrl: '/dojos/template/stats',
+        controller: 'stats-controller'
       })
       .state("champion-onboarding", {
         url: "/champion-onboarding",

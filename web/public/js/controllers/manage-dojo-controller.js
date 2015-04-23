@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojos($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location) {
+function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location) {
   $scope.filterValue = 1;
   $scope.itemsPerPage = 10;
 
@@ -173,5 +173,5 @@ function manageDojos($scope, dojoManagementService, alertService, auth, tableUti
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller', 
-  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', manageDojos]);
+  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', manageDojosCtrl]);
 
