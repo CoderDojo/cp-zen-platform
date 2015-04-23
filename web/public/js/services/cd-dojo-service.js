@@ -58,8 +58,11 @@
       },
       bulkDelete: function(dojos, win, fail){
         cdApi.post('dojos/bulk_delete',{dojos: dojos}, win, fail);
+      },
+      getStats: function(win, fail){
+        cdApi.post('dojos/stats', {}, win,  fail || topfail);
       }
-    }
+    };
   }
 angular.module('cpZenPlatform')
   .service('cdDojoService', ['cdApi', cdDojoService])
