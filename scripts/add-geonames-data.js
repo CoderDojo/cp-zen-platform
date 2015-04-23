@@ -71,7 +71,7 @@ seneca.ready(function() {
     var dojosEntity = seneca.make$('cd/dojos');
     async.waterfall([
       function(done) {
-        dojosEntity.list$({limit$:'NULL', placeGeonameId: null}, done);
+        dojosEntity.list$({limit$:'NULL'}, done);
       },
       function(dojos, done) {
         console.log('processing', dojos.length, 'dojos');
