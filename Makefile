@@ -1,5 +1,5 @@
 
-USER = postgres
+USER = platform
 HOST = localhost
 PORT= 5432
 

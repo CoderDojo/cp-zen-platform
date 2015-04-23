@@ -22,6 +22,30 @@ module.exports = {
           '/charter': 1,
           '/my-dojos': 1
         }
+      },
+      'basic-user': {
+        prefixmap: {
+          '/charter': 1,
+          '/my-dojos': 1
+        }
+      },
+      'mentor': {
+        prefixmap: {
+          '/charter': 1,
+          '/my-dojos': 1
+        }
+      },
+      'champion': {
+        prefixmap: {
+          '/charter': 1,
+          '/my-dojos': 1
+        }
+      },
+      'cdf-admin': {
+        prefixmap: {
+          '/charter': 1,
+          '/my-dojos': 1
+        }
       }
     }
   },

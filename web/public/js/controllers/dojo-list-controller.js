@@ -118,6 +118,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     if($scope.dojoData) $scope.dojoData = [];
     $scope.countryName = '';
     $scope.continentName = '';
+    $scope.stateName = '';
     $scope.searchSelected = false;
 
     if($scope.continentMarkers) {

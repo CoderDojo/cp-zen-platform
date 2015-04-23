@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="cd-create-dojo-container">
-        <div ng-if="!user">
+        <div ng-show="!user">
           <h2>Create a Dojo</h2>
           <div class="pre-game-warning">
             <p>You are currently not signed in.</p>
@@ -11,7 +11,15 @@
           </div>
         </div>
 
-        <form ng-if="user" id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+        <div ng-show="!showCreateDojoForm() && user">
+          <h2>Become a Champion</h2>
+          <div class="pre-game-warning">
+            <p>To create a Dojo, you must first register to become a Champion.</p>
+            <p>Start by going to the <a href="#/champion-onboarding">Champion Registration page here</a></p>
+          </div>
+        </div>
+
+        <form ng-show="showCreateDojoForm()" id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
           <div class="create-dojo-sidebar col-lg-4">
             <div class="widget">
               <legend>Status Messages</legend>
