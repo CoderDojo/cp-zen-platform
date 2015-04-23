@@ -9,7 +9,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 
   $scope.editDojo = function(dojo) {
     cdDojoService.setDojo(dojo, function(response) {
-      $location.path('/edit-dojo');
+      $location.path('/dashboard/edit-dojo');
     }, function (err){
       if(err){
         alertService.showError(

@@ -29,6 +29,9 @@ app.use(bodyparser.json({ limit: so.bodyparser.json.limit }))
 
 app.use(session({ secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
 
+app.all('/dashboard/*', function(req, res, next) {
+    res.render(__dirname + '/public/templates/dashboard/index', { root: __dirname });
+});
 
 app.listen(port, function (err) {
     console.log('[%s] Listening on http://localhost:%d', app.settings.env, port);

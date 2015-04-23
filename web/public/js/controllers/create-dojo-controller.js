@@ -65,7 +65,7 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
       alertService.showAlert("Your Dojo has been successfully saved", function() {
-        $location.path('/my-dojos');
+        $location.path('/dashboard/my-dojos');
         $scope.$apply();
       });
     }, function(err) {

@@ -33,7 +33,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
         if(data.ok) {
           alertService.showAlert('Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo.', function() {
             auth.login(user, function(data) {
-              $window.location.href = '/dashboard/#/create-dojo';
+              $window.location.href = '/dashboard/create-dojo';
             });
           });
         } else {
@@ -54,7 +54,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
       auth.login($scope.login,
         function(data){
-          $window.location.href = '/dashboard/#' + referer;
+          $window.location.href = '/dashboard' + referer;
         },
         function(){
           $scope.errorMessage = 'Invalid email or password!'

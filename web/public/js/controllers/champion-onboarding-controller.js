@@ -27,7 +27,7 @@ function cdChampionOnboardingCtrl($scope, auth, cdUsersService) {
   $scope.answers = ['Yes', 'No'];
 
   $scope.save = function(champion) {
-    //TO DO: Save champion to cd/champions table
+    //TO DO: Save champion to cd/champion_applications table
     // cdUsersService.promoteUser($scope.user.id, ['champion'], function(response) {
     // });
   }

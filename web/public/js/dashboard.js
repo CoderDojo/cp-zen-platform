@@ -76,11 +76,17 @@ var gmap = function($q, $window) {
 }
 
 app
-  .config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider
-      .when('/dashboard', '/dojo-list')
-      .otherwise('/dojo-list');
+  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $stateProvider
+      .state("home", {
+        url: "/",
+        templateUrl: '/dojos/template/dojo-list',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'dojo-list-controller'
+      })
       .state("login", {
         url: "/login",
         templateUrl: '/login',
@@ -100,7 +106,7 @@ app
         controller:'dojo-list-index-controller'
       })
       .state("dojo-list", {
-        url: "/dojo-list",
+        url: "/dashboard/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
         resolve: {
           gmap:gmap
@@ -108,16 +114,16 @@ app
         controller:'dojo-list-controller'
       })
       .state("charter", {
-        url: "/charter",
+        url: "/dashboard/charter",
         templateUrl:'/charter/template/index',
         controller:'charter-controller'
       })
       .state("my-dojos", {
-        url: "/my-dojos",
+        url: "/dashboard/my-dojos",
         templateUrl:'/dojos/template/my-dojos',
         controller:'my-dojos-controller'
       })
-      .state("create-dojo", {
+      .state("create-dojo-public", {
         url: "/create-dojo",
         templateUrl:'/dojos/template/create-dojo',
         resolve: {
@@ -125,8 +131,16 @@ app
         },
         controller:'create-dojo-controller'
       })
+      .state("create-dojo", {
+        url: "/dashboard/create-dojo",
+        templateUrl:'/dojos/template/create-dojo',
+        resolve: {
+          gmap: gmap
+        },
+        controller:'create-dojo-controller'
+      })
       .state("edit-dojo", {
-        url: "/edit-dojo",
+        url: "/dashboard/edit-dojo",
         templateUrl:'/dojos/template/edit-dojo',
         resolve: {
           gmap:gmap
@@ -142,15 +156,16 @@ app
         controller:'dojo-detail-controller'
       })
       .state("manage-dojos", {
-        url: "/manage-dojos",
+        url: "/dashboard/manage-dojos",
         templateUrl: '/dojos/template/manage-dojos',
         controller: 'manage-dojo-controller'
       })
       .state("champion-onboarding", {
-        url: "/champion-onboarding",
+        url: "/dashboard/champion-onboarding",
         templateUrl: '/champion/template/create',
         controller: 'champion-onboarding-controller'
       });
+      $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
