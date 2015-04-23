@@ -14,8 +14,27 @@
           <th>Total</th>
         </tr>
       </thead>
-      <tbody>
-        <tr></tr>
+      <tbody ng-repeat="(continent, values) in dojos">
+        <tr ng-repeat="dojo in values">
+          <td>{{ dojo.countryName }}</td>
+          <td>{{ dojo.activeVerified }}</td>
+          <td>{{ dojo.verified }}</td>
+          <td>{{ dojo.all }}</td>
+        </tr>
+        <tr class="total-row">
+          <td>{{ continentMap[continent] }} Total</td>
+          <td>{{ totals[continent].active }}</td>
+          <td>{{ totals[continent].verified }}</td>
+          <td>{{ totals[continent].all }}</td>
+        </tr>
+      </tbody>
+      <tbody>        
+        <tr class="total-row">
+          <td>Total</td>
+          <td>{{ totals.overallTotal.active }}</td>
+          <td>{{ totals.overallTotal.verified }}</td>
+          <td>{{ totals.overallTotal.all }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
