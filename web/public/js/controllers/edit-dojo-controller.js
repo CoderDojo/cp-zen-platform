@@ -1,10 +1,24 @@
 'use strict';
-
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap) {
+//TO DO: Move edit dojo controller into create-dojo-controller
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth) {
   $scope.dojo = cdDojoService.getDojo();
   $scope.model = {};
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';
+
+  auth.get_loggedin_user(function(user) {
+    $scope.user = user;
+  });
+
+  $scope.showCreateDojoForm = function() {
+    if($scope.user) {
+      var basicUser = _.find($scope.user.roles, function(role) { if(role === 'basic-user') { return true; } });
+      var mentorUser = _.find($scope.user.roles, function(role) { if(role === 'mentor') { return true; } });
+      if(basicUser || mentorUser) return false;
+      return true;
+    }
+    return false;
+  }
 
   cdCountriesService.listCountries(function(response) {
     var countries = [];
@@ -13,37 +27,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       cb();
     }, function() {
       $scope.countries = countries;
-
-      cdCountriesService.loadChildren($scope.dojo.country.geonameId, function(response) {
-        var states = [];
-        async.each(response, function(state, cb) {
-          states.push({toponymName:state.toponymName, geonameId:state.geonameId});
-          cb();
-        }, function() {
-          $scope.states = states;
-        });
-      });
-
-      cdCountriesService.loadChildren($scope.dojo.state.geonameId, function(response) {
-        var counties = [];
-        async.each(response, function(county, cb) {
-          counties.push({toponymName:county.toponymName, geonameId:county.geonameId});
-          cb();
-        }, function() {
-          $scope.counties = counties;
-        });
-      });
-
-      cdCountriesService.loadChildren($scope.dojo.county.geonameId, function(response) {
-        var cities = [];
-        async.each(response, function(city, cb) {
-          cities.push({toponymName:city.toponymName, geonameId:city.geonameId});
-          cb();
-        }, function() {
-          $scope.cities = cities;
-        });
-      });
-
     });
     
   });
@@ -151,4 +134,4 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', cdEditDojoCtrl]);
