@@ -47,7 +47,8 @@ require('./services/cd-agreements-service');
 require('./directives/country-select');
 
 function cdDashboardCtrl($scope, auth) {
-  
+
+
 }
 
 var gmap = function($q, $window) {
@@ -83,7 +84,10 @@ app
       .state("login", {
         url: "/login",
         templateUrl: '/login',
-        controller:'login'
+        controller:'login',
+        params: {
+          referer:null
+        }
       })
       .state("register-account", {
         url: "/register",

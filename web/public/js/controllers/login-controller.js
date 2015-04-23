@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
 
-  function loginCtrl($scope, $location, $window, auth, alertService) {
-
+  function loginCtrl($state, $scope, $location, $window, auth, alertService) {
+    var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     var msgmap = {
       'unknown': 'Unable to perform your request at this time - please try again later.',
       'user-not-found': 'Email address is not recognized.',
@@ -54,7 +54,7 @@ angular.module('cpZenPlatform').controller('login', ['$scope', '$location', '$wi
 
       auth.login($scope.login,
         function(data){
-          $window.location.href = '/dashboard/#/dojo-list';
+          $window.location.href = '/dashboard/#' + referer;
         },
         function(){
           $scope.errorMessage = 'Invalid email or password!'

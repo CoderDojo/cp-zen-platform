@@ -1,6 +1,6 @@
 'use strict';
 
-function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth) {
+function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.saveButtonText = 'Create Dojo';
@@ -8,6 +8,8 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   auth.get_loggedin_user(function(user) {
     $scope.user = user;
   });
+
+ $scope.createDojoUrl = $state.current.url;
 
   $scope.showCreateDojoForm = function() {
     if($scope.user) {
@@ -128,4 +130,4 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
 }
 
 angular.module('cpZenPlatform')
-  .controller('create-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', cdCreateDojoCtrl]);
+  .controller('create-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', cdCreateDojoCtrl]);
