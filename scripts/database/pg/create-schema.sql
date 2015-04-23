@@ -265,3 +265,14 @@ CREATE TABLE cd_agreements(
 WITH (
   OIDS=FALSE
 );
+
+DROP VIEW IF EXISTS cd_stats;
+
+CREATE VIEW cd_stats AS
+SELECT  continent, alpha2 as "country", country_name, 
+         COUNT(DISTINCT CASE WHEN (verified = 1 AND stage != 4) THEN id END) AS "active_verified",
+         COUNT(DISTINCT CASE WHEN verified = 1 THEN id END) AS "verified",
+         COUNT(DISTINCT id) as "all"
+FROM cd_dojos
+WHERE "deleted" = 0
+GROUP BY continent, alpha2, country_name

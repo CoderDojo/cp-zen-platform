@@ -17,7 +17,7 @@ function manageDojosService(cdDojoService, cdUsersService, cdAgreementsService){
 
           var mappedDojos = _.map(dojos, function(dojo){
             dojo.creatorEmail = emailsIdx[dojo.creator] && emailsIdx[dojo.creator].email;
-            dojo.agreements = _.findWhere(mappedAgreements, {userId: dojo.creator});
+            dojo.agreements = _.findWhere(mappedAgreements, {userId: dojo.creator, agreementVersion: 2});
             return dojo;
           });
 
