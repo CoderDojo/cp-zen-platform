@@ -30,7 +30,8 @@
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
     "underscore": "1.7.0",
     "googlemaps-js-marker-clusterer": "1.0.0",
-    "angular-truncate": "*"
+    "angular-truncate": "*",
+    "slug": "0.9.1"
   },
   "resolutions": {
     "angular": "1.2.26",
