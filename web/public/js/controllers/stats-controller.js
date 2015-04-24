@@ -1,45 +1,36 @@
 'use strict';
 
-function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreementsService, cdDojoService){
+function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService){
   $scope.load = function(){
-    getCharters();
-    getStats();
+    async.series([getContinentCodes, getCharters, getStats]);
   };
 
-  $scope.continentMap = {
-    "NA": "North America",
-    "SA": "South America",
-    "AU": "Australia",
-    "EU": "Europe",
-    "AS": "Asia",
-    "AF": "Africa",
-    "OC": "Oceania"
-  };
-
-  function getCharters(){
+  function getCharters(cb){
     cdAgreementsService.count({agreement_version: 2}, 
       function(count){
         $scope.count = count;
+        cb();
       }, 
       function(err){
-          alertService.showError('An error has occurred while loading Dojos: <br>' +
-            (err.error || JSON.stringify(err))
-          );
+        alertService.showError('An error has occurred while loading Dojos: <br>' +
+          (err.error || JSON.stringify(err))
+        );
+        cb(err);
       });
   }
 
-  function getStats(){
+  function getStats(cb){
     cdDojoService.getStats(
       function(dojos){
-        
         $scope.dojos = dojos;
         $scope.totals = computeTotals(dojos);
-
+        cb();
       },
       function(err){
         alertService.showError('An error has occurred while loading Dojos: <br>' +
           (err.error || JSON.stringify(err))
-        );        
+        );
+        cb(err);        
       }
     );
   }
@@ -81,10 +72,24 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
     });
 
     totals.overallTotal = overallTotal;
-
-    console.log("totals", totals);
     return totals;
   }
+
+  function getContinentCodes(cb){
+    cdCountriesService.getContinentCodes(
+      function(continentMap){
+        $scope.continentMap = _.invert(continentMap);
+        cb();
+      },
+      function(err){
+        cb(err);
+      }
+    );
+  }
+
+  $scope.convertCode = function(code){
+    return $scope.continentMap[code];
+  };
 
 
   auth.get_loggedin_user(function(){
@@ -93,4 +98,4 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
 }
 
 angular.module('cpZenPlatform')
-  .controller('stats-controller',['$scope', 'dojoManagementService', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', statsCtrl]);
+  .controller('stats-controller',['$scope', 'dojoManagementService', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', statsCtrl]);
