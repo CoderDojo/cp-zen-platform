@@ -12,7 +12,6 @@
     <table id="manageDojos" class="table cd-grid-table">
       <thead>
         <tr>
-          <th>ID (d)</th>
           <th>Dojo</th>
           <th>Stage</th>
           <th>Country</th>
@@ -25,7 +24,6 @@
       </thead>
       <tbody>
         <tr ng-repeat="dojo in dojos">
-          <td><span title="{{ dojo.id }}">{{ dojo.id | characters:10 }}</span></td>
           <td>{{ dojo.name }}</td>
           <td>{{ dojo.stage }}</td>
           <td>{{ dojo.country.countryName }}</td>
