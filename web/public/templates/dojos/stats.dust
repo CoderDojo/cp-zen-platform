@@ -22,7 +22,7 @@
           <td>{{ dojo.all }}</td>
         </tr>
         <tr class="total-row">
-          <td>{{ continentMap[continent] }} Total</td>
+          <td>{{ convertCode(continent) }} Total</td>
           <td>{{ totals[continent].active }}</td>
           <td>{{ totals[continent].verified }}</td>
           <td>{{ totals[continent].all }}</td>

@@ -23,6 +23,9 @@ function cdCountriesService(cdApi){
       },
       countyFromCoordinates: function(coordinates, win, fail) {
         cdApi.get('county_from_coordinates/' + coordinates, win, fail || topfail);
+      },
+      getContinentCodes: function(win, fail){
+        cdApi.get('geo/continent_codes', win, fail || topfail);
       }
     }
   }
