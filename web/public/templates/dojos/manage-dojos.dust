@@ -1,46 +1,79 @@
 <div class="cd-dashboard">
-  <div class="row manage-dojo-wrapper">
-    <legend>Manage Dojos</legend>
-    <div class="pull-right data-filter-wrapper">
-      <select name="dojosDataFilter" class="form-control" id="dojosDataFilter" ng-model="filterValue" ng-change="filterDojos()">
+  <legend>Manage Dojos</legend>
+  <div class="row">
+    <div class="col-md-2">
+      <label for="dojoVerifiedFilter">Verification</label>
+      <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified">
         <option value="1">Verified</option>
         <option value="0">Unverified</option>
       </select>
     </div>
-    <div class="clearfix"></div>
-    <div class="pull-right"><button class="btn btn-primary done-btn" ng-click="processDojos($event)">Done</button></div>
-    <table id="manageDojos" class="table cd-grid-table">
-      <thead>
-        <tr>
-          <th>Dojo</th>
-          <th>Stage</th>
-          <th>Country</th>
-          <th>Email</th>
-          <th>User</th>
-          <th>Edit</th>
-          <th>Verify</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="dojo in dojos">
-          <td>{{ dojo.name }}</td>
-          <td>{{ dojo.stage }}</td>
-          <td>{{ dojo.country.countryName }}</td>
-          <td><span title="{{ dojo.email }}">{{ dojo.email | characters:8 }}</span></td>
-          <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:10 }}</span></td>
-          <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
-          <td class="ten-percent-width">
-            <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
+    <div class="col-md-2">
+      <label for="dojoStageFilter">Stage</label>
+      <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage">
+        <option value="1">In Planning</option>
+        <option value="2">Open, come along</option>
+        <option value="3">Register ahead</option>
+        <option value="4">Full up</option>
+        <option value="5">Inactive</option>
+      </select>
+    </div>
+    <div class="col-md-5">
+      <label for="dojoCountryFilter">Country</label>
+      <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" required required-message="'Select a country'" >
+        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+        <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+          <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-md-3 padding-top-25">
+      <div class="pull-right">
+        <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
+        <button class="btn btn-primary left-margin-10" ng-click="resetFilter()">Reset</button></div>
+      </div>
+  </div>  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-right">
+        <button class="btn btn-primary done-btn" ng-click="processDojos($event)">Done</button>
+      </div>
+      <table id="manageDojos" class="table cd-grid-table">
+        <thead>
+          <tr>
+            <th>Dojo</th>
+            <th>Stage</th>
+            <th>Country</th>
+            <th>Email</th>
+            <th>User</th>
+            <th>Edit</th>
+            <th>Verify</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="dojo in dojos">
+            <td>{{ dojo.name }}</td>
+            <td>{{ dojo.stage }}</td>
+            <td>{{ dojo.country.countryName }}</td>
+            <td><span title="{{ dojo.email }}">{{ dojo.email | characters:8 }}</span></td>
+            <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:10 }}</span></td>
+            <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
+            <td class="ten-percent-width">
+              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
             </select>
-          </td>
-          <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="pull-right"><button class="btn btn-primary done-btn" ng-click="processDojos()">Done</button></div>
-    <div class="clearfix"></div>
-    <div class="row col-lg-6 col-lg-offset-4">
+            </td>
+            <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pull-right">
+        <button class="btn btn-primary done-btn" ng-click="processDojos()">Done</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
       <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
   </div>

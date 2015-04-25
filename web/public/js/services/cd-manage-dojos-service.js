@@ -5,7 +5,10 @@ function manageDojosService(cdDojoService, cdUsersService, cdAgreementsService){
   var loadDojos = function(query, cb){
     cdDojoService.searchDojos(query, function(dojos){
       var userIds = _.pluck(dojos, "creator");
-      
+      if(userIds.length === 0){
+        return cb("No results found");
+      }
+
       cdUsersService.getEmailsByIds(userIds, function(users){
         
         var emailsIdx = _.indexBy(users, 'id');
@@ -21,7 +24,8 @@ function manageDojosService(cdDojoService, cdUsersService, cdAgreementsService){
             return dojo;
           });
 
-          cdDojoService.dojoSearchCount({query: { verified: query.verified}}, function(results){
+          var countQuery = _.omit(query, ['limit', 'skip']);
+          cdDojoService.dojoSearchCount({query: countQuery}, function(results){
             return cb(null, {dojos: mappedDojos, totalItems: results.totalItems});
 
           }, function(err){
