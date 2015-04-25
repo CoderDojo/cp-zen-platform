@@ -61,7 +61,7 @@ var gmap = function($q, $window) {
   }
   scriptTag = doc.createElement('script');
   scriptTag.id = scriptId;
-  scriptTag.setAttribute('src', 
+  scriptTag.setAttribute('src',
     'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDlOskoHwHF560s_WgZzEP3_u4OWbWuec0');
   doc.head.appendChild(scriptTag);
   $window.mapReady = (function(dfd) {
@@ -70,7 +70,29 @@ var gmap = function($q, $window) {
       delete $window.mapReady;
     };
   }(dfd));
-  
+
+  return dfd.promise;
+}
+
+var resolveDojo = function($q, $stateParams, cdDojoService) {
+  var dfd = $q.defer();
+  if ($stateParams.id) {
+    cdDojoService.load($stateParams.id,
+      function (data) {
+      dfd.resolve(data);
+    }, function (err) {
+      dfd.reject(err);
+    });
+  }
+  else {
+    cdDojoService.find({
+      urlSlug: $stateParams.country + '/' + $stateParams.path
+    }, function (data) {
+      dfd.resolve(data);
+    }, function (err) {
+      dfd.reject(err);
+    });
+  }
   return dfd.promise;
 }
 
@@ -147,9 +169,19 @@ app
         controller:'edit-dojo-controller'
       })
       .state("dojo-detail", {
+        url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+        templateUrl: '/dojos/template/dojo-detail',
+        resolve: {
+          dojo:resolveDojo,
+          gmap:gmap
+        },
+        controller:'dojo-detail-controller'
+      })
+      .state("dojo-detail-alt", {
         url: "/dojo/:id",
         templateUrl: '/dojos/template/dojo-detail',
         resolve: {
+          dojo:resolveDojo,
           gmap:gmap
         },
         controller:'dojo-detail-controller'

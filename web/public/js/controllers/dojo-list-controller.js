@@ -40,7 +40,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.resetMap = function(type, text) {
     switch(type) {
-      case 'earth': 
+      case 'earth':
         removeBreadcrumbs(0);
         resetAllMarkers();
         break;
@@ -83,7 +83,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     });
     $scope.showStateMarkers(marker);
   }
-  
+
   function resetAllMarkers() {
     clearMarkerArrays();
     cdDojoService.dojoCount(function(response) {
@@ -102,7 +102,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         $scope.continentMarkers.push(marker);
         $scope.model.map.setZoom(2);
       });
-    }); 
+    });
   }
 
   function removeBreadcrumbs(minIndex) {
@@ -181,7 +181,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         style:'active'
       });
     }
-   
+
     var countData = dojoCountData.dojos.continents[continentSelected].countries;
     _.each(Object.keys(countData), function(country) {
       var countryName = country;
@@ -195,7 +195,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + countryDojoCount + '|0066FF|FFFFFF'
       });
       $scope.markers.push(marker);
-    }); 
+    });
 
     _.each($scope.continentMarkers, function(marker) {
       marker.setMap(null);
@@ -232,7 +232,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       });
     });
 
-   
+
    if($scope.currentLevels.length < 3) {
       _.each($scope.currentLevels, function(currentLevel) {
         currentLevel.style = '';
@@ -257,7 +257,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     $scope.stateName = marker.state;
 
     cdDojoService.list({admin1Name:marker.state}, function(response) {
-      
+
       _.each($scope.stateMarkers, function(marker) {
         marker.setMap(null);
       });
@@ -293,9 +293,9 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       }
 
       $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.countryMarkers);
-      var coords = _.map($scope.dojos, function(dojo) { 
+      var coords = _.map($scope.dojos, function(dojo) {
         var pair = dojo.coordinates.split(',');
-        return { lat: parseFloat(pair[0]), lng: parseFloat(pair[1]) }; 
+        return { lat: parseFloat(pair[0]), lng: parseFloat(pair[1]) };
       });
 
       var minlat = _.chain(coords).pluck('lat').min();
@@ -326,16 +326,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.viewDojo = function(dojo) {
-    cdDojoService.setDojo(dojo, function(response) {
-      $location.path('/dojo/' + dojo.id);
-    }, function (err){
-      if(err){
-        alertService.showError(
-          'An error has occurred while viewing dojo: <br /> '+
-          (err.error || JSON.stringify(err))
-        );
-      }
-    });
+    $location.path('/dojo/' + dojo.urlSlug);
   }
 
   $scope.searchForDojo = function() {
@@ -361,7 +352,7 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
     for(var prop in countriesContinentsData.countries) {
       if(countriesContinentsData.countries[prop].name === country) {
         return prop;
-      } 
+      }
     }
   }
 

@@ -1,31 +1,25 @@
 'use strict';
 
-
-var IndexModel = require('../models/index');
-
-
 module.exports = function (router) {
 
-    var model = new IndexModel();
+  router.get('/', function (req, res) {
+    res.render('dashboard/index');
+  });
 
+  router.get('/dojo/:alpha2([a-zA-Z]{2})/*', function (req, res) {
+    res.render('dashboard/index');
+  });
 
-    router.get('/', function (req, res) {
-        
-        
-        res.render('dashboard/index', model);
-        
-        
-    });
+  router.get('/dojo/:id', function (req, res) {
+    res.render('dashboard/index');
+  });
 
-    router.get('/login', function (req, res) {
+  router.get('/login', function (req, res) {
+    res.render('index');
+  });
 
-        res.render('index', model);
+  router.get('/register', function (req, res) {
+    res.render('accounts/register');
+  });
 
-    });
-
-    router.get('/register', function (req, res) {
-
-        res.render('accounts/register', model);
-
-    });
 };
