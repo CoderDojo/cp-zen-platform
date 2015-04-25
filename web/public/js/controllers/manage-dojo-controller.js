@@ -1,12 +1,13 @@
 'use strict';
 
-function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location) {
-  $scope.filterValue = 1;
+function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService) {
+  $scope.filter = {};
+  $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
 
   $scope.pageChanged = function(){
-    $scope.loadPage(+$scope.filterValue, false);
-  }
+    $scope.loadPage($scope.filter, false);
+  };
 
   var verficationStates = [
     {label: 'Unverified', value: 0},
@@ -33,12 +34,25 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     });
   };
 
-  $scope.loadPage = function(verified, resetFlag, cb){
+  $scope.resetFilter = function(){
+    $scope.filter = {};
+    $scope.filter.verified = 1;
+
+    $scope.loadPage($scope.filter, true);
+  };
+
+  $scope.loadPage = function(query, resetFlag, cb){
     cb = cb || function(){};
-    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, verified);
+
+    if(query.country){
+      query.countryName = query.country.countryName;
+      delete query.country;
+    }
+
+    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
-    loadPageData.config.verified = verified;
+    loadPageData.config = _.extend(loadPageData.config, query);
 
     dojoManagementService.loadDojos(loadPageData.config,  function(err, results){
       if(err){
@@ -60,7 +74,7 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
   };
 
   $scope.filterDojos =  function(){
-    $scope.loadPage(+$scope.filterValue, true);
+    $scope.loadPage($scope.filter, true);
     changedDojos = [];
   };
 
@@ -145,6 +159,12 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     });  
   };
 
+  cdCountriesService.listCountries(function(countries) {
+    $scope.countries = _.map(countries, function(country) {
+      return _.omit(country, 'entity$');
+    });
+  });
+
 
   $scope.pushChangedDojo = function(dojo){
     var exists = !!(_.find(changedDojos, function(changedDojo){ 
@@ -173,5 +193,5 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller', 
-  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', manageDojosCtrl]);
+  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', 'cdCountriesService',  manageDojosCtrl]);
 
