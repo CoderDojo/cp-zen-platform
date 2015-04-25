@@ -77,7 +77,7 @@ var gmap = function($q, $window) {
 var resolveDojo = function($q, $stateParams, cdDojoService) {
   var dfd = $q.defer();
   if ($stateParams.id) {
-    cdDojoService.load(id,
+    cdDojoService.load($stateParams.id,
       function (data) {
       dfd.resolve(data);
     }, function (err) {
