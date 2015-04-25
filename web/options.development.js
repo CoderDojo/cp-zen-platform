@@ -3,6 +3,9 @@ var path = require('path');
 
 var base = require('./options.base.js');
 
+console.log("DOCKER", process.env.DOCKER_HOST);
+var host = '192.168.59.103';
+
 module.exports = _.defaults({
 
   'mongo-store': {
@@ -13,7 +16,7 @@ module.exports = _.defaults({
   'agreement-version' : 2,
   'postgresql-store': {
     name: 'cd-zen-platform-development',
-    host: '127.0.0.1',
+    host: host,
     port: 5432,
     username: 'platform',
     password: 'QdYx3D5y'
