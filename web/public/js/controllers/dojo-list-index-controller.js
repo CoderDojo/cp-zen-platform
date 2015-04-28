@@ -6,16 +6,7 @@ function cdDojoListIndexCtrl($scope, $location, cdDojoService) {
   });
 
   $scope.viewDojo = function(dojo) {
-    cdDojoService.setDojo(dojo, function(response) {
-      $location.path('/dojo/' + dojo.id);
-    }, function (err){
-      if(err){
-        alertService.showError(
-          'An error has occurred while editing dojo: <br /> '+
-          (err.error || JSON.stringify(err))
-        );
-      }
-    });
+    $location.path('/dojo/' + dojo.urlSlug);
   }
 
 }

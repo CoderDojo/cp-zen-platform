@@ -1,10 +1,10 @@
 'use strict';
 
-function cdDojoDetailCtrl($scope, $window, $stateParams, $location, cdDojoService, alertService, gmap) {
-  $scope.dojo = cdDojoService.getDojo();
+function cdDojoDetailCtrl($scope, $window, $stateParams, $location, cdDojoService, alertService, dojo, gmap) {
+  $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
- 
+
   $scope.$watch('model.map', function(map){
     if(map) {
       var marker = new google.maps.Marker({
@@ -27,8 +27,8 @@ function cdDojoDetailCtrl($scope, $window, $stateParams, $location, cdDojoServic
     };
 
   }
-  
+
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$window', '$stateParams', '$location', 'cdDojoService', 'alertService', 'gmap', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$window', '$stateParams', '$location', 'cdDojoService', 'alertService', 'dojo', 'gmap', cdDojoDetailCtrl]);

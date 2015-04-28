@@ -45,11 +45,11 @@
               <tr>
                 <td class="col-lg-2"><b>Location</b></td>
                 <td ng-if="dojo.address1">{{ dojo.address1 }}, {{ dojo.address2 }}</td>
-                <td ng-if="dojo.location">{{ dojo.location }}</td>
+                <td ng-if="dojo.placeName">{{ dojo.placeName }}</td>
               </tr>
               <tr>
                 <td class="col-lg-2"><b>Country</b></td>
-                <td>{{ dojo.country }}</td>
+                <td>{{ dojo.countryName }}</td>
               </tr>
               <tr>
                 <td class="col-lg-2"><b>Notes</b></td>

@@ -46,7 +46,8 @@ require('./services/cd-agreements-service');
 require('./directives/country-select');
 
 function cdDashboardCtrl($scope, auth) {
-  
+
+
 }
 
 var gmap = function($q, $window) {
@@ -60,7 +61,7 @@ var gmap = function($q, $window) {
   }
   scriptTag = doc.createElement('script');
   scriptTag.id = scriptId;
-  scriptTag.setAttribute('src', 
+  scriptTag.setAttribute('src',
     'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDlOskoHwHF560s_WgZzEP3_u4OWbWuec0');
   doc.head.appendChild(scriptTag);
   $window.mapReady = (function(dfd) {
@@ -69,20 +70,51 @@ var gmap = function($q, $window) {
       delete $window.mapReady;
     };
   }(dfd));
-  
+
+  return dfd.promise;
+}
+
+var resolveDojo = function($q, $stateParams, cdDojoService) {
+  var dfd = $q.defer();
+  if ($stateParams.id) {
+    cdDojoService.load($stateParams.id,
+      function (data) {
+      dfd.resolve(data);
+    }, function (err) {
+      dfd.reject(err);
+    });
+  }
+  else {
+    cdDojoService.find({
+      urlSlug: $stateParams.country + '/' + $stateParams.path
+    }, function (data) {
+      dfd.resolve(data);
+    }, function (err) {
+      dfd.reject(err);
+    });
+  }
   return dfd.promise;
 }
 
 app
-  .config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider
-      .when('/dashboard', '/dojo-list')
-      .otherwise('/dojo-list');
+  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $stateProvider
+      .state("home", {
+        url: "/",
+        templateUrl: '/dojos/template/dojo-list',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'dojo-list-controller'
+      })
       .state("login", {
         url: "/login",
         templateUrl: '/login',
-        controller:'login'
+        controller:'login',
+        params: {
+          referer:null
+        }
       })
       .state("register-account", {
         url: "/register",
@@ -95,7 +127,7 @@ app
         controller:'dojo-list-index-controller'
       })
       .state("dojo-list", {
-        url: "/dojo-list",
+        url: "/dashboard/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
         resolve: {
           gmap:gmap
@@ -103,16 +135,16 @@ app
         controller:'dojo-list-controller'
       })
       .state("charter", {
-        url: "/charter",
+        url: "/dashboard/charter",
         templateUrl:'/charter/template/index',
         controller:'charter-controller'
       })
       .state("my-dojos", {
-        url: "/my-dojos",
+        url: "/dashboard/my-dojos",
         templateUrl:'/dojos/template/my-dojos',
         controller:'my-dojos-controller'
       })
-      .state("create-dojo", {
+      .state("create-dojo-public", {
         url: "/create-dojo",
         templateUrl:'/dojos/template/create-dojo',
         resolve: {
@@ -120,8 +152,16 @@ app
         },
         controller:'create-dojo-controller'
       })
+      .state("create-dojo", {
+        url: "/dashboard/create-dojo",
+        templateUrl:'/dojos/template/create-dojo',
+        resolve: {
+          gmap: gmap
+        },
+        controller:'create-dojo-controller'
+      })
       .state("edit-dojo", {
-        url: "/edit-dojo",
+        url: "/dashboard/edit-dojo",
         templateUrl:'/dojos/template/edit-dojo',
         resolve: {
           gmap:gmap
@@ -129,15 +169,25 @@ app
         controller:'edit-dojo-controller'
       })
       .state("dojo-detail", {
+        url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+        templateUrl: '/dojos/template/dojo-detail',
+        resolve: {
+          dojo:resolveDojo,
+          gmap:gmap
+        },
+        controller:'dojo-detail-controller'
+      })
+      .state("dojo-detail-alt", {
         url: "/dojo/:id",
         templateUrl: '/dojos/template/dojo-detail',
         resolve: {
+          dojo:resolveDojo,
           gmap:gmap
         },
         controller:'dojo-detail-controller'
       })
       .state("manage-dojos", {
-        url: "/manage-dojos",
+        url: "/dashboard/manage-dojos",
         templateUrl: '/dojos/template/manage-dojos',
         controller: 'manage-dojo-controller'
       })
@@ -147,10 +197,11 @@ app
         controller: 'stats-controller'
       })
       .state("champion-onboarding", {
-        url: "/champion-onboarding",
+        url: "/dashboard/champion-onboarding",
         templateUrl: '/champion/template/create',
         controller: 'champion-onboarding-controller'
       });
+      $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;

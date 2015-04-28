@@ -7,7 +7,7 @@
           <h2>Create a Dojo</h2>
           <div class="pre-game-warning">
             <p>You are currently not signed in.</p>
-            <p>Please <a href="#/login">Login here</a> or <a href="#/register">Create an Account</a></p>
+            <p>Please <a ui-sref="login({referer: createDojoUrl })">Login here</a> or <a href="#/register">Create an Account</a></p>
           </div>
         </div>
 
