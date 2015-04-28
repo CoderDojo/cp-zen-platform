@@ -155,7 +155,7 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
         alertService.showError('An error has occurred while updating Dojos: <br>' +
               (err.error || JSON.stringify(err)));  
       }
-      $scope.loadPage(+$scope.filterValue, false);
+      $scope.loadPage($scope.filter, false);
     });  
   };
 
@@ -167,18 +167,19 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
 
 
   $scope.pushChangedDojo = function(dojo){
-    var exists = !!(_.find(changedDojos, function(changedDojo){ 
+    var filterVerified, exists = !!(_.find(changedDojos, function(changedDojo){ 
                       return dojo.id === changedDojo.id;
                     }));
 
     
+    filterVerified = $scope.filter && $scope.filter.verified;
 
-    if((dojo.verified.value !== $scope.filterValue) || (dojo.toBeDeleted)){
+    if((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)){
       if(!exists){
         changedDojos.push(dojo);
       }
 
-    } else if(dojo.verified.value === $scope.filterValue && !dojo.toBeDeleted) {
+    } else if(dojo.verified.value === filterVerified && !dojo.toBeDeleted) {
       changedDojos =  _.filter(changedDojos, function(filteredDojo){
                         return dojo.id !== filteredDojo.id;
                       }); 
@@ -187,7 +188,7 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
   };
 
   auth.get_loggedin_user(function(){
-    $scope.loadPage(1, true);
+    $scope.loadPage($scope.filter, true);
   });
 }
 
