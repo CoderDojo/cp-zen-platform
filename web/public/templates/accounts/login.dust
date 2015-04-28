@@ -1,0 +1,77 @@
+<div class="row" ng-controller="login">
+  <div class="cp-login">
+    <div id="main">
+      
+      <form class="login-form" role="form" name="loginForm" ng-show="isVisible('login')">
+        <legend>Login</legend>
+        <div class="row">
+          <div class="input-group col-lg-6 col-md-offset-3">
+            <span class="input-group-addon"><span>@</span></span>
+            <input type="email" class="form-control" required ng-model="login.email" placeholder="EMAIL">
+          </div>
+        </div>
+
+        <span class="help-block"></span>
+        <div class="row">
+          <div class="input-group col-lg-6 col-md-offset-3">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="password" class="form-control" required ng-model="login.password" placeholder="PASSWORD">
+          </div>
+        </div>
+        <span class="help-block"></span>
+
+        <div class="center-block text-center error" ng-show="errorMessage">
+          <span class="help-block">{{ errorMessage }}</span>
+        </div>
+
+        <div class="controls center-block text-center">
+          <input class="btn-primary" ng-click="doLogin()" style="padding: 5px 108px;" type="submit" value="Login">
+        </div>
+
+      </form>
+
+      <form class="login-form" name="forgotPasswordForm" role="form" ng-show="isVisible('forgot-password')">
+        <div class="input-group">
+          <span class="input-group-addon"><span>@</span></span>
+          <input type="email" class="form-control" required ng-model="forgot.email" placeholder="EMAIL">
+        </div>
+        <span class="help-block"></span>
+
+        <div class="center-block text-center" ng-show="message">
+          <span class="help-block">{{ message }}</span>
+        </div>
+        <div class="center-block text-center error" ng-show="errorMessage">
+          <span class="help-block">{{ errorMessage }}</span>
+        </div>
+
+        <button class="btn btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">REQUEST PASSWORD RESET</button>
+
+        <div class="input-group center-block text-center back-button">
+          <a ng-click="show('login')">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+
+    <div id="sidebar">
+      <div class="widget">
+        <legend>Other stuff</legend>
+         <div class="forgot-password">
+          <a ng-click="show('forgot-password')">Forgot password?</a>
+        </div>
+        <div class="create-account">
+          <a ng-href="#/register">Register</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+

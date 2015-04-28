@@ -13,7 +13,8 @@ var app = angular.module('cpZenPlatform', [
   'ui.select',
   'ngSanitize',
   'ui.map',
-  'truncate'
+  'truncate',
+  'mgo-angular-wizard'
 ]);
 
 require('./services/auth-service');
@@ -108,24 +109,6 @@ app
         },
         controller:'dojo-list-controller'
       })
-      .state("login", {
-        url: "/login",
-        templateUrl: '/login',
-        controller:'login',
-        params: {
-          referer:null
-        }
-      })
-      .state("register-account", {
-        url: "/register",
-        templateUrl: '/register',
-        controller: 'login'
-      })
-      .state("dojo-list-index", {
-        url: "/dojo-list-index",
-        templateUrl: '/dojos/template/dojo-list-index',
-        controller:'dojo-list-index-controller'
-      })
       .state("dojo-list", {
         url: "/dashboard/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
@@ -143,14 +126,6 @@ app
         url: "/dashboard/my-dojos",
         templateUrl:'/dojos/template/my-dojos',
         controller:'my-dojos-controller'
-      })
-      .state("create-dojo-public", {
-        url: "/create-dojo",
-        templateUrl:'/dojos/template/create-dojo',
-        resolve: {
-          gmap: gmap
-        },
-        controller:'create-dojo-controller'
       })
       .state("create-dojo", {
         url: "/dashboard/create-dojo",
@@ -192,7 +167,7 @@ app
         controller: 'manage-dojo-controller'
       })
       .state("stats", {
-        url: "/stats",
+        url: "/dashboard/stats",
         templateUrl: '/dojos/template/stats',
         controller: 'stats-controller'
       })
