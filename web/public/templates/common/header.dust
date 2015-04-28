@@ -8,7 +8,7 @@
         </div>
         <div ng-if="!user" class="col-lg-2 cd-user-name-container">
             <a ui-sref="login"><span class="cd-logout">Login</span></a> 
-            <a ui-sref="create-dojo-public"><span class="cd-logout">Create a Dojo |</span></a>
+            <a ui-sref="start-dojo-wizard"><span class="cd-logout">Create a Dojo |</span></a>
         </div>
     </div>
 </header>

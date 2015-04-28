@@ -32,4 +32,12 @@ module.exports = function (router) {
   router.get('/template/stats', function(req, res){
     res.render('dojos/stats');
   });
+
+  router.get('/template/start-dojo-wizard', function(req, res){
+    res.render('dojos/start-dojo-wizard/wizard');
+  });
+
+  router.get('/template/start-dojo-wizard/step-one-register', function(req, res){
+    res.render('dojos/start-dojo-wizard/step-one-register');
+  });
 };

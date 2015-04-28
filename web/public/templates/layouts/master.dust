@@ -25,6 +25,9 @@
     <!-- Angular UI Select -->
     <link href="/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
+    <!-- Angular Wizard -->
+    <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -56,9 +59,11 @@
     <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/components/angular-ui-utils/ui-utils.min.js"></script>
     <script src="/components/angular-ui-select/dist/select.min.js"></script>
+    <script src="/components/tg-angular-validator/dist/angular-validator.min.js"></script>
     <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
     <script src="/components/ngstorage/ngStorage.min.js"></script>
     <script src="/components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
 
     <script src="/seneca/init.js"></script>

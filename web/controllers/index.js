@@ -18,6 +18,10 @@ module.exports = function (router) {
     res.render('index');
   });
 
+  router.get('/start-dojo', function (req, res) {
+    res.render('index');
+  });
+
   router.get('/dojo-list-index', function (req, res) {
     res.render('index');
   });

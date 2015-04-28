@@ -6,12 +6,12 @@ var app = angular.module('cpZenPlatform', [
   'ngStorage',
   'ngRoute',
   'ui.router',
+  'angularValidator',
   'ui.map',
   'ui.select',
-  'ngSanitize'
+  'ngSanitize',
+  'mgo-angular-wizard'
 ]);
-
-
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
@@ -19,12 +19,15 @@ require('./controllers/dojo-list-controller');
 require('./controllers/create-dojo-controller');
 require('./controllers/dojo-list-index-controller');
 require('./controllers/dojo-detail-controller');
+require('./controllers/start-dojo-wizard-controller');
 
 require('./services/cd-dojo-service');
 require('./services/cd-countries-service');
 require('./services/geocoder-service');
 require('./services/auth-service');
 require('./services/alert-service');
+
+require('./directives/cd-register-account');
 
 var gmap = function($q, $window) {
   var dfd = $q.defer();
@@ -127,6 +130,11 @@ app
           gmap:gmap
         },
         controller:'dojo-detail-controller'
+      })
+      .state("start-dojo-wizard", {
+        url: "/start-dojo",
+        templateUrl: '/dojos/template/start-dojo-wizard',
+        controller:'start-dojo-wizard-controller'
       });
   })
   .config(function(paginationConfig){

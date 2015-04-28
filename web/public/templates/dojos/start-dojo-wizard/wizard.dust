@@ -1,0 +1,18 @@
+<div class="cd-dashboard">
+    <wizard on-finish="finishedWizard()"> 
+        <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" title="Register Account">
+            <h1>Register Account</h1>
+            <p>To get started, please fill in the following registration form.</p>
+            <cd-register-account></cd-register-account>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" title="Champion Registration">
+            <h1>Champion Registration</h1>
+            
+            <input type="submit" wz-next value="Go on" />
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" title="Dojo Preparation">
+            <h1>Dojo Preparation</h1>
+            <input type="submit" wz-next value="Finish now" />
+        </wz-step>
+    </wizard>
+</div>
