@@ -28,6 +28,9 @@
     <!-- Angular UI Select -->
     <link href="/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
+    <!-- Angular Wizard -->
+    <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
