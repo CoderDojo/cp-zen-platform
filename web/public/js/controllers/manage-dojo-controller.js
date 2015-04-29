@@ -52,13 +52,14 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.loadPage($scope.filter, true);
   };
 
-  $scope.loadPage = function(query, resetFlag, cb){
+  $scope.loadPage = function(filter, resetFlag, cb){
     cb = cb || function(){};
 
-    if(query.country){
-      query.alpha2 = query.country.alpha2;
-      delete query.country;
-    }
+    var query = _.omit({
+      verified: filter.verified,
+      stage: filter.stage,
+      alpha2: filter.country && filter.country.alpha2
+    }, function(value) { return value === '' || _.isNull(value) || _.isUndefined(value) } );
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;

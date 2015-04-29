@@ -3,14 +3,16 @@
   <div class="row">
     <div class="col-md-2">
       <label for="dojoVerifiedFilter">Verification</label>
-      <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified">
-        <option value="1">Verified</option>
+      <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified" ng-change="filterDojos()">
+        <option value="">Any</option>
+        <option value="1" selected="true">Verified</option>
         <option value="0">Unverified</option>
       </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label for="dojoStageFilter">Stage</label>
-      <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage">
+      <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage" ng-change="filterDojos()">
+        <option value="">Any</option>
         <option value="1">In Planning</option>
         <option value="2">Open, come along</option>
         <option value="3">Register ahead</option>
@@ -20,26 +22,24 @@
     </div>
     <div class="col-md-5">
       <label for="dojoCountryFilter">Country</label>
-      <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" required required-message="'Select a country'" >
-        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+      <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" ng-change="filterDojos()" >
+        <ui-select-match allow-clear="true" placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
         <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
           <span ng-bind-html="country.countryName | highlight: $select.search"></span>
         </ui-select-choices>
       </ui-select>
     </div>
-    <div class="col-md-3 padding-top-25">
+    <div class="col-md-2 padding-top-25">
       <div class="pull-right">
         <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
-        <button class="btn btn-primary left-margin-10" ng-click="resetFilter()">Reset</button></div>
+      </div>
       </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="pull-right">
-        <button class="btn btn-primary done-btn" ng-click="processDojos($event)">Done</button>
-      </div>
+      &nbsp;
     </div>
-  </div> 
+  </div>
   <div class="row">
     <div class="col-md-12">
       <table id="manageDojos" class="table cd-grid-table">
@@ -59,13 +59,14 @@
           <tr ng-repeat="dojo in dojos">
             <td>{{ dojo.name }}</td>
             <td>{{ dojo.stage }}</td>
-            <td>{{ dojo.country.countryName }}</td>
-            <td><span title="{{ dojo.email }}">{{ dojo.email | characters:8 }}</span></td>
-            <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:10 }}</span></td>
+            <td>{{ dojo.alpha2 }}</td>
+            <td><span title="{{ dojo.email }}">{{ dojo.email }}</span></td>
+            <td><span title="{{ dojo.creatorEmail }}">{{ dojo.creatorEmail }}</span></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
-            <td class="ten-percent-width">
-              <select name="verfied" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control" ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
-            </select>
+            <td>
+              <select name="verified" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control"
+                      ng-options="state as state.label for state in getVerificationStates(dojo.agreements)">
+              </select>
             </td>
             <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
           </tr>
@@ -76,7 +77,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="pull-right">
-        <button class="btn btn-primary done-btn" ng-click="processDojos()">Done</button>
+        <button class="btn btn-primary done-btn" ng-click="processDojos()">Apply</button>
       </div>
     </div>
   </div>
