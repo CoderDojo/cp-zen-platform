@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -9,7 +9,7 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     $scope.loadPage($scope.filter, false);
   };
 
-  var verficationStates = [
+  var verificationStates = [
     {label: 'Unverified', value: 0},
     {label: 'Verified', value: 1},
     {label: 'Previous', value: 2}
@@ -17,8 +17,19 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
 
   var changedDojos = [];
 
-  $scope.getVerificationStates = function(isSigned){
-    return isSigned ? verficationStates : [verficationStates[0], verficationStates[2]];
+  $scope.getVerificationStates = function(agreements) {
+    var states = verificationStates.slice();
+
+    // TODO: single origin point for current agreement version
+    var currentAgreementVersion = 2;
+    if (!_.any(agreements, function(agreement) {
+      return agreement.agreementVersion === currentAgreementVersion;
+    })) {
+      //
+      states = _.reject(states, function(state) { return state.value === 1 });
+    }
+
+    return states;
   };
 
   $scope.editDojo = function(dojo) {
@@ -45,31 +56,42 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     cb = cb || function(){};
 
     if(query.country){
-      query.countryName = query.country.countryName;
+      query.alpha2 = query.country.alpha2;
       delete query.country;
     }
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
-    loadPageData.config = _.extend(loadPageData.config, query);
 
-    dojoManagementService.loadDojos(loadPageData.config,  function(err, results){
-      if(err){
-        alertService.showError('An error has occurred while loading Dojos: <br>' +
-          (err.error || JSON.stringify(err))
-        );
-        return; 
+    var search = {
+      from: loadPageData.skip,
+      size: $scope.itemsPerPage
+    };
+
+    if (!_.isEmpty(query)) {
+      search.filter = { and: _.map(query, function(value, key) {
+        var term = {};
+        term[key] = value.toLowerCase ? value.toLowerCase() : value;
+        return {term: term};
+      })};
       }
 
-      $scope.dojos = _.map(results.dojos, function(dojo){
-        dojo.verified = _.findWhere(verficationStates, {value: dojo.verified});
+    cdDojoService.searchDojos(search).then(function(result) {
+      $scope.dojos = _.map(result.records, function(dojo){
+        dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
         return dojo;
       });
 
-      $scope.totalItems = results.totalItems;
+      $scope.totalItems = result.total;
 
       return cb();
+    }, function(err) {
+      alertService.showError('An error has occurred while loading Dojos: <br>' +
+          (err.error || JSON.stringify(err))
+        );
+
+      return cb(err);
     });
   };
 
@@ -101,51 +123,48 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     });
 
     function updateDojos(cb){
-      if(!_.isEmpty($scope.dojosToBeUpdated)){
+      if (_.isEmpty($scope.dojosToBeUpdated)) {
+        return cb();
+      }
+
         var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function(dojo){
           dojo.verified = dojo.verified.value;
 
           return dojo;
         });
 
-        dojoManagementService.bulkUpdate(dojosToBeUpdated, function(err, response){
-          if(err){
+      cdDojoService.bulkUpdate(dojosToBeUpdated).then(function(response) {
+        // TODO: review, should notify user on successfull update?
+
+        return cb();
+      }, function(err) {
             alertService.showError('An error has occurred while updating Dojos: <br>' +
               (err.error || JSON.stringify(err)));
-            
-            return cb(err);
+
+        cb(err);
+      });
           }
 
-          cb(null, response);
-
-        });
-      } else {
-        cb();
+    function deleteDojos(cb) {
+      if (_.isEmpty($scope.dojosToBeDeleted)) {
+        return cb();
       }
-    }
 
-    function deleteDojos(cb){
-      if(!_.isEmpty($scope.dojosToBeDeleted)){
         var dojos = _.map($scope.dojosToBeDeleted, function(dojo){
           return {id: dojo.id, creator: dojo.creator};
         });
 
+      cdDojoService.bulkDelete(dojos).then(function(response) {
+        // TODO: review, should notify user on successfull delete?
 
-        dojoManagementService.bulkDelete(dojos, function(err, response){
-          if(err){
+        return cb();
+      }, function(err) {
             alertService.showError('An error has occurred while deleting Dojos: <br>' +
                       (err.error || JSON.stringify(err)));
 
-            return cb(err);
-          }
-
-          cb(null, response);
+        cb(err);
         });
-
-      } else {
-        cb();
       }
-    }
 
     async.series([updateDojos, deleteDojos], function(err){
       delete $scope.dojosToBeDeleted;
@@ -153,10 +172,10 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
       changedDojos = [];
       if(err){
         alertService.showError('An error has occurred while updating Dojos: <br>' +
-              (err.error || JSON.stringify(err)));  
+              (err.error || JSON.stringify(err)));
       }
       $scope.loadPage($scope.filter, false);
-    });  
+    });
   };
 
   cdCountriesService.listCountries(function(countries) {
@@ -167,11 +186,11 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
 
 
   $scope.pushChangedDojo = function(dojo){
-    var filterVerified, exists = !!(_.find(changedDojos, function(changedDojo){ 
+    var filterVerified, exists = !!(_.find(changedDojos, function(changedDojo){
                       return dojo.id === changedDojo.id;
                     }));
 
-    
+
     filterVerified = $scope.filter && $scope.filter.verified;
 
     if((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)){
@@ -182,7 +201,7 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
     } else if(dojo.verified.value === filterVerified && !dojo.toBeDeleted) {
       changedDojos =  _.filter(changedDojos, function(filteredDojo){
                         return dojo.id !== filteredDojo.id;
-                      }); 
+                      });
     }
 
   };
@@ -193,6 +212,6 @@ function manageDojosCtrl($scope, dojoManagementService, alertService, auth, tabl
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-dojo-controller', 
-  ['$scope', 'dojoManagementService', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', 'cdCountriesService',  manageDojosCtrl]);
+  .controller('manage-dojo-controller',
+  ['$scope', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', 'cdCountriesService',  manageDojosCtrl]);
 

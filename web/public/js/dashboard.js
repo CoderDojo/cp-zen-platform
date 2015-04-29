@@ -42,7 +42,6 @@ require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
 require('./services/cd-users-service');
-require('./services/cd-manage-dojos-service');
 require('./services/cd-agreements-service');
 
 require('./directives/country-select');
