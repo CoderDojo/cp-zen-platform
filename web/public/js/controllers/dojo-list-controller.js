@@ -331,12 +331,34 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.searchForDojo = function() {
     var dojoName = $scope.search.dojo;
+
     $scope.searchSelected = true;
     $scope.countrySelected = false;
     $scope.stateSelected = false;
     $scope.countryName = '';
-    cdDojoService.search({name:dojoName}, {}, function(response) {
-      $scope.dojos = response;
+
+    var search = {
+      query: {
+        multi_match: {
+          query: dojoName,
+          fields: ['name', 'placeName', 'admin1Name', 'admin2Name', 'address1', 'address2', 'countryName']
+        }
+      }
+    }
+
+    cdDojoService.search(search).then(function(result) {
+      var byCountry = _.groupBy(result.records, 'countryName');
+      _.each(_.keys(byCountry), function(countryName) {
+        var dojos = byCountry[countryName];
+        var byState = _.groupBy(dojos, 'admin1Name');
+        byCountry[countryName] = { states: byState };
+      });
+
+      $scope.dojoData =_.map(byCountry, function(dojoData, countryName) {
+        var pair = {}; pair[countryName] = dojoData; return pair;
+      });
+
+      $scope.dojos = result.records;
     });
   }
 
