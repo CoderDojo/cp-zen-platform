@@ -14,11 +14,10 @@
       list: function(query, win, fail){
         cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
-      count: function(currentUser, win, fail){
-        cdApi.post('dojos/my_dojos_count', {user: currentUser}, win, fail || topfail);
-      },
-      search: function (query, currentUser, win, fail) {
-        cdApi.post('dojos/my_dojos_search', {query: query, user:currentUser}, win, fail || topfail);
+      search: function (search, currentUser, win, fail) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/my_dojos', {search: search, user:currentUser}, resolve, reject);
+        });
       },
       searchDojos: function(search) {
         return $q(function(resolve, reject) {
