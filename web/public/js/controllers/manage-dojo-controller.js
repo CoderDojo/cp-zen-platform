@@ -66,6 +66,9 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.dojos = [];
 
     var search = {
+      sort: [{
+        created: 'desc'
+      }],
       from: loadPageData.skip,
       size: $scope.itemsPerPage
     };
