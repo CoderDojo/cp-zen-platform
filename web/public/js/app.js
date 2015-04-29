@@ -27,7 +27,9 @@ require('./services/geocoder-service');
 require('./services/auth-service');
 require('./services/alert-service');
 
+//--Dojo Wizard Directives--//
 require('./directives/cd-register-account');
+//--//
 
 var gmap = function($q, $window) {
   var dfd = $q.defer();

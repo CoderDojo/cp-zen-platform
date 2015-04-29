@@ -40,4 +40,8 @@ module.exports = function (router) {
   router.get('/template/start-dojo-wizard/step-one-register', function(req, res){
     res.render('dojos/start-dojo-wizard/step-one-register');
   });
+
+  router.get('/template/start-dojo-wizard/step-two-champion-registration', function(req, res){
+    res.render('dojos/start-dojo-wizard/step-two-champion-registration');
+  });
 };
