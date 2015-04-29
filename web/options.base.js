@@ -14,37 +14,32 @@ module.exports = {
     roles: {
       'admin': {
         prefixmap: {
-          '/admin': 1
+          '/dashboard': 1
         }
       },
       'manager': {
         prefixmap: {
-          '/charter': 1,
-          '/my-dojos': 1
+          '/dashboard': 1
         }
       },
       'basic-user': {
         prefixmap: {
-          '/charter': 1,
-          '/my-dojos': 1
+          '/dashboard': 1
         }
       },
       'mentor': {
         prefixmap: {
-          '/charter': 1,
-          '/my-dojos': 1
+          '/dashboard': 1
         }
       },
       'champion': {
         prefixmap: {
-          '/charter': 1,
-          '/my-dojos': 1
+          '/dashboard': 1
         }
       },
       'cdf-admin': {
         prefixmap: {
-          '/charter': 1,
-          '/my-dojos': 1
+          '/dashboard': 1
         }
       }
     }
@@ -52,9 +47,8 @@ module.exports = {
 
   'web-access': {
     prefixlist: [
-      '/admin',
-      '/charter',
-      '/my-dojos'
+      '/dashboard',
+      '/admin'
     ]
   }
 
