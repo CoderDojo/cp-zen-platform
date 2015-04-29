@@ -32,12 +32,16 @@
         <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
         <button class="btn btn-primary left-margin-10" ng-click="resetFilter()">Reset</button></div>
       </div>
-  </div>  
+  </div>
   <div class="row">
     <div class="col-md-12">
       <div class="pull-right">
         <button class="btn btn-primary done-btn" ng-click="processDojos($event)">Done</button>
       </div>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-md-12">
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
@@ -67,6 +71,10 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <div class="pull-right">
         <button class="btn btn-primary done-btn" ng-click="processDojos()">Done</button>
       </div>
