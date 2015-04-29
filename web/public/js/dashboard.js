@@ -36,6 +36,7 @@ require('./controllers/edit-dojo-controller');
 require('./controllers/manage-dojo-controller');
 require('./controllers/stats-controller');
 require('./controllers/champion-onboarding-controller');
+require('./controllers/start-dojo-wizard-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -45,6 +46,10 @@ require('./services/cd-manage-dojos-service');
 require('./services/cd-agreements-service');
 
 require('./directives/country-select');
+//--Dojo Wizard Directives--//
+require('./directives/cd-register-account');
+require('./directives/cd-champion-registration');
+//--//
 
 function cdDashboardCtrl($scope, auth) {
 
@@ -175,8 +180,17 @@ app
         url: "/dashboard/champion-onboarding",
         templateUrl: '/champion/template/create',
         controller: 'champion-onboarding-controller'
+      })
+      .state("start-dojo-wizard", {
+        url: "/dashboard/start-dojo/:step",
+        templateUrl: '/dojos/template/start-dojo-wizard',
+        controller:'start-dojo-wizard-controller',
+        params: {
+          referer:null
+        }
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
+      $urlRouterProvider.when('/dashboard/start-dojo', '/dashboard/start-dojo/0');
   })
   .config(function(paginationConfig){
     paginationConfig.maxSize = 5;
