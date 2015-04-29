@@ -57,7 +57,7 @@
       },
       bulkUpdate: function(dojos) {
         return $q(function(resolve, reject) {
-          cdApi.post('dojos/bulk_update', dojos, resolve, reject);
+          cdApi.post('dojos/bulk_update', {dojos: dojos}, resolve, reject);
         });
       },
       dojoSearchCount: function(query, win, fail){

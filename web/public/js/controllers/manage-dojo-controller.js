@@ -134,9 +134,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       }
 
       var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function (dojo) {
-        dojo.verified = dojo.verified.value;
-
-        return dojo;
+        return {
+          id: dojo.id,
+          verified: dojo.verified.value
+        }
       });
 
       cdDojoService.bulkUpdate(dojosToBeUpdated).then(function (response) {
