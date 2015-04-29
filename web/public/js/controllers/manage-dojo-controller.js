@@ -83,7 +83,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       };
     }
 
-    cdDojoService.searchDojos(search).then(function (result) {
+    cdDojoService.search(search).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
         dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
         return dojo;

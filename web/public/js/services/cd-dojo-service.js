@@ -14,12 +14,12 @@
       list: function(query, win, fail){
         cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
-      search: function (search, currentUser, win, fail) {
+      myDojos: function (search, currentUser, win, fail) {
         return $q(function(resolve, reject) {
           cdApi.post('dojos/my_dojos', {search: search, user:currentUser}, resolve, reject);
         });
       },
-      searchDojos: function(search) {
+      search: function(search) {
         return $q(function(resolve, reject) {
           cdApi.post('dojos/search', {search: search}, resolve, reject);
         });

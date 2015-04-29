@@ -48,7 +48,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
       size: $scope.itemsPerPage
     };
 
-    cdDojoService.search(search, currentUser).then(function(result) {
+    cdDojoService.myDojos(search, currentUser).then(function(result) {
       $scope.myDojos = result.records;
       $scope.totalItems = result.total;
 
