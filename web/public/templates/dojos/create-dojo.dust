@@ -15,7 +15,7 @@
           <h2>Become a Champion</h2>
           <div class="pre-game-warning">
             <p>To create a Dojo, you must first register to become a Champion.</p>
-            <p>Start by going to the <a href="#/champion-onboarding">Champion Registration page here</a></p>
+            <p>Start by going to the <a ui-sref="champion-onboarding">Champion Registration page here</a></p>
           </div>
         </div>
 

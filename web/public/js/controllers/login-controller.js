@@ -13,7 +13,6 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     var path = window.location.pathname
 
-
     $scope.login = {}
     $scope.forgot = {}
 

@@ -1,6 +1,6 @@
 <div class="col-lg-8" ng-controller="header">
   <div class="col-md-2 cd-logo-container">
-      <a href="/"><div class="cd-logo"></div></a>
+      <a ui-sref="home"><div class="cd-logo"></div></a>
   </div>
     <div class="top-menu-links center-block text-center">
       <span ng-if="user"><a ui-sref="dojo-list">Dojo List</a></span>
