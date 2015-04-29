@@ -36,3 +36,4 @@ web/.build
 .DS_Store
 
 .idea
+.nodemon-find-ref
