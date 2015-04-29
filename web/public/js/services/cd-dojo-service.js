@@ -64,6 +64,12 @@
       },
       getStats: function(win, fail){
         cdApi.post('dojos/stats', {}, win,  fail || topfail);
+      },
+      saveDojoLead: function(dojoLead, win, fail) {
+        cdApi.post('dojos/save_dojo_lead', { dojoLead: dojoLead}, win, fail || topfail);
+      },
+      loadUserDojoLead: function(userId, win, fail) {
+        cdApi.get('dojos/user_dojo_lead/' + userId, win, fail || topfail);
       }
     };
   }

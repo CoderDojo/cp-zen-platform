@@ -5,14 +5,12 @@
             <p>To get started, please fill in the following registration form.</p>
             <cd-register-account></cd-register-account>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" title="Champion Registration">
+        <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" title="Champion Registration">
             <h1>Champion Registration</h1>
-            
-            <input type="submit" wz-next value="Go on" />
+            <cd-champion-registration></cd-champion-registration>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" title="Dojo Preparation">
+        <wz-step class="start-dojo-wizard-step" canenter="championApplicationSubmitted" title="Dojo Preparation">
             <h1>Dojo Preparation</h1>
-            <input type="submit" wz-next value="Finish now" />
         </wz-step>
     </wizard>
 </div>

@@ -267,6 +267,20 @@ WITH (
   OIDS=FALSE
 );
 
+DROP TABLE IF EXISTS cd_dojoleads CASCADE;
+
+CREATE TABLE cd_dojoleads(
+  user_id character varying,
+  email character varying,
+  application json,
+  id character varying NOT NULL,
+  CONSTRAINT pk_cd_dojoleads PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
 DROP VIEW IF EXISTS cd_stats;
 
 CREATE VIEW cd_stats AS
