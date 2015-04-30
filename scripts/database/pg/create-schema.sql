@@ -182,6 +182,7 @@ CREATE TABLE cd_dojos(
   place json,
   location character varying,
   coordinates character varying,
+  geo_point json,
   notes text,
   email character varying,
   website character varying,
