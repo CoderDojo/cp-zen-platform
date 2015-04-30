@@ -132,7 +132,7 @@ app
       })
       .state("create-dojo", {
         url: "/dashboard/create-dojo",
-        templateUrl:'/dojos/template/create-dojo',
+        templateUrl:'/dojos/template/edit-dojo',
         resolve: {
           gmap: gmap
         },
