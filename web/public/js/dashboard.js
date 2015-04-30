@@ -49,6 +49,7 @@ require('./directives/country-select');
 //--Dojo Wizard Directives--//
 require('./directives/cd-register-account');
 require('./directives/cd-champion-registration');
+require('./directives/cd-dojo-preparation');
 //--//
 
 function cdDashboardCtrl($scope, auth) {

@@ -1,0 +1,33 @@
+<div id="main">
+  <p>Please tick each item that is complete.</p>
+  <form name="dojoPreparationForm" novalidate angular-validator angular-validator-submit="submitDojoPreparation(dojoPreparation)" role="form">
+    <legend>Gather Team</legend>
+   
+    <div class="row">
+      <div class="input-group col-lg-6 col-md-offset-3">
+        <input type="checkbox" class="form-control" name="gatherTeam" required required-message="'You must gather a team before continuing.'" ng-model="dojoPreparation.gatherTeam">
+      </div>
+    </div>
+    <span class="help-block"></span>
+
+    <legend>Find Mentors</legend>
+    <div class="row">
+      <div class="input-group col-lg-6 col-md-offset-3">
+        <input type="checkbox" class="form-control" name="findMentors" required required-message="'You must find a team before continuing.'" ng-model="dojoPreparation.findMentors">
+      </div>
+    </div>
+    <span class="help-block"></span>
+
+    <legend>Background Check</legend>
+    <div class="row">
+      <div class="input-group col-lg-6 col-md-offset-3">
+        <input type="checkbox" class="form-control" name="backgroundCheck" ng-model="dojoPreparation.backgroundCheck">
+      </div>
+    </div>
+    <span class="help-block"></span>
+   
+    <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">Submit</button>
+  </form>
+</div>
+
+

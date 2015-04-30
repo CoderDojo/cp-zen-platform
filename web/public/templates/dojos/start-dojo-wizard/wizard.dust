@@ -11,6 +11,7 @@
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canenter="championApplicationSubmitted" title="Dojo Preparation">
             <h1>Dojo Preparation</h1>
+            <cd-dojo-preparation></cd-dojo-preparation>
         </wz-step>
     </wizard>
 </div>
