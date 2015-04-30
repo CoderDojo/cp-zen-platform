@@ -1,5 +1,5 @@
 'use strict';
-  function cdDojoService(cdApi){
+  function cdDojoService($q, cdApi){
     function topfail(err){
       console.log(err);
     }
@@ -14,14 +14,15 @@
       list: function(query, win, fail){
         cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
-      count: function(currentUser, win, fail){
-        cdApi.post('dojos/my_dojos_count', {user: currentUser}, win, fail || topfail);
+      myDojos: function (search, currentUser, win, fail) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/my_dojos', {search: search, user:currentUser}, resolve, reject);
+        });
       },
-      search: function (query, currentUser, win, fail) {
-        cdApi.post('dojos/my_dojos_search', {query: query, user:currentUser}, win, fail || topfail);
-      },
-      searchDojos: function(query, win, fail) {
-        cdApi.post('dojos/search', {query: query}, win, fail || topfail);
+      search: function(search) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/search', {search: search}, resolve, reject);
+        });
       },
       save: function(dojo, win, fail) {
         dojo = angular.copy(dojo);
@@ -53,14 +54,18 @@
       dojosStateCount: function(country, win, fail) {
         cdApi.get('dojos_state_count/' + country, win, fail || topfail);
       },
-      bulkUpdate: function(dojos, win, fail) {
-        cdApi.post('dojos/bulk_update', dojos, win, fail || topfail);
+      bulkUpdate: function(dojos) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/bulk_update', {dojos: dojos}, resolve, reject);
+        });
       },
       dojoSearchCount: function(query, win, fail){
         cdApi.post('dojos/search_count', query, win, fail || topfail);
       },
-      bulkDelete: function(dojos, win, fail){
-        cdApi.post('dojos/bulk_delete',{dojos: dojos}, win, fail);
+      bulkDelete: function(dojos){
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/bulk_delete', {dojos: dojos}, resolve, reject);
+        });
       },
       getStats: function(win, fail){
         cdApi.post('dojos/stats', {}, win,  fail || topfail);
@@ -74,5 +79,5 @@
     };
   }
 angular.module('cpZenPlatform')
-  .service('cdDojoService', ['cdApi', cdDojoService])
+  .service('cdDojoService', ['$q', 'cdApi', cdDojoService])
 ;

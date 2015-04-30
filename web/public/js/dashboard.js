@@ -20,7 +20,6 @@ var app = angular.module('cpZenPlatform', [
 require('./services/auth-service');
 require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
-require('./services/cd-load-my-dojos-service');
 require('./services/geocoder-service');
 require('./services/cd-countries-service');
 
@@ -42,7 +41,6 @@ require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
 require('./services/cd-users-service');
-require('./services/cd-manage-dojos-service');
 require('./services/cd-agreements-service');
 
 require('./directives/country-select');
