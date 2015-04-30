@@ -1,17 +1,35 @@
 <div class="cd-dashboard">
-    <wizard on-finish="finishedWizard()"> 
-        <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" title="Register Account">
+    <wizard class="start-dojo-wizard" current-step="wizardCurrentStep" on-finish="finishedWizard()"> 
+        <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
             <h1>Register Account</h1>
             <p>To get started, please fill in the following registration form.</p>
             <cd-register-account></cd-register-account>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" title="Champion Registration">
+        <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" title="Champion Registration">
             <h1>Champion Registration</h1>
             <cd-champion-registration></cd-champion-registration>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canenter="championApplicationSubmitted" title="Dojo Preparation">
-            <h1>Dojo Preparation</h1>
-            <cd-dojo-preparation></cd-dojo-preparation>
+        <wz-step class="start-dojo-wizard-step" canexit="teamGathered" title="Gather Team">
+            <h1>Gather Team</h1>
+            <cd-gather-team></cd-gather-team>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" canexit="venueVerified" title="Find Venue">
+            <h1>Venue</h1>
+            <cd-find-venue></cd-find-venue>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" canexit="dojoContentComplete" title="Dojo Content">
+            <h1>Plan Dojo Content</h1>
+            <cd-plan-dojo-content></cd-plan-dojo-content>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" title="Dojo Listing">
+            <h1>Create Dojo Listing</h1>
+            <cd-dojo-listing></cd-dojo-listing>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" canexit="createdEvent" title="Create Event">
+            <h1>Create Event</h1>
+        </wz-step>
+        <wz-step class="start-dojo-wizard-step" canexit="promotedDojo" title="Promote">
+            <h1>Promote</h1>
         </wz-step>
     </wizard>
 </div>

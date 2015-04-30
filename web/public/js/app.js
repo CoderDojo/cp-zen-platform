@@ -6,6 +6,7 @@ var app = angular.module('cpZenPlatform', [
   'ngStorage',
   'ngRoute',
   'ui.router',
+  'ngCkeditor',
   'angularValidator',
   'ui.map',
   'ui.select',
@@ -29,6 +30,11 @@ require('./services/alert-service');
 
 //--Dojo Wizard Directives--//
 require('./directives/cd-register-account');
+require('./directives/cd-champion-registration');
+require('./directives/cd-gather-team');
+require('./directives/cd-find-venue');
+require('./directives/cd-plan-dojo-content');
+require('./directives/cd-dojo-listing');
 //--//
 
 var gmap = function($q, $window) {
@@ -136,6 +142,9 @@ app
       .state("start-dojo-wizard", {
         url: "/start-dojo",
         templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+        resolve: {
+          gmap:gmap
+        },
         controller:'start-dojo-wizard-controller'
       });
   })

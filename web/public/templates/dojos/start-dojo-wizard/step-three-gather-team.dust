@@ -1,0 +1,57 @@
+<div id="main">
+  <p>Checklist</p>
+  <form name="dojoPreparationForm" novalidate angular-validator angular-validator-submit="submitDojoPreparation(dojoPreparation)" role="form">
+
+    <div class="[ form-group ]">
+      <input type="checkbox" name="gatherTeam" id="gatherTeam" required required-message="'You must gather a team before continuing.'" ng-model="dojoPreparation.gatherTeam" autocomplete="off" />
+      <div class="[ btn-group ]">
+          <label for="gatherTeam" class="[ btn btn-default ]">
+              <span class="[ glyphicon glyphicon-ok ]"></span>
+              <span> </span>
+          </label>
+          <label for="gatherTeam" class="[ btn btn-default active ]">
+              Gather Team
+          </label>
+          <a href="http://kata.coderdojo.com/wiki/Plan_your_Dojo"><span class="glyphicon glyphicon-info-sign col-lg-1 pull-right" aria-hidden="true"></span></a>
+      </div>
+    </div>
+
+    <span class="help-block"></span>
+
+    <div class="[ form-group ]">
+      <input type="checkbox" name="findMentors" id="findMentors" required required-message="'You must find mentors before continuing.'" ng-model="dojoPreparation.findMentors" autocomplete="off" />
+      <div class="[ btn-group ]">
+          <label for="findMentors" class="[ btn btn-default ]">
+              <span class="[ glyphicon glyphicon-ok ]"></span>
+              <span> </span>
+          </label>
+          <label for="findMentors" class="[ btn btn-default active ]">
+              Find Mentors
+          </label>
+          <a href="http://kata.coderdojo.com/wiki/Plan_your_Dojo"><span class="glyphicon glyphicon-info-sign col-lg-1 pull-right" aria-hidden="true"></span></a>
+      </div>
+    </div>
+
+    <span class="help-block"></span>
+
+    <div class="[ form-group ]">
+      <input type="checkbox" name="backgroundCheck" id="backgroundCheck" ng-model="dojoPreparation.backgroundCheck" autocomplete="off" />
+      <div class="[ btn-group ]">
+        <label for="backgroundCheck" class="[ btn btn-default ]">
+            <span class="[ glyphicon glyphicon-ok ]"></span>
+            <span> </span>
+        </label>
+        <label for="backgroundCheck" class="[ btn btn-default active ]">
+            Background Check
+        </label>
+        <a href="http://kata.coderdojo.com/wiki/Plan_your_Dojo"><span class="glyphicon glyphicon-info-sign col-lg-1 pull-right" aria-hidden="true"></span></a>
+      </div>
+    </div>
+    
+    <span class="help-block"></span>
+   
+    <button class="btn btn-primary col-lg-3 col-lg-offset-4" type="submit">Submit</button>
+  </form>
+</div>
+
+
