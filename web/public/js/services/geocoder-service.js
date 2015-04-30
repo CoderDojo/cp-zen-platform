@@ -20,7 +20,7 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
   var queryPause = 250;
 
   /**
-   * executeNext() - execute the next function in the queue. 
+   * executeNext() - execute the next function in the queue.
    *                  If a result is returned, fulfill the promise.
    *                  If we get an error, reject the promise (with message).
    *                  If we receive OVER_QUERY_LIMIT, increase interval and try again.
@@ -53,7 +53,7 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
         });
       } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         queryPause += 250;
-        $timeout(executeNext, queryPause);        
+        $timeout(executeNext, queryPause);
       } else if (status === google.maps.GeocoderStatus.REQUEST_DENIED) {
         queue.shift();
         task.d.reject({
@@ -94,11 +94,11 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
     boundsForCountry: function(country) {
       var d = $q.defer();
       var geocoder = new google.maps.Geocoder();
-      
+
       geocoder.geocode({address:country}, function (results, status) {
         if(status === google.maps.GeocoderStatus.OK) {
           var resultBounds = new google.maps.LatLngBounds(
-            results[0].geometry.viewport.getSouthWest(), 
+            results[0].geometry.viewport.getSouthWest(),
             results[0].geometry.viewport.getNorthEast()
           );
           d.resolve(resultBounds);
@@ -114,10 +114,10 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
     boundsForContinent: function(continent) {
       var d = $q.defer();
       var southWestCoordinates = new google.maps.LatLng(continentBounds[continent][0], continentBounds[continent][1]);
-      var northEastCoordinates = new google.maps.LatLng(continentBounds[continent][2], continentBounds[continent][3]); 
+      var northEastCoordinates = new google.maps.LatLng(continentBounds[continent][2], continentBounds[continent][3]);
       var resultBounds  = new google.maps.LatLngBounds(
         southWestCoordinates,
-        northEastCoordinates        
+        northEastCoordinates
       );
       d.resolve(resultBounds);
       return d.promise;
@@ -126,10 +126,25 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
       var d = $q.defer();
       var resultBounds  = new google.maps.LatLngBounds(
         min,
-        max    
+        max
       );
       d.resolve(resultBounds);
       return d.promise;
+    },
+    geocode: function(address) {
+      var d = $q.defer();
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({address:address}, function (results, status) {
+        if(status === google.maps.GeocoderStatus.OK) {
+          d.resolve(results);
+        } else {
+          d.reject({
+            type: 'error',
+            message: 'Error getting bounds for ' + address
+          });
+        }
+      });
+      return d.promise
     }
   };
 });
