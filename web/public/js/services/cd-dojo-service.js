@@ -71,11 +71,7 @@
         cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
       saveDojoLead: function(dojoLead, win, fail) {
-        if(dojoLead.id) {
-          cdApi.put('dojos/dojo_lead/' + dojoLead.id, { dojoLead: dojoLead }, win, fail || topfail);
-        } else {
-          cdApi.post('dojos/save_dojo_lead', { dojoLead: dojoLead }, win, fail || topfail);
-        }
+        cdApi.post('dojos/save_dojo_lead', { dojoLead: dojoLead }, win, fail || topfail);
       },
       loadUserDojoLead: function(userId, win, fail) {
         cdApi.get('dojos/user_dojo_lead/' + userId, win, fail || topfail);
