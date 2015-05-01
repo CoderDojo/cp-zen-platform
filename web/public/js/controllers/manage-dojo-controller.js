@@ -32,6 +32,17 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     return states;
   };
 
+  $scope.setStyle = function(agreements){
+    // TODO: single origin point for current agreement version
+    var currentAgreementVersion = 2;
+
+    var isSigned  = _.any(agreements, function(agreement) {
+      return agreement.agreementVersion === currentAgreementVersion;
+    });
+
+    return !isSigned ? {color:'red'} : {color: 'black'};
+  };
+
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
       $location.path('/dashboard/edit-dojo');
