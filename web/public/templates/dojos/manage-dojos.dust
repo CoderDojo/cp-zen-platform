@@ -61,7 +61,7 @@
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
-            <td><a title="{{ dojo.creatorEmail }}"href="mailto:{{ dojo.creatorEmail }}">{{ dojo.creatorEmail | characters:20 }}</a></td>
+            <td><a title="{{ dojo.creatorEmail }}" href="mailto:{{ dojo.creatorEmail }}" ng-style="setStyle(dojo.agreements)">{{ dojo.creatorEmail | characters:20 }}</a></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
             <td>
               <select name="verified" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control"
