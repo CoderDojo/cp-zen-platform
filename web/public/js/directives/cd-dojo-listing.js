@@ -1,18 +1,18 @@
 ;(function() {
   'use strict';
 
-function cdDojoList(){
+function cdDojoListing(){
     return {
       restrict: 'E',
-      templateUrl: '/content/dojos/cd-dojo-list-template.html',
+      templateUrl: '/dojos/template/start-dojo-wizard/step-six-dojo-listing',
       link: function (scope, element, attrs) { 
        
       }
     }
   }
 
-  angular
+angular
     .module('cpZenPlatform')
-    .directive('cdDojoList', cdDojoList)
+    .directive('cdDojoListing', cdDojoListing)
  
 }());

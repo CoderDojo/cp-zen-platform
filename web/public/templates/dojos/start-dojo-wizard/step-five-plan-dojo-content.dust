@@ -1,0 +1,7 @@
+<div id="main">
+  <form name="planDojoContentForm" novalidate angular-validator angular-validator-submit="submitPlanDojoContent()" role="form">
+    <button class="btn btn-primary col-lg-3 col-lg-offset-4" type="submit">Submit</button>
+  </form>
+</div>
+
+

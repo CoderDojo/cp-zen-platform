@@ -64,6 +64,8 @@
     <script src="/components/ngstorage/ngStorage.min.js"></script>
     <script src="/components/angular-sanitize/angular-sanitize.js"></script>
     <script src="/components/angular-wizard/dist/angular-wizard.min.js"></script>
+    <script src="/components/ckeditor/ckeditor.js"></script>
+    <script src="/components/ng-ckeditor/ng-ckeditor.js"></script>
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
 
     <script src="/seneca/init.js"></script>
