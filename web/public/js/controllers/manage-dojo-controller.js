@@ -69,7 +69,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     var query = _.omit({
       verified: filter.verified,
       stage: filter.stage,
-      alpha2: filter.country && filter.country.alpha2
+      alpha2: filter.country && filter.country.alpha2,
+      email: filter.email
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
