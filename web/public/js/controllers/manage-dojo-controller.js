@@ -239,15 +239,24 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   $scope.toggleSort = function ($event, columnName) {
-    var className, descFlag, sortConfig = {},sort = [];
+    var className, descFlag, sortConfig = {},sort = [], currentTargetEl;
+    
+    var DOWN = 'glyphicon-chevron-down';
+    var UP = 'glyphicon-chevron-up';
+    var ACTIVE_COL = 'active-column';
+    var ACTIVE_COL_CLASS = ".active-column";
 
     function isDesc(className) {
-      var result = className.indexOf('glyphicon-chevron-down');
+      var result = className.indexOf(DOWN);
 
       return result > -1 ? true : false;
     }
 
+    currentTargetEl = angular.element($event.currentTarget);
+
     className = $event.currentTarget.className;
+
+    angular.element(ACTIVE_COL_CLASS).removeClass(ACTIVE_COL);
 
     descFlag = isDesc(className);
 
@@ -255,17 +264,24 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       sortConfig[columnName] = {order: "asc"};
       sort.push(sortConfig);
 
-      angular.element($event.currentTarget)
-        .removeClass('glyphicon-chevron-down')
-        .addClass('glyphicon-chevron-up')
+      currentTargetEl
+        .removeClass(DOWN)
+        .addClass(UP);
       }
       else {
         sortConfig[columnName] = {order: "desc"};
         sort.push(sortConfig);
-        angular.element($event.currentTarget)
-          .removeClass('glyphicon-chevron-up')
-          .addClass('glyphicon-chevron-down')
+        currentTargetEl
+          .removeClass(UP)
+          .addClass(DOWN);
       }
+
+      currentTargetEl.addClass(ACTIVE_COL);
+
+    angular.element("span.sortable")
+      .not(ACTIVE_COL_CLASS)
+      .removeClass(UP)
+      .addClass(DOWN);
 
     $scope.sort = sort;
     $scope.loadPage($scope.filter, true);
