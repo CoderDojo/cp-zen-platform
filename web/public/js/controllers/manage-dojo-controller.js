@@ -25,7 +25,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     if (!_.any(agreements, function (agreement) {
         return agreement.agreementVersion === currentAgreementVersion;
       })) {
-      //
+      
       states = _.reject(states, function (state) { return state.value === 1 });
     }
 
@@ -65,15 +65,13 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    var filteredQuery = {};
-    filteredQuery.query = {};
-    filteredQuery.query.filtered = {};
+    var filteredQuery = { query: { filtered: {}}};
 
-    if(!_.isNull(filter.email) && filter.email !== '' && !_.isUndefined(filter.email)){
+    if(filter.email){
       filteredQuery.query.filtered.query = {
         "regexp" : {
           "email" : {
-              "value": ".*" + filter.email + ".*"
+            "value": ".*" + filter.email + ".*"
           }
         }
       };
