@@ -25,7 +25,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     if (!_.any(agreements, function (agreement) {
         return agreement.agreementVersion === currentAgreementVersion;
       })) {
-      //
+      
       states = _.reject(states, function (state) { return state.value === 1 });
     }
 
@@ -65,6 +65,17 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
+    var filteredQuery = { query: { filtered: {}}};
+
+    if(filter.email){
+      filteredQuery.query.filtered.query = {
+        "regexp" : {
+          "email" : {
+            "value": ".*" + filter.email + ".*"
+          }
+        }
+      };
+    }
 
     var query = _.omit({
       verified: filter.verified,
@@ -76,7 +87,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
 
-    var search = {
+    var meta = {
       sort: [{
         created: 'desc'
       }],
@@ -84,8 +95,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       size: $scope.itemsPerPage
     };
 
+    filteredQuery = _.extend(filteredQuery, meta);
+
     if (!_.isEmpty(query)) {
-      search.filter = {
+      filteredQuery.query.filtered.filter = {
         and: _.map(query, function (value, key) {
           var term = {};
           term[key] = value.toLowerCase ? value.toLowerCase() : value;
@@ -94,7 +107,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       };
     }
 
-    cdDojoService.search(search).then(function (result) {
+
+    cdDojoService.search(filteredQuery).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
         dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
         return dojo;

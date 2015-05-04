@@ -9,7 +9,7 @@
         <option value="0">Unverified</option>
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <label for="dojoStageFilter">Stage</label>
       <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage" ng-change="filterDojos()">
         <option value="">Any</option>
@@ -20,7 +20,7 @@
         <option value="5">Inactive</option>
       </select>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <label for="dojoCountryFilter">Country</label>
       <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" ng-change="filterDojos()" >
         <ui-select-match allow-clear="true" placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
@@ -29,11 +29,15 @@
         </ui-select-choices>
       </ui-select>
     </div>
-    <div class="col-md-2 padding-top-25">
+    <div class="col-md-3">
+      <label for="">Email</label>
+      <input type="text" class="form-control" ng-model="filter.email">
+    </div>
+    <div class="col-md-1 padding-top-25 pull-right">
       <div class="pull-right">
         <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
       </div>
-      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-12">
