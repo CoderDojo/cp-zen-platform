@@ -65,19 +65,31 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
+    var filteredQuery = {};
+    filteredQuery.query = {};
+    filteredQuery.query.filtered = {};
+
+    if(!_.isNull(filter.email) && filter.email !== '' && !_.isUndefined(filter.email)){
+      filteredQuery.query.filtered.query = {
+        "regexp" : {
+          "email" : {
+              "value": ".*" + filter.email + ".*"
+          }
+        }
+      };
+    }
 
     var query = _.omit({
       verified: filter.verified,
       stage: filter.stage,
-      alpha2: filter.country && filter.country.alpha2,
-      email: filter.email
+      alpha2: filter.country && filter.country.alpha2
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
 
-    var search = {
+    var meta = {
       sort: [{
         created: 'desc'
       }],
@@ -85,8 +97,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       size: $scope.itemsPerPage
     };
 
+    filteredQuery = _.extend(filteredQuery, meta);
+
     if (!_.isEmpty(query)) {
-      search.filter = {
+      filteredQuery.query.filtered.filter = {
         and: _.map(query, function (value, key) {
           var term = {};
           term[key] = value.toLowerCase ? value.toLowerCase() : value;
@@ -95,7 +109,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       };
     }
 
-    cdDojoService.search(search).then(function (result) {
+
+    cdDojoService.search(filteredQuery).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
         dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
         return dojo;
