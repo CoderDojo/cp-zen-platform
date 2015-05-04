@@ -67,6 +67,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     cb = cb || function () {};
     var filteredQuery = { query: { filtered: {}}};
 
+    $scope.sort = $scope.sort ? $scope.sort :[{ created: 'desc' }];
+
     if(filter.email){
       filteredQuery.query.filtered.query = {
         "regexp" : {
@@ -88,9 +90,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.dojos = [];
 
     var meta = {
-      sort: [{
-        created: 'desc'
-      }],
+      sort: $scope.sort,
       from: loadPageData.skip,
       size: $scope.itemsPerPage
     };
@@ -237,6 +237,40 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }
 
   };
+
+  $scope.toggleSort = function ($event, columnName) {
+    var className, descFlag, sortConfig = {},sort = [];
+
+    function isDesc(className) {
+      var result = className.indexOf('glyphicon-chevron-down');
+
+      return result > -1 ? true : false;
+    }
+
+    className = $event.currentTarget.className;
+
+    descFlag = isDesc(className);
+
+    if (descFlag) {
+      sortConfig[columnName] = {order: "asc"};
+      sort.push(sortConfig);
+
+      angular.element($event.currentTarget)
+        .removeClass('glyphicon-chevron-down')
+        .addClass('glyphicon-chevron-up')
+      }
+      else {
+        sortConfig[columnName] = {order: "desc"};
+        sort.push(sortConfig);
+        angular.element($event.currentTarget)
+          .removeClass('glyphicon-chevron-up')
+          .addClass('glyphicon-chevron-down')
+      }
+
+    $scope.sort = sort;
+    $scope.loadPage($scope.filter, true);
+  };
+
 
   auth.get_loggedin_user(function () {
     $scope.loadPage($scope.filter, true);
