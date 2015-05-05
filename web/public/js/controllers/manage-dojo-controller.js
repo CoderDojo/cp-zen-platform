@@ -67,6 +67,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     cb = cb || function () {};
     var filteredQuery = { query: { filtered: {}}};
 
+    $scope.sort = $scope.sort ? $scope.sort :[{ created: 'desc' }];
+
     if(filter.email){
       filteredQuery.query.filtered.query = {
         "regexp" : {
@@ -88,9 +90,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.dojos = [];
 
     var meta = {
-      sort: [{
-        created: 'desc'
-      }],
+      sort: $scope.sort,
       from: loadPageData.skip,
       size: $scope.itemsPerPage
     };
@@ -237,6 +237,56 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }
 
   };
+
+  $scope.toggleSort = function ($event, columnName) {
+    var className, descFlag, sortConfig = {},sort = [], currentTargetEl;
+    
+    var DOWN = 'glyphicon-chevron-down';
+    var UP = 'glyphicon-chevron-up';
+    var ACTIVE_COL = 'active-column';
+    var ACTIVE_COL_CLASS = ".active-column";
+
+    function isDesc(className) {
+      var result = className.indexOf(DOWN);
+
+      return result > -1 ? true : false;
+    }
+
+    currentTargetEl = angular.element($event.currentTarget);
+
+    className = $event.currentTarget.className;
+
+    angular.element(ACTIVE_COL_CLASS).removeClass(ACTIVE_COL);
+
+    descFlag = isDesc(className);
+
+    if (descFlag) {
+      sortConfig[columnName] = {order: "asc"};
+      sort.push(sortConfig);
+
+      currentTargetEl
+        .removeClass(DOWN)
+        .addClass(UP);
+      }
+      else {
+        sortConfig[columnName] = {order: "desc"};
+        sort.push(sortConfig);
+        currentTargetEl
+          .removeClass(UP)
+          .addClass(DOWN);
+      }
+
+      currentTargetEl.addClass(ACTIVE_COL);
+
+    angular.element("span.sortable")
+      .not(ACTIVE_COL_CLASS)
+      .removeClass(UP)
+      .addClass(DOWN);
+
+    $scope.sort = sort;
+    $scope.loadPage($scope.filter, true);
+  };
+
 
   auth.get_loggedin_user(function () {
     $scope.loadPage($scope.filter, true);

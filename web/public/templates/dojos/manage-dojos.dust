@@ -49,14 +49,14 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th class="col-md-3">Dojo</th>
-            <th class="col-md-1">Stage</th>
-            <th class="col-md-1">Country</th>
-            <th class="col-md-2">Email</th>
-            <th class="col-md-2">User</th>
-            <th class="col-md-1">Edit</th>
-            <th class="col-md-1">Verify</th>
-            <th class="col-md-1">Delete</th>
+            <th><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down blue-text">&nbsp;</span>Dojo</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Stage</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Country</th>
+            <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Email</th>
+            <th>User</th>
+            <th>Edit</th>
+            <th>Verify</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
