@@ -144,7 +144,7 @@
                   <div class="form-group">
                     <label class="col-lg-4">Coordinates</label>
                       <div class="col-lg-6">
-                        <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn-primary" value="Get location from address">
+                        <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
                       </div>
                       <div class="col-lg-8 pull-right google-map">
                         <section ng-if="mapLoaded" id="map">
@@ -163,6 +163,7 @@
                   <div class="form-group">
                     <label for="dojoNotes" ng-model="dojo.coordinates" class="col-lg-4">Notes</label>
                     <div class="col-lg-8">
+                      <pre>{{ editorOptions }}</pre>
                       <textarea ckeditor="editorOptions" ng-model="dojo.notes"></textarea>
                     </div>
                   </div>
@@ -222,7 +223,7 @@
 
                       </div>
                       <div class="col-lg-4 col-lg-offset-5">
-                        <button class="btn-primary" type="submit">{{ saveButtonText }}</button>
+                        <button class="btn btn-primary" type="submit">{{ saveButtonText }}</button>
                       </div>
                     </div>
                   </div>

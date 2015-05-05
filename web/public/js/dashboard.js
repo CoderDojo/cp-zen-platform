@@ -14,7 +14,9 @@ var app = angular.module('cpZenPlatform', [
   'ngSanitize',
   'ui.map',
   'truncate',
-  'mgo-angular-wizard'
+  'mgo-angular-wizard',
+  'checklist-model',
+  'sbDateSelect'
 ]);
 
 require('./services/auth-service');
