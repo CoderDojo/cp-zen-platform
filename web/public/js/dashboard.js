@@ -48,6 +48,9 @@ require('./directives/country-select');
 require('./directives/cd-register-account');
 require('./directives/cd-champion-registration');
 require('./directives/cd-gather-team');
+require('./directives/cd-find-venue');
+require('./directives/cd-plan-dojo-content');
+require('./directives/cd-dojo-listing');
 //--//
 
 function cdDashboardCtrl($scope, auth) {
@@ -179,6 +182,14 @@ app
         url: "/dashboard/champion-onboarding",
         templateUrl: '/champion/template/create',
         controller: 'champion-onboarding-controller'
+      })
+      .state("start-dojo-wizard", {
+        url: "/dashboard/start-dojo",
+        templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'start-dojo-wizard-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })

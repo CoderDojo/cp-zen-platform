@@ -28,12 +28,29 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="form-group">
-            <label for="plannedDojoLocation" class="col-lg-4">Planned Dojo Location*</label>
-              <div class="col-lg-6">
-                <input type="text" tooltip="Please let us know where in the world you are planning to set up your Dojo. eg. Town, City, State, Country" required required-message="'Planned Dojo Location is empty'" ng-model="champion.plannedDojoLocation" class="form-control" name="plannedDojoLocation" id="plannedDojoLocation">
-              </div>
+        <div class="form-group">
+          <label for="championCountry" class="col-lg-4">Country*</label>
+          <div class="col-lg-6">
+            <ui-select ng-model="champion.country" on-select="setCountry(champion, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
+              <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+              <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="championPlace" class="col-lg-4">City/Town*</label>
+          <div class="col-lg-6">
+            <ui-select ng-model="champion.place" ng-disabled="disabled" on-select="setPlace(champion, $item)" required required-message="'Select a place'">
+              <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-choices repeat="place in places"
+                  refresh="getPlaces(champion.country.alpha2, $select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
 
