@@ -331,12 +331,34 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 
   $scope.searchForDojo = function() {
     var dojoName = $scope.search.dojo;
+
     $scope.searchSelected = true;
     $scope.countrySelected = false;
     $scope.stateSelected = false;
     $scope.countryName = '';
-    cdDojoService.search({name:dojoName}, {}, function(response) {
-      $scope.dojos = response;
+
+    var search = {
+      query: {
+        multi_match: {
+          query: dojoName,
+          fields: ['name', 'placeName', 'admin1Name', 'admin2Name', 'address1', 'address2', 'countryName']
+        }
+      }
+    }
+
+    cdDojoService.search(search).then(function(result) {
+      var byCountry = _.groupBy(result.records, 'countryName');
+      _.each(_.keys(byCountry), function(countryName) {
+        var dojos = byCountry[countryName];
+        var byState = _.groupBy(dojos, 'admin1Name');
+        byCountry[countryName] = { states: byState };
+      });
+
+      $scope.dojoData =_.map(byCountry, function(dojoData, countryName) {
+        var pair = {}; pair[countryName] = dojoData; return pair;
+      });
+
+      $scope.dojos = result.records;
     });
   }
 
@@ -354,6 +376,92 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
         return prop;
       }
     }
+  }
+
+  function addMarkersToMap(dojos) {
+    $scope.countryMarkers = [];
+    _.each(dojos, function(dojo) {
+      if(dojo.coordinates) {
+        var coordinates = dojo.coordinates.split(',');
+        var marker = new google.maps.Marker({
+          map:$scope.model.map,
+          dojo:dojo.name,
+          dojoID:dojo.id,
+          position: new google.maps.LatLng(coordinates[0], coordinates[1])
+        });
+        $scope.countryMarkers.push(marker);
+      }
+    });
+  }
+
+  $scope.search = function() {
+    clearMarkerArrays();
+
+    var address = $scope.search.dojo;
+    Geocoder.geocode(address).then(function (results) {
+      if (!results.length) {
+        return;
+      }
+
+      var location = results[0].geometry.location;
+      var searchNearest = {
+        size: 1,
+        sort: [{
+          _geo_distance: {
+            geoPoint: {
+              lat: location.lat(),
+              lon: location.lng()
+            },
+            order: 'asc',
+            unit: 'km'
+          }
+        }]
+      };
+
+      if (results[0].geometry.bounds) {
+
+        var bounds =  results[0].geometry.bounds;
+        var searchInBounds = {
+          filter: {
+            geo_bounding_box: {
+              geoPoint: {
+                top_left: { lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng() },
+                bottom_right: { lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng() }
+              }
+            }
+          }
+        };
+
+        cdDojoService.search(searchInBounds).then(function(result) {
+          if (result.total > 0) {
+            $scope.searchResult = result.records;
+            addMarkersToMap(result.records);
+            $scope.model.map.fitBounds(bounds);
+          }
+          else {
+            cdDojoService.search(searchNearest).then(function(result) {
+              $scope.searchResult = result.records;
+              addMarkersToMap(result.records);
+
+              var closest = result.records[0];
+              $scope.model.map.setCenter(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
+              $scope.model.map.setZoom(15);
+            });
+          }
+        });
+      } else {
+        cdDojoService.search(searchNearest).then(function(result) {
+          $scope.searchResult = result.records;
+          addMarkersToMap(result.records);
+
+          var closest = result.records[0];
+          $scope.model.map.setCenter(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
+          $scope.model.map.setZoom(15);
+        });
+      }
+    }, function(reason) {
+      console.error(reason);
+    });
   }
 
 }

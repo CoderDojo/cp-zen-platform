@@ -1,18 +1,18 @@
 ;(function() {
   'use strict';
-  
-  function cdCharter(){
+
+function cdFindVenue(){
     return {
       restrict: 'E',
-      templateUrl: '/content/charter/cd-charter-template.html',
+      templateUrl: '/dojos/template/start-dojo-wizard/step-four-find-venue',
       link: function (scope, element, attrs) { 
        
       }
     }
   }
 
- angular
+angular
     .module('cpZenPlatform')
-    .directive('cdCharter', cdCharter)
+    .directive('cdFindVenue', cdFindVenue)
  
 }());

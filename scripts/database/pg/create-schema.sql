@@ -182,6 +182,7 @@ CREATE TABLE cd_dojos(
   place json,
   location character varying,
   coordinates character varying,
+  geo_point json,
   notes text,
   email character varying,
   website character varying,
@@ -261,6 +262,21 @@ CREATE TABLE cd_agreements(
   user_id character varying,
   id character varying NOT NULL,
   CONSTRAINT pk_cd_agreements PRIMARY KEY (id)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+DROP TABLE IF EXISTS cd_dojoleads CASCADE;
+
+CREATE TABLE cd_dojoleads(
+  user_id character varying,
+  email character varying,
+  application json,
+  current_step integer,
+  id character varying NOT NULL,
+  CONSTRAINT pk_cd_dojoleads PRIMARY KEY (id)
 )
 
 WITH (

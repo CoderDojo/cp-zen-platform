@@ -13,13 +13,13 @@ var app = angular.module('cpZenPlatform', [
   'ui.select',
   'ngSanitize',
   'ui.map',
-  'truncate'
+  'truncate',
+  'mgo-angular-wizard'
 ]);
 
 require('./services/auth-service');
 require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
-require('./services/cd-load-my-dojos-service');
 require('./services/geocoder-service');
 require('./services/cd-countries-service');
 
@@ -35,15 +35,23 @@ require('./controllers/edit-dojo-controller');
 require('./controllers/manage-dojo-controller');
 require('./controllers/stats-controller');
 require('./controllers/champion-onboarding-controller');
+require('./controllers/start-dojo-wizard-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
 require('./services/table-utils');
 require('./services/cd-users-service');
-require('./services/cd-manage-dojos-service');
 require('./services/cd-agreements-service');
 
 require('./directives/country-select');
+//--Dojo Wizard Directives--//
+require('./directives/cd-register-account');
+require('./directives/cd-champion-registration');
+require('./directives/cd-gather-team');
+require('./directives/cd-find-venue');
+require('./directives/cd-plan-dojo-content');
+require('./directives/cd-dojo-listing');
+//--//
 
 function cdDashboardCtrl($scope, auth) {
 
@@ -108,24 +116,6 @@ app
         },
         controller:'dojo-list-controller'
       })
-      .state("login", {
-        url: "/login",
-        templateUrl: '/login',
-        controller:'login',
-        params: {
-          referer:null
-        }
-      })
-      .state("register-account", {
-        url: "/register",
-        templateUrl: '/register',
-        controller: 'login'
-      })
-      .state("dojo-list-index", {
-        url: "/dojo-list-index",
-        templateUrl: '/dojos/template/dojo-list-index',
-        controller:'dojo-list-index-controller'
-      })
       .state("dojo-list", {
         url: "/dashboard/dojo-list",
         templateUrl: '/dojos/template/dojo-list',
@@ -144,17 +134,9 @@ app
         templateUrl:'/dojos/template/my-dojos',
         controller:'my-dojos-controller'
       })
-      .state("create-dojo-public", {
-        url: "/create-dojo",
-        templateUrl:'/dojos/template/create-dojo',
-        resolve: {
-          gmap: gmap
-        },
-        controller:'create-dojo-controller'
-      })
       .state("create-dojo", {
         url: "/dashboard/create-dojo",
-        templateUrl:'/dojos/template/create-dojo',
+        templateUrl:'/dojos/template/edit-dojo',
         resolve: {
           gmap: gmap
         },
@@ -192,7 +174,7 @@ app
         controller: 'manage-dojo-controller'
       })
       .state("stats", {
-        url: "/stats",
+        url: "/dashboard/stats",
         templateUrl: '/dojos/template/stats',
         controller: 'stats-controller'
       })
@@ -200,6 +182,14 @@ app
         url: "/dashboard/champion-onboarding",
         templateUrl: '/champion/template/create',
         controller: 'champion-onboarding-controller'
+      })
+      .state("start-dojo-wizard", {
+        url: "/dashboard/start-dojo",
+        templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+        resolve: {
+          gmap:gmap
+        },
+        controller:'start-dojo-wizard-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })

@@ -76,15 +76,29 @@ seneca.ready(function() {
       function(dojos, done) {
         console.log('processing', dojos.length, 'dojos');
         async.eachSeries(dojos, function(dojo, done) {
-          if(!dojo.coordinates) {
+          if (!dojo.coordinates) {
             return done();
           }
           // skip dojos that are already resolved
           //if (dojo.placeGeonameId) {
           //  return done();
           //}
-          var latitude = dojo.coordinates.split(',')[0];
-          var longitude = dojo.coordinates.split(',')[1];
+
+          var coordsPair = _.trim(dojo.coordinates, '@').split(',').map(parseFloat);
+          if (coordsPair.length === 2 && _.isFinite(coordsPair[0]) && _.isFinite(coordsPair[1])) {
+            dojo.geoPoint = {
+              lat: coordsPair[0],
+              lon: coordsPair[1]
+            }
+          }
+
+          if (!dojo.geoPoint) {
+            return done();
+          }
+
+          var latitude = coordsPair[0];
+          var longitude = coordsPair[1];
+
           async.series([
             function(done) {
               async.waterfall([

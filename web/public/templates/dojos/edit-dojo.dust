@@ -1,0 +1,260 @@
+<div class="cd-dashboard">
+  <div class="dojo-list-dashboard">
+
+    <div class="row">
+      <div class="cd-create-dojo-container">
+        <div ng-show="!user">
+          <h2>Create a Dojo</h2>
+          <div class="pre-game-warning">
+            <p>You are currently not signed in.</p>
+            <p>Please <a ui-sref="login({referer: createDojoUrl })">Login here</a> or <a href="#/register">Create an Account</a></p>
+          </div>
+        </div>
+
+        <div ng-show="!showCreateDojoForm() && user">
+          <h2>Become a Champion</h2>
+          <div class="pre-game-warning">
+            <p>To create a Dojo, you must first register to become a Champion.</p>
+            <p>Start by going to the <a ui-sref="champion-onboarding">Champion Registration page here</a></p>
+          </div>
+        </div>
+
+        <form ng-show="showCreateDojoForm()" id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+          <div class="create-dojo-sidebar col-lg-4">
+            <div class="widget">
+              <legend>Status Messages</legend>
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-lg-5">Need Mentors</label>
+                  <div class="col-lg-4 mailingListCheckbox">
+                    <div class="checkbox">
+                      <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
+                      <label for="needMentorsCheckbox"></label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row widget-block">
+                <label class="col-lg-5">Current Stage</label>
+                <div class="current-stage-radios">
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="In Planning" checked>
+                    <label for="inPlanning">
+                        In Planning
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="openComeAlong" value="Open, Come Along">
+                    <label for="openComeAlong">
+                        Open, come along
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="registerAhead" value="Register Ahead">
+                    <label for="registerAhead">
+                        Register Ahead
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="Full Up">
+                    <label for="Full Up">
+                        Full Up
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row widget-block">
+                <div class="form-group">
+                  <label class="col-lg-5">Private</label>
+                  <div class="col-lg-6 mailingListCheckbox">
+                    <div class="checkbox">
+                      <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
+                      <label for="privateCheckbox"></label>
+                    </div>
+                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation.
+                       eg. schools/universities/children of organisation's employees etc.</p>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="widget">
+              <legend>Supporters Image URL</legend>
+              <div class="col-lg-11">
+                <input type="text" ng-model="dojo.supporter_image" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
+              </div>
+            </div>
+
+          </div>
+
+          <div id="main">
+            <div class="pre-game-warning center-block">
+              <span>Pre-game warning!</span>
+              <p>Before you sign up to create a listing for your Dojo please complete our <a href="#">New Champion Registration Form</a>,
+                if you have not already.</p>
+            </div>
+            <div id="createDojoForm">
+              <legend>Dojo Information</legend>
+                <div class="row">
+                  <div class="form-group">
+                    <label for="dojoName" class="col-lg-4">Dojo Name*</label>
+                      <div class="col-lg-6">
+                        <input type="text" required required-message="'Name is empty'" ng-model="dojo.name" class="form-control" name="dojoName" id="dojoName">
+                        <p>Normally after an area, like "Cork" or multiple Dojos are in your area "San Fran @ GitHub".
+                          Try refrain from prefixing the name with "CoderDojo".</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoEmail" class="col-lg-4">Email*</label>
+                      <div class="col-lg-6">
+                        <input type="text" required required-message="'Email is empty'" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
+                        <p>This should be different to the personal email you signed up for an account here with.
+                          For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank.</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoTimes" class="col-lg-4">Times*</label>
+                      <div class="col-lg-6">
+                        <input type="text" required required-message="'Times are empty'" ng-model="dojo.time" class="form-control" name="dojoTimes" id="dojoTimes">
+                        <p>State whether it's every week or on a certain day (Eg. "Every Friday,
+                          5.30pm - 8pm or "Saturday 25th, 12pm - 3pm")</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoCountry" class="col-lg-4">Country*</label>
+                    <div class="col-lg-6">
+                      <ui-select ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
+                        <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+                        <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                          <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
+                      <p>Country</p>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoPlace" class="col-lg-4">Place*</label>
+                    <div class="col-lg-6">
+                      <ui-select ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required required-message="'Select a place'">
+                        <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+                        <ui-select-choices repeat="place in places"
+                            refresh="getPlaces(dojo.country.alpha2, $select.search)"
+                            refresh-delay="500">
+                          <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+                        </ui-select-choices>
+                      </ui-select>
+                      <p>City/Town/</p>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoAddress1" class="col-lg-4">Address*</label>
+                    <div class="col-lg-6">
+                      <input type="text" required required-message="'Address is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
+                      <p>Address of the Dojo (Eg. LIT Downtown Centre)</p>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-lg-4">Coordinates</label>
+                      <div class="col-lg-6">
+                        <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn-primary" value="Get location from address">
+                      </div>
+                      <div class="col-lg-8 pull-right google-map">
+                        <section ng-if="mapLoaded" id="map">
+                          <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                          <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
+                        </section>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <div class="col-lg-8 col-lg-offset-4">
+                        <input type="text" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="dojoNotes" ng-model="dojo.coordinates" class="col-lg-4">Notes</label>
+                    <div class="col-lg-8">
+                      <textarea ckeditor="editorOptions" ng-model="dojo.notes"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="other-information">
+                  <legend>Other Information</legend>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <label for="dojoGoogleGroup" class="col-lg-4">Google Group URL</label>
+                        <div class="col-lg-6">
+                          <input type="text" ng-model="dojo.google_group" class="form-control" name="dojoGoogleGroup" id="dojoGoogleGroup">
+                          <p>We recommend setting up a Discussion group so people can sign up for the latest
+                             happenings and news and contribute.</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <label for="dojoGoogleGroup" class="col-lg-4">Website</label>
+                        <div class="col-lg-6">
+                          <input type="text" ng-model="dojo.website" class="form-control" name="dojoWebsite" id="dojoWebsite">
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <label for="dojoTwitter" class="col-lg-4">Twitter</label>
+                        <div class="col-lg-6">
+                          <input type="text" ng-model="dojo.twitter" class="form-control" name="dojoTwitter" id="dojoTwitter">
+                          <p>Again, a useful way for sharing information and being found. We can also
+                            help share messages to followers.</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group">
+                      <label for="dojoMailingList" class="col-lg-4">Mailing List</label>
+                        <div class="col-lg-6 mailingListCheckbox">
+                          <div class="checkbox">
+                            <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
+                            <label for="mailingListCheckbox"></label>
+                          </div>
+                          <p>Receive monthly updates to your user email address from the CoderDojo community around the world that keep you
+                          informed and help you with running your Dojo.</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row center-block">
+                    <div class="form-group">
+                      <div class="col-lg-6">
+
+                      </div>
+                      <div class="col-lg-4 col-lg-offset-5">
+                        <button class="btn-primary" type="submit">{{ saveButtonText }}</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

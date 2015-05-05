@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <th>Dojo</th>
-            <th>Address</th>
+            <th>Location</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -14,7 +14,7 @@
         <tbody>
           <tr ng-repeat="myDojo in myDojos">
             <td>{{ myDojo.name }}</td>
-            <td>{{ myDojo.address1 }}, {{ myDojo.address2 }}</td>
+            <td>{{ myDojo.placeName }}</td>
             <td class="pointer" ng-click="editDojo(myDojo)">Edit</td>
             <td class="pointer" ng-click="deleteDojo(myDojo)">Delete</td>
           </tr>

@@ -1,16 +1,16 @@
 'use strict';
 
-function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService){
+function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService){
   $scope.load = function(){
     async.series([getContinentCodes, getCharters, getStats]);
   };
 
   function getCharters(cb){
-    cdAgreementsService.count({agreement_version: 2}, 
+    cdAgreementsService.count({agreement_version: 2},
       function(count){
         $scope.count = count;
         cb();
-      }, 
+      },
       function(err){
         alertService.showError('An error has occurred while loading Dojos: <br>' +
           (err.error || JSON.stringify(err))
@@ -30,7 +30,7 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
         alertService.showError('An error has occurred while loading Dojos: <br>' +
           (err.error || JSON.stringify(err))
         );
-        cb(err);        
+        cb(err);
       }
     );
   }
@@ -39,8 +39,8 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
     var totals = {}, overallTotal = {}, firstIteration = true;
 
     _.forEach(dojos, function(n, key) {
-      var total = {}; 
-      
+      var total = {};
+
       var allValues = _.pluck(n, 'all');
       var verifiedValues = _.pluck(n, 'verified');
       var activeValues = _.pluck(n, 'activeVerified');
@@ -48,16 +48,16 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
       for(var i = 0; i < n.length ; i++){
         total.all = total.all ? total.all : 0;
         total.all = +allValues[i] + total.all;
-        
+
         total.verified = total.verified ? total.verified : 0;
         total.verified = +verifiedValues[i] + total.verified;
 
         total.active = total.active ? total.active : 0;
         total.active = +activeValues[i] + total.active;
       }
-      
+
       totals[key] = total;
-      
+
       if(firstIteration){
         overallTotal.all = 0;
         overallTotal.verified = 0;
@@ -98,4 +98,4 @@ function statsCtrl($scope, dojoManagementService, alertService, auth, cdAgreemen
 }
 
 angular.module('cpZenPlatform')
-  .controller('stats-controller',['$scope', 'dojoManagementService', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', statsCtrl]);
+  .controller('stats-controller',['$scope', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', statsCtrl]);

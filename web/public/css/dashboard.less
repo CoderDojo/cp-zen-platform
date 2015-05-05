@@ -30,7 +30,7 @@ ul {
   span {
     padding-left:20px;
     padding-right:20px;
-    a { 
+    a {
       color:white;
     }
   }
@@ -59,10 +59,10 @@ ul {
   }
 }
 
-label { 
-	display: inline-block; 
+label {
+	display: inline-block;
 	font-size:14px;
-	text-align: right; 
+	text-align: right;
 }
 	​
 
@@ -72,21 +72,51 @@ label {
 
 .cd-dashboard {
 	background: white;
-  	padding: 20px;
-  	width: 90%;
-  	margin: 0 auto;
-  	margin-top: 20px;
-    a {
-      color:#315169;
+	padding: 20px;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 20px;
+  a {
+    color:#315169;
+  }
+  .my-dojos {
+    padding:20px;
+  }
+  .state-heading {
+    font-weight:bold;
+    margin-left:20px;
+  }
+  .start-dojo-wizard {
+    margin-bottom:20px;
+    .form-group input[type="checkbox"] {
+      display: none;
+    } 
+    .form-group input[type="checkbox"] + .btn-group > label span {
+      width: 20px;
     }
-    .my-dojos {
-      padding:20px;
+    .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+      display: none;
     }
-    .state-heading {
-      font-weight:bold;
-      margin-left:20px;
+    .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+      display: inline-block;   
     }
-}
+    .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+      display: inline-block;
+    }
+    .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+      display: none;   
+    }
+    .glyphicon-info-sign {
+      margin-top:7px;
+    }
+    .validationMessage {
+      position: relative;
+      width: 100%;
+      text-align: left;
+      line-height: 30px;
+    }
+  }
+}    
 
 .cd-dashboard2 {
   padding-right: 0;
@@ -153,11 +183,11 @@ label {
     }
   }
   #createChampionForm {
-    #main {
-      width: 590px;
-    }
     .form-group {
       margin-top:15px;
+    }
+    .pre-game-warning {
+      width:100%;
     }
     label {
       text-align:left;
@@ -180,8 +210,8 @@ label {
     p {
       color:#99999F;
     }
-    .angular-google-map-container { 
-      height: 300px; 
+    .angular-google-map-container {
+      height: 300px;
     }
     .google-map {
       margin-top:15px;
@@ -334,4 +364,30 @@ label {
 
 .left-margin-10 {
   margin-left: 10px;
+}
+
+.start-dojo-wizard-step {
+  margin-bottom:50px;
+}
+
+.cd-grid-table {
+  font-size: 13px;
+
+  margin-bottom: 0px;
+
+  tbody>tr>td {
+    vertical-align: middle;
+  }
+
+  .form-control, .btn {
+    font-size: 13px;
+  }
+
+  select {
+    min-width: 120px;
+  }
+}
+
+.active-column {
+  color: #00FF00;
 }

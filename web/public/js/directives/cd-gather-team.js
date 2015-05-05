@@ -1,18 +1,18 @@
 ;(function() {
   'use strict';
 
-function cdDojoList(){
+function cdGatherTeam(){
     return {
       restrict: 'E',
-      templateUrl: '/content/dojos/cd-dojo-list-template.html',
+      templateUrl: '/dojos/template/start-dojo-wizard/step-three-gather-team',
       link: function (scope, element, attrs) { 
        
       }
     }
   }
 
-  angular
+angular
     .module('cpZenPlatform')
-    .directive('cdDojoList', cdDojoList)
+    .directive('cdGatherTeam', cdGatherTeam)
  
 }());

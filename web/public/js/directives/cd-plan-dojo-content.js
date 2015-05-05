@@ -1,10 +1,10 @@
 ;(function() {
   'use strict';
 
-function cdMyDojos(){
+function cdPlanDojoContent(){
     return {
       restrict: 'E',
-      templateUrl: '/content/dojos/cd-my-dojos-template.html',
+      templateUrl: '/dojos/template/start-dojo-wizard/step-five-plan-dojo-content',
       link: function (scope, element, attrs) { 
        
       }
@@ -13,6 +13,6 @@ function cdMyDojos(){
 
 angular
     .module('cpZenPlatform')
-    .directive('cdMyDojos', cdMyDojos)
+    .directive('cdPlanDojoContent', cdPlanDojoContent)
  
 }());

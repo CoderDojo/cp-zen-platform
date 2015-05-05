@@ -28,9 +28,12 @@
     <!-- Angular UI Select -->
     <link href="/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
+    <!-- Angular Wizard -->
+    <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
-    <base href="/dashboard" />
+    <base href="/" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -70,6 +73,7 @@
     <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
     <script src="/content/auth/auth-front.js"></script>
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
+    <script src="/components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script src="/seneca/init.js"></script>
     <script src="/js/dashboard.js"></script>
   </body>

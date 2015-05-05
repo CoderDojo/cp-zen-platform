@@ -1,0 +1,168 @@
+<div id="main">
+  <div class="cd-create-dojo-container">
+    <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
+      <div id="main">
+        <h3>CoderDojo Champion Registration Form</h3>
+        <div class="pre-game-warning center-block">
+          <p>Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.</p>
+          <p>The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!</p>
+          <p>If you wish to learn more about starting a CoderDojo in your area please see: <a href="http://kata.coderdojo.com">http://kata.coderdojo.com/</a></p>
+        </div>
+
+        <legend>General Information</legend>
+        <div class="row">
+          <div class="form-group">
+            <label for="emailAddress" class="col-lg-4">Email Address*</label>
+              <div class="col-lg-6">
+                <input type="email" readonly required required-message="'Email is empty'" ng-model="champion.email" class="form-control" name="emailAddress" id="emailAddress">
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="fullName" class="col-lg-4">Full Name*</label>
+              <div class="col-lg-6">
+                <input type="text" readonly required required-message="'Name is empty'" ng-model="champion.name" class="form-control" name="fullName" id="fullName">
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="championCountry" class="col-lg-4">Country*</label>
+          <div class="col-lg-6">
+            <ui-select ng-model="champion.country" on-select="setCountry(champion, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
+              <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+              <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="championPlace" class="col-lg-4">City/Town*</label>
+          <div class="col-lg-6">
+            <ui-select ng-model="champion.place" ng-disabled="disabled" on-select="setPlace(champion, $item)" required required-message="'Select a place'">
+              <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-choices repeat="place in places"
+                  refresh="getPlaces(champion.country.alpha2, $select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="dateOfBirth" class="col-lg-4">Date of Birth*</label>
+            <div class="col-lg-6">
+              <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'Date of birth is empty'" ng-click="opened = true" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="telephoneNumber" class="col-lg-4">Telephone Number*</label>
+            <div class="col-lg-6">
+              <input type="text" tooltip="Please include country code." required required-message="'Telephone Number is empty'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber">
+            </div>
+          </div>
+        </div>
+
+        <legend>Experience</legend>
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="relevantExperience" class="col-lg-10">Do you have any relevant experience working with young people?*</label><br />
+            <div class="col-lg-6 col-lg-offset-4">
+              <textarea name="experience" required required-message="'Experience is empty'" class="form-control" tooltip="Please list your relevant experience working with young people" rows="5" ng-model="champion.experience"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="technicalExperience" class="col-lg-10">Please list any relevant technical experience. *</label><br />
+            <div class="col-lg-6 col-lg-offset-4">
+              <textarea name="technicalExperience" required required-message="'Technical Experience is empty'" class="form-control" tooltip="Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A" rows="5" 
+              ng-model="champion.technicalExperience"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="coderDojoReference" class="col-lg-10">How did you hear about CoderDojo?</label><br />
+            <div class="col-lg-6 col-lg-offset-4">
+              <textarea name="coderDojoReference" class="form-control" rows="5" ng-model="champion.coderDojoReference"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <legend>Social</legend>
+        <div class="row">
+          <div class="form-group">
+            <label for="twitter" class="col-lg-4">Twitter</label>
+              <div class="col-lg-6">
+                <input type="text" tooltip="If you wish please provide your username or a link to your Twitter page." ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="linkedIn" class="col-lg-4">LinkedIn</label>
+              <div class="col-lg-6">
+                <input type="text" tooltip="If you wish please provide your username or a link to your LinkedIn page." ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="googlePlus" class="col-lg-4">Google+</label>
+              <div class="col-lg-6">
+                <input type="text" tooltip="If you wish please provide your username or a link to your Google+" ng-model="champion.googlePlus" class="form-control" name="googlePlus" id="googlePlus">
+              </div>
+          </div>
+        </div>
+
+        <legend>Other</legend>
+        <div class="row">
+          <div class="form-group">
+            <label for="technicalMentorsAccess" class="col-lg-4">Do you have access to technical mentors? *</label>
+              <div class="col-lg-6">
+                <ui-select name="hasTechnicalMentors" ng-model="champion.hasTechnicalMentors" ng-disabled="disabled" required required-message="'Select an option'"
+                tooltip="It is recommended to find a team of interested local technical volunteers to mentor and to find non-technical volunteers, such as parents, who can help out and volunteer when they bring their children etc. You do not need to have a big team but it is always better to have support from a core team when organising a Dojo. You can then have planning meetings with your team in advance of setting up your Dojo">
+                    <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                    <ui-select-choices repeat="answer in answers">
+                      <span ng-bind-html="answer"></span>
+                    </ui-select-choices>
+                  </ui-select>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="venue" class="col-lg-4">Do you have access to a venue? *</label>
+              <div class="col-lg-6">
+                <ui-select name="hasVenue" ng-model="champion.hasVenue" ng-disabled="disabled" required required-message="'Select an option'"
+                tooltip="Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees.">
+                    <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                    <ui-select-choices repeat="answer in answers">
+                      <span ng-bind-html="answer"></span>
+                    </ui-select-choices>
+                  </ui-select>
+              </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary center-block" type="submit">Register</button>
+      </div>
+
+    </form>
+  </div>
+</div>

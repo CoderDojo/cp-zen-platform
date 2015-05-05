@@ -12,7 +12,7 @@ module.exports = _.defaults({
   },
 
   auth: {
-    restrict: ['/dashboard', '/charter', '/my-dojos'],
+    restrict: ['/dashboard'],
     redirect:{
       restrict: '/'
     },
