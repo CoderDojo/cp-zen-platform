@@ -11,7 +11,9 @@ var app = angular.module('cpZenPlatform', [
   'ui.map',
   'ui.select',
   'ngSanitize',
-  'mgo-angular-wizard'
+  'mgo-angular-wizard',
+  'checklist-model',
+  'sbDateSelect'
 ]);
 
 require('./controllers/login-controller');

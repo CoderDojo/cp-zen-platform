@@ -9,7 +9,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
     var createdDojoListing = false;
     var createdEvent = false;
     var promotedDojo = false;
-
+    $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
 
     var stepNames = ['Register Account',
@@ -30,17 +30,14 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         cdDojoService.loadUserDojoLead(user.id, function(dojoLead) {
           if(dojoLead.currentStep) {
             initStep(dojoLead.currentStep);
-            WizardHandler.wizard().goTo(dojoLead.currentStep);
           } else {
             initStep(1);
-            WizardHandler.wizard().goTo(1);
           }
         });
       }
     }, function () {
       //User not logged in
       initStep(0);
-      WizardHandler.wizard().goTo(0);
     });
 
     function initStep (step) {
@@ -79,8 +76,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           if(data.ok) {
             auth.login(user, function(data) {
               registeredSuccessfully = true;
-              setupStep1();
-              WizardHandler.wizard().next();
+              setupStep2();
             });
           } else {
             alertService.showAlert('There was a problem registering your account:' + data.why);
@@ -99,6 +95,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         if(registeredSuccessfully) return true;
         return false;      
       }
+      WizardHandler.wizard().goTo(0);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -114,6 +112,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         }
       });
 
+      $scope.languages = ['Java', 'JavaScript', 'C#', 'PHP', 'C++', 'Python', 'C', 'Ruby', 'Objective-C', 'Perl', 'Other'];
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
       
@@ -123,7 +122,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       };
 
       $scope.today = new Date();
-
       $scope.answers = ['Yes', 'No'];
 
       $scope.save = function(champion) {
@@ -134,8 +132,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
         cdDojoService.saveDojoLead(dojoLead, function(response) {
           championApplicationSent = true;
-          setupStep2();
-          WizardHandler.wizard().next();
+          setupStep3();
         });
       }
 
@@ -186,6 +183,17 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       $scope.preventEnterChampionRegistration = function () {
         return false;
       }
+
+      $scope.referredBy = [
+        "Google",
+        "Newspaper/Magazine",
+        "Radio",
+        "Family/Friends",
+        "Other"
+      ];
+
+      WizardHandler.wizard().goTo(1);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -205,7 +213,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
             teamGathered = true;
             setupStep4();
-            WizardHandler.wizard().next();
           });
         });
       }
@@ -214,7 +221,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         if(teamGathered) return true;
         return false;
       }
-
+      WizardHandler.wizard().goTo(2);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -236,11 +244,11 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function(response) {
             venueVerified = true;
             setupStep5();
-            WizardHandler.wizard().next();
           });
         });
       }
-
+      WizardHandler.wizard().goTo(3);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -257,10 +265,12 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function(response) {
             dojoContentComplete = true;
             setupStep6();
-            WizardHandler.wizard().next();
           });
         });
       }
+
+      WizardHandler.wizard().goTo(4);
+      $scope.stepFinishedLoading = true;
     }
 
     $scope.dojoContentComplete = function () {
@@ -274,7 +284,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       var currentUser;
       auth.get_loggedin_user(function(user) {
         currentUser = user;
-      })
+      });
 
       $scope.createdDojoListing = function() {
         if(createdDojoListing) return true;
@@ -338,7 +348,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function(response) {
             createdDojoListing = true;
             setupStep7();
-            WizardHandler.wizard().next();
           });
         })
       }
@@ -393,7 +402,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           });
         }
       }
-
+      WizardHandler.wizard().goTo(5);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -403,7 +413,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       $scope.createdEvent = function () {
         if(createdEvent) return true;
         return false;
-      } 
+      }
+      WizardHandler.wizard().goTo(6);
     }
     //--
 
@@ -413,6 +424,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         if(promotedDojo) return true;
         return false;
       }
+      WizardHandler.wizard().goTo(7);
     }
     //--
 }
