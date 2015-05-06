@@ -42,7 +42,6 @@
     "seneca-user-roles": "0.1.0",
     "seneca-web-access": "0.1.0",
     "serve-static": "^1.4.0",
-    "seneca-workflow": "^0.1.6",
     "slug": "^0.9.1",
     "yargs": "^3.7.2"
   },
