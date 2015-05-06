@@ -1,42 +1,72 @@
 <div class="cd-dashboard">
   <legend>Manage Dojos</legend>
   <div class="row">
-    <div class="col-md-2">
-      <label for="dojoVerifiedFilter">Verification</label>
-      <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified" ng-change="filterDojos()">
-        <option value="">Any</option>
-        <option value="1" selected="true">Verified</option>
-        <option value="0">Unverified</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <label for="dojoStageFilter">Stage</label>
-      <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage" ng-change="filterDojos()">
-        <option value="">Any</option>
-        <option value="1">In Planning</option>
-        <option value="2">Open, come along</option>
-        <option value="3">Register ahead</option>
-        <option value="4">Full up</option>
-        <option value="5">Inactive</option>
-      </select>
-    </div>
-    <div class="col-md-4">
-      <label for="dojoCountryFilter">Country</label>
-      <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" ng-change="filterDojos()" >
-        <ui-select-match allow-clear="true" placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
-        <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
-          <span ng-bind-html="country.countryName | highlight: $select.search"></span>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-    <div class="col-md-3">
-      <label for="">Email</label>
-      <input type="text" class="form-control" ng-model="filter.email">
-    </div>
-    <div class="col-md-1 padding-top-25 pull-right">
-      <div class="pull-right">
-        <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
+
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="dojoVerifiedFilter">Verification</label>
+            <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified" ng-change="filterDojos()">
+              <option value="">Any</option>
+              <option value="1" selected="true">Verified</option>
+              <option value="0">Unverified</option>
+            </select> 
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">          
+            <label for="dojoStageFilter">Stage</label>
+            <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage" ng-change="filterDojos()">
+              <option value="">Any</option>
+              <option value="1">In Planning</option>
+              <option value="2">Open, come along</option>
+              <option value="3">Register ahead</option>
+              <option value="4">Full up</option>
+              <option value="5">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dojoCountryFilter">Country</label>
+            <ui-select name="dojoCountryFilter" ng-model="filter.country" ng-disabled="disabled" ng-change="filterDojos()" >
+              <ui-select-match allow-clear="true" placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+              <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
       </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">          
+            <label for="">Dojo Email</label>
+            <input type="text" class="form-control" ng-model="filter.email">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="user-email">User Email</label>
+            <ui-select ng-model="" ng-disabled="" on-select="" required required-message="">
+              <ui-select-match placeholder="Seach for user email">{{ $select.selected  }}</ui-select-match>
+              <ui-select-choices repeat=""
+                  refresh=""
+                  refresh-delay="500">
+                <span ng-bind-html=" | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>        
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="padding-top-25 pull-right">
+        <div class="pull-right">
+          <button class="btn btn-primary" ng-click="filterDojos()">Filter</button>
+        </div>
+      </div> 
     </div>
   </div>
   <div class="row">
@@ -52,7 +82,8 @@
             <th><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down blue-text">&nbsp;</span>Dojo</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Stage</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Country</th>
-            <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Email</th>
+            <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Dojo Email</th>
+
             <th>User</th>
             <th>Edit</th>
             <th>Verify</th>
