@@ -2,8 +2,6 @@ var _ = require('lodash');
 var path = require('path');
 
 var base = require('./options.base.js');
-
-console.log("DOCKER", process.env.DOCKER_HOST);
 var host = '192.168.59.103';
 
 module.exports = _.defaults({
