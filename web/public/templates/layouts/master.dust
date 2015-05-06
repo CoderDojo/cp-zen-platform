@@ -53,6 +53,8 @@
     <script src="/components/angular/angular.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
+    <script src="/components/moment/min/moment.min.js"></script>
+    <script src="/components/angular-moment/angular-moment.min.js"></script>
     <script src="/components/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>

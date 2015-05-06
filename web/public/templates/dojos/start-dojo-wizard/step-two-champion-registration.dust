@@ -41,82 +41,65 @@
           <div class="form-group has-feedback">
             <label for="telephoneNumber" class="col-lg-4">Telephone Number*</label>
             <div class="col-lg-6">
-              <input type="text" tooltip="Please include country code." required required-message="'Telephone Number is empty'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber">
+              <input type="text" tooltip="Please include country code." required required-message="'Telephone Number is empty'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" autocomplete="off">
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="championCountry" class="col-lg-4">Country*</label>
-          <div class="col-lg-6">
-            <ui-select ng-model="champion.country" on-select="setCountry(champion, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
-              <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
-              <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
-                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
+        <div class="row">
+          <div class="form-group">
+            <label for="championCountry" class="col-lg-4">Country*</label>
+            <div class="col-lg-6">
+              <ui-select ng-model="champion.country" on-select="setCountry(champion, $item)" required required-message="'Select a country'" >
+                <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+                <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                  <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="championPlace" class="col-lg-4">City/Town*</label>
-          <div class="col-lg-6">
-            <ui-select ng-model="champion.place" ng-disabled="disabled" on-select="setPlace(champion, $item)" required required-message="'Select a place'">
-              <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
-              <ui-select-choices repeat="place in places"
-                  refresh="getPlaces(champion.country.alpha2, $select.search)"
-                  refresh-delay="500">
-                <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
+        <div class="row">
+          <div class="form-group">
+            <label for="championPlace" class="col-lg-4">City/Town*</label>
+            <div class="col-lg-6">
+              <ui-select ng-model="champion.place" on-select="setPlace(champion, $item)" required required-message="'Select a place'">
+                <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+                <ui-select-choices repeat="place in places"
+                    refresh="getPlaces(champion.country.alpha2, $select.search)"
+                    refresh-delay="500">
+                  <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
           </div>
         </div>
 
         <legend>Experience</legend>
         <div class="row">
-          <div class="form-group has-feedback">
-            <label for="relevantExperience" class="col-lg-10">Do you have any relevant experience working with young people?*</label><br />
-            <div class="col-lg-6 col-lg-offset-4">
-              <textarea name="experience" required required-message="'Experience is empty'" class="form-control" tooltip="Please list your relevant experience working with young people" rows="5" ng-model="champion.experience"></textarea>
+          <div class="form-group">
+            <label class="col-lg-4">Languages Spoken</label>
+            <div class="col-lg-6">
+              <div ng-repeat="language in languages" class="checkbox checkbox-primary">
+                <input type="checkbox" name="language-{{ language }}" id="language-{{ language }}" checklist-value="language" checklist-model="champion.languagesSpoken">
+                <label for="language-{{ language }}">
+                  {{ language }}
+                </label>
+              </div>
+              <input type="text" class="form-control other-languages" placeholder="Please specify other languages you have experience with" ng-model="champion.languagesSpokenOther" ng-show="otherLanguageSelected()" />
             </div>
           </div>
         </div>
+
 
         <div class="row">
-          <div class="form-group has-feedback">
-            <label for="technicalExperience" class="col-lg-10">Please list any relevant technical experience. *</label><br />
-            <div class="col-lg-6 col-lg-offset-4">
-              <textarea name="technicalExperience" required required-message="'Technical Experience is empty'" class="form-control" tooltip="Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A" rows="5" 
-              ng-model="champion.technicalExperience"></textarea>
-            </div>
+          <label for="projects" class="col-lg-3">Projects</label><br />
+          <div class="col-lg-6 col-lg-offset-4">
+            <textarea name="projects" class="form-control" placeholder="Please describe any websites, apps or open source work that you have done." rows="5" ng-model="champion.projects"></textarea>
           </div>
         </div>
-
-        <div class="form-group">
-          <label class="col-lg-4">Languages Spoken</label>
-          <div class="col-lg-6">
-            <div ng-repeat="language in languages" class="checkbox checkbox-primary">
-              <input type="checkbox" name="language-{{ language }}" id="language-{{ language }}" checklist-value="language" checklist-model="champion.languagesSpoken">
-              <label for="language-{{ language }}">
-                {{ language }}
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="coderDojoReference" class="col-lg-4">How did you hear about CoderDojo?</label>
-          <div class="col-lg-6">
-            <ui-select name="hasVenue" ng-model="champion.coderDojoReference">
-                <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
-                <ui-select-choices repeat="referer in referredBy">
-                  <span ng-bind-html="referer"></span>
-                </ui-select-choices>
-            </ui-select>
-            <input type="text" class="form-control" placeholder="Please specify where you heard about CoderDojo" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" />
-          </div>
-        </div>
-
+     
         <legend>Social</legend>
         <div class="row">
           <div class="form-group">
@@ -138,45 +121,46 @@
 
         <legend>Other</legend>
         <div class="row">
-          <div class="form-group">
-            <label for="technicalMentorsAccess" class="col-lg-4">Do you have access to technical mentors? *</label>
-            <div class="col-lg-1">
-              <div class="radio">
-                <input type="radio" ng-model="champion.hasTechnicalMentors" name="hasTechnicalMentors" id="hasTechnicalMentorsYes" value="yes">
-                <label for="hasTechnicalMentorsYes">
-                    Yes
-                </label>
-              </div>
+          <label class="col-lg-4">Prerequisites</label>
+          <div class="col-lg-6">
+
+            <div class="checkbox checkbox-primary">
+              <input type="checkbox" name="hasTechnicalMentors" id="hasTechnicalMentors" required required-message="'You must check this box before continuing.'" ng-model="champion.hasTechnicalMentorsAccess">
+              <label for="hasTechnicalMentors">
+                I have access to Technical Mentors
+              </label>
             </div>
-            <div class="col-lg-1">
-              <div class="radio">
-                <input type="radio" ng-model="champion.hasTechnicalMentors" name="hasTechnicalMentors" id="hasTechnicalMentorsNo" value="no">
-                <label for="hasTechnicalMentorsNo">
-                    No
-                </label>
-              </div>
+            <textarea class="form-control" ng-show="champion.hasTechnicalMentorsAccess === true" ng-model="champion.technicalMentorsDescription" rows="5" placeholder="Please give more information about your technical mentors team."></textarea>
+
+            <div class="checkbox checkbox-primary">
+              <input type="checkbox" name="hasVenue" id="hasVenue" required required-message="'You must check this box before continuing.'" ng-model="champion.hasVenueAccess">
+              <label for="hasVenue">
+                I have access to a Venue
+              </label>
             </div>
+            <textarea class="form-control venueInfoTextArea" ng-show="champion.hasVenueAccess === true" ng-model="champion.venueDescription" rows="5" placeholder="Please give more information about your venue."></textarea>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="projects" class="col-lg-3">Notes</label><br />
+          <div class="col-lg-6 col-lg-offset-4">
+            <textarea name="notes" class="form-control" placeholder="Please add any other relevant information." rows="5" ng-model="champion.notes"></textarea>
           </div>
         </div>
 
         <div class="row">
           <div class="form-group">
-            <label for="venue" class="col-lg-4">Do you have access to a venue? *</label>
-            <div class="col-lg-1">
-              <div class="radio">
-                <input type="radio" ng-model="champion.hasVenue" name="hasVenue" id="hasVenueYes" value="yes">
-                <label for="hasVenueYes">
-                    Yes
-                </label>
-              </div>
-            </div>
-            <div class="col-lg-1">
-              <div class="radio">
-                <input type="radio" ng-model="champion.hasVenue" name="hasVenue" id="hasVenueNo" value="no">
-                <label for="hasVenueNo">
-                    No
-                </label>
-              </div>
+            <label for="coderDojoReference" class="col-lg-4">How did you hear about CoderDojo?</label>
+            <div class="col-lg-6">
+              <ui-select name="coderDojoReference" ng-model="champion.coderDojoReference">
+                  <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                  <ui-select-choices repeat="referer in referredBy">
+                    <span ng-bind-html="referer"></span>
+                  </ui-select-choices>
+              </ui-select>
+              <input type="text" class="form-control cdReferenceOther" placeholder="Please specify where you heard about CoderDojo" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" />
             </div>
           </div>
         </div>
