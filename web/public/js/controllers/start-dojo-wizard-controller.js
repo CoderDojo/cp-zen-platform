@@ -350,9 +350,12 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           var dojoLead = response;
           dojoLead.application.dojoListing = dojo;
           dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-          cdDojoService.saveDojoLead(dojoLead, function(response) {
-            createdDojoListing = true;
-            setupStep7();
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            dojo.dojoLeadId = response.id;
+            cdDojoService.save(dojo, function (response) {
+              createdDojoListing = true;
+              setupStep7();
+            });
           });
         })
       }
@@ -420,6 +423,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         return false;
       }
       WizardHandler.wizard().goTo(6);
+      $scope.stepFinishedLoading = true;
     }
     //--
 
@@ -430,6 +434,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         return false;
       }
       WizardHandler.wizard().goTo(7);
+      $scope.stepFinishedLoading = true;
     }
     //--
 }

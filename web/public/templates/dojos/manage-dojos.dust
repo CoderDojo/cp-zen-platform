@@ -54,6 +54,7 @@
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Country</th>
             <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Email</th>
             <th>User</th>
+            <th>Application</th>
             <th>Edit</th>
             <th>Verify</th>
             <th>Delete</th>
@@ -66,6 +67,7 @@
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
             <td><a title="{{ dojo.creatorEmail }}" href="mailto:{{ dojo.creatorEmail }}" ng-style="setStyle(dojo.agreements)">{{ dojo.creatorEmail | characters:20 }}</a></td>
+            <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">View</a></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
             <td>
               <select name="verified" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control"
