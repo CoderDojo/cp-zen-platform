@@ -35,8 +35,8 @@ module.exports = _.defaults({
         create_reset: 'CoderDojo Password Reset'
       },
       content: {
-        resetlinkprefix: 'http://127.0.0.1:8000/reset',
-        confirmlinkprefix: 'http://127.0.0.1:8000/confirm'
+        resetlinkprefix: 'http://' + host + ':8000/reset',
+        confirmlinkprefix: 'http://' + host + ':8000/confirm'
       }
     }
   },
