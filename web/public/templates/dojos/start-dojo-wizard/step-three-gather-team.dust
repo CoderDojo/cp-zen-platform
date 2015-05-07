@@ -17,30 +17,30 @@
   <p>If you are setting up a new Dojo in the remote location where you have difficulties finding mentors, please reach out to us using this form and we will work together to connect you with remote mentors for your Dojo.</p>
 
   <h2>Checklist</h2>
-  <form name="dojoPreparationForm" novalidate angular-validator angular-validator-submit="submitDojoPreparation(dojoPreparation)" role="form">
+  <form name="gatherTeamForm" novalidate angular-validator angular-validator-submit="submitGatherTeam(gatherTeam)" role="form">
 
-    <div style="border: 1px dashed rgb(66, 139, 202);padding: 5px;margin:10px;">
+    <div class="gatherTeamChecklist">
       <div class="checkbox checkbox-primary">
-        <input type="checkbox" name="gatherTeam" id="gatherTeam" required required-message="'You must gather a team before continuing.'" ng-model="dojoPreparation.gatherTeam">
+        <input type="checkbox" name="gatherTeam" id="gatherTeam" required required-message="'You must gather a team before continuing.'" ng-model="gatherTeam.teamOrganised">
         <label for="gatherTeam">
             Gather Team
         </label>
       </div>
 
       <div class="checkbox checkbox-primary">
-        <input type="checkbox" name="findMentors" id="findMentors" required required-message="'You must find mentors before continuing.'" ng-model="dojoPreparation.findMentors">
+        <input type="checkbox" name="findMentors" id="findMentors" required required-message="'You must find mentors before continuing.'" ng-model="gatherTeam.findMentors">
         <label for="findMentors">
             Find Mentors
         </label>
       </div>
 
       <div class="checkbox checkbox-primary">
-        <input type="checkbox" name="backgroundCheck" id="backgroundCheck" ng-model="dojoPreparation.backgroundCheck">
+        <input type="checkbox" name="backgroundCheck" id="backgroundCheck" ng-model="gatherTeam.backgroundCheck">
         <label for="backgroundCheck">
           Background Check
         </label>
       </div>
-
+      <textarea name="backgroundCheckDescription" required required-message="'Background Check description is empty'" ng-if="gatherTeam.backgroundCheck === true" class="form-control" placeholder="Please describe how you have completed a background check on your team." rows="5" ng-model="gatherTeam.backgroundCheckDescription"></textarea>
     </div>
 
     <button class="btn btn-primary col-lg-3 col-lg-offset-4" type="submit">Submit</button>

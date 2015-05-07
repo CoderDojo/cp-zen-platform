@@ -142,6 +142,11 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         });
       });
 
+      $scope.otherLanguageSelected = function () {
+        var otherSelected = _.contains($scope.champion.languagesSpoken, 'Other');
+        return otherSelected;
+      }
+
       $scope.getPlaces = function(countryCode, search) {
         if (!countryCode || !search.length || search.length < 3) {
           $scope.places = [];
@@ -199,16 +204,16 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 
     //--Step Three:
     function setupStep3() {
-      $scope.dojoPreparation = { gatherTeam:false, findMentors: false, backgroundCheck:false };
+      $scope.gatherTeam = { teamOrganised:false, findMentors: false, backgroundCheck:false };
       var currentUser;
       auth.get_loggedin_user(function (user) {
         currentUser = user;
       });
 
-      $scope.submitDojoPreparation = function (dojoPreparation) {
+      $scope.submitGatherTeam = function (gatherTeam) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var updatedDojoLead = response;
-          updatedDojoLead.application.dojoPreparation = dojoPreparation;
+          updatedDojoLead.application.gatherTeam = gatherTeam;
           updatedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
             teamGathered = true;

@@ -163,7 +163,6 @@
                   <div class="form-group">
                     <label for="dojoNotes" ng-model="dojo.coordinates" class="col-lg-4">Notes</label>
                     <div class="col-lg-8">
-                      <pre>{{ editorOptions }}</pre>
                       <textarea ckeditor="editorOptions" ng-model="dojo.notes"></textarea>
                     </div>
                   </div>

@@ -1,7 +1,5 @@
 #header {
   background: #13181a;
-  height: 46px;
-  width: 100%;
   -webkit-box-shadow: inset 0 -1px rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
   -moz-box-shadow: inset 0 -1px 0 rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
   box-shadow: inset 0 -1px 0 rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
@@ -16,10 +14,9 @@
   background-size:contain;
 }
 .cd-logo-container {
-  padding-top: 12px;
-}
-.cd-user-name-container {
-  line-height: 46px;
+  margin:10px 0px 10px 5px;
+  width:100px;
+  float:left;
 }
 .cd-user-name {
   &:extend(.cp-pn-reg);
@@ -28,6 +25,9 @@
   color: #f1f1f1;
   font-size: 14px;
 }
+.cd-user-name-container{
+  margin:10px 5px;
+}
 .cd-logout {
   &:extend(.cp-pn-reg);
   float:right;
@@ -35,7 +35,7 @@
   color:#f1f1f1;
   font-size:14px;
   cursor:pointer;
-  margin-left: 5px;
+  margin-left:5px;
 }
 .cd-header-text {
   color:white;
