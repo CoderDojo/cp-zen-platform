@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, cdProfilesService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -287,6 +287,54 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.loadPage($scope.filter, true);
   };
 
+  $scope.getUsersByEmails = function(email){
+    if(!email || !email.length || email.length < 3) {
+      $scope.users = [];
+      return;
+    }
+    var win = function(users){
+      console.log(users);
+      $scope.users = users;
+    };
+
+    //TODO add failure callback
+    cdUsersService.getUsersByEmails(email, win);
+  };
+
+  $scope.getDojoIds = function(item){
+    if(!item){
+      $scope.loadPage($scope.filter, true);
+      return;
+    }
+
+    cdProfilesService.getProfiles(item.id, function(profiles){
+      console.log(profiles);
+      var dojoIds = _.pluck(profiles, 'dojoId');
+      var query = {filter: {ids : {"values": dojoIds}}};
+
+      
+
+      cdDojoService.search(query).then(function (result) {
+        $scope.dojos = _.map(result.records, function (dojo) {
+          dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
+          return dojo;
+        });
+
+        $scope.totalItems = result.total;
+
+        
+      }, function (err) {
+        alertService.showError('An error has occurred while loading Dojos: <br>' +
+          (err.error || JSON.stringify(err))
+        );
+
+      });
+
+
+    });
+
+  };
+
 
   auth.get_loggedin_user(function () {
     $scope.loadPage($scope.filter, true);
@@ -295,5 +343,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
-  ['$scope', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', 'cdCountriesService', manageDojosCtrl]);
+  ['$scope', 'alertService', 'auth', 
+  'tableUtils', 'cdDojoService', '$location', 
+  'cdCountriesService', 'cdUsersService', 'cdProfilesService', manageDojosCtrl]);
 

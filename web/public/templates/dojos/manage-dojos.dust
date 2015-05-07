@@ -49,12 +49,12 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="user-email">User Email</label>
-            <ui-select ng-model="" ng-disabled="" on-select="" required required-message="">
-              <ui-select-match placeholder="Seach for user email">{{ $select.selected  }}</ui-select-match>
-              <ui-select-choices repeat=""
-                  refresh=""
+            <ui-select ng-model="user.email" ng-disabled="false" on-select="getDojoIds($item)">
+              <ui-select-match allow-clear="true" placeholder="Seach for user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-choices repeat="user in users"
+                  refresh="getUsersByEmails($select.search)"
                   refresh-delay="500">
-                <span ng-bind-html=" | highlight: $select.search"></span>
+                <span ng-bind-html="user.email | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
           </div>
