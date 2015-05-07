@@ -38,6 +38,7 @@ require('./controllers/manage-dojo-controller');
 require('./controllers/stats-controller');
 require('./controllers/champion-onboarding-controller');
 require('./controllers/start-dojo-wizard-controller');
+require('./controllers/review-champion-application-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -192,6 +193,11 @@ app
           gmap:gmap
         },
         controller:'start-dojo-wizard-controller'
+      })
+      .state("review-champion-application", {
+        url: "/dashboard/champion-applications/:id",
+        templateUrl: '/champion/template/review-application',
+        controller: 'review-champion-application-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })

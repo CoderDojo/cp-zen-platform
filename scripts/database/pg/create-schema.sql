@@ -166,6 +166,7 @@ DROP TABLE IF EXISTS cd_dojos CASCADE;
 CREATE TABLE cd_dojos(
   id character varying NOT NULL,
   mysql_dojo_id int,
+  dojo_lead_id character varying,
   name character varying NOT NULL,
   creator character varying,
   created timestamp with time zone,
@@ -173,6 +174,7 @@ CREATE TABLE cd_dojos(
   verified_by character varying,
   verified smallint NOT NULL DEFAULT 0,
   need_mentors smallint NOT NULL DEFAULT 0,
+  mailing_list smallint NOT NULL DEFAULT 0,
   stage smallint NOT NULL DEFAULT 0,
   "time" character varying,
   "country" json,

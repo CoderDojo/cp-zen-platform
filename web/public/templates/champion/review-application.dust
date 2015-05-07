@@ -1,0 +1,134 @@
+<div class="cd-dashboard">
+  <div id="main">
+    <div class="cd-create-dojo-container">
+      <h1>Champion Application</h1>
+       <legend>General Information</legend>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="emailAddress" class="col-lg-4">Email Address</label>
+              <div class="col-lg-6">
+                <span>{{ dojoLead.championDetails.email }}</span>
+              </div>
+          </div>
+        </div>
+
+         <div class="row">
+          <div class="form-group">
+            <label for="fullName" class="col-lg-4">Full Name</label>
+              <div class="col-lg-6">
+                <span>{{ dojoLead.championDetails.name }}</span>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="dateOfBirth" class="col-lg-4">Date of Birth</label>
+            <div class="col-lg-6">
+              <span>{{ dojoLead.championDetails.dateOfBirth }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group has-feedback">
+            <label for="telephoneNumber" class="col-lg-4">Telephone Number</label>
+            <div class="col-lg-6">
+              <span>{{ dojoLead.championDetails.phone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="championCountry" class="col-lg-4">Country</label>
+            <div class="col-lg-6">
+             <span>{{ dojoLead.championDetails.country.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="championPlace" class="col-lg-4">City/Town</label>
+            <div class="col-lg-6">
+             <span>{{ dojoLead.championDetails.place.nameWithHierarchy }}</span>
+            </div>
+          </div>
+        </div>
+
+        <legend>Experience</legend>
+        <div class="row">
+          <div class="form-group">
+            <label class="col-lg-4">Languages Spoken</label>
+            <div class="col-lg-6">
+              <div ng-repeat="language in dojoLead.championDetails.languagesSpoken" class="checkbox checkbox-primary">
+               <span>{{ language }}</span>
+              </div>
+              <span> {{ dojoLead.championDetails.languagesSpokenOther }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="projects" class="col-lg-3">Projects</label><br />
+          <div class="col-lg-6 col-lg-offset-4">
+            <textarea readonly name="projects" class="form-control" rows="5">
+              {{ dojoLead.championDetails.projects }}
+            </textarea>
+          </div>
+        </div>
+
+        <legend>Social</legend>
+        <div class="row">
+          <div class="form-group">
+            <label for="twitter" class="col-lg-4">Twitter</label>
+              <div class="col-lg-6">
+                <span>{{ dojoLead.championDetails.twitter }}</span>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="linkedIn" class="col-lg-4">LinkedIn</label>
+              <div class="col-lg-6">
+               <span>{{ dojoLead.championDetails.linkedIn }}</span>
+              </div>
+          </div>
+        </div>
+
+        <legend>Other</legend>
+        <div class="row">
+          <label class="col-lg-4">Prerequisites</label>
+          <div class="col-lg-6">
+            <span>Has access to Technical Mentors: {{ dojoLead.championDetails.hasTechnicalMentorsAccess }}</span>
+            <textarea class="form-control" readonly ng-show="dojoLead.championDetails.hasTechnicalMentorsAccess === 'Yes'" rows="5">{{ dojoLead.championDetails.technicalMentorsDescription }}</textarea>
+          </div>
+          <div class="col-lg-6 col-lg-offset-4">
+            <span>Has access to a Venue: {{ dojoLead.championDetails.hasVenueAccess }}</span>
+            <textarea class="form-control venueInfoTextArea" readonly ng-show="dojoLead.championDetails.hasVenueAccess === 'Yes'" rows="5">{{ dojoLead.championDetails.venueDescription }}</textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="projects" class="col-lg-3">Notes</label><br />
+          <div class="col-lg-6 col-lg-offset-4">
+            <textarea name="notes" class="form-control" readonly rows="5">{{ dojoLead.championDetails.notes }}</textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="coderDojoReference" class="col-lg-4">How did you hear about CoderDojo?</label>
+            <div class="col-lg-6">
+              <span>{{ dojoLead.championDetails.coderDojoReference }}</span>
+              <span ng-show="dojoLead.championDetails.coderDojoReference === 'Other'">{{ dojoLead.championDetails.coderDojoReferenceOther }}</span>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
