@@ -96,15 +96,25 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     };
 
     filteredQuery = _.extend(filteredQuery, meta);
+    filteredQuery.query.filtered.filter = {bool: {must: []}};
 
     if (!_.isEmpty(query)) {
-      filteredQuery.query.filtered.filter = {
+
+      var andFilter = {
         and: _.map(query, function (value, key) {
           var term = {};
           term[key] = value.toLowerCase ? value.toLowerCase() : value;
           return {term: term};
         })
       };
+
+      filteredQuery.query.filtered.filter.bool.must.push(andFilter);
+
+    }
+
+    if($scope.filter.usersDojos){
+      var idsFilter =  {ids : {'values': $scope.filter.usersDojos}};
+      filteredQuery.query.filtered.filter.bool.must.push(idsFilter);
     }
 
 
@@ -292,45 +302,30 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       $scope.users = [];
       return;
     }
+
     var win = function(users){
-      console.log(users);
       $scope.users = users;
     };
 
-    //TODO add failure callback
-    cdUsersService.getUsersByEmails(email, win);
+    var fail = function(){
+      alertService.showError('An error has occurred while loading Dojos');
+    };
+
+    cdUsersService.getUsersByEmails(email, win, fail);
   };
 
   $scope.getDojoIds = function(item){
     if(!item){
+      $scope.filter.usersDojos = null;
       $scope.loadPage($scope.filter, true);
       return;
     }
 
     cdProfilesService.getProfiles(item.id, function(profiles){
-      console.log(profiles);
       var dojoIds = _.pluck(profiles, 'dojoId');
-      var query = {filter: {ids : {"values": dojoIds}}};
-
       
-
-      cdDojoService.search(query).then(function (result) {
-        $scope.dojos = _.map(result.records, function (dojo) {
-          dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
-          return dojo;
-        });
-
-        $scope.totalItems = result.total;
-
-        
-      }, function (err) {
-        alertService.showError('An error has occurred while loading Dojos: <br>' +
-          (err.error || JSON.stringify(err))
-        );
-
-      });
-
-
+      $scope.filter.usersDojos = dojoIds;
+      $scope.loadPage($scope.filter, true);
     });
 
   };
