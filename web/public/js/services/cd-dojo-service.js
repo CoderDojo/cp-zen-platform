@@ -75,6 +75,9 @@
       },
       loadUserDojoLead: function(userId, win, fail) {
         cdApi.get('dojos/user_dojo_lead/' + userId, win, fail || topfail);
+      },
+      loadDojoLead: function(id, win, fail) {
+        cdApi.get('dojos/dojo_lead/' + id, win, fail || topfail);
       }
     };
   }
