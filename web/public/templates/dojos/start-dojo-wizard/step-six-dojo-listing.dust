@@ -4,73 +4,7 @@
       <div class="cd-create-dojo-container">
         <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
           <div class="create-dojo-sidebar col-lg-4">
-            <div class="widget">
-              <legend>Status Messages</legend>
-              <div class="row">
-                <div class="form-group">
-                  <label class="col-lg-5">Need Mentors</label>
-                  <div class="col-lg-4 mailingListCheckbox">
-                    <div class="checkbox">
-                      <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
-                      <label for="needMentorsCheckbox"></label>
-                    </div>
-                  </div>
-                </div>
 
-              </div>
-              <div class="row widget-block">
-                <label class="col-lg-5">Current Stage</label>
-                <div class="current-stage-radios">
-                  <div class="radio">
-                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="In Planning" checked>
-                    <label for="inPlanning">
-                        In Planning
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="openComeAlong" value="Open, Come Along">
-                    <label for="openComeAlong">
-                        Open, come along
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="registerAhead" value="Register Ahead">
-                    <label for="registerAhead">
-                        Register Ahead
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="Full Up">
-                    <label for="Full Up">
-                        Full Up
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row widget-block">
-                <div class="form-group">
-                  <label class="col-lg-5">Private</label>
-                  <div class="col-lg-6 mailingListCheckbox">
-                    <div class="checkbox">
-                      <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
-                      <label for="privateCheckbox"></label>
-                    </div>
-                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation.
-                       eg. schools/universities/children of organisation's employees etc.</p>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-
-            <div class="widget">
-              <legend>Supporters Image URL</legend>
-              <div class="col-lg-11">
-                <input type="text" ng-model="dojo.supporter_image" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
-              </div>
-            </div>
 
           </div>
 
@@ -215,6 +149,71 @@
                         </div>
                     </div>
                   </div>
+
+            <div class="widget">
+              <legend>Status Messages</legend>
+              <div class="row">
+                <div class="form-group">
+                  <label class="col-lg-5">Need Mentors</label>
+                  <div class="col-lg-4 mailingListCheckbox">
+                    <div class="checkbox">
+                      <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
+                      <label for="needMentorsCheckbox"></label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row widget-block">
+                <label class="col-lg-5">Current Stage</label>
+                <div class="current-stage-radios">
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="In Planning" checked>
+                    <label for="inPlanning">
+                        In Planning
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="openComeAlong" value="Open, Come Along">
+                    <label for="openComeAlong">
+                        Open, come along
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="registerAhead" value="Register Ahead">
+                    <label for="registerAhead">
+                        Register Ahead
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="Full Up">
+                    <label for="Full Up">
+                        Full Up
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row widget-block">
+                <div class="form-group">
+                  <label class="col-lg-5">Private</label>
+                  <div class="col-lg-6 mailingListCheckbox">
+                    <div class="checkbox">
+                      <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
+                      <label for="privateCheckbox"></label>
+                    </div>
+                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation.
+                       eg. schools/universities/children of organisation's employees etc.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="widget">
+              <legend>Supporters Image URL</legend>
+              <div class="col-lg-11">
+                <input type="text" ng-model="dojo.supporter_image" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
+              </div>
+            </div>
 
                   <div class="row center-block">
                     <div class="form-group">
