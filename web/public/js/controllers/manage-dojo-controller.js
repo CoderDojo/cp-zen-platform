@@ -112,9 +112,14 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
     }
 
-    if($scope.filter.usersDojos){
+    if($scope.filter.usersDojos && $scope.filter.usersDojos.length > 0){
       var idsFilter =  {ids : {'values': $scope.filter.usersDojos}};
       filteredQuery.query.filtered.filter.bool.must.push(idsFilter);
+    } else if(typeof $scope.filter.usersDojos !== 'undefined'){
+      $scope.dojos = [];
+      $scope.totalItems = 0;
+      alertService.showError('An error has occurred while loading Dojos');
+      return;
     }
 
 
@@ -128,9 +133,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
       return cb();
     }, function (err) {
-      alertService.showError('An error has occurred while loading Dojos: <br>' +
-        (err.error || JSON.stringify(err))
-      );
+      alertService.showError('An error has occurred while loading Dojos');
 
       return cb(err);
     });
@@ -316,7 +319,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.getDojoIds = function(item){
     if(!item){
-      $scope.filter.usersDojos = null;
+      delete $scope.filter.usersDojos ;
       $scope.loadPage($scope.filter, true);
       return;
     }
@@ -324,6 +327,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     cdProfilesService.getProfiles(item.id, function(profiles){
       var dojoIds = _.pluck(profiles, 'dojoId');
       
+      dojoIds = _.filter(dojoIds, function(dojoId){
+        return dojoId !== null;
+      });
+
       $scope.filter.usersDojos = dojoIds;
       $scope.loadPage($scope.filter, true);
     });
