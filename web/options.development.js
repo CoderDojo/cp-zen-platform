@@ -2,22 +2,26 @@ var _ = require('lodash');
 var path = require('path');
 
 var base = require('./options.base.js');
-var host = '192.168.59.103';
+
+// Utility function for local development running with boot2docker
+// where we need the ip address of boot2docker instead of localhost.
+// This is for accessing containerised services.
+function localhost() {
+  if (process.env.DOCKER_HOST) {
+    return require('url').parse(process.env.DOCKER_HOST).hostname;
+  }
+  return '127.0.0.1';
+}
+
 
 module.exports = _.defaults({
-
-  'mongo-store': {
-     name: 'cd-zen-platform-development',
-     host: '127.0.0.1',
-     port: 27017
-  },
   'agreement-version' : 2,
   'postgresql-store': {
-    name: 'cd-zen-platform-development',
-    host: host,
-    port: 5432,
-    username: 'platform',
-    password: 'QdYx3D5y'
+    name: process.env.POSTGRES_NAME,
+    host: process.env.POSTGRES_HOST || localhost(),
+    port: process.env.POSTGRES_PORT || 5432,
+    username: process.env.POSTGRES_USERNAME,
+    password: process.env.POSTGRES_PASSWORD
   },
   auth: {
     restrict: ['/dashboard'],
@@ -35,8 +39,8 @@ module.exports = _.defaults({
         create_reset: 'CoderDojo Password Reset'
       },
       content: {
-        resetlinkprefix: 'http://' + host + ':8000/reset',
-        confirmlinkprefix: 'http://' + host + ':8000/confirm'
+        resetlinkprefix: 'http://' + '127.0.0.1' + ':8000/reset',
+        confirmlinkprefix: 'http://' + '127.0.0.1' + ':8000/confirm'
       }
     }
   },
