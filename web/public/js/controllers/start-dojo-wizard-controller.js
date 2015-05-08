@@ -153,8 +153,43 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           return;
         }
 
-        cdCountriesService.listPlaces(countryCode, search, function(places) {
-          $scope.places = _.map(places, function(place) {
+        var query = {
+          query: {
+            filtered: {
+              query: {
+                multi_match: {
+                  query: search,
+                  type: "phrase_prefix",
+                  fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
+                }
+              },
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      term: {
+                        countryCode: countryCode
+                      }
+                    },
+                    {
+                      term: {
+                        featureClass: "P"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          from: 0,
+          size: 100,
+          sort: [
+            { asciiname: "asc" }
+          ]
+        };
+
+        cdCountriesService.listPlaces(query).then(function(result) {
+          $scope.places = _.map(result, function(place) {
             return _.omit(place, 'entity$');
           });
         });
@@ -318,8 +353,43 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           return;
         }
 
-        cdCountriesService.listPlaces(countryCode, search, function(places) {
-          $scope.places = _.map(places, function(place) {
+        var query = {
+          query: {
+            filtered: {
+              query: {
+                multi_match: {
+                  query: search,
+                  type: "phrase_prefix",
+                  fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
+                }
+              },
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      term: {
+                        countryCode: countryCode
+                      }
+                    },
+                    {
+                      term: {
+                        featureClass: "P"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          from: 0,
+          size: 100,
+          sort: [
+            { asciiname: "asc" }
+          ]
+        };
+
+        cdCountriesService.listPlaces(query).then(function(result) {
+          $scope.places = _.map(result.records, function(place) {
             return _.omit(place, 'entity$');
           });
         });
