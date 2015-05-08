@@ -17,9 +17,9 @@
             <legend><h1>Venue</h1></legend>
             <cd-find-venue></cd-find-venue>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canexit="dojoContentComplete" title="Dojo Content">
-            <legend><h1>Plan Dojo Content</h1></legend>
-            <cd-plan-dojo-content></cd-plan-dojo-content>
+        <wz-step class="start-dojo-wizard-step" canexit="dojoContentComplete" title="Plan your Dojo">
+            <legend><h1>Plan your Dojo</h1></legend>
+            <cd-plan-your-dojo></cd-plan-your-dojo>
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" title="Dojo Listing">
             <h1>Create Dojo Listing</h1>

@@ -52,7 +52,7 @@ require('./directives/cd-register-account');
 require('./directives/cd-champion-registration');
 require('./directives/cd-gather-team');
 require('./directives/cd-find-venue');
-require('./directives/cd-plan-dojo-content');
+require('./directives/cd-plan-your-dojo');
 require('./directives/cd-dojo-listing');
 //--//
 
