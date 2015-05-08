@@ -5,18 +5,20 @@ function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService) {
   $scope.dojoLead;
 
   cdDojoService.loadDojoLead(applicationId, function(response) {
-  	var championDOB = moment(response.application.championDetails.dateOfBirth).format('MM/DD/YYYY');
-  	response.application.championDetails.dateOfBirth = championDOB;
+  	var championApplication = response.application.championDetails;
 
-  	var yesNoVal = response.application.championDetails.hasTechnicalMentorsAccess;
-  	yesNoVal ? yesNoVal = 'Yes' : yesNoVal = 'No';
-  	response.application.championDetails.hasTechnicalMentorsAccess = yesNoVal;
+  	var championDOB = moment(championApplication.dateOfBirth).format('MM/DD/YYYY');
+  	championApplication.dateOfBirth = championDOB;
 
-  	yesNoVal = response.application.championDetails.hasVenueAccess;
+  	var yesNoVal = championApplication.hasTechnicalMentorsAccess;
   	yesNoVal ? yesNoVal = 'Yes' : yesNoVal = 'No';
-  	response.application.championDetails.hasVenueAccess = yesNoVal;
-  	
-  	$scope.dojoLead = response.application;
+  	championApplication.hasTechnicalMentorsAccess = yesNoVal;
+
+  	yesNoVal = championApplication.hasVenueAccess;
+  	yesNoVal ? yesNoVal = 'Yes' : yesNoVal = 'No';
+  	championApplication.hasVenueAccess = yesNoVal;
+
+  	$scope.championApplication = championApplication;
 
   });
 }

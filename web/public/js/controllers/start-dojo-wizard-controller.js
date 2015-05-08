@@ -5,7 +5,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
     var championApplicationSent = false;
     var teamGathered = false;
     var venueVerified = false;
-    var dojoContentComplete = false;
+    var planYourDojoComplete = false;
     var createdDojoListing = false;
     var createdEvent = false;
     var promotedDojo = false;
@@ -16,7 +16,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
                      'Champion Registration',
                      'Gather Team',
                      'Find Venue',
-                     'Dojo Content',
+                     'Plan your Dojo',
                      'Dojo Listing',
                      'Create Event',
                      'Promote'];
@@ -112,7 +112,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         }
       });
 
-      $scope.languages = ['Java', 'JavaScript', 'C#', 'PHP', 'C++', 'Python', 'C', 'Ruby', 'Objective-C', 'Perl', 'Other'];
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
       
@@ -264,11 +263,12 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         currentUser = user;
       });
 
-      $scope.submitPlanDojoContent = function () {
+      $scope.submitPlanYourDojo = function (planDojo) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(dojoLead) {
           dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          dojoLead.application.planDojo = planDojo;
           cdDojoService.saveDojoLead(dojoLead, function(response) {
-            dojoContentComplete = true;
+            planYourDojoComplete = true;
             setupStep6();
           });
         });
@@ -279,7 +279,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
     }
 
     $scope.dojoContentComplete = function () {
-      if(dojoContentComplete) return true;
+      if(planYourDojoComplete) return true;
       return false;
     }
     //--

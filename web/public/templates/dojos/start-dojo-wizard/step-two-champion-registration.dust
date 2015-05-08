@@ -78,22 +78,6 @@
 
         <legend>Experience</legend>
         <div class="row">
-          <div class="form-group">
-            <label class="col-lg-4">Languages Spoken</label>
-            <div class="col-lg-6">
-              <div ng-repeat="language in languages" class="checkbox checkbox-primary">
-                <input type="checkbox" name="language-{{ language }}" id="language-{{ language }}" checklist-value="language" checklist-model="champion.languagesSpoken">
-                <label for="language-{{ language }}">
-                  {{ language }}
-                </label>
-              </div>
-              <input type="text" class="form-control other-languages" placeholder="Please specify other languages you have experience with" ng-model="champion.languagesSpokenOther" ng-show="otherLanguageSelected()" />
-            </div>
-          </div>
-        </div>
-
-
-        <div class="row">
           <label for="projects" class="col-lg-3">Projects</label><br />
           <div class="col-lg-6 col-lg-offset-4">
             <textarea name="projects" class="form-control" placeholder="Please describe any websites, apps or open source work that you have done." rows="5" ng-model="champion.projects"></textarea>
@@ -120,29 +104,6 @@
         </div>
 
         <legend>Other</legend>
-        <div class="row">
-          <label class="col-lg-4">Prerequisites</label>
-          <div class="col-lg-6">
-
-            <div class="checkbox checkbox-primary">
-              <input type="checkbox" name="hasTechnicalMentors" id="hasTechnicalMentors" required required-message="'You must check this box before continuing.'" ng-model="champion.hasTechnicalMentorsAccess">
-              <label for="hasTechnicalMentors">
-                I have access to Technical Mentors
-              </label>
-            </div>
-            <textarea class="form-control" ng-show="champion.hasTechnicalMentorsAccess === true" ng-model="champion.technicalMentorsDescription" rows="5" placeholder="Please give more information about your technical mentors team."></textarea>
-
-            <div class="checkbox checkbox-primary">
-              <input type="checkbox" name="hasVenue" id="hasVenue" required required-message="'You must check this box before continuing.'" ng-model="champion.hasVenueAccess">
-              <label for="hasVenue">
-                I have access to a Venue
-              </label>
-            </div>
-            <textarea class="form-control venueInfoTextArea" ng-show="champion.hasVenueAccess === true" ng-model="champion.venueDescription" rows="5" placeholder="Please give more information about your venue."></textarea>
-
-          </div>
-        </div>
-
         <div class="row">
           <label for="projects" class="col-lg-3">Notes</label><br />
           <div class="col-lg-6 col-lg-offset-4">
