@@ -1,6 +1,6 @@
 'use strict';
 
-function cdCountriesService(cdApi){
+function cdCountriesService($q, cdApi){
     function topfail(err){
       console.log(err);
     }
@@ -9,8 +9,10 @@ function cdCountriesService(cdApi){
       listCountries: function(win, fail){
         cdApi.get('geo/countries', win, fail || topfail);
       },
-      listPlaces: function(countryCode, search, win, fail) {
-        cdApi.get('geo/places/' + countryCode + '?search=' + search, win, fail || topfail);
+      listPlaces: function(search) {
+        return $q(function(resolve, reject) {
+          cdApi.post('geo/places', { search: search }, resolve, reject);
+        });
       },
       loadContinentsLatLongData: function(win, fail) {
         cdApi.get('geo/continents_lat_long', win, fail || topfail);
@@ -30,5 +32,5 @@ function cdCountriesService(cdApi){
     }
   }
 angular.module('cpZenPlatform')
-  .service('cdCountriesService', ['cdApi', cdCountriesService])
+  .service('cdCountriesService', ['$q', 'cdApi', cdCountriesService])
 ;

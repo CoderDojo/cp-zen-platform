@@ -23,3 +23,12 @@ add-users:
 es-delete-index:
 	@echo "\nDeleting '$(ES_INDEX)' index \n" ;
 	curl -XDELETE '$(ES_PROTOCOL)://$(ES_HOST):$(ES_PORT)/$(ES_INDEX)?pretty'
+
+es-index-dojos:
+	cd ../cp-dojos-service/ && ./start.sh scripts/es-index-dojos-data.js development
+
+es-index-countries-geo:
+	cd ../cp-countries-service/ && ./start.sh scripts/countries-import.js development
+	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=no-country" development
+	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=IE" development
+	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=RO" development
