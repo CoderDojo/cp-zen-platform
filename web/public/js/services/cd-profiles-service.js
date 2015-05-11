@@ -6,8 +6,8 @@ function cdProfilesService(cdApi){
   }
 
   return {
-    getProfiles : function(id, win, fail){
-      cdApi.get('profiles/' + id, win, fail || topfail);
+    getProfiles : function(query, win, fail){
+      cdApi.post('profiles', {query: query}, win, fail || topfail);
     }
   };
 }
