@@ -97,7 +97,13 @@
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
-            <td><a title="{{ dojo.creatorEmail }}" href="mailto:{{ dojo.creatorEmail }}" ng-style="setStyle(dojo.agreements)">{{ dojo.creatorEmail | characters:20 }}</a></td>
+            <td>
+              <ul ng-repeat="creatorEmail in dojo.creatorEmails">
+                <li>
+                  <a title="{{ creatorEmail }}" href="mailto:{{ creatorEmail }}" ng-style="setStyle(dojo.agreements)">{{ creatorEmail | characters:20 }}</a>
+                </li>
+              </ul>
+            </td>
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">View</a></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">Edit</button></td>
             <td>
