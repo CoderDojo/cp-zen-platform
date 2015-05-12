@@ -121,7 +121,7 @@
                   <div class="form-group">
                     <label for="dojoPlace" class="col-lg-4">Place*</label>
                     <div class="col-lg-6">
-                      <ui-select ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required required-message="'Select a place'">
+                      <ui-select ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required-message="'Select a place'">
                         <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
                             refresh="getPlaces(dojo.country.alpha2, $select.search)"

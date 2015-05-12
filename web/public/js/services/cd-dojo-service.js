@@ -78,6 +78,9 @@
       },
       loadDojoLead: function(id, win, fail) {
         cdApi.get('dojos/dojo_lead/' + id, win, fail || topfail);
+      },
+      loadSetupDojoSteps: function(win, fail) {
+        cdApi.get('load_setup_dojo_steps', win, fail || topfail);
       }
     };
   }

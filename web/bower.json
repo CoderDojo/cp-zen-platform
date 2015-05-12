@@ -31,7 +31,7 @@
     "underscore": "1.7.0",
     "googlemaps-js-marker-clusterer": "1.0.0",
     "angular-truncate": "*",
-    "angular-wizard": "0.4.3",
+    "angular-wizard": "https://github.com/david-cahill/angular-wizard.git#master",
     "slug": "0.9.1",
     "checklist-model": "0.2.4",
     "angular-sb-date-select": "0.3.5"

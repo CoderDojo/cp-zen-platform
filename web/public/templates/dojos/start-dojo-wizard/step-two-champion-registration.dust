@@ -1,4 +1,4 @@
-<div id="main">
+<div id="main" ng-show="championRegistrationFormVisible">
   <div class="cd-create-dojo-container">
     <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
@@ -64,7 +64,7 @@
           <div class="form-group">
             <label for="championPlace" class="col-lg-4">City/Town*</label>
             <div class="col-lg-6">
-              <ui-select ng-model="champion.place" on-select="setPlace(champion, $item)" required required-message="'Select a place'">
+              <ui-select ng-model="champion.place" on-select="setPlace(champion, $item)">
                 <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                 <ui-select-choices repeat="place in places"
                     refresh="getPlaces(champion.country.alpha2, $select.search)"

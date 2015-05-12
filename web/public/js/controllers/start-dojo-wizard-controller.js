@@ -3,23 +3,17 @@
 function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, Geocoder, gmap) {
     var registeredSuccessfully = false;
     var championApplicationSent = false;
-    var teamGathered = false;
-    var venueVerified = false;
-    var planYourDojoComplete = false;
+    var dojoSetup = false;
     var createdDojoListing = false;
-    var createdEvent = false;
-    var promotedDojo = false;
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
-
-    var stepNames = ['Register Account',
-                     'Champion Registration',
-                     'Gather Team',
-                     'Find Venue',
-                     'Plan your Dojo',
-                     'Dojo Listing',
-                     'Create Event',
-                     'Promote'];
+    var currentStepInt;
+    var stepNames = [
+                      'Register Account',
+                      'Champion Registration',
+                      'Setup your Dojo',
+                      'Dojo Listing'
+                    ];
 
     //Check if user has already started the wizard.
     auth.get_loggedin_user(function(user) {
@@ -28,6 +22,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         $window.location.href = '/dashboard/start-dojo';
       } else {
         cdDojoService.loadUserDojoLead(user.id, function(dojoLead) {
+          currentStepInt = dojoLead.currentStep;
           if(dojoLead.currentStep) {
             initStep(dojoLead.currentStep);
           } else {
@@ -54,23 +49,32 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         case 3:
           setupStep4();
           break;
-        case 4:
-          setupStep5();
-          break;
-        case 5:
-          setupStep6();
-          break;
-        case 6:
-          setupStep7();
-          break;
-        case 7:
-          setupStep8();
-          break;
       }
+    }
+
+    $scope.preventEnterRegisterAccount = function () {
+      if(currentStepInt > 0) return false;
+      return true;
+    }
+
+    $scope.preventEnterChampionRegistration = function () {
+      if(currentStepInt > 1) return false;
+      return true;
+    }
+
+    $scope.preventEnterSetupDojo = function () {
+      if(currentStepInt > 2) return false;
+      return true;
+    }
+
+    $scope.preventEnterDojoListing = function () {
+      if(currentStepInt > 3) return false;
+      return true;
     }
 
     //--Step One:
     function setupStep1() {
+      $scope.hideIndicators = true;
       $scope.doRegister = function(user) {
         auth.register(user, function(data) {
           if(data.ok) {
@@ -87,10 +91,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         });
       }
 
-      $scope.preventEnterRegisterAccount = function () {
-        return false;
-      }
-
       $scope.accountSuccessfullyRegistered = function () {
         if(registeredSuccessfully) return true;
         return false;      
@@ -102,6 +102,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 
     //--Step Two:
     function setupStep2() {
+      $scope.hideIndicators = false;
+      $scope.championRegistrationFormVisible = true;
       var currentUser;
       $scope.champion = {};
       auth.get_loggedin_user(function (user) {
@@ -130,9 +132,17 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         dojoLead.email = currentUser.email;
         dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
         cdDojoService.saveDojoLead(dojoLead, function(response) {
-          championApplicationSent = true;
-          setupStep3();
+          $scope.showCharterAgreement();
         });
+      }
+
+      $scope.showCharterAgreement = function () {
+        $scope.championRegistrationFormVisible = false;
+      }
+
+      $scope.acceptCharterAgreement = function () {
+        championApplicationSent = true;
+        setupStep3();
       }
 
       cdCountriesService.listCountries(function(countries) {
@@ -219,10 +229,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         return false;
       }
 
-      $scope.preventEnterChampionRegistration = function () {
-        return false;
-      }
-
       $scope.referredBy = [
         "Google",
         "Newspaper/Magazine",
@@ -231,96 +237,58 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         "Other"
       ];
 
-      WizardHandler.wizard().goTo(1);
+      WizardHandler.wizard().goTo(1, true);
       $scope.stepFinishedLoading = true;
     }
     //--
 
     //--Step Three:
     function setupStep3() {
-      $scope.gatherTeam = { teamOrganised:false, findMentors: false, backgroundCheck:false };
+      $scope.hideIndicators = false;
+      $scope.setupDojo = {};
       var currentUser;
       auth.get_loggedin_user(function (user) {
         currentUser = user;
       });
 
-      $scope.submitGatherTeam = function (gatherTeam) {
+      $scope.dojoSetup = function () {
+        if(dojoSetup) return true;
+        return false;
+      }
+
+      cdDojoService.loadSetupDojoSteps(function (response) {
+        $scope.steps = response;
+      });
+
+      $scope.submitSetupYourDojo = function (setupDojo) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var updatedDojoLead = response;
-          updatedDojoLead.application.gatherTeam = gatherTeam;
+          updatedDojoLead.application.setupYourDojo = setupDojo;
           updatedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
-            teamGathered = true;
+            dojoSetup = true;
             setupStep4();
           });
         });
       }
 
-      $scope.teamGathered = function () {
-        if(teamGathered) return true;
-        return false;
+      $scope.openAllSteps = function (context) {
+        var formInvalid = context.setupYourDojoForm.$invalid;
+        if(formInvalid) {
+          $scope.steps.map(function(step){
+            step.open = true;
+          });
+        }
       }
-      WizardHandler.wizard().goTo(2);
+
+      WizardHandler.wizard().goTo(2, true);
       $scope.stepFinishedLoading = true;
     }
     //--
 
     //--Step Four:
     function setupStep4() {
-      var currentUser;
-      auth.get_loggedin_user(function(user) {
-        currentUser = user;
-      });
-
-      $scope.venueVerified = function () {
-        if(venueVerified) return true;
-        return false;
-      }
-
-      $scope.submitFindVenue = function () {
-        cdDojoService.loadUserDojoLead(currentUser.id, function(dojoLead) {
-          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-          cdDojoService.saveDojoLead(dojoLead, function(response) {
-            venueVerified = true;
-            setupStep5();
-          });
-        });
-      }
-      WizardHandler.wizard().goTo(3);
-      $scope.stepFinishedLoading = true;
-    }
-    //--
-
-    //--Step Five:
-    function setupStep5() {
-      var currentUser;
-      auth.get_loggedin_user(function(user) {
-        currentUser = user;
-      });
-
-      $scope.submitPlanYourDojo = function (planDojo) {
-        cdDojoService.loadUserDojoLead(currentUser.id, function(dojoLead) {
-          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-          dojoLead.application.planDojo = planDojo;
-          cdDojoService.saveDojoLead(dojoLead, function(response) {
-            planYourDojoComplete = true;
-            setupStep6();
-          });
-        });
-      }
-
-      WizardHandler.wizard().goTo(4);
-      $scope.stepFinishedLoading = true;
-    }
-
-    $scope.dojoContentComplete = function () {
-      if(planYourDojoComplete) return true;
-      return false;
-    }
-    //--
-
-    //--Step Six:
-    function setupStep6() {
+      $scope.hideIndicators = false;
       var currentUser;
       auth.get_loggedin_user(function(user) {
         currentUser = user;
@@ -403,6 +371,19 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         dojo.alpha3 = country.alpha3;
       };
 
+      var initContent = "<p><ul> \
+        <li>A pack lunch</li> \
+        <li>A laptop. Borrow one from somebody if needs be.</li> \
+        <li><b>A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.</b></li> \
+        </ul></p>";
+
+      $scope.editorOptions = {
+        language: 'en',
+        uiColor: '#000000',
+        height:'200px',
+        initContent:initContent
+      };
+
       $scope.setPlace = function(dojo, place) {
         dojo.placeName = place.name;
         dojo.placeGeonameId = place.geonameId;
@@ -424,7 +405,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
               createdDojoListing = true;
-              setupStep7();
+              //TO-DO:Go to Dojo Listing page when dojo is saved.
             });
           });
         })
@@ -452,19 +433,6 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         $scope.dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
       };
 
-      var initContent = "<p><ul> \
-        <li>A pack lunch</li> \
-        <li>A laptop. Borrow one from somebody if needs be.</li> \
-        <li><b>A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.</b></li> \
-        </ul></p>";
-
-      $scope.editorOptions = {
-        language: 'en',
-        uiColor: '#000000',
-        height:'200px',
-        initContent:initContent
-      };
-
       $scope.getLocationFromAddress = function(dojo) {
         if(dojo && dojo.place) {
           var address = dojo.placeName;
@@ -480,33 +448,11 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           });
         }
       }
-      WizardHandler.wizard().goTo(5);
+      WizardHandler.wizard().goTo(3, true);
       $scope.stepFinishedLoading = true;
     }
     //--
 
-    //TO DO: Step 7 & Step 8 Templates
-    //--Step Seven:
-    function setupStep7() {
-      $scope.createdEvent = function () {
-        if(createdEvent) return true;
-        return false;
-      }
-      WizardHandler.wizard().goTo(6);
-      $scope.stepFinishedLoading = true;
-    }
-    //--
-
-    //--Step Eight:
-    function setupStep8() {
-      $scope.promotedDojo = function () {
-        if(promotedDojo) return true;
-        return false;
-      }
-      WizardHandler.wizard().goTo(7);
-      $scope.stepFinishedLoading = true;
-    }
-    //--
 }
 
 angular.module('cpZenPlatform')

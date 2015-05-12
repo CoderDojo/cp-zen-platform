@@ -37,6 +37,8 @@ require('./directives/cd-gather-team');
 require('./directives/cd-find-venue');
 require('./directives/cd-plan-your-dojo');
 require('./directives/cd-dojo-listing');
+require('./directives/cd-charter');
+require('./directives/cd-setup-your-dojo');
 //--//
 
 var gmap = function($q, $window) {

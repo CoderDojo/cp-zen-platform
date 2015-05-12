@@ -2,7 +2,7 @@
   <div class="cd-logo-container">
       <a ui-sref="home"><div class="cd-logo"></div></a>
   </div>
-    <div ng-if="user" class="top-menu-links center-block text-center">
+    <div ng-if="user" class="top-menu-links">
       <span ng-if="user"><a ui-sref="dojo-list">Dojo List</a></span>
       <span ng-if="user"><a ui-sref="charter">Charter</a></span>
       <span ng-if="user"><a ui-sref="my-dojos">My Dojos</a></span>
