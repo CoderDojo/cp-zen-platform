@@ -21,12 +21,6 @@ seneca
   .use('ng-web')
   .use('user', { confirm: true })
   .use('auth')
-  .use('account')
-  .use('data-editor')
-  .use('admin')
-  .use('user-roles')
-  .use('web-access')
-  .use('perm')
   .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
@@ -34,6 +28,7 @@ seneca
   .use('../lib/geonames/cd-geonames.js')
   .use('../lib/users/cd-users.js')
   .use('../lib/agreements/cd-agreements.js')
+  .use('../lib/profiles/cd-profiles.js')
 ;
 
 _.each(options.client, function(opts) {

@@ -129,21 +129,23 @@
 
                   <div class="form-group">
                     <label for="dojoCountry" class="col-lg-4">Country*</label>
-                    <div class="col-lg-6">
-                      <ui-select ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required required-message="'Select a country'" >
+                    <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
+                      <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required>
                         <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
                         <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                           <span ng-bind-html="country.countryName | highlight: $select.search"></span>
                         </ui-select-choices>
                       </ui-select>
+                      <label class="control-label has-error validationMessage"
+                             ng-show="createDojoForm.$submitted && createDojoForm.country.$error.required">Select a country</label>
                       <p>Country</p>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="dojoPlace" class="col-lg-4">Place*</label>
-                    <div class="col-lg-6">
-                      <ui-select ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required required-message="'Select a place'">
+                    <label for="dojoPlace" class="col-lg-4">City/Town*</label>
+                    <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.place.$error.required}">
+                      <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required>
                         <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
                             refresh="getPlaces(dojo.country.alpha2, $select.search)"
@@ -151,6 +153,8 @@
                           <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
                         </ui-select-choices>
                       </ui-select>
+                      <label class="control-label has-error validationMessage"
+                             ng-show="createDojoForm.$submitted && createDojoForm.place.$error.required">Select a place</label>
                       <p>City/Town/</p>
                     </div>
                   </div>

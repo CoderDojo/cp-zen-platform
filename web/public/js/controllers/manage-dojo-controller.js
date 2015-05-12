@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, cdProfilesService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -96,15 +96,30 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     };
 
     filteredQuery = _.extend(filteredQuery, meta);
+    filteredQuery.query.filtered.filter = {bool: {must: []}};
 
     if (!_.isEmpty(query)) {
-      filteredQuery.query.filtered.filter = {
+
+      var andFilter = {
         and: _.map(query, function (value, key) {
           var term = {};
           term[key] = value.toLowerCase ? value.toLowerCase() : value;
           return {term: term};
         })
       };
+
+      filteredQuery.query.filtered.filter.bool.must.push(andFilter);
+
+    }
+
+    if($scope.filter.usersDojos && $scope.filter.usersDojos.length > 0){
+      var idsFilter =  {ids : {'values': $scope.filter.usersDojos}};
+      filteredQuery.query.filtered.filter.bool.must.push(idsFilter);
+    } else if(typeof $scope.filter.usersDojos !== 'undefined'){
+      $scope.dojos = [];
+      $scope.totalItems = 0;
+      alertService.showError('An error has occurred while loading Dojos');
+      return;
     }
 
 
@@ -118,9 +133,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
       return cb();
     }, function (err) {
-      alertService.showError('An error has occurred while loading Dojos: <br>' +
-        (err.error || JSON.stringify(err))
-      );
+      alertService.showError('An error has occurred while loading Dojos');
 
       return cb(err);
     });
@@ -287,6 +300,46 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.loadPage($scope.filter, true);
   };
 
+  $scope.getUsersByEmails = function(email){
+    if(!email || !email.length || email.length < 3) {
+      $scope.users = [];
+      return;
+    }
+
+    var win = function(users){
+      $scope.users = users;
+    };
+
+    var fail = function(){
+      alertService.showError('An error has occurred while loading Dojos');
+    };
+
+    cdUsersService.getUsersByEmails(email, win, fail);
+  };
+
+  $scope.getDojoIds = function(item){
+    if(!item){
+      delete $scope.filter.usersDojos ;
+      $scope.loadPage($scope.filter, true);
+      return;
+    }
+
+    var query = {limit$: 'NULL'};
+    query.user_id = item.id;
+
+    cdProfilesService.getProfiles(query, function(profiles){
+      var dojoIds = _.pluck(profiles, 'dojoId');
+      
+      dojoIds = _.filter(dojoIds, function(dojoId){
+        return dojoId !== null;
+      });
+
+      $scope.filter.usersDojos = dojoIds;
+      $scope.loadPage($scope.filter, true);
+    });
+
+  };
+
 
   auth.get_loggedin_user(function () {
     $scope.loadPage($scope.filter, true);
@@ -295,5 +348,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
-  ['$scope', 'alertService', 'auth', 'tableUtils', 'cdDojoService', '$location', 'cdCountriesService', manageDojosCtrl]);
+  ['$scope', 'alertService', 'auth', 
+  'tableUtils', 'cdDojoService', '$location', 
+  'cdCountriesService', 'cdUsersService', 
+  'cdProfilesService', manageDojosCtrl]);
 
