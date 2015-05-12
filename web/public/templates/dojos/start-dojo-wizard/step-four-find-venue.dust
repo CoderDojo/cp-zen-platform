@@ -1,7 +1,0 @@
-<div id="findVenueSlideable" class="slideable">
-  <form name="findVenueForm" novalidate angular-validator angular-validator-submit="submitFindVenue()" role="form">
-    <button class="btn btn-primary col-lg-3 col-lg-offset-4" type="submit">Submit</button>
-  </form>
-</div>
-
-
