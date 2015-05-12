@@ -324,7 +324,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       return;
     }
 
-    cdProfilesService.getProfiles(item.id, function(profiles){
+    var query = {limit$: 'NULL'};
+    query.user_id = item.id;
+
+    cdProfilesService.getProfiles(query, function(profiles){
       var dojoIds = _.pluck(profiles, 'dojoId');
       
       dojoIds = _.filter(dojoIds, function(dojoId){
@@ -347,5 +350,6 @@ angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', 'alertService', 'auth', 
   'tableUtils', 'cdDojoService', '$location', 
-  'cdCountriesService', 'cdUsersService', 'cdProfilesService', manageDojosCtrl]);
+  'cdCountriesService', 'cdUsersService', 
+  'cdProfilesService', manageDojosCtrl]);
 
