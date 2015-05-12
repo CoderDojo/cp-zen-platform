@@ -1,4 +1,4 @@
-<div id="main">
+<div id="main" ng-show="championRegistrationFormVisible">
   <div class="cd-create-dojo-container">
     <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
@@ -65,6 +65,7 @@
         <div class="row">
           <div class="form-group">
             <label for="championPlace" class="col-lg-4">City/Town*</label>
+
             <div class="col-lg-6" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
               <ui-select name="place" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
                 <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>

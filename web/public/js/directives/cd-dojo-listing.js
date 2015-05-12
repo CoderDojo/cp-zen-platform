@@ -6,7 +6,7 @@ function cdDojoListing(){
       restrict: 'E',
       templateUrl: '/dojos/template/start-dojo-wizard/step-six-dojo-listing',
       link: function (scope, element, attrs) { 
-       
+        
       }
     }
   }

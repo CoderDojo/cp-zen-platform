@@ -1,10 +1,10 @@
 ;(function() {
   'use strict';
 
-function cdFindVenue(){
+function cdCharter(){
     return {
       restrict: 'E',
-      templateUrl: '/dojos/template/start-dojo-wizard/step-four-find-venue',
+      templateUrl: '/charter/template/index',
       link: function (scope, element, attrs) { 
        
       }
@@ -13,6 +13,6 @@ function cdFindVenue(){
 
 angular
     .module('cpZenPlatform')
-    .directive('cdFindVenue', cdFindVenue)
+    .directive('cdCharter', cdCharter)
  
 }());
