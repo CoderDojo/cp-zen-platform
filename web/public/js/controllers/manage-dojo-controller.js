@@ -324,8 +324,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       return;
     }
 
-    var query = {limit: 'NULL'};
-    query.id = item.id;
+    var query = {limit$: 'NULL'};
+    query.user_id = item.id;
 
     cdProfilesService.getProfiles(query, function(profiles){
       var dojoIds = _.pluck(profiles, 'dojoId');
