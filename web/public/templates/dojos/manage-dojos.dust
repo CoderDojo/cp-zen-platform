@@ -79,11 +79,10 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down blue-text">&nbsp;</span>Dojo</th>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Stage</th>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Country</th>
-            <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down blue-text">&nbsp;</span>Dojo Email</th>
-
+            <th><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>Dojo</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Stage</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Country</th>
+            <th><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Dojo Email</th>
             <th>User</th>
             <th>Application</th>
             <th>Edit</th>
@@ -93,7 +92,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="dojo in dojos">
-            <td>{{ dojo.name }}</td>
+            <td>{{ dojo.name }} <span ng-show="dojo.verified.value === 1" class="green-text glyphicon glyphicon-ok-sign"></span></td>
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>

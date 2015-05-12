@@ -256,8 +256,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     
     var DOWN = 'glyphicon-chevron-down';
     var UP = 'glyphicon-chevron-up';
-    var ACTIVE_COL = 'active-column';
-    var ACTIVE_COL_CLASS = ".active-column";
+    var ACTIVE_COL = 'green-text';
+    var ACTIVE_COL_CLASS = ".green-text";
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
