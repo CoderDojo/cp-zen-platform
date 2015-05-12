@@ -13,7 +13,8 @@ var app = angular.module('cpZenPlatform', [
   'ngSanitize',
   'mgo-angular-wizard',
   'checklist-model',
-  'sbDateSelect'
+  'sbDateSelect',
+  'angular-alert-banner'
 ]);
 
 require('./controllers/login-controller');
@@ -93,6 +94,10 @@ app
         templateUrl: '/dojos/template/dojo-list',
         resolve: {
           gmap:gmap
+        },
+        params: {
+          bannerType:null,
+          bannerMessage:null
         },
         controller:'dojo-list-controller'
       })

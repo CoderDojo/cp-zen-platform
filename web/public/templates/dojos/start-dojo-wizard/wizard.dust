@@ -1,5 +1,5 @@
 <div class="cd-dashboard">
-    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators" on-finish="finishedWizard()"> 
+    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
         <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
             <legend><h1>Register Account</h1></legend>
             <p>To get started, please fill in the following registration form.</p>
@@ -19,4 +19,8 @@
             <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>
     </wizard>
+    <div ng-if="wizardComplete" class="dojoWizardComplete">
+      <span>Thank you for submitting your dojo listing.</span><br/>
+      <span>A member from the CoderDojo Foundation team will review your listing and be in touch shortly.</span>
+    </div>
 </div>

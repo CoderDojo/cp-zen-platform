@@ -123,7 +123,7 @@
                   <div class="form-group">
                     <label for="dojoPlace" class="col-lg-4">City/Town*</label>
                     <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.place.$error.required}">
-                      <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required>
+                      <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
                         <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
                             refresh="getPlaces(dojo.country.alpha2, $select.search)"
