@@ -356,7 +356,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         };
 
         cdCountriesService.listPlaces(query).then(function(result) {
-          $scope.places = _.map(result.records, function(place) {
+          $scope.places = _.map(result, function(place) {
             return _.omit(place, 'entity$');
           });
         });
