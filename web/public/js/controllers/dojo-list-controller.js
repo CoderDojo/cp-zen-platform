@@ -275,6 +275,14 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   }
 
+  $scope.mapZoomChanged = function(zoom){
+    // A minimum zoom level of 2 - don't let map zoom out farther than the world.
+    if(zoom < 2)
+    {
+      $scope.model.map.setZoom(2);
+    }
+  }
+
   $scope.showStateMarkers = function(marker) {
     $scope.stateSelected = true;
     $scope.countrySelected = false;
