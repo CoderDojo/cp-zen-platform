@@ -81,6 +81,9 @@
       },
       loadSetupDojoSteps: function(win, fail) {
         cdApi.get('load_setup_dojo_steps', win, fail || topfail);
+      },
+      getUsersDojos: function(query, win, fail) {
+        cdApi.get('dojos/users', {query: query}, win, fail || topfail);
       }
     };
   }
