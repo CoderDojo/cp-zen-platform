@@ -3,6 +3,7 @@
     <legend>Register</legend>
     <div class="row">
       <div class="input-group col-lg-6 col-md-offset-3">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
         <input type="text" class="form-control" name="fullName" required required-message="'Name is empty'" ng-model="registerUser.name" placeholder="NAME">
       </div>
     </div>
@@ -15,6 +16,15 @@
       </div>
     </div>
     <span class="help-block"></span>
+
+     <div class="row">
+      <div class="input-group col-lg-6 col-md-offset-3">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+        <input type="text" class="form-control" name="phoneNumber" required required-message="'Phone Number is empty'" ng-model="registerUser.phone" placeholder="PHONE NUMBER">
+      </div>
+    </div>
+    <span class="help-block"></span>
+
     <div class="row">
       <div class="input-group col-lg-6 col-md-offset-3">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
@@ -29,6 +39,12 @@
       </div>
     </div>
     <span class="help-block"></span>
+    <div class="checkbox text-center terms-conditions-checkbox">
+      <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="registerUser.termsConditionsAccepted" required required-message="'You must accept the Terms and Conditions'" id="termsAndConditionsCheckbox">
+      <label for="termsAndConditionsCheckbox">
+        I have read and accept the <a ui-sref="terms-and-conditions" target="_blank"><b>Terms and Conditions here</b></a>
+      </label>
+    </div>
 
     <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">Register</button>
     
