@@ -11,4 +11,5 @@
             <a ui-sref="start-dojo-wizard"><span class="cd-logout">Create a Dojo |</span></a>
         </div>
     </div>
+    <alert-banner></alert-banner>
 </header>

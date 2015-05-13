@@ -16,7 +16,8 @@ var app = angular.module('cpZenPlatform', [
   'truncate',
   'mgo-angular-wizard',
   'checklist-model',
-  'sbDateSelect'
+  'sbDateSelect',
+  'angular-alert-banner'
 ]);
 
 require('./services/auth-service');
@@ -116,6 +117,10 @@ app
         templateUrl: '/dojos/template/dojo-list',
         resolve: {
           gmap:gmap
+        },
+        params: {
+          bannerType:null,
+          bannerMessage:null
         },
         controller:'dojo-list-controller'
       })

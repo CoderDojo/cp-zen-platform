@@ -1,6 +1,6 @@
 'use strict';
 
-function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesService, Geocoder, gmap) {
+function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, gmap) {
   $scope.model = {};
   $scope.markers = [];
   $scope.continentMarkers = [];
@@ -36,6 +36,14 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
       zoom: 2,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+  }
+  
+  if($stateParams.bannerMessage) {
+    var type = $stateParams.bannerType || 'info';
+    AlertBanner.publish({
+      type: type,
+      message: $stateParams.bannerMessage
+    });
   }
 
   $scope.resetMap = function(type, text) {
@@ -467,4 +475,4 @@ function cdDojoListCtrl($window, $scope, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-controller', ['$window', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'Geocoder', 'gmap', cdDojoListCtrl]);
+  .controller('dojo-list-controller', ['$window', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', 'gmap', cdDojoListCtrl]);

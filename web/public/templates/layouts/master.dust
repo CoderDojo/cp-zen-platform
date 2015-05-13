@@ -31,6 +31,9 @@
     <!-- Awesome Bootstrap Checkbox -->
     <link href="/components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
+    <!-- Angular Alert Banner -->
+    <link rel="stylesheet" href="/components/angular-alert-banner/dist/angular-alert-banner.min.css">
+    
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -74,6 +77,7 @@
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
     <script src="/components/checklist-model/checklist-model.js"></script>
     <script src="/components/angular-sb-date-select/src/sb-date-select.js"></script>
+    <script src="/components/angular-alert-banner/dist/angular-alert-banner.min.js"></script>
     <script src="/seneca/init.js"></script>
 
     <script src="/js/app.js"></script>
