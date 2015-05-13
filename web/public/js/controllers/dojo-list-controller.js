@@ -294,10 +294,12 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
       _.each($scope.dojos, function(dojo) {
         if(dojo.coordinates) {
           var coordinates = dojo.coordinates.split(',');
+          var pinColor = dojo.private === 1 ? 'FF0000' : '008000';
           var marker = new google.maps.Marker({
             map:$scope.model.map,
             dojo:dojo.name,
             dojoID:dojo.id,
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
             position: new google.maps.LatLng(coordinates[0], coordinates[1])
           });
           $scope.countryMarkers.push(marker);
