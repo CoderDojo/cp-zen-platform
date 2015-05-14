@@ -10,6 +10,9 @@ function localhost() {
   if (process.env.DOCKER_HOST) {
     return require('url').parse(process.env.DOCKER_HOST).hostname;
   }
+  if (process.env.TARGETIP) {
+    return process.env.TARGETIP;
+  } 
   return '127.0.0.1';
 }
 
