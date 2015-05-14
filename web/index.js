@@ -17,10 +17,9 @@ var options = {
 }
 var port = process.env.PORT || 8000
 
-
-
 app.use(kraken(options))
 
+require('./lib/dust-i18n.js');
 
 app.use(cookieparser())
 
