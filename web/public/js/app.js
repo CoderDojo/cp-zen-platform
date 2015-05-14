@@ -24,6 +24,7 @@ require('./controllers/create-dojo-controller');
 require('./controllers/dojo-list-index-controller');
 require('./controllers/dojo-detail-controller');
 require('./controllers/start-dojo-wizard-controller');
+require('./controllers/terms-and-conditions-controller');
 
 require('./services/cd-dojo-service');
 require('./services/cd-countries-service');
@@ -152,6 +153,11 @@ app
           gmap:gmap
         },
         controller:'start-dojo-wizard-controller'
+      })
+      .state("terms-and-conditions", {
+        url: "/terms-and-conditions",
+        templateUrl: '/templates/terms-and-conditions',
+        controller:'terms-and-conditions-controller'
       });
   })
   .config(function(paginationConfig){

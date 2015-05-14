@@ -26,6 +26,10 @@ module.exports = function (router) {
     res.render('index');
   });
 
+  router.get('/terms-and-conditions', function (req, res) {
+    res.render('index');
+  });
+
   router.get('/dojo/:alpha2([a-zA-Z]{2})/*', function (req, res) {
     res.render('dashboard/index');
   });
@@ -40,6 +44,10 @@ module.exports = function (router) {
 
   router.get('/templates/register', function (req, res) {
     res.render('accounts/register');
+  });
+
+  router.get('/templates/terms-and-conditions', function (req, res) {
+    res.render('accounts/terms-and-conditions');
   });
 
 };

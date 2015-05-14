@@ -83,12 +83,24 @@
 
         <legend>Experience</legend>
         <div class="row">
-          <label for="projects" class="col-lg-3">Projects</label><br />
-          <div class="col-lg-6 col-lg-offset-4">
-            <textarea name="projects" class="form-control" placeholder="Please describe any websites, apps or open source work that you have done." rows="5" ng-model="champion.projects"></textarea>
+          <div class="col-lg-10">
+            <label for="projects" class="col-lg-3">Projects</label>
+            <div class="col-lg-offset-5">
+              <textarea name="projects" class="form-control" placeholder="Please describe any websites, apps or open source work that you have done." rows="5" ng-model="champion.projects"></textarea>
+            </div>
           </div>
         </div>
-     
+
+        <div class="row">
+          <div class="col-lg-10">
+            <label for="youthExperience" class="col-lg-4">Experience working with youth</label>
+            <div class="col-lg-offset-5">
+              <textarea name="youthExperience" class="form-control" placeholder="Please describe your experience working with youth." rows="5" ng-model="champion.youthExperience"></textarea>
+            </div>
+          </div>
+        </div>
+      
+
         <legend>Social</legend>
         <div class="row">
           <div class="form-group">
@@ -110,9 +122,11 @@
 
         <legend>Other</legend>
         <div class="row">
-          <label for="projects" class="col-lg-3">Notes</label><br />
-          <div class="col-lg-6 col-lg-offset-4">
-            <textarea name="notes" class="form-control" placeholder="Please add any other relevant information." rows="5" ng-model="champion.notes"></textarea>
+          <div class="col-lg-10">
+            <label for="projects" class="col-lg-3">Notes</label>
+            <div class="col-lg-offset-5">
+              <textarea name="notes" class="form-control" placeholder="Please add any other relevant information." rows="5" ng-model="champion.notes"></textarea>
+            </div>
           </div>
         </div>
 
