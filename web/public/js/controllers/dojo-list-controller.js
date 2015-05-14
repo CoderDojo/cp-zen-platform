@@ -46,6 +46,22 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     });
   }
 
+  $scope.$on('$viewContentLoaded', function() {
+    jQuery('body').cookieDisclaimer({
+      style: "light", // dark,light
+      cssPosition: "fixed", //fixed,absolute,relative
+      policyBtn: {
+        link: "http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2", // cookie policy page URL
+      },
+      cookie: {
+        name: "cookieDisclaimer",
+        val: "confirmed",
+        path: "/",
+        expire: 1
+      }
+    });
+  });
+
   $scope.resetMap = function(type, text) {
     switch(type) {
       case 'earth':
