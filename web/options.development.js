@@ -10,6 +10,9 @@ function localhost() {
   if (process.env.DOCKER_HOST) {
     return require('url').parse(process.env.DOCKER_HOST).hostname;
   }
+  if (process.env.TARGETIP) {
+    return process.env.TARGETIP;
+  }
   return '127.0.0.1';
 }
 
@@ -60,12 +63,12 @@ module.exports = _.defaults({
   },
 
   client: [
-    {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
-    {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-profiles,cmd:*'},
-    {type: 'web', host: '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},
-    {type: 'web', host: '127.0.0.1', port: 10302, pin: 'role:cd-geonames,cmd:*'},
-    {type: 'web', host: '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
-    {type: 'web', host: '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'}
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-profiles,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-geonames,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'}
   ]
 
 }, base);

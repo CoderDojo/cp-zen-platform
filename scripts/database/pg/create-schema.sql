@@ -74,6 +74,8 @@ CREATE TABLE sys_user
   last_name character varying,
   roles character varying[],
   active boolean,
+  terms_conditions_accepted boolean,
+  phone character varying,
   "when" timestamp with time zone,
   confirmed boolean,
   confirmcode character varying,
