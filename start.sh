@@ -1,7 +1,8 @@
 #! /bin/bash
 
-FILE="web/config/$2".env
-START=$1
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
+FILE="$DIR/web/config/$2".env
+START=$DIR"/"$1
 USAGE="Usage: ./start.sh <startscript> <config>"
 
 if [ ! -r $FILE ] ; then
