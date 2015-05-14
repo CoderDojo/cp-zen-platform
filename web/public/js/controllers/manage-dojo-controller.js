@@ -35,8 +35,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   function allSigned(dojo){
     // TODO: single origin point for current agreement version
     var currentAgreementVersion = 2;
-    var agreements = _.flatten(dojo.agreements);
     var creators = dojo.creators;
+    var agreements = _.flatten(_.pluck(creators, 'agreements'));
     var signedCreators = [];
 
     _.each(creators, function(creator){
@@ -47,8 +47,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       }
     });
 
-    return signedCreators.length === creators.length;
+    return signedCreators.length === (creators && creators.length);
   }
+
+  $scope.allSigned = allSigned;
 
 
 

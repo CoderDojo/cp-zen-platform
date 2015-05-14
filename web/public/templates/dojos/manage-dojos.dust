@@ -94,7 +94,7 @@
         <tbody>
           <tr ng-repeat="dojo in dojos" ng-style="setStyle(dojo)">
             <td>{{ dojo.name }}</td>
-            <td><span ng-show="dojo.verified.value === 1" class="green-text glyphicon glyphicon-ok-sign"></span></td>
+            <td><span ng-show="allSigned(dojo) && (dojo.verified.value === 1)" class="green-text glyphicon glyphicon-ok-sign"></span></td>
             <td>{{ dojo.stage }}</td>
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
@@ -102,6 +102,7 @@
               <ul ng-repeat="creator in dojo.creators">
                 <li>
                   <a title="{{ creator.email }}" href="mailto:{{ creator.email }}" >{{ creator.email | characters:20 }}</a>
+                  <span ng-show="creator.agreements.length < 1">&nbsp;(unsigned)</span>
                 </li>
               </ul>
             </td>
