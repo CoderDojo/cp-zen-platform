@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
-    "postinstall": "cd web && bower install",
+    "postinstall": "cd web && ../node_modules/.bin/bower install",
     "test": "grunt test"
   },
   "repository": {
@@ -41,6 +41,7 @@
     "localizr": "^0.1.0"
   },
   "devDependencies": {
+    "bower": "^1.4.1",
     "fs-extra": "~0.13.0",
     "glob": "~4.3.1",
     "grunt": "^0.4.5",
