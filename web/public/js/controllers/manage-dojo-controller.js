@@ -17,14 +17,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   var changedDojos = [];
 
-  $scope.getVerificationStates = function (agreements) {
+  $scope.getVerificationStates = function (dojo) {
     var states = verificationStates.slice();
 
-    // TODO: single origin point for current agreement version
-    var currentAgreementVersion = 2;
-    if (!_.any(agreements, function (agreement) {
-        return agreement.agreementVersion === currentAgreementVersion;
-      })) {
+    if (!allSigned(dojo)) {
       
       states = _.reject(states, function (state) { return state.value === 1 });
     }
@@ -32,16 +28,29 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     return states;
   };
 
-  $scope.setStyle = function(agreements){
+  $scope.setStyle = function(dojo){
+    return !allSigned(dojo) ? {'background-color' :'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
+  };
+
+  function allSigned(dojo){
     // TODO: single origin point for current agreement version
     var currentAgreementVersion = 2;
+    var agreements = _.flatten(dojo.agreements);
+    var creators = dojo.creators;
+    var signedCreators = [];
 
-    var isSigned  = _.any(agreements, function(agreement) {
-      return agreement.agreementVersion === currentAgreementVersion;
+    _.each(creators, function(creator){
+      var result = _.findWhere(agreements, {agreementVersion: currentAgreementVersion, userId: creator.id});
+
+      if(result){
+        signedCreators.push(creator);
+      }
     });
 
-    return !isSigned ? {color:'red'} : {color: 'black'};
-  };
+    return signedCreators.length === creators.length;
+  }
+
+
 
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
