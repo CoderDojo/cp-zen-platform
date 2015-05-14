@@ -17,14 +17,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   var changedDojos = [];
 
-  $scope.getVerificationStates = function (agreements) {
+  $scope.getVerificationStates = function (dojo) {
     var states = verificationStates.slice();
 
-    // TODO: single origin point for current agreement version
-    var currentAgreementVersion = 2;
-    if (!_.any(agreements, function (agreement) {
-        return agreement.agreementVersion === currentAgreementVersion;
-      })) {
+    if (!allSigned(dojo)) {
       
       states = _.reject(states, function (state) { return state.value === 1 });
     }
@@ -32,16 +28,31 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     return states;
   };
 
-  $scope.setStyle = function(agreements){
+  $scope.setStyle = function(dojo){
+    return !allSigned(dojo) ? {'background-color' :'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
+  };
+
+  function allSigned(dojo){
     // TODO: single origin point for current agreement version
     var currentAgreementVersion = 2;
+    var creators = dojo.creators;
+    var agreements = _.flatten(_.pluck(creators, 'agreements'));
+    var signedCreators = [];
 
-    var isSigned  = _.any(agreements, function(agreement) {
-      return agreement.agreementVersion === currentAgreementVersion;
+    _.each(creators, function(creator){
+      var result = _.findWhere(agreements, {agreementVersion: currentAgreementVersion, userId: creator.id});
+
+      if(result){
+        signedCreators.push(creator);
+      }
     });
 
-    return !isSigned ? {color:'red'} : {color: 'black'};
-  };
+    return signedCreators.length === (creators && creators.length);
+  }
+
+  $scope.allSigned = allSigned;
+
+
 
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
@@ -256,8 +267,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     
     var DOWN = 'glyphicon-chevron-down';
     var UP = 'glyphicon-chevron-up';
-    var ACTIVE_COL = 'active-column';
-    var ACTIVE_COL_CLASS = ".active-column";
+    var ACTIVE_COL = 'green-text';
+    var ACTIVE_COL_CLASS = ".green-text";
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
