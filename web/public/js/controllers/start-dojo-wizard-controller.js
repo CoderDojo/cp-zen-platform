@@ -20,7 +20,17 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       } else {
         cdDojoService.loadUserDojoLead(user.id, function(dojoLead) {
           currentStepInt = dojoLead.currentStep;
-          if(currentStepInt === 4) $scope.wizardComplete = true;
+          if(currentStepInt === 4) {
+            //Check if user has deleted the Dojo
+            cdDojoService.find({dojoLeadId:dojoLead.id}, function (response) {
+              if(!_.isEmpty(response)) {
+                 $scope.wizardComplete = true; 
+              } else {
+                //Go back to Dojo Listing step
+                initStep(3);
+              }
+            });
+          }
           if(dojoLead.currentStep) {
             initStep(dojoLead.currentStep);
           } else {

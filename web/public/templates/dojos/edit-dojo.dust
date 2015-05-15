@@ -1,25 +1,9 @@
 <div class="cd-dashboard">
   <div class="dojo-list-dashboard">
 
-    <div class="row">
+    <div ng-if="dojoPageReady" class="row">
       <div class="cd-create-dojo-container">
-        <div ng-show="!user">
-          <h2>Create a Dojo</h2>
-          <div class="pre-game-warning">
-            <p>You are currently not signed in.</p>
-            <p>Please <a ui-sref="login({referer: createDojoUrl })">Login here</a> or <a href="#/register">Create an Account</a></p>
-          </div>
-        </div>
-
-        <div ng-show="!showCreateDojoForm() && user">
-          <h2>Become a Champion</h2>
-          <div class="pre-game-warning">
-            <p>To create a Dojo, you must first register to become a Champion.</p>
-            <p>Start by going to the <a ui-sref="champion-onboarding">Champion Registration page here</a></p>
-          </div>
-        </div>
-
-        <form ng-show="showCreateDojoForm()" id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+        <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
           <div class="create-dojo-sidebar col-lg-4">
             <div class="widget">
               <legend>Status Messages</legend>
@@ -92,11 +76,6 @@
           </div>
 
           <div id="main">
-            <div class="pre-game-warning center-block">
-              <span>Pre-game warning!</span>
-              <p>Before you sign up to create a listing for your Dojo please complete our <a href="#">New Champion Registration Form</a>,
-                if you have not already.</p>
-            </div>
             <div id="createDojoForm">
               <legend>Dojo Information</legend>
                 <div class="row">

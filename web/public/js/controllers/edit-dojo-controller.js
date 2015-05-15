@@ -1,7 +1,7 @@
 'use strict';
 //TO DO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth) {
-  $scope.dojo = cdDojoService.getDojo();
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q) {
+  $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';
@@ -10,14 +10,51 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.user = user;
   });
 
-  $scope.showCreateDojoForm = function() {
-    if($scope.user) {
-      var basicUser = _.find($scope.user.roles, function(role) { if(role === 'basic-user') { return true; } });
-      var mentorUser = _.find($scope.user.roles, function(role) { if(role === 'mentor') { return true; } });
-      if(basicUser || mentorUser) return false;
-      return true;
+  function loadDojo() {
+    return $q(function(resolve, reject) {
+      var dojoId = $state.params.id;
+      cdDojoService.load(dojoId, function(response) {
+        if(!_.isEmpty(response)) {
+          $scope.dojo = response;
+          resolve();
+        } else {
+          reject('Failed to load Dojo');
+        }
+      });
+    });
+  }
+
+  loadDojo().then(function() { 
+    loadDojoMap();
+  }, function (error) {
+    alertService.showError(error);
+  });
+  
+  function loadDojoMap() {
+    $scope.$watch('model.map', function(map){
+      if(map) {
+        var marker = new google.maps.Marker({
+          map: $scope.model.map,
+          position: new google.maps.LatLng(latitude, longitude)
+        });
+        $scope.markers.push(marker);
+      }
+    });
+
+    if(gmap) {
+      $scope.mapLoaded = true;
+      var coordinates = $scope.dojo.coordinates.split(',');
+      var latitude  = coordinates[0];
+      var longitude = coordinates[1];
+
+      $scope.mapOptions = {
+        center: new google.maps.LatLng(latitude, longitude),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
     }
-    return false;
+    $scope.dojoPageReady = true;
   }
 
   cdCountriesService.listCountries(function(response) {
@@ -60,30 +97,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     });
   }
   
-  $scope.$watch('model.map', function(map){
-    if(map) {
-      var marker = new google.maps.Marker({
-        map: $scope.model.map,
-        position: new google.maps.LatLng(latitude, longitude)
-      });
-      $scope.markers.push(marker);
-    }
-  });
-
-  if(gmap) {
-    $scope.mapLoaded = true;
-    var coordinates = $scope.dojo.coordinates.split(',');
-    var latitude  = coordinates[0];
-    var longitude = coordinates[1];
-
-    $scope.mapOptions = {
-      center: new google.maps.LatLng(latitude, longitude),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-  }
-
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
       alertService.showAlert("Your Dojo has been successfully saved", function() {
@@ -130,8 +143,8 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     uiColor: '#000000',
     height:'200px'
   };
-
+  
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', cdEditDojoCtrl]);
