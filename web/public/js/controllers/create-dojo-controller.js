@@ -11,18 +11,6 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
 
  $scope.createDojoUrl = $state.current.url;
 
-  $scope.showCreateDojoForm = function() {
-    if($scope.user) {
-      //If user has the basic-user role, then this is their first Dojo. 
-      //They must first sign up to become a Champion before creating a Dojo.
-      var basicUser = _.find($scope.user.roles, function(role) { if(role === 'basic-user') { return true; } });
-      var mentorUser = _.find($scope.user.roles, function(role) { if(role === 'mentor') { return true; } });
-      if(basicUser || mentorUser) return false;
-      return true;
-    }
-    return false;
-  }
-
   cdCountriesService.listCountries(function(countries) {
     $scope.countries = _.map(countries, function(country) {
       return _.omit(country, 'entity$');
