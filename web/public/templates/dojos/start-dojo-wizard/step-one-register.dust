@@ -17,14 +17,6 @@
     </div>
     <span class="help-block"></span>
 
-     <div class="row">
-      <div class="input-group col-lg-6 col-md-offset-3">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-        <input type="text" class="form-control" name="phoneNumber" required required-message="'Phone Number is empty'" ng-model="registerUser.phone" placeholder="PHONE NUMBER">
-      </div>
-    </div>
-    <span class="help-block"></span>
-
     <div class="row">
       <div class="input-group col-lg-6 col-md-offset-3">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
@@ -39,7 +31,17 @@
       </div>
     </div>
     <span class="help-block"></span>
-    <div class="checkbox text-center terms-conditions-checkbox">
+
+  
+    <div class="checkbox text-center">
+      <input type="checkbox" title="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you
+    informed and help you with running your Dojo." ng-model="registerUser.mailingList" id="mailingListCheckbox">
+      <label for="mailingListCheckbox">Join Mailing List</label>
+    </div>
+    <p></p> 
+    <span class="help-block"></span>
+
+    <div class="checkbox text-center">
       <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="registerUser.termsConditionsAccepted" required required-message="'You must accept the Terms and Conditions'" id="termsAndConditionsCheckbox">
       <label for="termsAndConditionsCheckbox">
         I have read and accept the <a ui-sref="terms-and-conditions" target="_blank"><b>Terms and Conditions here</b></a>
