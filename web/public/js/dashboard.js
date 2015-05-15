@@ -29,7 +29,6 @@ require('./services/cd-profiles-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
-require('./controllers/charter-controller');
 require('./controllers/dojo-list-controller');
 require('./controllers/my-dojos-controller');
 require('./controllers/dojo-detail-controller');
@@ -131,11 +130,6 @@ app
           gmap:gmap
         },
         controller:'dojo-list-controller'
-      })
-      .state("charter", {
-        url: "/dashboard/charter",
-        templateUrl:'/charter/template/index',
-        controller:'charter-controller'
       })
       .state("my-dojos", {
         url: "/dashboard/my-dojos",

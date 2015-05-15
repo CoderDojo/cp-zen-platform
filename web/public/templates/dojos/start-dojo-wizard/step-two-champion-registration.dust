@@ -145,7 +145,7 @@
           </div>
         </div>
 
-        <button class="btn btn-primary center-block" type="submit">Register</button>
+        <button class="btn btn-primary center-block registerButton" type="submit">Register</button>
       </div>
 
     </form>

@@ -147,15 +147,15 @@
 
                   <div class="form-group">
                     <label class="col-lg-4">Coordinates</label>
-                      <div class="col-lg-6">
-                        <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
-                      </div>
-                      <div class="col-lg-8 pull-right google-map">
-                        <section ng-if="mapLoaded" id="map">
-                          <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
-                          <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
-                        </section>
-                      </div>
+                    <div class="col-lg-6">
+                      <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
+                    </div>
+                    <div class="col-lg-8 pull-right google-map">
+                      <section ng-if="mapLoaded" id="map">
+                        <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                        <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
+                      </section>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -202,20 +202,6 @@
                           <input type="text" ng-model="dojo.twitter" class="form-control" name="dojoTwitter" id="dojoTwitter">
                           <p>Again, a useful way for sharing information and being found. We can also
                             help share messages to followers.</p>
-                        </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="form-group">
-                      <label for="dojoMailingList" class="col-lg-4">Mailing List</label>
-                        <div class="col-lg-6 mailingListCheckbox">
-                          <div class="checkbox">
-                            <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
-                            <label for="mailingListCheckbox"></label>
-                          </div>
-                          <p>Receive monthly updates to your user email address from the CoderDojo community around the world that keep you
-                          informed and help you with running your Dojo.</p>
                         </div>
                     </div>
                   </div>

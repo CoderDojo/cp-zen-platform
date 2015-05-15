@@ -4,7 +4,6 @@
   </div>
   <div ng-if="user" class="top-menu-links">
     <span ng-if="user"><a ui-sref="dojo-list">Dojo List</a></span>
-    <span ng-if="user"><a ui-sref="charter">Charter</a></span>
     <span ng-if="user"><a ui-sref="my-dojos">My Dojos</a></span>
     <span ng-if="user"><a ui-sref="start-dojo-wizard">Create Dojo</a></span>
     <span ng-if="user"><a ui-sref="manage-dojos">Manage Dojos</a></span>

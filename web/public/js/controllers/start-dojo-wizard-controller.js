@@ -146,7 +146,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         auth.register(user, function(data) {
           if(data.ok) {
             auth.login(user, function(data) {
-              setupStep2();
+              //User is now logged in, go to dashboard
+              $window.location.href = '/dashboard/start-dojo';
             });
           } else {
             alertService.showAlert('There was a problem registering your account:' + data.why);
@@ -374,6 +375,14 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        $scope.$watch('model.map', function(map) {
+          if(map) { 
+            setTimeout(function () {
+              google.maps.event.trigger($scope.model.map, 'resize');
+              var center = new google.maps.LatLng(53.344415, -6.260147);
+            }, 100);
+          }
+        });
       }
 
       $scope.addMarker = function($event, $params) {
