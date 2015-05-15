@@ -230,8 +230,8 @@ CREATE TABLE cd_usersdojos(
   mysql_user_id int,
   mysql_dojo_id int,
   owner smallint,
-  user_id character varying NOT NULL,
-  dojo_id character varying NOT NULL,
+  user_id character varying,
+  dojo_id character varying,
   CONSTRAINT pk_cd_userdojos PRIMARY KEY (id)
 )
 
