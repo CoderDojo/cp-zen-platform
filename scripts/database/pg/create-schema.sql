@@ -74,6 +74,7 @@ CREATE TABLE sys_user
   last_name character varying,
   roles character varying[],
   active boolean,
+  phone character varying,
   mailing_list smallint NOT NULL DEFAULT 0,
   terms_conditions_accepted boolean,
   "when" timestamp with time zone,
