@@ -38,6 +38,10 @@ module.exports = function (router) {
     res.render('dashboard/index');
   });
 
+  router.get('/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken', function (req, res) {
+    res.render('index');
+  }); 
+
   router.get('/templates/login', function (req, res) {
     res.render('accounts/login');
   });

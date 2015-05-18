@@ -3,7 +3,8 @@
 angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
 
   function loginCtrl($state, $scope, $location, $window, auth, alertService) {
-    var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
+    $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
+    
     var msgmap = {
       'unknown': 'Unable to perform your request at this time - please try again later.',
       'user-not-found': 'Email address is not recognized.',
@@ -32,7 +33,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
         if(data.ok) {
           alertService.showAlert('Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo.', function() {
             auth.login(user, function(data) {
-              $window.location.href = '/dashboard/create-dojo';
+              $window.location.href = '/dashboard' + $scope.referer;
             });
           });
         } else {
@@ -53,7 +54,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
       auth.login($scope.login,
         function(data){
-          $window.location.href = '/dashboard' + referer;
+          $window.location.href = '/dashboard' + $scope.referer;
         },
         function(){
           $scope.errorMessage = 'Invalid email or password!'

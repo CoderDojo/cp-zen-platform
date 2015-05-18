@@ -1,5 +1,5 @@
 
-<div class="row">
+
   <div class="cp-login">
     <div id="main">
 
@@ -42,5 +42,11 @@
         </div>
       </form>
     </div>
+    <div id="sidebar">
+      <div class="widget">
+      <legend>Already have an account?</legend>
+      <a ui-sref="login({referer: referer})">Login</a>
+      </div>
+    </div>
   </div>
-</div>
+

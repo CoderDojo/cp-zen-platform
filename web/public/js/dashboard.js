@@ -40,6 +40,8 @@ require('./controllers/stats-controller');
 require('./controllers/champion-onboarding-controller');
 require('./controllers/start-dojo-wizard-controller');
 require('./controllers/review-champion-application-controller');
+require('./controllers/manage-dojo-users-controller');
+require('./controllers/accept-dojo-mentor-invitation-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -197,6 +199,16 @@ app
         url: "/dashboard/champion-applications/:id",
         templateUrl: '/champion/template/review-application',
         controller: 'review-champion-application-controller'
+      })
+      .state("manage-dojo-users", {
+        url: "/dashboard/dojo/:id/users",
+        templateUrl: '/dojos/template/manage-dojo-users',
+        controller: 'manage-dojo-users-controller'
+      })
+      .state("accept-dojo-mentor-invitation", {
+        url: "/dashboard/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken",
+        templateUrl: '/dojos/template/accept-dojo-mentor-invitation',
+        controller: 'accept-dojo-mentor-invitation-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })

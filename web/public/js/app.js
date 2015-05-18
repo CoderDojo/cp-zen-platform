@@ -25,6 +25,7 @@ require('./controllers/dojo-list-index-controller');
 require('./controllers/dojo-detail-controller');
 require('./controllers/start-dojo-wizard-controller');
 require('./controllers/terms-and-conditions-controller');
+require('./controllers/accept-dojo-mentor-invitation-controller');
 
 require('./services/cd-dojo-service');
 require('./services/cd-countries-service');
@@ -113,6 +114,9 @@ app
       .state("register-account", {
         url: "/register",
         templateUrl: '/templates/register',
+        params: {
+          referer:null
+        },
         controller: 'login'
       })
       .state("create-dojo-public", {
@@ -158,6 +162,11 @@ app
         url: "/terms-and-conditions",
         templateUrl: '/templates/terms-and-conditions',
         controller:'terms-and-conditions-controller'
+      })
+      .state("accept-dojo-mentor-invitation", {
+        url: "/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken",
+        templateUrl: '/dojos/template/accept-dojo-mentor-invitation',
+        controller: 'accept-dojo-mentor-invitation-controller'
       });
   })
   .config(function(paginationConfig){
