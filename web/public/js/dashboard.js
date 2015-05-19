@@ -1,6 +1,7 @@
 'use strict';
 
 var app = angular.module('cpZenPlatform', [
+  'pascalprecht.translate',
   'ui.bootstrap',
   'ui.bootstrap.tpls',
   'cdAuth',
@@ -216,6 +217,10 @@ app
   }])
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
+  }])
+  .config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useUrlLoader('/locale/data?format=mf');
+    $translateProvider.preferredLanguage('default');
   }])
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))

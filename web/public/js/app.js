@@ -1,6 +1,7 @@
 'use strict';
 
 var app = angular.module('cpZenPlatform', [
+  'pascalprecht.translate',
   'ui.bootstrap',
   'ui.bootstrap.tpls',
   'ngStorage',
@@ -177,5 +178,10 @@ app
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
-  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }));
+  .config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useUrlLoader('/locale/data?format=mf');
+    $translateProvider.preferredLanguage('default');
+  }])
+  .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
+;
 
