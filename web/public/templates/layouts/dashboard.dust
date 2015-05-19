@@ -31,6 +31,9 @@
     <!-- Angular Wizard -->
     <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
 
+    <!-- Cookie Disclaimer template -->
+    <link href="/components/jquery-cookie-disclaimer/dist/css/cookieDisclaimer.min.css" rel="stylesheet">
+
     <!-- Angular Alert Banner -->
     <link rel="stylesheet" href="/components/angular-alert-banner/dist/angular-alert-banner.min.css">
 
