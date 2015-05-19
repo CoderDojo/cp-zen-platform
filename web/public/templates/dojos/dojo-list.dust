@@ -7,7 +7,7 @@
     <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'showCountryDojos(marker)'}"></div>
     <div ng-repeat="countryMarker in countryMarkers" ui-map-marker="countryMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(countryMarker)'}"></div>
     <div ng-repeat="stateMarker in stateMarkers" ui-map-marker="stateMarkers[$index]" ui-event="{'map-click': 'showStateMarkers(stateMarker)'}"></div>
-    <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas" ui-event="{'map-zoom_changed':'mapZoomChanged(model.map.getZoom())'}"></div>
+    <div id="googleMap" ui-map="model.map" ui-event="{'map-dragend':'mapDragEnd()', 'map-zoom_changed':'mapZoomChanged()'}" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
   <ol id="map-breadcrumbs" class="breadcrumb">
@@ -22,7 +22,7 @@
     </div>
   </form>
 
-  <div ng-if="countrySelected" class="row">
+  <div ng-if="countrySelected && !searchResult" class="row">
     <div class="col-lg-12">
       <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
       <legend ng-if="!countryName && dojos"><h2>Search Results</h2></legend>
@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <div ng-if="stateSelected" class="row">
+  <div ng-if="stateSelected && !searchResult" class="row">
     <div class="col-lg-12">
       <legend><h1>{{ continentName }}</h1></legend>
       <legend ng-if="stateName"><h2>{{ stateName }}, {{ countryName }}</h2></legend>
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div ng-if="!countrySelected && !stateSelected" class="row">
+  <div ng-if="!countrySelected && !stateSelected && !searchResult" class="row">
     <div class="col-lg-12">
       <legend><h2>{{ continentName }}</h2></legend>
         <div ng-repeat="data in dojoData">
