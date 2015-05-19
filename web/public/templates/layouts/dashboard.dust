@@ -82,6 +82,8 @@
     <script src="/components/jquery-cookie-disclaimer/dist/jquery-cookie/jquery.cookie.js"></script>
     <script src="/components/jquery-cookie-disclaimer/dist/jquery.cookieDisclaimer.js"></script>
     <script src="/components/angular-alert-banner/dist/angular-alert-banner.min.js"></script>
+    <script src="/components/spin.js/spin.js"></script>
+    <script src="/components/angular-spinner/angular-spinner.min.js"></script>
     <script src="/seneca/init.js"></script>
     <script src="/js/dashboard.js"></script>
   </body>

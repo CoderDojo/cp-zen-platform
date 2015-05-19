@@ -31,7 +31,7 @@ module.exports = function (router) {
   });
 
   router.get('/dojo/:alpha2([a-zA-Z]{2})/*', function (req, res) {
-    res.render('dashboard/index');
+    res.render('index');
   });
 
   router.get('/dojo/:id', function (req, res) {
@@ -39,6 +39,10 @@ module.exports = function (router) {
   });
 
   router.get('/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken', function (req, res) {
+    res.render('index');
+  });
+
+  router.get('/accept_dojo_mentor_request/:userId/:mentorInviteToken', function(req, res) {
     res.render('index');
   }); 
 

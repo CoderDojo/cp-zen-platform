@@ -1,5 +1,6 @@
 <div class="cd-dashboard">
   <legend>Manage Dojo Users</legend>
+  <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="row">
   	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteMentor(invite, this)" name="inviteMentorForm">
 	  	<div class="form-group">
@@ -7,8 +8,8 @@
 		      <input type="email" required required-message="'Email is empty'" placeholder="Enter Email" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
 		    </div>
 		    <button class="btn btn-primary" type="submit">Send Mentor Invite</button>
-		</div>
-	</form>
+		  </div>
+	  </form>
   	<div class="col-md-12 table-responsive">
       <table id="manageDojoUsers" class="table cd-grid-table">
         <thead>

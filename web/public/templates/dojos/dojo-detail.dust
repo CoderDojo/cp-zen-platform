@@ -7,7 +7,10 @@
             <legend>Status</legend>
 
           </div>
-
+          <div class="widget">
+            <legend>Join</legend>
+              <button class="btn btn-success" ng-click="requestToJoinAsMentor()">Request to Join as Mentor</button>
+          </div>
           <div class="widget">
             <legend>Contact</legend>
             <table class="table">

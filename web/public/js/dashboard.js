@@ -17,7 +17,8 @@ var app = angular.module('cpZenPlatform', [
   'mgo-angular-wizard',
   'checklist-model',
   'sbDateSelect',
-  'angular-alert-banner'
+  'angular-alert-banner',
+  'angularSpinner'
 ]);
 
 require('./services/auth-service');
@@ -42,6 +43,7 @@ require('./controllers/start-dojo-wizard-controller');
 require('./controllers/review-champion-application-controller');
 require('./controllers/manage-dojo-users-controller');
 require('./controllers/accept-dojo-mentor-invitation-controller');
+require('./controllers/accept-dojo-mentor-request-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -155,7 +157,7 @@ app
         controller:'edit-dojo-controller'
       })
       .state("dojo-detail", {
-        url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+        url: "/dashboard/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
         templateUrl: '/dojos/template/dojo-detail',
         resolve: {
           dojo:resolveDojo,
@@ -209,6 +211,11 @@ app
         url: "/dashboard/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken",
         templateUrl: '/dojos/template/accept-dojo-mentor-invitation',
         controller: 'accept-dojo-mentor-invitation-controller'
+      })
+      .state("accept-dojo-mentor-request", {
+        url: "/dashboard/accept_dojo_mentor_request/:userId/:mentorInviteToken",
+        templateUrl: '/dojos/template/accept-dojo-mentor-request',
+        controller: 'accept-dojo-mentor-request-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
   })
