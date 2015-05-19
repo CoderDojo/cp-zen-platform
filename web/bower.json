@@ -38,7 +38,7 @@
     "jquery-cookie-disclaimer": "1.0.0",
     "angular-alert-banner": "https://github.com/samouss/angular-alert-banner.git#master",
     "jed": "~1.0.2",
-    "messageformat": "~0.2.2",
+    "messageformat": "~0.1.8",
     "angular-translate": "~2.7.0",
     "angular-translate-interpolation-messageformat": "~2.7.0",
     "angular-translate-loader-url": "~2.7.0"
