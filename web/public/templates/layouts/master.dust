@@ -80,8 +80,13 @@
     <script src="https://coderdojo.org/globalmenu/coderdojomenu.min.js"></script>
     <script src="/components/checklist-model/checklist-model.js"></script>
     <script src="/components/angular-sb-date-select/src/sb-date-select.js"></script>
+    <script src="/components/jquery-cookie-disclaimer/dist/jquery-cookie/jquery.cookie.js"></script>
     <script src="/components/jquery-cookie-disclaimer/dist/jquery.cookieDisclaimer.min.js"></script>
     <script src="/components/angular-alert-banner/dist/angular-alert-banner.min.js"></script>
+    <!--<script src="/components/jed/jed.js"></script>-->
+    <script src="/components/angular-translate/angular-translate.min.js"></script>
+    <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
+    <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
     <script src="/seneca/init.js"></script>
 
     <script src="/js/app.js"></script>
