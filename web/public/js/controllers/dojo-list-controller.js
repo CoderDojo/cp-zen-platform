@@ -32,7 +32,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   if(gmap) {
     $scope.mapLoaded = true;
     $scope.mapOptions = {
-      center: new google.maps.LatLng(53, -7),
+      center: new google.maps.LatLng(25, -5),
       zoom: 2,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
