@@ -20,8 +20,10 @@ module.exports = function (router) {
     //  res.send(po.translations['']);
     //});
 
+    var format = req.query['format'] || 'jed';
+
     po2json.parseFile(path.join(__dirname, '../../locale/', locale, 'messages.po'), {
-      format: 'jed',
+      format: format,
       domain: 'coder-dojo-platform'
     }, function(err, data) {
       if (err) { throw err; }
