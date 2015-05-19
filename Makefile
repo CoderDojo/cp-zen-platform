@@ -1,9 +1,17 @@
+# strips the DOCKER_HOST env variable of it's port
+strip_port = $(DOCKER_HOST:%:2376=%)
+
+# strips the remaining of the DOCKER_HOST env variable of it's protocol
+strip_host = $(strip_port:tcp://%=%)
+
+# Sets LOCAL_HOST variable to be either 'localhost' or DOCKER hostname. This is used to run POSTGRES and ELASTICSEARCH commands
+LOCAL_HOST = $(or $(call strip_host), localhost)
 
 USER = platform
-HOST = localhost
+HOST = $(LOCAL_HOST)
 PORT= 5432
 
-ES_HOST=localhost
+ES_HOST=$(LOCAL_HOST)
 ES_PORT=9200
 ES_PROTOCOL=http
 ES_INDEX=cd-zen-platform-development
