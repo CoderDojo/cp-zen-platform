@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
-    "postinstall": "cd web && ../node_modules/.bin/bower install",
+    "postinstall": "cd web && bower install",
     "test": "grunt test"
   },
   "repository": {
