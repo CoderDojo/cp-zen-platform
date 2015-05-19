@@ -23,14 +23,14 @@
             }
         }
     },
-    
+
 
     "i18n": {
         "contentPath": "path:./locales",
         "fallback": "en-US"
     },
-    
-    
+
+
 
     "middleware": {
 
@@ -46,6 +46,14 @@
             }
         }
 
+        ,"locale": {
+            "priority": 95,
+            "enabled": true,
+            "module": {
+                "name": "path:./lib/locale"
+            }
+        }
+
         ,"seneca": {
             "priority": 105,
             "enabled": true,
@@ -54,7 +62,7 @@
             }
         }
 
-        
+
         ,"expressView": {
             "priority": 100,
             "enabled": true,
@@ -62,9 +70,9 @@
                 "name": "engine-munger/lib/expressView"
             }
         }
-        
 
-        
+
+
 
         ,"fileNotFound": {
             "enabled": true,
@@ -84,6 +92,6 @@
             }
         }
 
-        
+
     }
 }
