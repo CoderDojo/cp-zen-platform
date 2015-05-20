@@ -4,43 +4,34 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
             <input type="text" class="form-control" name="fullName" required required-message="'Name is empty'" ng-model="registerUser.name" placeholder="NAME">
-          </div>
         </div>
         <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon"><span>@</span></span>
-            <input type="email" class="form-control" name="emailAddress" required required-message="'Email is empty'" ng-model="registerUser.email" placeholder="EMAIL">
-          </div>
+          <input type="email" class="form-control" name="emailAddress" required required-message="'Email is empty'" ng-model="registerUser.email" placeholder="EMAIL">
         </div>
         <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" class="form-control" name="password" required required-message="'Password is empty'" ng-model="registerUser.password" placeholder="PASSWORD">
-          </div>
+          <input type="password" class="form-control" name="password" required required-message="'Password is empty'" ng-model="registerUser.password" placeholder="PASSWORD">
         </div>
         <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message= "'Passwords do not match!'" validator="registerUser.password === passwordConfirm" required required-message="'Confirm Password is empty'"  validate-on="dirty" name="passConfirmField" placeholder="CONFIRM PASSWORD"/>
-          </div>
+          <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message= "'Passwords do not match!'" validator="registerUser.password === passwordConfirm" required required-message="'Confirm Password is empty'"  validate-on="dirty" name="passConfirmField" placeholder="CONFIRM PASSWORD"/>
         </div>
         <div class="form-group">
           <div class="checkbox">
-            <input type="checkbox" title="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo." ng-model="registerUser.mailingList" id="mailingListCheckbox">
+            <input type="checkbox" title="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you
+          informed and help you with running your Dojo." ng-model="registerUser.mailingList" id="mailingListCheckbox">
             <label for="mailingListCheckbox">Join Mailing List</label>
           </div>
-        </div>
-        <div class="form-group">
+          <p></p> 
+          <span class="help-block"></span>
+
           <div class="checkbox">
             <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="registerUser.termsConditionsAccepted" required required-message="'You must accept the Terms and Conditions'" id="termsAndConditionsCheckbox">
-            <label for="termsAndConditionsCheckbox">I have read and accept the <a ui-sref="terms-and-conditions" target="_blank"><b>Terms and Conditions here</b></a>
+            <label for="termsAndConditionsCheckbox">
+              I have read and accept the <a ui-sref="terms-and-conditions" target="_blank"><b>Terms and Conditions here</b></a>
             </label>
           </div>
         </div>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
           <button class="btn btn-primary" type="submit">Register</button>
         </div>
       </div>

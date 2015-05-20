@@ -70,7 +70,7 @@ ul {
 label {
 	display: inline-block;
 	font-size:14px;
-	text-align: right;
+	text-align: left;
 }
 	​
 
@@ -453,7 +453,6 @@ label {
   padding:10px 10px;
 }
 
-label.control-label.has-error.validationMessage {
-  position: absolute;
-  margin-left: 10px
+.checkbox label.control-label.has-error.validationMessage:before {
+  content: none;
 }
