@@ -16,7 +16,8 @@ var app = angular.module('cpZenPlatform', [
   'checklist-model',
   'sbDateSelect',
   'angular-alert-banner',
-  'angularSpinner'
+  'angularSpinner',
+  'ngTagsInput'
 ]);
 
 require('./controllers/login-controller');
@@ -29,12 +30,14 @@ require('./controllers/start-dojo-wizard-controller');
 require('./controllers/terms-and-conditions-controller');
 require('./controllers/accept-dojo-mentor-invitation-controller');
 require('./controllers/accept-dojo-mentor-request-controller');
+require('./controllers/user-profile-controller');
 
 require('./services/cd-dojo-service');
 require('./services/cd-countries-service');
 require('./services/geocoder-service');
 require('./services/auth-service');
 require('./services/alert-service');
+require('./services/cd-users-service');
 
 //--Dojo Wizard Directives--//
 require('./directives/cd-register-account');
@@ -175,6 +178,11 @@ app
         url: "/accept_dojo_mentor_request/:userId/:mentorInviteToken",
         templateUrl: '/dojos/template/accept-dojo-mentor-request',
         controller: 'accept-dojo-mentor-request-controller'
+      })
+      .state("user-profile", {
+        url: "/profile/:userId/",
+        templateUrl: '/dojos/template/user-profile',
+        controller: 'user-profile-controller'
       });
   })
   .config(function(paginationConfig){

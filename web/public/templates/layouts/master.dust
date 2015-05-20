@@ -37,6 +37,9 @@
 	<!-- Angular Alert Banner -->
     <link rel="stylesheet" href="/components/angular-alert-banner/dist/angular-alert-banner.min.css">
 
+    <!-- Angular ngTagsInput -->
+    <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -89,6 +92,7 @@
     <script src="/components/angular-translate/angular-translate.min.js"></script>
     <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
     <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
+    <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/seneca/init.js"></script>
 
     <script src="/js/app.js"></script>

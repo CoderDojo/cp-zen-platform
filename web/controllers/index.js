@@ -44,6 +44,10 @@ module.exports = function (router) {
 
   router.get('/accept_dojo_mentor_request/:userId/:mentorInviteToken', function(req, res) {
     res.render('index');
+  });
+
+  router.get('/profile/:userId', function (req, res) {
+    res.render('index');
   }); 
 
   router.get('/templates/login', function (req, res) {
