@@ -88,9 +88,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="dojoEmail" class="col-lg-4">Email*</label>
+                    <label for="dojoEmail" class="col-lg-4">Email</label>
                       <div class="col-lg-6">
-                        <input type="text" required required-message="'Email is empty'" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
+                        <input type="text" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
                         <p>This should be different to the personal email you signed up for an account here with.
                           For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank.</p>
                       </div>

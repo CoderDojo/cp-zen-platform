@@ -60,7 +60,7 @@
             <div class="checkbox checkbox-primary">
               <input type="checkbox" ng-model="agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'You must accept the charter'" id="agreeToCharterCheckbox">
               <label for="agreeToCharterCheckbox">
-                  I have read and accept the above charter
+                  I have read and accepted the above charter
               </label>
             </div>
           </div>
