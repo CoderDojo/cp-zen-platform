@@ -96,6 +96,74 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       });
     });
   }
+
+  $scope.getPlaces = function(countryCode, search) {
+    if (!countryCode || !search.length || search.length < 3) {
+      $scope.places = [];
+      return;
+    }
+
+    var query = {
+      query: {
+        filtered: {
+          query: {
+            multi_match: {
+              query: search,
+              type: "phrase_prefix",
+              fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
+            }
+          },
+          filter: {
+            bool: {
+              must: [
+                {
+                  term: {
+                    countryCode: countryCode
+                  }
+                },
+                {
+                  term: {
+                    featureClass: "P"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      from: 0,
+      size: 100,
+      sort: [
+        { asciiname: "asc" }
+      ]
+    };
+
+    cdCountriesService.listPlaces(query).then(function(result) {
+      $scope.places = _.map(result, function(place) {
+        return _.omit(place, 'entity$');
+      });
+    });
+  };
+
+  $scope.setCountry = function(dojo, country) {
+    dojo.countryName = country.countryName;
+    dojo.countryNumber = country.countryNumber;
+    dojo.continent = country.continent;
+    dojo.alpha2 = country.alpha2;
+    dojo.alpha3 = country.alpha3;
+  };
+
+  $scope.setPlace = function(dojo, place) {
+    dojo.placeName = place.name;
+    dojo.placeGeonameId = place.geonameId;
+    dojo.county = {};
+    dojo.state = {};
+    dojo.city = {};
+    for (var adminidx=1; adminidx<=4; adminidx++) {
+      dojo['admin'+ adminidx + 'Code'] = place['admin'+ adminidx + 'Code'];
+      dojo['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
+    }
+  };
   
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {

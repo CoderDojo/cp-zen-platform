@@ -32,6 +32,9 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showAlert('Invite Sent!');
       context.inviteMentorForm.reset();
+    }, function (err) {
+      usSpinnerService.stop('manage-dojo-users-spinner');
+      alertService.showError('Error sending invite: ' + err);
     }); 
   }
 

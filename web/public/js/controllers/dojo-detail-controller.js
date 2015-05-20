@@ -1,6 +1,6 @@
 'use strict';
 
-function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, auth, dojo, gmap) {
+function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, usSpinnerService, auth, dojo, gmap) {
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
@@ -30,8 +30,10 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 
   $scope.requestToJoinAsMentor = function () {
     auth.get_loggedin_user(function (user) {
+      usSpinnerService.spin('dojo-detail-spinner');
       var data = {user:user, dojoId:dojo.id};
       cdDojoService.requestMentorInvite(data, function (response) {
+        usSpinnerService.stop('dojo-detail-spinner');
         alertService.showAlert("Mentor Invite Request Sent!");
       });
     }, function () {
@@ -43,4 +45,4 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'alertService', 'auth', 'dojo', 'gmap', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', cdDojoDetailCtrl]);

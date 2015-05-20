@@ -29,7 +29,9 @@ function cdAcceptDojoMentorRequestCtrl($scope, $window, $state, $stateParams, $l
             $state.go('my-dojos');
           });
         }
-        
+      }, function (err) {
+        usSpinnerService.stop('mentor-request-spinner');
+        alertService.showError('Error validating mentor request: ' + err);
       });
     }
 

@@ -29,6 +29,9 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
             $state.go('my-dojos');
           });
         }
+      }, function (err) {
+        usSpinnerService.stop('mentor-invitation-spinner');
+        alertService.showError('Error accepting invitation:' + err);
       });
     }
 
