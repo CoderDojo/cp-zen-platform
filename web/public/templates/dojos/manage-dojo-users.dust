@@ -1,0 +1,37 @@
+<div class="cd-dashboard">
+  <legend>Manage Dojo Users</legend>
+  <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+  <div class="row">
+  	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteMentor(invite, this)" name="inviteMentorForm">
+	  	<div class="form-group">
+		    <div class="col-lg-3">
+		      <input type="email" required required-message="'Email is empty'" placeholder="Enter Email" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
+		    </div>
+		    <button class="btn btn-primary" type="submit">Send Mentor Invite</button>
+		  </div>
+	  </form>
+  	<div class="col-md-12 table-responsive">
+      <table id="manageDojoUsers" class="table cd-grid-table">
+        <thead>
+          <tr>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>Name</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Email</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'roles')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Roles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users">
+            <td>{{ user.name }}</td>
+            <td><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
+            <td>{{ user.roles }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+    </div>
+  </div>
+</div>

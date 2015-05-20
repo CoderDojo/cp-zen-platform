@@ -84,6 +84,21 @@
       },
       getUsersDojos: function(query, win, fail) {
         cdApi.get('dojos/users', {query: query}, win, fail || topfail);
+      },
+      loadDojoUsers: function(query, win, fail) {
+        cdApi.post('dojos/load_dojo_users', {query: query}, win, fail || topfail);
+      },
+      generateMentorInviteToken: function(data, win, fail) {
+        cdApi.post('dojos/generate_mentor_invite_token', {email:data.email, dojoId:data.dojoId}, win, fail || topfail);
+      },
+      acceptMentorInvite: function(data, win, fail) {
+        cdApi.post('dojos/accept_mentor_invite', { data: data }, win, fail || topfail);
+      },
+      requestMentorInvite: function (data, win, fail) {
+        cdApi.post('dojos/request_mentor_invite', { data: data }, win, fail || topfail);
+      },
+      acceptMentorRequest: function(data, win, fail) {
+        cdApi.post('dojos/accept_mentor_request', { data: data }, win, fail || topfail);
       }
     };
   }

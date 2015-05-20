@@ -1,6 +1,6 @@
 'use strict';
 
-function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, gmap) {
+function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, gmap) {
   $scope.model = {};
   $scope.markers = [];
   $scope.continentMarkers = [];
@@ -357,7 +357,11 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   }
 
   $scope.viewDojo = function(dojo) {
-    $location.path('/dojo/' + dojo.urlSlug);
+    var urlSlugArray = dojo.urlSlug.split('/');
+    var country = urlSlugArray[0].toString();
+    urlSlugArray.splice(0, 1);
+    var path = urlSlugArray.join('/');
+    $state.go('dojo-detail',{country:country, path:path});
   }
 
   $scope.searchForDojo = function() {
@@ -545,4 +549,4 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-controller', ['$window', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', 'gmap', cdDojoListCtrl]);
+  .controller('dojo-list-controller', ['$window', '$state', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', 'gmap', cdDojoListCtrl]);

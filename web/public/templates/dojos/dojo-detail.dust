@@ -1,5 +1,6 @@
 <div class="cd-dashboard">
   <div class="dojo-list-dashboard">
+    <span spinner-key="dojo-detail-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="row">
       <div class="dojo-detail">
         <div class="dojo-detail-sidebar col-lg-4">
@@ -7,7 +8,10 @@
             <legend>Status</legend>
 
           </div>
-
+          <div class="widget">
+            <legend>Join</legend>
+              <button class="btn btn-success" ng-click="requestToJoinAsMentor()">Request to Join as Mentor</button>
+          </div>
           <div class="widget">
             <legend>Contact</legend>
             <table class="table">

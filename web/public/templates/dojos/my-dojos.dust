@@ -8,6 +8,7 @@
             <th>Dojo</th>
             <th>Location</th>
             <th>Edit</th>
+            <th>Users</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -16,6 +17,7 @@
             <td>{{ myDojo.name }}</td>
             <td>{{ myDojo.placeName }}</td>
             <td class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">Edit</a></td>
+            <td class="pointer"><a ui-sref="manage-dojo-users({id:myDojo.id})">Manage</a></td>
             <td class="pointer" ng-click="deleteDojo(myDojo)">Delete</td>
           </tr>
         </tbody>

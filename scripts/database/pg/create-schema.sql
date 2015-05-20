@@ -88,6 +88,7 @@ CREATE TABLE sys_user
   locale character varying,
   banned smallint,
   ban_reason character varying,
+  mentor_requests json[],
   CONSTRAINT pk_sys_user_id PRIMARY KEY (id)
 )
 WITH (
@@ -179,6 +180,7 @@ CREATE TABLE cd_dojos(
   need_mentors smallint NOT NULL DEFAULT 0,
   stage smallint NOT NULL DEFAULT 0,
   mailing_list smallint NOT NULL DEFAULT 0,
+  mentor_invites json[],
   "time" character varying,
   "country" json,
   county json,
