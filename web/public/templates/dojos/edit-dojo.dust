@@ -218,7 +218,7 @@
             <div class="widget">
               <legend>Supporters Image URL</legend>
               <div class="col-lg-11">
-                <input type="text" ng-model="dojo.supporter_image" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
+                <input type="text" ng-model="dojo.supporterImage" class="form-control" name="dojoSupporterImage" id="dojoSupporterImage">
               </div>
             </div>
 
