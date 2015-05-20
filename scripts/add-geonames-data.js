@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var url = require('url');
+var path = require('path');
+var fs = require('fs');
 var async = require('async');
 var request = require('request');
 var seneca = require('seneca')({
@@ -20,12 +22,26 @@ var args = require('yargs')
   .describe('throttle', 'throttle geonames request in milliseconds')
   .alias('throttle', 't')
   .default('throttle', 100)
+  .boolean('ignore-cache')
+  .boolean('update-cache')
+  .string('cache-path')
   .argv;
 
 var options = require('../web/options.' + env + '.js');
 seneca.options(options);
 
 seneca.use('postgresql-store');
+
+var geonamesCache = {};
+var geonamesCachePath = args['cache-path'] ?
+  path.resolve(args['cache-path']) :
+  path.join(__dirname, 'geonames-cache/data.json');
+
+if (!args['ignore-cache']) {
+  if (fs.existsSync(geonamesCachePath)) {
+    geonamesCache = require(geonamesCachePath);
+  }
+}
 
 seneca.ready(function() {
 
@@ -36,35 +52,45 @@ seneca.ready(function() {
       pathname: method + 'JSON',
       query: _.extend({username: args.username}, params)
     });
-    request({
-      url: geonamesurl,
-      json: true
-    }, function(err, res, body) {
-      if (err) { return done(err); }
-      if (res.statusCode !== 200) {
-        return done(new Error('Geonames responded with', res.statusCode));
-      }
-      if (body.status) {
-        if (body.status.value === 14) {
-          console.warn('Geonames', method, 'called with invalid parameters', JSON.stringify(params));
-          return done(null, null);
-        }
-        // not results found
-        if (body.status.value === 15) {
-          return done(null, null);
-        }
-        // hourly limit exceeded
-        if (body.status.value === 19) {
-          // wait?
-        }
-        console.error(JSON.stringify(body.status));
-        console.log(JSON.stringify(params));
-        return done(new Error(body.status.message));
-      }
-      setTimeout(function() {
-        return done(null, body);
-      }, args.throttle);
+    var cachekey = url.format({
+      pathname: method + 'JSON',
+      query: params
     });
+    if (geonamesCache[cachekey]) {
+      return done(null, geonamesCache[cachekey]);
+    }
+    else {
+      request({
+        url: geonamesurl,
+        json: true
+      }, function (err, res, body) {
+        if (err) { return done(err); }
+        if (res.statusCode !== 200) {
+          return done(new Error('Geonames responded with', res.statusCode));
+        }
+        if (body.status) {
+          if (body.status.value === 14) {
+            console.warn('Geonames', method, 'called with invalid parameters', JSON.stringify(params));
+            return done(null, null);
+          }
+          // not results found
+          if (body.status.value === 15) {
+            return done(null, null);
+          }
+          // hourly limit exceeded
+          if (body.status.value === 19) {
+            // wait?
+          }
+          console.error(JSON.stringify(body.status));
+          console.log(JSON.stringify(params));
+          return done(new Error(body.status.message));
+        }
+        setTimeout(function () {
+          geonamesCache[cachekey] = body;
+          return done(null, body);
+        }, args.throttle);
+      });
+    }
   }
 
   function run(cb) {
@@ -195,7 +221,20 @@ seneca.ready(function() {
           ], done);
         }, done);
       }
-    ], cb);
+    ], function(err) {
+      async.series([
+        function(done) {
+          if (args['update-cache']) {
+            fs.writeFile(geonamesCachePath, JSON.stringify(geonamesCache), done);
+          }
+          else {
+            setImmediate(done);
+          }
+        }
+      ], function() {
+        return cb(err);
+      });
+    });
   }
 
   run(function (err) {

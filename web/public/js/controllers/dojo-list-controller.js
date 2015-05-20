@@ -32,12 +32,12 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   if(gmap) {
     $scope.mapLoaded = true;
     $scope.mapOptions = {
-      center: new google.maps.LatLng(53, -7),
+      center: new google.maps.LatLng(25, -5),
       zoom: 2,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
   }
-  
+
   if($stateParams.bannerMessage) {
     var type = $stateParams.bannerType || 'info';
     AlertBanner.publish({
@@ -63,6 +63,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   });
 
   $scope.resetMap = function(type, text) {
+    $scope.searchResult = null;
     switch(type) {
       case 'earth':
         removeBreadcrumbs(0);
@@ -79,6 +80,10 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
       case 'state':
         removeBreadcrumbs(3);
         showMarkersInState(text);
+        break;
+      case 'search':
+        removeBreadcrumbs(0);
+        resetAllMarkers();
         break;
     }
   }
@@ -425,7 +430,13 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.search = function() {
+    if (!$scope.search.dojo) {
+      return;
+    }
+
     clearMarkerArrays();
+    $scope.searchResult = null;
+    $scope.currentLevels = _.reject($scope.currentLevels, function(level) {return level.type === 'search'});
 
     var address = $scope.search.dojo;
     Geocoder.geocode(address).then(function (results) {
@@ -433,67 +444,108 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
         return;
       }
 
+      $scope.currentLevels.push({
+        text:$scope.search.dojo,
+        type:'search',
+        style:'active'
+      });
+
+      $scope.search.dojo = '';
+
       var location = results[0].geometry.location;
-      var searchNearest = {
-        size: 1,
-        sort: [{
-          _geo_distance: {
-            geoPoint: {
-              lat: location.lat(),
-              lon: location.lng()
-            },
-            order: 'asc',
-            unit: 'km'
-          }
-        }]
-      };
 
       if (results[0].geometry.bounds) {
-
         var bounds =  results[0].geometry.bounds;
-        var searchInBounds = {
-          filter: {
-            geo_bounding_box: {
-              geoPoint: {
-                top_left: { lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng() },
-                bottom_right: { lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng() }
-              }
-            }
-          }
-        };
+        $scope.model.map.fitBounds(bounds);
+        $scope.searchBounds(location, $scope.model.map.getBounds(), true);
 
-        cdDojoService.search(searchInBounds).then(function(result) {
-          if (result.total > 0) {
-            $scope.searchResult = result.records;
-            addMarkersToMap(result.records);
-            $scope.model.map.fitBounds(bounds);
-          }
-          else {
-            cdDojoService.search(searchNearest).then(function(result) {
-              $scope.searchResult = result.records;
-              addMarkersToMap(result.records);
-
-              var closest = result.records[0];
-              $scope.model.map.setCenter(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
-              $scope.model.map.setZoom(15);
-            });
-          }
-        });
       } else {
-        cdDojoService.search(searchNearest).then(function(result) {
-          $scope.searchResult = result.records;
-          addMarkersToMap(result.records);
-
-          var closest = result.records[0];
-          $scope.model.map.setCenter(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
-          $scope.model.map.setZoom(15);
-        });
+        $scope.searchNearest(location);
       }
     }, function(reason) {
       console.error(reason);
     });
   }
 
+  $scope.searchNearest = function(location) {
+    var searchNearest = {
+      size: 10,
+      sort: [{
+        _geo_distance: {
+          geoPoint: {
+            lat: location.lat(),
+            lon: location.lng()
+          },
+          order: 'asc',
+          unit: 'km'
+        }
+      }]
+    };
+
+    cdDojoService.search(searchNearest).then(function(result) {
+      clearMarkerArrays();
+      $scope.searchResult = result.records;
+      addMarkersToMap(result.records);
+
+      if (result.records.length) {
+        var closest = result.records[0];
+
+        // fit map to show the lccation and the closest dojo
+        var bounds = new google.maps.LatLngBounds(location, location);
+        bounds.extend(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
+        $scope.model.map.fitBounds(bounds);
+
+        $scope.searchBounds(location, $scope.model.map.getBounds());
+      }
+    });
+  }
+
+  $scope.searchBounds = function(location, bounds, fallbackToNearest) {
+    var searchInBounds = {
+      filter: {
+        geo_bounding_box: {
+          geoPoint: {
+            top_left: { lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng() },
+            bottom_right: { lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng() }
+          }
+        }
+      },
+      from: 0,
+      size: 100
+    };
+
+    cdDojoService.search(searchInBounds).then(function(result) {
+      if (result.total > 0) {
+        clearMarkerArrays();
+        $scope.searchResult = result.records;
+        addMarkersToMap(result.records);
+      }
+      else {
+        if (fallbackToNearest) {
+          $scope.searchNearest(location);
+        }
+      }
+    });
+  }
+
+  $scope.mapDragEnd = function() {
+    if ($scope.searchResult) {
+      $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
+      console.log('drag end');
+    }
+  }
+
+  $scope.mapZoomChanged = function() {
+    // A minimum zoom level of 2 - don't let map zoom out farther than the world.
+    if($scope.model.map.getZoom() < 2) {
+      $scope.model.map.setZoom(2);
+    }
+
+    if ($scope.searchResult) {
+      $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
+      console.log('zoom changed');
+    }
+  }
 }
 
 angular.module('cpZenPlatform')

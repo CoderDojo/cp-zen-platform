@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Coder Dojo Platform v1.0\n"
+"POT-Creation-Date: 2015-05-01 01:16+0200\n"
+"PO-Revision-Date: 2015-05-14 08:36+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: web/public\n"
+"X-Poedit-SearchPathExcluded-0: web/public/components\n"
+
+#: web/public/js/controllers/champion-onboarding-controller.js:27
+msgid "Yes"
+msgstr "Yes"
+
+#: web/public/js/controllers/champion-onboarding-controller.js:27
+msgid "No"
+msgstr "No"
+
+msgid "Register a Dojo"
+msgstr "Register a Dojo"

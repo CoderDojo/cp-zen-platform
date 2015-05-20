@@ -2,7 +2,7 @@
   <div class="dojo-list-dashboard">
     <div id="sidebar" class="col-lg-4">
       <div class="widget">
-        <legend>Register a Dojo</legend>
+        <legend>{@i18n key="Register a Dojo"/}</legend>
         <p>To register a Dojo you first need an account. Sign up here:</p>
         <a href="#"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="Register"></a>
       </div>
