@@ -160,7 +160,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
               $window.location.href = '/dashboard/start-dojo';
             });
           } else {
-            var reason = data.why === 'nick-exists' ? 'nickname already exists' : 'server error';
+            var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
             alertService.showAlert('There was a problem registering your account: ' + reason);
           }
         }, function() {
