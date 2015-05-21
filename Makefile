@@ -25,10 +25,10 @@ add-users:
 	node scripts/insert-test-users.js
 
 es-index-dojos:
-	cd ../cp-dojos-service/ && ./start.sh scripts/es-index-dojos-data.js development
+	cd ../cp-dojos-service/ && ./start.sh development scripts/es-index-dojos-data.js
 
 es-index-countries-geo:
-	cd ../cp-countries-service/ && ./start.sh scripts/countries-import.js development
-	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=no-country" development
-	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=IE" development
-	cd ../cp-countries-service/ && ./start.sh "scripts/geonames-import.js --country=RO" development
+	cd ../cp-countries-service/ && ./start.sh development scripts/countries-import.js
+	cd ../cp-countries-service/ && ./start.sh development scripts/geonames-import.js --country=no-country
+	cd ../cp-countries-service/ && ./start.sh development scripts/geonames-import.js --country=IE
+	cd ../cp-countries-service/ && ./start.sh development scripts/geonames-import.js --country=RO
