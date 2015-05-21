@@ -10,12 +10,14 @@
 		    <button class="btn btn-primary" type="submit">Send Mentor Invite</button>
 		  </div>
 	  </form>
+
   	<div class="col-md-12 table-responsive">
       <table id="manageDojoUsers" class="table cd-grid-table">
         <thead>
           <tr>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>Name</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Email</th>
+            <th class="ten-percent-width">Profile</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'roles')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Roles</th>
           </tr>
         </thead>
@@ -23,7 +25,8 @@
           <tr ng-repeat="user in users">
             <td>{{ user.name }}</td>
             <td><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
-            <td>{{ user.roles }}</td>
+            <td><a class="pointer" ui-sref="user-profile({userId:user.id})">View Profile</a></td>
+            <td><tags-input add-from-autocomplete-only="true" placeholder="Add a role" on-tag-added="pushChangedUser(user)" on-tag-removed="pushChangedUser(user)" ng-model="user.roles"><auto-complete source="loadRoles($query)"></auto-complete></tags-input></td>
           </tr>
         </tbody>
       </table>

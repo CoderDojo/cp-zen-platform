@@ -1,8 +1,9 @@
  'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tableUtils, usSpinnerService) {
+function cdManageDojoUsersCtrl($scope, $state, cdDojoService, cdUsersService, alertService, tableUtils, usSpinnerService) {
   var dojoId = $state.params.id;
   $scope.itemsPerPage = 10;
+  var roles = [];
 
   $scope.pageChanged = function () {
     $scope.loadPage(false);
@@ -15,16 +16,30 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
     var query = {dojoId:dojoId};
+
     cdDojoService.loadDojoUsers(query, function (response) {
-      _.each(response, function(user) {
-        user.roles = user.roles.join();
-      });
       $scope.users = response;
       $scope.totalItems = response.length;
+      cdUsersService.getRoles(function (response) {
+        roles = response;
+      });
       return cb();
     });
 
   };
+
+  $scope.loadRoles = function(query) {
+    var filteredRoles = _.filter(roles, function (role) { return role.indexOf(query) > -1; })
+    return filteredRoles;
+  }
+
+  $scope.pushChangedUser = function(user) {
+    user.roles = _.pluck(user.roles, 'text');
+    cdUsersService.update(user, function (response) {
+    }, function (err) {
+      alertService.showError('Error updating user: ' + err);
+    });
+  }
 
   $scope.inviteMentor = function (invite, context) {
     usSpinnerService.spin('manage-dojo-users-spinner');
@@ -43,4 +58,5 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', 'cdDojoService', 'cdUsersService', 'alertService', 'tableUtils', 'usSpinnerService', cdManageDojoUsersCtrl]);
+

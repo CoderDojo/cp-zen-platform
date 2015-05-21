@@ -99,6 +99,9 @@
       },
       acceptMentorRequest: function(data, win, fail) {
         cdApi.post('dojos/accept_mentor_request', { data: data }, win, fail || topfail);
+      },
+      dojosForUser: function(userId, win, fail) {
+        cdApi.get('dojos/dojos_for_user/' + userId, win, fail || topfail);
       }
     };
   }

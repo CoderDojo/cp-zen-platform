@@ -14,6 +14,16 @@ function cdUsersService(cdApi){
     },
     getUsersByEmails: function(email, win, fail) {
       cdApi.post('users/emails', {email: email}, win, fail || topfail);
+    },
+    update: function(user, win, fail) {
+      user = angular.copy(user);
+      cdApi.put('users/update/' + user.id, { user: user }, win, fail);
+    },
+    getRoles: function(win, fail) {
+      cdApi.get('users/get_roles', win, fail || topfail);
+    },
+    load: function(userId, win, fail) {
+      cdApi.get('users/load/' + userId, win, fail || topfail);
     }
   };
 }
