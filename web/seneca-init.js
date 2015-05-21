@@ -10,10 +10,6 @@ var seneca = require('seneca')(options.main);
 
 seneca.options(options);
 
-if (options['postgresql-store']) {
-  seneca.use('postgresql-store', options['postgresql-store']);
-}
-
 seneca
   .use('ng-web')
   .use('user', { confirm: true })
