@@ -77,17 +77,30 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
     var filteredQuery = { query: { filtered: {}}};
+    var filteredBoolQuery = {bool: {must: []}};
 
     $scope.sort = $scope.sort ? $scope.sort :[{ created: 'desc' }];
 
     if(filter.email){
-      filteredQuery.query.filtered.query = {
+      var emailQuery = {
         "regexp" : {
           "email" : {
             "value": ".*" + filter.email + ".*"
           }
         }
       };
+      filteredBoolQuery.bool.must.push(emailQuery); 
+    }
+
+    if(filter.name){
+      var nameQuery = {
+        "regexp": {
+          "name": {
+            "value": ".*" + filter.name + ".*"
+          }
+        }
+      };
+      filteredBoolQuery.bool.must.push(nameQuery);
     }
 
     var query = _.omit({
@@ -133,7 +146,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       return;
     }
 
-
+    filteredQuery.query.filtered.query = filteredBoolQuery;
     cdDojoService.search(filteredQuery).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
         dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
