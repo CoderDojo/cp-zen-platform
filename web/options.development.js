@@ -19,13 +19,6 @@ function localhost() {
 
 module.exports = _.defaults({
   'agreement-version' : 2,
-  'postgresql-store': {
-    name: process.env.POSTGRES_NAME,
-    host: process.env.POSTGRES_HOST || localhost(),
-    port: process.env.POSTGRES_PORT || 5432,
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASSWORD
-  },
   auth: {
     restrict: ['/dashboard'],
     redirect:{
