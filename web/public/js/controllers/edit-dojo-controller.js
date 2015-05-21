@@ -5,7 +5,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   $scope.model = {};
   $scope.markers = [];
   $scope.saveButtonText = 'Update Dojo';
-  var DUBLIN_COORDS = '53.3478,6.2597';
+  var DEFAULT_COORDS = '53.3478,6.2597';
 
   auth.get_loggedin_user(function(user) {
     $scope.user = user;
@@ -49,7 +49,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       
       if(!coordsStr){
         alertService.showError('An error has occurred while loading Dojo');
-        coordsStr = DUBLIN_COORDS;
+        coordsStr = DEFAULT_COORDS;
       }
  
       var coordinates = coordsStr.split(',');
