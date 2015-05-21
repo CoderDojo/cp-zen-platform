@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, cdProfilesService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -351,8 +351,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     var query = {limit$: 'NULL'};
     query.user_id = item.id;
 
-    cdProfilesService.getProfiles(query, function(profiles){
-      var dojoIds = _.pluck(profiles, 'dojoId');
+    cdDojoService.getUsersDojos(query, function(usersDojos){
+      var dojoIds = _.pluck(usersDojos, 'dojoId');
       
       dojoIds = _.filter(dojoIds, function(dojoId){
         return dojoId !== null;
@@ -374,6 +374,5 @@ angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', 'alertService', 'auth', 
   'tableUtils', 'cdDojoService', '$location', 
-  'cdCountriesService', 'cdUsersService', 
-  'cdProfilesService', manageDojosCtrl]);
+  'cdCountriesService', 'cdUsersService',  manageDojosCtrl]);
 
