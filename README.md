@@ -7,7 +7,6 @@ npm install
 ```
 
 To insert test users into the mongo database (development), run:
-
 ```
 node scripts/insert-test-users.js
 ```
