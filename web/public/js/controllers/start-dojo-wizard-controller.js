@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, Geocoder, gmap) {
+function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdUsersService, Geocoder, gmap) {
     $scope.stepFinishedLoading = false;
     $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
@@ -178,12 +178,21 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       currentStepInt = 1;
       $scope.championRegistrationFormVisible = true;
       var currentUser;
+      var dojoLead;
+
       $scope.champion = {};
       auth.get_loggedin_user(function (user) {
         currentUser = user;
         if(currentUser) {
           $scope.champion.email = currentUser.email;
           $scope.champion.name = currentUser.name;
+          cdDojoService.loadUserDojoLead(currentUser.id, function (response) {
+          if(!_.isEmpty(response)) {
+            dojoLead = response;
+          } else {
+            dojoLead = {application:{}};
+          }
+        });
         }
       });
 
@@ -199,12 +208,11 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       $scope.answers = ['Yes', 'No'];
 
       $scope.save = function(champion) {
-        var dojoLead = {application:{}};
         dojoLead.application.championDetails = champion;
         dojoLead.userId = currentUser.id;
         dojoLead.email = currentUser.email;
-        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
         cdDojoService.saveDojoLead(dojoLead, function(response) {
+          dojoLead = response;
           $scope.showCharterAgreement();
         });
       }
@@ -214,7 +222,10 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       }
 
       $scope.acceptCharterAgreement = function () {
-        setupStep3();
+        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+        cdDojoService.saveDojoLead(dojoLead, function (response) {
+          setupStep3();
+        });
       }
 
       cdCountriesService.listCountries(function(countries) {
@@ -366,10 +377,14 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
-              $state.go('home', 
-              { bannerType:'success', 
-                bannerMessage: 'Thank you for submitting your dojo listing. \
-                A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'
+              //Make user champion
+              //TO-DO:User should only be made champion of this Dojo.
+              cdUsersService.promote(currentUser.id, ['champion'], function (response) {
+                $state.go('home', { 
+                  bannerType:'success', 
+                  bannerMessage: 'Thank you for submitting your dojo listing. \
+                  A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'
+                });
               });
             });
           });
@@ -429,5 +444,5 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdUsersService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
 

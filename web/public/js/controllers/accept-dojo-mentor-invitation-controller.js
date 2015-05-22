@@ -4,7 +4,7 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
   var dojoId = $stateParams.dojoId;
   var inviteToken = $stateParams.mentorInviteToken;
   var currentPath = $location.path();
-
+  
   auth.get_loggedin_user(function(user) {
     if($state.current.url === '/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken') {
       $window.location.href = '/dashboard' + currentPath;

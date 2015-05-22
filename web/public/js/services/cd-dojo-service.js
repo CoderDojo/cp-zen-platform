@@ -71,7 +71,11 @@
         cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
       saveDojoLead: function(dojoLead, win, fail) {
-        cdApi.post('dojos/save_dojo_lead', { dojoLead: dojoLead }, win, fail || topfail);
+        if(dojoLead.id) {
+          cdApi.put('dojos/update_dojo_lead/' + dojoLead.id, { dojoLead: dojoLead }, win, fail || topfail);
+        } else {
+          cdApi.post('dojos/save_dojo_lead', { dojoLead: dojoLead }, win, fail || topfail);
+        }
       },
       loadUserDojoLead: function(userId, win, fail) {
         cdApi.get('dojos/user_dojo_lead/' + userId, win, fail || topfail);
@@ -83,7 +87,7 @@
         cdApi.get('load_setup_dojo_steps', win, fail || topfail);
       },
       getUsersDojos: function(query, win, fail) {
-        cdApi.get('dojos/users', {query: query}, win, fail || topfail);
+        cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
       loadDojoUsers: function(query, win, fail) {
         cdApi.post('dojos/load_dojo_users', {query: query}, win, fail || topfail);
@@ -102,7 +106,19 @@
       },
       dojosForUser: function(userId, win, fail) {
         cdApi.get('dojos/dojos_for_user/' + userId, win, fail || topfail);
-      }
+      },
+      saveUsersDojos: function(userDojo, win, fail) {
+        cdApi.post('dojos/save_usersdojos', {userDojo: userDojo}, win, fail || topfail);
+      },
+      removeUsersDojosLink: function(userId, dojoId, win, fail) {
+        cdApi.delete('dojos/remove_usersdojos/' + userId + '/' + dojoId, win, fail || topfail);
+      },
+      getUserPermissions: function(win, fail) {
+        cdApi.get('get_user_permissions', win, fail || topfail);
+      },
+      getUserTypes: function(win, fail) {
+        cdApi.get('get_user_types', win, fail || topfail);
+      },
     };
   }
 angular.module('cpZenPlatform')

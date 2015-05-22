@@ -17,7 +17,8 @@ var app = angular.module('cpZenPlatform', [
   'sbDateSelect',
   'angular-alert-banner',
   'angularSpinner',
-  'ngTagsInput'
+  'ngTagsInput',
+  'ngBootbox'
 ]);
 
 require('./controllers/login-controller');
@@ -94,8 +95,15 @@ var resolveDojo = function($q, $stateParams, cdDojoService) {
 }
 
 app
-  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
     $locationProvider.html5Mode(true);
+    function valToString(val)   { return val !== null ? val.toString() : val; }
+    function valFromString(val) { return val != null ? val.toString() : val; }
+    $urlMatcherFactoryProvider.type('nonURIEncoded', {
+      encode: valToString,
+      decode: valFromString,
+      is: function () { return true; }
+    });
     $stateProvider
       .state("home", {
         url: "/",
@@ -139,7 +147,7 @@ app
         controller:'dojo-list-index-controller'
       })
       .state("dojo-detail", {
-        url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+        url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
         templateUrl: '/dojos/template/dojo-detail',
         resolve: {
           dojo:resolveDojo,
