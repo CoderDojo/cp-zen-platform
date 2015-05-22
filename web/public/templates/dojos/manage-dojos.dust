@@ -41,16 +41,22 @@
       </div>
       <div class="row">
         <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Dojo Name</label>
+            <input type="text" placeholder="Search by dojo name" ng-model="filter.name" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="form-group">          
             <label for="">Dojo Email</label>
-            <input type="text" placeholder="Search for dojo email" class="form-control" ng-model="filter.email">
+            <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.email">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label for="user-email">User Email</label>
             <ui-select ng-model="userEmail" ng-disabled="false" on-select="getDojoIds($item)">
-              <ui-select-match allow-clear="true" placeholder="Search for user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
               <ui-select-choices repeat="user in users"
                   refresh="getUsersByEmails($select.search)"
                   refresh-delay="500">

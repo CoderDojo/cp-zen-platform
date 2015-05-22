@@ -60,7 +60,7 @@
           <a ng-click="show('forgot-password')">Forgot password?</a>
         </div>
         <div class="create-account">
-          <a ng-href="#/register">Register</a>
+          <a ng-href="/register">Register</a>
         </div>
       </div>
     </div>

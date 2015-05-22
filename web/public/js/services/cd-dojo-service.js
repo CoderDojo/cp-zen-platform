@@ -83,7 +83,7 @@
         cdApi.get('load_setup_dojo_steps', win, fail || topfail);
       },
       getUsersDojos: function(query, win, fail) {
-        cdApi.get('dojos/users', {query: query}, win, fail || topfail);
+        cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
       loadDojoUsers: function(query, win, fail) {
         cdApi.post('dojos/load_dojo_users', {query: query}, win, fail || topfail);

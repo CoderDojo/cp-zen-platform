@@ -8,15 +8,15 @@
     <table class="table cd-grid-table">
       <thead>
         <tr>
-          <th>&nbsp;</th>
-          <th>Active</th>
-          <th>Verified</th>
-          <th>Total</th>
+          <th style="width:70%">&nbsp;</th>
+          <th style="width:10%">Active</th>
+          <th style="width:10%">Verified</th>
+          <th style="width:10%">Total</th>
         </tr>
       </thead>
       <tbody ng-repeat="(continent, values) in dojos">
         <tr ng-repeat="dojo in values">
-          <td>{{ dojo.countryName }}</td>
+          <td>{{ dojo.countryName | characters:100}}</td>
           <td>{{ dojo.activeVerified }}</td>
           <td>{{ dojo.verified }}</td>
           <td>{{ dojo.all }}</td>

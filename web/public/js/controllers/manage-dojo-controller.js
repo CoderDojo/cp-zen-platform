@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, cdProfilesService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -56,7 +56,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
-      $location.path('/dashboard/edit-dojo');
+      $location.path('/dashboard/edit-dojo/'+ dojo.id);
     }, function (err) {
       if (err) {
         alertService.showError(
@@ -77,17 +77,30 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
     var filteredQuery = { query: { filtered: {}}};
+    var filteredBoolQuery = {bool: {must: []}};
 
     $scope.sort = $scope.sort ? $scope.sort :[{ created: 'desc' }];
 
     if(filter.email){
-      filteredQuery.query.filtered.query = {
+      var emailQuery = {
         "regexp" : {
           "email" : {
             "value": ".*" + filter.email + ".*"
           }
         }
       };
+      filteredBoolQuery.bool.must.push(emailQuery); 
+    }
+
+    if(filter.name){
+      var nameQuery = {
+        "regexp": {
+          "name": {
+            "value": ".*" + filter.name + ".*"
+          }
+        }
+      };
+      filteredBoolQuery.bool.must.push(nameQuery);
     }
 
     var query = _.omit({
@@ -133,7 +146,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       return;
     }
 
-
+    filteredQuery.query.filtered.query = filteredBoolQuery;
     cdDojoService.search(filteredQuery).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
         dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
@@ -338,8 +351,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     var query = {limit$: 'NULL'};
     query.user_id = item.id;
 
-    cdProfilesService.getProfiles(query, function(profiles){
-      var dojoIds = _.pluck(profiles, 'dojoId');
+    cdDojoService.getUsersDojos(query, function(usersDojos){
+      var dojoIds = _.pluck(usersDojos, 'dojoId');
       
       dojoIds = _.filter(dojoIds, function(dojoId){
         return dojoId !== null;
@@ -361,6 +374,5 @@ angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', 'alertService', 'auth', 
   'tableUtils', 'cdDojoService', '$location', 
-  'cdCountriesService', 'cdUsersService', 
-  'cdProfilesService', manageDojosCtrl]);
+  'cdCountriesService', 'cdUsersService',  manageDojosCtrl]);
 
