@@ -235,6 +235,8 @@ CREATE TABLE cd_usersdojos(
   owner smallint,
   user_id character varying,
   dojo_id character varying,
+  user_types json[],
+  user_permissions json[],
   CONSTRAINT pk_cd_userdojos PRIMARY KEY (id)
 )
 

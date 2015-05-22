@@ -19,9 +19,6 @@ function cdUsersService(cdApi){
       user = angular.copy(user);
       cdApi.put('users/update/' + user.id, { user: user }, win, fail);
     },
-    getRoles: function(win, fail) {
-      cdApi.get('users/get_roles', win, fail || topfail);
-    },
     load: function(userId, win, fail) {
       cdApi.get('users/load/' + userId, win, fail || topfail);
     }

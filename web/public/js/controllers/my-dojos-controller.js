@@ -49,6 +49,13 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
     };
 
     cdDojoService.myDojos(search, currentUser).then(function(result) {
+      _.each(result.records, function (dojo) {
+        dojo.country = dojo.country.alpha2.toLowerCase();
+        var path = dojo.urlSlug.split('/');
+        path.splice(0, 1);
+        path = path.join('/');
+        dojo.path = path;
+      });
       $scope.myDojos = result.records;
       $scope.totalItems = result.total;
 
