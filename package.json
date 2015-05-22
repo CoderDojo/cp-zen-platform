@@ -7,7 +7,7 @@
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
     "postinstall": "cd web && bower install",
-    "test": "grunt test"
+    "test": "echo TEST NOT IMPLEMENTED"
   },
   "repository": {
     "type": "git",
