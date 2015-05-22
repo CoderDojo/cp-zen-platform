@@ -49,7 +49,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   $scope.$on('$viewContentLoaded', function() {
     jQuery('body').cookieDisclaimer({
       style: "light", // dark,light
-      cssPosition: "fixed", //fixed,absolute,relative
+      cssPosition: "relative", //fixed,absolute,relative
       policyBtn: {
         link: "http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2", // cookie policy page URL
       },
