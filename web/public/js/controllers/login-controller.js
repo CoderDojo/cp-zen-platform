@@ -36,7 +36,8 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
             });
           });
         } else {
-          alertService.showAlert('There was a problem registering your account:' + data.why);
+          var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
+          alertService.showAlert('There was a problem registering your account: ' + reason);
         }
       }, function() {
         
