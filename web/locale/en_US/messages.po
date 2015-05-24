@@ -25,3 +25,27 @@ msgstr "No"
 
 msgid "Register a Dojo"
 msgstr "Register a Dojo"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "REQUEST PASSWORD RESET"
+msgstr "REQUEST PASSWORD RESET"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Forgot password"
+msgstr "Forgot password?"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "EMAIL"
+msgstr "EMAIL"
+
+msgid "PASSWORD"
+msgstr "PASSWORDS"
+
+msgid "Other stuff"
+msgstr "Other stuff"
