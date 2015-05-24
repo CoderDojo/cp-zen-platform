@@ -73,3 +73,10 @@ msgstr "CONFIRM PASSWORD"
 
 msgid "Already have an account"
 msgstr "Already have an account?"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Terms and Conditions"
+msgstr "Terms and Conditions"
+
