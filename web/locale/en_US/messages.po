@@ -45,7 +45,31 @@ msgid "EMAIL"
 msgstr "EMAIL"
 
 msgid "PASSWORD"
-msgstr "PASSWORDS"
+msgstr "PASSWORD"
 
 msgid "Other stuff"
 msgstr "Other stuff"
+
+msgid "Name is empty"
+msgstr "Name is empty"
+
+msgid "NAME"
+msgstr "NAME"
+
+msgid "Email is empty"
+msgstr "Email is empty"
+
+msgid "Password is empty"
+msgstr "Password is empty"
+
+msgid "Passwords do not match"
+msgstr "Passwords do not match!"
+
+msgid "Confirm Password is empty"
+msgstr "Confirm Password is empty"
+
+msgid "CONFIRM PASSWORD"
+msgstr "CONFIRM PASSWORD"
+
+msgid "Already have an account"
+msgstr "Already have an account?"
