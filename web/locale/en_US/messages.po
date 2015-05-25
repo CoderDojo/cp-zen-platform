@@ -403,6 +403,14 @@ msgstr "Location"
 msgid "Map"
 msgstr "Map"
 
+msgid "dojo.list.index.p1"
+msgstr "To register a Dojo you first need an account. Sign up here:"
+
+msgid "dojo.list.index.p2"
+msgstr "The Dojos listed here are all verified by the CoderDojo team."
+
+msgid "Learn more"
+msgstr "Learn more..."
 
 
 
