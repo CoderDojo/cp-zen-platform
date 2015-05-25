@@ -80,3 +80,112 @@ msgstr "Login"
 msgid "Terms and Conditions"
 msgstr "Terms and Conditions"
 
+msgid "CoderDojo Champion Registration Form"
+msgstr "CoderDojo Champion Registration Form"
+
+msgid "pre-game-warning-p1"
+msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
+
+msgid "pre-game-warning-p2"
+msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+
+msgid "pre-game-warning-p3"
+msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
+
+msgid "General Information"
+msgstr "General Information"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "champion.registration.email.tooltip"
+msgstr "Please provide a personal email address."
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "champion.registration.fullname.tooltip"
+msgstr "Please provide your full name"
+
+msgid "Planned Dojo Location"
+msgstr "Planned Dojo Location"
+
+msgid "champion.registration.planneddojo.tooltip"
+msgstr "Please let us know where in the world you are planning to set up your Dojo. eg. Town, City, State, Country"
+
+msgid "Planned Dojo Location is empty"
+msgstr "Planned Dojo Location is empty"
+
+msgid "Date of Birth"
+msgstr "Date of Birth"
+
+msgid "Date of Birth"
+msgstr "Date of Birth"
+
+msgid "Telephone Number"
+msgstr "Telephone Number"
+
+msgid "Telephone Number is empty"
+msgstr "Telephone Number is empty"
+
+msgid "Experience"
+msgstr "Experience"
+
+msgid "Do you have any relevant experience working with young people"
+msgstr "Do you have any relevant experience working with young people?"
+
+msgid "Experience is empty"
+msgstr "Experience is empty"
+
+msgid "champion.registration.telephone.tooltip"
+msgstr "Please include country code."
+
+msgid "champion.registration.experience.tooltop"
+msgstr "Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A."
+
+msgid "Please list any relevant technical experience"
+msgstr "Please list any relevant technical experience."
+
+msgid "Technical Experience is empty"
+msgstr "Technical Experience is empty"
+
+msgid "How did you hear about CoderDojo"
+msgstr "How did you hear about CoderDojo?"
+
+msgid "Social"
+msgstr "Social"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "champion.registration.social.twitter.tooltip"
+msgstr "If you wish please provide your username or a link to your Twitter page."
+
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+msgid "champion.registration.social.linkedin.tooltip"
+msgstr "If you wish please provide your username or a link to your LinkedIn page."
+
+msgid "Google+"
+msgstr "Google+"
+
+msgid "champion.registration.social.google.tooltip"
+msgstr "If you wish please provide your username or a link to your Google+"
+
+msgid "Do you have access to technical mentors"
+msgstr "Do you have access to technical mentors?"
+
+msgid "champion.registration.technicalmentors.tooltip"
+msgstr "It is recommended to find a team of interested local technical volunteers to mentor and to find non-technical volunteers, such as parents, who can help out and volunteer when they bring their children etc. You do not need to have a big team but it is always better to have support from a core team when organising a Dojo. You can then have planning meetings with your team in advance of setting up your Dojo"
+
+msgid "Select an option"
+msgstr "Select an option"
+
+msgid "Do you have access to a venue"
+msgstr "Do you have access to a venue?"
+
+msgid "champion.registration.venue.tooltip"
+msgstr "Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees."
+
+
