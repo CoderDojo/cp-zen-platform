@@ -3,12 +3,12 @@
     <div id="sidebar" class="col-lg-4">
       <div class="widget">
         <legend>{@i18n key="Register a Dojo"/}</legend>
-        <p>To register a Dojo you first need an account. Sign up here:</p>
+        <p>{@i18n key="dojo.list.index.p1"/}</p>
         <a href="#"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="Register"></a>
       </div>
       <div class="widget">
-        <legend>Dojos</legend>
-        <p>The Dojos listed here are all verified by the CoderDojo team. <a href="http://kata.coderdojo.com/index.php?title=Unverified_Dojo_Listing" target="_blank">Learn more...</a></p>
+        <legend>{@i18n key="Dojos"/}</legend>
+        <p>{@i18n key="dojo.list.index.p2"/} <a href="http://kata.coderdojo.com/index.php?title=Unverified_Dojo_Listing" target="_blank">{@i18n key="Learn More"/}</a></p>
       </div>
     </div>
     <div dw-loading="main" class="cd-dojo-list-container">
