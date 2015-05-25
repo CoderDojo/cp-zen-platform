@@ -1,12 +1,12 @@
 <div class="cd-dashboard">
   <div id="main">
     <div class="cd-create-dojo-container">
-      <h1>Champion Application</h1>
-       <legend>General Information</legend>
+      <h1>{@i18n key="Champion Application"/}</h1>
+       <legend>{@i18n key="General Information"/}</legend>
 
         <div class="row">
           <div class="form-group">
-            <label for="emailAddress" class="col-lg-4">Email Address</label>
+            <label for="emailAddress" class="col-lg-4">{@i18n key="Email Address"/}</label>
               <div class="col-lg-6">
                 <span>{{ championApplication.email }}</span>
               </div>
@@ -15,7 +15,7 @@
 
          <div class="row">
           <div class="form-group">
-            <label for="fullName" class="col-lg-4">Full Name</label>
+            <label for="fullName" class="col-lg-4">{@i18n key="Full Name"/}</label>
               <div class="col-lg-6">
                 <span>{{ championApplication.name }}</span>
               </div>
@@ -24,7 +24,7 @@
 
         <div class="row">
           <div class="form-group has-feedback">
-            <label for="dateOfBirth" class="col-lg-4">Date of Birth</label>
+            <label for="dateOfBirth" class="col-lg-4">{@i18n key="Date of Birth"/}</label>
             <div class="col-lg-6">
               <span>{{ championApplication.dateOfBirth }}</span>
             </div>
@@ -33,7 +33,7 @@
 
         <div class="row">
           <div class="form-group has-feedback">
-            <label for="telephoneNumber" class="col-lg-4">Telephone Number</label>
+            <label for="telephoneNumber" class="col-lg-4">{@i18n key="Telephone Number"/}</label>
             <div class="col-lg-6">
               <span>{{ championApplication.phone }}</span>
             </div>
@@ -42,7 +42,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="championCountry" class="col-lg-4">Country</label>
+            <label for="championCountry" class="col-lg-4">{@i18n key="Country"/}</label>
             <div class="col-lg-6">
              <span>{{ championApplication.country.name }}</span>
             </div>
@@ -51,17 +51,17 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="championPlace" class="col-lg-4">City/Town</label>
+            <label for="championPlace" class="col-lg-4">{@i18n key="CityTown"/}</label>
             <div class="col-lg-6">
              <span>{{ championApplication.place.nameWithHierarchy }}</span>
             </div>
           </div>
         </div>
 
-        <legend>Experience</legend>
+        <legend>{@i18n key="Experience"/}</legend>
         <div class="row">
           <div class="form-group">
-            <label class="col-lg-4">Languages Spoken</label>
+            <label class="col-lg-4">{@i18n key="Languages Spoken"/}</label>
             <div class="col-lg-6">
               <div ng-repeat="language in championApplication.languagesSpoken" class="checkbox checkbox-primary">
                <span>{{ language }}</span>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="row">
-          <label for="projects" class="col-lg-3">Projects</label><br />
+          <label for="projects" class="col-lg-3">{@i18n key="Projects"/}</label><br />
           <div class="col-lg-6 col-lg-offset-4">
             <textarea readonly name="projects" class="form-control" rows="5">
               {{ championApplication.projects }}
@@ -80,10 +80,10 @@
           </div>
         </div>
 
-        <legend>Social</legend>
+        <legend>{@i18n key="Social"/}</legend>
         <div class="row">
           <div class="form-group">
-            <label for="twitter" class="col-lg-4">Twitter</label>
+            <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
               <div class="col-lg-6">
                 <span>{{ championApplication.twitter }}</span>
               </div>
@@ -92,16 +92,16 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="linkedIn" class="col-lg-4">LinkedIn</label>
+            <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-6">
                <span>{{ championApplication.linkedIn }}</span>
               </div>
           </div>
         </div>
 
-        <legend>Other</legend>
+        <legend>{@i18n key="Other"/}</legend>
         <div class="row">
-          <label class="col-lg-4">Prerequisites</label>
+          <label class="col-lg-4">{@i18n key="Prerequisites"/}</label>
           <div class="col-lg-6">
             <span>Has access to Technical Mentors: {{ championApplication.hasTechnicalMentorsAccess }}</span>
             <textarea class="form-control" readonly ng-show="championApplication.hasTechnicalMentorsAccess === 'Yes'" rows="5">{{ championApplication.technicalMentorsDescription }}</textarea>
@@ -113,7 +113,7 @@
         </div>
 
         <div class="row">
-          <label for="projects" class="col-lg-3">Notes</label><br />
+          <label for="projects" class="col-lg-3">{@i18n key="Notes"/}</label><br />
           <div class="col-lg-6 col-lg-offset-4">
             <textarea name="notes" class="form-control" readonly rows="5">{{ championApplication.notes }}</textarea>
           </div>
@@ -121,7 +121,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="coderDojoReference" class="col-lg-4">How did you hear about CoderDojo?</label>
+            <label for="coderDojoReference" class="col-lg-4">{@i18n key="How did you hear about CoderDojo"/}</label>
             <div class="col-lg-6">
               <span>{{ championApplication.coderDojoReference }}</span>
               <span ng-show="championApplication.coderDojoReference === 'Other'">{{ championApplication.coderDojoReferenceOther }}</span>
