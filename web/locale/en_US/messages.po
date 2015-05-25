@@ -328,6 +328,22 @@ msgstr "Next"
 msgid "Dojo Menu"
 msgstr "Dojo Menu"
 
+
+msgid "Find a Dojo"
+msgstr "Find a Dojo"
+
+msgid "Resources"
+msgstr "Resources"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "CoolestProjects2015"
+msgstr "CoolestProjects2015"
+
+msgid "Opens in new window"
+msgstr "Opens in new window"
+
 msgid "Find a Dojo"
 msgstr "Find a Dojo"
 
