@@ -373,9 +373,35 @@ msgstr "Mentor Request"
 msgid "mentor.request.p1"
 msgstr "Mentor Request is being validated..."
 
+msgid "Status"
+msgstr "Status"
 
+msgid "Join"
+msgstr "Join"
 
+msgid "Request to Join as Mentor"
+msgstr "Request to Join as Mentor"
 
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Google Group"
+msgstr "Google Group"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Location"
+msgstr "Location"
+
+msgid "Map"
+msgstr "Map"
 
 
 
