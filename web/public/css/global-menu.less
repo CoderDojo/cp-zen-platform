@@ -1,0 +1,154 @@
+.cdgm_container {
+padding-left:15px;
+padding-right:15px;
+width:100%;
+}
+
+.cdgm_row {
+margin-left:-15px;
+margin-right:-15px;
+}
+
+.cdgm_container:after,.cdgm_container:before,.cdgm_row:after,.cdgm_row:before {
+content:" ";
+display:table;
+}
+
+.cdgm_container:after,.cdgm_row:after {
+clear:both;
+}
+
+.cdgm_col-md-12 {
+position:relative;
+min-height:1px;
+padding-left:15px;
+padding-right:15px;
+}
+
+.cdgm_container nav {
+display:block;
+}
+
+.cdgm_container a {
+background:0 0;
+}
+
+.cdgm_container a:active,.cdgm_container a:hover {
+outline:0;
+}
+
+.cdgm_menu * {
+font-family:Arial,sans-serif;
+}
+
+.cdgm_menu {
+background:#333;
+height:40px;
+display:block;
+width:100%;
+left:0;
+top:0;
+right:0;
+font-size:16px;
+line-height:30px;
+}
+
+.cdgm_dl-menu a,.cdgm_menu a {
+color:#fff;
+}
+
+.cdgm_add-nav.cdgm_dl-menu {
+list-style:none;
+font-size:12px;
+line-height:16px;
+display:block;
+width:auto;
+text-transform:uppercase;
+margin:0 0 0 23px;
+padding:0;
+}
+
+.cdgm_add-nav.cdgm_dl-menu>li {
+float:left;
+list-style:none;
+margin:0 24px 13px 0;
+}
+
+.cdgm_add-nav.cdgm_dl-menu>li>a,.cdgm_inner .cdgm_add-nav.cdgm_dl-menu>li>a {
+display:block;
+color:#fff;
+border-top:2px solid #333;
+padding:9px 0 0;
+}
+
+.cdgm_add-nav.cdgm_dl-menu>li.active>a,.cdgm_add-nav.cdgm_dl-menu>li:hover>a,.cdgm_inner .cdgm_add-nav.cdgm_dl-menu>li.active>a {
+color:#fff;
+border-color:#fff;
+padding:9px 0 0;
+}
+
+.cdgm_add-nav.cdgm_dl-menu>li+li {
+border:none;
+}
+
+.cdgm_menu ul {
+float:left;
+list-style:none;
+margin:0 0 0 23px;
+padding:0;
+}
+
+.cdgm_menu li {
+position:relative;
+float:left;
+margin-bottom:13px;
+}
+
+.cdgm_menu a {
+text-decoration:none;
+-webkit-transition:all .2s linear;
+transition:all .2s linear;
+font-family:arial,helvetica,sans-serif;
+}
+
+.cdgm_menu a:hover {
+color:#666;
+text-decoration:none;
+}
+
+.cdgm_menu .cdgm_close,.cdgm_menu .cdgm_opener {
+display:none;
+}
+
+.cdgm_menu.cdgm_left,.cdgm_menu .cdgm_drop {
+float:left;
+}
+
+@media min-width992px{
+.cdgm_col-md-12 {
+float:left;
+width:100%;
+}
+}
+
+@media screen and max-width768px{
+.cdgm_menu ul.cdgm_dl-menu.cdgm_add-nav li {
+display:block;
+float:none;
+}
+
+.cdgm_menu ul.cdgm_dl-menu.cdgm_add-nav {
+display:none;
+}
+
+.cdgm_menu .cdgm_opener {
+display:inline;
+float:right;
+color:#fff;
+padding:3px 10px 0 0;
+}
+
+.cdgm_dl-menuwrapper.cdgm_menu.cdgm_left.cdgm_navbar-left {
+width:100%;
+}
+}
