@@ -15,7 +15,7 @@
   </ol>
   <form name="dojoSearch" ng-submit="search()">
     <div id="find-dojo-form" class="input-group">
-      <input id="location" ng-model="search.dojo" placeholder="Where are you? Enter an address here and we'll find the closest dojo to you." type="text" class="form-control">
+      <input id="location" ng-model="search.dojo" placeholder="{@i18n key="dojo.list.search.placeholder"/}" type="text" class="form-control">
       <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Go!</button>
       </span>
@@ -25,7 +25,7 @@
   <div ng-if="countrySelected && !searchResult" class="row">
     <div class="col-lg-12">
       <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
-      <legend ng-if="!countryName && dojos"><h2>Search Results</h2></legend>
+      <legend ng-if="!countryName && dojos"><h2>{@i18n key="Search Results"/}</h2></legend>
       <div ng-repeat="(state, dojos) in dojosByCountry">
         <legend style="margin-bottom:5px;">{{ state }}</legend>
         <ul ng-repeat="dojo in dojos">
@@ -64,7 +64,7 @@
 
   <div ng-if="searchResult" class="row">
     <div class="col-lg-12">
-      <h5 class="state-heading">Your closest dojos</h5>
+      <h5 class="state-heading">{@i18n key="Your closest dojos"/}</h5>
       <ul ng-repeat="dojo in searchResult">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
