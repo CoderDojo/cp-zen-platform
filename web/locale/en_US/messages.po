@@ -358,6 +358,12 @@ msgstr "Manage Dojos"
 msgid "Stats"
 msgstr "Stats"
 
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Create a Dojo"
+msgstr "Create a Dojo"
+
 
 
 
