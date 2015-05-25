@@ -367,6 +367,12 @@ msgstr "Create a Dojo"
 msgid "Mentor Invitation"
 msgstr "Mentor Invitation"
 
+msgid "Mentor Request"
+msgstr "Mentor Request"
+
+msgid "mentor.request.p1"
+msgstr "Mentor Request is being validated..."
+
 
 
 

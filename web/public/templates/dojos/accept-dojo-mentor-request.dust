@@ -1,5 +1,5 @@
 <div class="cd-dashboard">
-    <legend>Mentor Request</legend>
-    <p>Mentor Request is being validated...</p>
+    <legend>{@i18n key="Mentor Request"/}</legend>
+    <p>{@i18n key="mentor.request.p1"/}</p>
     <span spinner-key="mentor-request-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
 </div>
