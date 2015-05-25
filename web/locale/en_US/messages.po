@@ -364,6 +364,9 @@ msgstr "Logout"
 msgid "Create a Dojo"
 msgstr "Create a Dojo"
 
+msgid "Mentor Invitation"
+msgstr "Mentor Invitation"
+
 
 
 
