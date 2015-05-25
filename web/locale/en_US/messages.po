@@ -343,6 +343,23 @@ msgstr "CoolestProjects2015"
 msgid "Opens in new window"
 msgstr "Opens in new window"
 
+msgid "Dojo List"
+msgstr "Dojo List"
+
+msgid "My Dojos"
+msgstr "My Dojos"
+
+msgid "Create Dojo"
+msgstr "Create Dojo"
+
+msgid "Manage Dojos"
+msgstr "Manage Dojos"
+
+msgid "Stats"
+msgstr "Stats"
+
+
+
 
 
 
