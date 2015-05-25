@@ -437,13 +437,98 @@ msgstr "Your closest dojos"
 msgid "dojo.list.search.placeholder"
 msgstr "Where are you? Enter an address here and we'll find the closest dojo to you."
 
+msgid "Dojo Information"
+msgstr "Dojo Information"
 
+msgid "Dojo Name"
+msgstr "Dojo Name"
 
+msgid "dojo.edit.information.description"
+msgstr "Normally after an area, like \"Cork\" or multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 
+msgid "dojo.edit.email.description"
+msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank."
 
+msgid "Times are empty"
+msgstr "Times are empty"
 
+msgid "dojo.edit.times.description"
+msgstr "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 
+msgid "dojo.edit.country.placeholder"
+msgstr "Select or search a country in the list..."
 
+msgid "Select a country"
+msgstr "Select a country"
 
+msgid "dojo.edit.place.citytown.placeholder"
+msgstr "Select or search a place in the list..."
 
+msgid "Select a place"
+msgstr "Select a place"
 
+msgid "Address"
+msgstr "Address"
+
+msgid "dojo.edit.address.description"
+msgstr "Address of the Dojo (Eg. LIT Downtown Centre)"
+
+msgid "Coordinates"
+msgstr "Coordinates"
+
+msgid "Address is empty"
+msgstr "Address is empty"
+
+msgid "Get location from address"
+msgstr "Get location from address"
+
+msgid "dojo.edit.map.placeholder"
+msgstr "Click on the map to select a location"
+
+msgid "Other Information"
+msgstr "Other Information"
+
+msgid "Google Group URL"
+msgstr "Google Group URL"
+
+msgid "dojo.edit.googleurl.description"
+msgstr "We recommend setting up a Discussion group so people can sign up for the latest happenings and news and contribute."
+
+msgid "dojo.edit.twitter.description"
+msgstr "Again, a useful way for sharing information and being found. We can also help share messages to followers."
+
+msgid "Mailing List"
+msgstr "Mailing List"
+
+msgid "dojo.edit.mailinglist.description"
+msgstr "Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."
+
+msgid "Status Messages"
+msgstr "Status Messages"
+
+msgid "Need Mentors"
+msgstr "Need Mentors"
+
+msgid "Current Stage"
+msgstr "Current Stage"
+
+msgid "In Planning"
+msgstr "In Planning"
+
+msgid "Open, come along"
+msgstr "Open, come along"
+
+msgid "Register Ahead"
+msgstr "Register Ahead"
+
+msgid "Full Up"
+msgstr "Full Up"
+
+msgid "Private"
+msgstr "Private"
+
+msgid "dojo.edit.private.description"
+msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation eg. schools/universities/children of organisation's employees etc."
+
+msgid "Supporters Image URL"
+msgstr "Supporters Image URL"
