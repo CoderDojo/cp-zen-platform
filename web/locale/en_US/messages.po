@@ -70,7 +70,6 @@ msgstr "Confirm Password is empty"
 
 msgid "CONFIRM PASSWORD"
 msgstr "CONFIRM PASSWORD"
-
 msgid "Already have an account"
 msgstr "Already have an account?"
 
@@ -188,4 +187,29 @@ msgstr "Do you have access to a venue?"
 msgid "champion.registration.venue.tooltip"
 msgstr "Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees."
 
+msgid "Champion Application"
+msgstr "Champion Application"
 
+msgid "General Information"
+msgstr "General Information"
+
+msgid "Country"
+msgstr "Country"
+
+msgid "CityTown"
+msgstr "City/Town"
+
+msgid "Languages Spoken"
+msgstr "Languages Spoken"
+
+msgid "Projects"
+msgstr "Projects"
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Prerequisites"
+msgstr "Prerequisites"
+
+msgid "Notes"
+msgstr "Notes"
