@@ -14,6 +14,8 @@ seneca
   .use('ng-web')
   .use('../lib/users/user.js')
   .use('auth')
+  .use('user-roles')
+  .use('web-access')
   .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
