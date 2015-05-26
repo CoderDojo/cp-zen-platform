@@ -2,7 +2,6 @@
     <div class="cdgm_container">
         <div class="cdgm_row">
             <div class="cdgm_col-md-12">
-<<<<<<< HEAD
                 <nav class="cdgm_dl-menuwrapper cdgm_menu cdgm_left cdgm_navbar-left"><a href="#" class="cdgm_dl-trigger cdgm_opener"><span>{@i18n key="Dojo Menu"/}</span></a>
                     <ul class="cdgm_dl-menu cdgm_add-nav">
                         <li id="menu-item-1168" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1168"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
@@ -10,15 +9,6 @@
                         <li id="menu-item-10" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10"><a title="Opens in new window" target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">{@i18n key="Resources"/}</a></li>
                         <li id="menu-item-1405" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1405"><a href="http://help.coderdojo.com/">{@i18n key="FAQ"/}</a></li>
                         <li id="menu-item-1425" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1425"><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></li>
-=======
-                <nav class="cdgm_dl-menuwrapper cdgm_menu cdgm_left cdgm_navbar-left"><a href="#" class="cdgm_dl-trigger cdgm_opener"><span>Dojo Menu</span></a>
-                    <ul class="cdgm_dl-menu cdgm_add-nav">
-                        <li id="menu-item-1168" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1168"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
-                        <li id="menu-item-9" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9 active"><a title="Opens in new window" target="_blank" href="https://zen.coderdojo.com">Find a Dojo</a></li>
-                        <li id="menu-item-10" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10"><a title="Opens in new window" target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></li>
-                        <li id="menu-item-1405" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1405"><a href="http://help.coderdojo.com/">FAQ</a></li>
-                        <li id="menu-item-1425" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1425"><a href="http://coolestprojects.org/">CoolestProjects2015</a></li>
->>>>>>> 759056509d1b8425119f0bf576ac7d84ce0179dd
                     </ul>
                 </nav>
             </div>
