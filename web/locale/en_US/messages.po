@@ -532,3 +532,24 @@ msgstr "Please only select if your Dojo will be accessible exclusively to attend
 
 msgid "Supporters Image URL"
 msgstr "Supporters Image URL"
+
+msgid "Manage Dojo Users"
+msgstr "Manage Dojo Users"
+
+msgid "Send Mentor Invite"
+msgstr "Send Mentor Invite"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "User Types"
+msgstr "User Types"
+
+msgid "User Permissions"
+msgstr "User Permissions"
+
+msgid "Remove User"
+msgstr "Remove User"
+
+msgid "View Profile"
+msgstr "View Profile"
