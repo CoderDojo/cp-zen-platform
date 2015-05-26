@@ -639,3 +639,35 @@ msgstr "Next"
 msgid "Click on each step to get started"
 msgstr "Click on each step to get started"
 
+msgid "CoderDojo Champion Registration Form"
+msgstr "CoderDojo Champion Registration Form"
+
+msgid "champion.registration.p1"
+msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
+
+msgid "champion.registration.p2"
+msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+
+msgid "champion.registration.p3"
+msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
+
+msgid "General Information"
+msgstr "General Information"
+
+msgid "Technical Experience"
+msgstr "Technical Experience"
+
+msgid "technicalexperience.placeholder"
+msgstr "Please describe any websites, apps or open source work that you have done."
+
+msgid "Experience working with youth"
+msgstr "Experience working with youth"
+
+msgid "experienceyouth.placeholder"
+msgstr "Please describe your experience working with youth."
+
+msgid "notes.placeholder"
+msgstr "Please add any other relevant information."
+
+msgid "howdidyouhear.placeholder"
+msgstr "Please specify where you heard about CoderDojo"
