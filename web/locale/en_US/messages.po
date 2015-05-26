@@ -701,3 +701,22 @@ msgstr "Active"
 
 msgid "Total"
 msgstr "Total"
+
+msgid "Send me an email"
+msgstr "Send me an email"
+
+msgid "Joined"
+msgstr "Joined"
+
+msgid "Social Media"
+msgstr "Social Media"
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "A description about me"
+msgstr "A description about me."
+
+msgid "Member of Dojos"
+msgstr "Member of Dojos"
+
