@@ -633,3 +633,9 @@ msgstr "I have read and accept the"
 msgid "Terms and Conditions here"
 msgstr "Terms and Conditions here"
 
+msgid "Next"
+msgstr "Next"
+
+msgid "Click on each step to get started"
+msgstr "Click on each step to get started"
+

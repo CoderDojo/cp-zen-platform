@@ -1,6 +1,6 @@
 <div id="main">
     <div class="cd-create-dojo-container">
-      <p>Click on each step to get started</p>
+      <p>{@i18n key="Click on each step to get started"/}</p>
       <form name="setupYourDojoForm" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
         <accordion close-others="false">
           <accordion-group ng-repeat="step in steps" is-open="step.open">
@@ -16,7 +16,7 @@
             </div>
           </accordion-group>
         </accordion>
-        <button class="btn btn-primary col-lg-3 col-lg-offset-4" ng-click="openAllSteps(this)" type="submit">Next</button>
+        <button class="btn btn-primary col-lg-3 col-lg-offset-4" ng-click="openAllSteps(this)" type="submit">{@i18n key="Next"/}</button>
       </form>
     </div>
 </div>
