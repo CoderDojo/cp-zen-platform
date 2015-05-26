@@ -12,16 +12,6 @@ module.exports = {
 
   'user-roles': {
     roles: {
-      'admin': {
-        prefixmap: {
-          '/dashboard': 1
-        }
-      },
-      'manager': {
-        prefixmap: {
-          '/dashboard': 1
-        }
-      },
       'basic-user': {
         prefixmap: {
           '/dashboard/dojo-list': 1,
