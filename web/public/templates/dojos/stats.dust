@@ -1,17 +1,17 @@
 <div class="cd-dashboard">
   <div class="row manage-dojo-wrapper">
-    <legend>Charter</legend>
-    <div>{{ count.noOfAgreements }} persons have signed the current version of the charter</div>
+    <legend>{@i18n key="Charter"/}</legend>
+    <div>{{ count.noOfAgreements }} {@i18n key="stats.p1"/}</div>
   </div>
   <div class="row manage-dojo-wrapper">
-    <legend>Dojos</legend>
+    <legend>{@i18n key="Dojos"/}</legend>
     <table class="table cd-grid-table">
       <thead>
         <tr>
           <th style="width:70%">&nbsp;</th>
-          <th style="width:10%">Active</th>
-          <th style="width:10%">Verified</th>
-          <th style="width:10%">Total</th>
+          <th style="width:10%">{@i18n key="Active"/}</th>
+          <th style="width:10%">{@i18n key="Verified"/}</th>
+          <th style="width:10%">{@i18n key="Total"/}</th>
         </tr>
       </thead>
       <tbody ng-repeat="(continent, values) in dojos">
@@ -30,7 +30,7 @@
       </tbody>
       <tbody>        
         <tr class="total-row">
-          <td>Total</td>
+          <td>{@i18n key="Total"/}</td>
           <td>{{ totals.overallTotal.active }}</td>
           <td>{{ totals.overallTotal.verified }}</td>
           <td>{{ totals.overallTotal.all }}</td>
