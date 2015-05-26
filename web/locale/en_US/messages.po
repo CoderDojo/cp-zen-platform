@@ -671,3 +671,26 @@ msgstr "Please add any other relevant information."
 
 msgid "howdidyouhear.placeholder"
 msgstr "Please specify where you heard about CoderDojo"
+
+msgid "Register Account"
+msgstr "Register Account"
+
+msgid "wizard.p1"
+msgstr "To get started, please fill in the following registration form."
+
+msgid "Champion Registration"
+msgstr "Champion Registration"
+
+msgid "Setup your Dojo"
+msgstr "Setup your Dojo"
+
+msgid "Create Dojo Listing"
+msgstr "Create Dojo Listing"
+
+msgid "wizard.p2"
+msgstr "Thank you for submitting your dojo listing."
+
+msgid "wizard.p3"
+msgstr "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
+
+

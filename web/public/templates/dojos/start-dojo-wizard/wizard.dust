@@ -1,26 +1,26 @@
 <div class="cd-dashboard">
     <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
         <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
-            <legend><h1>Register Account</h1></legend>
-            <p>To get started, please fill in the following registration form.</p>
+            <legend><h1>{@i18n key="Register Account"/}</h1></legend>
+            <p>{@i18n key="wizard.p1"/}</p>
             <cd-register-account ng-if="wizardCurrentStep === 'Register Account'"></cd-register-account>
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" title="Champion Registration">
-            <legend><h1>Champion Registration</h1></legend>
+            <legend><h1>{@i18n key="Champion Registration"/}</h1></legend>
             <cd-champion-registration ng-if="wizardCurrentStep === 'Champion Registration'"></cd-champion-registration>
             <cd-charter></cd-charter>
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="dojoSetup" canenter="preventEnterSetupDojo" title="Setup your Dojo">
-            <legend><h1>Setup your Dojo</h1></legend>
+            <legend><h1>{@i18n key="Setup your Dojo"/}</h1></legend>
             <cd-setup-your-dojo ng-if="wizardCurrentStep === 'Setup your Dojo'"></cd-setup-your-dojo>
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" canenter="preventEnterDojoListing" title="Dojo Listing">
-            <h1>Create Dojo Listing</h1>
+            <h1>{@i18n key="Create Dojo Listing"/}</h1>
             <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>
     </wizard>
     <div ng-if="wizardComplete" class="dojoWizardComplete">
-      <span>Thank you for submitting your dojo listing.</span><br/>
-      <span>A member from the CoderDojo Foundation team will review your listing and be in touch shortly.</span>
+      <span>{@i18n key="wizard.p2"/}</span><br/>
+      <span>{@i18n key="wizard.p3"/}</span>
     </div>
 </div>
