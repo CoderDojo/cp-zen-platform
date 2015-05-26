@@ -620,3 +620,6 @@ msgstr "Users"
 msgid "Listing"
 msgstr "Listing"
 
+msgid "Times"
+msgstr "Times"
+
