@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-9">
         <h1 class="">{{ user.name }}</h1>
-        <a href="mailto:{{ user.email }}"><button type="button" class="btn btn-info">Send me an email</button></a>
+        <a href="mailto:{{ user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a>
         <br>
       </div>
       <div class="col-sm-2">
@@ -16,20 +16,20 @@
       <div class="col-sm-3">
         <!--left col-->
         <ul class="list-group">
-          <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 1/5/2015</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">Name</strong></span> {{ user.name }}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">Location</strong></span> Waterford, Ireland</li>
+          <li class="list-group-item text-muted" contenteditable="false">{@i18n key="Profile"/}</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Joined"/}</strong></span> 1/5/2015</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Last seen"/}</strong></span> Yesterday</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Name"/}</strong></span> {{ user.name }}</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Location"/}</strong></span> Waterford, Ireland</li>
         </ul>
         <div class="panel panel-default">
-          <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+          <div class="panel-heading">{@i18n key="Website"/} <i class="fa fa-link fa-1x"></i></div>
           <div class="panel-body">
             <a href="http://coderdojo.com" class="">coderdojo.com</a>
           </div>
         </div>
         <div class="panel panel-default">
-          <div class="panel-heading">Social Media</div>
+          <div class="panel-heading">{@i18n key="Social Media"/}</div>
           <div class="panel-body"> 
             <i class="fa fa-facebook fa-2x"></i>
             <i class="fa fa-github fa-2x"></i> 
@@ -42,11 +42,11 @@
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
         <div class="panel panel-default">
-          <div class="panel-heading">{{ user.name }}'s Bio</div>
-          <div class="panel-body"> A description about me.</div>
+          <div class="panel-heading">{{ user.name }}'s {@i18n key="Bio"/}</div>
+          <div class="panel-body">{@i18n key="A description about me"/}</div>
         </div>
         <div class="panel panel-default target">
-          <div class="panel-heading" contenteditable="false">Member of Dojos</div>
+          <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
           <div class="panel-body">
             <div class="row">
               <div class="col-md-4" ng-repeat="dojo in dojos">
@@ -62,7 +62,7 @@
           </div>         
         </div>
         <div class="panel panel-default">
-          <div class="panel-heading">{{ user.name }}'s Experience</div>
+          <div class="panel-heading">{{ user.name }}'s {@i18n key="Experience"/}</div>
           <div class="panel-body"> A description about my experience.</div>
         </div>
       </div>
