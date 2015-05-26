@@ -553,3 +553,60 @@ msgstr "Remove User"
 
 msgid "View Profile"
 msgstr "View Profile"
+
+msgid "Manage Dojos"
+msgstr "Manage Dojos"
+
+msgid "Verification"
+msgstr "Verification"
+
+msgid "Any"
+msgstr "Any"
+
+msgid "Verified"
+msgstr "Verified"
+
+msgid "Unverified"
+msgstr "Unverified"
+
+msgid "Stage"
+msgstr "Stage"
+
+msgid "Dojo Name"
+msgstr "Dojo Name"
+
+msgid "Dojo Email"
+msgstr "Dojo Email"
+
+msgid "User Email"
+msgstr "User Email"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Dojo"
+msgstr "Dojo"
+
+msgid "User"
+msgstr "User"
+
+msgid "Application"
+msgstr "Application"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Verify"
+msgstr "Verify"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "unsigned"
+msgstr "unsigned"
+
+msgid "View"
+msgstr "View"
+
+msgid "Apply"
+msgstr "Apply"
