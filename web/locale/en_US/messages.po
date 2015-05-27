@@ -812,3 +812,30 @@ msgstr "An error has occurred while loading Dojo"
 
 msgid "Failed to load Dojo"
 msgstr "Failed to load Dojo"
+
+msgid "login.msgmap.unknown"
+msgstr "Unable to perform your request at this time - please try again later."
+
+msgid "login.msgmap.user-not-found"
+msgstr "Email address is not recognized."
+
+msgid "login.msgmap.invalid-password"
+msgstr "That password is incorrect"
+
+msgid "login.msgmap.reset-sent"
+msgstr "An email with password reset instructions has been sent to you."
+
+msgid "login.register.success"
+msgstr "Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo."
+
+msgid "user name already exists"
+msgstr "user name already exists"
+
+msgid "server error"
+msgstr "server error"
+
+msgid "login.register.failure"
+msgstr "There was a problem registering your account:"
+
+msgid "Invalid email or password"
+msgstr "Invalid email or password!"
