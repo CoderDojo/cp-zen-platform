@@ -1,6 +1,6 @@
  'use strict';
 
-function cdChampionOnboardingCtrl($scope, auth, cdUsersService) {
+function cdChampionOnboardingCtrl($scope, auth, cdUsersService, $translate) {
   $scope.champion = {};
 
   auth.get_loggedin_user(function(user) {
@@ -24,7 +24,7 @@ function cdChampionOnboardingCtrl($scope, auth, cdUsersService) {
 
   $scope.today = new Date();
 
-  $scope.answers = ['Yes', 'No'];
+  $scope.answers = [$translate.instant('Yes'), $translate.instant('No')];
 
   $scope.save = function(champion) {
     //TO DO: Save champion to cd/champion_applications table
@@ -34,4 +34,4 @@ function cdChampionOnboardingCtrl($scope, auth, cdUsersService) {
 }
 
 angular.module('cpZenPlatform')
-    .controller('champion-onboarding-controller', ['$scope', 'auth', 'cdUsersService', cdChampionOnboardingCtrl]);
+    .controller('champion-onboarding-controller', ['$scope', 'auth', 'cdUsersService', '$translate', cdChampionOnboardingCtrl]);
