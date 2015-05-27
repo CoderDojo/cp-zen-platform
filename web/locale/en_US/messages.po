@@ -860,3 +860,21 @@ msgstr "An error has occurred while updating Dojos:"
 
 msgid "An error has occurred while deleting Dojos"
 msgstr "An error has occurred while deleting Dojos:"
+
+msgid "Error saving permission"
+msgstr "Error saving permission: "
+
+msgid "Error removing permission"
+msgstr "Error removing permission:"
+
+msgid "Error saving user type"
+msgstr "Error saving user type:"
+
+msgid "Invite Sent"
+msgstr "Invite Sent!"
+
+msgid "Error sending invite"
+msgstr "Error sending invite:"
+
+msgid "Error removing user"
+msgstr "Error removing user:"
