@@ -720,3 +720,54 @@ msgstr "A description about me."
 msgid "Member of Dojos"
 msgstr "Member of Dojos"
 
+msgid "Gather your Team"
+msgstr "Gather your Team"
+
+msgid "Gather Team"
+msgstr "Gather Team"
+
+msgid "You must gather a team before continuing."
+msgstr "You must gather a team before continuing."
+
+msgid "Find Mentors"
+msgstr "Find Mentors"
+
+msgid "You must find mentors before continuing."
+msgstr "You must find mentors before continuing."
+
+msgid "Background Check"
+msgstr "Background Check"
+
+msgid "Please describe how you have background checked your team."
+msgstr "Please describe how you have background checked your team."
+
+msgid "Find your Venue"
+msgstr "Find your Venue"
+
+msgid "Plan your Dojo"
+msgstr "Plan your Dojo"
+
+msgid "Plan how frequently you will run your Dojo"
+msgstr "Plan how frequently you will run your Dojo"
+
+msgid "You must plan how often your Dojo will take place."
+msgstr "You must plan how often your Dojo will take place."
+
+msgid "Please describe when your Dojo will take place."
+msgstr "Please describe when your Dojo will take place."
+
+msgid "Set the first date of your Dojo"
+msgstr "Set the first date of your Dojo"
+
+msgid "Set up Social Media"
+msgstr "Set up Social Media"
+
+msgid "Set up Website"
+msgstr "Set up Website"
+
+msgid "Plan the content you will use"
+msgstr "Plan the content you will use"
+
+
+
+

@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdUsersService, Geocoder, gmap) {
+function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdUsersService, Geocoder, gmap, $translate) {
     $scope.stepFinishedLoading = false;
     $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
@@ -283,8 +283,31 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         currentUser = user;
       });
 
-      cdDojoService.loadSetupDojoSteps(function (response) {
-        $scope.steps = response;
+      cdDojoService.loadSetupDojoSteps(function (steps) {
+        $scope.steps = _.map(steps, function(step){
+          step.title = $translate.instant(step.title);
+
+          if(step.checkboxes){
+            step.checkboxes = _.map(step.checkboxes, function(checkbox){
+              if(checkbox.title){
+                checkbox.title = $translate.instant(checkbox.title);
+              }
+
+              if(checkbox.placeholder){
+                checkbox.placeholder = $translate.instant(checkbox.placeholder);
+              }
+
+              if(checkbox.requiredMessage){
+                checkbox.requiredMessage = $translate.instant(checkbox.requiredMessage);
+              }
+
+              return checkbox;
+            });
+          }
+
+          return steps;
+        });
+        $scope.steps = steps;
       });
 
       $scope.submitSetupYourDojo = function (setupDojo) {
@@ -445,5 +468,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdUsersService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', 
+      '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 
+      'cdDojoService', 'cdCountriesService', 'cdUsersService', 'Geocoder', 
+      'gmap', '$translate',startDojoWizardCtrl]);
 
