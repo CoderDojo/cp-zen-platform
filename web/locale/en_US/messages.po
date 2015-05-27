@@ -786,5 +786,18 @@ msgstr "Invalid Invite Request"
 msgid "Error validating mentor request"
 msgstr "Error validating mentor request:"
 
+msgid "Your Dojo has been successfully saved"
+msgstr "Your Dojo has been successfully saved"
 
+msgid "An error has occurred while saving"
+msgstr "An error has occurred while saving:"
+
+msgid "dojo.create.initcontent.li1"
+msgstr "A pack lunch"
+
+msgid "dojo.create.initcontent.li2"
+msgstr "A laptop. Borrow one from somebody if needs be."
+
+msgid "dojo.create.initcontent.li3"
+msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
