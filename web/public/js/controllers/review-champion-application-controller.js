@@ -1,6 +1,6 @@
 'use strict';
 
-function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService) {
+function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService, $translate) {
   var applicationId = $state.params.id;  
   $scope.dojoLead;
 
@@ -11,11 +11,11 @@ function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService) {
   	championApplication.dateOfBirth = championDOB;
 
   	var yesNoVal = championApplication.hasTechnicalMentorsAccess;
-  	yesNoVal ? yesNoVal = 'Yes' : yesNoVal = 'No';
+  	yesNoVal ? yesNoVal = $translate.instant('Yes') : yesNoVal = $translate.instant('No');
   	championApplication.hasTechnicalMentorsAccess = yesNoVal;
 
   	yesNoVal = championApplication.hasVenueAccess;
-  	yesNoVal ? yesNoVal = 'Yes' : yesNoVal = 'No';
+  	yesNoVal ? yesNoVal = $translate.instant('Yes') : yesNoVal = $translate.instant('No');
   	championApplication.hasVenueAccess = yesNoVal;
 
   	$scope.championApplication = championApplication;
@@ -24,4 +24,4 @@ function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService) {
 }
 
 angular.module('cpZenPlatform')
-    .controller('review-champion-application-controller', ['$scope', '$state', 'cdDojoService', cdReviewChampionApplicationCtrl]);
+    .controller('review-champion-application-controller', ['$scope', '$state', 'cdDojoService', '$translate', cdReviewChampionApplicationCtrl]);
