@@ -3,11 +3,11 @@
     <div id="main">
       
       <form class="login-form" role="form" name="loginForm" ng-show="isVisible('login')">
-        <legend>Login</legend>
+        <legend>{@i18n key="Login"/}</legend>
         <div class="row">
           <div class="input-group col-lg-6 col-md-offset-3">
             <span class="input-group-addon"><span>@</span></span>
-            <input type="email" class="form-control" required ng-model="login.email" placeholder="EMAIL">
+            <input type="email" class="form-control" required ng-model="login.email" placeholder="{@i18n key="EMAIL"/}">
           </div>
         </div>
 
@@ -15,7 +15,7 @@
         <div class="row">
           <div class="input-group col-lg-6 col-md-offset-3">
             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" class="form-control" required ng-model="login.password" placeholder="PASSWORD">
+            <input type="password" class="form-control" required ng-model="login.password" placeholder="{@i18n key="PASSWORD"/}">
           </div>
         </div>
         <span class="help-block"></span>
@@ -33,7 +33,7 @@
       <form class="login-form" name="forgotPasswordForm" role="form" ng-show="isVisible('forgot-password')">
         <div class="input-group">
           <span class="input-group-addon"><span>@</span></span>
-          <input type="email" class="form-control" required ng-model="forgot.email" placeholder="EMAIL">
+          <input type="email" class="form-control" required ng-model="forgot.email" placeholder="{@i18n key="EMAIL"/}">
         </div>
         <span class="help-block"></span>
 
@@ -44,23 +44,22 @@
           <span class="help-block">{{ errorMessage }}</span>
         </div>
 
-        <button class="btn btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">REQUEST PASSWORD RESET</button>
+        <button class="btn btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">{@i18n key="REQUEST PASSWORD RESET"/}</button>
 
         <div class="input-group center-block text-center back-button">
-          <a ng-click="show('login')">Cancel</a>
+          <a ng-click="show('login')">{@i18n key="Cancel"/}</a>
         </div>
       </form>
-
     </div>
-
+    
     <div id="sidebar">
       <div class="widget">
-        <legend>Other stuff</legend>
-         <div class="forgot-password">
-          <a ng-click="show('forgot-password')">Forgot password?</a>
+        <legend>{@i18n key="Other stuff"/}</legend>
+          <div class="forgot-password">
+          <a ng-click="show('forgot-password')">{@i18n key="Forgot password"/}</a>
         </div>
         <div class="create-account">
-          <a ng-href="/register">Register</a>
+          <a ng-href="/register">{@i18n key="Register"/}</a>
         </div>
       </div>
     </div>

@@ -90,13 +90,13 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
 
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
-      alertService.showAlert("Your Dojo has been successfully saved", function() {
+      alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
         $location.path('/dashboard/my-dojos');
         $scope.$apply();
       });
     }, function(err) {
       alertService.showError(
-        'An error has occurred while saving: <br /> '+
+        $translate.instant('An error has occurred while saving') + ' <br /> '+
         (err.error || JSON.stringify(err))
       );
     });
@@ -125,9 +125,9 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   };
 
   var initContent = "<p><ul> \
-    <li>A pack lunch</li> \
-    <li>A laptop. Borrow one from somebody if needs be.</li> \
-    <li><b>A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.</b></li> \
+    <li>" + $translate.instant('dojo.create.initcontent.li1') + "</li> \
+    <li>" + $translate.instant('dojo.create.initcontent.li2') + "</li> \
+    <li><b>" + $translate.instant('dojo.create.initcontent.li3') + "</b></li> \
     </ul></p>";
 
   $scope.editorOptions = {

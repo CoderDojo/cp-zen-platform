@@ -213,6 +213,7 @@ app
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useUrlLoader('/locale/data?format=mf');
     $translateProvider.preferredLanguage('default');
+    $translateProvider.useSanitizeValueStrategy('escaped');
   }])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
 ;

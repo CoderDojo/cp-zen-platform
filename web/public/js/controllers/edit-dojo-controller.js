@@ -1,10 +1,10 @@
 'use strict';
 //TO DO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
-  $scope.saveButtonText = 'Update Dojo';
+  $scope.saveButtonText = $translate.instant('Update Dojo');
   var DEFAULT_COORDS = '53.3478,6.2597';
 
   auth.get_loggedin_user(function(user) {
@@ -19,7 +19,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
           $scope.dojo = response;
           resolve();
         } else {
-          reject('Failed to load Dojo');
+          reject($translate.instant('Failed to load Dojo'));
         }
       });
     });
@@ -48,7 +48,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var coordsStr = $scope.dojo.coordinates;
       
       if(!coordsStr){
-        alertService.showError('An error has occurred while loading Dojo');
+        alertService.showError($translate.instant('An error has occurred while loading Dojo'));
         coordsStr = DEFAULT_COORDS;
       }
  
@@ -176,13 +176,13 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
-      alertService.showAlert("Your Dojo has been successfully saved", function() {
+      alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
         $location.path('/dashboard/my-dojos');
         $scope.$apply();
       });
     }, function(err) {
       alertService.showError(
-        'An error has occurred while saving: <br /> '+
+        $translate.instant('An error has occurred while saving') + ': <br /> '+
         (err.error || JSON.stringify(err))
       );
     });
@@ -224,4 +224,4 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate' ,cdEditDojoCtrl]);

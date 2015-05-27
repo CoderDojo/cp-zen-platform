@@ -1,6 +1,6 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tableUtils, usSpinnerService) {
+function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tableUtils, usSpinnerService, $translate) {
   var dojoId = $state.params.id;
   $scope.itemsPerPage = 10;
   var userTypes = [];
@@ -65,7 +65,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
       cdDojoService.saveUsersDojos(userDojoLink, function (response) {
         
       }, function (err) {
-        alertService.showError('Error saving permission: ' + err);
+        alertService.showError($translate.instant('Error saving permission') + ' ' + err);
       });
     } else {
       //Remove from user permissions
@@ -82,7 +82,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
       cdDojoService.saveUsersDojos(userDojoLink, function (response) {
 
       }, function (err) {
-        alertService.showError('Error removing permission: ' + err);
+        alertService.showError($translate.instant('Error removing permission') + ' ' +err);
       });
     }
 
@@ -101,7 +101,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     cdDojoService.saveUsersDojos(userDojoLink, function (response) {
 
     }, function (err) {
-      alertService.showError('Error saving user type: ' + err);
+      alertService.showError($translate.instant('Error saving user type') + ' ' + err);
     });
   }
 
@@ -109,11 +109,11 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     usSpinnerService.spin('manage-dojo-users-spinner');
     cdDojoService.generateMentorInviteToken({email:invite.email, dojoId:dojoId}, function (response) {
       usSpinnerService.stop('manage-dojo-users-spinner');
-      alertService.showAlert('Invite Sent!');
+      alertService.showAlert($translate.instant('Invite Sent'));
       context.inviteMentorForm.reset();
     }, function (err) {
       usSpinnerService.stop('manage-dojo-users-spinner');
-      alertService.showError('Error sending invite: ' + err);
+      alertService.showError($translate.instant('Error sending invite') + ' ' + err);
     }); 
   }
 
@@ -122,7 +122,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     cdDojoService.removeUsersDojosLink(userId, dojoId, function (response) {
       $scope.loadPage(true);
     }, function (err) {
-      alertService.showError('Error removing user: ' + err);
+      alertService.showError($translate.instant('Error removing user') + ' ' + err);
     });
   }
 
@@ -131,5 +131,5 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', '$translate' ,cdManageDojoUsersCtrl]);
 

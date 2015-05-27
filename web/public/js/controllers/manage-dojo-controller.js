@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, $translate) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -10,9 +10,9 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   var verificationStates = [
-    {label: 'Unverified', value: 0},
-    {label: 'Verified', value: 1},
-    {label: 'Previous', value: 2}
+    {label: $translate.instant('Unverified'), value: 0},
+    {label: $translate.instant('Verified'), value: 1},
+    {label: $translate.instant('Previous'), value: 2}
   ];
 
   var changedDojos = [];
@@ -60,7 +60,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }, function (err) {
       if (err) {
         alertService.showError(
-          'An error has occurred while editing dojo: <br /> ' +
+          $translate.instant('An error has occurred while editing dojo') +' <br /> ' +
           (err.error || JSON.stringify(err))
         );
       }
@@ -142,7 +142,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     } else if(typeof $scope.filter.usersDojos !== 'undefined'){
       $scope.dojos = [];
       $scope.totalItems = 0;
-      alertService.showError('An error has occurred while loading Dojos');
+      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
       return;
     }
 
@@ -157,7 +157,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
       return cb();
     }, function (err) {
-      alertService.showError('An error has occurred while loading Dojos');
+      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
 
       return cb(err);
     });
@@ -207,7 +207,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
         return cb();
       }, function (err) {
-        alertService.showError('An error has occurred while updating Dojos: <br>' +
+        alertService.showError($translate.instant("An error has occurred while updating Dojos") + ' <br>' +
         (err.error || JSON.stringify(err)));
 
         cb(err);
@@ -228,7 +228,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
         return cb();
       }, function (err) {
-        alertService.showError('An error has occurred while deleting Dojos: <br>' +
+        alertService.showError($translate.instant('An error has occurred while deleting Dojos') + ' <br>' +
         (err.error || JSON.stringify(err)));
 
         cb(err);
@@ -240,7 +240,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       delete $scope.dojosToBeUpdated;
       changedDojos = [];
       if (err) {
-        alertService.showError('An error has occurred while updating Dojos: <br>' +
+        alertService.showError($translate.instant('An error has occurred while updating Dojos') + ' <br>' +
         (err.error || JSON.stringify(err)));
       }
       $scope.loadPage($scope.filter, false);
@@ -335,7 +335,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     };
 
     var fail = function(){
-      alertService.showError('An error has occurred while loading Dojos');
+      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
     };
 
     cdUsersService.getUsersByEmails(email, win, fail);
@@ -374,5 +374,5 @@ angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', 'alertService', 'auth', 
   'tableUtils', 'cdDojoService', '$location', 
-  'cdCountriesService', 'cdUsersService',  manageDojosCtrl]);
+  'cdCountriesService', 'cdUsersService', '$translate', manageDojosCtrl]);
 

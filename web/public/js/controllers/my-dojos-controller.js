@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService) {
+function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate) {
   $scope.itemsPerPage = 10;
 
   $scope.pageChanged = function(){
@@ -13,7 +13,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
     }, function (err){
       if(err){
         alertService.showError(
-          'An error has occurred while editing dojo: <br /> '+
+          $translate.instant('An error has occurred while editing dojo') + ' <br /> '+
           (err.error || JSON.stringify(err))
         );
       }
@@ -26,7 +26,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
     }, function (err){
       if(err){
         alertService.showError(
-          'An error has occurred while deleting dojo: <br /> '+
+          $translate.instant('An error has occurred while deleting dojo') + ' <br /> '+
           (err.error || JSON.stringify(err))
         );
       }
@@ -62,7 +62,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
       return cb();
     }, function(err) {
       alertService.showError(
-        'An error has occurred while loading Dojos: <br /> '+
+        $translate.instant('An error has occurred while loading Dojos') + ' <br /> '+
         (err.error || JSON.stringify(err))
       );
 
@@ -79,4 +79,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate',cdMyDojosCtrl]);

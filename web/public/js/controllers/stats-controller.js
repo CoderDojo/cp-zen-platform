@@ -1,6 +1,6 @@
 'use strict';
 
-function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService){
+function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService, $translate){
   $scope.load = function(){
     async.series([getContinentCodes, getCharters, getStats]);
   };
@@ -12,7 +12,7 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
         cb();
       },
       function(err){
-        alertService.showError('An error has occurred while loading Dojos: <br>' +
+        alertService.showError($translate.instant('An error has occurred while loading Dojos') + ' <br>' +
           (err.error || JSON.stringify(err))
         );
         cb(err);
@@ -27,7 +27,7 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
         cb();
       },
       function(err){
-        alertService.showError('An error has occurred while loading Dojos: <br>' +
+        alertService.showError($translate.instant('An error has occurred while loading Dojos') + ' <br>' +
           (err.error || JSON.stringify(err))
         );
         cb(err);
@@ -98,4 +98,4 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
 }
 
 angular.module('cpZenPlatform')
-  .controller('stats-controller',['$scope', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', statsCtrl]);
+  .controller('stats-controller',['$scope', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', '$translate', statsCtrl]);
