@@ -34,7 +34,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
       var data = {user:user, dojoId:dojo.id};
       cdDojoService.requestMentorInvite(data, function (response) {
         usSpinnerService.stop('dojo-detail-spinner');
-        alertService.showAlert($translate.inspect('Mentor Invite Request Sent!'));
+        alertService.showAlert($translate.instant('Mentor Invite Request Sent!'));
       });
     }, function () {
       //Not logged in

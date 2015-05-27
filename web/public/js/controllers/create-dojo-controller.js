@@ -125,9 +125,9 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
   };
 
   var initContent = "<p><ul> \
-    <li>" + $translate.inspect('dojo.create.initcontent.li1') + "</li> \
-    <li>" + $translate.inspect('dojo.create.initcontent.li2') + "</li> \
-    <li><b>" + $translate.inspect('dojo.create.initcontent.li3') + "</b></li> \
+    <li>" + $translate.instant('dojo.create.initcontent.li1') + "</li> \
+    <li>" + $translate.instant('dojo.create.initcontent.li2') + "</li> \
+    <li><b>" + $translate.instant('dojo.create.initcontent.li3') + "</b></li> \
     </ul></p>";
 
   $scope.editorOptions = {
