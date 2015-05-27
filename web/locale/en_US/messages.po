@@ -899,3 +899,9 @@ msgstr "Radio"
 
 msgid "FamilyFriends"
 msgstr "Family/Friends"
+
+msgid "Error loading profile"
+msgstr "Error loading profile:"
+
+msgid "Error loading Dojos"
+msgstr "Error loading Dojos:"
