@@ -1,6 +1,6 @@
  'use strict';
 
-function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService) {
+function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService, $translate) {
   var dojoId = $stateParams.dojoId;
   var inviteToken = $stateParams.mentorInviteToken;
   var currentPath = $location.path();
@@ -21,17 +21,17 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
       cdDojoService.acceptMentorInvite(tokenData, function (response) {
         usSpinnerService.stop('mentor-invitation-spinner');
         if(response.status === 1) {
-          alertService.showAlert('Invitation Accepted!', function () {
+          alertService.showAlert($translate.instant('Invitation Accepted'), function () {
             $state.go('my-dojos');
           });
         } else {
-          alertService.showError('Invalid Invitation', function () {
+          alertService.showError($translate.instant('Invalid Invitation'), function () {
             $state.go('my-dojos');
           });
         }
       }, function (err) {
         usSpinnerService.stop('mentor-invitation-spinner');
-        alertService.showError('Error accepting invitation:' + err);
+        alertService.showError($translate.instant('Error accepting invitation')+ err);
       });
     }
 
@@ -42,4 +42,6 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
 }
 
 angular.module('cpZenPlatform')
-    .controller('accept-dojo-mentor-invitation-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'cdDojoService', 'usSpinnerService', 'alertService', cdAcceptDojoMentorInvitationCtrl]);
+    .controller('accept-dojo-mentor-invitation-controller', ['$scope', '$window', '$state', 
+      '$stateParams', '$location', 'auth', 'cdDojoService', 
+      'usSpinnerService', 'alertService', '$translate',cdAcceptDojoMentorInvitationCtrl]);

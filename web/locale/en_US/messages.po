@@ -768,6 +768,15 @@ msgstr "Set up Website"
 msgid "Plan the content you will use"
 msgstr "Plan the content you will use"
 
+msgid "Invitation Accepted"
+msgstr "Invitation Accepted!"
+
+msgid "Invalid Invitation"
+msgstr "Invalid Invitation"
+
+msgid "Error accepting invitation"
+msgstr "'Error accepting invitation:'"
+
 
 
 
