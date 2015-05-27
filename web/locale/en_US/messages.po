@@ -801,3 +801,6 @@ msgstr "A laptop. Borrow one from somebody if needs be."
 msgid "dojo.create.initcontent.li3"
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
+msgid "Mentor Invite Request Sent"
+msgstr "Mentor Invite Request Sent!"
+
