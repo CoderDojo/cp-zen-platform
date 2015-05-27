@@ -881,3 +881,21 @@ msgstr "Error removing user:"
 
 msgid "An error has occurred while deleting dojo"
 msgstr "An error has occurred while deleting dojo: "
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Create Dojo"
+msgstr "Create Dojo"
+
+msgid "dojo.create.success"
+msgstr "Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
+
+msgid "NewspaperMagazine"
+msgstr ""Newspaper/Magazine""
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "FamilyFriends"
+msgstr "Family/Friends"

@@ -160,8 +160,8 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
               $window.location.href = '/dashboard/start-dojo';
             });
           } else {
-            var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
-            alertService.showAlert('There was a problem registering your account: ' + reason);
+            var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
+            alertService.showAlert($translate.instant('login.register.failure') + ' ' + reason);
           }
         }, function() {
           
@@ -206,7 +206,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       };
 
       $scope.today = new Date();
-      $scope.answers = ['Yes', 'No'];
+      $scope.answers = [$translate.instant('Yes'), $translate.instant('No')];
 
       $scope.save = function(champion) {
         dojoLead.application.championDetails = champion;
@@ -236,7 +236,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       });
 
       $scope.otherLanguageSelected = function () {
-        var otherSelected = _.contains($scope.champion.languagesSpoken, 'Other');
+        var otherSelected = _.contains($scope.champion.languagesSpoken, $translate.instant('Other'));
         return otherSelected;
       }
 
@@ -262,10 +262,10 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 
       $scope.referredBy = [
         "Google",
-        "Newspaper/Magazine",
-        "Radio",
-        "Family/Friends",
-        "Other"
+        $translate.instant('NewspaperMagazine'),
+        $translate.instant('Radio'),
+        $translate.instant('FamilyFriends'),
+        $translate.instant('Other')
       ];
 
       WizardHandler.wizard().goTo(1, true);
@@ -346,7 +346,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 
       $scope.dojo = {};
       $scope.model = {};
-      $scope.saveButtonText = 'Create Dojo';
+      $scope.saveButtonText = $translate.instant('Create Dojo');
 
       auth.get_loggedin_user(function(user) {
         $scope.user = user;
@@ -369,9 +369,9 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       };
 
       var initContent = "<p><ul> \
-        <li>A pack lunch</li> \
-        <li>A laptop. Borrow one from somebody if needs be.</li> \
-        <li><b>A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.</b></li> \
+        <li>" + $translate.instant('dojo.create.initcontent.li1') +"</li> \
+        <li>"+ $translate.instant('dojo.create.initcontent.li2') +"</li> \
+        <li><b>" + $translate.instant('dojo.create.initcontent.li3') +"</b></li> \
         </ul></p>";
 
       $scope.editorOptions = {
@@ -406,8 +406,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
               cdUsersService.promote(currentUser.id, ['champion'], function (response) {
                 $state.go('home', { 
                   bannerType:'success', 
-                  bannerMessage: 'Thank you for submitting your dojo listing. \
-                  A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'
+                  bannerMessage: $translate.instant('dojo.create.success')
                 });
               });
             });
