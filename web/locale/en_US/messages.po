@@ -804,3 +804,11 @@ msgstr "A parent! (Very important). If you are 12 or under, your parent must sta
 msgid "Mentor Invite Request Sent"
 msgstr "Mentor Invite Request Sent!"
 
+msgid "Update Dojo"
+msgstr "Update Dojo"
+
+msgid "An error has occurred while loading Dojo"
+msgstr "An error has occurred while loading Dojo"
+
+msgid "Failed to load Dojo"
+msgstr "Failed to load Dojo"
