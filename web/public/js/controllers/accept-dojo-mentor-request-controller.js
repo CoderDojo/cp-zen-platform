@@ -1,6 +1,6 @@
  'use strict';
 
-function cdAcceptDojoMentorRequestCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService) {
+function cdAcceptDojoMentorRequestCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService, $translate) {
   var userId = $stateParams.userId;
   var inviteToken = $stateParams.mentorInviteToken;
   var currentPath = $location.path();
@@ -21,17 +21,17 @@ function cdAcceptDojoMentorRequestCtrl($scope, $window, $state, $stateParams, $l
       cdDojoService.acceptMentorRequest(tokenData, function (response) {
         usSpinnerService.stop('mentor-request-spinner');
         if(response.status === 1) {
-          alertService.showAlert('Mentor Successfully Validated!', function () {
+          alertService.showAlert($translate.instant('Mentor Successfully Validated'), function () {
             $state.go('my-dojos');
           });
         } else {
-          alertService.showError('Invalid Invite Request', function () {
+          alertService.showError($translate.instant('Invalid Invite Request'), function () {
             $state.go('my-dojos');
           });
         }
       }, function (err) {
         usSpinnerService.stop('mentor-request-spinner');
-        alertService.showError('Error validating mentor request: ' + err);
+        alertService.showError($translate.instant('Error validating mentor request') + err);
       });
     }
 
@@ -42,4 +42,4 @@ function cdAcceptDojoMentorRequestCtrl($scope, $window, $state, $stateParams, $l
 }
 
 angular.module('cpZenPlatform')
-    .controller('accept-dojo-mentor-request-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'cdDojoService', 'usSpinnerService', 'alertService', cdAcceptDojoMentorRequestCtrl]);
+    .controller('accept-dojo-mentor-request-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'cdDojoService', 'usSpinnerService', 'alertService', '$translate',cdAcceptDojoMentorRequestCtrl]);

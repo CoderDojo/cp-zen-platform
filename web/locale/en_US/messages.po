@@ -777,6 +777,14 @@ msgstr "Invalid Invitation"
 msgid "Error accepting invitation"
 msgstr "'Error accepting invitation:'"
 
+msgid "Mentor Successfully Validated"
+msgstr "Mentor Successfully Validated!"
+
+msgid "Invalid Invite Request"
+msgstr "Invalid Invite Request"
+
+msgid "Error validating mentor request"
+msgstr "Error validating mentor request:"
 
 
 
