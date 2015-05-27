@@ -878,3 +878,6 @@ msgstr "Error sending invite:"
 
 msgid "Error removing user"
 msgstr "Error removing user:"
+
+msgid "An error has occurred while deleting dojo"
+msgstr "An error has occurred while deleting dojo: "
