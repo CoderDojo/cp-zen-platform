@@ -839,3 +839,24 @@ msgstr "There was a problem registering your account:"
 
 msgid "Invalid email or password"
 msgstr "Invalid email or password!"
+
+msgid "Unverified"
+msgstr "Unverified"
+
+msgid "Verified"
+msgstr "Verified"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "An error has occurred while editing dojo"
+msgstr "An error has occurred while editing dojo:"
+
+msgid "An error has occurred while loading Dojos"
+msgstr "An error has occurred while loading Dojos"
+
+msgid "An error has occurred while updating Dojos"
+msgstr "An error has occurred while updating Dojos:"
+
+msgid "An error has occurred while deleting Dojos"
+msgstr "An error has occurred while deleting Dojos:"
