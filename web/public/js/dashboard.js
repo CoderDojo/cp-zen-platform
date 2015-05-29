@@ -26,7 +26,6 @@ require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
 require('./services/geocoder-service');
 require('./services/cd-countries-service');
-require('./services/cd-profiles-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
