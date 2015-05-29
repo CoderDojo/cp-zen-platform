@@ -43,7 +43,6 @@
     "seneca-auth": "0.2.10",
     "seneca-ng-web": "git://github.com/iantocristian/seneca-ng-web.git",
     "seneca-postgresql-store": "git://github.com/iantocristian/seneca-postgresql-store.git",
-    "seneca-user": "0.2.10",
     "serve-static": "^1.4.0",
     "slug": "^0.9.1",
     "yargs": "3.9.0"

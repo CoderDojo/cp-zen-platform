@@ -5,12 +5,6 @@ var base = require('./options.base.js');
 
 module.exports = _.defaults({
 
-  'mongo-store': {
-     name: 'cd-zen-platform-development',
-     host: '127.0.0.1',
-     port: 27017
-  },
-
   auth: {
     restrict: ['/dashboard'],
     redirect:{
