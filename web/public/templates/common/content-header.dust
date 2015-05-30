@@ -6,7 +6,7 @@
     <span ng-if="user"><a ui-sref="dojo-list">{@i18n key="Dojo List"/}</a></span>
     <span ng-if="user"><a ui-sref="my-dojos">{@i18n key="My Dojos"/}</a></span>
     <span ng-if="user"><a ui-sref="start-dojo-wizard">{@i18n key="Create Dojo"/}</a></span>
-    <span ng-if="user"><a ui-sref="manage-dojos">{@i18n key="Manage Dojos"/}</a></span>
-    <span ng-if="user"><a ui-sref="stats">{@i18n key="Stats"/}</a></span>
+    <span ng-if="userIsCDFAdmin()"><a ui-sref="manage-dojos">{@i18n key="Manage Dojos"/}</a></span>
+    <span ng-if="userIsCDFAdmin()"><a ui-sref="stats">{@i18n key="Stats"/}</a></span>
   </div>
 </div>

@@ -36,6 +36,7 @@
     "locale": "0.0.20",
     "localizr": "^0.1.0",
     "lodash": "3.7.x",
+    "lodash-deep": "^1.6.0",
     "optimist": "0.6.1",
     "po2json": "^0.4.1",
     "request": "2.55.0",
@@ -43,7 +44,8 @@
     "seneca-auth": "0.2.10",
     "seneca-ng-web": "git://github.com/iantocristian/seneca-ng-web.git",
     "seneca-postgresql-store": "git://github.com/iantocristian/seneca-postgresql-store.git",
-    "seneca-user": "0.2.10",
+    "seneca-user-roles": "0.1.0",
+    "seneca-web-access": "0.1.0",
     "serve-static": "^1.4.0",
     "slug": "^0.9.1",
     "yargs": "3.9.0"

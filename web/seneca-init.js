@@ -10,14 +10,12 @@ var seneca = require('seneca')(options.main);
 
 seneca.options(options);
 
-if (options['postgresql-store']) {
-  seneca.use('postgresql-store', options['postgresql-store']);
-}
-
 seneca
   .use('ng-web')
-  .use('user', { confirm: true })
+  .use('../lib/users/user.js')
   .use('auth')
+  .use('user-roles')
+  .use('web-access')
   .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
