@@ -48,7 +48,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var coordsStr = $scope.dojo.coordinates;
       
       if(!coordsStr){
-        alertService.showError('An error has occurred while loading Dojo');
         coordsStr = DEFAULT_COORDS;
       }
  
