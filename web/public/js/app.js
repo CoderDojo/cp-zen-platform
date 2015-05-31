@@ -40,6 +40,7 @@ require('./services/geocoder-service');
 require('./services/auth-service');
 require('./services/alert-service');
 require('./services/cd-users-service');
+require('./services/languages-service');
 
 //--Dojo Wizard Directives--//
 require('./directives/cd-register-account');

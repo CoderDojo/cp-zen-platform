@@ -2,7 +2,7 @@
 
 var path = require('path');
 var po2json = require('po2json');
-var languages = require('../languages.js');
+var languages = require('../../config/languages');
 
 module.exports = function (router) {
 

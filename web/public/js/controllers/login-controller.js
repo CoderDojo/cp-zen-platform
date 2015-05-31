@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdCountriesService','$cookies', '$route', '$rootScope',loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdCountriesService','$cookies', '$route', '$rootScope', 'cdLanguagesService', loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, cdCountriesService, $cookies, $route, $rootScope) {
+  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, cdCountriesService, $cookies, $route, $rootScope, cdLanguagesService) {
     $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     
     var msgmap = {
@@ -105,11 +105,15 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     $scope.selectedLanguage = $cookies['NG_TRANSLATE_LANG_KEY'].replace(/\"/g, "");
 
-    cdCountriesService.getLanguages(function(languages){
-      $scope.languages = languages;
-    }, function(){
-      alertService.showError($translate.instant('An error has occured while loading languages'));
-    });
+    cdLanguagesService.getLanguages()
+      .success(function(languages){
+        $scope.languages = languages;
+      })
+      .error(function(){
+        alertService.showError($translate.instant('An error has occured while loading languages'));
+      });
+      
+
 
     $scope.updateLocale = function(){
       $scope.languageUpdated = true;
