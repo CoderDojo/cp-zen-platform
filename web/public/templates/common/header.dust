@@ -3,13 +3,20 @@
     <div class="container">
         {>"common/content-header" /}
         <div ng-if="user" class="col-lg-3 cd-user-name-container">
-            <a href=""><span class="cd-logout" ng-click="logout()">{@i18n key="Logout"/}</span></a>
-            <span class="cd-user-name">{{ user.name }} |</span>
+            <span class="" style="color:white">{{ user.name }} | </span>
+            <span class="" ng-click="logout()"><a href=""  style="color:white">{@i18n key="Logout"/}</a></span>
         </div>
         <div ng-if="!user" class="col-lg-3 cd-user-name-container">
             <a ui-sref="login"><span class="cd-logout">{@i18n key="Login"/}</span></a> 
             <a ui-sref="start-dojo-wizard"><span class="cd-logout">{@i18n key="Create a Dojo"/} |</span></a>
         </div>
+            <div class="language-selector">
+                <select name="language" 
+                    class="form-control" 
+                    ng-model="selectedLanguage"
+                    ng-change="updateLocale()" 
+                    ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
+            </div>
     </div>
     <alert-banner></alert-banner>
 </header>
