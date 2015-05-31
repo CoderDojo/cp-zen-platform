@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdCountriesService','$cookies', '$route', '$rootScope', 'cdLanguagesService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, cdCountriesService, $cookies, $route, $rootScope, cdLanguagesService) {
+  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService) {
     $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     
     var msgmap = {
