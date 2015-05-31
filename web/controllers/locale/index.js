@@ -1,8 +1,8 @@
 'use strict';
 
 var path = require('path');
-
 var po2json = require('po2json');
+var languages = require('../languages.js');
 
 module.exports = function (router) {
 
@@ -18,6 +18,10 @@ module.exports = function (router) {
       res.send(data);
     });
 
+  });
+
+  router.get('/languages', function(req, res){
+    res.send(languages);
   });
 
 };
