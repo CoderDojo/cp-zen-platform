@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdCountriesService','$cookies', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdCountriesService','$cookies', '$route', '$rootScope',loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, cdCountriesService, $cookies) {
+  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, cdCountriesService, $cookies, $route, $rootScope) {
     $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     
     var msgmap = {
@@ -104,7 +104,6 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     });
 
     $scope.selectedLanguage = $cookies['NG_TRANSLATE_LANG_KEY'].replace(/\"/g, "");
-    console.log($scope.selectedLanguage);
 
     cdCountriesService.getLanguages(function(languages){
       $scope.languages = languages;
@@ -113,9 +112,15 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     });
 
     $scope.updateLocale = function(){
-      console.log("using ", $scope.selectedLanguage);
+      $scope.languageUpdated = true;
       $translate.use($scope.selectedLanguage);
-      $window.location.reload();
     };
+
+    $scope.$watch(function() { return $cookies.NG_TRANSLATE_LANG_KEY; }, function(newValue) {
+      if($scope.languageUpdated){
+        $window.location.reload();
+        $scope.languageUpdated = false;
+      }
+    });
 
   }

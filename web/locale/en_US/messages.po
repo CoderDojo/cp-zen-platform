@@ -555,9 +555,6 @@ msgstr "Remove User"
 msgid "View Profile"
 msgstr "View Profile"
 
-msgid "Manage Dojos"
-msgstr "Manage Dojos"
-
 msgid "Verification"
 msgstr "Verification"
 
