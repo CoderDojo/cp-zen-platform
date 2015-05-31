@@ -18,7 +18,8 @@ var app = angular.module('cpZenPlatform', [
   'angular-alert-banner',
   'angularSpinner',
   'ngTagsInput',
-  'ngBootbox'
+  'ngBootbox',
+  'ngCookies'
 ]);
 
 require('./controllers/login-controller');
@@ -212,8 +213,9 @@ app
   }])
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useUrlLoader('/locale/data?format=mf');
-    $translateProvider.preferredLanguage('default');
+    $translateProvider.determinePreferredLanguage();
     $translateProvider.useSanitizeValueStrategy('escaped');
+    $translateProvider.useCookieStorage();
   }])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
 ;

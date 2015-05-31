@@ -21,7 +21,8 @@ var app = angular.module('cpZenPlatform', [
   'angular-alert-banner',
   'angularSpinner',
   'ngTagsInput',
-  'ngBootbox'
+  'ngBootbox',
+  'ngCookies'
 ]);
 
 require('./services/auth-service');
@@ -254,8 +255,9 @@ app
   }])
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useUrlLoader('/locale/data?format=mf');
-    $translateProvider.preferredLanguage('default');
+    $translateProvider.determinePreferredLanguage();
     $translateProvider.useSanitizeValueStrategy('escaped');
+    $translateProvider.useCookieStorage();
   }])
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
