@@ -115,6 +115,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     $scope.updateLocale = function(){
       console.log("using ", $scope.selectedLanguage);
       $translate.use($scope.selectedLanguage);
+      $window.location.reload();
     };
 
   }

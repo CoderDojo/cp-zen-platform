@@ -27,4 +27,11 @@ msgstr "Nein"
 msgid "Register a Dojo"
 msgstr "Dojo Registrierung"
 
+msgid "Manage Dojos"
+msgstr "Manage Dojos in German"
+
+msgid "dojo.create.initcontent.li1"
+msgstr "A pack lunch in german"
+
+
 
