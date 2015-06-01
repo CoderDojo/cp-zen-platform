@@ -1,7 +1,6 @@
 'use strict';
 
 var languageCtrl = function($scope, cdLanguagesService, alertService, $cookies, $translate, $window){
-  console.log("translate", $translate.use());
   $scope.selectedLanguage = ( $cookies['NG_TRANSLATE_LANG_KEY'] && $cookies['NG_TRANSLATE_LANG_KEY'].replace(/\"/g, "")) || $translate.proposedLanguage();
 
   cdLanguagesService.getLanguages()
