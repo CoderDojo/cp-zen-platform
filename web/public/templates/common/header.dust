@@ -10,7 +10,7 @@
             <a ui-sref="login"><span class="cd-logout">{@i18n key="Login"/}</span></a> 
             <a ui-sref="start-dojo-wizard"><span class="cd-logout">{@i18n key="Create a Dojo"/} |</span></a>
         </div>
-            <div class="language-selector" ng-controller="language">
+            <div class="language-selector" ng-controller="languageController">
                 <select name="language" 
                     class="form-control" 
                     ng-model="selectedLanguage"

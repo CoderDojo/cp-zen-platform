@@ -33,6 +33,7 @@ require('./controllers/terms-and-conditions-controller');
 require('./controllers/accept-dojo-mentor-invitation-controller');
 require('./controllers/accept-dojo-mentor-request-controller');
 require('./controllers/user-profile-controller');
+require('./controllers/language-controller');
 
 require('./services/cd-dojo-service');
 require('./services/cd-countries-service');
@@ -213,8 +214,8 @@ app
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
   .config(['$translateProvider', function($translateProvider) {
-    $translateProvider.useUrlLoader('/locale/data?format=mf');
     $translateProvider.determinePreferredLanguage();
+    $translateProvider.useUrlLoader('/locale/data?format=mf');
     $translateProvider.useSanitizeValueStrategy('escaped');
     $translateProvider.useCookieStorage();
   }])

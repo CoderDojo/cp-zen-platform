@@ -256,8 +256,8 @@ app
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
   .config(['$translateProvider', function($translateProvider) {
-    $translateProvider.useUrlLoader('/locale/data?format=mf');
     $translateProvider.determinePreferredLanguage();
+    $translateProvider.useUrlLoader('/locale/data?format=mf');
     $translateProvider.useSanitizeValueStrategy('escaped');
     $translateProvider.useCookieStorage();
   }])
