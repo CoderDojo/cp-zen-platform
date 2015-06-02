@@ -82,7 +82,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         showMarkersInState(text);
         break;
       case 'search':
-        removeBreadcrumbs(0);
+        removeBreadcrumbs();
         resetAllMarkers();
         break;
     }
@@ -176,6 +176,37 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         marker.setMap(null);
       });
       $scope.stateMarkers = [];
+    }
+  }
+
+  function fillBreadcrumbsSearchBased(dojo){
+    if(dojo.alpha2){
+      var country;
+      cdCountriesService.loadCountriesContinents(function(countriesContinents){
+        country = countriesContinents.countries[dojo.alpha2];
+        if(country){
+          removeBreadcrumbs(0);
+          $scope.currentLevels.push({
+            text:countriesContinents.continents[country.continent],
+            type:'continent',
+            style:'active'
+          });
+
+          $scope.currentLevels.push({
+            text:country.name,
+            type:'country',
+            style:'active'
+          });
+
+          if(dojo.admin1Name){
+            $scope.currentLevels.push({
+              text:dojo.admin1Name,
+              type:'state',
+              style:'active'
+            });
+          }
+        }
+      })
     }
   }
 
@@ -515,6 +546,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         clearMarkerArrays();
         $scope.searchResult = result.records;
         addMarkersToMap(result.records);
+        fillBreadcrumbsSearchBased(result.records[0]);
       }
       else {
         if (fallbackToNearest) {
@@ -535,9 +567,18 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     // A minimum zoom level of 2 - don't let map zoom out farther than the world.
     if($scope.model.map.getZoom() < 2) {
       $scope.model.map.setZoom(2);
+      $scope.resetMap('earth');
     }
 
-    if ($scope.searchResult) {
+    if($scope.model.map.getZoom() > 2 && $scope.model.map.getZoom() <= 4 && $scope.currentLevels.length > 2){
+      $scope.resetMap('continent', $scope.currentLevels[1].text);
+    }
+
+    if($scope.model.map.getZoom() > 4 && $scope.model.map.getZoom() <= 6 && $scope.currentLevels.length > 3){
+      $scope.resetMap('country', $scope.currentLevels[2].text);
+    }
+
+    if ($scope.searchResult && $scope.model.map.getZoom() > 2) {
       $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
       console.log('zoom changed');
     }
