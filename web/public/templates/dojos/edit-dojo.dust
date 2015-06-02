@@ -202,8 +202,7 @@
                       <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
                       <label for="privateCheckbox"></label>
                     </div>
-                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation.
-                       eg. schools/universities/children of organisation's employees etc.</p>
+                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc.</p>
                   </div>
                 </div>
               </div>
