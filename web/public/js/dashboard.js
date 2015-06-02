@@ -256,10 +256,11 @@ app
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
   .config(['$translateProvider', function($translateProvider) {
-    $translateProvider.determinePreferredLanguage();
-    $translateProvider.useUrlLoader('/locale/data?format=mf');
-    $translateProvider.useSanitizeValueStrategy('escaped');
-    $translateProvider.useCookieStorage();
+    $translateProvider.useUrlLoader('/locale/data?format=mf')
+      .useCookieStorage()
+      .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+      .determinePreferredLanguage()
+      .fallbackLanguage('en_US');
   }])
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
