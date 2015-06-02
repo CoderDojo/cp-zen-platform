@@ -63,43 +63,43 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
     )
   }
 
-    $scope.sendPasswordResetEmail = function() {
-      $scope.message = ''
-      $scope.errorMessage = ''
+  $scope.sendPasswordResetEmail = function() {
+    $scope.message = ''
+    $scope.errorMessage = ''
 
-      if (!$scope.forgotPasswordForm.$valid) {
-        return
-      }
-
-      auth.reset({
-        email:$scope.forgot.email
-      }, function() {
-        $scope.message = msgmap['reset-sent'];
-      }, function(out) {
-        $scope.errorMessage = msgmap[out.why] || msgmap.unknown
-      })
+    if (!$scope.forgotPasswordForm.$valid) {
+      return
     }
 
-    $scope.logout = function(){
-      auth.logout(function(data){
-        $window.location.href = '/'
-      })
-    }
-
-    $scope.goHome = function() {
-      window.location.href = '/'
-    }
-
-
-    auth.instance(function(data){
-      if( data.user ) {
-        $scope.user = data.user;
-        if (path==='/') {
-          $window.location.href = 'dashboard'
-        }
-      }
-      else {
-        $scope.show('login')
-      }
-    });
+    auth.reset({
+      email:$scope.forgot.email
+    }, function() {
+      $scope.message = msgmap['reset-sent'];
+    }, function(out) {
+      $scope.errorMessage = msgmap[out.why] || msgmap.unknown
+    })
   }
+
+  $scope.logout = function(){
+    auth.logout(function(data){
+      $window.location.href = '/'
+    })
+  }
+
+  $scope.goHome = function() {
+    window.location.href = '/'
+  }
+
+
+  auth.instance(function(data){
+    if( data.user ) {
+      $scope.user = data.user;
+      if (path==='/') {
+        $window.location.href = 'dashboard'
+      }
+    }
+    else {
+      $scope.show('login')
+    }
+  });
+}
