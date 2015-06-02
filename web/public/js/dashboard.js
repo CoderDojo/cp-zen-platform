@@ -21,7 +21,8 @@ var app = angular.module('cpZenPlatform', [
   'angular-alert-banner',
   'angularSpinner',
   'ngTagsInput',
-  'ngBootbox'
+  'ngBootbox',
+  'ngCookies'
 ]);
 
 require('./services/auth-service');
@@ -30,6 +31,7 @@ require('./services/cd-dojo-service');
 require('./services/geocoder-service');
 require('./services/cd-countries-service');
 require('./services/cd-profiles-service');
+require('./services/languages-service');
 
 require('./controllers/login-controller');
 require('./controllers/header-controller');
@@ -48,6 +50,7 @@ require('./controllers/manage-dojo-users-controller');
 require('./controllers/accept-dojo-mentor-invitation-controller');
 require('./controllers/accept-dojo-mentor-request-controller');
 require('./controllers/user-profile-controller');
+require('./controllers/language-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
@@ -253,9 +256,11 @@ app
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
   .config(['$translateProvider', function($translateProvider) {
-    $translateProvider.useUrlLoader('/locale/data?format=mf');
-    $translateProvider.preferredLanguage('default');
-    $translateProvider.useSanitizeValueStrategy('escaped');
+    $translateProvider.useUrlLoader('/locale/data?format=mf')
+      .useCookieStorage()
+      .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+      .determinePreferredLanguage()
+      .fallbackLanguage('en_US');
   }])
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))

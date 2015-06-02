@@ -29,7 +29,7 @@ function cdCountriesService($q, cdApi){
       getContinentCodes: function(win, fail){
         cdApi.get('geo/continent_codes', win, fail || topfail);
       }
-    }
+    };
   }
 angular.module('cpZenPlatform')
   .service('cdCountriesService', ['$q', 'cdApi', cdCountriesService])

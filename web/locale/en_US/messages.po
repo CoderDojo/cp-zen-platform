@@ -555,9 +555,6 @@ msgstr "Remove User"
 msgid "View Profile"
 msgstr "View Profile"
 
-msgid "Manage Dojos"
-msgstr "Manage Dojos"
-
 msgid "Verification"
 msgstr "Verification"
 
@@ -905,3 +902,6 @@ msgstr "Error loading profile:"
 
 msgid "Error loading Dojos"
 msgstr "Error loading Dojos:"
+
+msgid "An error has occured while loading languages"
+msgstr "An error has occured while loading languages"

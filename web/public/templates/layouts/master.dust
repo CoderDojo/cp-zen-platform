@@ -63,6 +63,7 @@
     <script src="/components/bootbox/bootbox.js"></script>
 
     <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/angular-cookies/angular-cookies.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
     <script src="/components/moment/min/moment.min.js"></script>
@@ -91,6 +92,7 @@
     <script src="/components/angular-translate/angular-translate.min.js"></script>
     <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
     <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
+    <script src="/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
     <script src="/seneca/init.js"></script>

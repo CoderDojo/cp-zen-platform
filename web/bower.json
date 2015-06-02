@@ -43,6 +43,7 @@
     "angular-translate": "~2.7.0",
     "angular-translate-interpolation-messageformat": "~2.7.0",
     "angular-translate-loader-url": "~2.7.0",
+    "angular-translate-storage-cookie": "~2.7.0",
     "ng-tags-input": "2.3.0",
     "ngBootbox": "0.0.5"
   },

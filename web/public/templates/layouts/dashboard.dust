@@ -56,6 +56,7 @@
     <script src="/components/jquery/dist/jquery.min.js"></script>
     <script src="/components/underscore/underscore.js"></script>
     <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/angular-cookies/angular-cookies.min.js"></script>
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -93,6 +94,7 @@
     <script src="/components/angular-translate/angular-translate.min.js"></script>
     <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
     <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
+    <script src="/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
     <script src="/seneca/init.js"></script>
