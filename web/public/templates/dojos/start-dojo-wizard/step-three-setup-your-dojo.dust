@@ -10,7 +10,7 @@
             <div class="checkbox checkbox-primary" ng-repeat="checkboxInput in step.checkboxes">
               <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}" ng-init="setupDojo[checkboxInput.name]=false" ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'" ng-model="setupDojo[checkboxInput.name]">
               <label for="{{ checkboxInput.name }}">
-                {{ checkboxInput.title }}
+                {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
               </label>
               <input type="text" ng-if="checkboxInput.textField" ng-init="setupDojo[checkboxInput.name + '-text']=''" ng-show="setupDojo[checkboxInput.name] === true" class="form-control" placeholder="{{ checkboxInput.placeholder }}" ng-model="setupDojo[checkboxInput.name + '-text']"/>
             </div>
