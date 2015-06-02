@@ -2,66 +2,66 @@
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService) {
-    $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
-    
-    var msgmap = {
-      'unknown': $translate.instant('login.msgmap.unknown'),
-      'user-not-found': $translate.instant('login.msgmap.user-not-found'),
-      'invalid-password': $translate.instant('login.msgmap.invalid-password'),
-      'reset-sent': $translate.instant('login.msgmap.reset-sent')
-    }
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService) {
+  $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
+  
+  var msgmap = {
+    'unknown': $translate.instant('login.msgmap.unknown'),
+    'user-not-found': $translate.instant('login.msgmap.user-not-found'),
+    'invalid-password': $translate.instant('login.msgmap.invalid-password'),
+    'reset-sent': $translate.instant('login.msgmap.reset-sent')
+  }
 
-    var path = window.location.pathname
+  var path = window.location.pathname
 
-    $scope.login = {}
-    $scope.forgot = {}
+  $scope.login = {}
+  $scope.forgot = {}
 
-    $scope.isVisible = function(view) {
-      return $scope.currentView === view
-    }
+  $scope.isVisible = function(view) {
+    return $scope.currentView === view
+  }
 
-    $scope.show = function(view) {
-      $scope.message = ''
-      $scope.errorMessage = ''
+  $scope.show = function(view) {
+    $scope.message = ''
+    $scope.errorMessage = ''
 
-      $scope.currentView = view
-    }
+    $scope.currentView = view
+  }
 
-    $scope.doRegister = function(user) {
-      auth.register(user, function(data) {
-        if(data.ok) {
-          alertService.showAlert($translate.instant('login.register.success'), function() {
-            auth.login(user, function(data) {
-              $window.location.href = '/dashboard' + $scope.referer;
-            });
+  $scope.doRegister = function(user) {
+    auth.register(user, function(data) {
+      if(data.ok) {
+        alertService.showAlert($translate.instant('login.register.success'), function() {
+          auth.login(user, function(data) {
+            $window.location.href = '/dashboard' + $scope.referer;
           });
-        } else {
-          var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
-          alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
-        }
-      }, function() {
-        
-      });
-    }
-
-    $scope.doLogin = function() {
-      $scope.message = ''
-      $scope.errorMessage = ''
-
-      if (!$scope.loginForm.$valid) {
-        return
+        });
+      } else {
+        var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
+        alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
       }
+    }, function() {
+      
+    });
+  }
 
-      auth.login($scope.login,
-        function(data){
-          $window.location.href = '/dashboard' + $scope.referer;
-        },
-        function(){
-          $scope.errorMessage = $translate.instant('Invalid email or password');
-        }
-      )
+  $scope.doLogin = function() {
+    $scope.message = ''
+    $scope.errorMessage = ''
+
+    if (!$scope.loginForm.$valid) {
+      return
     }
+
+    auth.login($scope.login,
+      function(data){
+        $window.location.href = '/dashboard' + $scope.referer;
+      },
+      function(){
+        $scope.errorMessage = $translate.instant('Invalid email or password');
+      }
+    )
+  }
 
     $scope.sendPasswordResetEmail = function() {
       $scope.message = ''
