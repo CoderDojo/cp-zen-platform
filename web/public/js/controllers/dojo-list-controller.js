@@ -63,6 +63,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   });
 
   $scope.resetMap = function(type, text) {
+    $scope.originalZoom = $scope.model.map.getZoom();
     $scope.searchResult = null;
     switch(type) {
       case 'earth':
@@ -212,6 +213,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   $scope.$watch('model.map', function(map) {
     if(map) {
+      $scope.currentZoom = map.getZoom();
       resetAllMarkers();
     }
   });
@@ -222,6 +224,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     var continentSelected = marker.continent;
     Geocoder.boundsForContinent(continentSelected).then(function (data) {
       $scope.model.map.fitBounds(data);
+      $scope.model.map.setZoom(3);
     });
 
     var continentCountries = dojoCountData.dojos.continents[continentSelected].countries;
@@ -261,6 +264,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
       marker.setMap(null);
     });
 
+
   }
 
   $scope.showCountryDojos = function(marker) {
@@ -269,6 +273,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     var countrySelected = marker.country;
     Geocoder.boundsForCountry('country:'+countrySelected).then(function (data) {
       $scope.model.map.fitBounds(data);
+      $scope.model.map.setZoom(5);
     });
 
     cdDojoService.list({alpha2:countrySelected}, function(response) {
@@ -565,23 +570,30 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   $scope.mapZoomChanged = function() {
     // A minimum zoom level of 2 - don't let map zoom out farther than the world.
-    if($scope.model.map.getZoom() < 2) {
-      $scope.model.map.setZoom(2);
-      $scope.resetMap('earth');
+    console.log('MAP ZOOM:', $scope.model.map.getZoom());
+    if($scope.model.map.getZoom() < $scope.currentZoom) {
+      if ($scope.model.map.getZoom() < 2) {
+        $scope.model.map.setZoom(2);
+        $scope.resetMap('earth');
+      }
+
+      if ($scope.model.map.getZoom() > 2 && $scope.model.map.getZoom() < 4 && $scope.currentLevels.length > 2) {
+        $scope.resetMap('continent', $scope.currentLevels[1].text);
+        $scope.model.map.setZoom(3);
+      }
+
+      if ($scope.model.map.getZoom() > 4 && $scope.model.map.getZoom() < 6 && $scope.currentLevels.length > 3) {
+        $scope.resetMap('country', $scope.currentLevels[2].text);
+        $scope.model.map.setZoom(5);
+      }
+
+      if ($scope.searchResult && $scope.model.map.getZoom() > 2) {
+        $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
+        console.log('zoom changed');
+      }
     }
 
-    if($scope.model.map.getZoom() > 2 && $scope.model.map.getZoom() <= 4 && $scope.currentLevels.length > 2){
-      $scope.resetMap('continent', $scope.currentLevels[1].text);
-    }
-
-    if($scope.model.map.getZoom() > 4 && $scope.model.map.getZoom() <= 6 && $scope.currentLevels.length > 3){
-      $scope.resetMap('country', $scope.currentLevels[2].text);
-    }
-
-    if ($scope.searchResult && $scope.model.map.getZoom() > 2) {
-      $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
-      console.log('zoom changed');
-    }
+    $scope.currentZoom = $scope.model.map.getZoom();
   }
 }
 
