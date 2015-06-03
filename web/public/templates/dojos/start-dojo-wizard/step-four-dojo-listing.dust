@@ -56,8 +56,7 @@
                       <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
                       <label for="privateCheckbox"></label>
                     </div>
-                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation.
-                       eg. schools/universities/children of organisation's employees etc.</p>
+                    <p>Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc.</p>
                   </div>
                 </div>
               </div>
@@ -82,8 +81,7 @@
                     <label for="dojoName" class="col-lg-4">Dojo Name*</label>
                       <div class="col-lg-6">
                         <input type="text" required required-message="'Name is empty'" ng-model="dojo.name" class="form-control" name="dojoName" id="dojoName">
-                        <p>Normally after an area, like "Cork" or multiple Dojos are in your area "San Fran @ GitHub".
-                          Try refrain from prefixing the name with "CoderDojo".</p>
+                        <p>Normally named after an area, like "Cork", or if there are multiple Dojos are in your area "San Fran @ GitHub". Try refrain from prefixing the name with "CoderDojo".</p>
                       </div>
                   </div>
 
@@ -91,8 +89,7 @@
                     <label for="dojoEmail" class="col-lg-4">Email</label>
                       <div class="col-lg-6">
                         <input type="text" ng-model="dojo.email" class="form-control" name="dojoEmail" id="dojoEmail">
-                        <p>This should be different to the personal email you signed up for an account here with.
-                          For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank.</p>
+                        <p>This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank.</p>
                       </div>
                   </div>
 
@@ -141,7 +138,7 @@
                     <label for="dojoAddress1" class="col-lg-4">Address*</label>
                     <div class="col-lg-6">
                       <input type="text" required required-message="'Address is empty'" ng-model="dojo.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
-                      <p>Address of the Dojo (Eg. LIT Downtown Centre)</p>
+                      <p>Address of the Dojo (e.g. LIT Downtown Centre)</p>
                     </div>
                   </div>
 
@@ -180,8 +177,7 @@
                       <label for="dojoGoogleGroup" class="col-lg-4">Google Group URL</label>
                         <div class="col-lg-6">
                           <input type="text" ng-model="dojo.google_group" class="form-control" name="dojoGoogleGroup" id="dojoGoogleGroup">
-                          <p>We recommend setting up a Discussion group so people can sign up for the latest
-                             happenings and news and contribute.</p>
+                          <p>We recommend setting up a discussion group so people can sign up for the latest news and happenings.</p>
                         </div>
                     </div>
                   </div>
@@ -200,8 +196,7 @@
                       <label for="dojoTwitter" class="col-lg-4">Twitter</label>
                         <div class="col-lg-6">
                           <input type="text" ng-model="dojo.twitter" class="form-control" name="dojoTwitter" id="dojoTwitter">
-                          <p>Again, a useful way for sharing information and being found. We can also
-                            help share messages to followers.</p>
+                          <p>Again, a useful way for sharing information and being found. We can also help share messages to followers.</p>
                         </div>
                     </div>
                   </div>

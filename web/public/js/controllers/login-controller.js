@@ -30,7 +30,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     $scope.doRegister = function(user) {
       auth.register(user, function(data) {
         if(data.ok) {
-          alertService.showAlert('Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo.', function() {
+          alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo.', function() {
             auth.login(user, function(data) {
               $window.location.href = '/dashboard/start-dojo';
             });
