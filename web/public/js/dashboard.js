@@ -47,7 +47,7 @@ require('./controllers/champion-onboarding-controller');
 require('./controllers/start-dojo-wizard-controller');
 require('./controllers/review-champion-application-controller');
 require('./controllers/manage-dojo-users-controller');
-require('./controllers/accept-dojo-mentor-invitation-controller');
+require('./controllers/accept-dojo-user-invitation-controller');
 require('./controllers/accept-dojo-mentor-request-controller');
 require('./controllers/user-profile-controller');
 require('./controllers/language-controller');
@@ -221,10 +221,10 @@ app
         templateUrl: '/dojos/template/manage-dojo-users',
         controller: 'manage-dojo-users-controller'
       })
-      .state("accept-dojo-mentor-invitation", {
-        url: "/dashboard/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken",
-        templateUrl: '/dojos/template/accept-dojo-mentor-invitation',
-        controller: 'accept-dojo-mentor-invitation-controller'
+      .state("accept-dojo-user-invitation", {
+        url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
+        templateUrl: '/dojos/template/accept-dojo-user-invitation',
+        controller: 'accept-dojo-user-invitation-controller'
       })
       .state("accept-dojo-mentor-request", {
         url: "/dashboard/accept_dojo_mentor_request/:userId/:mentorInviteToken",

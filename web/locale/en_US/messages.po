@@ -381,8 +381,8 @@ msgstr "Logout"
 msgid "Create a Dojo"
 msgstr "Create a Dojo"
 
-msgid "Mentor Invitation"
-msgstr "Mentor Invitation"
+msgid "User Invitation"
+msgstr "User Invitation"
 
 msgid "Mentor Request"
 msgstr "Mentor Request"
@@ -537,8 +537,8 @@ msgstr "Supporters Image URL"
 msgid "Manage Dojo Users"
 msgstr "Manage Dojo Users"
 
-msgid "Send Mentor Invite"
-msgstr "Send Mentor Invite"
+msgid "Send Invite"
+msgstr "Send Invite"
 
 msgid "Profile"
 msgstr "Profile"

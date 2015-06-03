@@ -1,16 +1,16 @@
  'use strict';
 
-function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService, $translate) {
+function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $location, auth, cdDojoService, usSpinnerService, alertService, $translate) {
   var dojoId = $stateParams.dojoId;
-  var inviteToken = $stateParams.mentorInviteToken;
+  var inviteToken = $stateParams.userInviteToken;
   var currentPath = $location.path();
   
   auth.get_loggedin_user(function(user) {
-    if($state.current.url === '/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken') {
+    if($state.current.url === '/accept_dojo_user_invitation/:dojoId/:userInviteToken') {
       $window.location.href = '/dashboard' + currentPath;
     } else {
 
-      usSpinnerService.spin('mentor-invitation-spinner');
+      usSpinnerService.spin('user-invitation-spinner');
       $scope.user = user;
       var tokenData = {dojoId:dojoId, 
         inviteToken:inviteToken, 
@@ -18,8 +18,8 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
         currentUserId: $scope.user.id
       };
 
-      cdDojoService.acceptMentorInvite(tokenData, function (response) {
-        usSpinnerService.stop('mentor-invitation-spinner');
+      cdDojoService.acceptUserInvite(tokenData, function (response) {
+        usSpinnerService.stop('user-invitation-spinner');
         if(response.status === 1) {
           alertService.showAlert($translate.instant('Invitation Accepted'), function () {
             $state.go('my-dojos');
@@ -42,6 +42,6 @@ function cdAcceptDojoMentorInvitationCtrl($scope, $window, $state, $stateParams,
 }
 
 angular.module('cpZenPlatform')
-    .controller('accept-dojo-mentor-invitation-controller', ['$scope', '$window', '$state', 
+    .controller('accept-dojo-user-invitation-controller', ['$scope', '$window', '$state', 
       '$stateParams', '$location', 'auth', 'cdDojoService', 
-      'usSpinnerService', 'alertService', '$translate',cdAcceptDojoMentorInvitationCtrl]);
+      'usSpinnerService', 'alertService', '$translate', cdAcceptDojoUserInvitationCtrl]);
