@@ -401,13 +401,10 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
-              //Make user champion
               //TO-DO:User should only be made champion of this Dojo.
-              cdUsersService.promote(currentUser.id, ['champion'], function (response) {
-                $state.go('home', { 
-                  bannerType:'success', 
-                  bannerMessage: $translate.instant('dojo.create.success')
-                });
+              $state.go('home', { 
+                bannerType:'success', 
+                bannerMessage: $translate.instant('dojo.create.success')
               });
             });
           });
