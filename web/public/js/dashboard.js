@@ -258,6 +258,7 @@ app
   .config(['$translateProvider', function($translateProvider) {
     $translateProvider.useUrlLoader('/locale/data?format=mf')
       .useCookieStorage()
+      .useSanitizeValueStrategy('sanitize')
       .registerAvailableLanguageKeys(['en_US', 'de_DE'])
       .determinePreferredLanguage()
       .fallbackLanguage('en_US');
