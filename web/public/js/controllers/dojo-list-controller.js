@@ -570,7 +570,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   $scope.mapZoomChanged = function() {
     // A minimum zoom level of 2 - don't let map zoom out farther than the world.
-    console.log('MAP ZOOM:', $scope.model.map.getZoom());
     if($scope.model.map.getZoom() < $scope.currentZoom) {
       if ($scope.model.map.getZoom() < 2) {
         $scope.model.map.setZoom(2);
@@ -589,7 +588,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
       if ($scope.searchResult && $scope.model.map.getZoom() > 2) {
         $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
-        console.log('zoom changed');
       }
     }
 
