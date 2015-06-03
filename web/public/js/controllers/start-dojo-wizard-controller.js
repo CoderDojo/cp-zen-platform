@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, Geocoder, gmap) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap) {
     $scope.stepFinishedLoading = false;
     $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
@@ -161,11 +161,9 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       $scope.hideIndicators = true;
       currentStepInt = 0;
       $scope.doRegister = function(user) {
-        debugger
         auth.register(user, function(data) {
           if(data.ok) {
             auth.login(user, function(data) {
-              debugger
               //User is now logged in, go to dashboard
               $window.location.href = '/dashboard/start-dojo';
             });
@@ -230,11 +228,17 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         agreementObj.fullName = agreement.agreedToBy;
         agreementObj.userId = currentUser.id;
         agreementObj.version = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
-        agreementObj.ipAddress = '';//TODO: get IP address
 
-        cdAgreementsService.save(agreementObj, function(response) {
-          setupStep3();
-        });
+        $http.get('http://ipinfo.io/json').
+          success(function(data) {
+            agreementObj.ipAddress = data.ip;
+
+            cdAgreementsService.save(agreementObj, function(response) {
+              debugger
+              setupStep3();
+            });
+
+          });
       }
 
       cdCountriesService.listCountries(function(countries) {
@@ -449,5 +453,5 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
 
