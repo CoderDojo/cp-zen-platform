@@ -47,18 +47,18 @@
           <li>You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation.</li>
       </ul>
       <div class="wizardSlideableDiv">
-        <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement()" name="charterForm">
+        <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
           <div class="row">
             <div class="form-group">
               <label for="agreedToBy" class="col-lg-3">Full Name:</label>
                 <div class="col-lg-5">
-                  <input type="text" ng-model="agreedToBy" class="form-control" required required-message="'You must enter your full name'" name="agreedToBy" id="agreedToBy">
+                  <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'You must enter your full name'" name="agreedToBy" id="agreedToBy">
                 </div>
             </div>
           </div>
           <div class="col-lg-offset-3">
             <div class="checkbox checkbox-primary">
-              <input type="checkbox" ng-model="agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'You must accept the charter'" id="agreeToCharterCheckbox">
+              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'You must accept the charter'" id="agreeToCharterCheckbox">
               <label for="agreeToCharterCheckbox">
                   I have read and accepted the above charter
               </label>

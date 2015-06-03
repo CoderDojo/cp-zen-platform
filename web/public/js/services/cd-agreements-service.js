@@ -6,6 +6,16 @@ function cdAgreementsService(cdApi){
   }
 
   return {
+    save: function(agreement, win, fail){
+      debugger
+      agreement = angular.copy(agreement);
+      if (agreement.id) {
+        cdApi.post('agreements/' + agreement.id, { agreement: agreement }, win, fail);
+      }
+      else {
+        cdApi.post('agreements', { agreement: agreement }, win, fail || topfail);
+      }
+    },
     getAgreementsByIds: function(ids, win, fail){
       cdApi.post('agreements/list-by-ids', {usersIds: ids}, win, fail || topfail);
     },
