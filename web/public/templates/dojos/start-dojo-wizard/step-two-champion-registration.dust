@@ -31,8 +31,21 @@
         <div class="row">
           <div class="form-group has-feedback">
             <label for="dateOfBirth" class="col-lg-4">Date of Birth*</label>
-            <div class="col-lg-6">
-              <div sb-date-select min="1900-01-01" ng-model="champion.dateOfBirth"></div>
+            <div class="input-group col-lg-6" style="padding-right: 15px; padding-left: 15px;">
+              <input type="text" required readonly="true"
+                     class="form-control"
+                     name="dateOfBirth"
+                     required-message="'Date of birth is empty'"
+                     datepicker-popup="fullDate"
+                     ng-model="champion.dateOfBirth"
+                     is-open="picker.opened"
+                     min-date="'1900-01-01'"
+                     max-date="today"
+                     datepicker-options="dateOptions" />
+
+              <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
             </div>
           </div>
         </div>
