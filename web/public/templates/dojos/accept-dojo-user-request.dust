@@ -1,0 +1,5 @@
+<div class="cd-dashboard">
+    <legend>{@i18n key="User Request"/}</legend>
+    <p>{@i18n key="user.request.p1"/}</p>
+    <span spinner-key="user-request-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+</div>

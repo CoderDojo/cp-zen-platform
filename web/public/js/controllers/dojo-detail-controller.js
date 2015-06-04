@@ -4,6 +4,11 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
+  $scope.requestInvite = {};
+  
+  cdDojoService.getUserTypes(function (response) {
+    $scope.userTypes = response;
+  });
 
   $scope.$watch('model.map', function(map){
     if(map) {
@@ -28,13 +33,14 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 
   }
 
-  $scope.requestToJoinAsMentor = function () {
+  $scope.requestToJoin = function (requestInvite) {
+    var userType = requestInvite.userType;
     auth.get_loggedin_user(function (user) {
       usSpinnerService.spin('dojo-detail-spinner');
-      var data = {user:user, dojoId:dojo.id};
-      cdDojoService.requestMentorInvite(data, function (response) {
+      var data = {user:user, dojoId:dojo.id, userType:userType};
+      cdDojoService.requestInvite(data, function (response) {
         usSpinnerService.stop('dojo-detail-spinner');
-        alertService.showAlert($translate.instant('Mentor Invite Request Sent!'));
+        alertService.showAlert($translate.instant('Invite Request Sent!'));
       });
     }, function () {
       //Not logged in

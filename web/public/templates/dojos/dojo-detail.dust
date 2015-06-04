@@ -10,7 +10,24 @@
           </div>
           <div class="widget">
             <legend>{@i18n key="Join"/}</legend>
-              <button class="btn btn-success" ng-click="requestToJoinAsMentor()">{@i18n key="Request to Join as Mentor"/}</button>
+            <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
+              <div class="col-lg-10">
+                <div class="form-group">
+                  <ui-select name="inviteUserType" ng-model="requestInvite.userType">
+                    <ui-select-match allow-clear="false" placeholder="Join Dojo as...">{{ $select.selected  }}</ui-select-match>
+                    <ui-select-choices repeat="userType in userTypes">
+                      <span ng-bind-html="userType"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="form-group">
+                  <button class="btn btn-success btn-210px" type="submit">{@i18n key="Send Request"/}</button>
+                </div>
+              </div>
+            </form>
+
           </div>
           <div class="widget">
             <legend>{@i18n key="Contact"/}</legend>
