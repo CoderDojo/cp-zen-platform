@@ -60,6 +60,14 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       }
     }
 
+    $scope.moveToInvalid = function(){
+      var createDojoFormScope = angular.element('#createDojoForm').scope();
+
+      if(createDojoFormScope.createDojoForm.$invalid){
+        angular.element('#createDojoForm .ng-invalid')[0].scrollIntoView();
+      }
+    };
+
     $scope.preventEnterRegisterAccount = function () {
       if(currentStepInt > 0) return false;
       return true;
