@@ -60,6 +60,13 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       }
     }
 
+    $scope.scrollToInvalid = function(form){
+
+      if(form.$invalid){
+        angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+      }
+    };
+
     $scope.preventEnterRegisterAccount = function () {
       if(currentStepInt > 0) return false;
       return true;
