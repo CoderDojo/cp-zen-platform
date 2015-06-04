@@ -118,7 +118,7 @@
 
                   <div class="form-group">
                     <label for="dojoPlace" class="col-lg-4">{@i18n key="CityTown"/}*</label>
-                    <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.place.$error.required}">
+                    <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
                       <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
                         <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
@@ -128,7 +128,7 @@
                         </ui-select-choices>
                       </ui-select>
                       <label class="control-label has-error validationMessage"
-                             ng-show="createDojoForm.$submitted && createDojoForm.place.$error.required">{@i18n key="Select a place"/}</label>
+                             ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
                       <p>{@i18n key="CityTown"/}</p>
                     </div>
                   </div>
@@ -206,7 +206,7 @@
 
                       </div>
                       <div class="col-lg-4 col-lg-offset-5">
-                        <button class="btn btn-primary" type="submit">{{ saveButtonText }}</button>
+                        <button class="btn btn-primary" ng-click="moveToInvalid()" type="submit">{{ saveButtonText }}</button>
                       </div>
                     </div>
                   </div>
