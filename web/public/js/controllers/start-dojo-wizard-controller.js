@@ -195,12 +195,18 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }
       });
 
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      $scope.format = $scope.formats[0];
-
       $scope.dateOptions = {
         formatYear: 'yy',
         startingDay: 1
+      };
+
+      $scope.picker = {opened :false};
+
+      $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.picker.opened = true;
       };
 
       $scope.today = new Date();
@@ -447,7 +453,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.stepFinishedLoading = true;
     }
     //--
-
 }
 
 angular.module('cpZenPlatform')
