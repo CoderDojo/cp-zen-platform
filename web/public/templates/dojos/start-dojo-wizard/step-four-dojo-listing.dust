@@ -118,8 +118,13 @@
                   </div>
 
                   <div class="form-group">
+<<<<<<< HEAD
                     <label for="dojoPlace" class="col-lg-4">City/Town*</label>
                     <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.place.$error.required}">
+=======
+                    <label for="dojoPlace" class="col-lg-4">{@i18n key="CityTown"/}*</label>
+                    <div class="col-lg-6" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
+>>>>>>> 1450754... If there is an error move to the erroneous field
                       <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
                         <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                         <ui-select-choices repeat="place in places"
@@ -129,8 +134,13 @@
                         </ui-select-choices>
                       </ui-select>
                       <label class="control-label has-error validationMessage"
+<<<<<<< HEAD
                              ng-show="createDojoForm.$submitted && createDojoForm.place.$error.required">Select a place</label>
                       <p>City/Town</p>
+=======
+                             ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
+                      <p>{@i18n key="CityTown"/}</p>
+>>>>>>> 1450754... If there is an error move to the erroneous field
                     </div>
                   </div>
 
@@ -207,7 +217,7 @@
 
                       </div>
                       <div class="col-lg-4 col-lg-offset-5">
-                        <button class="btn btn-primary" type="submit">{{ saveButtonText }}</button>
+                        <button class="btn btn-primary" ng-click="moveToInvalid()" type="submit">{{ saveButtonText }}</button>
                       </div>
                     </div>
                   </div>
