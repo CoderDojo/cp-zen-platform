@@ -384,11 +384,11 @@ msgstr "Create a Dojo"
 msgid "User Invitation"
 msgstr "User Invitation"
 
-msgid "Mentor Request"
-msgstr "Mentor Request"
+msgid "User Request"
+msgstr "User Request"
 
-msgid "mentor.request.p1"
-msgstr "Mentor Request is being validated..."
+msgid "user.request.p1"
+msgstr "User Request is being validated..."
 
 msgid "Status"
 msgstr "Status"
@@ -396,8 +396,8 @@ msgstr "Status"
 msgid "Join"
 msgstr "Join"
 
-msgid "Request to Join as Mentor"
-msgstr "Request to Join as Mentor"
+msgid "Send Request"
+msgstr "Send Request"
 
 msgid "Contact"
 msgstr "Contact"
@@ -774,14 +774,14 @@ msgstr "Invalid Invitation"
 msgid "Error accepting invitation"
 msgstr "'Error accepting invitation:'"
 
-msgid "Mentor Successfully Validated"
-msgstr "Mentor Successfully Validated!"
+msgid "User Successfully Validated"
+msgstr "User Successfully Validated!"
 
 msgid "Invalid Invite Request"
 msgstr "Invalid Invite Request"
 
-msgid "Error validating mentor request"
-msgstr "Error validating mentor request:"
+msgid "Error validating user request"
+msgstr "Error validating user request:"
 
 msgid "Your Dojo has been successfully saved"
 msgstr "Your Dojo has been successfully saved"
@@ -798,8 +798,8 @@ msgstr "A laptop. Borrow one from somebody if needs be."
 msgid "dojo.create.initcontent.li3"
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
-msgid "Mentor Invite Request Sent"
-msgstr "Mentor Invite Request Sent!"
+msgid "Invite Request Sent"
+msgstr "Invite Request Sent!"
 
 msgid "Update Dojo"
 msgstr "Update Dojo"

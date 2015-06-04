@@ -6,30 +6,7 @@ var base = require('./options.base.js');
 module.exports = _.defaults({
   'agreement-version' : 2,
   auth: {
-    restrict: function (req, res, next) {
-      //Restrict API
-      var loginOnly = ['/api/1.0/dojos/stats',
-                       '/api/1.0/dojo_create',
-                       '/api/1.0/dojos/my_dojos',
-                       '/api/1.0/dojos/bulk_update',
-                       '/api/1.0/dojos/bulk_delete',
-                       '/api/1.0/dojos/save_dojo_lead',
-                       '/api/1.0/load_setup_dojo_steps'
-                      ];
-      
-      function restrictAccess(res) {
-        res.writeHead(401);
-        res.end(JSON.stringify({ok:false,why:'restricted'}));
-      }
-
-      if(_.contains(loginOnly, req.url)) {
-        if(req.user) return next();
-        return restrictAccess(res);
-      }
-
-      return next();
-      
-    },
+    restrict: ['/dashboard'],
     redirect:{
       restrict: '/'
     },
