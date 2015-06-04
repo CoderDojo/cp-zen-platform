@@ -217,7 +217,7 @@
 
                       </div>
                       <div class="col-lg-4 col-lg-offset-5">
-                        <button class="btn btn-primary" ng-click="moveToInvalid()" type="submit">{{ saveButtonText }}</button>
+                        <button class="btn btn-primary" ng-click="scrollToInvalid(createDojoForm)" type="submit">{{ saveButtonText }}</button>
                       </div>
                     </div>
                   </div>

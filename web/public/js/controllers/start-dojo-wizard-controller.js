@@ -60,11 +60,10 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       }
     }
 
-    $scope.moveToInvalid = function(){
-      var createDojoFormScope = angular.element('#createDojoForm').scope();
+    $scope.scrollToInvalid = function(form){
 
-      if(createDojoFormScope.createDojoForm.$invalid){
-        angular.element('#createDojoForm .ng-invalid')[0].scrollIntoView();
+      if(form.$invalid){
+        angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
       }
     };
 

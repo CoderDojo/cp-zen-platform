@@ -144,8 +144,7 @@
             </div>
           </div>
         </div>
-
-        <button class="btn btn-primary center-block registerButton" type="submit">Register</button>
+        <button class="btn btn-primary center-block registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
       </div>
 
     </form>
