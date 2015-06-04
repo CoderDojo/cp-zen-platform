@@ -157,7 +157,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     //--Step One:
     function setupStep1() {
-      debugger
       $scope.hideIndicators = true;
       currentStepInt = 0;
       $scope.doRegister = function(user) {
@@ -227,14 +226,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         var agreementObj = {};
         agreementObj.fullName = agreement.agreedToBy;
         agreementObj.userId = currentUser.id;
-        agreementObj.version = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
+        agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
         $http.get('http://ipinfo.io/json').
           success(function(data) {
             agreementObj.ipAddress = data.ip;
 
             cdAgreementsService.save(agreementObj, function(response) {
-              debugger
               setupStep3();
             });
 
