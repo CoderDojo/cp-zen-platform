@@ -32,6 +32,7 @@ require('./services/cd-countries-service');
 require('./services/geocoder-service');
 require('./services/auth-service');
 require('./services/alert-service');
+require('./services/cd-agreements-service');
 
 //--Dojo Wizard Directives--//
 require('./directives/cd-register-account');
