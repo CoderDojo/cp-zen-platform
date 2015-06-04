@@ -2,10 +2,10 @@
 
 function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tableUtils, usSpinnerService, $translate) {
   var dojoId = $state.params.id;
-  $scope.itemsPerPage = 10;
-  var userTypes = [];
-  $scope.userPermissions = [];
   var usersDojosLink = [];
+  $scope.itemsPerPage = 10;
+  $scope.userTypes = [];
+  $scope.userPermissions = [];
   $scope.selectedUserPermissions = {};
 
   $scope.pageChanged = function () {
@@ -21,7 +21,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     var query = {dojoId:dojoId};
 
     cdDojoService.getUserTypes(function (response) {
-      userTypes = response;
+      $scope.userTypes = response;
     });
 
     cdDojoService.getUserPermissions(function (response) {
@@ -89,7 +89,7 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
   }
 
   $scope.loadUserTypes = function(query) {
-    var filteredUserTypes = _.filter(userTypes, function (userType) { return userType.indexOf(query) > -1; })
+    var filteredUserTypes = _.filter($scope.userTypes, function (userType) { return userType.indexOf(query) > -1; })
     return filteredUserTypes;
   }
 
@@ -105,9 +105,9 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     });
   }
 
-  $scope.inviteMentor = function (invite, context) {
+  $scope.inviteUser = function (invite, context) {
     usSpinnerService.spin('manage-dojo-users-spinner');
-    cdDojoService.generateMentorInviteToken({email:invite.email, dojoId:dojoId}, function (response) {
+    cdDojoService.generateUserInviteToken({email:invite.email, userType:invite.userType, dojoId:dojoId}, function (response) {
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showAlert($translate.instant('Invite Sent'));
       context.inviteMentorForm.reset();
