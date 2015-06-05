@@ -801,6 +801,9 @@ msgstr "A parent! (Very important). If you are 12 or under, your parent must sta
 msgid "Invite Request Sent"
 msgstr "Invite Request Sent!"
 
+msgid "Successfully Joined Dojo"
+msgstr "Successfully Joined Dojo!"
+
 msgid "Update Dojo"
 msgstr "Update Dojo"
 
@@ -905,3 +908,30 @@ msgstr "Error loading Dojos:"
 
 msgid "An error has occured while loading languages"
 msgstr "An error has occured while loading languages"
+
+msgid "Join Dojo"
+msgstr "Join Dojo"
+
+msgid "Leave"
+msgstr "Leave"
+
+msgid "Error leaving Dojo"
+msgstr "Error leaving Dojo"
+
+msgid "Are you sure you want to leave this Dojo?"
+msgstr "Are you sure you want to leave this Dojo?"
+
+msgid "Leave Dojo"
+msgstr "Leave Dojo"
+
+msgid "Join Dojo as..."
+msgstr "Join Dojo as..."
+
+msgid "Dojo Admin"
+msgstr "Dojo Admin"
+
+msgid "Forum Admin"
+msgstr "Forum Admin"
+
+msgid "Ticketing Admin"
+msgstr "Ticketing Admin"

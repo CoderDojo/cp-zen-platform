@@ -118,7 +118,7 @@
       },
       getUserTypes: function(win, fail) {
         cdApi.get('get_user_types', win, fail || topfail);
-      },
+      }
     };
   }
 angular.module('cpZenPlatform')
