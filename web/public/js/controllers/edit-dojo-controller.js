@@ -11,6 +11,13 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.user = user;
   });
 
+  $scope.scrollToInvalid = function(form){
+
+    if(form.$invalid){
+      angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+    }
+  };
+
   function loadDojo() {
     return $q(function(resolve, reject) {
       var dojoId = $state.params.id;

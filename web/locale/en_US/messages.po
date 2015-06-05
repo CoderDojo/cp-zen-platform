@@ -445,10 +445,10 @@ msgid "Dojo Name"
 msgstr "Dojo Name"
 
 msgid "dojo.edit.information.description"
-msgstr "Normally after an area, like \"Cork\" or multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
+msgstr "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 
 msgid "dojo.edit.email.description"
-msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank."
+msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
 
 msgid "Times are empty"
 msgstr "Times are empty"
@@ -472,7 +472,7 @@ msgid "Address"
 msgstr "Address"
 
 msgid "dojo.edit.address.description"
-msgstr "Address of the Dojo (Eg. LIT Downtown Centre)"
+msgstr "Address of the Dojo (e.g. LIT Downtown Centre)"
 
 msgid "Coordinates"
 msgstr "Coordinates"
@@ -493,7 +493,7 @@ msgid "Google Group URL"
 msgstr "Google Group URL"
 
 msgid "dojo.edit.googleurl.description"
-msgstr "We recommend setting up a Discussion group so people can sign up for the latest happenings and news and contribute."
+msgstr "We recommend setting up a discussion group so people can sign up for the latest news and happenings."
 
 msgid "dojo.edit.twitter.description"
 msgstr "Again, a useful way for sharing information and being found. We can also help share messages to followers."
@@ -529,7 +529,7 @@ msgid "Private"
 msgstr "Private"
 
 msgid "dojo.edit.private.description"
-msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation eg. schools/universities/children of organisation's employees etc."
+msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."
 
 msgid "Supporters Image URL"
 msgstr "Supporters Image URL"
@@ -823,7 +823,7 @@ msgid "login.msgmap.reset-sent"
 msgstr "An email with password reset instructions has been sent to you."
 
 msgid "login.register.success"
-msgstr "Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo."
+msgstr "Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo."
 
 msgid "user name already exists"
 msgstr "user name already exists"
