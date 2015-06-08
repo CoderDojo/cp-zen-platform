@@ -16,7 +16,7 @@ module.exports = _.defaults({
                        '/api/1.0/dojos/save_dojo_lead',
                        '/api/1.0/load_setup_dojo_steps'
                       ];
-      
+
       function restrictAccess(res) {
         res.writeHead(401);
         res.end(JSON.stringify({ok:false,why:'restricted'}));
@@ -28,7 +28,7 @@ module.exports = _.defaults({
       }
 
       return next();
-      
+
     },
     redirect:{
       restrict: '/'
@@ -71,7 +71,8 @@ module.exports = _.defaults({
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-geonames,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'}
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'},
+    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'}
   ]
 
 }, base);
