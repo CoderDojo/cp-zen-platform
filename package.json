@@ -7,8 +7,11 @@
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
     "postinstall": "cd web && bower install",
-    "test": "node_modules/.bin/karma start"
+    "test": "node_modules/.bin/karma start --single-run"
   },
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/CoderDojo/cp-zen-platform.git"
@@ -72,7 +75,8 @@
     "karma-mocha": "0.1.10",
     "karma-phantomjs-launcher": "0.2.0",
     "karma-sinon-chai": "0.3.0",
-    "karma-browserify": "4.2.1"
+    "karma-browserify": "4.2.1",
+    "pre-commit": "1.0.7"
   },
   "generator-kraken": {
     "version": "1.1.0",
