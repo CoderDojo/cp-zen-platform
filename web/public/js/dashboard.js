@@ -21,6 +21,8 @@ var app = angular.module('cpZenPlatform', [
   'angular-alert-banner'
 ]);
 
+/*
+TODO: move to e.g. layout template
 require('./services/auth-service');
 require('./services/cd-charter-service');
 require('./services/cd-dojo-service');
@@ -55,6 +57,7 @@ require('./directives/cd-dojo-listing');
 require('./directives/cd-charter');
 require('./directives/cd-setup-your-dojo');
 //--//
+*/
 
 function cdDashboardCtrl($scope, auth) {
 
