@@ -23,5 +23,5 @@ function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService) {
   });
 }
 
-angular.module('cpZenPlatform', [])
+angular.module('cpZenPlatform')
     .controller('review-champion-application-controller', ['$scope', '$state', 'cdDojoService', cdReviewChampionApplicationCtrl]);

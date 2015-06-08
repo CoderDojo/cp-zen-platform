@@ -18,6 +18,7 @@ module.exports = function(config) {
       'web/public/components/angular/angular.js',
       'web/public/components/angular-mocks/angular-mocks.js',
       'web/public/components/moment/moment.js',
+      'test/test-helper.js',
       'web/public/js/controllers/review-champion-application-controller.js',
       // 'web/public/js/controllers/*.js',
       'test/*-spec.js'
@@ -32,6 +33,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'test/test-helper.js': ['browserify'],
       'web/public/js/controllers/review-champion-application-controller.js': ['coverage', 'browserify'],
       'test/*-spec.js': ['browserify']
       // 'web/public/js/controllers/*.js': ['coverage']
