@@ -19,7 +19,6 @@
 		  </div>
       
 	  </form>
-
   	<div class="col-md-12 table-responsive">
       <table id="manageDojoUsers" class="table cd-grid-table">
         <thead>
@@ -37,10 +36,10 @@
             <td>{{ user.name }}</td>
             <td><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
             <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View Profile"/}</a></td>
-            <td><tags-input add-from-autocomplete-only="true" placeholder="Add a user type" on-tag-added="pushChangedUser(user)" on-tag-removed="pushChangedUser(user)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
+            <td><tags-input add-from-autocomplete-only="true" placeholder="Add a user type" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
             <td>
               <div class="checkbox" ng-repeat="userPermission in userPermissions">
-                <input type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
+                <input ng-disabled="!canUpdateUserPermissions" tooltip="test" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
                 <label for="{{ userPermission.name }}-{{ user.id }}">
                     {{ userPermission.title }}
                 </label>

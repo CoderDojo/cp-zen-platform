@@ -1,7 +1,8 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate) {
+function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService, $location, auth, tableUtils, alertService, $translate) {
   $scope.itemsPerPage = 10;
+  var currentUser;
 
   $scope.pageChanged = function(){
     $scope.loadPage(currentUser, false);
@@ -21,15 +22,60 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
   }
 
   $scope.deleteDojo = function(dojo) {
-    cdDojoService.delete(dojo.id, function(response) {
-      $state.transitionTo($state.current, $stateParams, { reload: true, inherit: false, notify: true });
-    }, function (err){
-      if(err){
-        alertService.showError(
-          $translate.instant('An error has occurred while deleting dojo') + ' <br /> '+
-          (err.error || JSON.stringify(err))
-        );
+    var hasPermission = false;
+    canDeleteDojo(dojo, function (result) {
+      hasPermission = result;
+      if(hasPermission) {
+        cdDojoService.delete(dojo.id, function(response) {
+          $state.transitionTo($state.current, $stateParams, { reload: true, inherit: false, notify: true });
+        }, function (err) {
+          if(err){
+            alertService.showError(
+              $translate.instant('An error has occurred while deleting dojo') + ' <br /> '+
+              (err.error || JSON.stringify(err))
+            );
+          }
+        });
+      } else {
+        alertService.showAlert($translate.instant('You do not have permission to delete this Dojo'));
       }
+    });
+  }
+
+  function canDeleteDojo (dojo, cb) {
+    //User can delete dojo if:
+    // - They have the champion user type
+    // - They have the Dojo Admin Permission
+    // - They are the current owner of the Dojo
+    var isChampion;
+    var isDojoAdmin;
+    var isDojoOwner;
+    var query = {userId: currentUser.id, dojoId:dojo.id};
+
+    function getUsersDojos() {
+      return $q(function(resolve, reject) {
+        cdDojoService.getUsersDojos(query, function (response) {
+          var userDojo    = response[0];
+          isChampion  = _.contains(userDojo.userTypes, 'champion');
+          isDojoAdmin = _.find(userDojo.userPermissions, function(userPermission) {
+                          return userPermission.name === 'dojo-admin';
+                        });
+          isDojoOwner;
+          if(userDojo.owner === 1) isDojoOwner = true;
+          else isDojoOwner = false;
+           if(isChampion && isDojoAdmin && isDojoOwner) resolve(true);
+           else resolve(false);
+        }, function (err) {
+          reject( $translate.instant('Error loading user dojo entity') + ' <br /> ' + 
+          (err.error || JSON.stringify(err)));
+        });  
+      });
+    }
+
+    getUsersDojos().then(function (result) {
+      cb(result);
+    }, function (err) {
+      alertService.showError(err);
     });
   }
 
@@ -55,6 +101,9 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
         path.splice(0, 1);
         path = path.join('/');
         dojo.path = path;
+        canDeleteDojo(dojo, function (result) {
+          dojo.canDelete$ = result;
+        });
       });
       $scope.myDojos = result.records;
       $scope.totalItems = result.total;
@@ -71,7 +120,6 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 
   };
 
-  var currentUser;
   auth.get_loggedin_user(function(user) {
     currentUser = user;
     $scope.loadPage(currentUser, true);
@@ -79,4 +127,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate',cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', '$q', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate',cdMyDojosCtrl]);

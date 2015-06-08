@@ -935,3 +935,12 @@ msgstr "Forum Admin"
 
 msgid "Ticketing Admin"
 msgstr "Ticketing Admin"
+
+msgid "You do not have permission to delete this Dojo"
+msgstr "You do not have permission to delete this Dojo"
+
+msgid "Error loading user dojo entity"
+msgstr "Error loading user dojo entity"
+
+msgid "You do not have permission to update user types"
+msgstr "You do not have permission to update user types"
