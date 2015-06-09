@@ -21,7 +21,6 @@ app.use(kraken(options))
 
 require('./lib/dust-i18n.js');
 
-app.use(cookieparser())
 
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use(bodyparser.json({ limit: so.bodyparser.json.limit }))
