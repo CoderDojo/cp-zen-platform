@@ -944,3 +944,6 @@ msgstr "Error loading user dojo entity"
 
 msgid "You do not have permission to update user types"
 msgstr "You do not have permission to update user types"
+
+msgid "You do not have permission to remove users"
+msgstr "You do not have permission to remove users"
