@@ -109,7 +109,6 @@
     <script src="/js/controllers/edit-dojo-controller.js"></script>
     <script src="/js/controllers/manage-dojo-controller.js"></script>
     <script src="/js/controllers/stats-controller.js"></script>
-    <script src="/js/controllers/champion-onboarding-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
     <script src="/js/controllers/review-champion-application-controller.js"></script>
 
