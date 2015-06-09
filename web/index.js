@@ -11,12 +11,15 @@ var app = require('express')()
 var env = process.env.NODE_ENV || 'development';
 var so = require('./options.' + env  + '.js');
 
-var sessionStore = new RedisStore()
+var sessionStore = new RedisStore(so.redis)
 
 var options = {
-  onconfig: function (config, next) {
-    next(null, config);
-  }
+    onconfig: function (config, next) {
+      var sessionConfig = require('./config/sessions.json')
+      // reset the redis host here for docker or localhost
+      sessionConfig.module['arguments'].push(so.redis)
+      next(null, config);
+    }
 }
 var port = process.env.PORT || 8000
 
