@@ -1,8 +1,11 @@
- 'use strict';
+(function() {
+  'use strict';
 
-function cdTermsAndConditionsCtrl($scope) {
-    
-}
+  function cdTermsAndConditionsCtrl($scope) {
 
-angular.module('cpZenPlatform')
+  }
+
+  angular.module('cpZenPlatform')
     .controller('terms-and-conditions-controller', ['$scope', cdTermsAndConditionsCtrl]);
+
+})();

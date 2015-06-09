@@ -1,18 +1,18 @@
-;(function() {
+(function() {
   'use strict';
 
-function cdCharter(){
+  function cdCharter() {
     return {
       restrict: 'E',
       templateUrl: '/charter/template/index',
-      link: function (scope, element, attrs) { 
-       
+      link: function(scope, element, attrs) {
+
       }
     }
   }
 
-angular
+  angular
     .module('cpZenPlatform')
     .directive('cdCharter', cdCharter)
- 
+
 }());

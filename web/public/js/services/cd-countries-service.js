@@ -1,17 +1,20 @@
-'use strict';
+(function() {
+  'use strict';
 
-function cdCountriesService($q, cdApi){
-    function topfail(err){
+  function cdCountriesService($q, cdApi) {
+    function topfail(err) {
       console.log(err);
     }
 
     return {
-      listCountries: function(win, fail){
+      listCountries: function(win, fail) {
         cdApi.get('geo/countries', win, fail || topfail);
       },
       listPlaces: function(search) {
         return $q(function(resolve, reject) {
-          cdApi.post('geo/places', { search: search }, resolve, reject);
+          cdApi.post('geo/places', {
+            search: search
+          }, resolve, reject);
         });
       },
       loadContinentsLatLongData: function(win, fail) {
@@ -26,11 +29,12 @@ function cdCountriesService($q, cdApi){
       countyFromCoordinates: function(coordinates, win, fail) {
         cdApi.get('county_from_coordinates/' + coordinates, win, fail || topfail);
       },
-      getContinentCodes: function(win, fail){
+      getContinentCodes: function(win, fail) {
         cdApi.get('geo/continent_codes', win, fail || topfail);
       }
     }
   }
-angular.module('cpZenPlatform')
-  .service('cdCountriesService', ['$q', 'cdApi', cdCountriesService])
-;
+  angular.module('cpZenPlatform')
+    .service('cdCountriesService', ['$q', 'cdApi', cdCountriesService]);
+})();
+

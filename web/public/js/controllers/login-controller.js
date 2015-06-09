@@ -1,6 +1,5 @@
-'use strict';
-
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
+(function() {
+  'use strict';
 
   function loginCtrl($state, $scope, $location, $window, auth, alertService) {
     var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
@@ -29,7 +28,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     $scope.doRegister = function(user) {
       auth.register(user, function(data) {
-        if(data.ok) {
+        if (data.ok) {
           alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo.', function() {
             auth.login(user, function(data) {
               $window.location.href = '/dashboard/start-dojo';
@@ -40,7 +39,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
           alertService.showAlert('There was a problem registering your account: ' + reason);
         }
       }, function() {
-        
+
       });
     }
 
@@ -53,10 +52,10 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
       }
 
       auth.login($scope.login,
-        function(data){
+        function(data) {
           $window.location.href = '/dashboard' + referer;
         },
-        function(){
+        function() {
           $scope.errorMessage = 'Invalid email or password!'
         }
       )
@@ -71,7 +70,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
       }
 
       auth.reset({
-        email:$scope.forgot.email
+        email: $scope.forgot.email
       }, function() {
         $scope.message = msgmap['reset-sent'];
       }, function(out) {
@@ -79,8 +78,8 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
       })
     }
 
-    $scope.logout = function(){
-      auth.logout(function(data){
+    $scope.logout = function() {
+      auth.logout(function(data) {
         $window.location.href = '/'
       })
     }
@@ -90,16 +89,20 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     }
 
 
-    auth.instance(function(data){
-      if( data.user ) {
+    auth.instance(function(data) {
+      if (data.user) {
         $scope.user = data.user;
-        if (path==='/') {
+        if (path === '/') {
           $window.location.href = 'dashboard'
         }
-      }
-      else {
+      } else {
         $scope.show('login')
       }
     });
 
   }
+
+  angular.module('cpZenPlatform')
+    .controller(
+      'login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
+})();
