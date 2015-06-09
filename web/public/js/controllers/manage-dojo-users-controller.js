@@ -1,12 +1,24 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tableUtils, usSpinnerService, $translate) {
+function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, $translate) {
   var dojoId = $state.params.id;
   var usersDojosLink = [];
+  var currentUser;
   $scope.itemsPerPage = 10;
   $scope.userTypes = [];
   $scope.userPermissions = [];
   $scope.selectedUserPermissions = {};
+  $scope.canUpdateUserPermissions = false;
+
+  auth.get_loggedin_user(function (user) {
+    currentUser = user;
+    //Updating user permissions and user types require the same permissions,
+    //therefore we can check if the user can update user permissions by checking the result from the
+    //canUpdateUserTypes method.
+    canUpdateUserTypes(function (result) {
+      $scope.canUpdateUserPermissions = result;
+    });
+  });
 
   $scope.pageChanged = function () {
     $scope.loadPage(false);
@@ -93,15 +105,54 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
     return filteredUserTypes;
   }
 
-  $scope.pushChangedUser = function(user) {
-    user.types = _.pluck(user.types, 'text');
-    var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
-    if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
-    userDojoLink.userTypes = user.types;
-    cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+  $scope.pushChangedUser = function(user, method, $tag) {
+    var hasPermission = false;
+    canUpdateUserTypes(function (result) {
+      hasPermission = result;
 
-    }, function (err) {
-      alertService.showError($translate.instant('Error saving user type') + ' ' + err);
+      if(hasPermission) {
+        user.types = _.pluck(user.types, 'text');
+        var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+        if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
+        userDojoLink.userTypes = user.types;
+        cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+        }, function (err) {
+          alertService.showError($translate.instant('Error saving user type') + ' ' + err);
+        });  
+      } else {
+        alertService.showAlert($translate.instant('You do not have permission to update user types'));
+        if(method === 'add') user.types.pop();
+        if(method === 'remove') user.types.push($tag);
+      }
+    });
+  }
+
+  function canUpdateUserTypes(cb) {
+    //Can update user types if:
+    // - Current user is champion 
+    // - Current user is Dojo Admin
+    function getUsersDojos() {
+      return $q(function (resolve, reject) {
+        var query = {userId: currentUser.id, dojoId: dojoId};
+        var isChampion;
+        var isDojoAdmin;
+        cdDojoService.getUsersDojos(query, function (response) {
+          var userDojo = response[0];
+          isChampion   = _.contains(userDojo.userTypes, 'champion');
+          isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
+                          return userPermission.name === 'dojo-admin';
+                        });
+          if(isChampion && isDojoAdmin) return resolve(true);
+          return resolve(false);
+        }, function (err) {
+          alertService.showError($translate.instant('Error loading user dojo entity') + ' <br /> ' + 
+          (err.error || JSON.stringify(err)));
+        }); 
+      });
+    }
+
+    getUsersDojos().then(function (result) {
+      cb(result);
     });
   }
 
@@ -131,5 +182,5 @@ function cdManageDojoUsersCtrl($scope, $state, cdDojoService, alertService, tabl
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', '$translate' ,cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', '$translate' ,cdManageDojoUsersCtrl]);
 
