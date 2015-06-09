@@ -54,6 +54,31 @@
             }
         }
 
+        ,"session": {
+            "enabled": true,
+            "priority": 100,
+            "module": {
+                "name": "path:./lib/redis-store.js",
+                "arguments": [
+                    {
+                        "key": "CD.ZENPLATFORM",
+                        "secret": "seneca",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "resave": true,
+                        "saveUninitialized": true,
+                        "proxy": null
+                    },
+                    {
+                        // host for redis, db, etc.,...
+                    }
+                ]
+            }
+        }
+
         ,"seneca": {
             "priority": 105,
             "enabled": true,
@@ -91,6 +116,8 @@
                 "arguments": [ "errors/500" ]
             }
         }
+
+
 
 
     }
