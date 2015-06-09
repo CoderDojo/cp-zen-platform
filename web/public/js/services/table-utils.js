@@ -1,46 +1,50 @@
-'use strict';
+(function() {
+  'use strict';
 
-angular.module('cpZenPlatform').factory('tableUtils', function($rootScope) {
-  var tableUtils = {};
+  angular.module('cpZenPlatform').factory('tableUtils', function($rootScope) {
+    var tableUtils = {};
 
-  tableUtils.calculateSkip = function(pageNo, itemsPerPage) {
-    return (pageNo - 1) * itemsPerPage;
-  };
+    tableUtils.calculateSkip = function(pageNo, itemsPerPage) {
+      return (pageNo - 1) * itemsPerPage;
+    };
 
-  tableUtils.loadPage = function(resetFlag, itemsPerPage, pageNo, filterQuery, sort) {
-  	var skip, limit, countQuery={}, config ={};
-    
-    limit = itemsPerPage;
-    var loadPageData = {};
+    tableUtils.loadPage = function(resetFlag, itemsPerPage, pageNo, filterQuery, sort) {
+      var skip, limit, countQuery = {},
+        config = {};
 
-    if(resetFlag){
-      loadPageData.pageNo = 1;
-      loadPageData.skip = 0;
-    } else {
-      loadPageData.pageNo = pageNo;
-      loadPageData.skip = tableUtils.calculateSkip(pageNo, itemsPerPage);
-    }
+      limit = itemsPerPage;
+      var loadPageData = {};
 
-    config.skip = loadPageData.skip;
-    config.limit = limit;
+      if (resetFlag) {
+        loadPageData.pageNo = 1;
+        loadPageData.skip = 0;
+      } else {
+        loadPageData.pageNo = pageNo;
+        loadPageData.skip = tableUtils.calculateSkip(pageNo, itemsPerPage);
+      }
 
-    if(!_.isEmpty(filterQuery)){
-      _.extend(config, filterQuery);
-      
-      countQuery = _.omit(filterQuery, function(value, key, object){
-        return _.isNull(value) || _.isUndefined(value) || _.isNaN(value) || value === "";
-      });
-    
-    }
-    
-    if(!_.isEmpty(sort)){
-      config.sort = sort;
-    }
+      config.skip = loadPageData.skip;
+      config.limit = limit;
 
-    loadPageData.config = config;
-    loadPageData.countQuery = countQuery;
-    return loadPageData;
-  };
+      if (!_.isEmpty(filterQuery)) {
+        _.extend(config, filterQuery);
 
-  return tableUtils;
-});
+        countQuery = _.omit(filterQuery, function(value, key, object) {
+          return _.isNull(value) || _.isUndefined(value) || _.isNaN(value) || value === "";
+        });
+
+      }
+
+      if (!_.isEmpty(sort)) {
+        config.sort = sort;
+      }
+
+      loadPageData.config = config;
+      loadPageData.countQuery = countQuery;
+      return loadPageData;
+    };
+
+    return tableUtils;
+  });
+})();
+

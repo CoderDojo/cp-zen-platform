@@ -1,18 +1,18 @@
-;(function() {
+(function() {
   'use strict';
 
-function cdSetupYourDojo(){
+  function cdSetupYourDojo() {
     return {
       restrict: 'E',
       templateUrl: '/dojos/template/start-dojo-wizard/step-three-setup-your-dojo',
-      link: function (scope, element, attrs) { 
-       
+      link: function(scope, element, attrs) {
+
       }
     }
   }
 
-angular
+  angular
     .module('cpZenPlatform')
     .directive('cdSetupYourDojo', cdSetupYourDojo)
- 
+
 }());

@@ -1,16 +1,19 @@
-'use strict';
+(function() {
+  'use strict';
 
-function cdDojoListIndexCtrl($scope, $location, cdDojoService) {
+  function cdDojoListIndexCtrl($scope, $location, cdDojoService) {
 
-  cdDojoService.list({}, function(response) {
-    $scope.dojoData = response;
-  });
+    cdDojoService.list({}, function(response) {
+      $scope.dojoData = response;
+    });
 
-  $scope.viewDojo = function(dojo) {
-    $location.path('/dojo/' + dojo.urlSlug);
+    $scope.viewDojo = function(dojo) {
+      $location.path('/dojo/' + dojo.urlSlug);
+    }
+
   }
 
-}
+  angular.module('cpZenPlatform')
+    .controller('dojo-list-index-controller', ['$scope', '$location', 'cdDojoService', cdDojoListIndexCtrl]);
+})();
 
-angular.module('cpZenPlatform')
-  .controller('dojo-list-index-controller', ['$scope', '$location', 'cdDojoService', cdDojoListIndexCtrl]);
