@@ -2,7 +2,6 @@
 
 require('newrelic');
 
-var cookieparser = require('cookie-parser')
 var bodyparser   = require('body-parser')
 var session      = require('express-session')
 
