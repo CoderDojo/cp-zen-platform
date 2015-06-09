@@ -44,6 +44,11 @@ module.exports = _.defaults({
   client: [
     {type: 'web', host: '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
     {type: 'web', host: '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'}
-  ]
+  ],
+
+  redis: {
+    "host": process.env.TARGETIP || (process.env.DOCKER_HOST ? require('url').parse(process.env.DOCKER_HOST).hostname : '127.0.0.1'),
+    "port": 6379 // this isn't optioned
+  }
 
 }, base);
