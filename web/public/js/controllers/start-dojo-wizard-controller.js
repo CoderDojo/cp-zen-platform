@@ -425,23 +425,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
-              //Update userDojo entity that was created when dojo was saved.
-              var query = {dojoId:response.id, userId:currentUser.id};
-              cdDojoService.getUsersDojos(query, function (usersDojos) {
-                var userDojo = usersDojos[0];
-                userDojo.userTypes = ['champion'];
-                userDojo.userPermissions = [
-                  {title:$translate.instant('Dojo Admin'), name:'dojo-admin'},
-                  {title:$translate.instant('Forum Admin'), name:'forum-admin'}, 
-                  {title:$translate.instant('Ticketing Admin'), name:'ticketing-admin'}
-                ];
-                cdDojoService.saveUsersDojos(userDojo, function (response) {
-                  $state.go('home', { 
-                    bannerType:'success', 
-                    bannerMessage: $translate.instant('dojo.create.success')
-                  });  
-                });
-              });
+              $state.go('home', { 
+                bannerType:'success', 
+                bannerMessage: $translate.instant('dojo.create.success')
+              });  
             });
           });
         })
