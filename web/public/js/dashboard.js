@@ -66,6 +66,8 @@ require('./directives/cd-charter');
 require('./directives/cd-setup-your-dojo');
 //--//
 
+require('./directives/cd-profiles');
+
 function cdDashboardCtrl($scope, auth) {
 
 

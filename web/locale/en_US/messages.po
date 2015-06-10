@@ -947,3 +947,13 @@ msgstr "You do not have permission to update user types"
 
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
+
+msgid "ParentsGuardians"
+msgstr "Parents/Guardians"
+
+msgid "Badges"
+msgstr "Badges"
+
+msgid "Children"
+msgstr "Children"
+

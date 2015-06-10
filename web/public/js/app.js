@@ -52,6 +52,8 @@ require('./directives/cd-charter');
 require('./directives/cd-setup-your-dojo');
 //--//
 
+require('./directives/cd-profiles');
+
 var gmap = function($q, $window) {
   var dfd = $q.defer();
   var doc = $window.document;
