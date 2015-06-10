@@ -23,6 +23,7 @@ seneca
   .use('../lib/geonames/cd-geonames.js')
   .use('../lib/users/cd-users.js')
   .use('../lib/agreements/cd-agreements.js')
+  .use('../lib/profiles/cd-profiles.js')
 ;
 
 _.each(options.client, function(opts) {

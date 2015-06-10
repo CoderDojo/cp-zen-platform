@@ -3,7 +3,7 @@
     <div class="container">
         {>"common/content-header" /}
         <div ng-if="user" class="col-lg-3 cd-user-name-container">
-            <span class="" style="color:white">{{ user.name }} | </span>
+            <span class="" style="color:white"><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
             <span class="" ng-click="logout()"><a href=""  style="color:white">{@i18n key="Logout"/}</a></span>
         </div>
         <div ng-if="!user" class="col-lg-3 cd-user-name-container">

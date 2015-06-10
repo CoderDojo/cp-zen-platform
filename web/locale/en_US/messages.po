@@ -957,3 +957,6 @@ msgstr "Badges"
 msgid "Children"
 msgstr "Children"
 
+msgid "Select a user type"
+msgstr "Select a user type"
+

@@ -5,7 +5,7 @@
       <legend>{@i18n key="Register"/}</legend>
       <div class="row">
         <div class="input-group col-lg-6 col-md-offset-3">
-          <input type="text" cxlass="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="NAME"/}">
+          <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="NAME"/}">
         </div>
       </div>
       <span class="help-block"></span>
@@ -32,6 +32,20 @@
       </div>
       <span class="help-block"></span>
 
+      <div class="row">
+        <div class="col-lg-6 col-lg-offset-3" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
+          <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
+            <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
+            <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
+              <span ng-bind-html="initUserType.title"></span>
+            </ui-select-choices>
+          </ui-select>
+          <label class="control-label has-error validationMessage"
+            ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
+        </div>
+      </div>
+
+      <span class="help-block"></span>
       <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">{@i18n key="Register"/}</button>
     </form>
   </div>
