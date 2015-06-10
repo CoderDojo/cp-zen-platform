@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,9 +12,14 @@
     <title>{+title /}</title>
 
     <style>
-      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-      display: none !important;
-      }
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak {
+            display: none !important;
+        }
     </style>
 
 
@@ -29,12 +35,14 @@
     <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
 
     <!-- Awesome Bootstrap Checkbox -->
-    <link href="/components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="/components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
+    rel="stylesheet">
 
     <!-- Cookie Disclaimer template -->
-    <link href="/components/jquery-cookie-disclaimer/dist/css/cookieDisclaimer.min.css" rel="stylesheet">
+    <link href="/components/jquery-cookie-disclaimer/dist/css/cookieDisclaimer.min.css"
+    rel="stylesheet">
 
-	<!-- Angular Alert Banner -->
+    <!-- Angular Alert Banner -->
     <link rel="stylesheet" href="/components/angular-alert-banner/dist/angular-alert-banner.min.css">
 
     <!-- Custom styles for this template -->
@@ -46,11 +54,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <script src="/components/angular-ui-utils/ui-utils-ieshiv.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body ng-app="cpZenPlatform" ng-cloak ng-class="{'lock-view':blockUI}" lock-view>
+<body ng-app="cpZenPlatform" ng-cloak ng-class="{'lock-view':blockUI}" lock-view>
     {+body /}
     <!-- Placed at the end of the document so the pages load faster -->
+
     <script src="/components/underscore/underscore.js"></script>
     <script src="/components/async/lib/async.js"></script>
     <script src="/components/lodash/dist/lodash.min.js"></script>
@@ -86,9 +95,36 @@
     <script src="/components/angular-translate/angular-translate.min.js"></script>
     <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
     <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
+    <script src="/components/angular-truncate/src/truncate.js"></script>
+
     <script src="/seneca/init.js"></script>
 
-    <script src="/js/app.js"></script>
+    <script src="/js/cp-zen-platform.js"></script>
 
-  </body>
+    <script src="/js/controllers/login-controller.js"></script>
+    <script src="/js/controllers/header-controller.js"></script>
+    <script src="/js/controllers/dojo-list-controller.js"></script>
+    <script src="/js/controllers/create-dojo-controller.js"></script>
+    <script src="/js/controllers/dojo-list-index-controller.js"></script>
+    <script src="/js/controllers/dojo-detail-controller.js"></script>
+    <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
+    <script src="/js/controllers/terms-and-conditions-controller.js"></script>
+
+    <script src="/js/services/cd-dojo-service.js"></script>
+    <script src="/js/services/cd-countries-service.js"></script>
+    <script src="/js/services/geocoder-service.js"></script>
+    <script src="/js/services/auth-service.js"></script>
+    <script src="/js/services/alert-service.js"></script>
+    <script src="/js/services/cd-agreements-service.js"></script>
+
+    <script src="/js/directives/cd-register-account.js"></script>
+    <script src="/js/directives/cd-champion-registration.js"></script>
+    <script src="/js/directives/cd-dojo-listing.js"></script>
+    <script src="/js/directives/cd-charter.js"></script>
+    <script src="/js/directives/cd-setup-your-dojo.js"></script>
+
+    <script src="/js/init-master.js"></script>
+
+</body>
+
 </html>
