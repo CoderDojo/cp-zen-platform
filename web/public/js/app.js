@@ -19,8 +19,7 @@ var app = angular.module('cpZenPlatform', [
   'angularSpinner',
   'ngTagsInput',
   'ngBootbox',
-  'ngCookies',
-  'xeditable'
+  'ngCookies'
 ]);
 
 require('./controllers/login-controller');
@@ -226,8 +225,5 @@ app
       .fallbackLanguage('en_US');
   }])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
-  .run(function(editableOptions) {
-    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-  })
 ;
 

@@ -40,8 +40,6 @@
     <!-- Angular ngTagsInput -->
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
 
-    <link href="/components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -99,8 +97,6 @@
     <script src="/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
-    <script src="/components/angular-xeditable/dist/js/xeditable.js"></script>
-
     <script src="/seneca/init.js"></script>
     <script src="/js/dashboard.js"></script>
   </body>
