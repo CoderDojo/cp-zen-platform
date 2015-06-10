@@ -3,12 +3,12 @@
 
 describe('review-champion-application-controller', function() {
 
-    var scope;
-    var ctrl;
-    var cdDojoService;
-    var loadDojoLeadStub;
-    var sandbox;
-    var $httpBackend;
+    var scope,
+        ctrl,
+        sandbox,
+        $httpBackend,
+        services,
+        stubs;
 
     beforeEach(function() {
         sandbox = sinon.sandbox.create();
@@ -16,13 +16,12 @@ describe('review-champion-application-controller', function() {
 
     beforeEach(angular.mock.module('cpZenPlatform'));
 
-
     beforeEach(inject(function(
         $rootScope,
         $controller,
         _$browser_,
-        _cdDojoService_,
-        _$httpBackend_
+        _$httpBackend_,
+        _cdDojoService_
     ) {
         $httpBackend = _$httpBackend_;
 
@@ -33,10 +32,14 @@ describe('review-champion-application-controller', function() {
 
         scope = $rootScope.$new();
 
-        cdDojoService = _cdDojoService_;
-        loadDojoLeadStub = sandbox.stub(cdDojoService, 'loadDojoLead');
+        services = {};
+        services.cdDojo = _cdDojoService_;
 
-        loadDojoLeadStub.yields({
+        stubs = {
+            cdDojo: {}
+        };
+        stubs.cdDojo.loadDojoLead = sandbox.stub(services.cdDojo, 'loadDojoLead');
+        stubs.cdDojo.loadDojoLead.yields({
             application: {
                 championDetails: {
                     dateOfBirth: '01/01/2015',
@@ -53,7 +56,7 @@ describe('review-champion-application-controller', function() {
                     id: 0
                 }
             },
-            cdDojoService: cdDojoService
+            cdDojoService: services.cdDojo
         });
     }));
 
@@ -63,14 +66,14 @@ describe('review-champion-application-controller', function() {
     });
 
 
-    it('loads dojo lead', function() {
+    it('load dojo lead', function() {
         $httpBackend.when('GET', '/locale/data?format=mf&lang=default').respond({});
         $httpBackend.expectGET('/locale/data?format=mf&lang=default');
 
         scope.$apply();
 
         var ca = scope.championApplication;
-        expect(loadDojoLeadStub.callCount).to.equal(1);
+        expect(stubs.cdDojo.loadDojoLead.callCount).to.equal(1);
         expect(ca.dateOfBirth).to.equal('01/01/2015');
         expect(ca.hasTechnicalMentorsAccess).to.equal('Yes');
         expect(ca.hasVenueAccess).to.equal('No');

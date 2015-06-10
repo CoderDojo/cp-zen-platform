@@ -10,7 +10,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['browserify', 'mocha', 'sinon-chai'],
+        frameworks: ['browserify', 'mocha', 'fixture', 'sinon-chai'],
 
 
         // list of files / patterns to load in the browser
@@ -46,9 +46,13 @@ module.exports = function(config) {
             './web/public/js/directives/*.js',
             './web/public/js/services/*.js',
             './web/public/js/init-master.js',
-            './test/*-spec.js'
+            './test/*-spec.js',
+            './test/fixtures/*.json'
         ],
 
+        jsonFixturesPreprocessor: {
+          variableName: '__json__'
+        },
 
         // list of files to exclude
         exclude: [],
@@ -57,7 +61,10 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
+            '**/*.html'   : ['html2js'],
+            '**/*.json'   : ['json_fixtures'],
             'web/public/js/**/*.js': ['coverage'],
+            'test/utils/globals.js': ['browserify'],
             'test/**/*-spec.js': ['browserify']
         },
 

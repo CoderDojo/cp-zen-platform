@@ -15,5 +15,13 @@ msgstr ""
 "X-Poedit-SearchPath-0: web/public\n"
 "X-Poedit-SearchPathExcluded-0: web/public/components\n"
 
+#: web/public/js/controllers/champion-onboarding-controller.js:27
+msgid "Yes"
+msgstr "Yes"
+
+#: web/public/js/controllers/champion-onboarding-controller.js:27
+msgid "No"
+msgstr "No"
+
 msgid "Register a Dojo"
 msgstr "Register a Dojo"
