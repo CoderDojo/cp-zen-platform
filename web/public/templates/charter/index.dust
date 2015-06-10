@@ -47,18 +47,18 @@
           <li>{@i18n key="charter.li24"/}</li>
       </ul>
       <div class="wizardSlideableDiv">
-        <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement()" name="charterForm">
+        <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
           <div class="row">
             <div class="form-group">
               <label for="agreedToBy" class="col-lg-3">{@i18n key="charter.fullname.label"/}</label>
                 <div class="col-lg-5">
-                  <input type="text" ng-model="agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
+                  <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
                 </div>
             </div>
           </div>
           <div class="col-lg-offset-3">
             <div class="checkbox checkbox-primary">
-              <input type="checkbox" ng-model="agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'{@i18n key="You must accept the charter"/}'" id="agreeToCharterCheckbox">
+              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'{@i18n key="You must accept the charter"/}'" id="agreeToCharterCheckbox">
               <label for="agreeToCharterCheckbox">
                 {@i18n key="I have read and accepted the above charter"/}
               </label>

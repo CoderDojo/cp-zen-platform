@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdUsersService, Geocoder, gmap, $translate) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate) {
     $scope.stepFinishedLoading = false;
     $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
@@ -24,7 +24,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
             //Check if user has deleted the Dojo
             cdDojoService.find({dojoLeadId:dojoLead.id}, function (response) {
               if(!_.isEmpty(response)) {
-                 $scope.wizardComplete = true; 
+                 $scope.wizardComplete = true;
               } else {
                 //Go back to Dojo Listing step
                 initStep(3);
@@ -60,6 +60,13 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       }
     }
 
+    $scope.scrollToInvalid = function(form){
+
+      if(form.$invalid){
+        angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+      }
+    };
+
     $scope.preventEnterRegisterAccount = function () {
       if(currentStepInt > 0) return false;
       return true;
@@ -82,7 +89,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
 
     $scope.accountSuccessfullyRegistered = function () {
       if(currentStepInt > 0) return true;
-      return false;      
+      return false;
     }
 
     $scope.championApplicationSubmitted = function () {
@@ -164,7 +171,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
             alertService.showAlert($translate.instant('login.register.failure') + ' ' + reason);
           }
         }, function() {
-          
+
         });
       }
 
@@ -197,12 +204,18 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         }
       });
 
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      $scope.format = $scope.formats[0];
-      
       $scope.dateOptions = {
         formatYear: 'yy',
         startingDay: 1
+      };
+
+      $scope.picker = {opened :false};
+
+      $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.picker.opened = true;
       };
 
       $scope.today = new Date();
@@ -222,11 +235,22 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
         $scope.championRegistrationFormVisible = false;
       }
 
-      $scope.acceptCharterAgreement = function () {
-        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        cdDojoService.saveDojoLead(dojoLead, function (response) {
-          setupStep3();
-        });
+      $scope.acceptCharterAgreement = function (agreement) {
+
+        var agreementObj = {};
+        agreementObj.fullName = agreement.agreedToBy;
+        agreementObj.userId = currentUser.id;
+        agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
+
+        $http.get('http://ipinfo.io/json').
+          success(function(data) {
+            agreementObj.ipAddress = data.ip;
+
+            cdAgreementsService.save(agreementObj, function(response) {
+              setupStep3();
+            });
+
+          });
       }
 
       cdCountriesService.listCountries(function(countries) {
@@ -401,10 +425,22 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
-              //TO-DO:User should only be made champion of this Dojo.
-              $state.go('home', { 
-                bannerType:'success', 
-                bannerMessage: $translate.instant('dojo.create.success')
+              //Update userDojo entity that was created when dojo was saved.
+              var query = {dojoId:response.id, userId:currentUser.id};
+              cdDojoService.getUsersDojos(query, function (usersDojos) {
+                var userDojo = usersDojos[0];
+                userDojo.userTypes = ['champion'];
+                userDojo.userPermissions = [
+                  {title:$translate.instant('Dojo Admin'), name:'dojo-admin'},
+                  {title:$translate.instant('Forum Admin'), name:'forum-admin'}, 
+                  {title:$translate.instant('Ticketing Admin'), name:'ticketing-admin'}
+                ];
+                cdDojoService.saveUsersDojos(userDojo, function (response) {
+                  $state.go('home', { 
+                    bannerType:'success', 
+                    bannerMessage: $translate.instant('dojo.create.success')
+                  });  
+                });
               });
             });
           });
@@ -421,7 +457,7 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         $scope.$watch('model.map', function(map) {
-          if(map) { 
+          if(map) {
             setTimeout(function () {
               google.maps.event.trigger($scope.model.map, 'resize');
               var center = new google.maps.LatLng(53.344415, -6.260147);
@@ -460,12 +496,11 @@ function startDojoWizardCtrl($scope, $window, $state, $stateParams, $location, a
       $scope.stepFinishedLoading = true;
     }
     //--
-
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', 
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', 
       '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 
-      'cdDojoService', 'cdCountriesService', 'cdUsersService', 'Geocoder', 
+      'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'cdUsersService', 'Geocoder', 
       'gmap', '$translate',startDojoWizardCtrl]);
 

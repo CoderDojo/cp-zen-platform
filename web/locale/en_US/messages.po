@@ -381,14 +381,14 @@ msgstr "Logout"
 msgid "Create a Dojo"
 msgstr "Create a Dojo"
 
-msgid "Mentor Invitation"
-msgstr "Mentor Invitation"
+msgid "User Invitation"
+msgstr "User Invitation"
 
-msgid "Mentor Request"
-msgstr "Mentor Request"
+msgid "User Request"
+msgstr "User Request"
 
-msgid "mentor.request.p1"
-msgstr "Mentor Request is being validated..."
+msgid "user.request.p1"
+msgstr "User Request is being validated..."
 
 msgid "Status"
 msgstr "Status"
@@ -396,8 +396,8 @@ msgstr "Status"
 msgid "Join"
 msgstr "Join"
 
-msgid "Request to Join as Mentor"
-msgstr "Request to Join as Mentor"
+msgid "Send Request"
+msgstr "Send Request"
 
 msgid "Contact"
 msgstr "Contact"
@@ -445,10 +445,10 @@ msgid "Dojo Name"
 msgstr "Dojo Name"
 
 msgid "dojo.edit.information.description"
-msgstr "Normally after an area, like \"Cork\" or multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
+msgstr "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 
 msgid "dojo.edit.email.description"
-msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (Eg. limerick@coderdojo.com, please contact us and leave this field blank."
+msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
 
 msgid "Times are empty"
 msgstr "Times are empty"
@@ -472,7 +472,7 @@ msgid "Address"
 msgstr "Address"
 
 msgid "dojo.edit.address.description"
-msgstr "Address of the Dojo (Eg. LIT Downtown Centre)"
+msgstr "Address of the Dojo (e.g. LIT Downtown Centre)"
 
 msgid "Coordinates"
 msgstr "Coordinates"
@@ -493,7 +493,7 @@ msgid "Google Group URL"
 msgstr "Google Group URL"
 
 msgid "dojo.edit.googleurl.description"
-msgstr "We recommend setting up a Discussion group so people can sign up for the latest happenings and news and contribute."
+msgstr "We recommend setting up a discussion group so people can sign up for the latest news and happenings."
 
 msgid "dojo.edit.twitter.description"
 msgstr "Again, a useful way for sharing information and being found. We can also help share messages to followers."
@@ -529,7 +529,7 @@ msgid "Private"
 msgstr "Private"
 
 msgid "dojo.edit.private.description"
-msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation eg. schools/universities/children of organisation's employees etc."
+msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."
 
 msgid "Supporters Image URL"
 msgstr "Supporters Image URL"
@@ -537,8 +537,8 @@ msgstr "Supporters Image URL"
 msgid "Manage Dojo Users"
 msgstr "Manage Dojo Users"
 
-msgid "Send Mentor Invite"
-msgstr "Send Mentor Invite"
+msgid "Send Invite"
+msgstr "Send Invite"
 
 msgid "Profile"
 msgstr "Profile"
@@ -774,14 +774,14 @@ msgstr "Invalid Invitation"
 msgid "Error accepting invitation"
 msgstr "'Error accepting invitation:'"
 
-msgid "Mentor Successfully Validated"
-msgstr "Mentor Successfully Validated!"
+msgid "User Successfully Validated"
+msgstr "User Successfully Validated!"
 
 msgid "Invalid Invite Request"
 msgstr "Invalid Invite Request"
 
-msgid "Error validating mentor request"
-msgstr "Error validating mentor request:"
+msgid "Error validating user request"
+msgstr "Error validating user request:"
 
 msgid "Your Dojo has been successfully saved"
 msgstr "Your Dojo has been successfully saved"
@@ -798,8 +798,11 @@ msgstr "A laptop. Borrow one from somebody if needs be."
 msgid "dojo.create.initcontent.li3"
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
-msgid "Mentor Invite Request Sent"
-msgstr "Mentor Invite Request Sent!"
+msgid "Invite Request Sent"
+msgstr "Invite Request Sent!"
+
+msgid "Successfully Joined Dojo"
+msgstr "Successfully Joined Dojo!"
 
 msgid "Update Dojo"
 msgstr "Update Dojo"
@@ -823,7 +826,7 @@ msgid "login.msgmap.reset-sent"
 msgstr "An email with password reset instructions has been sent to you."
 
 msgid "login.register.success"
-msgstr "Thank You for Registering. Your Coder Dojo Account has been successfully created. You can now Register to become a Champion and Create a Dojo."
+msgstr "Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo."
 
 msgid "user name already exists"
 msgstr "user name already exists"
@@ -905,3 +908,42 @@ msgstr "Error loading Dojos:"
 
 msgid "An error has occured while loading languages"
 msgstr "An error has occured while loading languages"
+
+msgid "Join Dojo"
+msgstr "Join Dojo"
+
+msgid "Leave"
+msgstr "Leave"
+
+msgid "Error leaving Dojo"
+msgstr "Error leaving Dojo"
+
+msgid "Are you sure you want to leave this Dojo?"
+msgstr "Are you sure you want to leave this Dojo?"
+
+msgid "Leave Dojo"
+msgstr "Leave Dojo"
+
+msgid "Join Dojo as..."
+msgstr "Join Dojo as..."
+
+msgid "Dojo Admin"
+msgstr "Dojo Admin"
+
+msgid "Forum Admin"
+msgstr "Forum Admin"
+
+msgid "Ticketing Admin"
+msgstr "Ticketing Admin"
+
+msgid "You do not have permission to delete this Dojo"
+msgstr "You do not have permission to delete this Dojo"
+
+msgid "Error loading user dojo entity"
+msgstr "Error loading user dojo entity"
+
+msgid "You do not have permission to update user types"
+msgstr "You do not have permission to update user types"
+
+msgid "You do not have permission to remove users"
+msgstr "You do not have permission to remove users"

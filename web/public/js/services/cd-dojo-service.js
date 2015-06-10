@@ -92,17 +92,17 @@
       loadDojoUsers: function(query, win, fail) {
         cdApi.post('dojos/load_dojo_users', {query: query}, win, fail || topfail);
       },
-      generateMentorInviteToken: function(data, win, fail) {
-        cdApi.post('dojos/generate_mentor_invite_token', {email:data.email, dojoId:data.dojoId}, win, fail || topfail);
+      generateUserInviteToken: function(data, win, fail) {
+        cdApi.post('dojos/generate_user_invite_token', data, win, fail || topfail);
       },
-      acceptMentorInvite: function(data, win, fail) {
-        cdApi.post('dojos/accept_mentor_invite', { data: data }, win, fail || topfail);
+      acceptUserInvite: function(data, win, fail) {
+        cdApi.post('dojos/accept_user_invite', { data: data }, win, fail || topfail);
       },
-      requestMentorInvite: function (data, win, fail) {
-        cdApi.post('dojos/request_mentor_invite', { data: data }, win, fail || topfail);
+      requestInvite: function (data, win, fail) {
+        cdApi.post('dojos/request_user_invite', { data: data }, win, fail || topfail);
       },
-      acceptMentorRequest: function(data, win, fail) {
-        cdApi.post('dojos/accept_mentor_request', { data: data }, win, fail || topfail);
+      acceptUserRequest: function(data, win, fail) {
+        cdApi.post('dojos/accept_user_request', { data: data }, win, fail || topfail);
       },
       dojosForUser: function(userId, win, fail) {
         cdApi.get('dojos/dojos_for_user/' + userId, win, fail || topfail);
@@ -118,7 +118,7 @@
       },
       getUserTypes: function(win, fail) {
         cdApi.get('get_user_types', win, fail || topfail);
-      },
+      }
     };
   }
 angular.module('cpZenPlatform')

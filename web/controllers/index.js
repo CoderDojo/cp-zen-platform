@@ -38,11 +38,11 @@ module.exports = function (router) {
     res.render('dashboard/index');
   });
 
-  router.get('/accept_dojo_mentor_invitation/:dojoId/:mentorInviteToken', function (req, res) {
+  router.get('/accept_dojo_user_invitation/:dojoId/:userInviteToken', function (req, res) {
     res.render('index');
   });
 
-  router.get('/accept_dojo_mentor_request/:userId/:mentorInviteToken', function(req, res) {
+  router.get('/accept_dojo_user_request/:userId/:userInviteToken', function(req, res) {
     res.render('index');
   });
 

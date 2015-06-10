@@ -6,11 +6,34 @@
         <div class="dojo-detail-sidebar col-lg-4">
           <div class="widget">
             <legend>{@i18n key="Status"/}</legend>
-
           </div>
-          <div class="widget">
+
+          <div ng-if="dojoMember && userMemberCheckComplete" class="widget">
+            <legend>{@i18n key="Leave"/}</legend>
+            <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
+          </div>
+ 
+          <div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Join"/}</legend>
-              <button class="btn btn-success" ng-click="requestToJoinAsMentor()">{@i18n key="Request to Join as Mentor"/}</button>
+            <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
+              <div class="col-lg-10">
+                <div class="form-group">
+                  <ui-select name="inviteUserType" ng-model="requestInvite.userType" on-select="userTypeSelected($item)">
+                    <ui-select-match allow-clear="false" placeholder="{@i18n key="Join Dojo as..."/}">{{ $select.selected  }}</ui-select-match>
+                    <ui-select-choices repeat="userType in userTypes">
+                      <span ng-bind-html="userType"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="form-group">
+                  <button ng-show="approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Send Request"/}</button>
+                  <button ng-show="!approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Join Dojo"/}</button>
+                </div>
+              </div>
+            </form>
+
           </div>
           <div class="widget">
             <legend>{@i18n key="Contact"/}</legend>

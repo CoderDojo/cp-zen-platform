@@ -2,15 +2,23 @@
   <legend>{@i18n key="Manage Dojo Users"/}</legend>
   <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="row">
-  	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteMentor(invite, this)" name="inviteMentorForm">
+  	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm">
 	  	<div class="form-group">
 		    <div class="col-lg-3">
 		      <input type="email" required required-message="'Email is empty'" placeholder="Enter Email" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
 		    </div>
-		    <button class="btn btn-primary" type="submit">{@i18n key="Send Mentor Invite"/}</button>
+        <div class="col-lg-3">
+          <ui-select name="inviteUserType" ng-model="invite.userType">
+            <ui-select-match allow-clear="true" placeholder="Select a user type to invite...">{{ $select.selected  }}</ui-select-match>
+            <ui-select-choices repeat="userType in userTypes">
+              <span ng-bind-html="userType"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+		    <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
 		  </div>
+      
 	  </form>
-
   	<div class="col-md-12 table-responsive">
       <table id="manageDojoUsers" class="table cd-grid-table">
         <thead>
@@ -28,16 +36,16 @@
             <td>{{ user.name }}</td>
             <td><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
             <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View Profile"/}</a></td>
-            <td><tags-input add-from-autocomplete-only="true" placeholder="Add a role" on-tag-added="pushChangedUser(user)" on-tag-removed="pushChangedUser(user)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
+            <td><tags-input add-from-autocomplete-only="true" placeholder="Add a user type" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
             <td>
               <div class="checkbox" ng-repeat="userPermission in userPermissions">
-                <input type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
+                <input ng-disabled="!canUpdateUserPermissions" tooltip="test" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
                 <label for="{{ userPermission.name }}-{{ user.id }}">
                     {{ userPermission.title }}
                 </label>
               </div>
             </td>
-            <td><button class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove User"/}</button></td>
+            <td><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove User"/}</button></td>
           </tr>
         </tbody>
       </table>
