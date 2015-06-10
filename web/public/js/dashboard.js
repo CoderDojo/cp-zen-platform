@@ -22,7 +22,8 @@ var app = angular.module('cpZenPlatform', [
   'angularSpinner',
   'ngTagsInput',
   'ngBootbox',
-  'ngCookies'
+  'ngCookies',
+  'xeditable'
 ]);
 
 require('./services/auth-service');
@@ -266,4 +267,7 @@ app
   }])
   .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
   .service('cdApi', seneca.ng.web({ prefix:'/api/1.0/' }))
+  .run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  })
 ;
