@@ -39,6 +39,7 @@
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
         <form>
+          <general-info></general-info>
           <children-list></children-list>
           <parents-list></parents-list>
           <badges-list></badges-list>

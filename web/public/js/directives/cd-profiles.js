@@ -22,10 +22,18 @@ function listOfChildren(){
   };
 }
 
+function generalInfo(){
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/general-info'
+  };
+}
+
 angular
-    .module('cpZenPlatform')
-    .directive('badgesList', listOfBadges)
-    .directive('childrenList', listOfChildren)
-    .directive('parentsList', listOfParents);
+  .module('cpZenPlatform')
+  .directive('badgesList', listOfBadges)
+  .directive('childrenList', listOfChildren)
+  .directive('generalInfo', generalInfo)
+  .directive('parentsList', listOfParents);
  
 }());
