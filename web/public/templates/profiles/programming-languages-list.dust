@@ -1,0 +1,8 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{@i18n key="Programming Languages"/}</div>
+  <div class="panel-body">
+    <ul ng-repeat="programmingLanguage in profile.programmingLanguages">
+      <li>{{ programmingLanguage }}</li>
+    </ul>
+  </div>
+</div>

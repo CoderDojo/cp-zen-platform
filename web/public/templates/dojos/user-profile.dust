@@ -39,6 +39,9 @@
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
         <form>
+          <projects-list></projects-list>
+          <programming-languages-list></programming-languages-list>
+          <languages-spoken-list></languages-spoken-list>
           <general-info></general-info>
           <children-list></children-list>
           <parents-list></parents-list>
@@ -61,9 +64,9 @@
                       <p>{{ dojo.description }}</p>
                     </div>
                   </div>
-                </div>                
-              </div>    
-            </div>         
+                </div>
+              </div>
+            </div>
           </div>
           <div class="panel panel-default">
             <div class="panel-heading">{{ profileData.user.name }}'s {@i18n key="Experience"/}</div>

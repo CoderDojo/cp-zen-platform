@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="Children"/}</div>
   <div class="panel-body">
-    <ul ng-repeat="child in children">
+    <ul ng-repeat="child in profile.children">
       <li>{{ child.name }}</li>
     </ul>
   </div>

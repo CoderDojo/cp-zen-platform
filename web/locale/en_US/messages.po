@@ -960,3 +960,10 @@ msgstr "Children"
 msgid "Select a user type"
 msgstr "Select a user type"
 
+msgid "Languages Spoken"
+msgstr "Languages Spoken"
+
+msgid "Programming Languages"
+msgstr "Programming Languages"
+
+

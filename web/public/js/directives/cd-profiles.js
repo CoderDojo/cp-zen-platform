@@ -29,8 +29,32 @@ function generalInfo(){
   };
 }
 
+function listOfLanguagesSpoken(){
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/languages-spoken-list'
+  };
+}
+
+function listOfProgrammingLanguages(){
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/programming-languages-list'
+  };
+}
+
+function listOfProjects(){
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/projects-list'
+  }
+}
+
 angular
   .module('cpZenPlatform')
+  .directive('projectsList', listOfProjects)
+  .directive('programmingLanguagesList', listOfProgrammingLanguages)
+  .directive('languagesSpokenList', listOfLanguagesSpoken)
   .directive('badgesList', listOfBadges)
   .directive('childrenList', listOfChildren)
   .directive('generalInfo', generalInfo)
