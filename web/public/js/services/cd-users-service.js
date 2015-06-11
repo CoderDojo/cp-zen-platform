@@ -21,6 +21,12 @@ function cdUsersService(cdApi){
     },
     load: function(userId, win, fail) {
       cdApi.get('users/load/' + userId, win, fail || topfail);
+    },
+    getInitUserTypes: function(win, fail) {
+      cdApi.get('users/init_user_types', win, fail || topfail);
+    },
+    listProfiles: function(query, win, fail) {
+      cdApi.post('profiles', {query:query}, win, fail || topfail);
     }
   };
 }
