@@ -18,6 +18,8 @@ var app = angular.module('cpZenPlatform', [
   'angular-alert-banner'
 ]);
 
+/*
+TODO: move to e.g. layout template
 require('./controllers/login-controller');
 require('./controllers/header-controller');
 require('./controllers/dojo-list-controller');
@@ -41,6 +43,7 @@ require('./directives/cd-dojo-listing');
 require('./directives/cd-charter');
 require('./directives/cd-setup-your-dojo');
 //--//
+*/
 
 var gmap = function($q, $window) {
   var dfd = $q.defer();
