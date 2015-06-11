@@ -41,10 +41,11 @@ module.exports = function(config) {
             './web/public/components/angular-alert-banner/dist/angular-alert-banner.js',
             './web/public/components/angular-translate-loader-url/angular-translate-loader-url.js',
             './lib/auth/public/auth-front.js',
-            './web/public/js/app.js',
+            './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
             './web/public/js/directives/*.js',
             './web/public/js/services/*.js',
+            './web/public/js/init-master.js',
             './test/*-spec.js'
         ],
 
