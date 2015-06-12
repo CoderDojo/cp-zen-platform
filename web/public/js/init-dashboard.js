@@ -50,8 +50,15 @@
   }
 
   angular.module('cpZenPlatform')
-    .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
+      function valToString(val)   { return val !== null ? val.toString() : val; }
+      function valFromString(val) { return val != null ? val.toString() : val; }
+      $urlMatcherFactoryProvider.type('nonURIEncoded', {
+        encode: valToString,
+        decode: valFromString,
+        is: function () { return true; }
+      });
       $stateProvider
         .state("home", {
           url: "/",
@@ -95,7 +102,7 @@
           controller: 'edit-dojo-controller'
         })
         .state("dojo-detail", {
-          url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+          url: "/dashboard/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
@@ -139,8 +146,28 @@
           url: "/dashboard/champion-applications/:id",
           templateUrl: '/champion/template/review-application',
           controller: 'review-champion-application-controller'
+        })
+        .state("manage-dojo-users", {
+          url: "/dashboard/dojo/:id/users",
+          templateUrl: '/dojos/template/manage-dojo-users',
+          controller: 'manage-dojo-users-controller'
+        })
+        .state("accept-dojo-user-invitation", {
+          url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
+          templateUrl: '/dojos/template/accept-dojo-user-invitation',
+          controller: 'accept-dojo-user-invitation-controller'
+        })
+        .state("accept-dojo-user-request", {
+          url: "/dashboard/accept_dojo_user_request/:userId/:userInviteToken",
+          templateUrl: '/dojos/template/accept-dojo-user-request',
+          controller: 'accept-dojo-user-request-controller'
+        })
+        .state("user-profile", {
+          url: "/dashboard/profile/:userId/",
+          templateUrl: '/dojos/template/user-profile',
+          controller: 'user-profile-controller'
         });
-      $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
+        $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
@@ -165,9 +192,13 @@
     ])
     .config(['$translateProvider',
       function($translateProvider) {
-        $translateProvider.useUrlLoader('/locale/data?format=mf');
-        $translateProvider.preferredLanguage('default');
-      }
+        $translateProvider.useUrlLoader('/locale/data?format=mf')
+        .useCookieStorage()
+        .useSanitizeValueStrategy('sanitize')
+        .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .determinePreferredLanguage()
+        .fallbackLanguage('en_US');
+        }
     ])
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({

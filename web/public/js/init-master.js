@@ -47,8 +47,15 @@
   };
 
   angular.module('cpZenPlatform')
-    .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
+      function valToString(val)   { return val !== null ? val.toString() : val; }
+      function valFromString(val) { return val != null ? val.toString() : val; }
+      $urlMatcherFactoryProvider.type('nonURIEncoded', {
+        encode: valToString,
+        decode: valFromString,
+        is: function () { return true; }
+      });
       $stateProvider
         .state("home", {
           url: "/",
@@ -73,6 +80,9 @@
         .state("register-account", {
           url: "/register",
           templateUrl: '/templates/register',
+          params: {
+            referer:null
+          },
           controller: 'login'
         })
         .state("create-dojo-public", {
@@ -89,7 +99,7 @@
           controller: 'dojo-list-index-controller'
         })
         .state("dojo-detail", {
-          url: "/dojo/{country:[a-zA-Z]{2}}/{path:.*}",
+          url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
@@ -118,6 +128,21 @@
           url: "/terms-and-conditions",
           templateUrl: '/templates/terms-and-conditions',
           controller: 'terms-and-conditions-controller'
+        })
+        .state("accept-dojo-user-invitation", {
+        url: "/accept_dojo_user_invitation/:dojoId/:userInviteToken",
+        templateUrl: '/dojos/template/accept-dojo-user-invitation',
+        controller: 'accept-dojo-user-invitation-controller'
+        })
+        .state("accept-dojo-user-request", {
+          url: "/accept_dojo_user_request/:userId/:userInviteToken",
+          templateUrl: '/dojos/template/accept-dojo-user-request',
+          controller: 'accept-dojo-user-request-controller'
+        })
+        .state("user-profile", {
+          url: "/profile/:userId/",
+          templateUrl: '/dojos/template/user-profile',
+          controller: 'user-profile-controller'
         });
     })
     .config(function(paginationConfig) {
@@ -143,8 +168,12 @@
     ])
     .config(['$translateProvider',
       function($translateProvider) {
-        $translateProvider.useUrlLoader('/locale/data?format=mf');
-        $translateProvider.preferredLanguage('default');
+        $translateProvider.useUrlLoader('/locale/data?format=mf')
+        .useCookieStorage()
+        .useSanitizeValueStrategy('sanitize')
+        .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .determinePreferredLanguage()
+        .fallbackLanguage('en_US');
       }
     ])
     .service('cdApi', seneca.ng.web({
