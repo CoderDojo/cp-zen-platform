@@ -66,13 +66,6 @@ app.get('/oauth/authorize', function (req, res, next) {
     })
 )
 
-app.get('/oauth-profile', function(req, res){
-    // this needs replaced with our user profile page in some meaningful way
-    // this should be a call to simply get this JSON back, once we're authenticated, you're all set.
-    res.send({id:'123', name:'Robert Myers', email:'robert.myers@nearform.com'})
-})
-
-
 app.post('/oauth/token', app.oauth.grant())
 
 app.use(kraken(options))
