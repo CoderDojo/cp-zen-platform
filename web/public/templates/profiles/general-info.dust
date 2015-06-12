@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="General Info"/}</div>
   <div class="panel-body">
-    <form class="form-horizontal" name="generalInfoForm">
+    <form class="form-horizontal" name="generalInfoForm" novalidate angular-validator angular-validator-submit="save(profile)" id="generalInfoForm">
       <div class="form-group">
         <label for="name" class="col-sm-4 control-label">Name: </label>
         <div class="col-sm-8">
@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="dateOfBirth" class="col-sm-4">Date of Birth*</label>
+        <label for="dateOfBirth" class="col-sm-4 text-right">Date of Birth*</label>
         <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-          <input type="text" required readonly="true"
+          <input type="text" readonly="true"
                  class="form-control"
                  name="dateOfBirth"
                  required-message="'Date of birth is empty'"
@@ -34,9 +34,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="championCountry" class="col-sm-4">{@i18n key="Country"/}*</label>
+        <label for="championCountry" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
         <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
-          <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)" required>
+          <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)">
             <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
             <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
               <span ng-bind-html="country.countryName | highlight: $select.search"></span>
@@ -47,9 +47,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="championPlace" class="col-sm-4">{@i18n key="CityTown"/}*</label>
+        <label for="championPlace" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
         <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
-          <ui-select name="place" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
+          <ui-select name="place" ng-model="profile.place" on-select="setPlace(profile, $item)">
             <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
             <ui-select-choices repeat="place in places"
                 refresh="getPlaces(profile.country.alpha2, $select.search)"
@@ -106,7 +106,7 @@
       <div class="form-group">
         <label for="programmingLanguages" class="col-sm-4 control-label">Programming Languages: </label>
         <div class="col-sm-8">
-          <input type="text" ng-model="profile.programmingLanguages" class="form-control" placeholder="Comma separated list of programming languages" id="programmingLanguages">
+          <input type="text" ng-model="profile.languages" class="form-control" placeholder="Comma separated list of programming languages" id="programmingLanguages">
         </div>
       </div>
       <div class="form-group">

@@ -54,6 +54,22 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     });
   }
+
+  $scope.save = function(profile){
+    function win(profile){
+      $scope.profile = profile;
+    }
+
+    function fail(){
+      alertService.showError('An error has occurred while saving profile');
+    }
+
+    profile.languagesSpoken = profile.languagesSpoken.split(',');
+    profile.languages = profile.languages.split(',');
+    profile.projects = profile.projects.split(',');
+
+    cdUsersService.saveProfile(profile, win, fail);
+  };
   
   $scope.toggleEdit = function(field){
     $scope[field] = $scope[field] ? false : true;

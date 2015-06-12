@@ -27,6 +27,9 @@ function cdUsersService(cdApi){
     },
     listProfiles: function(query, win, fail) {
       cdApi.post('profiles', {query:query}, win, fail || topfail);
+    },
+    saveProfile: function(profile, win, fail) {
+      cdApi.post('profiles/create', {profile: profile}, win, fail || topfail);
     }
   };
 }

@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-9">
         <h1 class="">{{ profileData.user.name }}</h1>
-        <a href="mailto:{{ profileData.user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a>
+<!--         <a href="mailto:{{ profileData.user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a> -->
         <br>
       </div>
       <div class="col-sm-2">
@@ -38,7 +38,6 @@
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
-        <form>
           <projects-list></projects-list>
           <programming-languages-list></programming-languages-list>
           <languages-spoken-list></languages-spoken-list>
@@ -46,12 +45,6 @@
           <children-list></children-list>
           <parents-list></parents-list>
           <badges-list></badges-list>
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ profileData.user.name }}'s {@i18n key="Bio"/}</div>
-            <div class="panel-body">
-              <textarea type="text" class="form-control" id="description" name="description" ng-model="profile.description" placeholder="{@i18n key="A description about me"/}"></textarea>
-            </div>
-          </div>
           <div class="panel panel-default target">
             <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
             <div class="panel-body">
@@ -68,11 +61,6 @@
               </div>
             </div>
           </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ profileData.user.name }}'s {@i18n key="Experience"/}</div>
-            <div class="panel-body"> A description about my experience.</div>
-          </div>
-        </form>
       </div>
       <div id="push"></div>
     </div>

@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="Languages Spoken"/}</div>
   <div class="panel-body">
-    <ul ng-repeat="languageSpoken in profile.languagesSpoken">
-      <li>{{ languagesSpoken }}</li>
+   <ul ng-repeat="languageSpoken in profile.widget.languagesSpoken"> -->
+      <li>{{ languagesSpoken }}</li>      
     </ul>
   </div>
 </div>

@@ -24,6 +24,7 @@ seneca
   .use('../lib/users/cd-users.js')
   .use('../lib/agreements/cd-agreements.js')
   .use('../lib/badges/cd-badges.js')
+  .use('../lib/profiles/cd-profiles.js')
 ;
 
 _.each(options.client, function(opts) {
