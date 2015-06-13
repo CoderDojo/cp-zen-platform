@@ -64,8 +64,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       alertService.showError('An error has occurred while saving profile');
     }
 
+    delete profile.countryName;
+
     profile.languagesSpoken = profile.languagesSpoken.split(',');
-    profile.languages = profile.languages.split(',');
+    profile.programmingLanguages = profile.programmingLanguages.split(',');
     profile.projects = profile.projects.split(',');
 
     cdUsersService.saveProfile(profile, win, fail);

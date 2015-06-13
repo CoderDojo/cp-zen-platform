@@ -22,7 +22,7 @@
                  name="dateOfBirth"
                  required-message="'Date of birth is empty'"
                  datepicker-popup="fullDate"
-                 ng-model="champion.dateOfBirth"
+                 ng-model="profile.dob"
                  is-open="opened"
                  min-date="'1900-01-01'"
                  max-date="today"
@@ -100,19 +100,19 @@
       <div class="form-group">
         <label for="projects" class="col-sm-4 control-label">Projects: </label>
         <div class="col-sm-8">
-          <input type="text" ng-model="profile.projects" class="form-control" placeholder="Comma separated list of projects" id="projects">
+          <tags-input ng-model="profile.projects" placeholder="Projects"></tags-input>
         </div>
       </div>
       <div class="form-group">
         <label for="programmingLanguages" class="col-sm-4 control-label">Programming Languages: </label>
         <div class="col-sm-8">
-          <input type="text" ng-model="profile.languages" class="form-control" placeholder="Comma separated list of programming languages" id="programmingLanguages">
+          <tags-input ng-model="profile.programmingLanguages" placeholder="Programming Languages"></tags-input>
         </div>
       </div>
       <div class="form-group">
         <label for="languagesSpoken" class="col-sm-4 control-label">Languages Spoken: </label>
         <div class="col-sm-8">
-          <input type="text" ng-model="profile.languagesSpoken" class="form-control" placeholder="Comma separated list of languages spoken" id="languagesSpoken">
+          <tags-input ng-model="profile.languagesSpoken" placeholder="Languages Spoken"></tags-input>
         </div>
       </div>
       <div class="form-group">
