@@ -1,8 +1,11 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, $translate, cdCountriesService, profile, utils, loggedInUser) {
+function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos) {
   var userId = $state.params.userId;
-  var userType;
+
+  console.log("usersDojos", usersDojos);
+  console.log("loggedinuser", loggedInUser);
 
   $scope.profile = profile[0];
 
@@ -10,7 +13,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
     $scope.profile.languagesSpoken = utils.toTags($scope.profile.languagesSpoken);
     $scope.profile.projects = utils.toTags($scope.profile.projects);
-
     $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
 
     $scope.profile.widget = {};
@@ -27,9 +29,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     if(_.isEmpty($scope.dojos)) {
       //This user has no Dojos.
       //Use init user type to setup profile.
-      auth.get_loggedin_user(function (user) {
-        userType = user.initUserType.name;
-      });
+    
+      $scope.userType = JSON.parse(loggedInUser.initUserType);
     } else {
       //Search usersdojos for highest user type
       findHighestUserType();
@@ -38,29 +39,30 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
   });
 
+
   function findHighestUserType() {
     var highestTypeFound = false;
-    cdDojoService.getUsersDojos({userId:userId}, function (usersDojosLinks) {
-
-      function checkLinks(userType) {
-        for(var i = 0; i < usersDojosLinks.length; i++) {
-          var userDojoLink = usersDojosLinks[i];
-          var userTypes = userDojoLink.userTypes;
-          if(_.contains(userTypes, userType)) {
-            highestTypeFound = true;
-            return userType;
-          }
+    
+    function checkLinks(userType) {
+      for(var i = 0; i < usersDojos.length; i++) {
+        var userDojoLink = usersDojos[i];
+        var userTypes = userDojoLink.userTypes;
+        if(_.contains(userTypes, userType)) {
+          highestTypeFound = true;
+          return userType;
         }
       }
+    }
 
-      //If no champion found, search for next user type
-      var searchForUserTypes = ['champion', 'mentor', 'parent-guardian', 'attendee-o13', 'attendee-u13'];
+    //If no champion found, search for next user type
+    var searchForUserTypes = ['champion', 'mentor', 'parent-guardian', 'attendee-o13', 'attendee-u13'];
 
-      _.each(searchForUserTypes, function (searchForUserType) {
-        if(!highestTypeFound) userType = checkLinks(searchForUserType);
-      });
-
+    _.each(searchForUserTypes, function (searchForUserType) {
+      if(!highestTypeFound){
+        $scope.userType = checkLinks(searchForUserType);
+      } 
     });
+
   }
 
   $scope.save = function(profile){
@@ -183,5 +185,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser',cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', cdUserProfileCtrl]);
 

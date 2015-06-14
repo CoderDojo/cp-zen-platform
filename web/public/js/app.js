@@ -204,6 +204,9 @@ app
           },
           loggedInUser: function(auth){
             return auth.get_loggedin_user_promise();
+          },
+          usersDojos: function($stateParams, cdDojoService){
+            return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId});
           }
         }
       });
