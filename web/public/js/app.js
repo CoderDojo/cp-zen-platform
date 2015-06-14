@@ -201,6 +201,9 @@ app
         resolve: {
           profile: function($state, cdUsersService){
             return cdUsersService.listProfilesPromise({userId: $state.params.userId});
+          },
+          loggedInUser: function(auth){
+            return auth.get_loggedin_user_promise();
           }
         }
       });

@@ -1,9 +1,8 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, $translate, cdCountriesService, profile, utils) {
+function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, $translate, cdCountriesService, profile, utils, loggedInUser) {
   var userId = $state.params.userId;
   var userType;
-
 
   $scope.profile = profile[0];
 
@@ -15,7 +14,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
 
     $scope.profile.widget = {};
-    
+
     $scope.profile.widget.projects = utils.frTags($scope.profile.projects);
     $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
     $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken); 
@@ -183,5 +182,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', '$translate' , 'cdCountriesService', 'profile', 'utilsService',cdUserProfileCtrl]);
+  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser',cdUserProfileCtrl]);
 

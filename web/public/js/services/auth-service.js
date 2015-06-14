@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').service('auth', function($http) {
+angular.module('cpZenPlatform').service('auth', function($http, $q) {
 
   var loggedin_user = null;
   function topfail( data ) {
@@ -57,7 +57,19 @@ angular.module('cpZenPlatform').service('auth', function($http) {
         loggedin_user = data.user;
         win(loggedin_user);
       });
-    }
-  }
+    },
+    get_loggedin_user_promise: function(){
+      var deferred = $q.defer();
+      this.instance(function (data) {
+        if (!data.user) {
+          deferred.reject('cannot get logged in user');
+        }
 
-})
+        loggedin_user = data.user;
+        deferred.resolve(loggedin_user);
+      });
+
+      return deferred.promise;
+    }
+  };
+});
