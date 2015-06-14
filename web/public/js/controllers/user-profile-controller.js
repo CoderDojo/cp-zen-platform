@@ -1,19 +1,28 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, $translate, cdCountriesService) {
+function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, $translate, cdCountriesService, profile, utils) {
   var userId = $state.params.userId;
   var userType;
-  $scope.profileData = {};
 
-  cdUsersService.load(userId, function (response) {
-    $scope.profileData.user = response;
-    cdUsersService.listProfiles({userId:userId}, function (response) {
-      $scope.profileData.profile = response;
-    });
-  }, function (err) {
-    alertService.showError($translate.instant('Error loading profile') + ' ' + err);
-  });
 
+  $scope.profile = profile[0];
+
+  if(!_.isEmpty($scope.profile)){
+    $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
+    $scope.profile.languagesSpoken = utils.toTags($scope.profile.languagesSpoken);
+    $scope.profile.projects = utils.toTags($scope.profile.projects);
+
+    $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
+
+    $scope.profile.widget = {};
+    
+    $scope.profile.widget.projects = utils.frTags($scope.profile.projects);
+    $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
+    $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken); 
+  }
+
+
+  
   cdDojoService.dojosForUser(userId, function (response) {
     $scope.dojos = response;
     if(_.isEmpty($scope.dojos)) {
@@ -56,6 +65,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.save = function(profile){
+    profile.programmingLanguages = utils.frTags(profile.programmingLanguages);
+    profile.languagesSpoken = utils.frTags(profile.languagesSpoken);
+    profile.projects = utils.frTags(profile.projects);
+    
+
     function win(profile){
       $scope.profile = profile;
     }
@@ -65,10 +79,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     }
 
     delete profile.countryName;
-
-    profile.languagesSpoken = profile.languagesSpoken.split(',');
-    profile.programmingLanguages = profile.programmingLanguages.split(',');
-    profile.projects = profile.projects.split(',');
 
     cdUsersService.saveProfile(profile, win, fail);
   };
@@ -173,5 +183,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', '$translate' , 'cdCountriesService', cdUserProfileCtrl]);
+  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', '$translate' , 'cdCountriesService', 'profile', 'utilsService',cdUserProfileCtrl]);
 

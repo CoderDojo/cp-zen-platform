@@ -1,6 +1,6 @@
 'use strict';
 
-function cdUsersService(cdApi){
+function cdUsersService(cdApi, $q){
   function topfail(err){
     console.log(err);
   }
@@ -28,6 +28,14 @@ function cdUsersService(cdApi){
     listProfiles: function(query, win, fail) {
       cdApi.post('profiles', {query:query}, win, fail || topfail);
     },
+    listProfilesPromise: function(query){
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      cdApi.post('profiles', {query:query}, deferred.resolve, deferred.reject || topfail);
+
+      return promise;
+    },
     saveProfile: function(profile, win, fail) {
       cdApi.post('profiles/create', {profile: profile}, win, fail || topfail);
     }
@@ -35,4 +43,4 @@ function cdUsersService(cdApi){
 }
 
 angular.module('cpZenPlatform')
-  .service('cdUsersService', ['cdApi', cdUsersService]);
+  .service('cdUsersService', ['cdApi', '$q',cdUsersService]);

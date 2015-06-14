@@ -56,6 +56,7 @@ require('./services/spinner-service');
 require('./services/table-utils');
 require('./services/cd-users-service');
 require('./services/cd-agreements-service');
+require('./services/utils-service.js');
 
 require('./directives/country-select');
 //--Dojo Wizard Directives--//
@@ -235,6 +236,11 @@ app
       .state("user-profile", {
         url: "/dashboard/profile/:userId/",
         templateUrl: '/dojos/template/user-profile',
+        resolve: {
+          profile: function($stateParams, cdUsersService){
+            return cdUsersService.listProfilesPromise({userId: $stateParams.userId});
+          }
+        },
         controller: 'user-profile-controller'
       });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');

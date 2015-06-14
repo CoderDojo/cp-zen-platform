@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="Programming Languages"/}</div>
   <div class="panel-body">
-    <ul ng-repeat="language in profile.widget.languages">
+    <ul ng-repeat="language in profile.widget.programmingLanguages">
       <li>{{ language }}</li>
     </ul>
   </div>
