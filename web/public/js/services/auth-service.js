@@ -61,9 +61,6 @@ angular.module('cpZenPlatform').service('auth', function($http, $q) {
     get_loggedin_user_promise: function(){
       var deferred = $q.defer();
       this.instance(function (data) {
-        if (!data.user) {
-          deferred.reject('cannot get logged in user');
-        }
 
         loggedin_user = data.user;
         deferred.resolve(loggedin_user);

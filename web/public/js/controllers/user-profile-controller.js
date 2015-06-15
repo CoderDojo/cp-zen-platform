@@ -7,7 +7,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   console.log("usersDojos", usersDojos);
   console.log("loggedinuser", loggedInUser);
 
-  $scope.profile = profile[0];
+  if(profile.err || loggedInUser.err || usersDojos.err){
+    alertService.showError('An error has occurred');
+    return;
+  }
+
+  $scope.profile = profile.data;
+  $scope.loggedInUser = loggedInUser.data;
 
   if(!_.isEmpty($scope.profile)){
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
@@ -23,21 +29,22 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
 
-  
-  cdDojoService.dojosForUser(userId, function (response) {
-    $scope.dojos = response;
-    if(_.isEmpty($scope.dojos)) {
-      //This user has no Dojos.
-      //Use init user type to setup profile.
-    
-      $scope.userType = loggedInUser.initUserType;
-    } else {
-      //Search usersdojos for highest user type
-      findHighestUserType();
-    }
-  }, function (err) {
-    alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
-  });
+  if(loggedInUser.data){
+    cdDojoService.dojosForUser(userId, function (response) {
+      $scope.dojos = response;
+      if(_.isEmpty($scope.dojos)) {
+        //This user has no Dojos.
+        //Use init user type to setup profile.
+      
+        $scope.userType = loggedInUser.data.initUserType;
+      } else {
+        //Search usersdojos for highest user type
+        findHighestUserType();
+      }
+    }, function (err) {
+      alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
+    });
+  }  
 
 
   function findHighestUserType() {

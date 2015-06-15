@@ -144,13 +144,27 @@
           templateUrl: '/dojos/template/user-profile',
           resolve: {
             profile: function($stateParams, cdUsersService){
-              return cdUsersService.listProfilesPromise({userId: $stateParams.userId});
+              return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
             },
             loggedInUser: function(auth){
-              return auth.get_loggedin_user_promise();
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
             },
             usersDojos: function($stateParams, cdDojoService){
-              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId});
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
             }
           },
           controller: 'user-profile-controller'
