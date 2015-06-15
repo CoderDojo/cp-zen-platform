@@ -7,7 +7,6 @@ var session      = require('express-session')
 var RedisStore = require('connect-redis')(session)
 
 
-
 var kraken = require('kraken-js')
 var app = require('express')()
 var env = process.env.NODE_ENV || 'development';
