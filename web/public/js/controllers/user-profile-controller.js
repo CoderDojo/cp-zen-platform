@@ -30,7 +30,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       //This user has no Dojos.
       //Use init user type to setup profile.
     
-      $scope.userType = JSON.parse(loggedInUser.initUserType);
+      $scope.userType = loggedInUser.initUserType;
     } else {
       //Search usersdojos for highest user type
       findHighestUserType();
