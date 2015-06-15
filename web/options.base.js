@@ -42,6 +42,11 @@ module.exports = {
       '/dashboard/stats',
       '/admin'
     ]
+  },
+
+  redis: {
+    "host": process.env.REDIS_HOST || process.env.TARGETIP || (process.env.DOCKER_HOST ? require('url').parse(process.env.DOCKER_HOST).hostname : '127.0.0.1'),
+    "port": process.env.REDIS_PORT || 6379 // this is either configurable or in docker locally
   }
 
 };
