@@ -60,14 +60,24 @@ app.get('/oauth/authorize', function (req, res, next) {
         }
     },
     app.oauth.authCodeGrant(function (req, next) {
-        console.log('in auth code grant')
         // We're calling this authorized at this point, if we're here, you're authenticated.
-        next(null, true)
+        var userObject = {
+            "id": req.session.senecaUser.id,
+            "name": req.session.senecaUser.name,
+            "email": req.session.senecaUser.email
+        }
+        next(null, true, userObject)
     })
 )
 
 app.post('/oauth/token', app.oauth.grant())
+app.get('/oauth/userprofile', function(req, res){
+    // by access token, determine who this is and return the proper information
+    app.oauth.model.getAccessToken(req.query.access_token, function(err, user){
+        res.send(user.userId.id)
+    })
 
+})
 app.use(kraken(options))
 
 require('./lib/dust-i18n.js');
