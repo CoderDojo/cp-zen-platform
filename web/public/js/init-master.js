@@ -142,6 +142,17 @@
         .state("user-profile", {
           url: "/profile/:userId/",
           templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.userId});
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise();
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId});
+            }
+          },
           controller: 'user-profile-controller'
         });
     })

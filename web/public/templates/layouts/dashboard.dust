@@ -132,12 +132,14 @@
     <script src="/js/services/table-utils.js"></script>
     <script src="/js/services/cd-users-service.js"></script>
     <script src="/js/services/cd-agreements-service.js"></script>
+    <script src="/js/services/utils-service.js"></script>
 
     <script src="/js/directives/cd-register-account.js"></script>
     <script src="/js/directives/cd-champion-registration.js"></script>
     <script src="/js/directives/cd-dojo-listing.js"></script>
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
+    <script src="/js/directives/cd-profiles.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>
