@@ -14,6 +14,10 @@ describe('review-champion-application-controller', function() {
         sandbox = sinon.sandbox.create();
     })
 
+    beforeEach(angular.mock.module('ngCookies', function ($provide) {
+        $provide.value("$cookies", function(){});
+    }));
+
     beforeEach(angular.mock.module('cpZenPlatform'));
 
     beforeEach(inject(function(
@@ -67,8 +71,10 @@ describe('review-champion-application-controller', function() {
 
 
     it('load dojo lead', function() {
-        $httpBackend.when('GET', '/locale/data?format=mf&lang=default').respond({});
-        $httpBackend.expectGET('/locale/data?format=mf&lang=default');
+        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_US').respond({});
+        $httpBackend.expectGET('/locale/data?format=mf&lang=en_US');
+        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_IE').respond({});
+        $httpBackend.expectGET('/locale/data?format=mf&lang=en_IE');
 
         scope.$apply();
 
