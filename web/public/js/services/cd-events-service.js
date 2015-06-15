@@ -7,7 +7,7 @@ function cdEventsService(cdApi, $q){
 
   return {
     list: function(query, win, fail){
-      cdApi.post('events/list', {query: query}, win, fail || topfail);
+      cdApi.post('events', {query: query}, win, fail || topfail);
     },
     search: function(search) {
       return $q(function(resolve, reject) {
