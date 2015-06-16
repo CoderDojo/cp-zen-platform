@@ -1,0 +1,103 @@
+<div class="cd-dashboard">
+
+  <form>
+
+    <legend>Create Event</legend>
+
+    <div class="form-group">
+      <label for="eventName">Dojo Name*</label>
+      <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventName">
+    </div>
+
+    <div class="checkbox">
+      <input type="checkbox" id="is-public" ng-model="isPublic">
+      <label for="is-public">
+        is public*
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="description">
+        Description
+      </label>
+      <textarea name="description" id="description" class="form-control" rows="3" ng-model="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="weekday">Every:</label>
+      <select class="form-control" id="weekday">
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        <option value="7">Sunday</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="from-date">From:</label>
+      <div class="input-group">
+        <input type="date" class="form-control" datepicker-popup ng-model="fromDate" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event, 'openFromDatePicker')">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="to-date">To:</label>
+      <div class="input-group">
+        <input type="date" class="form-control" datepicker-popup ng-model="toDate" is-open="openToDatePicker" min-date="fromDate" ng-required="true" close-text="Close" id="to-date"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event, 'openToDatePicker')">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="time">Time:</label>
+      <timepicker id="time" ng-model="time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
+      </timepicker>
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="group-type-1">For:</label>
+
+      <div class="checkbox">
+        <input type="checkbox" id="group-type-1" ng-model="groupTypeModel.value1">
+        <label for="group-type-1">
+          Youths < 13
+        </label>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="group-type-2" ng-model="groupTypeModel.value2">
+        <label for="group-type-2">
+          Youth > 13
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input type="text" required name="location" id="location" class="form-control" ng-model="location">
+    </div>
+
+    <div class="form-group">
+      <label for="invites">Invites:</label>
+      <textarea name="invites" id="invites" class="form-control" rows="3" ng-model="invites"></textarea>
+    </div>
+
+    <div class="btn-toolbar">
+      <button type="button" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-success">Publish</button>
+    </div>
+  </form>
+
+</div>
