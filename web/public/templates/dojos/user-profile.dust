@@ -49,7 +49,7 @@
             <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-4" ng-repeat="dojo in dojos">
+                <div class="col-md-4" ng-repeat="dojo in profile.dojos">
                   <div class="thumbnail">
                     <img src="/img/dojo-default-logo.png">
                     <div class="caption">
