@@ -15,5 +15,15 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     return _.pluck(tags, 'text');
   };
 
+  utils.contains = _.contains;
+
+  utils.hasAccess = function(userTypes, allowedTypes){
+    var returnType = _.find(allowedTypes, function(allowedType){
+      return _.contains(userTypes, allowedType);
+    });
+
+    return (typeof returnType === 'undefined') ? false : true;
+  };
+
   return utils;
 });

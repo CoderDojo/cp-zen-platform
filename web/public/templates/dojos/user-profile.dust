@@ -40,11 +40,11 @@
       <div class="col-sm-8" contenteditable="false" style="">
           <general-info></general-info>
           <projects-list ng-if="profile.userType === 'champion' "></projects-list>
-          <programming-languages-list></programming-languages-list>
-          <languages-spoken-list></languages-spoken-list>
-          <children-list ng-if="profile.ownProfileFlag"></children-list>
-          <parents-list ng-if="profile.ownProfileFlag"></parents-list>
-          <badges-list ng-if="profile.userType === 'attendee-o13'"></badges-list>
+          <programming-languages-list ng-if="!profile.ownProfileFlag"></programming-languages-list>
+          <languages-spoken-list ng-if="!profile.ownProfileFlag"></languages-spoken-list>
+          <children-list ng-if="hasAccess(profile.userTypes, ['parent'])"></children-list>
+          <parents-list ng-if="hasAccess(profile.userTypes, ['parent'])"></parents-list>
+          <badges-list ng-if="hasAccess(profile.userTypes, ['attendee-o13'])"></badges-list>
           <div class="panel panel-default target">
             <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
             <div class="panel-body">

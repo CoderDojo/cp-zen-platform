@@ -4,13 +4,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos) {
   var userId = $state.params.userId;
 
-  console.log("usersDojos", usersDojos);
-  console.log("loggedinuser", loggedInUser);
-
   if(profile.err || loggedInUser.err || usersDojos.err){
     alertService.showError('An error has occurred');
     return;
   }
+
+  $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
   $scope.loggedInUser = loggedInUser.data;
