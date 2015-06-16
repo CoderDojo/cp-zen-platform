@@ -127,7 +127,7 @@
     <script src="/js/controllers/accept-dojo-user-request-controller.js"></script>
     <script src="/js/controllers/user-profile-controller.js"></script>
     <script src="/js/controllers/language-controller.js"></script>
-    <script src="/js/controllers/dojo-events-controller.js"></script>
+    <script src="/js/controllers/dojo-events-list-controller.js"></script>
     <script src="/js/controllers/manage-dojo-events-controller.js"></script>
     <script src="/js/controllers/dojo-event-form-controller.js"></script>
 
@@ -142,7 +142,7 @@
     <script src="/js/directives/cd-dojo-listing.js"></script>
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
-    <script src="/js/directives/cd-dojo-events.js"></script>
+    <script src="/js/directives/cd-dojo-events-list.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>

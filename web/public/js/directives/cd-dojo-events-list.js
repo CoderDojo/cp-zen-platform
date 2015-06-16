@@ -1,19 +1,19 @@
 ;(function() {
   'use strict';
 
-function cdDojoEvents(){
+function cdDojoEventsList(){
     return {
       restrict: 'E',
       templateUrl: '/dojos/template/events/list',
       scope: {
         dojoId: '@'
       },
-      controller:'dojo-events-controller'
+      controller:'dojo-events-list-controller'
     }
   }
 
 angular
     .module('cpZenPlatform')
-    .directive('cdDojoEvents', cdDojoEvents)
+    .directive('cdDojoEventsList', cdDojoEventsList)
  
 }());
