@@ -1,6 +1,5 @@
 'use strict';
 
-
 describe('stats-controller', function() {
 
     var scope,
@@ -18,8 +17,11 @@ describe('stats-controller', function() {
         expected = fixture.load('countries.json');
     })
 
-    beforeEach(angular.mock.module('cpZenPlatform'));
+    beforeEach(angular.mock.module('ngCookies', function ($provide) {
+        $provide.value("$cookies", function(){});
+    }));
 
+    beforeEach(angular.mock.module('cpZenPlatform'));
 
     beforeEach(inject(function(
         $rootScope,
@@ -57,7 +59,6 @@ describe('stats-controller', function() {
         stubs.cdDojo.getStats.yields(expected.stats);
         stubs.cdCountries.getContinentCodes.yields(expected.continent_codes);
 
-
         ctrl = $controller('stats-controller', {
             $scope: scope,
             alertService: services.alert,
@@ -68,15 +69,15 @@ describe('stats-controller', function() {
         });
     }));
 
-
     afterEach(function() {
         sandbox.restore();
     });
 
-
     it('get stats', function() {
-        $httpBackend.when('GET', '/locale/data?format=mf&lang=default').respond({});
-        $httpBackend.expectGET('/locale/data?format=mf&lang=default');
+        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_US').respond({});
+        $httpBackend.expectGET('/locale/data?format=mf&lang=en_US');
+        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_IE').respond({});
+        $httpBackend.expectGET('/locale/data?format=mf&lang=en_IE');
         $httpBackend.when('GET', '/auth/instance').respond({});
         $httpBackend.expectGET('/auth/instance');
 
