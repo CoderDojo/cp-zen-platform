@@ -1,0 +1,25 @@
+<div class="cd-dashboard">
+
+  <form>
+
+    <legend>Create Event</legend>
+
+    <div class="form-group">
+      <label for="eventName">Dojo Name*</label>
+      <input type="text" required name="event-name" id="event-name" class="form-control">
+    </div>
+
+    <div class="checkbox">
+      <label for="is-public">
+        <input type="checkbox" id="is-public"> is public*
+      </label>
+    </div>
+
+    <label for="description">
+      Description
+    </label>
+    <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+
+  </form>
+
+</div>
