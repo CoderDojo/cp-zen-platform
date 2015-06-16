@@ -14,10 +14,6 @@ describe('review-champion-application-controller', function() {
         sandbox = sinon.sandbox.create();
     })
 
-    beforeEach(angular.mock.module('ngCookies', function ($provide) {
-        $provide.value("$cookies", function(){});
-    }));
-
     beforeEach(angular.mock.module('cpZenPlatform'));
 
     beforeEach(inject(function(
