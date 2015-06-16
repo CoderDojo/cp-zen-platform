@@ -1,14 +1,12 @@
 (function() {
   'use strict';
 
-  function manageDojoEventsCtrl($scope, $stateParams, $location) {
+  function manageDojoEventsCtrl($scope, $stateParams, $state) {
 
-    var dojo = {
-      id: $stateParams.dojoId
-    };
+    var dojoId = $stateParams.dojoId;
 
     $scope.createEvent = function() {
-      $location.path('/dashboard/dojo/' + dojo.id + '/event-form');
+      $state.go('create-dojo-event', {dojoId: dojoId});
     };
   }
 
