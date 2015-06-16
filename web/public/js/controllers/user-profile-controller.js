@@ -86,9 +86,14 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       alertService.showError('An error has occurred while saving profile');
     }
 
-    delete profile.countryName;
+    var profileToBeSaved = angular.copy(profile);
 
-    cdUsersService.saveProfile(profile, win, fail);
+    delete profileToBeSaved.countryName;
+    delete profileToBeSaved.userTypes;
+    delete profileToBeSaved.ownProfileFlag;
+    delete profileToBeSaved.widget;
+
+    cdUsersService.saveProfile(profileToBeSaved, win, fail);
   };
   
   $scope.toggleEdit = function(field){

@@ -1,7 +1,11 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="General Info"/}</div>
   <div class="panel-body">
-    <form name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form">
+    <div ng-if="!profile.ownProfileFlag">
+      <p ng-if="profile.name && (profile.userTypes.indexOf('mentor') || profile.userTypes.userTypesindexOf('champion') || profile.userTypes.indexOf('attendee-o13'))">Name: {{ profile.name }}</p>
+      <p ng-if="profile.alias">Alias: {{ profile.alias }}</p>
+    </div>
+    <form name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag">
       <div class="form-group">
         <label for="name" class="col-sm-4 control-label">Name: </label>
         <div class="col-sm-8">

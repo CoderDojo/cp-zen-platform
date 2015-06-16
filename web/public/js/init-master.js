@@ -140,7 +140,7 @@
           controller: 'accept-dojo-user-request-controller'
         })
         .state("user-profile", {
-          url: "/profile/:userId/",
+          url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
           resolve: {
             profile: function($stateParams, cdUsersService){

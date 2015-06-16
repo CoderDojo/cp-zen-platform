@@ -31,20 +31,20 @@
         <div class="panel panel-default">
           <div class="panel-heading">{@i18n key="Social Media"/}</div>
           <div class="panel-body"> 
-            <a href="{{ profileData.profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
-            <a href="{{ profileData.profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
+            <a href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
+            <a href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
           </div>
         </div>
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
-          <projects-list></projects-list>
+          <general-info></general-info>
+          <projects-list ng-if="profile.userType === 'champion' "></projects-list>
           <programming-languages-list></programming-languages-list>
           <languages-spoken-list></languages-spoken-list>
-          <general-info></general-info>
-          <children-list></children-list>
-          <parents-list></parents-list>
-          <badges-list></badges-list>
+          <children-list ng-if="profile.ownProfileFlag"></children-list>
+          <parents-list ng-if="profile.ownProfileFlag"></parents-list>
+          <badges-list ng-if="profile.userType === 'attendee-o13'"></badges-list>
           <div class="panel panel-default target">
             <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
             <div class="panel-body">
