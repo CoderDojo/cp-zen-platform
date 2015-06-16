@@ -107,6 +107,7 @@
     <script src="/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
+    <script src="/components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 
