@@ -2,7 +2,7 @@
 
 function cdDojoEventsCtrl($scope, cdEventsService, tableUtils, alertService) {
   var dojoId = $scope.dojoId;
-  $scope.filter = {dojoId:dojoId};
+  $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
 
   $scope.pageChanged = function () {
@@ -12,13 +12,12 @@ function cdDojoEventsCtrl($scope, cdEventsService, tableUtils, alertService) {
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    var filteredQuery = { query: { filtered: {}}};
-    var filteredBoolQuery = {bool: {must: []}};
-
+    //Only list events for this Dojo
+    var dojoQuery = { query: { match: { dojo_id: dojoId }}};
     $scope.sort = $scope.sort ? $scope.sort :[{ date: 'desc' }];
 
     var query = _.omit({
-      dojoId: filter.dojoId,
+      dojo_id: filter.dojo_id,
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
@@ -31,33 +30,16 @@ function cdDojoEventsCtrl($scope, cdEventsService, tableUtils, alertService) {
       size: $scope.itemsPerPage
     };
 
-    filteredQuery = _.extend(filteredQuery, meta);
-    filteredQuery.query.filtered.filter = {bool: {must: []}};
-
-    if (!_.isEmpty(query)) {
-
-      var andFilter = {
-        and: _.map(query, function (value, key) {
-          var term = {};
-          term[key] = value.toLowerCase ? value.toLowerCase() : value;
-          return {term: term};
-        })
-      };
-
-      filteredQuery.query.filtered.filter.bool.must.push(andFilter);
-
-    }
-
-    filteredQuery.query.filtered.query = filteredBoolQuery;
+    dojoQuery = _.extend(dojoQuery, meta);
     
-    //TODO: implement elasticsearch query
-    cdEventsService.list($scope.filter, function (result) {
-      $scope.events = result;
-      $scope.totalItems = result.length;
+    cdEventsService.search(dojoQuery).then(function (result) {
+      var events = [];
+      _.each(result.hits, function (event) {
+        events.push(event._source);
+      });
+      $scope.events = events;
+      $scope.totalItems = result.total;
       return cb();
-    }, function (err) {
-      alertService.showError($translate.instant('An error has occurred while loading Dojo Events'));
-      return cb(err);
     });
   }
 
