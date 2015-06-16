@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-
+  
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate) {
     var dojoId = $stateParams.dojoId;
     $scope.filter = {dojo_id:dojoId};
@@ -102,6 +102,7 @@
     }
 
     $scope.loadPage($scope.filter, true);
+
   }
 
   angular.module('cpZenPlatform')
