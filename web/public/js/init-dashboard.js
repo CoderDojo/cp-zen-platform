@@ -124,6 +124,21 @@
           templateUrl: '/dojos/template/manage-dojos',
           controller: 'manage-dojo-controller'
         })
+        .state("manage-dojo-events", {
+          url: "/dashboard/dojo/:dojoId/events",
+          templateUrl: '/dojos/template/manage-dojo-events',
+          controller: 'manage-dojo-events-controller'
+        })
+        .state("create-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form",
+          templateUrl: '/dojos/template/dojo-event-form',
+          controller: 'dojo-event-form-controller'
+        })
+        .state("edit-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form/:eventId",
+          templateUrl: '/dojos/template/dojo-event-form',
+          controller: 'dojo-event-form-controller'
+        })
         .state("stats", {
           url: "/dashboard/stats",
           templateUrl: '/dojos/template/stats',

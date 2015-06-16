@@ -1,0 +1,8 @@
+<div class="cd-dashboard">
+  <legend>{@i18n key="Manage Dojo Events"/}</legend>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
+    </div>
+  </div>
+</div>
