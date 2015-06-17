@@ -9,21 +9,8 @@
       <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" required>
     </div>
 
-    <div class="form-group">
-      <label for="categroy">Category</label>
-      <select class="form-control" id="category" required>
-        <option value="1">Javascript</option>
-        <option value="2">Python</option>
-        <option value="3">Go</option>
-        <option value="4">Java</option>
-        <option value="5">Ruby</option>
-        <option value="6">Css</option>
-        <option value="7">Html</option>
-      </select>
-    </div>
-
     <div class="checkbox">
-      <input type="checkbox" id="is-public" ng-model="eventInfo.isPublic">
+      <input type="checkbox" id="is-public" ng-model="eventInfo.public">
       <label for="is-public">
         is public*
       </label>
@@ -36,7 +23,7 @@
       <textarea name="description" id="description" class="form-control" rows="3" ng-model="eventInfo.description" required></textarea>
     </div>
 
-    <div ng-init="eventInfo.type='recurring'">
+    <div ng-init="eventInfo.type='one-off'">
       <h5>Type</h5>
       <div class="radio-inline">
         <label>
@@ -82,7 +69,7 @@
       <div class="form-group">
         <label for="from-date">From</label>
         <div class="input-group">
-          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.fromDate" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
+          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.date" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open($event, 'openFromDatePicker')">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -94,7 +81,7 @@
       <div class="form-group">
         <label for="to-date">To</label>
         <div class="input-group">
-          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.toDate" is-open="openToDatePicker" min-date="fromDate" ng-required="true" close-text="Close" id="to-date"/>
+          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.toDate" is-open="openToDatePicker" min-date="eventInfo.date" ng-required="true" close-text="Close" id="to-date"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="open($event, 'openToDatePicker')">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -106,31 +93,29 @@
 
     <div class="form-group">
       <label for="time">Time</label>
-      <timepicker id="time" ng-model="eventInfo.time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
       </timepicker>
     </div>
 
     <div class="form-group form-inline">
       <label for="group-type-1">For</label>
 
-      <div class="checkbox">
-        <input type="checkbox" id="group-type-1" ng-model="groupTypeModel.value1">
-        <label for="group-type-1">
-          Youths < 13
-        </label>
-      </div>
-
-      <div class="checkbox">
-        <input type="checkbox" id="group-type-2" ng-model="groupTypeModel.value2">
-        <label for="group-type-2">
-          Youth > 13
+      <div class="checkbox" ng-repeat="(userType, value) in eventInfo.userTypes">
+        <input type="checkbox" id="{{ userType }}" ng-model="eventInfo.userTypes[userType]">
+        <label for="{{ userType }}">
+          {{ userType }}
         </label>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="location">Location:</label>
-      <input type="text" required name="location" id="location" class="form-control" ng-model="eventInfo.location">
+      <label for="city">City*:</label>
+      <input type="text" required name="city" id="city" class="form-control" ng-model="eventInfo.city">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address*:</label>
+      <input type="text" required name="address" id="address" class="form-control" ng-model="eventInfo.address">
     </div>
 
     <div class="form-group">
