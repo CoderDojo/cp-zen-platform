@@ -25,6 +25,7 @@
 
     <div ng-init="eventInfo.type='one-off'">
       <h5>Type</h5>
+
       <div class="radio-inline">
         <label>
           <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
@@ -40,60 +41,48 @@
       </div>
     </div>
 
-    <div class="form-group" ng-if="eventInfo.type === 'one-off'">
-      <label for="date">Date</label>
+    <div class="form-group" ng-if="eventInfo.type === 'recurring'">
+      <label for="weekday">Every</label>
+      <select class="form-control"
+              ng-model="weekdaySelection"
+              ng-options="item as item.name for item in weekdays"
+              id="weekday"
+              required>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label ng-if="eventInfo.type === 'one-off'" for="date">Date</label>
+      <label ng-if="eventInfo.type === 'recurring'" for="date">From</label>
       <div class="input-group">
-        <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.date" is-open="openDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="date"/>
+        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePickerIsOpen" min-date="datepicker.minDate" ng-required="true" close-text="Close" class="form-control" id="date" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="open($event, 'openDatePicker')">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="open($event, 'datePickerIsOpen')">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
         </span>
       </div>
     </div>
 
-    <div ng-if="eventInfo.type === 'recurring'">
-      <div class="form-group">
-        <label for="weekday">Every</label>
-        <select class="form-control" id="weekday" required>
-          <option value="1">Monday</option>
-          <option value="2">Tuesday</option>
-          <option value="3">Wednesday</option>
-          <option value="4">Thursday</option>
-          <option value="5">Friday</option>
-          <option value="6">Saturday</option>
-          <option value="7">Sunday</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="from-date">From</label>
-        <div class="input-group">
-          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.date" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open($event, 'openFromDatePicker')">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="to-date">To</label>
-        <div class="input-group">
-          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.toDate" is-open="openToDatePicker" min-date="eventInfo.date" ng-required="true" close-text="Close" id="to-date"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open($event, 'openToDatePicker')">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </div>
+    <div class="form-group" ng-if="eventInfo.type === 'recurring'">
+      <label for="to-date">To</label>
+      <div class="input-group">
+        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePickerIsOpen" min-date="datepicker.minDate" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="open($event, 'toDatePickerIsOpen')">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
       </div>
     </div>
 
     <div class="form-group">
       <label for="time">Time</label>
-      <timepicker id="time" ng-model="eventInfo.date" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian">
       </timepicker>
     </div>
 
