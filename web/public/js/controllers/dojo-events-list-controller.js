@@ -94,7 +94,7 @@ function cdDojoEventsListCtrl($scope, cdEventsService, tableUtils, alertService)
 
     $scope.sort = sort;
     $scope.loadPage($scope.filter, true);
-  };
+  }
 
 }
 

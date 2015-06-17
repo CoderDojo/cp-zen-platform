@@ -22,7 +22,8 @@
     'angularSpinner',
     'ngTagsInput',
     'ngBootbox',
-    'ngCookies'
+    'ngCookies',
+    'ncy-angular-breadcrumb'
   ]);
 })();
 

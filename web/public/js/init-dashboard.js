@@ -59,6 +59,7 @@
         decode: valFromString,
         is: function () { return true; }
       });
+
       $stateProvider
         .state("home", {
           url: "/",
@@ -83,7 +84,11 @@
         .state("my-dojos", {
           url: "/dashboard/my-dojos",
           templateUrl: '/dojos/template/my-dojos',
-          controller: 'my-dojos-controller'
+          scope: {},
+          controller: 'my-dojos-controller',
+          ncyBreadcrumb: {
+            label: '{{myDojosPageTitle}}'
+          }
         })
         .state("create-dojo", {
           url: "/dashboard/create-dojo",
@@ -124,10 +129,13 @@
           templateUrl: '/dojos/template/manage-dojos',
           controller: 'manage-dojo-controller'
         })
-        .state("manage-dojo-events", {
-          url: "/dashboard/dojo/:dojoId/events",
+        .state("my-dojos.manage-dojo-events", {
+          url: "/:dojoId/events",
           templateUrl: '/dojos/template/events/manage-dojo-events',
-          controller: 'manage-dojo-events-controller'
+          controller: 'manage-dojo-events-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventsPageTitle}}'
+          }
         })
         .state("create-dojo-event", {
           url: "/dashboard/dojo/:dojoId/event-form",
@@ -213,7 +221,7 @@
         .registerAvailableLanguageKeys(['en_US', 'de_DE'])
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
-        }
+      }
     ])
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({

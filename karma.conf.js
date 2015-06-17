@@ -45,6 +45,7 @@ module.exports = function(config) {
             './web/public/components/ngBootbox/ngBootbox.js',
             './web/public/components/angular-cookies/angular-cookies.js',
             './web/public/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js',
+            './web/public/components/angular-breadcrumb/dist/angular-breadcrumb.min.js',
             './lib/auth/public/auth-front.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',

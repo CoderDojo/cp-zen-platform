@@ -947,3 +947,48 @@ msgstr "You do not have permission to update user types"
 
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
+
+msgid "Events for Dojo"
+msgstr "Events for Dojo"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "For"
+msgstr "For"
+
+msgid "Events"
+msgstr "Events"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Capacity"
+msgstr "Capacity"
+
+msgid "Applicants"
+msgstr "Applicants"
+
+msgid "Attending"
+msgstr "Attending"
+
+msgid "Create Event"
+msgstr "Create Event"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Attendance"
+msgstr "Attendance"
+
+msgid "Manage Dojo Events"
+msgstr "Manage Dojo Events"
+
+
+
