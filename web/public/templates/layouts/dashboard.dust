@@ -126,6 +126,7 @@
     <script src="/js/controllers/accept-dojo-user-request-controller.js"></script>
     <script src="/js/controllers/user-profile-controller.js"></script>
     <script src="/js/controllers/language-controller.js"></script>
+    <script src="/js/controllers/add-child-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

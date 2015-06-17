@@ -50,6 +50,7 @@ require('./controllers/accept-dojo-user-invitation-controller');
 require('./controllers/accept-dojo-user-request-controller');
 require('./controllers/user-profile-controller');
 require('./controllers/language-controller');
+require('./controllers/add-child-controller');
 
 require('./services/alert-service');
 require('./services/spinner-service');
