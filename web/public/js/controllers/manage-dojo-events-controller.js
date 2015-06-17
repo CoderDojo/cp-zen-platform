@@ -11,7 +11,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$location', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', manageDojoEventsCtrl]);
 
 })();
 

@@ -61,11 +61,11 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       ]
     };
 
-    cdCountriesService.listPlaces(query).then(function(result) {
+    cdCountriesService.listPlaces(query, function(result) {
       $scope.places = _.map(result.records, function(place) {
         return _.omit(place, 'entity$');
       });
-    });
+    }, console.error.bind(console));
   };
 
   $scope.setCountry = function(dojo, country) {
