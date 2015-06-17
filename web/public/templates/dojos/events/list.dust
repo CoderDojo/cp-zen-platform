@@ -9,7 +9,6 @@
               <tr>
                 <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Event"/}</th>
                 <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
-                <th>{@i18n key="Type"/}</th>
                 <th>{@i18n key="For"/}</th>
                 <th></th>
               </tr>
@@ -18,15 +17,14 @@
               <tr ng-repeat="event in events">
                 <td>{{ event.name }}</td>
                 <td>{{ event.date }}</td>
-                <td>{{ event.type }}</td>
                 <td>{{ event.for }}</td>
-                <td class="pointer"><a ui-sref="applyForEvent({eventId:event.id})">{@i18n key="Apply"/}</a></td>
+                <td class="pointer"><button ng-click="applyForEvent(event)" class="btn btn-success" type="button">{@i18n key="Apply"/}</button></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="row col-lg-6 col-lg-offset-4">
+      <div class="row col-lg-6 col-lg-offset-3">
       <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
   </div>

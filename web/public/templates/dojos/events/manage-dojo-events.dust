@@ -9,7 +9,6 @@
             <tr>
               <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
               <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
-              <th>{@i18n key="Type"/}</th>
               <th>{@i18n key="Capacity"/}</th>
               <th>{@i18n key="Applicants"/}</th>
               <th>{@i18n key="Attending"/}</th>
@@ -23,14 +22,13 @@
             <tr ng-repeat="event in events">
               <td>{{ event.name }}</td>
               <td>{{ event.date }}</td>
-              <td>{{ event.type }}</td>
               <td>{{ event.capacity }}</td>
               <td>{{ event.applicants.length }}</td>
               <td>{{ event.applicants.length }}</td>
               <td class="pointer"><a ui-sref="editEvent({eventId:event.id})">{@i18n key="Edit"/}</a></td>
               <td class="pointer"><a ui-sref="manageEvent({eventId:event.id})">{@i18n key="Manage"/}</a></td>
               <td class="pointer"><a ui-sref="manageAttendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>
-              <td class="pointer"><a ui-sref="cancelEvent({eventId:event.id})">{@i18n key="Cancel"/}</a></td>
+              <td class="pointer"><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
             </tr>
           </tbody>
         </table>

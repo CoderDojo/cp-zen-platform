@@ -131,6 +131,7 @@
     <script src="/js/controllers/dojo-events-list-controller.js"></script>
     <script src="/js/controllers/manage-dojo-events-controller.js"></script>
     <script src="/js/controllers/dojo-event-form-controller.js"></script>
+    <script src="/js/controllers/apply-for-event-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

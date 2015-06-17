@@ -84,7 +84,6 @@
         .state("my-dojos", {
           url: "/dashboard/my-dojos",
           templateUrl: '/dojos/template/my-dojos',
-          scope: {},
           controller: 'my-dojos-controller',
           ncyBreadcrumb: {
             label: '{{myDojosPageTitle}}'
