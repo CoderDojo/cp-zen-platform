@@ -1,38 +1,27 @@
 (function() {
   'use strict';
 
-  function getRoundedNow() {
-    var now = new Date();
-
-    var minutes = now.getMinutes();
-    var hours = now.getHours();
-
-    var m = (parseInt((minutes + 7.5) / 15) * 15, 10) % 60;
-    var h = minutes > 52 ? (hours === 23 ? 0 : ++hours) : hours;
-
-    now.setMinutes(m);
-    now.setHours(h);
-
-    return now;
-  }
-
-
   function dojoEventFormCtrl(
     $scope,
     $stateParams,
     $state,
     cdEventsService,
     cdDojoService,
-    cdCountriesService
+    cdCountriesService,
+    auth
   ) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
 
     $scope.eventInfo = {};
+    $scope.eventInfo.dojoId = dojoId;
+    $scope.eventInfo.public = false;
     $scope.eventInfo.date = now;
-    $scope.eventInfo.fromDate = now;
-    $scope.eventInfo.toDate = now;
-    $scope.eventInfo.time = getRoundedNow();
+    $scope.eventInfo.date.setMinutes(0);
+    $scope.eventInfo.date.setSeconds(0);
+    $scope.eventInfo.toDate = new Date(
+      $scope.eventInfo.date.getTime()
+    );
 
     $scope.minDate = now;
     $scope.hstep = 1;
@@ -47,7 +36,7 @@
     };
 
     function goToManageDojoEvents(){
-      $state.go('manage-dojo-events', {dojoId: dojoId});
+      $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
     }
 
     $scope.cancel = function($event) {
@@ -61,19 +50,24 @@
       $event.preventDefault();
       $event.stopPropagation();
 
+      var userTypes = Object.keys(eventInfo.userTypes).filter(function(key){
+        return eventInfo.userTypes[key];
+      });
+
       cdEventsService.createEvent({
           name: eventInfo.name,
-          date: eventInfo.fromDate,
-          location: eventInfo.location,
+          date: eventInfo.date,
+          country: eventInfo.country,
+          city: {},
+          address: eventInfo.address,
           description: eventInfo.description,
-          capacity: 40,
-          public: eventInfo.isPublic,
-          category: 'todo',
-          user_types: ['todo'],
-          dojo_id: dojoId,
+          capacity: eventInfo.capacity,
+          public: eventInfo.public,
+          user_types: userTypes,
+          dojo_id: eventInfo.dojoId,
           status: publish ? 'published' : 'saved',
           created_at: new Date(),
-          created_by: 'user id'
+          created_by: eventInfo.userId
         },
         goToManageDojoEvents,
         console.error.bind(console)
@@ -116,12 +110,16 @@
     }
 
 
-    var dojo = {};
-    var places = [];
     getDojoAndPlaces(dojoId, function(err, result) {
-      dojo = result.dojo;
-      places = result.places;
+      var dojo = result.dojo;
+      var places = result.places;
+      $scope.eventInfo.country = dojo.country;
     });
+
+
+    auth.get_loggedin_user(function(user) {
+      $scope.eventInfo.userId = user.id;
+    }, console.error.bind(console));
 
 
     cdDojoService.loadDojoUsers({
@@ -136,8 +134,11 @@
       // Add missing user type
       userTypes.unshift('attendee-u13');
 
-      // Expose user types
-      $scope.dojoUserTypes = userTypes;
+      $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
+        memo[item] = false;
+        return memo;
+      }, {});
+
     }, console.error.bind(console));
   }
 
@@ -150,6 +151,7 @@
       'cdEventsService',
       'cdDojoService',
       'cdCountriesService',
+      'auth',
       dojoEventFormCtrl
     ]);
 })();
