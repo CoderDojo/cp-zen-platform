@@ -47,6 +47,7 @@
 
     <!-- Angular ngTagsInput -->
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.bootstrap.min.css">
 
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
