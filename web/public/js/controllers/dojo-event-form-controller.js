@@ -32,6 +32,7 @@
     var dojoId = $stateParams.dojoId;
     var now = new Date();
 
+
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
@@ -42,22 +43,26 @@
       $scope.eventInfo.date.getTime()
     );
 
+
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
-    $scope.open = function($event, isOpen) {
+    $scope.toggleDatepicker = function($event, isOpen) {
       $event.preventDefault();
       $event.stopPropagation();
 
-      $scope.datepicker[isOpen] = true;
+      $scope.datepicker[isOpen] = !$scope.datepicker[isOpen];
     };
+
 
     $scope.timepicker = {};
     $scope.timepicker.hstep = 1;
     $scope.timepicker.mstep = 15;
     $scope.timepicker.ismeridian = true;
 
-    $scope.weekdays = [{
+
+    $scope.weekdayPicker = {};
+    $scope.weekdayPicker.weekdays = [{
       id: 0,
       name: 'Sunday'
     }, {
@@ -80,11 +85,50 @@
       name: 'Saturday'
     }];
 
-    $scope.weekdaySelection = $scope.weekdays[0];
+    $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
+
+
+    if ($stateParams.eventId) {
+      console.log('TODO: Edit event, load event info if event already exists');
+    }
+
+
+    // Get and expose dojo's country code
+    cdDojoService.load(dojoId, function(dojoInfo){
+      $scope.eventInfo.country = dojoInfo.country;
+    }, console.error.bind(console));
+
+
+    // Get and expose user id
+    auth.get_loggedin_user(function(user) {
+      $scope.eventInfo.userId = user.id;
+    }, console.error.bind(console));
+
+
+    // Get and expose dojo users
+    cdDojoService.loadDojoUsers({
+      dojoId: dojoId
+    }, function(users) {
+      $scope.dojoUsers = users;
+    }, console.error.bind(console));
+
+
+    // Get and expose user types
+    cdDojoService.getUserTypes(function(userTypes) {
+      // Add missing user type
+      userTypes.unshift('attendee-u13');
+
+      $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
+        memo[item] = false;
+        return memo;
+      }, {});
+    }, console.error.bind(console));
+
 
     function goToManageDojoEvents(){
       $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
     }
+
 
     $scope.cancel = function($event) {
       $event.preventDefault();
@@ -92,6 +136,7 @@
 
       goToManageDojoEvents();
     };
+
 
     $scope.submit = function($event, eventInfo, publish) {
       $event.preventDefault();
@@ -103,7 +148,7 @@
 
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
       if(isDateRange) {
-        var eventDates = getEveryTargetWeekdayInDateRange(eventInfo.date, eventInfo.toDate, $scope.weekdaySelection.id);
+        var eventDates = getEveryTargetWeekdayInDateRange(eventInfo.date, eventInfo.toDate, $scope.weekdayPicker.selection.id);
 
         // Todo: Refactor, add createEvents endpoint which takes a list of events
         return async.forEachOf(eventDates, function(value, key, callback) {
@@ -149,73 +194,6 @@
         console.error.bind(console)
       );
     };
-
-
-    if ($stateParams.eventId) {
-      console.log('TODO: Edit event, load event info if event already exists');
-    }
-
-
-    function getDojoAndPlaces(dojoId, done){
-      var dojo = {};
-
-      async.waterfall([
-        function(callback) {
-          cdDojoService.load(dojoId, callback.bind(null, null), callback);
-        },
-        function(dojoInfo, response, callback) {
-          dojo = dojoInfo;
-          var countryCode = dojo.country.alpha2;
-
-          // TODO: Send in country code
-          var query = {query:{match_all:[]}};
-
-          cdCountriesService.listPlaces(query, callback.bind(null, null), callback);
-        }
-      ],
-      function(err, places) {
-        if(err){
-          return done(err);
-        }
-
-        done(err, {
-          dojo: dojo,
-          places: places
-        });
-      });
-    }
-
-
-    getDojoAndPlaces(dojoId, function(err, result) {
-      var dojo = result.dojo;
-      var places = result.places;
-      $scope.eventInfo.country = dojo.country;
-    });
-
-
-    auth.get_loggedin_user(function(user) {
-      $scope.eventInfo.userId = user.id;
-    }, console.error.bind(console));
-
-
-    cdDojoService.loadDojoUsers({
-      dojoId: dojoId
-    }, function(users) {
-      // Expose dojo users
-      $scope.dojoUsers = users;
-    }, console.error.bind(console));
-
-
-    cdDojoService.getUserTypes(function(userTypes) {
-      // Add missing user type
-      userTypes.unshift('attendee-u13');
-
-      $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
-        memo[item] = false;
-        return memo;
-      }, {});
-
-    }, console.error.bind(console));
   }
 
 
@@ -230,4 +208,5 @@
       'auth',
       dojoEventFormCtrl
     ]);
+
 })();
