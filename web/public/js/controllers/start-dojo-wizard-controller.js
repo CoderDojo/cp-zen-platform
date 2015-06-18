@@ -18,24 +18,60 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       if(!_.isEmpty(user) && currentPath === '/start-dojo') {
         $window.location.href = '/dashboard/start-dojo';
       } else {
-        cdDojoService.loadUserDojoLead(user.id, function(dojoLead) {
-          currentStepInt = dojoLead.currentStep;
-          if(currentStepInt === 4) {
+
+        debugger
+        var query = { query: { bool: { must: {
+                query_string: {
+                  default_field: "cd_dojoleads.userId",
+                  query: user.id
+                }
+              }
+            }
+          },
+          from: 0,
+          size: 0,
+          sort: [
+            {asciiname: "asc"}
+          ]
+        };
+
+        cdDojoService.searchDojoLeads(query).then(function(result) {
+          var results = _.map(result, function(place) {
+            return _.omit(place, 'entity$');
+          });
+
+          var uncompletedDojoLead = null;
+
+          _.each(results, function(dojoLead){
+            if(dojoLead.completed === false){
+              uncompletedDojoLead = dojolead;
+            }
+          });
+
+          currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
+          if (currentStepInt === 4) {
             //Check if user has deleted the Dojo
-            cdDojoService.find({dojoLeadId:dojoLead.id}, function (response) {
-              if(!_.isEmpty(response)) {
-                 $scope.wizardComplete = true;
+            cdDojoService.find({dojoLeadId: dojoLead.id}, function (response) {
+              if (!_.isEmpty(response)) {
+                $scope.wizardComplete = true;
               } else {
                 //Go back to Dojo Listing step
                 initStep(3);
               }
             });
           }
+
+          if(results.hits > 0 && !uncompletedDojoLead){
+            initStep(2);
+          } else {
+            initStep(1);
+          }
+/*
           if(dojoLead.currentStep) {
             initStep(dojoLead.currentStep);
           } else {
             initStep(1);
-          }
+          }*/
         });
       }
     }, function () {
