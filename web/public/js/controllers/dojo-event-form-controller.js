@@ -137,6 +137,10 @@
       console.log('TODO: Edit event, load event info if event already exists');
     }
 
+    $scope.eventInfo.invites = [];
+    $scope.loadUsers = function(query) {
+      return $scope.dojoUsers;
+    };
 
     // Get and expose dojo's country code
     cdDojoService.load(dojoId, function(dojoInfo){
@@ -208,6 +212,7 @@
               public: eventInfo.public,
               user_types: userTypes,
               dojo_id: eventInfo.dojoId,
+              invites: eventInfo.invites,
               status: publish ? 'published' : 'saved',
               created_at: new Date(),
               created_by: eventInfo.userId
@@ -231,6 +236,7 @@
           public: eventInfo.public,
           user_types: userTypes,
           dojo_id: eventInfo.dojoId,
+          invites: eventInfo.invites,
           status: publish ? 'published' : 'saved',
           created_at: new Date(),
           created_by: eventInfo.userId
