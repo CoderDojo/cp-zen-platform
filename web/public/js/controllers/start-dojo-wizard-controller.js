@@ -19,39 +19,41 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $window.location.href = '/dashboard/start-dojo';
       } else {
 
-        debugger
-        var query = { query: { bool: { must: {
-                query_string: {
-                  default_field: "cd_dojoleads.userId",
-                  query: user.id
-                }
+        var query = { query : {
+          filtered : {
+            query : {
+              match_all : {}
+            },
+            filter : {
+              bool: {
+                must: [{
+                  term: { userId: user.id }
+                }]
               }
             }
-          },
-          from: 0,
-          size: 0,
-          sort: [
-            {asciiname: "asc"}
-          ]
+          }
+        }
         };
 
         cdDojoService.searchDojoLeads(query).then(function(result) {
-          var results = _.map(result, function(place) {
-            return _.omit(place, 'entity$');
+
+          var results = _.map(result.records, function(dojoLead) {
+            return _.omit(dojoLead, 'entity$');
           });
 
           var uncompletedDojoLead = null;
 
           _.each(results, function(dojoLead){
-            if(dojoLead.completed === false){
-              uncompletedDojoLead = dojolead;
+            if(!dojoLead.completed){
+              uncompletedDojoLead = dojoLead;
             }
           });
 
+          debugger
           currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
           if (currentStepInt === 4) {
             //Check if user has deleted the Dojo
-            cdDojoService.find({dojoLeadId: dojoLead.id}, function (response) {
+            cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
               if (!_.isEmpty(response)) {
                 $scope.wizardComplete = true;
               } else {
@@ -59,10 +61,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
                 initStep(3);
               }
             });
-          }
-
-          if(results.hits > 0 && !uncompletedDojoLead){
-            initStep(2);
+          } else if(results.total > 0 && !uncompletedDojoLead) {
+              initStep(2);
           } else {
             initStep(1);
           }
