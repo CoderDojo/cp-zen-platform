@@ -1,6 +1,25 @@
 (function() {
   'use strict';
 
+  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday) {
+    var currentDate = dateStart;
+    var dates = [];
+
+    while (currentDate <= dateEnd) {
+      currentDate = new Date(currentDate);
+
+      if(currentDate.getDay() === targetWeekday){
+        dates.push(currentDate);
+      }
+
+      var d = new Date(currentDate.valueOf());
+      currentDate = d.setDate(d.getDate() + 1);
+    }
+
+    return dates;
+  }
+
+
   function dojoEventFormCtrl(
     $scope,
     $stateParams,
@@ -23,17 +42,45 @@
       $scope.eventInfo.date.getTime()
     );
 
-    $scope.minDate = now;
-    $scope.hstep = 1;
-    $scope.mstep = 15;
-    $scope.ismeridian = true;
+    $scope.datepicker = {};
+    $scope.datepicker.minDate = now;
 
     $scope.open = function($event, isOpen) {
       $event.preventDefault();
       $event.stopPropagation();
 
-      $scope[isOpen] = true;
+      $scope.datepicker[isOpen] = true;
     };
+
+    $scope.timepicker = {};
+    $scope.timepicker.hstep = 1;
+    $scope.timepicker.mstep = 15;
+    $scope.timepicker.ismeridian = true;
+
+    $scope.weekdays = [{
+      id: 0,
+      name: 'Sunday'
+    }, {
+      id: 1,
+      name: 'Monday'
+    }, {
+      id: 2,
+      name: 'Tuesday'
+    }, {
+      id: 3,
+      name: 'Wednesday'
+    }, {
+      id: 4,
+      name: 'Thursday'
+    }, {
+      id: 5,
+      name: 'Friday'
+    }, {
+      id: 6,
+      name: 'Saturday'
+    }];
+
+    $scope.weekdaySelection = $scope.weekdays[0];
 
     function goToManageDojoEvents(){
       $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
@@ -53,6 +100,35 @@
       var userTypes = Object.keys(eventInfo.userTypes).filter(function(key){
         return eventInfo.userTypes[key];
       });
+
+      var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
+      if(isDateRange) {
+        var eventDates = getEveryTargetWeekdayInDateRange(eventInfo.date, eventInfo.toDate, $scope.weekdaySelection.id);
+
+        // Todo: Refactor, add createEvents endpoint which takes a list of events
+        return async.forEachOf(eventDates, function(value, key, callback) {
+          cdEventsService.createEvent({
+              name: eventInfo.name,
+              date: value,
+              country: eventInfo.country,
+              city: {},
+              address: eventInfo.address,
+              description: eventInfo.description,
+              capacity: eventInfo.capacity,
+              public: eventInfo.public,
+              user_types: userTypes,
+              dojo_id: eventInfo.dojoId,
+              status: publish ? 'published' : 'saved',
+              created_at: new Date(),
+              created_by: eventInfo.userId
+            },
+            callback,
+            callback
+          );
+        }, function() {
+          goToManageDojoEvents();
+        });
+      }
 
       cdEventsService.createEvent({
           name: eventInfo.name,
@@ -91,7 +167,7 @@
           dojo = dojoInfo;
           var countryCode = dojo.country.alpha2;
 
-          // TODO: send in country code
+          // TODO: Send in country code
           var query = {query:{match_all:[]}};
 
           cdCountriesService.listPlaces(query, callback.bind(null, null), callback);
@@ -155,4 +231,3 @@
       dojoEventFormCtrl
     ]);
 })();
-
