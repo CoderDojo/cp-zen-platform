@@ -990,5 +990,23 @@ msgstr "Attendance"
 msgid "Manage Dojo Events"
 msgstr "Manage Dojo Events"
 
+msgid "Are you sure you want to cancel this event?"
+msgstr "Are you sure you want to cancel this event?"
+
+msgid "Are you sure you want to delete this Dojo?"
+msgstr "Are you sure you want to delete this Dojo?"
+
+msgid "Apply for Event"
+msgstr "Apply for Event"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+msgstr "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+
+msgid "Error applying for event"
+msgstr "Error applying for event: "
+
 
 

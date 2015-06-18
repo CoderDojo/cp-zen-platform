@@ -6,6 +6,9 @@ function cdEventsService(cdApi, $q){
   }
 
   return {
+    getEvent: function(id, win, fail) {
+      cdApi.get('events/' + id, win, fail || topfail);
+    },
     createEvent: function(eventInfo, win, fail){
       cdApi.post('create-event', {eventInfo: eventInfo}, win, fail || topfail);
     },
@@ -16,6 +19,9 @@ function cdEventsService(cdApi, $q){
       return $q(function(resolve, reject) {
         cdApi.post('events/search', {search: search}, resolve, reject);
       });
+    },
+    applyForEvent: function(eventId, win, fail) {
+      cdApi.get('events/' + eventId + '/apply', win, fail || topfail);
     }
   };
 }

@@ -39,14 +39,16 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 
   if(gmap) {
     $scope.mapLoaded = true;
-    var coordinates = $scope.dojo.coordinates.split(',');
-    var latitude  = coordinates[0];
-    var longitude = coordinates[1];
-    $scope.mapOptions = {
-      center: new google.maps.LatLng(latitude, longitude),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    if($scope.dojo.coordinates) {
+      var coordinates = $scope.dojo.coordinates.split(',');
+      var latitude  = coordinates[0];
+      var longitude = coordinates[1];
+      $scope.mapOptions = {
+        center: new google.maps.LatLng(latitude, longitude),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+    }
 
   }
 
@@ -118,3 +120,4 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 
 angular.module('cpZenPlatform')
   .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+
