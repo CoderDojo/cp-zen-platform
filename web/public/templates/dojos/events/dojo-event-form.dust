@@ -127,7 +127,15 @@
 
     <div class="form-group">
       <label for="invites">Invites:</label>
-      <textarea name="invites" id="invites" class="form-control" rows="3" ng-model="eventInfo.invites"></textarea>
+      <tags-input add-from-autocomplete-only="true"
+                  key-property="name"
+                  display-property="name"
+                  placeholder="Invite user"
+                  ng-model="eventInfo.invites"
+                  name="invites"
+                  id="invites">
+        <auto-complete source="loadUsers($query)" display-property="name"></auto-complete>
+      </tags-input>
     </div>
 
     <div class="btn-toolbar">
