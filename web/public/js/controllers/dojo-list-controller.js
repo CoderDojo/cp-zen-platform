@@ -47,12 +47,11 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.$on('$viewContentLoaded', function() {
-    jQuery('body').cookieDisclaimer({
+    jQuery('body').cookieDisclaimer({ 
+      text: 'To browse this site you need to accept our cookie policy (<a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2">Read More</a>).',
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
-      policyBtn: {
-        link: "http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2", // cookie policy page URL
-      },
+      policyBtn: { active: false },
       cookie: {
         name: "cookieDisclaimer",
         val: "confirmed",
