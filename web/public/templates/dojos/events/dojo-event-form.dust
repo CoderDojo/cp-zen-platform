@@ -99,7 +99,20 @@
 
     <div class="form-group">
       <label for="city">City*:</label>
-      <input type="text" required name="city" id="city" class="form-control" ng-model="eventInfo.city">
+      <ui-select ng-model="eventInfo.city"
+                 name="city"
+                 id="city"
+                 ng-disabled="disabled"
+                 required>
+        <ui-select-match>
+          {{ $select.selected.nameWithHierarchy }}
+        </ui-select-match>
+        <ui-select-choices repeat="city in cities"
+          refresh="searchCity($select.search)"
+          refresh-delay="500">
+          <span ng-bind-html="city.nameWithHierarchy | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
     </div>
 
     <div class="form-group">

@@ -88,6 +88,51 @@
     $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
 
 
+    $scope.searchCity = function(str) {
+      if (!str.length || str.length < 3) {
+        return $scope.cities = [];
+      }
+
+      var query = {
+        query: {
+          filtered: {
+            query: {
+              multi_match: {
+                query: str,
+                type: "phrase_prefix",
+                fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
+              }
+            },
+            filter: {
+              bool: {
+                must: [{
+                  term: {
+                    countryCode: $scope.eventInfo.country.alpha2
+                  }
+                }, {
+                  term: {
+                    featureClass: "P"
+                  }
+                }]
+              }
+            }
+          }
+        },
+        from: 0,
+        size: 100,
+        sort: [{
+          asciiname: "asc"
+        }]
+      };
+
+      cdCountriesService.listPlaces(query, function(result) {
+        $scope.cities = _.map(result, function(city) {
+          return _.omit(city, 'entity$');
+        });
+      }, console.error.bind(console));
+    };
+
+
     if ($stateParams.eventId) {
       console.log('TODO: Edit event, load event info if event already exists');
     }
@@ -156,7 +201,7 @@
               name: eventInfo.name,
               date: value,
               country: eventInfo.country,
-              city: {},
+              city: eventInfo.city,
               address: eventInfo.address,
               description: eventInfo.description,
               capacity: eventInfo.capacity,
@@ -179,7 +224,7 @@
           name: eventInfo.name,
           date: eventInfo.date,
           country: eventInfo.country,
-          city: {},
+          city: eventInfo.city,
           address: eventInfo.address,
           description: eventInfo.description,
           capacity: eventInfo.capacity,
