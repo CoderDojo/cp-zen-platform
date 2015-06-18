@@ -46,13 +46,13 @@
             }
         }
 
-        ,"locale": {
-            "priority": 95,
-            "enabled": true,
-            "module": {
-                "name": "path:./lib/locale"
-            }
-        }
+//        ,"locale": {
+//            "priority": 95,
+//            "enabled": true,
+//            "module": {
+//                "name": "path:./lib/locale"
+//            }
+//        }
 
         ,"session": {
             "enabled": true,
