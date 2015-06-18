@@ -1,6 +1,6 @@
 <div class="cd-dashboard">
   <div class="row">
-    <div class="my-dojos">
+    <div class="my-dojos" ui-view>
       <legend>{@i18n key="Your Dojos"/}</legend>
       <div class="row">
         <div class="col-md-12 table-responsive">
@@ -22,9 +22,9 @@
                 <td>{{ myDojo.placeName }}</td>
                 <td class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer"><a ui-sref="manage-dojo-users({id:myDojo.id})">{@i18n key="Manage"/}</a></td>
-                <td class="pointer"><a ui-sref="manage-dojo-events({dojoId:myDojo.id})">{@i18n key="Manage"/}</a></td>
+                <td class="pointer"><a ui-sref=".manage-dojo-events({dojoId:myDojo.id})">{@i18n key="Manage"/}</a></td>
                 <td class="pointer"><a ui-sref="dojo-detail({country:myDojo.country, path:myDojo.path})">{@i18n key="View"/}</a></td>
-                <td class="pointer"><button ng-if="myDojo.canDelete$" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to delete this Dojo?" ng-bootbox-confirm-action="deleteDojo(myDojo)">{@i18n key="Delete"/}</button></td>
+                <td class="pointer"><button ng-if="myDojo.canDelete$" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Dojo?"/}" ng-bootbox-confirm-action="deleteDojo(myDojo)">{@i18n key="Delete"/}</button></td>
               </tr>
             </tbody>
           </table>

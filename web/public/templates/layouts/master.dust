@@ -107,6 +107,7 @@
     <script src="/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
+    <script src="/components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 
@@ -124,6 +125,7 @@
     <script src="/js/controllers/accept-dojo-user-request-controller.js"></script>
     <script src="/js/controllers/user-profile-controller.js"></script>
     <script src="/js/controllers/language-controller.js"></script>
+    <script src="/js/controllers/dojo-events-list-controller.js"></script>
 
     <script src="/js/services/cd-dojo-service.js"></script>
     <script src="/js/services/cd-countries-service.js"></script>
@@ -133,12 +135,16 @@
     <script src="/js/services/cd-agreements-service.js"></script>
     <script src="/js/services/cd-users-service.js"></script>
     <script src="/js/services/languages-service.js"></script>
+    <script src="/js/services/cd-events-service.js"></script>
+    <script src="/js/services/spinner-service.js"></script>
+    <script src="/js/services/table-utils.js"></script>
 
     <script src="/js/directives/cd-register-account.js"></script>
     <script src="/js/directives/cd-champion-registration.js"></script>
     <script src="/js/directives/cd-dojo-listing.js"></script>
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
+    <script src="/js/directives/cd-dojo-events-list.js"></script>
 
     <script src="/js/init-master.js"></script>
 

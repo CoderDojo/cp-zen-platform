@@ -947,3 +947,66 @@ msgstr "You do not have permission to update user types"
 
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
+
+msgid "Events for Dojo"
+msgstr "Events for Dojo"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "For"
+msgstr "For"
+
+msgid "Events"
+msgstr "Events"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Capacity"
+msgstr "Capacity"
+
+msgid "Applicants"
+msgstr "Applicants"
+
+msgid "Attending"
+msgstr "Attending"
+
+msgid "Create Event"
+msgstr "Create Event"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Attendance"
+msgstr "Attendance"
+
+msgid "Manage Dojo Events"
+msgstr "Manage Dojo Events"
+
+msgid "Are you sure you want to cancel this event?"
+msgstr "Are you sure you want to cancel this event?"
+
+msgid "Are you sure you want to delete this Dojo?"
+msgstr "Are you sure you want to delete this Dojo?"
+
+msgid "Apply for Event"
+msgstr "Apply for Event"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+msgstr "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+
+msgid "Error applying for event"
+msgstr "Error applying for event: "
+
+
+

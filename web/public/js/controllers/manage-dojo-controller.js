@@ -52,8 +52,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.allSigned = allSigned;
 
-
-
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
       $location.path('/dashboard/edit-dojo/'+ dojo.id);

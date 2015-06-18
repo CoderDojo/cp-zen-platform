@@ -1,16 +1,16 @@
 <div class="cd-dashboard">
 
-  <form>
+  <form name="eventForm" novalidate>
 
     <legend>Create Event</legend>
 
     <div class="form-group">
       <label for="eventName">Dojo Name*</label>
-      <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventName">
+      <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" required>
     </div>
 
     <div class="checkbox">
-      <input type="checkbox" id="is-public" ng-model="isPublic">
+      <input type="checkbox" id="is-public" ng-model="eventInfo.public">
       <label for="is-public">
         is public*
       </label>
@@ -18,85 +18,120 @@
 
     <div class="form-group">
       <label for="description">
-        Description
+        Description*
       </label>
-      <textarea name="description" id="description" class="form-control" rows="3" ng-model="description"></textarea>
+      <textarea name="description" id="description" class="form-control" rows="3" ng-model="eventInfo.description" required></textarea>
     </div>
 
-    <div class="form-group">
-      <label for="weekday">Every:</label>
-      <select class="form-control" id="weekday">
-        <option value="1">Monday</option>
-        <option value="2">Tuesday</option>
-        <option value="3">Wednesday</option>
-        <option value="4">Thursday</option>
-        <option value="5">Friday</option>
-        <option value="6">Saturday</option>
-        <option value="7">Sunday</option>
-      </select>
+    <div ng-init="eventInfo.type='one-off'">
+      <h5>Type</h5>
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
+          Recurring
+        </label>
+      </div>
+
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="type" ng-model="eventInfo.type" id="one-off" value="one-off">
+          One off
+        </label>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="from-date">From:</label>
+    <div class="form-group" ng-if="eventInfo.type === 'one-off'">
+      <label for="date">Date</label>
       <div class="input-group">
-        <input type="date" class="form-control" datepicker-popup ng-model="fromDate" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
+        <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.date" is-open="openDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="date"/>
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="open($event, 'openFromDatePicker')">
+          <button type="button" class="btn btn-default" ng-click="open($event, 'openDatePicker')">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
         </span>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="to-date">To:</label>
-      <div class="input-group">
-        <input type="date" class="form-control" datepicker-popup ng-model="toDate" is-open="openToDatePicker" min-date="fromDate" ng-required="true" close-text="Close" id="to-date"/>
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="open($event, 'openToDatePicker')">
-            <i class="glyphicon glyphicon-calendar"></i>
-          </button>
-        </span>
+    <div ng-if="eventInfo.type === 'recurring'">
+      <div class="form-group">
+        <label for="weekday">Every</label>
+        <select class="form-control" id="weekday" required>
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="7">Sunday</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="from-date">From</label>
+        <div class="input-group">
+          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.date" is-open="openFromDatePicker" min-date="minDate" ng-required="true" close-text="Close" id="from-date"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event, 'openFromDatePicker')">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="to-date">To</label>
+        <div class="input-group">
+          <input type="date" class="form-control" datepicker-popup ng-model="eventInfo.toDate" is-open="openToDatePicker" min-date="eventInfo.date" ng-required="true" close-text="Close" id="to-date"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event, 'openToDatePicker')">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="time">Time:</label>
-      <timepicker id="time" ng-model="time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
+      <label for="time">Time</label>
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian">
       </timepicker>
     </div>
 
     <div class="form-group form-inline">
-      <label for="group-type-1">For:</label>
+      <label for="group-type-1">For</label>
 
-      <div class="checkbox">
-        <input type="checkbox" id="group-type-1" ng-model="groupTypeModel.value1">
-        <label for="group-type-1">
-          Youths < 13
-        </label>
-      </div>
-
-      <div class="checkbox">
-        <input type="checkbox" id="group-type-2" ng-model="groupTypeModel.value2">
-        <label for="group-type-2">
-          Youth > 13
+      <div class="checkbox" ng-repeat="(userType, value) in eventInfo.userTypes">
+        <input type="checkbox" id="{{ userType }}" ng-model="eventInfo.userTypes[userType]">
+        <label for="{{ userType }}">
+          {{ userType }}
         </label>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="location">Location:</label>
-      <input type="text" required name="location" id="location" class="form-control" ng-model="location">
+      <label for="city">City*:</label>
+      <input type="text" required name="city" id="city" class="form-control" ng-model="eventInfo.city">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address*:</label>
+      <input type="text" required name="address" id="address" class="form-control" ng-model="eventInfo.address">
+    </div>
+
+    <div class="form-group">
+      <label for="capacity">Capacity:</label>
+      <input type="number" required name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity">
     </div>
 
     <div class="form-group">
       <label for="invites">Invites:</label>
-      <textarea name="invites" id="invites" class="form-control" rows="3" ng-model="invites"></textarea>
+      <textarea name="invites" id="invites" class="form-control" rows="3" ng-model="eventInfo.invites"></textarea>
     </div>
 
     <div class="btn-toolbar">
-      <button type="button" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-success">Publish</button>
+      <button type="button" class="btn btn-default" ng-click="cancel($event)">Cancel</button>
+      <button type="button" class="btn btn-primary" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo)">Save</button>
+      <button type="button" class="btn btn-success" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo, true)">Publish</button>
     </div>
   </form>
 

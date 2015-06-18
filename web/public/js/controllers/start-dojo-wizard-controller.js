@@ -148,11 +148,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         ]
       };
 
-      cdCountriesService.listPlaces(query).then(function(result) {
+      cdCountriesService.listPlaces(query, function(result) {
         $scope.places = _.map(result, function(place) {
           return _.omit(place, 'entity$');
         });
-      });
+      }, console.error.bind(console));
     };
 
     //--Step One:
@@ -425,10 +425,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
-              $state.go('home', { 
-                bannerType:'success', 
+              $state.go('home', {
+                bannerType:'success',
                 bannerMessage: $translate.instant('dojo.create.success')
-              });  
+              });
             });
           });
         })
@@ -486,8 +486,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', 
-      '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 
-      'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'cdUsersService', 'Geocoder', 
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state',
+      '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler',
+      'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'cdUsersService', 'Geocoder',
       'gmap', '$translate',startDojoWizardCtrl]);
 

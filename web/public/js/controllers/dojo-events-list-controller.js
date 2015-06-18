@@ -1,14 +1,18 @@
  'use strict';
 
-function cdDojoEventsListCtrl($scope, cdEventsService, tableUtils, alertService) {
+function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdEventsService, tableUtils, alertService, auth) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
+  var currentUser;
+
+  auth.get_loggedin_user(function (user) {
+    currentUser = user;
+  });
 
   $scope.pageChanged = function () {
     $scope.loadPage($scope.filter, false);
   };
-
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
@@ -46,7 +50,32 @@ function cdDojoEventsListCtrl($scope, cdEventsService, tableUtils, alertService)
 
   $scope.loadPage($scope.filter, true);
 
-  //TODO: implement applyForEvent function
+  $scope.applyForEvent = function (event) {
+    if(!_.isEmpty(currentUser)) {
+      var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: '/dojos/template/events/apply',
+        controller: 'apply-for-event-controller',
+        size: 'lg',
+        resolve: {
+          eventData: function () {
+            return event;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (status) {
+        if(status === 'success') {
+          alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+        } else {
+          alertService.showError($translate.instant('Error applying for event') + status);
+        }
+      });
+    } else {
+      $state.go('register-account', {referer:$location.url()});
+    }
+    
+  }
 
   $scope.toggleSort = function ($event, columnName) {
     var className, descFlag, sortConfig = {},sort = [], currentTargetEl;
@@ -94,9 +123,9 @@ function cdDojoEventsListCtrl($scope, cdEventsService, tableUtils, alertService)
 
     $scope.sort = sort;
     $scope.loadPage($scope.filter, true);
-  };
+  }
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('dojo-events-list-controller', ['$scope', 'cdEventsService', 'tableUtils', 'alertService', cdDojoEventsListCtrl]);
+    .controller('dojo-events-list-controller', ['$scope', '$modal', '$state', '$location', '$translate', 'cdEventsService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
