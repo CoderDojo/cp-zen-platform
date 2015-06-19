@@ -7,15 +7,15 @@
     </div>
     <form name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag">
       <div class="form-group">
-        <label for="name" class="col-sm-4 control-label">Name: </label>
+        <label for="fullname" class="col-sm-4 control-label">Name* </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="name" placeholder="Name" ng-model="profile.name">
+          <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="Name" ng-model="profile.name">
         </div>
       </div>
-      <div class="form-group">
-        <label for="alias" class="col-sm-4 control-label">Alias: </label>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])">
+        <label for="alias" class="col-sm-4 control-label">Alias* </label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" required placeholder="Alias" ng-model="profile.alias">
+          <input type="text" name="alias" class="form-control" placeholder="Alias" ng-model="profile.alias">
         </div>
       </div>
       <div class="form-group">
@@ -31,7 +31,7 @@
                  max-date="today"
                  datepicker-options="dateOptions" />
 
-          <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
+          <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </div>
@@ -65,61 +65,61 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="address" class="col-sm-4 control-label">Address: </label>
+        <label for="address" class="col-sm-4 control-label">Address* </label>
         <div class="col-sm-8">
-          <input type="text"  class="form-control" id="address" placeholder="Address" ng-model="profile.address">
+          <input type="text"  required required-message="'Address is required'" class="form-control" id="address" placeholder="Address" ng-model="profile.address">
         </div>
       </div>
       <div class="form-group">
-        <label for="email" class="col-sm-4 control-label">Email: </label>
+        <label for="email" class="col-sm-4 control-label">Email </label>
         <div class="col-sm-8">
           <input type="text"  class="form-control" id="email" placeholder="Email" ng-model="profile.email">
         </div>
       </div>
       <div class="form-group">
-        <label for="phone" class="col-sm-4 control-label">Phone: </label>
+        <label for="phone" class="col-sm-4 control-label">Phone </label>
         <div class="col-sm-8">
           <input type="text"  class="form-control" id="phone" placeholder="Phone" ng-model="profile.phone">
         </div>
       </div>
       <div class="form-group">
-        <label for="linkedin" class="col-sm-4 control-label">LinkedIn: </label>
+        <label for="linkedin" class="col-sm-4 control-label">LinkedIn </label>
         <div class="col-sm-8">
           <input type="text"  class="form-control" id="linkedin" placeholder="LinkedIn" ng-model="profile.linkedin">
         </div>
       </div>
       <div class="form-group">
-        <label for="twitter" class="col-sm-4 control-label">Twitter: </label>
+        <label for="twitter" class="col-sm-4 control-label">Twitter </label>
         <div class="col-sm-8">
           <input type="text"  class="form-control" id="twitter" placeholder="Twitter" ng-model="profile.twitter">
         </div>
       </div>
-      <div class="form-group">
-        <label for="notes" class="col-sm-4 control-label">Notes: </label>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
+        <label for="notes" class="col-sm-4 control-label">Notes </label>
         <div class="col-sm-8">
           <textarea class="form-control"  placeholder="Notes" rows="3"></textarea>
         </div>
       </div>
-      <div class="form-group">
-        <label for="projects" class="col-sm-4 control-label">Projects: </label>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <label for="projects" class="col-sm-4 control-label">Projects </label>
         <div class="col-sm-8">
           <tags-input ng-model="profile.projects"  placeholder="Projects"></tags-input>
         </div>
       </div>
-      <div class="form-group">
-        <label for="programmingLanguages" class="col-sm-4 control-label">Programming Languages: </label>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <label for="programmingLanguages" class="col-sm-4 control-label">Programming Languages </label>
         <div class="col-sm-8">
           <tags-input ng-model="profile.programmingLanguages"  placeholder="Programming Languages"></tags-input>
         </div>
       </div>
-      <div class="form-group">
-        <label for="languagesSpoken" class="col-sm-4 control-label">Languages Spoken: </label>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <label for="languagesSpoken" class="col-sm-4 control-label">Languages Spoken </label>
         <div class="col-sm-8">
           <tags-input ng-model="profile.languagesSpoken"  placeholder="Languages Spoken"></tags-input>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-4 control-label">Gender: </label>
+        <label class="col-sm-4 control-label">Gender </label>
         <div class="col-sm-8">
           <label class="radio-inline">
             <input type="radio"  ng-model="profile.gender" value="Female"> Female
@@ -130,7 +130,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-4 control-label">Private profile: </label>
+        <label class="col-sm-4 control-label">Private profile </label>
         <div class="col-sm-8">
           <label class="radio-inline">
             <input type="radio"  ng-model="profile.private" value="true"> Yes
@@ -140,7 +140,7 @@
           </label>
         </div>
       </div>
-      <br>
+      <br> 
       <button type="submit" class="btn btn-primary pull-right">Save</button>
     </form>
   </div>

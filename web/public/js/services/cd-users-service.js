@@ -38,6 +38,9 @@ function cdUsersService(cdApi, $q){
     },
     saveProfile: function(profile, win, fail) {
       cdApi.post('profiles/create', {profile: profile}, win, fail || topfail);
+    },
+    saveYouthProfile: function(profile, win, fail) {
+      cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
     }
   };
 }

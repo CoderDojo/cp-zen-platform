@@ -163,7 +163,7 @@
           controller: 'accept-dojo-user-request-controller'
         })
         .state('add-child',{
-          url: "/dashboard/profile/child/add/:parentId",
+          url: "/dashboard/profile/child/add/:userType/:parentId",
           templateUrl: '/dojos/template/add-child',
           controller: 'add-child-controller'
         })

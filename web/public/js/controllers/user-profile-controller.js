@@ -9,6 +9,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return;
   }
 
+  $scope.youthUser = false;
+
   $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
@@ -79,6 +81,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     function win(profile){
       $scope.profile = profile;
+      alertService.showAlert('Profile has been saved successfully');
     }
 
     function fail(){
@@ -91,6 +94,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     delete profileToBeSaved.userTypes;
     delete profileToBeSaved.ownProfileFlag;
     delete profileToBeSaved.widget;
+    delete profileToBeSaved.dojos;
+    delete profileToBeSaved.password;
 
     cdUsersService.saveProfile(profileToBeSaved, win, fail);
   };

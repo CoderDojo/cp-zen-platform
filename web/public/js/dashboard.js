@@ -234,6 +234,11 @@ app
         templateUrl: '/dojos/template/accept-dojo-user-request',
         controller: 'accept-dojo-user-request-controller'
       })
+      .state('add-child',{
+        url: "/dashboard/profile/child/add/:userType/:parentId",
+        templateUrl: '/dojos/template/add-child',
+        controller: 'add-child-controller'
+      })
       .state("user-profile", {
         url: "/dashboard/profile/:userId/",
         templateUrl: '/dojos/template/user-profile',
