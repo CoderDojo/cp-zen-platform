@@ -11,7 +11,12 @@
   margin: 0px;
 }
 .cdbtn {
-  line-height: 14px;
-  padding: 0px 3px 1px 2px;
-  margin: 0px;
+  text-align: center;
+  font-size: 12px;
+  width: 14px;
+  height: 14px;
+  line-height: 8px;
+  border-radius: 100%;
+  padding: 0px 0px 1px 0px;
+  font-weight: bold;
 }

@@ -48,7 +48,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
 
   $scope.$on('$viewContentLoaded', function() {
     jQuery('body').cookieDisclaimer({ 
-      text: 'To browse this site you need to accept our cookie policy (<a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2">Read More</a>).',
+      text: 'By using this website you agree to the use of cookies. You can read about our cookie policy <a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2">here</a>.',
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
       acceptBtn: { text: 'x' },
@@ -57,7 +57,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
         name: "cookieDisclaimer",
         val: "confirmed",
         path: "/",
-        expire: 1
+        expire: 365
       }
     });
   });
