@@ -2,7 +2,6 @@
 
 function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap) {
     $scope.stepFinishedLoading = false;
-    $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
     var stepNames = [
@@ -36,7 +35,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         };
 
         cdDojoService.searchDojoLeads(query).then(function(result) {
-
           var results = _.map(result.records, function(dojoLead) {
             return _.omit(dojoLead, 'entity$');
           });
@@ -49,29 +47,37 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             }
           });
 
-          debugger
           currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
           if (currentStepInt === 4) {
             //Check if user has deleted the Dojo
             cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
               if (!_.isEmpty(response)) {
-                $scope.wizardComplete = true;
+                $state.go('home',
+                  { bannerType:'success',
+                    bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified. ' +
+                    'If you need help completing your initial Dojo application, please contact us at info@coderdojo.org',
+                    bannerTimeCollapse: 150000
+                  });
               } else {
                 //Go back to Dojo Listing step
                 initStep(3);
               }
             });
-          } else if(results.total > 0 && !uncompletedDojoLead) {
+          } else if(results.length > 0 && !uncompletedDojoLead) {
+            //make a copy of dojoLead here then initStep 2
+            var dojoLead = _.cloneDeep(results[0]);
+            dojoLead.completed = false;
+            dojoLead.currentStep= 2;
+            dojoLead.application.dojoListing = {};
+            dojoLead.application.setupYourDojo = {};
+            delete dojoLead.id;
+
+            cdDojoService.saveDojoLead(dojoLead, function(response) {
               initStep(2);
+            });
           } else {
-            initStep(1);
+            uncompletedDojoLead ? initStep(uncompletedDojoLead.currentStep) : initStep(1);
           }
-/*
-          if(dojoLead.currentStep) {
-            initStep(dojoLead.currentStep);
-          } else {
-            initStep(1);
-          }*/
         });
       }
     }, function () {
@@ -433,7 +439,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               $state.go('home',
               { bannerType:'success',
                 bannerMessage: 'Thank you for submitting your dojo listing. \
-                A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'
+                A member from the CoderDojo Foundation team will review your listing and be in touch shortly.',
+                bannerTimeCollapse: 150000
               });
             });
           });
