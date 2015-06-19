@@ -1008,5 +1008,56 @@ msgstr "Thank You. Your application has been received. You will be notified by e
 msgid "Error applying for event"
 msgstr "Error applying for event: "
 
+msgid "Add the event name"
+msgstr "Add the event name"
 
+msgid "Add a description"
+msgstr "Add a description"
 
+msgid "One off"
+msgstr "One off"
+
+msgid "Every"
+msgstr "Every"
+
+msgid "From"
+msgstr "From"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "is public"
+msgstr "is public"
+
+msgid "Event Name"
+msgstr "Event Name"
+
+msgid "To"
+msgstr "To"
+
+msgid "For"
+msgstr "For"
+
+msgid "City"
+msgstr "City"
+
+msgid "Add a city name"
+msgstr "Add a city name"
+
+msgid "Add the address to the event"
+msgstr "Add the address to the event"
+
+msgid "Add the maximum amount of participants"
+msgstr "Add the maximum amount of participants"
+
+msgid "Invites"
+msgstr "Invites"
+
+msgid "Invite dojo users"
+msgstr "Invite dojo users"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Publish"
+msgstr "Publish"
