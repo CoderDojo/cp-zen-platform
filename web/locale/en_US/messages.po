@@ -1020,5 +1020,5 @@ msgstr "Parents/Guardians"
 msgid "Approve"
 msgstr "Approve"
 
-
-
+msgid "Error updating application"
+msgstr "Error updating application"

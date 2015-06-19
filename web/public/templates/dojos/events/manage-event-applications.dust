@@ -10,11 +10,10 @@
         <table id="eventApplicationsTable" class="table cd-grid-table">
           <thead>
             <tr>
-              <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-              <th>{@i18n key="Age"/}</th>
-              <th>{@i18n key="Parents/Guardians"/}</th>
-              <th>{@i18n key="Status"/}</th>
-              <th>{@i18n key="Approve"/}</th>
+              <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
+              <th class="ten-percent-width">{@i18n key="Age"/}</th>
+              <th class="ten-percent-width">{@i18n key="Parents/Guardians"/}</th>
+              <th class="ten-percent-width">{@i18n key="Approve"/}</th>
             </tr>
           </thead>
           <tbody>
@@ -22,10 +21,9 @@
               <td>{{ application.name }}</td>
               <td></td>
               <td></td>
-              <td>{{ application.status }}</td>
               <td class="ten-percent-width">
                 <div class="checkbox">
-                  <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox" ng-checked="userIsApproved(application)" ng-click="approveApplication(application)">
+                  <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox" ng-checked="userIsApproved(application)" ng-click="updateApplicationStatus(application)">
                   <label for="applicationApprovedCheckbox"></label>
                 </div>
               </td>

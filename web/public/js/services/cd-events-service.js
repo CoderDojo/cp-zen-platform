@@ -26,8 +26,8 @@ function cdEventsService(cdApi, $q){
     loadEventApplications: function(eventId, win, fail) {
       cdApi.get('events/applications/' + eventId, win, fail || topfail);
     },
-    approveApplication: function(application, win, fail) {
-      cdApi.put('events/applications/approve/' + application.id, {application:application}, win, fail || topfail);
+    updateApplication: function(application, win, fail) {
+      cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
     }
   };
 }

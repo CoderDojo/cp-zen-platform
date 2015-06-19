@@ -141,7 +141,7 @@
           templateUrl: '/dojos/template/events/manage-event-applications',
           controller: 'manage-event-applications-controller',
           ncyBreadcrumb: {
-            label: 'Manage Dojo Event Applications'
+            label: '{{manageDojoEventApplicationsPageTitle}}'
           }
         })
         .state("create-dojo-event", {
