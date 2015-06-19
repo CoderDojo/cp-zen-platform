@@ -1008,5 +1008,17 @@ msgstr "Thank You. Your application has been received. You will be notified by e
 msgid "Error applying for event"
 msgstr "Error applying for event: "
 
+msgid "All"
+msgstr "All"
 
+msgid "Age"
+msgstr "Age"
 
+msgid "Parents/Guardians"
+msgstr "Parents/Guardians"
+
+msgid "Approve"
+msgstr "Approve"
+
+msgid "Error updating application"
+msgstr "Error updating application"

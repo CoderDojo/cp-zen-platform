@@ -136,6 +136,14 @@
             label: '{{manageDojoEventsPageTitle}}'
           }
         })
+        .state("my-dojos.manage-dojo-events.manage-applications", {
+          url: "/:eventId/applications",
+          templateUrl: '/dojos/template/events/manage-event-applications',
+          controller: 'manage-event-applications-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventApplicationsPageTitle}}'
+          }
+        })
         .state("create-dojo-event", {
           url: "/dashboard/dojo/:dojoId/event-form",
           templateUrl: '/dojos/template/events/dojo-event-form',
