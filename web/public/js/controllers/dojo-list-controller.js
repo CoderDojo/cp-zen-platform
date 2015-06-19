@@ -51,6 +51,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
       text: 'To browse this site you need to accept our cookie policy (<a href="http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2">Read More</a>).',
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
+      acceptBtn: { text: 'x' },
       policyBtn: { active: false },
       cookie: {
         name: "cookieDisclaimer",
