@@ -27,7 +27,9 @@
     cdEventsService,
     cdDojoService,
     cdCountriesService,
-    auth
+    auth,
+    $translate,
+    cdLanguagesService
   ) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
@@ -64,25 +66,25 @@
     $scope.weekdayPicker = {};
     $scope.weekdayPicker.weekdays = [{
       id: 0,
-      name: 'Sunday'
+      name: $translate.instant('Sunday')
     }, {
       id: 1,
-      name: 'Monday'
+      name: $translate.instant('Monday')
     }, {
       id: 2,
-      name: 'Tuesday'
+      name: $translate.instant('Tuesday')
     }, {
       id: 3,
-      name: 'Wednesday'
+      name: $translate.instant('Wednesday')
     }, {
       id: 4,
-      name: 'Thursday'
+      name: $translate.instant('Thursday')
     }, {
       id: 5,
-      name: 'Friday'
+      name: $translate.instant('Friday')
     }, {
       id: 6,
-      name: 'Saturday'
+      name: $translate.instant('Saturday')
     }];
 
     $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
@@ -257,6 +259,8 @@
       'cdDojoService',
       'cdCountriesService',
       'auth',
+      '$translate',
+      'cdLanguagesService',
       dojoEventFormCtrl
     ]);
 
