@@ -1011,8 +1011,14 @@ msgstr "Error applying for event: "
 msgid "Add the event name"
 msgstr "Add the event name"
 
+msgid "All"
+msgstr "All"
+
 msgid "Add a description"
 msgstr "Add a description"
+
+msgid "Age"
+msgstr "Age"
 
 msgid "One off"
 msgstr "One off"
@@ -1061,3 +1067,12 @@ msgstr "Save"
 
 msgid "Publish"
 msgstr "Publish"
+
+msgid "Parents/Guardians"
+msgstr "Parents/Guardians"
+
+msgid "Approve"
+msgstr "Approve"
+
+msgid "Error updating application"
+msgstr "Error updating application"

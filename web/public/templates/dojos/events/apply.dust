@@ -7,11 +7,11 @@
 
   <p><b>{@i18n key="Date"/}</b>: {{ event.date }}</p>
 
-  <p><b>{@i18n key="CityTown"/}:</b> {{ event.city }}</p>
+  <p><b>{@i18n key="CityTown"/}:</b> {{ event.city.nameWithHierarchy }}</p>
 
   <p><b>{@i18n key="Address"/}:</b> {{ event.address }}</p>
 
-  <p><b>{@i18n key="For"/}:</b> {{ event.userTypes }}</p>
+  <p><b>{@i18n key="For"/}:</b> {{ event.for }}</p>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="apply()">{@i18n key="Apply"/}</button>

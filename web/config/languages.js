@@ -5,8 +5,8 @@ module.exports = [
     "country": "United States"
   },
   {
-    "name": "Deutsche",
+    "name": "Deutsch",
     "code": "de_DE",
-    "country": "Deutscheland"
+    "country": "Deutschland"
   }
 ];

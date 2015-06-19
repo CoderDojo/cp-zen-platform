@@ -39,8 +39,17 @@ function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdE
     cdEventsService.search(dojoQuery).then(function (result) {
       var events = [];
       _.each(result.hits, function (event) {
-        event._source.date = moment(event._source.date).format('MMMM Do YYYY, h:mm');
-        events.push(event._source);
+        var event = event._source;
+        event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
+        var userTypes = event.userTypes;
+        if(_.contains(userTypes, 'attendee-u13') && _.contains(userTypes, 'attendee-o13')) {
+          event.for = $translate.instant('All');
+        } else if(_.contains(userTypes, 'attendee-u13')) {
+          event.for = '< 13';
+        } else {
+          event.for = '> 13';
+        }
+        events.push(event);
       });
       $scope.events = events;
       $scope.totalItems = result.total;
