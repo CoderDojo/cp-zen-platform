@@ -8,7 +8,7 @@
     while (currentDate <= dateEnd) {
       currentDate = new Date(currentDate);
 
-      if(currentDate.getDay() === targetWeekday){
+      if(currentDate.getDay() === targetWeekday) {
         dates.push(currentDate);
       }
 
@@ -33,7 +33,6 @@
   ) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
-
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
@@ -144,19 +143,43 @@
       return $scope.dojoUsers;
     };
 
-    // Get and expose dojo's country code
+    // Load dojo
     cdDojoService.load(dojoId, function(dojoInfo){
       $scope.eventInfo.country = dojoInfo.country;
+      $scope.eventInfo.city = dojoInfo.place;
+
+      var position = dojoInfo.coordinates.split(',');
+      var markerPosition = new google.maps.LatLng(parseFloat(position[0]), parseFloat(position[1]));
+
+      $scope.googleMaps = {
+        mapOptions: {
+          center: markerPosition,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        },
+        onTilesLoaded: onTilesLoaded
+      };
+
+      function onTilesLoaded(event) {
+        var map = $scope.googleMaps.map;
+
+        $scope.googleMaps.marker = new google.maps.Marker({
+          map: map,
+          position: markerPosition
+        });
+
+        google.maps.event.clearListeners(map, 'tilesloaded');
+      }
     }, console.error.bind(console));
 
 
-    // Get and expose user id
+    // Load user
     auth.get_loggedin_user(function(user) {
       $scope.eventInfo.userId = user.id;
     }, console.error.bind(console));
 
 
-    // Get and expose dojo users
+    // Load dojo user
     cdDojoService.loadDojoUsers({
       dojoId: dojoId
     }, function(users) {
@@ -164,7 +187,7 @@
     }, console.error.bind(console));
 
 
-    // Get and expose user types
+    // Load user types
     cdDojoService.getUserTypes(function(userTypes) {
       // Add missing user type
       userTypes.unshift('attendee-u13');
