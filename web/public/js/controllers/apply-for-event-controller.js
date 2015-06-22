@@ -1,25 +1,33 @@
 'use strict';
 
-function cdApplyForEventCtrl($scope, $modalInstance, $stateParams, cdEventsService, eventData) {
-
-  var eventId = eventData.id;
-
-  cdEventsService.getEvent(eventId, function (response) {
-    response.date = moment(response.date).format('MMMM Do YYYY, h:mm');
-    $scope.event = response;
-  });
+function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location, alertService, cdEventsService) {
+  var eventIndex = $scope.tableRowIndexExpandedCurr;
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $scope.showEventInfo(eventIndex, $scope.event.id);
   }
 
   $scope.apply = function () {
-    cdEventsService.applyForEvent(eventId, function (response) {
-      $modalInstance.close(response.status);
-    });
+    if(!_.isEmpty($scope.currentUser)) {
+      if($scope.event.id) {
+        cdEventsService.applyForEvent($scope.event.id, function (response) {
+          var status = response.status;
+          if(status === 'success') {
+            alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+            $scope.showEventInfo(eventIndex, $scope.event.id);
+          } else {
+            alertService.showError($translate.instant('Error applying for event') + status);
+          }
+        });
+      } else {
+        alertService.showError($translate.instant('Error applying for event'));
+      }
+    } else {
+      $state.go('register-account', {referer:$location.url()});
+    }
   }
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('apply-for-event-controller', ['$scope', '$modalInstance', '$stateParams', 'cdEventsService', 'eventData', cdApplyForEventCtrl]);
+    .controller('apply-for-event-controller', ['$scope', '$state', '$stateParams', '$translate', '$location', 'alertService','cdEventsService', cdApplyForEventCtrl]);

@@ -39,6 +39,7 @@
 
     <!-- Angular ngTagsInput -->
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.bootstrap.min.css">
 
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
@@ -132,6 +133,7 @@
     <script src="/js/controllers/manage-dojo-events-controller.js"></script>
     <script src="/js/controllers/dojo-event-form-controller.js"></script>
     <script src="/js/controllers/apply-for-event-controller.js"></script>
+    <script src="/js/controllers/manage-event-applications-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>
@@ -145,6 +147,7 @@
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
     <script src="/js/directives/cd-dojo-events-list.js"></script>
+    <script src="/js/directives/cd-apply-for-event.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>

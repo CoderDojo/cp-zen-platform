@@ -22,6 +22,12 @@ function cdEventsService(cdApi, $q){
     },
     applyForEvent: function(eventId, win, fail) {
       cdApi.get('events/' + eventId + '/apply', win, fail || topfail);
+    },
+    loadEventApplications: function(eventId, win, fail) {
+      cdApi.get('events/applications/' + eventId, win, fail || topfail);
+    },
+    updateApplication: function(application, win, fail) {
+      cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
     }
   };
 }

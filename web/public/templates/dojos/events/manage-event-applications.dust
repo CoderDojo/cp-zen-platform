@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-12 table-responsive">
+    <div class="row">
+      <div class="col-md-12 table-responsive">
+        <div class="margin-bottom-15 col-md-8">
+          <span class="col-md-3"><b>Capacity:</b> {{ event.capacity }}</span>
+          <span class="col-md-3"><b>Attending:</b> {{ attending }}</span>
+          <span class="col-md-3"><b>Waitlist:</b> {{ waitlist }}</span>
+        </div>
+        <table id="eventApplicationsTable" class="table cd-grid-table">
+          <thead>
+            <tr>
+              <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
+              <th class="ten-percent-width">{@i18n key="Age"/}</th>
+              <th class="ten-percent-width">{@i18n key="Parents/Guardians"/}</th>
+              <th class="ten-percent-width">{@i18n key="Approve"/}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="application in applications">
+              <td>{{ application.name }}</td>
+              <td></td>
+              <td></td>
+              <td class="ten-percent-width">
+                <div class="checkbox">
+                  <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox" ng-checked="userIsApproved(application)" ng-click="updateApplicationStatus(application)">
+                  <label for="applicationApprovedCheckbox"></label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row col-lg-6 col-lg-offset-4">
+    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+  </div>
+</div>

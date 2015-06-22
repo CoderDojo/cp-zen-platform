@@ -1,13 +1,13 @@
  'use strict';
 
-function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdEventsService, tableUtils, alertService, auth) {
+function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsService, tableUtils, alertService, auth) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
-  var currentUser;
+  $scope.currentUser;
 
   auth.get_loggedin_user(function (user) {
-    currentUser = user;
+    $scope.currentUser = user;
   });
 
   $scope.pageChanged = function () {
@@ -39,8 +39,17 @@ function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdE
     cdEventsService.search(dojoQuery).then(function (result) {
       var events = [];
       _.each(result.hits, function (event) {
-        event._source.date = moment(event._source.date).format('MMMM Do YYYY, h:mm');
-        events.push(event._source);
+        var event = event._source;
+        event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
+        var userTypes = event.userTypes;
+        if(_.contains(userTypes, 'attendee-u13') && _.contains(userTypes, 'attendee-o13')) {
+          event.for = $translate.instant('All');
+        } else if(_.contains(userTypes, 'attendee-u13')) {
+          event.for = '< 13';
+        } else {
+          event.for = '> 13';
+        }
+        events.push(event);
       });
       $scope.events = events;
       $scope.totalItems = result.total;
@@ -50,31 +59,23 @@ function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdE
 
   $scope.loadPage($scope.filter, true);
 
-  $scope.applyForEvent = function (event) {
-    if(!_.isEmpty(currentUser)) {
-      var modalInstance = $modal.open({
-        animation: true,
-        templateUrl: '/dojos/template/events/apply',
-        controller: 'apply-for-event-controller',
-        size: 'lg',
-        resolve: {
-          eventData: function () {
-            return event;
-          }
-        }
-      });
+  $scope.tableRowIndexExpandedCurr = '';
+ 
+  $scope.eventCollapsed = function (eventIndex) {
+    $scope.events[eventIndex].isCollapsed = false;
+  }
 
-      modalInstance.result.then(function (status) {
-        if(status === 'success') {
-          alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
-        } else {
-          alertService.showError($translate.instant('Error applying for event') + status);
-        }
-      });
-    } else {
-      $state.go('register-account', {referer:$location.url()});
+  $scope.showEventInfo = function (index, eventId) {
+    if (typeof $scope.events[index].isCollapsed === 'undefined') {
+      $scope.eventCollapsed(index);
     }
-    
+
+    if ($scope.events[index].isCollapsed === false) {
+      $scope.tableRowIndexExpandedCurr = index;
+      $scope.events[index].isCollapsed = true;
+    } else if ($scope.events[index].isCollapsed === true) {
+      $scope.events[index].isCollapsed = false;
+    }
   }
 
   $scope.toggleSort = function ($event, columnName) {
@@ -87,7 +88,6 @@ function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdE
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-
       return result > -1 ? true : false;
     }
 
@@ -128,4 +128,4 @@ function cdDojoEventsListCtrl($scope, $modal, $state, $location, $translate, cdE
 }
 
 angular.module('cpZenPlatform')
-    .controller('dojo-events-list-controller', ['$scope', '$modal', '$state', '$location', '$translate', 'cdEventsService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
+    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', 'cdEventsService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);

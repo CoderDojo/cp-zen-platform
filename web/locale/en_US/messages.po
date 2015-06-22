@@ -1010,3 +1010,94 @@ msgstr "Error applying for event: "
 
 msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
 msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
+
+msgid "Add the event name"
+msgstr "Add the event name"
+
+msgid "All"
+msgstr "All"
+
+msgid "Add a description"
+msgstr "Add a description"
+
+msgid "Age"
+msgstr "Age"
+
+msgid "One off"
+msgstr "One off"
+
+msgid "Every"
+msgstr "Every"
+
+msgid "From"
+msgstr "From"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "is public"
+msgstr "is public"
+
+msgid "Event Name"
+msgstr "Event Name"
+
+msgid "To"
+msgstr "To"
+
+msgid "For"
+msgstr "For"
+
+msgid "City"
+msgstr "City"
+
+msgid "Add a city name"
+msgstr "Add a city name"
+
+msgid "Add the address to the event"
+msgstr "Add the address to the event"
+
+msgid "Add the maximum amount of participants"
+msgstr "Add the maximum amount of participants"
+
+msgid "Invites"
+msgstr "Invites"
+
+msgid "Invite dojo users"
+msgstr "Invite dojo users"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Publish"
+msgstr "Publish"
+
+msgid "Parents/Guardians"
+msgstr "Parents/Guardians"
+
+msgid "Approve"
+msgstr "Approve"
+
+msgid "Error updating application"
+msgstr "Error updating application"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Saturday"
+msgstr "Saturday"
+>>>>>>> master

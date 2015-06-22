@@ -1,43 +1,45 @@
 <div ncy-breadcrumb></div>
-<legend>{@i18n key="Events for Dojo"/}: {{ dojo.name }}</legend>
-<div class="row">
-  <div class="col-md-12 table-responsive">
-    <div class="row">
-      <div class="col-md-12 table-responsive">
-        <table id="dojoEventsTable" class="table cd-grid-table">
-          <thead>
-            <tr>
-              <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-              <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
-              <th>{@i18n key="Capacity"/}</th>
-              <th>{@i18n key="Applicants"/}</th>
-              <th>{@i18n key="Attending"/}</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="event in events">
-              <td>{{ event.name }}</td>
-              <td>{{ event.date }}</td>
-              <td>{{ event.capacity }}</td>
-              <td>{{ event.applicants.length }}</td>
-              <td>{{ event.applicants.length }}</td>
-              <td class="pointer"><a ui-sref="editEvent({eventId:event.id})">{@i18n key="Edit"/}</a></td>
-              <td class="pointer"><a ui-sref="manageEvent({eventId:event.id})">{@i18n key="Manage"/}</a></td>
-              <td class="pointer"><a ui-sref="manageAttendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>
-              <td class="pointer"><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
-            </tr>
-          </tbody>
-        </table>
+<div ui-view>
+  <legend>{@i18n key="Events for Dojo"/}: {{ dojo.name }}</legend>
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <table id="dojoEventsTable" class="table cd-grid-table">
+            <thead>
+              <tr>
+                <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
+                <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
+                <th>{@i18n key="Capacity"/}</th>
+                <th>{@i18n key="Applicants"/}</th>
+                <th>{@i18n key="Attending"/}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="event in events">
+                <td>{{ event.name }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.capacity }}</td>
+                <td>{{ event.applicants.length }}</td>
+                <td>{{ event.applicants.length }}</td>
+                <td class="pointer"><a ui-sref="editEvent({eventId:event.id})">{@i18n key="Edit"/}</a></td>
+                <td class="pointer"><a ui-sref=".manage-applications({eventId:event.id})">{@i18n key="Manage"/}</a></td>
+                <td class="pointer"><a ui-sref="manageAttendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>
+                <td class="pointer"><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+      <div class="row col-lg-6 col-lg-offset-4">
+      <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
-    <div class="row col-lg-6 col-lg-offset-4">
-    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+    <span class="help-block"></span>
+    <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
   </div>
-  <span class="help-block"></span>
-  <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
 </div>
 
