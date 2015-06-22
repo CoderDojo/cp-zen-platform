@@ -147,6 +147,7 @@
     cdDojoService.load(dojoId, function(dojoInfo){
       $scope.eventInfo.country = dojoInfo.country;
       $scope.eventInfo.city = dojoInfo.place;
+      $scope.eventInfo.address = dojoInfo.address1;
 
       var position = dojoInfo.coordinates.split(',');
       var markerPosition = new google.maps.LatLng(parseFloat(position[0]), parseFloat(position[1]));
@@ -165,6 +166,8 @@
 
         $scope.googleMaps.marker = new google.maps.Marker({
           map: map,
+          draggable:true,
+          animation: google.maps.Animation.DROP,
           position: markerPosition
         });
 
@@ -216,56 +219,33 @@
       $event.preventDefault();
       $event.stopPropagation();
 
+      var eventPosition = {
+        lat: $scope.googleMaps.marker.getPosition().lat(),
+        lng: $scope.googleMaps.marker.getPosition().lng()
+      };
+
       var userTypes = Object.keys(eventInfo.userTypes).filter(function(key){
         return eventInfo.userTypes[key];
       });
 
-      var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
-      if(isDateRange) {
-        var eventDates = getEveryTargetWeekdayInDateRange(eventInfo.date, eventInfo.toDate, $scope.weekdayPicker.selection.id);
+      // Extend eventInfo
+      eventInfo.position = eventPosition;
+      eventInfo.status = publish ? 'published' : 'saved';
+      eventInfo.userTypes = userTypes;
 
-        // Todo: Refactor, add createEvents endpoint which takes a list of events
-        return async.forEachOf(eventDates, function(value, key, callback) {
-          cdEventsService.createEvent({
-              name: eventInfo.name,
-              date: value,
-              country: eventInfo.country,
-              city: eventInfo.city,
-              address: eventInfo.address,
-              description: eventInfo.description,
-              capacity: eventInfo.capacity,
-              public: eventInfo.public,
-              user_types: userTypes,
-              dojo_id: eventInfo.dojoId,
-              invites: eventInfo.invites,
-              status: publish ? 'published' : 'saved',
-              created_at: new Date(),
-              created_by: eventInfo.userId
-            },
-            callback,
-            callback
-          );
-        }, function() {
-          goToManageDojoEvents();
-        });
+      var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
+
+      if(eventInfo.type === 'recurring' && isDateRange) {
+        // Extend eventInfo
+        eventInfo.dates = getEveryTargetWeekdayInDateRange(
+          eventInfo.date,
+          eventInfo.toDate,
+          $scope.weekdayPicker.selection.id
+        );
       }
 
-      cdEventsService.createEvent({
-          name: eventInfo.name,
-          date: eventInfo.date,
-          country: eventInfo.country,
-          city: eventInfo.city,
-          address: eventInfo.address,
-          description: eventInfo.description,
-          capacity: eventInfo.capacity,
-          public: eventInfo.public,
-          user_types: userTypes,
-          dojo_id: eventInfo.dojoId,
-          invites: eventInfo.invites,
-          status: publish ? 'published' : 'saved',
-          created_at: new Date(),
-          created_by: eventInfo.userId
-        },
+      cdEventsService.createEvent(
+        eventInfo,
         goToManageDojoEvents,
         console.error.bind(console)
       );
