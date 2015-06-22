@@ -76,7 +76,14 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               initStep(2);
             });
           } else {
-            uncompletedDojoLead ? initStep(uncompletedDojoLead.currentStep) : initStep(1);
+            if(uncompletedDojoLead){
+              cdAgreementsService.loadUserAgreement(user.id, function(response){
+                response && response.id ? initStep(uncompletedDojoLead.currentStep) : initStep(1, 'charter')
+              });
+            } else {
+              //go to champion registration page
+              initStep(1);
+            }
           }
         });
       }
@@ -85,13 +92,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       initStep(0);
     });
 
-    function initStep (step) {
+    function initStep (step, subStep) {
       switch(step) {
         case 0:
           setupStep1();
           break;
         case 1:
-          setupStep2();
+          setupStep2(subStep);
           break;
         case 2:
           setupStep3();
@@ -223,51 +230,64 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--
 
     //--Step Two:
-    function setupStep2() {
+    function setupStep2(subStep) {
       $scope.hideIndicators = false;
       currentStepInt = 1;
-      $scope.championRegistrationFormVisible = true;
-      var currentUser;
-      $scope.champion = {};
-      auth.get_loggedin_user(function (user) {
-        currentUser = user;
-        if(currentUser) {
-          $scope.champion.email = currentUser.email;
-          $scope.champion.name = currentUser.name;
-        }
-      });
-
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-      };
-
-      $scope.picker = {opened :false};
-
-      $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.picker.opened = true;
-      };
-
-      $scope.today = new Date();
-      $scope.answers = ['Yes', 'No'];
-
-      $scope.save = function(champion) {
-        var dojoLead = {application:{}};
-        dojoLead.application.championDetails = champion;
-        dojoLead.userId = currentUser.id;
-        dojoLead.email = currentUser.email;
-        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        dojoLead.completed = false;
-        cdDojoService.saveDojoLead(dojoLead, function(response) {
-          $scope.showCharterAgreement();
-        });
-      }
 
       $scope.showCharterAgreement = function () {
         $scope.championRegistrationFormVisible = false;
+      }
+
+      var currentUser;
+      auth.get_loggedin_user(function (user) {
+        currentUser = user;
+        if (currentUser) {
+          $scope.champion ? $scope.champion.email = currentUser.email : '';
+          $scope.champion ? $scope.champion.name = currentUser.name : '';
+        }
+      });
+
+      if(subStep && subStep === 'charter'){
+        $scope.showCharterAgreement();
+      } else {
+        $scope.championRegistrationFormVisible = true;
+
+        $scope.champion = {};
+
+        $scope.dateOptions = {
+          formatYear: 'yy',
+          startingDay: 1
+        };
+
+        $scope.picker = {opened: false};
+
+        $scope.open = function ($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+
+          $scope.picker.opened = true;
+        };
+
+        $scope.today = new Date();
+        $scope.answers = ['Yes', 'No'];
+
+        $scope.save = function (champion) {
+          var dojoLead = {application: {}};
+          dojoLead.application.championDetails = champion;
+          dojoLead.userId = currentUser.id;
+          dojoLead.email = currentUser.email;
+          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          dojoLead.completed = false;
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            $scope.showCharterAgreement();
+          });
+        }
+
+        cdCountriesService.listCountries(function (countries) {
+          $scope.countries = _.map(countries, function (country) {
+            return _.omit(country, 'entity$');
+          });
+        });
       }
 
       $scope.acceptCharterAgreement = function (agreement) {
@@ -278,21 +298,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
         $http.get('http://ipinfo.io/json').
-          success(function(data) {
+          success(function (data) {
             agreementObj.ipAddress = data.ip;
 
-            cdAgreementsService.save(agreementObj, function(response) {
+            cdAgreementsService.save(agreementObj, function (response) {
               setupStep3();
             });
 
           });
       }
-
-      cdCountriesService.listCountries(function(countries) {
-        $scope.countries = _.map(countries, function(country) {
-          return _.omit(country, 'entity$');
-        });
-      });
 
       $scope.otherLanguageSelected = function () {
         var otherSelected = _.contains($scope.champion.languagesSpoken, 'Other');
