@@ -59,6 +59,7 @@
         decode: valFromString,
         is: function () { return true; }
       });
+
       $stateProvider
         .state("home", {
           url: "/",
@@ -83,7 +84,10 @@
         .state("my-dojos", {
           url: "/dashboard/my-dojos",
           templateUrl: '/dojos/template/my-dojos',
-          controller: 'my-dojos-controller'
+          controller: 'my-dojos-controller',
+          ncyBreadcrumb: {
+            label: '{{myDojosPageTitle}}'
+          }
         })
         .state("create-dojo", {
           url: "/dashboard/create-dojo",
@@ -123,6 +127,38 @@
           url: "/dashboard/manage-dojos",
           templateUrl: '/dojos/template/manage-dojos',
           controller: 'manage-dojo-controller'
+        })
+        .state("my-dojos.manage-dojo-events", {
+          url: "/:dojoId/events",
+          templateUrl: '/dojos/template/events/manage-dojo-events',
+          controller: 'manage-dojo-events-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventsPageTitle}}'
+          }
+        })
+        .state("my-dojos.manage-dojo-events.manage-applications", {
+          url: "/:eventId/applications",
+          templateUrl: '/dojos/template/events/manage-event-applications',
+          controller: 'manage-event-applications-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventApplicationsPageTitle}}'
+          }
+        })
+        .state("create-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form",
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap
+          },
+          controller: 'dojo-event-form-controller'
+        })
+        .state("edit-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form/:eventId",
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap
+          },
+          controller: 'dojo-event-form-controller'
         })
         .state("stats", {
           url: "/dashboard/stats",
@@ -253,7 +289,7 @@
         .registerAvailableLanguageKeys(['en_US', 'de_DE'])
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
-        }
+      }
     ])
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({
