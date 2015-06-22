@@ -39,7 +39,7 @@
             <td><tags-input add-from-autocomplete-only="true" placeholder="Add a user type" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
             <td>
               <div class="checkbox" ng-repeat="userPermission in userPermissions">
-                <input ng-disabled="!canUpdateUserPermissions" tooltip="test" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
+                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
                 <label for="{{ userPermission.name }}-{{ user.id }}">
                     {{ userPermission.title }}
                 </label>

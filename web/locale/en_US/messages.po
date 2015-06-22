@@ -1074,8 +1074,8 @@ msgstr "Parents/Guardians"
 msgid "Approve"
 msgstr "Approve"
 
-msgid "Error updating application"
-msgstr "Error updating application"
+msgid "Error updating applications"
+msgstr "Error updating applications"
 
 msgid "Sunday"
 msgstr "Sunday"
@@ -1097,3 +1097,6 @@ msgstr "Friday"
 
 msgid "Saturday"
 msgstr "Saturday"
+
+msgid "Applications successfully updated"
+msgstr "Applications successfully updated"

@@ -1,16 +1,49 @@
  'use strict';
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService) {
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, usSpinnerService) {
   var eventId = $stateParams.eventId;
+  $scope.filter = {event_id: eventId};
   $scope.approved = {};
   $scope.attending = 0;
   $scope.waitlist = 0;
-  
+  $scope.sort = undefined;
+  $scope.itemsPerPage = 10;
+  var changedApplications = [];
+
   cdEventsService.getEvent(eventId, function (response) {
     $scope.event = response;
     $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
-    cdEventsService.loadEventApplications(eventId, function (response) {
-      _.each(response, function(application) {
+  });
+
+  $scope.pageChanged = function () {
+    $scope.loadPage($scope.filter, false);
+  }
+
+ $scope.loadPage = function (filter, resetFlag, cb) {
+    cb = cb || function () {};
+
+    var eventApplicationsQuery = { query: { match: { event_id: eventId }}};
+    $scope.sort = $scope.sort ? $scope.sort :[{ name: 'asc' }];
+
+    var query = _.omit({
+      event_id: filter.event_id,
+    }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+
+    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
+    $scope.pageNo = loadPageData.pageNo;
+    $scope.applications = [];
+
+    var meta = {
+      sort: $scope.sort,
+      from: loadPageData.skip,
+      size: $scope.itemsPerPage
+    };
+
+    eventApplicationsQuery = _.extend(eventApplicationsQuery, meta);
+
+    cdEventsService.searchApplications(eventApplicationsQuery).then(function (result) {
+      var application = [];
+      _.each(result.records, function(application) {
         if(application.status === 'approved') {
           $scope.approved[application.id] = true;
           $scope.attending++;
@@ -19,11 +52,16 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.waitlist++;
         }
       });
-      $scope.applications = response;
-    }); 
-  });
+      $scope.applications = result.records;
+      $scope.totalItems = result.total;
+      return cb();
+    });
+  }
+
+  $scope.loadPage($scope.filter, true);
 
   $scope.updateApplicationStatus = function (application) {
+
     if(!$scope.userIsApproved(application)) {
       //Approve user
       application.status = 'approved';
@@ -38,12 +76,25 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       $scope.waitlist++;
     }
 
-    cdEventsService.updateApplication(application, function (response) {
-      
+    var applicationAlreadyUpdated = _.find(changedApplications, function(changedApplication) {
+      return changedApplication.id === application.id;
+    });
+
+    if(!applicationAlreadyUpdated) { 
+      changedApplications.push(application);
+    }
+
+  }
+
+  $scope.saveApplications = function() {
+    usSpinnerService.spin('manage-event-applications-spinner');
+    cdEventsService.bulkUpdateApplications(changedApplications, function (response) {
+      usSpinnerService.stop('manage-event-applications-spinner');
+      alertService.showAlert($translate.instant('Applications successfully updated'));
     }, function (err) {
-      alertService.showError($translate.instant('Error updating application') + ': <br/>' + JSON.stringify(err));
+      usSpinnerService.stop('manage-event-applications-spinner');
+      alertService.showError($translate.instant('Error updating applications') + ': <br/>' + JSON.stringify(err));
     }); 
-    
   }
 
   $scope.userIsApproved = function(application) {
@@ -54,4 +105,4 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', manageEventApplicationsControllerCtrl]);
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'usSpinnerService', manageEventApplicationsControllerCtrl]);
