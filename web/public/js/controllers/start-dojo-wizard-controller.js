@@ -260,6 +260,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         dojoLead.userId = currentUser.id;
         dojoLead.email = currentUser.email;
         dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+        dojoLead.completed = false;
         cdDojoService.saveDojoLead(dojoLead, function(response) {
           $scope.showCharterAgreement();
         });
