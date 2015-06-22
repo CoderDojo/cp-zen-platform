@@ -127,7 +127,8 @@
     <script src="/js/controllers/user-profile-controller.js"></script>
     <script src="/js/controllers/language-controller.js"></script>
     <script src="/js/controllers/dojo-events-list-controller.js"></script>
-
+     <script src="/js/controllers/apply-for-event-controller.js"></script>
+     
     <script src="/js/services/cd-dojo-service.js"></script>
     <script src="/js/services/cd-countries-service.js"></script>
     <script src="/js/services/geocoder-service.js"></script>
@@ -146,6 +147,7 @@
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
     <script src="/js/directives/cd-dojo-events-list.js"></script>
+    <script src="/js/directives/cd-apply-for-event.js"></script>
 
     <script src="/js/init-master.js"></script>
 

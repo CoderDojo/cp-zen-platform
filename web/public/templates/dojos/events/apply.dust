@@ -14,7 +14,7 @@
   <p><b>{@i18n key="For"/}:</b> {{ event.for }}</p>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="apply()">{@i18n key="Apply"/}</button>
+  <button class="btn btn-success" ng-click="apply()">{@i18n key="Apply"/}</button>
   <button class="btn btn-warning" ng-click="cancel()">{@i18n key="Cancel"/}</button>
 </div>
 
