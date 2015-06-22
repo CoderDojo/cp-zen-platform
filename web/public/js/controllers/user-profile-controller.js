@@ -199,11 +199,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       ]
     };
 
-    cdCountriesService.listPlaces(query).then(function(result) {
-      $scope.places = _.map(result, function(place) {
+    cdCountriesService.listPlaces(query, function(results) {
+      $scope.places = _.map(results, function(place) {
         return _.omit(place, 'entity$');
       });
-    });
+    }, console.error.bind(console));
   };
 
   $scope.setPlace = function(profile, place) {
