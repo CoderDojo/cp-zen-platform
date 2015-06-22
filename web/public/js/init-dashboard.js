@@ -61,7 +61,8 @@
           },
           params: {
             bannerType: null,
-            bannerMessage: null
+            bannerMessage: null,
+            bannerTimeCollapse: null
           },
           controller: 'dojo-list-controller'
         })
