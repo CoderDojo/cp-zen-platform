@@ -1,11 +1,11 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="General Info"/}</div>
   <div class="panel-body">
-    <div ng-if="!profile.ownProfileFlag">
+    <div ng-if="!profile.ownProfileFlag && !profile.myChild">
       <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">Name: {{ profile.name }}</p>
       <p ng-if="profile.alias">Alias: {{ profile.alias }}</p>
     </div>
-    <form name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag">
+    <form name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
       <div class="form-group">
         <label for="fullname" class="col-sm-4 control-label">Name* </label>
         <div class="col-sm-8">
@@ -138,6 +138,20 @@
           <label class="radio-inline">
             <input type="radio"  ng-model="profile.private" value="false"> No
           </label>
+        </div>
+      </div>
+      <div ng-if="hasAccess(profile.userTypes, ['attendee-o13']) && !profile.id">
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Password </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" name="password" required required-message="'{@i18n key="Password is empty"/}'" ng-model="profile.password" placeholder="{@i18n key="PASSWORD"/}"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="col-sm-4 control-label">Confirm Password </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" ng-model="profile.passwordConfirm" invalid-message="'{@i18n key="Passwords do not match"/}'" validator="profile.password === profile.passwordConfirm" required required-message="'{@i18n key="Confirm Password is empty"/}'" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
+          </div>
         </div>
       </div>
       <br> 

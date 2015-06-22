@@ -164,8 +164,33 @@
         })
         .state('add-child',{
           url: "/dashboard/profile/child/add/:userType/:parentId",
-          templateUrl: '/dojos/template/add-child',
-          controller: 'add-child-controller'
+          templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.parentId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.parentId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            }
+          },
+          controller: 'user-profile-controller'
         })
         .state("user-profile", {
           url: "/dashboard/profile/:userId",

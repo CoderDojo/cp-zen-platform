@@ -1,6 +1,6 @@
 <div class="cd-dashboard">
   <div class="panel panel-default">
-  <div class="panel-heading">{@i18n key="General Info"/}</div>
+  <div class="panel-heading">{@i18n key="General Info Child"/}</div>
   <div class="panel-body">
     <div ng-if="!profile.ownProfileFlag">
       <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">Name: {{ profile.name }}</p>

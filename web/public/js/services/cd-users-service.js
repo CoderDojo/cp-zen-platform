@@ -40,7 +40,11 @@ function cdUsersService(cdApi, $q){
       cdApi.post('profiles/create', {profile: profile}, win, fail || topfail);
     },
     saveYouthProfile: function(profile, win, fail) {
-      cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
+      if(profile.id){
+        cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
+      } else{
+        cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
+      }
     }
   };
 }

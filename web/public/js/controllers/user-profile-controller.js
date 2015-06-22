@@ -1,20 +1,26 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos) {
-  var userId = $state.params.userId;
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams) {
+  
 
   if(profile.err || loggedInUser.err || usersDojos.err){
     alertService.showError('An error has occurred');
     return;
   }
 
-  $scope.youthUser = false;
-
   $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
+  
   $scope.loggedInUser = loggedInUser.data;
+
+  if($stateParams.userType){
+    $scope.profile = {
+      ownProfileFlag: true,
+      userTypes: [$stateParams.userType]
+    };
+  }
 
   if(!_.isEmpty($scope.profile)){
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
@@ -30,8 +36,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
 
-  if(loggedInUser.data){
-    cdDojoService.dojosForUser(userId, function (response) {
+  if(loggedInUser.data && $stateParams.userId){
+
+    cdDojoService.dojosForUser($stateParams.userId, function (response) {
       $scope.dojos = response;
       if(_.isEmpty($scope.dojos)) {
         //This user has no Dojos.
@@ -73,10 +80,35 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   }
 
+  $scope.parentProfile = _.contains(profile.data.userTypes, 'parent-guardian');
+
   $scope.save = function(profile){
-    profile.programmingLanguages = utils.frTags(profile.programmingLanguages);
-    profile.languagesSpoken = utils.frTags(profile.languagesSpoken);
-    profile.projects = utils.frTags(profile.projects);
+    var profileCopy = angular.copy(profile);
+
+    profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos', 
+      'passwordConfirm', 'myChild', 'resolvedChildren']);
+    
+    if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
+      saveYouthViaParent(profileCopy);
+    } else {
+      saveDirect(profileCopy);
+    }
+  };
+  
+  function saveYouthViaParent(profile){
+    cdUsersService.saveYouthProfile(profile, function(){
+      alertService.showAlert('Save was successful');
+    }, function(){
+      alertService.showError('An error has occurred');
+    });
+  }
+
+  function saveDirect(profile){
+    profile = _.omit(profile, ['userTypes', 'dojos']);
+
+    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
+    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    profile.projects = profile.projects && utils.frTags(profile.projects);
     
 
     function win(profile){
@@ -88,18 +120,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       alertService.showError('An error has occurred while saving profile');
     }
 
-    var profileToBeSaved = angular.copy(profile);
+    cdUsersService.saveProfile(profile, win, fail);
+  }
 
-    delete profileToBeSaved.countryName;
-    delete profileToBeSaved.userTypes;
-    delete profileToBeSaved.ownProfileFlag;
-    delete profileToBeSaved.widget;
-    delete profileToBeSaved.dojos;
-    delete profileToBeSaved.password;
-
-    cdUsersService.saveProfile(profileToBeSaved, win, fail);
-  };
-  
   $scope.toggleEdit = function(field){
     $scope[field] = $scope[field] ? false : true;
   };
@@ -201,5 +224,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams' , cdUserProfileCtrl]);
 
