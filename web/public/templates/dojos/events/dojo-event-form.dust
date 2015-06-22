@@ -121,6 +121,17 @@
       <input type="text" required name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}">
     </div>
 
+    <div class="form-group" ng-if="googleMaps">
+      <label for="map">{@i18n key="Map"/}*:</label>
+      <div ui-map-marker="googleMaps.marker"></div>
+      <div id="map"
+           ui-map="googleMaps.map"
+           ui-options="googleMaps.mapOptions"
+           ui-event="{'map-tilesloaded': 'googleMaps.onTilesLoaded($event, $params)'}"
+           class="map-canvas">
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="capacity">{@i18n key="Capacity"/}:</label>
       <input type="number" required min="1" name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity" placeholder="{@i18n key="Add the maximum amount of participants"/}">
