@@ -13,12 +13,19 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              <tr ng-repeat="event in events">
+            <tbody ng-repeat="event in events" ng-switch on="events[$index].isCollapsed">
+              <tr>
                 <td>{{ event.name }}</td>
                 <td>{{ event.date }}</td>
                 <td>{{ event.for }}</td>
-                <td class="pointer"><button ng-click="applyForEvent(event)" class="btn btn-success" type="button">{@i18n key="Apply"/}</button></td>
+                <td class="pointer"><button ng-click="showEventInfo($index, event.id)" class="btn btn-primary" type="button">{@i18n key="Info"/}</button></td>
+              </tr>
+              <tr ng-switch-when="true">
+                <td colspan="9">
+                  <div class="span9">
+                    <cd-apply-for-event></cd-apply-for-event>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>

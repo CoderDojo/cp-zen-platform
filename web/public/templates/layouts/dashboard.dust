@@ -147,6 +147,7 @@
     <script src="/js/directives/cd-charter.js"></script>
     <script src="/js/directives/cd-setup-your-dojo.js"></script>
     <script src="/js/directives/cd-dojo-events-list.js"></script>
+    <script src="/js/directives/cd-apply-for-event.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>
