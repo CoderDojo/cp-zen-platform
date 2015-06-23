@@ -1,4 +1,5 @@
 <div class="row">
+  <span spinner-key="manage-event-applications-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="col-md-12 table-responsive">
     <div class="row">
       <div class="col-md-12 table-responsive">
@@ -23,8 +24,8 @@
               <td></td>
               <td class="ten-percent-width">
                 <div class="checkbox">
-                  <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox" ng-checked="userIsApproved(application)" ng-click="updateApplicationStatus(application)">
-                  <label for="applicationApprovedCheckbox"></label>
+                  <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-checked="userIsApproved(application)" ng-click="updateApplicationStatus(application)">
+                  <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
                 </div>
               </td>
             </tr>
@@ -35,4 +36,5 @@
     <div class="row col-lg-6 col-lg-offset-4">
     <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
   </div>
+  <button class="btn btn-success pull-right" ng-click="saveApplications()">{@i18n key="Save"/}</button>
 </div>

@@ -28,6 +28,14 @@ function cdEventsService(cdApi, $q){
     },
     updateApplication: function(application, win, fail) {
       cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
+    },
+    searchApplications: function(search) {
+      return $q(function(resolve, reject) {
+        cdApi.post('events/applications/search', {search: search}, resolve, reject);
+      });
+    },
+    bulkUpdateApplications: function(applications, win, fail) {
+      cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail);
     }
   };
 }
