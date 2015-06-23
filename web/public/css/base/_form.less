@@ -1,0 +1,26 @@
+input[type='date'],
+input[type='email'],
+input[type='number'],
+input[type='text'],
+textarea {
+  &.ng-dirty {
+
+    &.ng-valid {
+      border-color: @success-color;
+    }
+
+    &.ng-invalid {
+      border-color: @error-color;
+    }
+  }
+}
+
+.timepicker.ng-dirty {
+  &.ng-valid-time input {
+    border: 1px solid @success-color !important;
+  }
+
+  &.ng-invalid-time input {
+    border: 1px solid @error-color !important;
+  }
+}

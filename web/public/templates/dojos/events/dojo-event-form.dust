@@ -2,30 +2,31 @@
 
   <form name="eventForm" novalidate>
 
-    <legend>{@i18n key="Create Event"/}</legend>
+    <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
+    <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
 
     <div class="form-group">
-      <label for="eventName">{@i18n key="Event Name"/}*</label>
+      <label for="eventName">{@i18n key="Event Name"/}*:</label>
       <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" required placeholder="{@i18n key="Add the event name"/}">
     </div>
 
     <div class="checkbox">
       <input type="checkbox" id="is-public" ng-model="eventInfo.public">
       <label for="is-public">
-        {@i18n key="is public"/}*
+        {@i18n key="is public"/}
       </label>
     </div>
 
     <div class="form-group">
       <label for="description">
-        {@i18n key="Description"/}*
+        {@i18n key="Description"/}*:
       </label>
       <textarea name="description" id="description" class="form-control" rows="3" ng-model="eventInfo.description" required placeholder="{@i18n key="Add a description"/}">
       </textarea>
     </div>
 
-    <div ng-init="eventInfo.type='one-off'">
-      <h5>{@i18n key="Type"/}</h5>
+    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'">
+      <h5>{@i18n key="Type"/}:</h5>
 
       <div class="radio-inline">
         <label>
@@ -43,7 +44,7 @@
     </div>
 
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
-      <label for="weekday">{@i18n key="Every"/}</label>
+      <label for="weekday">{@i18n key="Every"/}:</label>
       <select class="form-control"
               ng-model="weekdayPicker.selection"
               ng-options="item as item.name for item in weekdayPicker.weekdays"
@@ -53,10 +54,10 @@
     </div>
 
     <div class="form-group">
-      <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}</label>
-      <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}</label>
+      <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
+      <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" min-date="datepicker.minDate" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -68,9 +69,9 @@
     </div>
 
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
-      <label for="to-date">{@i18n key="To"/}</label>
+      <label for="to-date">{@i18n key="To"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" min-date="datepicker.minDate" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -82,13 +83,13 @@
     </div>
 
     <div class="form-group">
-      <label for="time">{@i18n key="Time"/}</label>
-      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian">
+      <label for="time">{@i18n key="Time"/}:</label>
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker">
       </timepicker>
     </div>
 
     <div class="form-group form-inline">
-      <label for="group-type-1">{@i18n key="For"/}</label>
+      <label for="group-type-1">{@i18n key="For"/}:</label>
 
       <div class="checkbox" ng-repeat="(userType, value) in eventInfo.userTypes">
         <input type="checkbox" id="{{ userType }}" ng-model="eventInfo.userTypes[userType]">
@@ -122,7 +123,7 @@
     </div>
 
     <div class="form-group" ng-if="googleMaps">
-      <label for="map">{@i18n key="Map"/}*:</label>
+      <label for="map">{@i18n key="Map"/}:</label>
       <div ui-map-marker="googleMaps.marker"></div>
       <div id="map"
            ui-map="googleMaps.map"

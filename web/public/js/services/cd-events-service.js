@@ -9,8 +9,8 @@ function cdEventsService(cdApi, $q){
     getEvent: function(id, win, fail) {
       cdApi.get('events/' + id, win, fail || topfail);
     },
-    createEvent: function(eventInfo, win, fail){
-      cdApi.post('create-event', {eventInfo: eventInfo}, win, fail || topfail);
+    saveEvent: function(eventInfo, win, fail){
+      cdApi.post('save-event', {eventInfo: eventInfo}, win, fail || topfail);
     },
     list: function(query, win, fail){
       cdApi.post('events', {query: query}, win, fail || topfail);
