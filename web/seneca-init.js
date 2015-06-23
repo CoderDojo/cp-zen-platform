@@ -11,9 +11,11 @@ var seneca = require('seneca')(options.main);
 seneca.options(options);
 
 seneca
+
   .use('ng-web')
   .use('../lib/users/user.js')
   .use('auth')
+  .use('../lib/oauth/cd-oauth.js')
   .use('user-roles')
   .use('web-access')
   .use('../lib/auth/cd-auth.js')
@@ -24,8 +26,10 @@ seneca
   .use('../lib/users/cd-users.js')
   .use('../lib/agreements/cd-agreements.js')
   .use('../lib/badges/cd-badges.js')
-  .use('../lib/oauth/cd-oauth.js')
+
 ;
+
+
 
 _.each(options.client, function(opts) {
    seneca.client(opts);
