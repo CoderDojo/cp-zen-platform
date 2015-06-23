@@ -1107,3 +1107,10 @@ msgstr "Applications successfully updated"
 msgid "No applications have been changed."
 msgstr "No applications have been changed."
 
+msgid "Are you sure you want to delete this application?"
+msgstr "Are you sure you want to delete this application?"
+
+msgid "Select a Dojo member..."
+msgstr "Select a Dojo member..."
+
+
