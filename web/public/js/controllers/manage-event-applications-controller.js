@@ -102,7 +102,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         }
 
         $scope.dojoMembers = dojoMembers;
-        return cb();
       });
     });
   }
