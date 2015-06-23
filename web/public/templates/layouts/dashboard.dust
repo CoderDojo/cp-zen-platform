@@ -67,7 +67,7 @@
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
     <script src="/components/lodash/dist/lodash.min.js"></script>
     <script src="/components/angular-google-maps/dist/angular-google-maps.min.js"></script>
-    <script src="/components/tg-angular-validator/dist/angular-validator.js"></script>
+    <script src="/components/tg-angular-validator/dist/angular-validator.min.js"></script>
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-select/dist/select.min.js"></script>
@@ -129,7 +129,6 @@
     <script src="/js/controllers/accept-dojo-user-request-controller.js"></script>
     <script src="/js/controllers/user-profile-controller.js"></script>
     <script src="/js/controllers/language-controller.js"></script>
-    <script src="/js/controllers/add-child-controller.js"></script>
     <script src="/js/controllers/dojo-events-list-controller.js"></script>
     <script src="/js/controllers/manage-dojo-events-controller.js"></script>
     <script src="/js/controllers/dojo-event-form-controller.js"></script>
