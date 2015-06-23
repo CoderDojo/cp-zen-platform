@@ -89,6 +89,11 @@
       getUsersDojos: function(query, win, fail) {
         cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
+      getUsersDojosPromise: function(query){
+        var deferred = $q.defer();
+        cdApi.post('dojos/users', {query: query}, deferred.resolve, deferred.reject);
+        return deferred.promise;
+      },
       loadDojoUsers: function(query, win, fail) {
         cdApi.post('dojos/load_dojo_users', {query: query}, win, fail || topfail);
       },

@@ -1,0 +1,8 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{@i18n key="Projects"/}</div>
+  <div class="panel-body">
+    <ul ng-repeat="project in profile.widget.projects">
+      <li>{{ project }}</li>
+    </ul>
+  </div>
+</div>
