@@ -2,7 +2,8 @@
 
   <form name="eventForm" novalidate>
 
-    <legend>{@i18n key="Create Event"/}</legend>
+    <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
+    <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
 
     <div class="form-group">
       <label for="eventName">{@i18n key="Event Name"/}*:</label>
@@ -24,7 +25,7 @@
       </textarea>
     </div>
 
-    <div ng-init="eventInfo.type='one-off'">
+    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'">
       <h5>{@i18n key="Type"/}:</h5>
 
       <div class="radio-inline">
@@ -56,7 +57,7 @@
       <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
       <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" min-date="datepicker.minDate" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -70,7 +71,7 @@
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
       <label for="to-date">{@i18n key="To"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" min-date="datepicker.minDate" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -83,7 +84,7 @@
 
     <div class="form-group">
       <label for="time">{@i18n key="Time"/}:</label>
-      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" ng-pattern="/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/">
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker">
       </timepicker>
     </div>
 

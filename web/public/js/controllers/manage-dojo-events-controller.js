@@ -2,12 +2,12 @@
   'use strict';
 
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate) {
-    var dojoId = $stateParams.dojoId;
-    $scope.filter = {dojo_id:dojoId};
+    $scope.dojoId = $stateParams.dojoId;
+    $scope.filter = {dojo_id: $scope.dojoId};
     $scope.itemsPerPage = 10;
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
 
-    cdDojoService.load(dojoId, function (response) {
+    cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
     });
 
@@ -16,13 +16,13 @@
     }
 
     $scope.createEvent = function() {
-      $state.go('create-dojo-event', {dojoId: dojoId});
+      $state.go('create-dojo-event', {dojoId: $scope.dojoId});
     }
 
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo
-      var dojoQuery = { query: { match: { dojo_id: dojoId }}};
+      var dojoQuery = { query: { match: { dojo_id: $scope.dojoId }}};
       $scope.sort = $scope.sort ? $scope.sort :[{ date: 'asc' }];
 
       var query = _.omit({
