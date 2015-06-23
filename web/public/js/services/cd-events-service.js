@@ -35,7 +35,10 @@ function cdEventsService(cdApi, $q){
       });
     },
     bulkUpdateApplications: function(applications, win, fail) {
-      cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail);
+      cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail || topfail);
+    },
+    removeApplicant: function(application, win, fail) {
+      cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
     }
   };
 }
