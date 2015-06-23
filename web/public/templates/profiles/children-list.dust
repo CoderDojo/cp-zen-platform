@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{@i18n key="Children"/}
+    <span class="pull-right">
+      <a href="/dashboard/profile/child/add/attendee-u13/{{ profile.userId }}">Add child under 13</a>
+      &nbsp;|&nbsp;
+      <a href="/dashboard/profile/child/add/attendee-o13/{{ profile.userId }}">Add child over 13</a>
+    </span>
+  </div>
+  <div class="panel-body">
+    <ul ng-repeat="child in profile.resolvedChildren">
+      <li><a href="/dashboard/profile/{{ child.userId }}">{{ child.name }}</a></li>
+    </ul>
+  </div>
+</div>

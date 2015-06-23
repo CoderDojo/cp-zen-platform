@@ -948,6 +948,24 @@ msgstr "You do not have permission to update user types"
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
 
+msgid "ParentsGuardians"
+msgstr "Parents/Guardians"
+
+msgid "Badges"
+msgstr "Badges"
+
+msgid "Children"
+msgstr "Children"
+
+msgid "Select a user type"
+msgstr "Select a user type"
+
+msgid "Languages Spoken"
+msgstr "Languages Spoken"
+
+msgid "Programming Languages"
+msgstr "Programming Languages"
+
 msgid "Events for Dojo"
 msgstr "Events for Dojo"
 
@@ -1112,5 +1130,3 @@ msgstr "Are you sure you want to delete this application?"
 
 msgid "Select a Dojo member..."
 msgstr "Select a Dojo member..."
-
-

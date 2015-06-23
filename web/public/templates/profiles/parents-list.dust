@@ -1,0 +1,8 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{@i18n key="ParentsGuardians"/}</div>
+  <div class="panel-body">
+    <ul ng-repeat="parent in parents">
+      <li>{{ parent.name }}</li>
+    </ul>
+  </div>
+</div>

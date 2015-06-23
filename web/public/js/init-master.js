@@ -140,8 +140,33 @@
           controller: 'accept-dojo-user-request-controller'
         })
         .state("user-profile", {
-          url: "/profile/:userId/",
+          url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            }
+          },
           controller: 'user-profile-controller'
         });
     })
