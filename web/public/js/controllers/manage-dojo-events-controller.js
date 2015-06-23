@@ -43,9 +43,20 @@
 
       cdEventsService.search(dojoQuery).then(function (result) {
         var events = [];
-        _.each(result.hits, function (event) {
-          event._source.date = moment(event._source.date).format('MMMM Do YYYY, h:mm');
-          events.push(event._source);
+        _.each(result.records, function (event) {
+          event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
+          //Retrieve number of applicants & attendees
+          var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
+          cdEventsService.searchApplications(cdApplicationsQuery).then(function (result) {
+            var numOfApplicants = result.total;
+            var numAttending = 0;
+            _.each(result, function (application) {
+              if(application.status === 'approved') numAttending++;
+            })
+            event.applicants = numOfApplicants;
+            event.attending = numAttending;
+          });
+          events.push(event);
         });
         $scope.events = events;
         $scope.totalItems = result.total;
