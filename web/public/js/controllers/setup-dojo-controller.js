@@ -1,7 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, AlertBanner) {
-  $scope.itemsPerPage = 10;
+function cdSetupDojoCtrl($scope, $state, $stateParams, cdDojoService) {
 
   $scope.pageChanged = function(){
     $scope.loadPage(currentUser, false);
@@ -82,4 +81,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$state', '$stateParams', 'cdDojoService', cdSetupDojoCtrl]);
