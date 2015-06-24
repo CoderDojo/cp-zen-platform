@@ -76,17 +76,26 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       size: $scope.itemsPerPage
     };
 
+    var eventApplicationsQueryNoLimit = angular.copy(eventApplicationsQuery);
+    //Query elasticsearch to get total number of applicants.
+    cdEventsService.searchApplications(eventApplicationsQueryNoLimit, function (result) {
+      _.each(result.records, function (application) {
+        if(application.status === 'approved') {
+          $scope.attending++;
+        } else {
+          $scope.waitlist++;
+        }
+      });
+    });
+
     eventApplicationsQuery = _.extend(eventApplicationsQuery, meta);
 
     cdEventsService.searchApplications(eventApplicationsQuery, function (result) {
-      var application = [];
       _.each(result.records, function(application) {
         if(application.status === 'approved') {
           $scope.approved[application.id] = true;
-          $scope.attending++;
         } else {
           $scope.approved[application.id] = false;
-          $scope.waitlist++;
         }
       });
       $scope.applications = result.records;
