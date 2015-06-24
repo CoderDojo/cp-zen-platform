@@ -24,8 +24,8 @@
                 <td>{{ event.name }}</td>
                 <td>{{ event.date }}</td>
                 <td>{{ event.capacity }}</td>
-                <td>{{ event.applicants.length }}</td>
-                <td>{{ event.applicants.length }}</td>
+                <td>{{ event.applicants }}</td>
+                <td>{{ event.attending }}</td>
                 <td class="pointer"><a ui-sref="edit-dojo-event({eventId:event.id, dojoId: dojoId})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer"><a ui-sref=".manage-applications({eventId:event.id})">{@i18n key="Manage"/}</a></td>
                 <td class="pointer"><a ui-sref="manageAttendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>

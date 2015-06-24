@@ -38,8 +38,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
     
     cdEventsService.search(dojoQuery).then(function (result) {
       var events = [];
-      _.each(result.hits, function (event) {
-        var event = event._source;
+      _.each(result.records, function (event) {
         event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
         var userTypes = event.userTypes;
         if(_.contains(userTypes, 'attendee-u13') && _.contains(userTypes, 'attendee-o13')) {
