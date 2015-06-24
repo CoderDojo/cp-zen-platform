@@ -45,7 +45,11 @@ function cdUsersService(cdApi, $q){
       } else{
         cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
       }
+    },
+    inviteParent: function(data, win, fail) {
+      cdApi.post('profiles/invite-parent-guardian', {data: data}, win, fail || topfail);
     }
+
   };
 }
 

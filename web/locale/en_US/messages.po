@@ -1124,3 +1124,6 @@ msgstr "Applications successfully updated"
 
 msgid "No applications have been changed."
 msgstr "No applications have been changed."
+
+msgid "Invite Parent"
+msgstr "Invite Parent"

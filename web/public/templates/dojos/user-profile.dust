@@ -35,6 +35,17 @@
             <a href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
           </div>
         </div>
+        <div class="panel panel-default" ng-if="profile.myChild">
+          <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
+          <div class="panel-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="Parent's/Guardian's email">
+                <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">Invite</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
