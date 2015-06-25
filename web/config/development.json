@@ -45,10 +45,6 @@
                             "module": "kraken-devtools/plugins/less",
                             "files": "/css/**/*.css"
                         },
-                        "browserify": {
-                            "module": "kraken-devtools-browserify",
-                            "files": "/js/**/*.js"
-                        },
                         "copier": {
                             "module": "kraken-devtools/plugins/copier",
                             "files": "**/*"
