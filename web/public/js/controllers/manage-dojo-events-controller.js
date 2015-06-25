@@ -63,7 +63,7 @@
           event.formattedDate = moment(event.date).format('MMMM Do YYYY, h:mm');
           //Retrieve number of applicants & attendees
           var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
-          cdEventsService.searchApplications(cdApplicationsQuery).then(function (result) {
+          cdEventsService.searchApplications(cdApplicationsQuery, function (result) {
             var numOfApplicants = result.total;
             var numAttending = 0;
             _.each(result.records, function (application) {

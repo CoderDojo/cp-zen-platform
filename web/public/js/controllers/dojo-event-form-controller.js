@@ -294,6 +294,7 @@
     if ($stateParams.eventId) {
 
       return async.series([
+        loadDojoUsers,
         loadUserTypes,
         loadEvent
       ], function(err, results) {
@@ -301,7 +302,7 @@
           console.error(err);
         }
 
-        var eventPosition = results[1].position;
+        var eventPosition = results[2].position;
 
         addMap(eventPosition);
       });

@@ -78,19 +78,19 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
     var eventApplicationsQueryNoLimit = angular.copy(eventApplicationsQuery);
     //Query elasticsearch to get total number of applicants.
-    cdEventsService.searchApplications(eventApplicationsQueryNoLimit).then(function (result) {
+    cdEventsService.searchApplications(eventApplicationsQueryNoLimit, function (result) {
       _.each(result.records, function (application) {
         if(application.status === 'approved') {
           $scope.attending++;
         } else {
           $scope.waitlist++;
         }
-      }); 
+      });
     });
 
     eventApplicationsQuery = _.extend(eventApplicationsQuery, meta);
 
-    cdEventsService.searchApplications(eventApplicationsQuery).then(function (result) {
+    cdEventsService.searchApplications(eventApplicationsQuery, function (result) {
       _.each(result.records, function(application) {
         if(application.status === 'approved') {
           $scope.approved[application.id] = true;
@@ -185,7 +185,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       return changedApplication.id === application.id;
     });
 
-    if(!applicationAlreadyUpdated) { 
+    if(!applicationAlreadyUpdated) {
       changedApplications.push(application);
     }
 
@@ -203,7 +203,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       usSpinnerService.stop('manage-event-applications-spinner');
       alertService.showError($translate.instant('Error updating applications') + ': <br/>' + JSON.stringify(err));
       $scope.loadPage($scope.filter, true);
-    }); 
+    });
   }
 
   $scope.userIsApproved = function(application) {
