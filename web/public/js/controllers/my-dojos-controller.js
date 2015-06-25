@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
@@ -145,4 +145,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', '$q', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
