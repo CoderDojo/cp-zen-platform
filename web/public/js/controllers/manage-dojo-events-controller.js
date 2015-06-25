@@ -19,11 +19,27 @@
       $state.go('create-dojo-event', {dojoId: $scope.dojoId});
     }
 
+    $scope.cancelEvent = function(event) {
+      delete event.formattedDate;
+      event.status = 'cancelled';
+      cdEventsService.saveEvent(event, function (response) {
+        $scope.loadPage($scope.filter, true);
+      });
+    }
+
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo
-      var dojoQuery = { query: { match: { dojo_id: $scope.dojoId }}};
-      $scope.sort = $scope.sort ? $scope.sort :[{ date: 'asc' }];
+      var dojoQuery = { query: {
+                          bool: {
+                            must:[
+                              { match: { dojo_id: $scope.dojoId }}
+                            ]   
+                          }
+                        }
+                      };
+
+      $scope.sort = $scope.sort ? $scope.sort :[{ date: {order: 'asc', ignore_unmapped: true }}];
 
       var query = _.omit({
         dojo_id: filter.dojo_id,
@@ -44,13 +60,13 @@
       cdEventsService.search(dojoQuery).then(function (result) {
         var events = [];
         _.each(result.records, function (event) {
-          event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
+          event.formattedDate = moment(event.date).format('MMMM Do YYYY, h:mm');
           //Retrieve number of applicants & attendees
           var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
           cdEventsService.searchApplications(cdApplicationsQuery).then(function (result) {
             var numOfApplicants = result.total;
             var numAttending = 0;
-            _.each(result, function (application) {
+            _.each(result.records, function (application) {
               if(application.status === 'approved') numAttending++;
             })
             event.applicants = numOfApplicants;
@@ -87,14 +103,14 @@
       descFlag = isDesc(className);
 
       if (descFlag) {
-        sortConfig[columnName] = {order: "asc"};
+        sortConfig[columnName] = {order: "asc", ignore_unmapped:true};
         sort.push(sortConfig);
 
         currentTargetEl
           .removeClass(DOWN)
           .addClass(UP);
       } else {
-        sortConfig[columnName] = {order: "desc"};
+        sortConfig[columnName] = {order: "desc", ignore_unmapped:true};
         sort.push(sortConfig);
         currentTargetEl
           .removeClass(UP)

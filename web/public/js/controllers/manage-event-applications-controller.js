@@ -60,7 +60,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     changedApplications = [];
 
     var eventApplicationsQuery = { query: { match: { event_id: eventId }}};
-    $scope.sort = $scope.sort ? $scope.sort :[{ name: 'asc' }];
+    $scope.sort = $scope.sort ? $scope.sort :[{ name: {order:'asc', ignore_unmapped:true}}];
 
     var query = _.omit({
       event_id: filter.event_id,
@@ -138,14 +138,14 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     descFlag = isDesc(className);
 
     if (descFlag) {
-      sortConfig[columnName] = {order: "asc"};
+      sortConfig[columnName] = {order: "asc", ignore_unmapped:true};
       sort.push(sortConfig);
 
       currentTargetEl
         .removeClass(DOWN)
         .addClass(UP);
     } else {
-      sortConfig[columnName] = {order: "desc"};
+      sortConfig[columnName] = {order: "desc", ignore_unmapped:true};
       sort.push(sortConfig);
       currentTargetEl
         .removeClass(UP)

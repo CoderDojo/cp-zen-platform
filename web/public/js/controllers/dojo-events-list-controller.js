@@ -10,15 +10,30 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
     $scope.currentUser = user;
   });
 
-  $scope.pageChanged = function () {
-    $scope.loadPage($scope.filter, false);
-  };
-
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    //Only list events for this Dojo
-    var dojoQuery = { query: { match: { dojo_id: dojoId }}};
-    $scope.sort = $scope.sort ? $scope.sort :[{ date: 'asc' }];
+    //Only list published events for this Dojo
+    var todaysDate = moment().toDate();
+    todaysDate = moment(todaysDate).format('YYYY-MM-DD');
+    var dojoQuery = { 
+      query: {
+        bool: {
+          must:[
+            { match: { dojo_id: dojoId }},
+            { match: { status: 'published' }},
+            { 
+              range: {
+                date: {
+                  gte: todaysDate
+                }
+              }
+            }
+          ]   
+        }
+      }
+    };
+       
+    $scope.sort = $scope.sort ? $scope.sort :[{ date: {order:'asc', ignore_unmapped:true}}];
 
     var query = _.omit({
       dojo_id: filter.dojo_id,
@@ -64,6 +79,10 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
     $scope.events[eventIndex].isCollapsed = false;
   }
 
+  $scope.pageChanged = function () {
+    $scope.loadPage($scope.filter, false);
+  };
+
   $scope.showEventInfo = function (index, eventId) {
     if (typeof $scope.events[index].isCollapsed === 'undefined') {
       $scope.eventCollapsed(index);
@@ -99,14 +118,14 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
     descFlag = isDesc(className);
 
     if (descFlag) {
-      sortConfig[columnName] = {order: "asc"};
+      sortConfig[columnName] = {order: "asc", ignore_unmapped:true};
       sort.push(sortConfig);
 
       currentTargetEl
         .removeClass(DOWN)
         .addClass(UP);
     } else {
-      sortConfig[columnName] = {order: "desc"};
+      sortConfig[columnName] = {order: "desc", ignore_unmapped:true};
       sort.push(sortConfig);
       currentTargetEl
         .removeClass(UP)
