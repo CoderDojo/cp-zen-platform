@@ -6,6 +6,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.filter = {event_id: eventId};
   $scope.sort = undefined;
   $scope.itemsPerPage = 10;
+  $scope.pagination = {};
   var changedApplications = [];
 
   cdEventsService.getEvent(eventId, function (response) {
@@ -66,8 +67,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       event_id: filter.event_id,
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
-    $scope.pageNo = loadPageData.pageNo;
+    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
+    $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.applications = [];
 
     var meta = {
