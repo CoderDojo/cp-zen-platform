@@ -55,10 +55,17 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
       cdDojoService.uncompletedDojos(function(response){
         if(response.length > 0){
           var uncompletedDojo = response[0];
-          AlertBanner.publish({
+          $scope.ab = AlertBanner.publish({
             type: 'info',
-            message: 'some message',
-            timeCollapse: 1000000
+            message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
+            autoClose: false,
+            onOpen: function() {
+              angular.element('.a-no-float').on('click', function(e){
+                if(angular.element('.alert-message').hasClass('active')){
+                  angular.element('.alert-message').removeClass('active')
+                }
+              });
+            }
           });
         }
         return cb();
