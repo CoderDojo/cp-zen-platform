@@ -237,6 +237,11 @@
           },
           controller: 'user-profile-controller'
         })
+        .state('accept-child-invite',{
+          url: '/dashboard/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          controller: 'accept-child-controller',
+          templateUrl: '/profiles/template/accept-child-invite'
+        })
         .state("user-profile", {
           url: "/dashboard/profile/:userId",
           templateUrl: '/dojos/template/user-profile',

@@ -15,6 +15,18 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   
   $scope.loggedInUser = loggedInUser.data;
 
+  $scope.inviteParent = function(data){
+    var win = function(){
+      alertService.showAlert('Invitation was sent successfully');
+    };
+
+    var fail = function(){
+      alertService.showError('An error has occurred while sending invitation');
+    };
+
+    cdUsersService.inviteParent(data, win, fail);
+  };
+
   if($stateParams.userType){
     $scope.profile = {
       ownProfileFlag: true,

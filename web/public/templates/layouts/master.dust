@@ -128,6 +128,7 @@
     <script src="/js/controllers/language-controller.js"></script>
     <script src="/js/controllers/dojo-events-list-controller.js"></script>
     <script src="/js/controllers/apply-for-event-controller.js"></script>
+    <script src="/js/controllers/accept-child-controller.js"></script>
 
     <script src="/js/services/cd-dojo-service.js"></script>
     <script src="/js/services/cd-countries-service.js"></script>
@@ -141,6 +142,7 @@
     <script src="/js/services/cd-events-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>
     <script src="/js/services/table-utils.js"></script>
+
     <script src="/js/directives/cd-register-account.js"></script>
     <script src="/js/directives/cd-champion-registration.js"></script>
     <script src="/js/directives/cd-dojo-listing.js"></script>

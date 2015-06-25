@@ -46,6 +46,10 @@ module.exports = function (router) {
     res.render('index');
   });
 
+  router.get('/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken', function(req, res){
+    res.render('index');
+  });
+
   router.get('/profile/:userId', function (req, res) {
     res.render('index');
   }); 
