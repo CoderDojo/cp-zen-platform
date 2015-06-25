@@ -5,6 +5,7 @@
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojo_id: $scope.dojoId};
     $scope.itemsPerPage = 10;
+    $scope.pagination = {};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
 
     cdDojoService.load($scope.dojoId, function (response) {
@@ -45,8 +46,8 @@
         dojo_id: filter.dojo_id,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
-      $scope.pageNo = loadPageData.pageNo;
+      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
+      $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.events = [];
 
       var meta = {

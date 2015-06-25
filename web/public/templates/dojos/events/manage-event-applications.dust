@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="row col-lg-6 col-lg-offset-4">
-    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" boundary-links="true"></pagination>
   </div>
   <span class="help-block"></span>
   <button class="btn btn-success" ng-click="saveApplications()">{@i18n key="Save"/}</button>
