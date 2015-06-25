@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService) {
+function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, AlertBanner) {
   $scope.itemsPerPage = 10;
 
   $scope.pageChanged = function(){
@@ -52,7 +52,24 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
       $scope.myDojos = result.records;
       $scope.totalItems = result.total;
 
-      return cb();
+      cdDojoService.uncompletedDojos(function(response){
+        if(response.length > 0){
+          var uncompletedDojo = response[0];
+          $scope.ab = AlertBanner.publish({
+            type: 'info',
+            message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
+            autoClose: false,
+            onOpen: function() {
+              angular.element('.a-no-float').on('click', function(e){
+                if(angular.element('.alert-message').hasClass('active')){
+                  angular.element('.alert-message').removeClass('active')
+                }
+              });
+            }
+          });
+        }
+        return cb();
+      });
     }, function(err) {
       alertService.showError(
         'An error has occurred while loading Dojos: <br /> '+
@@ -72,4 +89,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', 'AlertBanner', cdMyDojosCtrl]);

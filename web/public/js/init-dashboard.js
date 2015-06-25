@@ -140,6 +140,11 @@
           url: "/dashboard/champion-applications/:id",
           templateUrl: '/champion/template/review-application',
           controller: 'review-champion-application-controller'
+        })
+        .state("setup-dojo", {
+          url: "/dashboard/setup-dojo/:id",
+          templateUrl: '/dojos/template/setup-dojo',
+          controller: 'setup-dojo-controller'
         });
       $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })
