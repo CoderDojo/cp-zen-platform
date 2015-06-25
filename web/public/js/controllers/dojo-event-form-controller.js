@@ -8,7 +8,7 @@
     while (currentDate <= dateEnd) {
       currentDate = new Date(currentDate);
 
-      if(currentDate.getDay() === targetWeekday) {
+      if (currentDate.getDay() === targetWeekday) {
         dates.push(currentDate);
       }
 
@@ -17,6 +17,13 @@
     }
 
     return dates;
+  }
+
+
+  function goToManageDojoEvents($state, dojoId) {
+    $state.go('my-dojos.manage-dojo-events', {
+      dojoId: dojoId
+    });
   }
 
 
@@ -44,7 +51,6 @@
       $scope.eventInfo.date.getTime()
     );
 
-
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
@@ -55,12 +61,10 @@
       $scope.datepicker[isOpen] = !$scope.datepicker[isOpen];
     };
 
-
     $scope.timepicker = {};
     $scope.timepicker.hstep = 1;
     $scope.timepicker.mstep = 15;
     $scope.timepicker.ismeridian = true;
-
 
     $scope.weekdayPicker = {};
     $scope.weekdayPicker.weekdays = [{
@@ -87,7 +91,6 @@
     }];
 
     $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
-
 
     $scope.searchCity = function(str) {
       if (!str.length || str.length < 3) {
@@ -133,87 +136,18 @@
       }, console.error.bind(console));
     };
 
-
-    if ($stateParams.eventId) {
-      console.log('TODO: Edit event, load event info if event already exists');
-    }
-
     $scope.eventInfo.invites = [];
+
     $scope.loadUsers = function(query) {
       return $scope.dojoUsers;
     };
-
-    // Load dojo
-    cdDojoService.load(dojoId, function(dojoInfo){
-      $scope.eventInfo.country = dojoInfo.country;
-      $scope.eventInfo.city = dojoInfo.place;
-      $scope.eventInfo.address = dojoInfo.address1;
-
-      var position = dojoInfo.coordinates.split(',');
-      var markerPosition = new google.maps.LatLng(parseFloat(position[0]), parseFloat(position[1]));
-
-      $scope.googleMaps = {
-        mapOptions: {
-          center: markerPosition,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        },
-        onTilesLoaded: onTilesLoaded
-      };
-
-      function onTilesLoaded(event) {
-        var map = $scope.googleMaps.map;
-
-        $scope.googleMaps.marker = new google.maps.Marker({
-          map: map,
-          draggable:true,
-          animation: google.maps.Animation.DROP,
-          position: markerPosition
-        });
-
-        google.maps.event.clearListeners(map, 'tilesloaded');
-      }
-    }, console.error.bind(console));
-
-
-    // Load user
-    auth.get_loggedin_user(function(user) {
-      $scope.eventInfo.userId = user.id;
-    }, console.error.bind(console));
-
-
-    // Load dojo user
-    cdDojoService.loadDojoUsers({
-      dojoId: dojoId
-    }, function(users) {
-      $scope.dojoUsers = users;
-    }, console.error.bind(console));
-
-
-    // Load user types
-    cdDojoService.getUserTypes(function(userTypes) {
-      // Add missing user type
-      userTypes.unshift('attendee-u13');
-
-      $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
-        memo[item] = false;
-        return memo;
-      }, {});
-    }, console.error.bind(console));
-
-
-    function goToManageDojoEvents(){
-      $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
-    }
-
 
     $scope.cancel = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
 
-      goToManageDojoEvents();
+      goToManageDojoEvents($state, dojoId);
     };
-
 
     $scope.submit = function($event, eventInfo, publish) {
       $event.preventDefault();
@@ -224,7 +158,7 @@
         lng: $scope.googleMaps.marker.getPosition().lng()
       };
 
-      var userTypes = Object.keys(eventInfo.userTypes).filter(function(key){
+      var userTypes = Object.keys(eventInfo.userTypes).filter(function(key) {
         return eventInfo.userTypes[key];
       });
 
@@ -235,7 +169,7 @@
 
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
-      if(eventInfo.type === 'recurring' && isDateRange) {
+      if (eventInfo.type === 'recurring' && isDateRange) {
         // Extend eventInfo
         eventInfo.dates = getEveryTargetWeekdayInDateRange(
           eventInfo.date,
@@ -244,12 +178,146 @@
         );
       }
 
-      cdEventsService.createEvent(
+      cdEventsService.saveEvent(
         eventInfo,
-        goToManageDojoEvents,
+        goToManageDojoEvents.bind(null, $state, dojoId),
         console.error.bind(console)
       );
     };
+
+
+    function addMap(eventPosition) {
+      var markerPosition = new google.maps.LatLng(eventPosition.lat, eventPosition.lng);
+
+      $scope.googleMaps = {
+        mapOptions: {
+          center: markerPosition,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        },
+        onTilesLoaded: onTilesLoaded
+      };
+
+      function onTilesLoaded() {
+        var map = $scope.googleMaps.map;
+
+        $scope.googleMaps.marker = new google.maps.Marker({
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: markerPosition
+        });
+
+        google.maps.event.clearListeners(map, 'tilesloaded');
+      }
+    }
+
+
+    function loadDojo(done) {
+      cdDojoService.load(dojoId, function(dojoInfo) {
+        $scope.eventInfo.country = dojoInfo.country;
+        $scope.eventInfo.city = dojoInfo.place;
+        $scope.eventInfo.address = dojoInfo.address1;
+
+        var position = dojoInfo.coordinates.split(',');
+
+        addMap({
+          lat: parseFloat(position[0]),
+          lng: parseFloat(position[1])
+        });
+
+        done(null, dojoInfo);
+
+      }, done);
+    }
+
+
+    function loadCurrentUser(done) {
+      auth.get_loggedin_user(function(user) {
+        $scope.eventInfo.userId = user.id;
+        done(null, user);
+      }, done);
+    }
+
+
+    function loadDojoUsers(done) {
+      cdDojoService.loadDojoUsers({
+        dojoId: dojoId
+      }, function(users) {
+        $scope.dojoUsers = users;
+        done(null, users);
+      }, done);
+    }
+
+
+    function loadUserTypes(done) {
+      cdDojoService.getUserTypes(function(userTypes) {
+        // Add missing user type
+        userTypes.unshift('attendee-u13');
+
+        $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
+          memo[item] = false;
+          return memo;
+        }, {});
+
+        done(null, userTypes);
+      }, done);
+    }
+
+
+    function loadEvent(done) {
+      var eventId = $stateParams.eventId;
+
+      cdEventsService.getEvent(eventId, function(event) {
+        $scope.isEditMode = true;
+
+        event.date = new Date(event.date);
+        event.createdAt = new Date(event.createdAt);
+        delete event.toDate;
+
+        var userTypes = $scope.eventInfo.userTypes;
+        var selectedUserTypes = event.userTypes;
+        delete event.userTypes;
+
+        $scope.eventInfo = _.assign($scope.eventInfo, event);
+        $scope.eventInfo.userTypes = userTypes;
+
+        selectedUserTypes.forEach(function(selectedUserType) {
+          $scope.eventInfo.userTypes[selectedUserType] = true;
+        });
+
+        done(null, event);
+      }, done);
+    }
+
+
+    if ($stateParams.eventId) {
+
+      return async.series([
+        loadDojoUsers,
+        loadUserTypes,
+        loadEvent
+      ], function(err, results) {
+        if (err) {
+          console.error(err);
+        }
+
+        var eventPosition = results[2].position;
+
+        addMap(eventPosition);
+      });
+    }
+
+    async.parallel([
+      loadDojo,
+      loadCurrentUser,
+      loadDojoUsers,
+      loadUserTypes
+    ], function(err, results) {
+      if (err) {
+        console.error(err);
+      }
+    });
   }
 
 
@@ -266,5 +334,5 @@
       'cdLanguagesService',
       dojoEventFormCtrl
     ]);
-
 })();
+

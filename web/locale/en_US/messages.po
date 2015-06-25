@@ -1024,7 +1024,7 @@ msgid "Thank You. Your application has been received. You will be notified by em
 msgstr "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
 
 msgid "Error applying for event"
-msgstr "Error applying for event: "
+msgstr "Error applying for event"
 
 msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
 msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
@@ -1127,3 +1127,12 @@ msgstr "No applications have been changed."
 
 msgid "Invite Parent"
 msgstr "Invite Parent"
+
+msgid "Are you sure you want to delete this application?"
+msgstr "Are you sure you want to delete this application?"
+
+msgid "Select a Dojo member..."
+msgstr "Select a Dojo member..."
+
+msgid "Please click the Join Dojo button before applying for events."
+msgstr "Please click the Join Dojo button before applying for events."

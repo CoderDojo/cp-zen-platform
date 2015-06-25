@@ -2,12 +2,13 @@
   'use strict';
 
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate) {
-    var dojoId = $stateParams.dojoId;
-    $scope.filter = {dojo_id:dojoId};
+    $scope.dojoId = $stateParams.dojoId;
+    $scope.filter = {dojo_id: $scope.dojoId};
     $scope.itemsPerPage = 10;
+    $scope.pagination = {};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
 
-    cdDojoService.load(dojoId, function (response) {
+    cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
     });
 
@@ -16,21 +17,37 @@
     }
 
     $scope.createEvent = function() {
-      $state.go('create-dojo-event', {dojoId: dojoId});
+      $state.go('create-dojo-event', {dojoId: $scope.dojoId});
+    }
+
+    $scope.cancelEvent = function(event) {
+      delete event.formattedDate;
+      event.status = 'cancelled';
+      cdEventsService.saveEvent(event, function (response) {
+        $scope.loadPage($scope.filter, true);
+      });
     }
 
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo
-      var dojoQuery = { query: { match: { dojo_id: dojoId }}};
-      $scope.sort = $scope.sort ? $scope.sort :[{ date: 'asc' }];
+      var dojoQuery = { query: {
+                          bool: {
+                            must:[
+                              { match: { dojo_id: $scope.dojoId }}
+                            ]   
+                          }
+                        }
+                      };
+
+      $scope.sort = $scope.sort ? $scope.sort :[{ date: {order: 'asc', ignore_unmapped: true }}];
 
       var query = _.omit({
         dojo_id: filter.dojo_id,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
-      $scope.pageNo = loadPageData.pageNo;
+      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
+      $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.events = [];
 
       var meta = {
@@ -43,9 +60,20 @@
 
       cdEventsService.search(dojoQuery).then(function (result) {
         var events = [];
-        _.each(result.hits, function (event) {
-          event._source.date = moment(event._source.date).format('MMMM Do YYYY, h:mm');
-          events.push(event._source);
+        _.each(result.records, function (event) {
+          event.formattedDate = moment(event.date).format('MMMM Do YYYY, h:mm');
+          //Retrieve number of applicants & attendees
+          var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
+          cdEventsService.searchApplications(cdApplicationsQuery, function (result) {
+            var numOfApplicants = result.total;
+            var numAttending = 0;
+            _.each(result.records, function (application) {
+              if(application.status === 'approved') numAttending++;
+            })
+            event.applicants = numOfApplicants;
+            event.attending = numAttending;
+          });
+          events.push(event);
         });
         $scope.events = events;
         $scope.totalItems = result.total;
@@ -76,14 +104,14 @@
       descFlag = isDesc(className);
 
       if (descFlag) {
-        sortConfig[columnName] = {order: "asc"};
+        sortConfig[columnName] = {order: "asc", ignore_unmapped:true};
         sort.push(sortConfig);
 
         currentTargetEl
           .removeClass(DOWN)
           .addClass(UP);
       } else {
-        sortConfig[columnName] = {order: "desc"};
+        sortConfig[columnName] = {order: "desc", ignore_unmapped:true};
         sort.push(sortConfig);
         currentTargetEl
           .removeClass(UP)

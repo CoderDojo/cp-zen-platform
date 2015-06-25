@@ -7,6 +7,7 @@
           <span class="col-md-3"><b>Capacity:</b> {{ event.capacity }}</span>
           <span class="col-md-3"><b>Attending:</b> {{ attending }}</span>
           <span class="col-md-3"><b>Waitlist:</b> {{ waitlist }}</span>
+          <span class="col-md-3"><button ng-click="createNewApplicant()" class="btn btn-primary">New Applicant</button>
         </div>
         <table id="eventApplicationsTable" class="table cd-grid-table">
           <thead>
@@ -15,9 +16,10 @@
               <th class="ten-percent-width">{@i18n key="Age"/}</th>
               <th class="ten-percent-width">{@i18n key="Parents/Guardians"/}</th>
               <th class="ten-percent-width">{@i18n key="Approve"/}</th>
+              <th class="ten-percent-width"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody ng-switch on="newApplicantClicked">
             <tr ng-repeat="application in applications">
               <td>{{ application.name }}</td>
               <td></td>
@@ -28,13 +30,29 @@
                   <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
                 </div>
               </td>
+              <td><button class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to delete this application?" ng-bootbox-confirm-action="removeApplicant(application)">Delete</button>
+            </tr>
+            <tr ng-switch-when="true">
+              <td>
+                <ui-select name="dojoMembersList" ng-model="newApplicant.member" on-select="dojoMemberSelected($item)"> 
+                  <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a Dojo member..."/}">{{ $select.selected.name  }}</ui-select-match>
+                  <ui-select-choices repeat="dojoMember in dojoMembers">
+                    <span ng-bind-html="dojoMember.name"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+              <td><button class="btn btn-primary" ng-click="cancelNewApplicant()">{@i18n key="Cancel"/}</button></td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
     <div class="row col-lg-6 col-lg-offset-4">
-    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
+    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" boundary-links="true"></pagination>
   </div>
-  <button class="btn btn-success pull-right" ng-click="saveApplications()">{@i18n key="Save"/}</button>
+  <span class="help-block"></span>
+  <button class="btn btn-success" ng-click="saveApplications()">{@i18n key="Save"/}</button>
+    
 </div>
