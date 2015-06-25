@@ -1,4 +1,4 @@
-<h2>Attendance: {{ event.name }}</h2>
+<h3>Manage Attendance for: {{ event.name }}</h3>
 
 <dl class="l-inline">
   <dt>Capacity:</dt>
@@ -33,9 +33,10 @@
         <td></td>
         <td></td>
         <td>
-          <label>
-            <input type="checkbox" ng-model="application.attended" ng-click="onAttendedClicked(application)">
-          </label>
+          <div class="checkbox">
+            <input type="checkbox" ng-model="application.attended" ng-click="onAttendedClicked(application)" id="{{ 'approvedApplicationsCheckbox-' + $index }}">
+            <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
+          </div>
         </td>
       </tr>
     </tbody>
