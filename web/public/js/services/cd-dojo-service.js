@@ -128,6 +128,9 @@
       },
       getUserTypes: function(win, fail) {
         cdApi.get('get_user_types', win, fail || topfail);
+      },
+      uncompletedDojos: function(win, fail){
+        cdApi.get('uncompleted_dojos', win, fail || topfail);
       }
     };
   }

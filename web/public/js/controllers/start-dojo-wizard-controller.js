@@ -54,8 +54,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               if (!_.isEmpty(response)) {
                 $state.go('home',
                   { bannerType:'success',
-                    bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified. ' +
-                    'If you need help completing your initial Dojo application, please contact us at info@coderdojo.org',
+                    bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.<br> ' +
+                    'If you need help completing your initial Dojo application, please contact us at <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
                     bannerTimeCollapse: 150000
                   });
               } else {
