@@ -71,7 +71,10 @@
               </tr>
               <tr>
                 <td class="col-lg-2"><b>{@i18n key="Location"/}</b></td>
-                <td ng-if="dojo.address1">{{ dojo.address1 }}, {{ dojo.address2 }}</td>
+                <td ng-if="dojo.address1">{{ dojo.address1 }}<span ng-if="dojo.address2">, {{ dojo.address2 }}</span></td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>{@i18n key="City/Town"/}</b></td>
                 <td ng-if="dojo.placeName">{{ dojo.placeName }}</td>
               </tr>
               <tr>

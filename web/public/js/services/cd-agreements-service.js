@@ -15,6 +15,9 @@ function cdAgreementsService(cdApi){
     },
     count: function(query, win, fail){
       cdApi.post('agreements/count', {query: query}, win, fail || topfail);
+    },
+    loadUserAgreement: function(id, win, fail){
+      cdApi.get('agreements/' + id, win, fail || topfail);
     }
   };
 }
