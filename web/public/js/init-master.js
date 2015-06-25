@@ -139,6 +139,11 @@
           templateUrl: '/dojos/template/accept-dojo-user-request',
           controller: 'accept-dojo-user-request-controller'
         })
+        .state('accept-child-invite',{
+          url: '/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          controller: 'accept-child-controller',
+          templateUrl: '/profiles/template/accept-child-invite'
+        })
         .state("user-profile", {
           url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',

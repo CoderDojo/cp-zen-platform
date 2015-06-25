@@ -48,8 +48,10 @@ function cdUsersService(cdApi, $q){
     },
     inviteParent: function(data, win, fail) {
       cdApi.post('profiles/invite-parent-guardian', {data: data}, win, fail || topfail);
+    },
+    acceptParent: function(data, win, fail) {
+      cdApi.post('profiles/accept-parent-guardian', {data: data}, win, fail || topfail);
     }
-
   };
 }
 
