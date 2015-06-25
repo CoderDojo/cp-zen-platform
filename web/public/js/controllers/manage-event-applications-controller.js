@@ -201,7 +201,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   }
 
   $scope.saveApplications = function() {
-    if(!changedApplications.length > 0) return alertService.showAlert($translate.instant('No applications have been changed.'));
+    if(changedApplications.length === 0) return alertService.showAlert($translate.instant('No applications have been changed.'));
     usSpinnerService.spin('manage-event-applications-spinner');
 
     cdEventsService.bulkUpdateApplications(changedApplications, function (response) {

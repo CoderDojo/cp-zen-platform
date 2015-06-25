@@ -4,7 +4,6 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
-  $scope.currentUser;
 
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;

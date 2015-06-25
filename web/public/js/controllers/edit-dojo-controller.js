@@ -1,4 +1,6 @@
 'use strict';
+/* global google */
+
 //TO DO: Move edit dojo controller into create-dojo-controller
 function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate) {
   $scope.dojo = {};

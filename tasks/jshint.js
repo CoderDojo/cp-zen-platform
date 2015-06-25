@@ -2,18 +2,19 @@
 
 
 module.exports = function jshint(grunt) {
-    // Load task
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+  // Load task
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    // Options
-    return {
-        files: [
-            'web/controllers/**/*.js',
-            'lib/**/*.js',
-            'web/models/!**!/!*.js'
-        ],
-        options: {
-            jshintrc: '.jshintrc'
-        }
-    };
+  // Options
+  return {
+    files: [
+      'web/controllers/**/*.js',
+      'lib/**/*.js',
+      'web/models/!**!/!*.js',
+      'web/public/js/**/*.js'
+    ],
+    options: {
+      jshintrc: '.jshintrc'
+    }
+  };
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 // Google async initializer needs global function, so we use $window
 angular.module('cpZenPlatform')
     .factory('GoogleMapsInitializer', function($window, $q){
