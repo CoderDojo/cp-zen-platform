@@ -1,5 +1,4 @@
 {
-    
     "express": {
         "view cache": false,
         "view engine": "dust",
@@ -34,7 +33,7 @@
                 "arguments": [
                     "path:./public",
                     "path:./.build",
-                    {   
+                    {
                         "template": {
                             "module": "kraken-devtools/plugins/dustjs",
                             "files": "/templates/**/*.js",
@@ -44,10 +43,6 @@
                         "css": {
                             "module": "kraken-devtools/plugins/less",
                             "files": "/css/**/*.css"
-                        },
-                        "browserify": {
-                            "module": "kraken-devtools-browserify",
-                            "files": "/js/**/*.js"
                         },
                         "copier": {
                             "module": "kraken-devtools/plugins/copier",
