@@ -13,6 +13,7 @@
                 <th>{@i18n key="Capacity"/}</th>
                 <th>{@i18n key="Applicants"/}</th>
                 <th>{@i18n key="Attending"/}</th>
+                <th>{@i18n key="Status"/}</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -22,14 +23,15 @@
             <tbody>
               <tr ng-repeat="event in events">
                 <td>{{ event.name }}</td>
-                <td>{{ event.date }}</td>
+                <td>{{ event.formattedDate }}</td>
                 <td>{{ event.capacity }}</td>
                 <td>{{ event.applicants }}</td>
                 <td>{{ event.attending }}</td>
+                <td>{{ event.status }}</td>
                 <td class="pointer"><a ui-sref="edit-dojo-event({eventId:event.id, dojoId: dojoId})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer"><a ui-sref=".manage-applications({eventId:event.id})">{@i18n key="Manage"/}</a></td>
                 <td class="pointer"><a ui-sref=".manage-attendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>
-                <td class="pointer"><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
+                <td class="pointer"><button ng-if="event.status !== 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
               </tr>
             </tbody>
           </table>

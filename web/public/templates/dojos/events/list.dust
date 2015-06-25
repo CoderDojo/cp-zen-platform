@@ -31,7 +31,7 @@
           </table>
         </div>
       </div>
-      <div class="row col-lg-6 col-lg-offset-3">
+      <div class="row col-lg-7 col-lg-offset-2">
       <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
   </div>
