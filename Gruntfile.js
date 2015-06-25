@@ -3,13 +3,15 @@
 
 module.exports = function (grunt) {
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-cli');
+  //Load the project's grunt tasks from a directory
+  require('grunt-config-dir')(grunt, {
+    configDir: require('path').resolve('tasks')
+  });
 
-  grunt.initConfig(require('./grunt/config'));
+  grunt.registerTask('js-hint',['jshint']);
 
-  grunt.registerTask('default', ['jshint', 'mochacli']);
-  grunt.registerTask('test', ['jshint', 'mochacli']);
-  grunt.registerTask('precommit', []);
-
+  // Register group tasks
+  //grunt.registerTask('build', [ 'jshint', 'less', 'requirejs', 'i18n', 'copyto' ]);
+  //grunt.registerTask('test', [ 'jshint', 'mochacli' ]);
+  //grunt.registerTask('precommit', []);
 };
