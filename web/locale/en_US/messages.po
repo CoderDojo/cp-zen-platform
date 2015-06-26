@@ -1136,3 +1136,12 @@ msgstr "Select a Dojo member..."
 
 msgid "Please click the Join Dojo button before applying for events."
 msgstr "Please click the Join Dojo button before applying for events."
+
+msgid "Dojo Staff"
+msgstr "Dojo Staff"
+
+msgid "< 13"
+msgstr "< 13"
+
+msgid "> 13"
+msgstr "> 13"

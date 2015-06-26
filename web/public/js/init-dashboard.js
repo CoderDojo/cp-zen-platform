@@ -197,7 +197,7 @@
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller'
         })
-        .state("setup-dojo", {
+		    .state("setup-dojo", {
           url: "/dashboard/setup-dojo/:id",
           templateUrl: '/dojos/template/setup-dojo',
           controller: 'setup-dojo-controller'
