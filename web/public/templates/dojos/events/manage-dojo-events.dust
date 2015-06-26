@@ -31,7 +31,10 @@
                 <td class="pointer"><a ui-sref="edit-dojo-event({eventId:event.id, dojoId: dojoId})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer"><a ui-sref=".manage-applications({eventId:event.id})">{@i18n key="Manage"/}</a></td>
                 <td class="pointer"><a ui-sref=".manage-attendance({eventId:event.id})">{@i18n key="Attendance"/}</a></td>
-                <td class="pointer"><button ng-if="event.status !== 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="cancelEvent(event)">{@i18n key="Cancel"/}</td>
+                <td class="pointer">
+                  <button ng-if="event.status === 'published'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="updateEventStatus(event, 'cancelled')">{@i18n key="Cancel"/}</button>
+                  <button ng-if="event.status === 'saved'" class="btn btn-success" ng-click="updateEventStatus(event, 'published')">{@i18n key="Publish"/}</button>
+                </td>
               </tr>
             </tbody>
           </table>

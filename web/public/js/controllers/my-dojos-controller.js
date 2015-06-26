@@ -67,9 +67,9 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
            if(isChampion && isDojoAdmin && isDojoOwner) resolve(true);
            else resolve(false);
         }, function (err) {
-          reject( $translate.instant('Error loading user dojo entity') + ' <br /> ' + 
+          reject( $translate.instant('Error loading user dojo entity') + ' <br /> ' +
           (err.error || JSON.stringify(err)));
-        });  
+        });
       });
     }
 
@@ -146,3 +146,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
 
 angular.module('cpZenPlatform')
   .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', '$q', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+

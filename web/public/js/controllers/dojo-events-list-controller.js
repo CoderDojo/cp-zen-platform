@@ -1,26 +1,26 @@
  'use strict';
 
-function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsService, tableUtils, alertService, auth) {
+function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdDojoService, tableUtils, alertService, auth) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
   $scope.currentUser;
 
   auth.get_loggedin_user(function (user) {
-    $scope.currentUser = user;
+    $scope.currentUser = user; 
   });
 
-  $scope.loadPage = function (filter, resetFlag, cb) {
-    cb = cb || function () {};
+  function buildEventsQuery() {
     //Only list published events for this Dojo
     var todaysDate = moment().toDate();
     todaysDate = moment(todaysDate).format('YYYY-MM-DD');
-    var dojoQuery = { 
+    return {
       query: {
         bool: {
           must:[
             { match: { dojo_id: dojoId }},
             { match: { status: 'published' }},
+            { match: { public: true}},
             { 
               range: {
                 date: {
@@ -29,10 +29,16 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
               }
             }
           ]   
-        }
+        },
       }
     };
-       
+  }
+
+  $scope.loadPage = function (filter, resetFlag, cb) {
+    cb = cb || function () {};
+
+    var dojoQuery = buildEventsQuery();
+    
     $scope.sort = $scope.sort ? $scope.sort :[{ date: {order:'asc', ignore_unmapped:true}}];
 
     var query = _.omit({
@@ -59,18 +65,20 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
         if(_.contains(userTypes, 'attendee-u13') && _.contains(userTypes, 'attendee-o13')) {
           event.for = $translate.instant('All');
         } else if(_.contains(userTypes, 'attendee-u13')) {
-          event.for = '< 13';
+          event.for = $translate.instant('< 13');
+        } else if(_.contains(userTypes, 'attendee-o13')) {
+          event.for = $translate.instant('> 13');
         } else {
-          event.for = '> 13';
+          event.for = $translate.instant('Dojo Staff');
         }
         events.push(event);
       });
       $scope.events = events;
       $scope.totalItems = result.total;
-      return cb();
     });
-  }
 
+  }
+  
   $scope.loadPage($scope.filter, true);
 
   $scope.tableRowIndexExpandedCurr = '';
@@ -140,10 +148,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, cdEventsSer
       .addClass(DOWN);
 
     $scope.sort = sort;
+
     $scope.loadPage($scope.filter, true);
   }
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', 'cdEventsService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
+    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', '$q', 'cdEventsService', 'cdDojoService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
