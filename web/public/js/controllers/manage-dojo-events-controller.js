@@ -27,7 +27,7 @@
         $scope.loadPage($scope.filter, true);
       });
     }
-    
+        
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo

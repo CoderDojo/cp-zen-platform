@@ -7,7 +7,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.currentUser;
 
   auth.get_loggedin_user(function (user) {
-    $scope.currentUser = user; 
+    $scope.currentUser = user;
   });
 
   function buildEventsQuery() {
@@ -78,7 +78,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     });
 
   }
-  
+
   $scope.loadPage($scope.filter, true);
 
   $scope.tableRowIndexExpandedCurr = '';
