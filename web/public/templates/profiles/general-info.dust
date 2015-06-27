@@ -98,12 +98,18 @@
         <label for="notes" class="col-sm-4 control-label">Notes </label>
         <div class="col-sm-8">
           <textarea class="form-control"  placeholder="Notes" rows="3"></textarea>
+          <label for="hideNotesField">Hide Notes&nbsp;&nbsp;</label>
+          <input type="checkbox" ng-model="profile.optionalHiddenFields['notes']" value="false">
         </div>
       </div>
       <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
         <label for="projects" class="col-sm-4 control-label">Projects </label>
         <div class="col-sm-8">
           <tags-input ng-model="profile.projects"  placeholder="Projects"></tags-input>
+          <div ng-if="hasAccess(profile.userTypes, ['champion'])">
+            <label for="hideProjectsField">Hide Projects&nbsp;&nbsp;</label>
+            <input type="checkbox" ng-model="profile.optionalHiddenFields['projects']" value="false">
+          </div>
         </div>
       </div>
       <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
