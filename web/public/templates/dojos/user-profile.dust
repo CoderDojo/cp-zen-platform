@@ -3,7 +3,7 @@
   <div class="container target">
     <div class="row">
       <div class="col-sm-9">
-        <h1 class="">{{ profileData.user.name }}</h1>
+        <h1 class="">{{ profile.name || profile.alias }}</h1>
 <!--         <a href="mailto:{{ profileData.user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a> -->
         <br>
       </div>
@@ -50,7 +50,7 @@
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
           <general-info></general-info>
-          <projects-list ng-if="profile.userType === 'champion' "></projects-list>
+          <projects-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
           <programming-languages-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
           <languages-spoken-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
           <children-list ng-if="hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>
