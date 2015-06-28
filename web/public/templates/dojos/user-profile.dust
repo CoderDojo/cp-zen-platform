@@ -19,7 +19,7 @@
           <div class="panel-body"> 
             <a ng-if="profile.twitter" href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
             <a ng-if="profile.linkedin" href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
-            <p ng-if="!profile.twitter && !profile.linkedin">None</p>
+            <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
           </div>
         </div>
         <div class="panel panel-default" ng-if="profile.myChild">
@@ -27,9 +27,9 @@
           <div class="panel-body invite-parent-guardian-form">
             <form class="form-horizontal">
               <div class="form-group">
-                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="Parent's/Guardian's email">
+                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="{@i18n key="parent.guardian.email"/}">
                 <div class="text-right invite-button">
-                  <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">Invite</button>
+                  <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">{@i18n key="Invite"/}</button>
                 </div>
               </div>
             </form>
