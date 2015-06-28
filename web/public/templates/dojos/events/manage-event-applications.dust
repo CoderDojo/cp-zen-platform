@@ -13,6 +13,7 @@
           <thead>
             <tr>
               <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
+              <th class="ten-percent-width">{@i18n key="Email"/}
               <th class="ten-percent-width">{@i18n key="Age"/}</th>
               <th class="ten-percent-width">{@i18n key="Parents/Guardians"/}</th>
               <th class="ten-percent-width">{@i18n key="Approve"/}</th>
@@ -21,7 +22,8 @@
           </thead>
           <tbody ng-switch on="newApplicantClicked">
             <tr ng-repeat="application in applications">
-              <td>{{ application.name }}</td>
+              <td><a ui-sref="user-profile({ userId:application.user.id })"><u>{{ application.name }}</u></a></td>
+              <td>{{ application.user.email }}</td>
               <td></td>
               <td></td>
               <td class="ten-percent-width">

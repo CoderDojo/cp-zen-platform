@@ -7,7 +7,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
 
   $scope.pageChanged = function(){
     $scope.loadPage(currentUser, false);
-  }
+  };
 
   $scope.editDojo = function(dojo) {
     cdDojoService.setDojo(dojo, function(response) {
@@ -20,7 +20,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
         );
       }
     });
-  }
+  };
 
   $scope.deleteDojo = function(dojo) {
     var hasPermission = false;
@@ -41,7 +41,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
         alertService.showAlert($translate.instant('You do not have permission to delete this Dojo'));
       }
     });
-  }
+  };
 
   function canDeleteDojo (dojo, cb) {
     //User can delete dojo if:
@@ -119,7 +119,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
             onOpen: function() {
               angular.element('.a-no-float').on('click', function(e){
                 if(angular.element('.alert-message').hasClass('active')){
-                  angular.element('.alert-message').removeClass('active')
+                  angular.element('.alert-message').removeClass('active');
                 }
               });
             }

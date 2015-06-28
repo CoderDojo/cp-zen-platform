@@ -20,14 +20,14 @@
       $state.go('create-dojo-event', {dojoId: $scope.dojoId});
     }
 
-    $scope.cancelEvent = function(event) {
+    $scope.updateEventStatus = function(event, status) {
       delete event.formattedDate;
-      event.status = 'cancelled';
+      event.status = status;
       cdEventsService.saveEvent(event, function (response) {
         $scope.loadPage($scope.filter, true);
       });
     }
-
+        
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo
