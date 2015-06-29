@@ -5,8 +5,6 @@
   <dd>{{ event.capacity }}</dd>
   <dt>Attending:</dt>
   <dd>{{ attending }}</dd>
-  <dt>Waitlist:</dt>
-  <dd>{{ waitlist }}</dd>
   <dt>Attended:</dt>
   <dd>{{ attended }}</dd>
 </dl>
@@ -16,8 +14,9 @@
     <thead>
       <tr>
         <th>
-          <span ng-click="toggleSort($event, 'name')"
-                class="pointer sortable glyphicon glyphicon-chevron-down">
+          <span ng-click="sort.toggleDirection()"
+                class="pointer sortable glyphicon"
+                ng-class="(sort.direction === 'asc') ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'">
             &nbsp;
           </span>{@i18n key="Name"/}
         </th>
@@ -34,7 +33,10 @@
         <td></td>
         <td>
           <div class="checkbox">
-            <input type="checkbox" ng-model="application.attended" ng-click="onAttendedClicked(application)" id="{{ 'approvedApplicationsCheckbox-' + $index }}">
+            <input type="checkbox"
+                   ng-model="application.attended"
+                   ng-click="onAttendedClicked(application)"
+                   id="{{ 'approvedApplicationsCheckbox-' + $index }}">
             <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
           </div>
         </td>
@@ -42,13 +44,11 @@
     </tbody>
   </table>
 
-  <div class="text-center">
-    <pagination total-items="totalItems"
-                ng-change="pageChanged()"
-                items-per-page="itemsPerPage"
-                ng-model="pageNo"
-                class="pagination-sm"
-                boundary-links="true">
+  <div class="text-center" ng-if="pagination.totalItems > pagination.itemsPerPage">
+    <pagination total-items="pagination.totalItems"
+                ng-change="pagination.change()"
+                items-per-page="pagination.itemsPerPage"
+                ng-model="pagination.currentPage">
     </pagination>
   </div>
 </div>

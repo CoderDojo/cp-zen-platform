@@ -1,13 +1,13 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
 
   $scope.pageChanged = function(){
     $scope.loadPage(currentUser, false);
-  }
+  };
 
   $scope.editDojo = function(dojo) {
     cdDojoService.setDojo(dojo, function(response) {
@@ -20,7 +20,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
         );
       }
     });
-  }
+  };
 
   $scope.deleteDojo = function(dojo) {
     var hasPermission = false;
@@ -41,7 +41,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
         alertService.showAlert($translate.instant('You do not have permission to delete this Dojo'));
       }
     });
-  }
+  };
 
   function canDeleteDojo (dojo, cb) {
     //User can delete dojo if:
@@ -61,7 +61,6 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
           isDojoAdmin = _.find(userDojo.userPermissions, function(userPermission) {
                           return userPermission.name === 'dojo-admin';
                         });
-          isDojoOwner;
           if(userDojo.owner === 1) isDojoOwner = true;
           else isDojoOwner = false;
            if(isChampion && isDojoAdmin && isDojoOwner) resolve(true);
@@ -119,7 +118,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
             onOpen: function() {
               angular.element('.a-no-float').on('click', function(e){
                 if(angular.element('.alert-message').hasClass('active')){
-                  angular.element('.alert-message').removeClass('active')
+                  angular.element('.alert-message').removeClass('active');
                 }
               });
             }
@@ -145,5 +144,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, $q, cdDojoService,
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', '$q', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
-
+  .controller('my-dojos-controller', ['$q', '$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);

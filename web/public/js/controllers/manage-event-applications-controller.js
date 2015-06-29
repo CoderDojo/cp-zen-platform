@@ -7,8 +7,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.sort = undefined;
   $scope.itemsPerPage = 10;
   $scope.pagination = {};
-  var changedApplications = [];
-
+  $scope.newApplicant = {};
+  
   cdEventsService.getEvent(eventId, function (response) {
     $scope.event = response;
     $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
@@ -19,7 +19,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.newApplicantClicked = false;
 
     var newApplicant = {
-        id: 'new-applicant-'+dojoMember.id,
         name: dojoMember.name,
         attended: false,
         dateOfBirth: null,
@@ -28,25 +27,19 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         user_id: dojoMember.id
     };
 
-    $scope.approved[newApplicant.id] = false;
-
-    $scope.applications.push(newApplicant);
-    changedApplications.push(newApplicant);
-    $scope.waitlist++;
+    cdEventsService.saveApplication(newApplicant, function (response) {
+      $scope.loadPage($scope.filter, true);
+    }, function (err) {
+      alertService.showError($translate.instant('Error saving new applicant') + '<br>' + JSON.stringify(err));
+    });
   }
 
   $scope.removeApplicant = function(applicant) {
-    //Check if this is a new applicant that was just added (i.e not yet saved to the db)
-    if(applicant.id.indexOf('new-applicant') > -1) {
-      var applicationsIndexToDelete = $scope.applications.indexOf(applicant);
-      var changedApplicationsIndexToDelete = changedApplications.indexOf(applicant);
-      $scope.applications.splice(applicationsIndexToDelete, 1);
-      changedApplications.splice(changedApplicationsIndexToDelete, 1);
-    } else {
-      cdEventsService.removeApplicant(applicant, function (response) {
-        $scope.loadPage($scope.filter, true);
-      });
-    }
+    cdEventsService.removeApplicant(applicant, function (response) {
+      $scope.loadPage($scope.filter, true);
+    }, function (err) {
+      alertService.showError($translate.instant('Error removing applicant') + '<br>' + JSON.stringify(err));
+    });
   }
 
   $scope.pageChanged = function () {
@@ -58,7 +51,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.approved = {};
     $scope.attending = 0;
     $scope.waitlist = 0;
-    changedApplications = [];
 
     var eventApplicationsQuery = { query: { match: { event_id: eventId }}};
     $scope.sort = $scope.sort ? $scope.sort :[{ name: {order:'asc', ignore_unmapped:true}}];
@@ -190,31 +182,13 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       $scope.waitlist++;
     }
 
-    var applicationAlreadyUpdated = _.find(changedApplications, function(changedApplication) {
-      return changedApplication.id === application.id;
+    delete application.user;
+    cdEventsService.updateApplication(application, null, function (err) {
+      alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
     });
 
-    if(!applicationAlreadyUpdated) {
-      changedApplications.push(application);
-    }
-
   }
-
-  $scope.saveApplications = function() {
-    if(!changedApplications.length > 0) return alertService.showAlert($translate.instant('No applications have been changed.'));
-    usSpinnerService.spin('manage-event-applications-spinner');
-
-    cdEventsService.bulkUpdateApplications(changedApplications, function (response) {
-      usSpinnerService.stop('manage-event-applications-spinner');
-      alertService.showAlert($translate.instant('Applications successfully updated'));
-      $scope.loadPage($scope.filter, true);
-    }, function (err) {
-      usSpinnerService.stop('manage-event-applications-spinner');
-      alertService.showError($translate.instant('Error updating applications') + ': <br/>' + JSON.stringify(err));
-      $scope.loadPage($scope.filter, true);
-    });
-  }
-
+  
   $scope.userIsApproved = function(application) {
     var isApproved = $scope.approved[application.id];
     if(isApproved) return true;

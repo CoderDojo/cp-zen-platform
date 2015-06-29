@@ -1,4 +1,5 @@
 'use strict';
+/* global bootbox */
 
 angular.module('cpZenPlatform').factory('alertService', function($rootScope) {
   var alertService = {};
