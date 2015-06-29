@@ -74,7 +74,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
       _.each(response, function (user) {
         var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
         user.types = thisUsersDojoLink.userTypes;
-        user.permissions = thisUsersDojoLink.userPermissions;       
+        user.permissions = thisUsersDojoLink.userPermissions;
         $scope.selectedUserPermissions[user.id] = user.permissions;
       });
       $scope.users = response;
@@ -100,9 +100,9 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
         if(!userDojoLink.userPermissions) userDojoLink.userPermissions = [];
         userDojoLink.userPermissions.push(permission);
         //Save to db
-        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0]['text']) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
-          
+
         }, function (err) {
           alertService.showError($translate.instant('Error saving permission') + ' ' + err);
         });
@@ -116,18 +116,18 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
         });
         user.permissions.splice(indexToRemove, 1);
         userDojoLink.userPermissions = user.permissions;
-        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0]['text']) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
         //Save to db
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
 
         }, function (err) {
           alertService.showError($translate.instant('Error removing permission') + ' ' +err);
         });
-      } 
+      }
     } else {
       alertService.showAlert($translate.instant('You do not have permission to update user permissions'));
     }
-    
+
 
   }
 
@@ -150,7 +150,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
         }, function (err) {
           alertService.showError($translate.instant('Error saving user type') + ' ' + err);
-        });  
+        });
       } else {
         alertService.showAlert($translate.instant('You do not have permission to update user types'));
         if(method === 'add') user.types.pop();
@@ -161,7 +161,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
   function canUpdateUserTypes(cb) {
     //Can update user types if:
-    // - Current user is champion 
+    // - Current user is champion
     // - Current user is Dojo Admin
     function getUsersDojos() {
       return $q(function (resolve, reject) {
@@ -177,9 +177,9 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
           if(isChampion && isDojoAdmin) return resolve(true);
           return resolve(false);
         }, function (err) {
-          alertService.showError($translate.instant('Error loading user dojo entity') + ' <br /> ' + 
+          alertService.showError($translate.instant('Error loading user dojo entity') + ' <br /> ' +
           (err.error || JSON.stringify(err)));
-        }); 
+        });
       });
     }
 
@@ -197,7 +197,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     }, function (err) {
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showError($translate.instant('Error sending invite') + ' ' + err);
-    }); 
+    });
   }
 
   $scope.removeUser = function (user) {

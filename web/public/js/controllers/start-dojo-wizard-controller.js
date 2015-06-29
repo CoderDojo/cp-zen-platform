@@ -1,4 +1,5 @@
  'use strict';
+ /*global google*/
 
 function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate) {
     $scope.stepFinishedLoading = false;
@@ -78,7 +79,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           } else {
             if(uncompletedDojoLead){
               cdAgreementsService.loadUserAgreement(user.id, function(response){
-                response && response.id ? initStep(uncompletedDojoLead.currentStep) : initStep(1, 'charter')
+                if(response && response.id){
+                  initStep(uncompletedDojoLead.currentStep);
+                } else {
+                  initStep(1, 'charter');
+                }
               });
             } else {
               //go to champion registration page
@@ -242,8 +247,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       auth.get_loggedin_user(function (user) {
         currentUser = user;
         if (currentUser) {
-          $scope.champion ? $scope.champion.email = currentUser.email : '';
-          $scope.champion ? $scope.champion.name = currentUser.name : '';
+          $scope.champion.email = $scope.champion ? currentUser.email : '';
+          $scope.champion.name = $scope.champion ? currentUser.name : '';
         }
       });
 
@@ -441,11 +446,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         dojo.alpha3 = country.alpha3;
       };
 
-      var initContent = "<p><ul> \
-        <li>" + $translate.instant('dojo.create.initcontent.li1') +"</li> \
-        <li>"+ $translate.instant('dojo.create.initcontent.li2') +"</li> \
-        <li><b>" + $translate.instant('dojo.create.initcontent.li3') +"</b></li> \
-        </ul></p>";
+      var initContent = "<p><ul>" +
+        "<li>" + $translate.instant('dojo.create.initcontent.li1') +"</li>" +
+        "<li>"+ $translate.instant('dojo.create.initcontent.li2') +"</li>" +
+        "<li><b>" + $translate.instant('dojo.create.initcontent.li3') +"</b></li>" +
+        "</ul></p>";
 
       $scope.editorOptions = {
         language: 'en',
@@ -477,7 +482,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               $state.go('home', {
                 bannerType:'success',
                 bannerMessage: $translate.instant('dojo.create.success'),
-				bannerTimeCollapse: 150000
+                bannerTimeCollapse: 150000
               });
             });
           });
@@ -522,7 +527,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               address = address + ', ' + dojo['admin'+adminidx+'Name'];
             }
           }
-          address = address + ', ' + dojo['countryName'];
+          address = address + ', ' + dojo.countryName;
           Geocoder.latLngForAddress(address).then(function (data) {
             $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
             $scope.model.map.panTo($scope.mapOptions.center);

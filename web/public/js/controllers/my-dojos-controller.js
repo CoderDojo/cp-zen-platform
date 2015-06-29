@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
@@ -61,7 +61,6 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
           isDojoAdmin = _.find(userDojo.userPermissions, function(userPermission) {
                           return userPermission.name === 'dojo-admin';
                         });
-          isDojoOwner;
           if(userDojo.owner === 1) isDojoOwner = true;
           else isDojoOwner = false;
            if(isChampion && isDojoAdmin && isDojoOwner) resolve(true);
@@ -145,4 +144,4 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $q,
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$q', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$q', '$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);

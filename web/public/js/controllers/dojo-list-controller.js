@@ -1,4 +1,5 @@
 'use strict';
+/* global google,jQuery,MarkerClusterer */
 
 function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, $translate, gmap) {
   $scope.model = {};
@@ -49,7 +50,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.$on('$viewContentLoaded', function() {
-    jQuery('body').cookieDisclaimer({ 
+    jQuery('body').cookieDisclaimer({
       text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."),
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
