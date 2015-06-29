@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     configDir: require('path').resolve('tasks')
   });
 
-  grunt.registerTask('js-hint',['jshint']);
+  grunt.registerTask('build',['jshint']);
 
   // Register group tasks
   //grunt.registerTask('build', [ 'jshint', 'less', 'requirejs', 'i18n', 'copyto' ]);
