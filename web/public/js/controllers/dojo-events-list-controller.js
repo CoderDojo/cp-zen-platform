@@ -1,12 +1,51 @@
  'use strict';
 
-function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdDojoService, tableUtils, alertService, auth) {
+function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdUsersService, cdDojoService, tableUtils, alertService, auth) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
+  $scope.applyData = {};
 
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
+
+    //Get users current user types in this Dojo.
+    cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId:dojoId}, function (response) {
+      if(!_.isEmpty(response)) {
+        var userDojo = response[0];
+        var userTypes = userDojo.userTypes;
+        $scope.isParent = _.contains(userTypes, 'parent-guardian');
+       
+        if($scope.isParent) {
+          //retrieve this parent's children
+          var query = {userId:$scope.currentUser.id};
+          cdUsersService.listProfiles(query, function (response) {
+            var parentProfile = response;
+            var children = parentProfile.children;
+            var childProfiles = [];
+            async.each(children, function (child, cb) {
+              cdUsersService.listProfiles({userId:child}, function (response) {
+                if(response.userType === 'attendee-u13') {
+                  childProfiles.push(response);
+                }
+                cb();
+              });
+            }, function (err) {
+              var childUsers = [];
+              async.each(childProfiles, function (childProfile, cb) {
+                //Load sys_user objects
+                cdUsersService.load(childProfile.userId, function (response) {
+                  childUsers.push(response);
+                  cb();
+                });
+              }, function (err) {
+                $scope.childUsers = childUsers;
+              });
+            });
+          });
+        }
+      }
+    });
   });
 
   function buildEventsQuery() {
@@ -154,4 +193,4 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 }
 
 angular.module('cpZenPlatform')
-    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', '$q', 'cdEventsService', 'cdDojoService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
+    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', '$q', 'cdEventsService', 'cdUsersService', 'cdDojoService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);

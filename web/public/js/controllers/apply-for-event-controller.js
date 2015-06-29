@@ -1,8 +1,8 @@
 'use strict';
 
-function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location, alertService, cdEventsService, cdDojoService, usSpinnerService) {
+function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
   var eventIndex = $scope.tableRowIndexExpandedCurr;
-
+  
   $scope.cancel = function () {
     $scope.showEventInfo(eventIndex, $scope.event.id);
   }
@@ -19,7 +19,14 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
         });
 
         if(isMember) {
-          cdEventsService.applyForEvent($scope.event.id, function (response) {
+
+          var applyData = {
+            eventId: $scope.event.id,
+            children: $scope.applyData.childrenSelected,
+            user:$scope.currentUser
+          };
+
+          cdEventsService.applyForEvent(applyData, function (response) {
             if(response.error) {
               usSpinnerService.stop('apply-for-event-spinner');
               alertService.showError($translate.instant('Error applying for event') + ': ' + response.error);
@@ -42,4 +49,4 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
 }
 
 angular.module('cpZenPlatform')
-    .controller('apply-for-event-controller', ['$scope', '$state', '$stateParams', '$translate', '$location', 'alertService','cdEventsService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);
+    .controller('apply-for-event-controller', ['$scope', '$state', '$stateParams', '$translate', '$location', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);

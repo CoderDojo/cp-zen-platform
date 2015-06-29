@@ -12,6 +12,18 @@
   <p><b>{@i18n key="Address"/}:</b> {{ event.address }}</p>
 
   <p><b>{@i18n key="For"/}:</b> {{ event.for }}</p>
+
+  <div ng-if="childUsers.length > 0" class="well">
+    <legend>{@i18n key="Children Attending"/}</legend>
+    <div class="control-group" ng-repeat="childUser in childUsers">
+      <div class="checkbox">
+        <input checklist-model="applyData.childrenSelected" checklist-value="childUser.id" type="checkbox" name="{{ childUser.id }}" id="{{ childUser.id }}">
+        <label for="{{ childUser.id }}">
+          {{ childUser.name }}
+        </label>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-success" ng-click="apply()">{@i18n key="Apply"/}</button>

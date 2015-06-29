@@ -20,8 +20,8 @@ function cdEventsService(cdApi, $q){
         cdApi.post('events/search', {search: search}, resolve, reject);
       });
     },
-    applyForEvent: function(eventId, win, fail) {
-      cdApi.get('events/' + eventId + '/apply', win, fail || topfail);
+    applyForEvent: function(applyData, win, fail) {
+      cdApi.post('events/' + applyData.eventId + '/apply', {applyData: applyData}, win, fail || topfail);
     },
     loadEventApplications: function(eventId, win, fail) {
       cdApi.get('events/applications/' + eventId, win, fail || topfail);
