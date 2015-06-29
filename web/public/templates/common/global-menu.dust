@@ -1,8 +1,8 @@
-<div class="cdgm_menu">
+<div class="cdgm_menu" ng-controller="login">
     <div class="cdgm_container">
         <div class="cdgm_row">
-            <div class="cdgm_col-md-12">
-                <nav class="cdgm_dl-menuwrapper cdgm_menu cdgm_left cdgm_navbar-left"><a href="#" class="cdgm_dl-trigger cdgm_opener"><span>Dojo Menu</span></a>
+            <div class="cdgm_col-md-9">
+                <nav class="cdgm_dl-menuwrapper cdgm_left cdgm_navbar-left"><a href="#" class="cdgm_dl-trigger cdgm_opener"><span>Dojo Menu</span></a>
                     <ul class="cdgm_dl-menu cdgm_add-nav">
                         <li id="menu-item-1168" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1168"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
                         <li id="menu-item-9" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9 active"><a title="Opens in new window" target="_blank" href="https://zen.coderdojo.com">Find a Dojo</a></li>
@@ -11,6 +11,10 @@
                         <li id="menu-item-1425" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1425"><a href="http://coolestprojects.org/">CoolestProjects2015</a></li>
                     </ul>
                 </nav>
+            </div>
+            <div class="col-md-3 cdgm_right" ng-if="user">
+                <span class="" style="color:white">{{ user.name }} | </span>
+                <span class="" ng-click="logout()"><a href=""  style="color:white">{@i18n key="Logout"/}</a></span>
             </div>
         </div>
     </div>

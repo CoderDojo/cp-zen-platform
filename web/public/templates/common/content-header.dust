@@ -1,13 +1,13 @@
-<div class="col-lg-8" ng-controller="header">
-  <div class="cd-logo-container">
-      <a ui-sref="home"><div class="cd-logo"></div></a>
-  </div>
-  <div ng-if="user" class="top-menu-links">
-    <span ng-if="user"><a ui-sref="dojo-list">Dojo List</a></span>
-    <span ng-if="user"><a ui-sref="my-dojos">My Dojos</a></span>
-    <span ng-if="user"><a ui-sref="start-dojo-wizard">Create Dojo</a></span>
-    <span ng-if="userIsCDFAdmin()"><a ui-sref="manage-dojos">Manage Dojos</a></span>
-    <span ng-if="userIsCDFAdmin()"><a ui-sref="stats">Stats</a></span>
-  </div>
-</div>
+<span class="col-lg-3 cd-logo-container">
+    <a ui-sref="home"><div class="cd-logo"></div></a>
+</span>
+<span class="col-lg-3 language-selector">
+</span>
+<span ng-controller="header" ng-if="user" class="top-menu-links">
+  <div class="cd-header-button cd-dojolist-button" ng-if="user"><a ui-sref="dojo-list">Dojo List</a></div>
+  <div class="cd-header-button cd-mydojos-button" ng-if="user"><a ui-sref="my-dojos">My Dojos</a></div>
+  <div class="cd-header-button cd-createdojo-button" ng-if="user"><a ui-sref="start-dojo-wizard">Create Dojo</a></div>
+  <div class="cd-header-button cd-managedojos-button" ng-if="userIsCDFAdmin()"><a ui-sref="manage-dojos">Manage Dojos</a></div>
+  <div class="cd-header-button cd-stats-button" ng-if="userIsCDFAdmin()"><a ui-sref="stats">Stats</a></div>
+</span>
 
