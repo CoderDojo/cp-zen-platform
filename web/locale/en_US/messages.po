@@ -947,3 +947,249 @@ msgstr "You do not have permission to update user types"
 
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
+
+msgid "ParentsGuardians"
+msgstr "Parents/Guardians"
+
+msgid "Badges"
+msgstr "Badges"
+
+msgid "Children"
+msgstr "Children"
+
+msgid "Select a user type"
+msgstr "Select a user type"
+
+msgid "Languages Spoken"
+msgstr "Languages Spoken"
+
+msgid "Programming Languages"
+msgstr "Programming Languages"
+
+msgid "Events for Dojo"
+msgstr "Events for Dojo"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "For"
+msgstr "For"
+
+msgid "Events"
+msgstr "Events"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Capacity"
+msgstr "Capacity"
+
+msgid "Applicants"
+msgstr "Applicants"
+
+msgid "Attending"
+msgstr "Attending"
+
+msgid "Create Event"
+msgstr "Create Event"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Attendance"
+msgstr "Attendance"
+
+msgid "Manage Dojo Events"
+msgstr "Manage Dojo Events"
+
+msgid "Are you sure you want to cancel this event?"
+msgstr "Are you sure you want to cancel this event?"
+
+msgid "Are you sure you want to delete this Dojo?"
+msgstr "Are you sure you want to delete this Dojo?"
+
+msgid "Apply for Event"
+msgstr "Apply for Event"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+msgstr "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
+
+msgid "Error applying for event"
+msgstr "Error applying for event"
+
+msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
+msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
+
+msgid "Add the event name"
+msgstr "Add the event name"
+
+msgid "All"
+msgstr "All"
+
+msgid "Add a description"
+msgstr "Add a description"
+
+msgid "Age"
+msgstr "Age"
+
+msgid "One off"
+msgstr "One off"
+
+msgid "Every"
+msgstr "Every"
+
+msgid "From"
+msgstr "From"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "is public"
+msgstr "is public"
+
+msgid "Event Name"
+msgstr "Event Name"
+
+msgid "To"
+msgstr "To"
+
+msgid "For"
+msgstr "For"
+
+msgid "City"
+msgstr "City"
+
+msgid "Add a city name"
+msgstr "Add a city name"
+
+msgid "Add the address to the event"
+msgstr "Add the address to the event"
+
+msgid "Add the maximum amount of participants"
+msgstr "Add the maximum amount of participants"
+
+msgid "Invites"
+msgstr "Invites"
+
+msgid "Invite dojo users"
+msgstr "Invite dojo users"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Publish"
+msgstr "Publish"
+
+msgid "Parents/Guardians"
+msgstr "Parents/Guardians"
+
+msgid "Approve"
+msgstr "Approve"
+
+msgid "Error updating applications"
+msgstr "Error updating applications"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Applications successfully updated"
+msgstr "Applications successfully updated"
+
+msgid "No applications have been changed."
+msgstr "No applications have been changed."
+
+msgid "Invite Parent"
+msgstr "Invite Parent"
+
+msgid "Are you sure you want to delete this application?"
+msgstr "Are you sure you want to delete this application?"
+
+msgid "Select a Dojo member..."
+msgstr "Select a Dojo member..."
+
+msgid "Please click the Join Dojo button before applying for events."
+msgstr "Please click the Join Dojo button before applying for events."
+
+msgid "Hide Notes"
+msgstr "Hide Notes"
+
+msgid "Hide Projects"
+msgstr "Hide Projects"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Female"
+msgstr "Female"
+
+msgid "Private profile"
+msgstr "Private profile"
+
+msgid "None"
+msgstr "None"
+
+msgid "parent.guardian.email"
+msgstr "Parent's/Guardian's email"
+
+msgid "Invite"
+msgstr "Invite"
+
+msgid "Address is required"
+msgstr "Address is required"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Hide Notes"
+msgstr "Hide Notes"
+
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Dojo Staff"
+msgstr "Dojo Staff"
+
+msgid "< 13"
+msgstr "< 13"
+
+msgid "> 13"
+msgstr "> 13"
+
+msgid "Error updating application"
+msgstr "Error updating application"
+
+msgid "Error saving new applicant"
+msgstr "Error saving new applicant"
+
+msgid "Error removing applicant"
+msgstr "Error removing applicant"

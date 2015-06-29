@@ -1,0 +1,55 @@
+<h3>Manage Attendance for: {{ event.name }}</h3>
+
+<dl class="l-inline">
+  <dt>Capacity:</dt>
+  <dd>{{ event.capacity }}</dd>
+  <dt>Attending:</dt>
+  <dd>{{ attending }}</dd>
+  <dt>Attended:</dt>
+  <dd>{{ attended }}</dd>
+</dl>
+
+<div class="row table-responsive">
+  <table id="eventApplicationsTable" class="table cd-grid-table">
+    <thead>
+      <tr>
+        <th>
+          <span ng-click="sort.toggleDirection()"
+                class="pointer sortable glyphicon"
+                ng-class="(sort.direction === 'asc') ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'">
+            &nbsp;
+          </span>{@i18n key="Name"/}
+        </th>
+        <th>{@i18n key="Age"/}</th>
+        <th>{@i18n key="Parents/Guardians"/}</th>
+        <th>{@i18n key="Attended"/}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="application in approvedApplications">
+        <td>{{ application.name }}</td>
+        <td></td>
+        <td></td>
+        <td>
+          <div class="checkbox">
+            <input type="checkbox"
+                   ng-model="application.attended"
+                   ng-click="onAttendedClicked(application)"
+                   id="{{ 'approvedApplicationsCheckbox-' + $index }}">
+            <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center" ng-if="pagination.totalItems > pagination.itemsPerPage">
+    <pagination total-items="pagination.totalItems"
+                ng-change="pagination.change()"
+                items-per-page="pagination.itemsPerPage"
+                ng-model="pagination.currentPage">
+    </pagination>
+  </div>
+</div>
+

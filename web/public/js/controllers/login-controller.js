@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService) {
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
   
   var msgmap = {
@@ -16,6 +16,10 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
 
   $scope.login = {}
   $scope.forgot = {}
+
+  cdUsersService.getInitUserTypes(function (response) {
+    $scope.initUserTypes = response;
+  });
 
   $scope.isVisible = function(view) {
     return $scope.currentView === view

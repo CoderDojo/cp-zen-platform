@@ -1,4 +1,6 @@
 'use strict';
+/* global google */
+
 //TO DO: Move edit dojo controller into create-dojo-controller
 function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate) {
   $scope.dojo = {};
@@ -32,12 +34,12 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     });
   }
 
-  loadDojo().then(function() { 
+  loadDojo().then(function() {
     loadDojoMap();
   }, function (error) {
     alertService.showError(error);
   });
-  
+
   function loadDojoMap() {
     $scope.$watch('model.map', function(map){
       if(map) {
@@ -53,11 +55,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       $scope.mapLoaded = true;
 
       var coordsStr = $scope.dojo.coordinates;
-      
+
       if(!coordsStr){
         coordsStr = DEFAULT_COORDS;
       }
- 
+
       var coordinates = coordsStr.split(',');
       var latitude  = coordinates[0];
       var longitude = coordinates[1];
@@ -80,7 +82,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }, function() {
       $scope.countries = countries;
     });
-    
+
   });
 
   $scope.getGeonameData = function($item, type) {
@@ -153,11 +155,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       ]
     };
 
-    cdCountriesService.listPlaces(query).then(function(result) {
+    cdCountriesService.listPlaces(query, function(result) {
       $scope.places = _.map(result, function(place) {
         return _.omit(place, 'entity$');
       });
-    });
+    }, console.error.bind(console));
   };
 
   $scope.setCountry = function(dojo, country) {
@@ -179,7 +181,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       dojo['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
     }
   };
-  
+
   $scope.save = function(dojo) {
     cdDojoService.save(dojo, function(response) {
       alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
@@ -220,13 +222,13 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       });
     }
   }
-  
+
   $scope.editorOptions = {
     language: 'en',
     uiColor: '#000000',
     height:'200px'
   };
-  
+
 }
 
 angular.module('cpZenPlatform')

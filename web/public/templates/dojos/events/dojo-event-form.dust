@@ -1,0 +1,161 @@
+<div class="cd-dashboard">
+
+  <form name="eventForm" novalidate>
+
+    <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
+    <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
+
+    <div class="form-group">
+      <label for="eventName">{@i18n key="Event Name"/}*:</label>
+      <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" required placeholder="{@i18n key="Add the event name"/}">
+    </div>
+
+    <div class="checkbox">
+      <input type="checkbox" id="is-public" ng-model="eventInfo.public">
+      <label for="is-public">
+        {@i18n key="is public"/}
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label for="description">
+        {@i18n key="Description"/}*:
+      </label>
+      <textarea name="description" id="description" class="form-control" rows="3" ng-model="eventInfo.description" required placeholder="{@i18n key="Add a description"/}">
+      </textarea>
+    </div>
+
+    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'">
+      <h5>{@i18n key="Type"/}:</h5>
+
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
+          {@i18n key="Recurring"/}
+        </label>
+      </div>
+
+      <div class="radio-inline">
+        <label>
+          <input type="radio" name="type" ng-model="eventInfo.type" id="one-off" value="one-off">
+          {@i18n key="One off"/}
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="eventInfo.type === 'recurring'">
+      <label for="weekday">{@i18n key="Every"/}:</label>
+      <select class="form-control"
+              ng-model="weekdayPicker.selection"
+              ng-options="item as item.name for item in weekdayPicker.weekdays"
+              id="weekday"
+              required>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
+      <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
+      <div class="input-group">
+        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="toggleDatepicker($event, 'datePicker1')">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="eventInfo.type === 'recurring'">
+      <label for="to-date">{@i18n key="To"/}:</label>
+      <div class="input-group">
+        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="toggleDatepicker($event, 'datePicker2')">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="time">{@i18n key="Time"/}:</label>
+      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker">
+      </timepicker>
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="group-type-1">{@i18n key="For"/}:</label>
+
+      <div class="checkbox" ng-repeat="(userType, value) in eventInfo.userTypes">
+        <input type="checkbox" id="{{ userType }}" ng-model="eventInfo.userTypes[userType]">
+        <label for="{{ userType }}">
+          {{ userType }}
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="city">{@i18n key="City"/}*:</label>
+      <ui-select ng-model="eventInfo.city"
+                 name="city"
+                 id="city"
+                 ng-disabled="disabled"
+                 required>
+        <ui-select-match placeholder="{@i18n key="Add a city name"/}">
+          {{ $select.selected.nameWithHierarchy }}
+        </ui-select-match>
+        <ui-select-choices repeat="city in cities"
+          refresh="searchCity($select.search)"
+          refresh-delay="500">
+          <span ng-bind-html="city.nameWithHierarchy | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
+    <div class="form-group">
+      <label for="address">{@i18n key="Address"/}*:</label>
+      <input type="text" required name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}">
+    </div>
+
+    <div class="form-group" ng-if="googleMaps">
+      <label for="map">{@i18n key="Map"/}:</label>
+      <div ui-map-marker="googleMaps.marker"></div>
+      <div id="map"
+           ui-map="googleMaps.map"
+           ui-options="googleMaps.mapOptions"
+           ui-event="{'map-tilesloaded': 'googleMaps.onTilesLoaded($event, $params)'}"
+           class="map-canvas">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="capacity">{@i18n key="Capacity"/}:</label>
+      <input type="number" required min="1" name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity" placeholder="{@i18n key="Add the maximum amount of participants"/}">
+    </div>
+
+    <div class="form-group">
+      <label for="invites">{@i18n key="Invites"/}:</label>
+      <tags-input add-from-autocomplete-only="true"
+                  key-property="name"
+                  display-property="name"
+                  placeholder="{@i18n key="Invite dojo users"/}"
+                  ng-model="eventInfo.invites"
+                  name="invites"
+                  id="invites">
+        <auto-complete source="loadUsers($query)" display-property="name"></auto-complete>
+      </tags-input>
+    </div>
+
+    <div class="btn-toolbar">
+      <button type="button" class="btn btn-default" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
+      <button type="button" class="btn btn-primary" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo)">{@i18n key="Save"/}</button>
+      <button type="button" class="btn btn-success" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo, true)">{@i18n key="Publish"/}</button>
+    </div>
+  </form>
+
+</div>

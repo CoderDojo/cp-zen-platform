@@ -6,6 +6,10 @@
         <div class="dojo-detail-sidebar col-lg-4">
           <div class="widget">
             <legend>{@i18n key="Status"/}</legend>
+            <div class="status-wrapper">
+              <div class="alert alert-success text-center" ng-if="dojo.verified === 1" role="alert">{@i18n key="Verified"/}</div>
+              <div class="alert alert-warning text-center" ng-if="dojo.verified !== 0"role="alert">{@i18n key="Unverified"/}</div>
+            </div>
           </div>
 
           <div ng-if="dojoMember && userMemberCheckComplete" class="widget">
@@ -71,7 +75,10 @@
               </tr>
               <tr>
                 <td class="col-lg-2"><b>{@i18n key="Location"/}</b></td>
-                <td ng-if="dojo.address1">{{ dojo.address1 }}, {{ dojo.address2 }}</td>
+                <td ng-if="dojo.address1">{{ dojo.address1 }}<span ng-if="dojo.address2">, {{ dojo.address2 }}</span></td>
+              </tr>
+              <tr>
+                <td class="col-lg-2"><b>{@i18n key="City/Town"/}</b></td>
                 <td ng-if="dojo.placeName">{{ dojo.placeName }}</td>
               </tr>
               <tr>
@@ -84,6 +91,8 @@
               </tr>
             </tbody>
           </table>
+
+          <cd-dojo-events-list dojo-id="{{ dojo.id }}"></cd-dojo-events-list>
 
           <legend>{@i18n key="Map"/}</legend>
           <section ng-if="mapLoaded" id="map">

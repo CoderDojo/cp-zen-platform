@@ -1,4 +1,5 @@
 'use strict';
+/* global google */
 
 function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $translate) {
   $scope.dojo = {};
@@ -61,11 +62,11 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       ]
     };
 
-    cdCountriesService.listPlaces(query).then(function(result) {
+    cdCountriesService.listPlaces(query, function(result) {
       $scope.places = _.map(result.records, function(place) {
         return _.omit(place, 'entity$');
       });
-    });
+    }, console.error.bind(console));
   };
 
   $scope.setCountry = function(dojo, country) {
@@ -124,11 +125,11 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
     $scope.dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
   };
 
-  var initContent = "<p><ul> \
-    <li>" + $translate.instant('dojo.create.initcontent.li1') + "</li> \
-    <li>" + $translate.instant('dojo.create.initcontent.li2') + "</li> \
-    <li><b>" + $translate.instant('dojo.create.initcontent.li3') + "</b></li> \
-    </ul></p>";
+  var initContent = "<p><ul>" +
+    "<li>" + $translate.instant('dojo.create.initcontent.li1') + "</li>" +
+    "<li>" + $translate.instant('dojo.create.initcontent.li2') + "</li> " +
+    "<li><b>" + $translate.instant('dojo.create.initcontent.li3') + "</b></li> " +
+    "</ul></p>";
 
   $scope.editorOptions = {
     language: 'en',
@@ -145,7 +146,7 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
           address = address + ', ' + dojo['admin'+adminidx+'Name'];
         }
       }
-      address = address + ', ' + dojo['countryName'];
+      address = address + ', ' + dojo.countryName;
       Geocoder.latLngForAddress(address).then(function (data) {
         $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
         $scope.model.map.panTo($scope.mapOptions.center);

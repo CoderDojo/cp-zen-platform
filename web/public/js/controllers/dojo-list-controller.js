@@ -1,6 +1,7 @@
 'use strict';
+/* global google,jQuery,MarkerClusterer */
 
-function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, gmap) {
+function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, $translate, gmap) {
   $scope.model = {};
   $scope.markers = [];
   $scope.continentMarkers = [];
@@ -40,24 +41,26 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
 
   if($stateParams.bannerMessage) {
     var type = $stateParams.bannerType || 'info';
+    var timeCollapse = $stateParams.bannerTimeCollapse || 5000;
     AlertBanner.publish({
       type: type,
-      message: $stateParams.bannerMessage
+      message: $stateParams.bannerMessage,
+      timeCollapse: timeCollapse
     });
   }
 
   $scope.$on('$viewContentLoaded', function() {
     jQuery('body').cookieDisclaimer({
+      text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."),
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
-      policyBtn: {
-        link: "http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2", // cookie policy page URL
-      },
+      acceptBtn: { text: 'x' },
+      policyBtn: { active: false },
       cookie: {
         name: "cookieDisclaimer",
         val: "confirmed",
         path: "/",
-        expire: 1
+        expire: 365
       }
     });
   });
@@ -600,4 +603,4 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-controller', ['$window', '$state', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', 'gmap', cdDojoListCtrl]);
+  .controller('dojo-list-controller', ['$window', '$state', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', '$translate', 'gmap', cdDojoListCtrl]);

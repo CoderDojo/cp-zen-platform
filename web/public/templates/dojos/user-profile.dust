@@ -3,8 +3,7 @@
   <div class="container target">
     <div class="row">
       <div class="col-sm-9">
-        <h1 class="">{{ user.name }}</h1>
-        <a href="mailto:{{ user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a>
+        <h1 class="">{{ profile.name || profile.alias }}</h1>
         <br>
       </div>
       <div class="col-sm-2">
@@ -15,56 +14,53 @@
     <div class="row">
       <div class="col-sm-3">
         <!--left col-->
-        <ul class="list-group">
-          <li class="list-group-item text-muted" contenteditable="false">{@i18n key="Profile"/}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Joined"/}</strong></span> 1/5/2015</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Last seen"/}</strong></span> Yesterday</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Name"/}</strong></span> {{ user.name }}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Location"/}</strong></span> Waterford, Ireland</li>
-        </ul>
-        <div class="panel panel-default">
-          <div class="panel-heading">{@i18n key="Website"/} <i class="fa fa-link fa-1x"></i></div>
-          <div class="panel-body">
-            <a href="http://coderdojo.com" class="">coderdojo.com</a>
-          </div>
-        </div>
         <div class="panel panel-default">
           <div class="panel-heading">{@i18n key="Social Media"/}</div>
           <div class="panel-body"> 
-            <i class="fa fa-facebook fa-2x"></i>
-            <i class="fa fa-github fa-2x"></i> 
-            <i class="fa fa-twitter fa-2x"></i>
-            <i class="fa fa-pinterest fa-2x"></i>
-            <i class="fa fa-google-plus fa-2x"></i>
+            <a ng-if="profile.twitter" href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
+            <a ng-if="profile.linkedin" href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
+            <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
+          </div>
+        </div>
+        <div class="panel panel-default" ng-if="profile.myChild">
+          <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
+          <div class="panel-body invite-parent-guardian-form">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="{@i18n key="parent.guardian.email"/}">
+                <div class="text-right invite-button">
+                  <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">{@i18n key="Invite"/}</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
-        <div class="panel panel-default">
-          <div class="panel-heading">{{ user.name }}'s {@i18n key="Bio"/}</div>
-          <div class="panel-body">{@i18n key="A description about me"/}</div>
-        </div>
-        <div class="panel panel-default target">
-          <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-4" ng-repeat="dojo in dojos">
-                <div class="thumbnail">
-                  <img src="/img/dojo-default-logo.png">
-                  <div class="caption">
-                    <h3>{{ dojo.name }}</h3>
-                    <p>{{ dojo.description }}</p>
+          <general-info></general-info>
+          <projects-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
+          <programming-languages-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
+          <languages-spoken-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
+          <children-list ng-if="hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>
+          <parents-list ng-if="hasAccess(profile.userTypes, ['attendee-o13, attendee-u13'])"></parents-list>
+          <badges-list ng-if="hasAccess(profile.userTypes, ['attendee-o13'])"></badges-list>
+          <div class="panel panel-default target">
+            <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4" ng-repeat="dojo in profile.dojos">
+                  <div class="thumbnail">
+                    <img src="/img/dojo-default-logo.png">
+                    <div class="caption">
+                      <h3>{{ dojo.name }}</h3>
+                      <p>{{ dojo.description }}</p>
+                    </div>
                   </div>
                 </div>
-              </div>                
-            </div>    
-          </div>         
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">{{ user.name }}'s {@i18n key="Experience"/}</div>
-          <div class="panel-body"> A description about my experience.</div>
-        </div>
+              </div>
+            </div>
+          </div>
       </div>
       <div id="push"></div>
     </div>

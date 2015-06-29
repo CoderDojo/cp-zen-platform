@@ -53,12 +53,13 @@
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
-      function valFromString(val) { return val != null ? val.toString() : val; }
+      function valFromString(val) { return val !== null ? val.toString() : val; }
       $urlMatcherFactoryProvider.type('nonURIEncoded', {
         encode: valToString,
         decode: valFromString,
         is: function () { return true; }
       });
+
       $stateProvider
         .state("home", {
           url: "/",
@@ -68,7 +69,8 @@
           },
           params: {
             bannerType: null,
-            bannerMessage: null
+            bannerMessage: null,
+            bannerTimeCollapse: null
           },
           controller: 'dojo-list-controller'
         })
@@ -83,7 +85,10 @@
         .state("my-dojos", {
           url: "/dashboard/my-dojos",
           templateUrl: '/dojos/template/my-dojos',
-          controller: 'my-dojos-controller'
+          controller: 'my-dojos-controller',
+          ncyBreadcrumb: {
+            label: '{{myDojosPageTitle}}'
+          }
         })
         .state("create-dojo", {
           url: "/dashboard/create-dojo",
@@ -124,6 +129,46 @@
           templateUrl: '/dojos/template/manage-dojos',
           controller: 'manage-dojo-controller'
         })
+        .state("my-dojos.manage-dojo-events", {
+          url: "/:dojoId/events",
+          templateUrl: '/dojos/template/events/manage-dojo-events',
+          controller: 'manage-dojo-events-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventsPageTitle}}'
+          }
+        })
+        .state("my-dojos.manage-dojo-events.manage-applications", {
+          url: "/:eventId/applications",
+          templateUrl: '/dojos/template/events/manage-event-applications',
+          controller: 'manage-event-applications-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventApplicationsPageTitle}}'
+          }
+        })
+        .state("my-dojos.manage-dojo-events.manage-attendance", {
+          url: "/:eventId/attendance",
+          templateUrl: '/dojos/template/events/manage-event-attendance',
+          controller: 'manage-event-attendance-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventAttendancePageTitle}}'
+          }
+        })
+        .state("create-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form",
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap
+          },
+          controller: 'dojo-event-form-controller'
+        })
+        .state("edit-dojo-event", {
+          url: "/dashboard/dojo/:dojoId/event-form/:eventId",
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap
+          },
+          controller: 'dojo-event-form-controller'
+        })
         .state("stats", {
           url: "/dashboard/stats",
           templateUrl: '/dojos/template/stats',
@@ -152,6 +197,11 @@
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller'
         })
+		    .state("setup-dojo", {
+          url: "/dashboard/setup-dojo/:id",
+          templateUrl: '/dojos/template/setup-dojo',
+          controller: 'setup-dojo-controller'
+        })
         .state("accept-dojo-user-invitation", {
           url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
           templateUrl: '/dojos/template/accept-dojo-user-invitation',
@@ -162,9 +212,69 @@
           templateUrl: '/dojos/template/accept-dojo-user-request',
           controller: 'accept-dojo-user-request-controller'
         })
-        .state("user-profile", {
-          url: "/dashboard/profile/:userId/",
+        .state('add-child',{
+          url: "/dashboard/profile/child/add/:userType/:parentId",
           templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.parentId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.parentId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            }
+          },
+          controller: 'user-profile-controller'
+        })
+        .state('accept-child-invite',{
+          url: '/dashboard/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          controller: 'accept-child-controller',
+          templateUrl: '/profiles/template/accept-child-invite'
+        })
+        .state("user-profile", {
+          url: "/dashboard/profile/:userId",
+          templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            }
+          },
           controller: 'user-profile-controller'
         });
         $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
@@ -198,7 +308,7 @@
         .registerAvailableLanguageKeys(['en_US', 'de_DE'])
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
-        }
+      }
     ])
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({

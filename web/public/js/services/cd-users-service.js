@@ -1,6 +1,6 @@
 'use strict';
 
-function cdUsersService(cdApi){
+function cdUsersService(cdApi, $q){
   function topfail(err){
     console.log(err);
   }
@@ -21,9 +21,39 @@ function cdUsersService(cdApi){
     },
     load: function(userId, win, fail) {
       cdApi.get('users/load/' + userId, win, fail || topfail);
+    },
+    getInitUserTypes: function(win, fail) {
+      cdApi.get('users/init_user_types', win, fail || topfail);
+    },
+    listProfiles: function(query, win, fail) {
+      cdApi.post('profiles', {query:query}, win, fail || topfail);
+    },
+    listProfilesPromise: function(query){
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      cdApi.post('profiles', {query:query}, deferred.resolve, deferred.reject || topfail);
+
+      return promise;
+    },
+    saveProfile: function(profile, win, fail) {
+      cdApi.post('profiles/create', {profile: profile}, win, fail || topfail);
+    },
+    saveYouthProfile: function(profile, win, fail) {
+      if(profile.id){
+        cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
+      } else{
+        cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
+      }
+    },
+    inviteParent: function(data, win, fail) {
+      cdApi.post('profiles/invite-parent-guardian', {data: data}, win, fail || topfail);
+    },
+    acceptParent: function(data, win, fail) {
+      cdApi.post('profiles/accept-parent-guardian', {data: data}, win, fail || topfail);
     }
   };
 }
 
 angular.module('cpZenPlatform')
-  .service('cdUsersService', ['cdApi', cdUsersService]);
+  .service('cdUsersService', ['cdApi', '$q',cdUsersService]);

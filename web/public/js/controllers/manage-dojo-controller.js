@@ -52,8 +52,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.allSigned = allSigned;
 
-
-
   $scope.editDojo = function (dojo) {
     cdDojoService.setDojo(dojo, function (response) {
       $location.path('/dashboard/edit-dojo/'+ dojo.id);
@@ -198,7 +196,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function (dojo) {
         return {
           id: dojo.id,
-          verified: dojo.verified.value
+          verified: dojo.verified.value,
+          dojoLeadId: dojo.dojoLeadId
         }
       });
 

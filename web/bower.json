@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "angular": "~1.3.15",
-    "angular-bootstrap": "0.11.2",
+    "angular-bootstrap": "0.13.0",
     "angular-google-maps": "2.0.17",
     "angular-loading": "~0.1.4",
     "angular-moment": "0.8.3",
@@ -13,8 +13,8 @@
     "angular-ui-router": "~0.2.13",
     "angular-ui-select": "0.11.2",
     "angular-ui-utils": "0.2.3",
-    "async": "0.9.2",
-    "awesome-bootstrap-checkbox": "0.3.3",
+    "async": "1.2.1",
+    "awesome-bootstrap-checkbox": "0.3.4",
     "bootbox": "4.3.0",
     "bootstrap": "3.2.0",
     "ckeditor": "4.4.7",
@@ -27,7 +27,7 @@
     "ng-ckeditor": "https://github.com/david-cahill/ng-ckeditor.git#master",
     "ngstorage": "0.3.0",
     "spin.js": "2.0.2",
-    "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
+    "tg-angular-validator": "1.2.5",
     "underscore": "1.7.0",
     "googlemaps-js-marker-clusterer": "1.0.0",
     "angular-truncate": "*",
@@ -36,7 +36,7 @@
     "checklist-model": "0.2.4",
     "angular-sb-date-select": "0.3.5",
     "jquery-cookie-disclaimer": "1.0.0",
-    "angular-alert-banner": "https://github.com/samouss/angular-alert-banner.git#master",
+    "angular-alert-banner": "https://github.com/ckiss/angular-alert-banner.git#master",
     "angular-spinner": "0.6.1",
     "jed": "~1.0.2",
     "messageformat": "~0.1.8",
@@ -45,10 +45,11 @@
     "angular-translate-loader-url": "2.7.0",
     "angular-translate-storage-cookie": "2.7.0",
     "ng-tags-input": "2.3.0",
-    "ngBootbox": "0.0.5"
+    "ngBootbox": "0.0.5",
+    "angular-breadcrumb": "0.4.0"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.1",
+    "angular-mocks": "~1.3.0",
     "util": "~0.10.3"
   },
   "resolutions": {
@@ -56,6 +57,7 @@
     "bootstrap": "3.2.0",
     "jquery": "2.1.3",
     "spin.js": "2.0.2",
-    "bootbox": "~4.4.0"
+    "bootbox": "~4.4.0",
+    "tg-angular-validator": "1.2.5"
   }
 }

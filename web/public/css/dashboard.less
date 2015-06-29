@@ -90,6 +90,13 @@ label {
   .my-dojos {
     padding:20px;
   }
+  .setup-dojo{
+    padding:20px;
+
+    .validationMessage{
+      width:100%;
+    }
+  }
   .state-heading {
     font-weight:bold;
     margin-left:20px;
@@ -98,7 +105,7 @@ label {
     margin-bottom:20px;
     .form-group input[type="checkbox"] {
       display: none;
-    } 
+    }
     .form-group input[type="checkbox"] + .btn-group > label span {
       width: 20px;
     }
@@ -106,13 +113,13 @@ label {
       display: none;
     }
     .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-      display: inline-block;   
+      display: inline-block;
     }
     .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
       display: inline-block;
     }
     .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-      display: none;   
+      display: none;
     }
     .glyphicon-info-sign {
       margin-top:7px;
@@ -149,10 +156,7 @@ label {
     padding:10px;
     border-radius:5px;
   }
-  .btn-210px {
-    width:210px;
-  }
-}    
+}
 
 .cd-dashboard2 {
   padding-right: 0;
@@ -457,4 +461,20 @@ label {
 
 .checkbox label.control-label.has-error.validationMessage:before {
   content: none;
+}
+
+.badge-panel .caption h3 {
+  font-size: 20px;
+}
+
+.panel-body.invite-parent-guardian-form {
+  padding: 30px;
+}
+
+div.invite-button {
+  padding-top: 10px;
+}
+
+div.status-wrapper {
+  padding: 10px;
 }

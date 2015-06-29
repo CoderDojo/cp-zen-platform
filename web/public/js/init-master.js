@@ -50,7 +50,7 @@
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
-      function valFromString(val) { return val != null ? val.toString() : val; }
+      function valFromString(val) { return val !== null ? val.toString() : val; }
       $urlMatcherFactoryProvider.type('nonURIEncoded', {
         encode: valToString,
         decode: valFromString,
@@ -139,9 +139,39 @@
           templateUrl: '/dojos/template/accept-dojo-user-request',
           controller: 'accept-dojo-user-request-controller'
         })
+        .state('accept-child-invite',{
+          url: '/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          controller: 'accept-child-controller',
+          templateUrl: '/profiles/template/accept-child-invite'
+        })
         .state("user-profile", {
-          url: "/profile/:userId/",
+          url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
+          resolve: {
+            profile: function($stateParams, cdUsersService){
+              return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+                function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            },
+            loggedInUser: function(auth){
+              return auth.get_loggedin_user_promise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
+            },
+            usersDojos: function($stateParams, cdDojoService){
+              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
+                .then(function(data){
+                  return {data: data};
+                }, function(err){
+                  return {err: err};
+                });
+            }
+          },
           controller: 'user-profile-controller'
         });
     })
