@@ -55,7 +55,7 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
       cdDojoService.uncompletedDojos(function(response){
         if(response.length > 0){
           var uncompletedDojo = response[0];
-          $scope.ab = AlertBanner.publish({
+          AlertBanner.publish({
             type: 'info',
             message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
             autoClose: false,
