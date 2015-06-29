@@ -1145,3 +1145,15 @@ msgstr "< 13"
 
 msgid "> 13"
 msgstr "> 13"
+
+msgid "Error updating application"
+msgstr "Error updating application"
+
+msgid "Error saving new applicant"
+msgstr "Error saving new applicant"
+
+msgid "Error removing applicant"
+msgstr "Error removing applicant"
+
+
+
