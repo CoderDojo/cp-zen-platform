@@ -188,7 +188,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     });
 
   }
-
+  
   $scope.userIsApproved = function(application) {
     var isApproved = $scope.approved[application.id];
     if(isApproved) return true;

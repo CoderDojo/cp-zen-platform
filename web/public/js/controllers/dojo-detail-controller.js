@@ -1,4 +1,5 @@
 'use strict';
+/* global google */
 
 function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
   $scope.dojo = dojo;
@@ -15,7 +16,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
     //Check if user is a member of this Dojo
     var query = {dojoId:dojo.id, userId:user.id};
     cdDojoService.getUsersDojos(query, function (response) {
-      _.isEmpty(response) ? $scope.dojoMember = false : $scope.dojoMember = true;
+      $scope.dojoMember = !_.isEmpty(response);
       $scope.userMemberCheckComplete = true;
     });
   }, function () {
@@ -68,14 +69,14 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
         cdDojoService.requestInvite(data, function (response) {
           usSpinnerService.stop('dojo-detail-spinner');
           alertService.showAlert($translate.instant('Invite Request Sent!'));
-        });  
+        });
       } else {
         //Check if user is already a member of this Dojo
         var query = {userId:user.id, dojoId:dojo.id};
+        var userDojo = {};
         cdDojoService.getUsersDojos(query, function (response) {
           if(_.isEmpty(response)) {
             //Save
-            var userDojo = {};
             userDojo.owner = 0;
             userDojo.userId = user.id;
             userDojo.dojoId = dojo.id;
@@ -98,7 +99,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
           }
         });
 
-        
+
       }
     }, function () {
       //Not logged in

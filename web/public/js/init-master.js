@@ -50,7 +50,7 @@
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
-      function valFromString(val) { return val != null ? val.toString() : val; }
+      function valFromString(val) { return val !== null ? val.toString() : val; }
       $urlMatcherFactoryProvider.type('nonURIEncoded', {
         encode: valToString,
         decode: valFromString,
