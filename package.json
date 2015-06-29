@@ -7,9 +7,11 @@
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
     "postinstall": "cd web && bower install",
-    "test": "node_modules/.bin/karma start --single-run"
+    "test": "node_modules/.bin/karma start --single-run",
+    "jshint-check": "grunt build"
   },
   "pre-commit": [
+    "jshint-check",
     "test"
   ],
   "repository": {
