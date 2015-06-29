@@ -1193,3 +1193,6 @@ msgstr "Error saving new applicant"
 
 msgid "Error removing applicant"
 msgstr "Error removing applicant"
+
+msgid "Children Attending"
+msgstr "Children Attending"
