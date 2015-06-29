@@ -3,8 +3,7 @@
   <div class="container target">
     <div class="row">
       <div class="col-sm-9">
-        <h1 class="">{{ profileData.user.name }}</h1>
-<!--         <a href="mailto:{{ profileData.user.email }}"><button type="button" class="btn btn-info">{@i18n key="Send me an email"/}</button></a> -->
+        <h1 class="">{{ profile.name || profile.alias }}</h1>
         <br>
       </div>
       <div class="col-sm-2">
@@ -15,33 +14,23 @@
     <div class="row">
       <div class="col-sm-3">
         <!--left col-->
-        <ul class="list-group">
-          <li class="list-group-item text-muted" contenteditable="false">{@i18n key="Profile"/}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Joined"/}</strong></span> 1/5/2015</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Last seen"/}</strong></span> Yesterday</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Name"/}</strong></span> {{ profileData.user.name }}</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong class="">{@i18n key="Location"/}</strong></span> {{ profileData.profile.country }}</li>
-        </ul>
-        <div class="panel panel-default">
-          <div class="panel-heading">{@i18n key="Website"/} <i class="fa fa-link fa-1x"></i></div>
-          <div class="panel-body">
-            <a href="http://coderdojo.com" class="">coderdojo.com</a>
-          </div>
-        </div>
         <div class="panel panel-default">
           <div class="panel-heading">{@i18n key="Social Media"/}</div>
           <div class="panel-body"> 
-            <a href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
-            <a href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
+            <a ng-if="profile.twitter" href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
+            <a ng-if="profile.linkedin" href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
+            <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
           </div>
         </div>
         <div class="panel panel-default" ng-if="profile.myChild">
           <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
-          <div class="panel-body">
+          <div class="panel-body invite-parent-guardian-form">
             <form class="form-horizontal">
               <div class="form-group">
-                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="Parent's/Guardian's email">
-                <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">Invite</button>
+                <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="{@i18n key="parent.guardian.email"/}">
+                <div class="text-right invite-button">
+                  <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">{@i18n key="Invite"/}</button>
+                </div>
               </div>
             </form>
           </div>
@@ -50,7 +39,7 @@
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
           <general-info></general-info>
-          <projects-list ng-if="profile.userType === 'champion' "></projects-list>
+          <projects-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
           <programming-languages-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
           <languages-spoken-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
           <children-list ng-if="hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>

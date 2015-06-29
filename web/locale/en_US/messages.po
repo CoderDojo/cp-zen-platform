@@ -1137,6 +1137,45 @@ msgstr "Select a Dojo member..."
 msgid "Please click the Join Dojo button before applying for events."
 msgstr "Please click the Join Dojo button before applying for events."
 
+msgid "Hide Notes"
+msgstr "Hide Notes"
+
+msgid "Hide Projects"
+msgstr "Hide Projects"
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Female"
+msgstr "Female"
+
+msgid "Private profile"
+msgstr "Private profile"
+
+msgid "None"
+msgstr "None"
+
+msgid "parent.guardian.email"
+msgstr "Parent's/Guardian's email"
+
+msgid "Invite"
+msgstr "Invite"
+
+msgid "Address is required"
+msgstr "Address is required"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Hide Notes"
+msgstr "Hide Notes"
+
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+msgid "Save"
+msgstr "Save"
+
 msgid "Dojo Staff"
 msgstr "Dojo Staff"
 
@@ -1157,6 +1196,3 @@ msgstr "Error removing applicant"
 
 msgid "Children Attending"
 msgstr "Children Attending"
-
-
-

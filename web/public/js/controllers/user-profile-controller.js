@@ -125,6 +125,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     function win(profile){
       $scope.profile = profile;
+      $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
       alertService.showAlert('Profile has been saved successfully');
     }
 
