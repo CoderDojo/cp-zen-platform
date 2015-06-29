@@ -40,9 +40,11 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
 
   if($stateParams.bannerMessage) {
     var type = $stateParams.bannerType || 'info';
+    var timeCollapse = $stateParams.bannerTimeCollapse || 5000;
     AlertBanner.publish({
       type: type,
-      message: $stateParams.bannerMessage
+      message: $stateParams.bannerMessage,
+      timeCollapse: timeCollapse
     });
   }
 

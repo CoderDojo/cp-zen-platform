@@ -1175,3 +1175,13 @@ msgstr "Confirm Password"
 
 msgid "Save"
 msgstr "Save"
+
+msgid "Dojo Staff"
+msgstr "Dojo Staff"
+
+msgid "< 13"
+msgstr "< 13"
+
+msgid "> 13"
+msgstr "> 13"
+

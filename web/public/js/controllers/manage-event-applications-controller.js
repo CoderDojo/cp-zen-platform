@@ -1,6 +1,6 @@
  'use strict';
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, usSpinnerService, cdDojoService) {
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, usSpinnerService, cdDojoService, cdUsersService) {
   var eventId = $stateParams.eventId;
   var dojoId  = $stateParams.dojoId;
   $scope.filter = {event_id: eventId};
@@ -92,27 +92,35 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     eventApplicationsQuery = _.extend(eventApplicationsQuery, meta);
 
     cdEventsService.searchApplications(eventApplicationsQuery, function (result) {
-      _.each(result.records, function(application) {
+      
+      async.each(result.records, function(application, cb) {
         if(application.status === 'approved') {
           $scope.approved[application.id] = true;
         } else {
           $scope.approved[application.id] = false;
         }
-      });
-      $scope.applications = result.records;
-      $scope.totalItems = result.total;
-      cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
-        var dojoMembers = response;
-        var dojoMembersToDelete = [];
 
-        //Only show users that are not already in $scope.applications
-        for(var i = dojoMembers.length - 1; i >= 0; i--) {
-          var application = _.findWhere($scope.applications, {userId:dojoMembers[i].id});
-          if(application) dojoMembers.splice(i, 1);
-        }
+        cdUsersService.load(application.userId, function (response) {
+          application.user = response;
+          cb();
+        });
+      }, function (err) {
+        $scope.applications = result.records;
+        $scope.totalItems = result.total;
+        cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
+          var dojoMembers = response;
+          var dojoMembersToDelete = [];
 
-        $scope.dojoMembers = dojoMembers;
+          //Only show users that are not already in $scope.applications
+          for(var i = dojoMembers.length - 1; i >= 0; i--) {
+            var application = _.findWhere($scope.applications, {userId:dojoMembers[i].id});
+            if(application) dojoMembers.splice(i, 1);
+          }
+
+          $scope.dojoMembers = dojoMembers;
+        });
       });
+
     });
   }
 
@@ -224,4 +232,4 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'usSpinnerService', 'cdDojoService', manageEventApplicationsControllerCtrl]);
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'usSpinnerService', 'cdDojoService', 'cdUsersService', manageEventApplicationsControllerCtrl]);

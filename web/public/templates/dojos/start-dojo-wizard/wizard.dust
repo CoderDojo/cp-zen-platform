@@ -19,8 +19,4 @@
             <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>
     </wizard>
-    <div ng-if="wizardComplete" class="dojoWizardComplete">
-      <span>{@i18n key="wizard.p2"/}</span><br/>
-      <span>{@i18n key="wizard.p3"/}</span>
-    </div>
 </div>

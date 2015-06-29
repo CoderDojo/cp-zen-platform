@@ -69,7 +69,8 @@
           },
           params: {
             bannerType: null,
-            bannerMessage: null
+            bannerMessage: null,
+            bannerTimeCollapse: null
           },
           controller: 'dojo-list-controller'
         })
@@ -195,6 +196,11 @@
           url: "/dashboard/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller'
+        })
+		    .state("setup-dojo", {
+          url: "/dashboard/setup-dojo/:id",
+          templateUrl: '/dojos/template/setup-dojo',
+          controller: 'setup-dojo-controller'
         })
         .state("accept-dojo-user-invitation", {
           url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",

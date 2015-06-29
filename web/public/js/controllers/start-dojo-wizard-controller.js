@@ -2,7 +2,6 @@
 
 function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate) {
     $scope.stepFinishedLoading = false;
-    $scope.wizardComplete = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
     var stepNames = [
@@ -18,23 +17,73 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       if(!_.isEmpty(user) && currentPath === '/start-dojo') {
         $window.location.href = '/dashboard/start-dojo';
       } else {
-        cdDojoService.loadUserDojoLead(user.id, function(dojoLead) {
-          currentStepInt = dojoLead.currentStep;
-          if(currentStepInt === 4) {
+
+        var query = { query : {
+          filtered : {
+            query : {
+              match_all : {}
+            },
+            filter : {
+              bool: {
+                must: [{
+                  term: { userId: user.id }
+                }]
+              }
+            }
+          }
+        }
+        };
+
+        cdDojoService.searchDojoLeads(query).then(function(result) {
+          var results = _.map(result.records, function(dojoLead) {
+            return _.omit(dojoLead, 'entity$');
+          });
+
+          var uncompletedDojoLead = null;
+
+          _.each(results, function(dojoLead){
+            if(!dojoLead.completed){
+              uncompletedDojoLead = dojoLead;
+            }
+          });
+
+          currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
+          if (currentStepInt === 4) {
             //Check if user has deleted the Dojo
-            cdDojoService.find({dojoLeadId:dojoLead.id}, function (response) {
-              if(!_.isEmpty(response)) {
-                 $scope.wizardComplete = true;
+            cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
+              if (!_.isEmpty(response)) {
+                $state.go('home',
+                  { bannerType:'success',
+                    bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.<br> ' +
+                    'If you need help completing your initial Dojo application, please contact us at <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
+                    bannerTimeCollapse: 150000
+                  });
               } else {
                 //Go back to Dojo Listing step
                 initStep(3);
               }
             });
-          }
-          if(dojoLead.currentStep) {
-            initStep(dojoLead.currentStep);
+          } else if(results.length > 0 && !uncompletedDojoLead) {
+            //make a copy of dojoLead here then initStep 2
+            var dojoLead = _.cloneDeep(results[0]);
+            dojoLead.completed = false;
+            dojoLead.currentStep= 2;
+            dojoLead.application.dojoListing = {};
+            dojoLead.application.setupYourDojo = {};
+            delete dojoLead.id;
+
+            cdDojoService.saveDojoLead(dojoLead, function(response) {
+              initStep(2);
+            });
           } else {
-            initStep(1);
+            if(uncompletedDojoLead){
+              cdAgreementsService.loadUserAgreement(user.id, function(response){
+                response && response.id ? initStep(uncompletedDojoLead.currentStep) : initStep(1, 'charter')
+              });
+            } else {
+              //go to champion registration page
+              initStep(1);
+            }
           }
         });
       }
@@ -43,13 +92,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       initStep(0);
     });
 
-    function initStep (step) {
+    function initStep (step, subStep) {
       switch(step) {
         case 0:
           setupStep1();
           break;
         case 1:
-          setupStep2();
+          setupStep2(subStep);
           break;
         case 2:
           setupStep3();
@@ -181,58 +230,64 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--
 
     //--Step Two:
-    function setupStep2() {
+    function setupStep2(subStep) {
       $scope.hideIndicators = false;
       currentStepInt = 1;
-      $scope.championRegistrationFormVisible = true;
-      var currentUser;
-      var dojoLead;
-
-      $scope.champion = {};
-      auth.get_loggedin_user(function (user) {
-        currentUser = user;
-        if(currentUser) {
-          $scope.champion.email = currentUser.email;
-          $scope.champion.name = currentUser.name;
-          cdDojoService.loadUserDojoLead(currentUser.id, function (response) {
-          if(!_.isEmpty(response)) {
-            dojoLead = response;
-          } else {
-            dojoLead = {application:{}};
-          }
-        });
-        }
-      });
-
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-      };
-
-      $scope.picker = {opened :false};
-
-      $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.picker.opened = true;
-      };
-
-      $scope.today = new Date();
-      $scope.answers = [$translate.instant('Yes'), $translate.instant('No')];
-
-      $scope.save = function(champion) {
-        dojoLead.application.championDetails = champion;
-        dojoLead.userId = currentUser.id;
-        dojoLead.email = currentUser.email;
-        cdDojoService.saveDojoLead(dojoLead, function(response) {
-          dojoLead = response;
-          $scope.showCharterAgreement();
-        });
-      }
 
       $scope.showCharterAgreement = function () {
         $scope.championRegistrationFormVisible = false;
+      }
+
+      var currentUser;
+      auth.get_loggedin_user(function (user) {
+        currentUser = user;
+        if (currentUser) {
+          $scope.champion ? $scope.champion.email = currentUser.email : '';
+          $scope.champion ? $scope.champion.name = currentUser.name : '';
+        }
+      });
+
+      if(subStep && subStep === 'charter'){
+        $scope.showCharterAgreement();
+      } else {
+        $scope.championRegistrationFormVisible = true;
+
+        $scope.champion = {};
+
+        $scope.dateOptions = {
+          formatYear: 'yy',
+          startingDay: 1
+        };
+
+        $scope.picker = {opened: false};
+
+        $scope.open = function ($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+
+          $scope.picker.opened = true;
+        };
+
+        $scope.today = new Date();
+        $scope.answers = ['Yes', 'No'];
+
+        $scope.save = function (champion) {
+          var dojoLead = {application: {}};
+          dojoLead.application.championDetails = champion;
+          dojoLead.userId = currentUser.id;
+          dojoLead.email = currentUser.email;
+          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          dojoLead.completed = false;
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            $scope.showCharterAgreement();
+          });
+        }
+
+        cdCountriesService.listCountries(function (countries) {
+          $scope.countries = _.map(countries, function (country) {
+            return _.omit(country, 'entity$');
+          });
+        });
       }
 
       $scope.acceptCharterAgreement = function (agreement) {
@@ -243,21 +298,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
         $http.get('http://ipinfo.io/json').
-          success(function(data) {
+          success(function (data) {
             agreementObj.ipAddress = data.ip;
 
-            cdAgreementsService.save(agreementObj, function(response) {
+            cdAgreementsService.save(agreementObj, function (response) {
               setupStep3();
             });
 
           });
       }
-
-      cdCountriesService.listCountries(function(countries) {
-        $scope.countries = _.map(countries, function(country) {
-          return _.omit(country, 'entity$');
-        });
-      });
 
       $scope.otherLanguageSelected = function () {
         var otherSelected = _.contains($scope.champion.languagesSpoken, $translate.instant('Other'));
@@ -427,7 +476,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             cdDojoService.save(dojo, function (response) {
               $state.go('home', {
                 bannerType:'success',
-                bannerMessage: $translate.instant('dojo.create.success')
+                bannerMessage: $translate.instant('dojo.create.success'),
+				bannerTimeCollapse: 150000
               });
             });
           });
