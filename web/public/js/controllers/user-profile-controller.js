@@ -98,7 +98,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos', 
-      'passwordConfirm', 'myChild', 'resolvedChildren']);
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents']);
     
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
