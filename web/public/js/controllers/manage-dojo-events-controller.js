@@ -40,7 +40,7 @@
                         }
                       };
 
-      $scope.sort = $scope.sort ? $scope.sort :[{ date: {order: 'asc', ignore_unmapped: true }}];
+      $scope.sort = $scope.sort ? $scope.sort :[{ dates: {order: 'asc', ignore_unmapped: true }}];
 
       var query = _.omit({
         dojo_id: filter.dojo_id,
