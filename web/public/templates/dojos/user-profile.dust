@@ -35,6 +35,18 @@
             </form>
           </div>
         </div>
+        <div class="panel panel-default parent-list" ng-if="profile.resolvedParents.length > 0">
+          <div class="panel-heading">Parent</div>
+          <div class="parent-body">
+            <ul>
+              <li ng-repeat="parent in profile.resolvedParents">
+                <a href="/dashboard/profile/{{ parent.userId }}">
+                  {{ parent.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
