@@ -161,6 +161,30 @@
           </div>
         </div>
       </div>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-o13'])">
+        <label for="hideDojosField"  class="col-sm-4 control-label">Hide Dojos&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="checkbox" name="hideDojosField" ng-model="profile.optionalHiddenFields['dojos']" value="false">
+        </div>
+      </div>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-o13'])">
+        <label for="hideLinkedinField"  class="col-sm-4 control-label">Hide Linkedin&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="checkbox" name="hideLinkedinField" ng-model="profile.optionalHiddenFields['linkedin']" value="false">
+        </div>
+      </div>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-o13'])">
+        <label for="hideTwitterField"  class="col-sm-4 control-label">Hide Twitter&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="checkbox" name="hideTwitterField" ng-model="profile.optionalHiddenFields['twitter']" value="false">
+        </div>
+      </div>
+      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-o13'])">
+        <label for="hideBadgesField"  class="col-sm-4 control-label">Hide Badges&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="checkbox" name="hideBadgesField" ng-model="profile.optionalHiddenFields['badges']" value="false">
+        </div>
+      </div>
       <br> 
       <button type="submit" class="btn btn-primary pull-right">{@i18n key="Save"/}</button>
     </form>
