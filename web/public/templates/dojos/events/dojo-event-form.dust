@@ -25,19 +25,19 @@
       </textarea>
     </div>
 
-    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'">
+    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'" class="form-group form-inline">
       <h5>{@i18n key="Type"/}:</h5>
 
-      <div class="radio-inline">
-        <label>
-          <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
+      <div class="radio">
+        <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
+        <label for="recurring">
           {@i18n key="Recurring"/}
         </label>
       </div>
 
-      <div class="radio-inline">
-        <label>
-          <input type="radio" name="type" ng-model="eventInfo.type" id="one-off" value="one-off">
+      <div class="radio">
+        <input type="radio" name="type" ng-model="eventInfo.type" id="one-off" value="one-off">
+        <label for="one-off">
           {@i18n key="One off"/}
         </label>
       </div>
@@ -91,10 +91,10 @@
     <div class="form-group form-inline">
       <label for="group-type-1">{@i18n key="For"/}:</label>
 
-      <div class="checkbox" ng-repeat="(userType, value) in eventInfo.userTypes">
-        <input type="checkbox" id="{{ userType }}" ng-model="eventInfo.userTypes[userType]">
-        <label for="{{ userType }}">
-          {{ userType }}
+      <div class="radio" ng-repeat="userType in eventInfo.userTypes">
+        <input type="radio" id="{{ userType.name }}" value="{{ userType.name }}" name="userTypes" ng-model="eventInfo.userType">
+        <label for="{{ userType.name }}">
+          {{ userType.title }}
         </label>
       </div>
     </div>

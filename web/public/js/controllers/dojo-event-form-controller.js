@@ -20,13 +20,11 @@
     return dates;
   }
 
-
   function goToManageDojoEvents($state, dojoId) {
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
     });
   }
-
 
   function dojoEventFormCtrl(
     $scope,
@@ -34,6 +32,7 @@
     $state,
     cdEventsService,
     cdDojoService,
+    cdUsersService,
     cdCountriesService,
     auth,
     $translate,
@@ -159,15 +158,10 @@
         lng: $scope.googleMaps.marker.getPosition().lng()
       };
 
-      var userTypes = Object.keys(eventInfo.userTypes).filter(function(key) {
-        return eventInfo.userTypes[key];
-      });
-
       // Extend eventInfo
       eventInfo.position = eventPosition;
       eventInfo.status = publish ? 'published' : 'saved';
-      eventInfo.userTypes = userTypes;
-
+    
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -177,15 +171,16 @@
           eventInfo.toDate,
           $scope.weekdayPicker.selection.id
         );
+      } else {
+        eventInfo.dates = [eventInfo.date];
       }
-
+      
       cdEventsService.saveEvent(
         eventInfo,
         goToManageDojoEvents.bind(null, $state, dojoId),
         console.error.bind(console)
       );
     };
-
 
     function addMap(eventPosition) {
       var markerPosition = new google.maps.LatLng(eventPosition.lat, eventPosition.lng);
@@ -213,7 +208,6 @@
       }
     }
 
-
     function loadDojo(done) {
       cdDojoService.load(dojoId, function(dojoInfo) {
         $scope.eventInfo.country = dojoInfo.country;
@@ -232,14 +226,12 @@
       }, done);
     }
 
-
     function loadCurrentUser(done) {
       auth.get_loggedin_user(function(user) {
         $scope.eventInfo.userId = user.id;
         done(null, user);
       }, done);
     }
-
 
     function loadDojoUsers(done) {
       cdDojoService.loadDojoUsers({
@@ -250,21 +242,16 @@
       }, done);
     }
 
-
     function loadUserTypes(done) {
-      cdDojoService.getUserTypes(function(userTypes) {
-        // Add missing user type
-        userTypes.unshift('attendee-u13');
-
-        $scope.eventInfo.userTypes = userTypes.reduce(function(memo, item) {
-          memo[item] = false;
-          return memo;
-        }, {});
-
+      cdUsersService.getInitUserTypes(function(userTypes) {
+        _.each(userTypes, function (userType) {
+          userType.title = $translate.instant(userType.title);
+        });
+        userTypes.push({title:$translate.instant('Everyone'), name:'all-user-types'});
+        $scope.eventInfo.userTypes = userTypes;
         done(null, userTypes);
       }, done);
     }
-
 
     function loadEvent(done) {
       var eventId = $stateParams.eventId;
@@ -272,25 +259,20 @@
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
 
-        event.date = new Date(event.date);
+        event.date = new Date(_.first(event.dates));
         event.createdAt = new Date(event.createdAt);
-        delete event.toDate;
+        event.toDate = new Date(_.last(event.dates));
 
-        var userTypes = $scope.eventInfo.userTypes;
-        var selectedUserTypes = event.userTypes;
-        delete event.userTypes;
-
-        $scope.eventInfo = _.assign($scope.eventInfo, event);
-        $scope.eventInfo.userTypes = userTypes;
-
-        selectedUserTypes.forEach(function(selectedUserType) {
-          $scope.eventInfo.userTypes[selectedUserType] = true;
+        var eventDay =  moment(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
+        var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
+          return dayObject.name === $translate.instant(eventDay);
         });
-
+        
+        $scope.weekdayPicker.selection = dayObject;
+        $scope.eventInfo = _.assign($scope.eventInfo, event);
         done(null, event);
       }, done);
     }
-
 
     if ($stateParams.eventId) {
 
@@ -321,7 +303,6 @@
     });
   }
 
-
   angular.module('cpZenPlatform')
     .controller('dojo-event-form-controller', [
       '$scope',
@@ -329,6 +310,7 @@
       '$state',
       'cdEventsService',
       'cdDojoService',
+      'cdUsersService',
       'cdCountriesService',
       'auth',
       '$translate',
@@ -336,4 +318,3 @@
       dojoEventFormCtrl
     ]);
 })();
-
