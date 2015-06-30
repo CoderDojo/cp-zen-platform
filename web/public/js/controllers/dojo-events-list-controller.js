@@ -61,7 +61,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
             { match: { public: true}},
             { 
               range: {
-                date: {
+                dates: {
                   gte: todaysDate
                 }
               }
@@ -98,17 +98,20 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     cdEventsService.search(dojoQuery).then(function (result) {
       var events = [];
       _.each(result.records, function (event) {
-        event.date = moment(event.date).format('MMMM Do YYYY, h:mm');
-        var userTypes = event.userTypes;
-        if(_.contains(userTypes, 'attendee-u13') && _.contains(userTypes, 'attendee-o13')) {
-          event.for = $translate.instant('All');
-        } else if(_.contains(userTypes, 'attendee-u13')) {
-          event.for = $translate.instant('< 13');
-        } else if(_.contains(userTypes, 'attendee-o13')) {
-          event.for = $translate.instant('> 13');
+        if(event.type === 'recurring') {
+          var startDate = _.first(event.dates);
+          var endDate = _.last(event.dates);
+          event.formattedDate = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+          event.day = moment(startDate, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         } else {
-          event.for = $translate.instant('Dojo Staff');
+          //One-off event
+          var eventDate = _.first(event.dates);
+          event.formattedDate = moment(eventDate).format('Do MMMM YY, HH:mm');
         }
+
+        var userType = event.userType;
+        //TODO: translate event.type
+        event.for = $translate.instant(userType);
         events.push(event);
       });
       $scope.events = events;

@@ -9,6 +9,7 @@
               <tr>
                 <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Event"/}</th>
                 <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
+                <th>{@i18n key="Type"/}</th>
                 <th>{@i18n key="For"/}</th>
                 <th></th>
               </tr>
@@ -16,7 +17,8 @@
             <tbody ng-repeat="event in events" ng-switch on="events[$index].isCollapsed">
               <tr>
                 <td>{{ event.name }}</td>
-                <td>{{ event.date }}</td>
+                <td>{{ event.formattedDate }}</td>
+                <td>{{ event.type }}</td>
                 <td>{{ event.for }}</td>
                 <td class="pointer"><button ng-click="showEventInfo($index, event.id)" class="btn btn-primary" type="button">{@i18n key="Info"/}</button></td>
               </tr>

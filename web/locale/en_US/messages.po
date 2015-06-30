@@ -1196,3 +1196,54 @@ msgstr "Error removing applicant"
 
 msgid "Children Attending"
 msgstr "Children Attending"
+
+msgid "Dates"
+msgstr "Dates"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "to"
+msgstr "to"
+
+msgid "Everyone"
+msgstr "Everyone"
+
+msgid "attendee-u13"
+msgstr "Youths over 13"
+
+msgid "attendee-o13"
+msgstr "Youths under 13"
+
+msgid "parent-guardian"
+msgstr "Parents/Guardians"
+
+msgid "mentor"
+msgstr "Mentors/Volunteers"
+
+msgid "champion"
+msgstr "Champions"
+
+msgid "all-user-types"
+msgstr "Everyone"
+
+msgid "Youth Under 13"
+msgstr "Youth Under 13"
+
+msgid "Youth Over 13"
+msgstr "Youth Over 13"
+
+msgid "Parent/Guardian"
+msgstr "Parent/Guardian"
+
+msgid "Mentor/Volunteer"
+msgstr "Mentor/Volunteer"
+
+msgid "Champion"
+msgstr "Champion"
+
+msgid "recurring"
+msgstr "Recurring"
+
+msgid "one-off"
+msgstr "One off"

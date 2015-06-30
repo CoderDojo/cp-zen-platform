@@ -5,13 +5,16 @@
 <div class="modal-body">
   <p><b>{@i18n key="Description"/}</b>: {{ event.description }}</p>
 
-  <p><b>{@i18n key="Date"/}</b>: {{ event.date }}</p>
+  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Day"/}</b>: {{ event.day }}</p>
+  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Dates"/}</b>: {{ event.formattedDate }}</p>
+
+  <p ng-if="event.type === 'one-off'"><b>{@i18n key="Date"/}</b>: {{ event.formattedDate }}</p>
 
   <p><b>{@i18n key="CityTown"/}:</b> {{ event.city.nameWithHierarchy }}</p>
 
   <p><b>{@i18n key="Address"/}:</b> {{ event.address }}</p>
 
-  <p><b>{@i18n key="For"/}:</b> {{ event.for }}</p>
+  <p><b>{@i18n key="For"/}:</b> {@i18n key="{{ event.for }}"/}</p>
 
   <div ng-if="childUsers.length > 0" class="well">
     <legend>{@i18n key="Children Attending"/}</legend>
