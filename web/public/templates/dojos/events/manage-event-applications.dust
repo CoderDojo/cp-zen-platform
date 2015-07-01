@@ -48,7 +48,7 @@
                 </ui-select>
               </td>
               <td>
-                <button class="btn btn-success" ng-click="dojoMemberSelected(newApplicant.member)">{@i18n key="Save"/}</button> 
+                <button class="btn btn-success" ng-click="saveNewApplicant(newApplicant.member)">{@i18n key="Save"/}</button> 
                 <button class="btn btn-primary" ng-click="cancelNewApplicant()">{@i18n key="Cancel"/}</button>
               </td>
               <td></td>
