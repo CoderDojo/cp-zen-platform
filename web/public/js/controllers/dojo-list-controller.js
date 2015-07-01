@@ -420,7 +420,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     if($scope.markerClusterer) $scope.markerClusterer.clearMarkers();
 
     _.each(dojos, function(dojo) {
-      debugger
       if(dojo.coordinates) {
         var coordinates = dojo.coordinates.split(',');
         var pinColor = dojo.private === 1 ? 'FF0000' : '008000';
@@ -436,14 +435,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     });
 
     $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.countryMarkers);
-
-    var coords = _.map($scope.dojos, function(dojo) {
-      var pair = dojo.coordinates.split(',');
-      return { lat: parseFloat(pair[0]), lng: parseFloat(pair[1]) };
-    });
-
-    var minlat = _.chain(coords).pluck('lat').min();
-    var minlng = _.chain(coords).pluck('lng').min();
   }
 
   $scope.search = function() {
@@ -574,12 +565,10 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   $scope.mapDragEnd = function() {
     if ($scope.searchResult) {
       $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
-      console.log('drag end');
     }
   }
 
   $scope.mapZoomChanged = function() {
-    console.log('MAP ZOOM IS: ', $scope.model.map.getZoom());
     // A minimum zoom level of 2 - don't let map zoom out farther than the world.
     if($scope.model.map.getZoom() < $scope.currentZoom) {
       if ($scope.model.map.getZoom() < 2) {
