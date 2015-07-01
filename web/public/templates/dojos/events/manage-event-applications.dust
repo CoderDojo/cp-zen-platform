@@ -24,8 +24,12 @@
             <tr ng-repeat="application in applications">
               <td><a ui-sref="user-profile({ userId:application.user.id })"><u>{{ application.name }}</u></a></td>
               <td>{{ application.user.email }}</td>
-              <td></td>
-              <td></td>
+              <td>{{ application.age }}</td>
+              <td>
+                <div ng-repeat="parent in application.parents">
+                  <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
+                </div>
+              </td>
               <td class="ten-percent-width">
                 <div class="checkbox">
                   <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-checked="userIsApproved(application)" ng-click="updateApplicationStatus(application)">
@@ -44,7 +48,7 @@
                 </ui-select>
               </td>
               <td>
-                <button class="btn btn-success" ng-click="dojoMemberSelected(newApplicant.member)">{@i18n key="Save"/}</button> 
+                <button class="btn btn-success" ng-click="saveNewApplicant(newApplicant.member)">{@i18n key="Save"/}</button> 
                 <button class="btn btn-primary" ng-click="cancelNewApplicant()">{@i18n key="Cancel"/}</button>
               </td>
               <td></td>

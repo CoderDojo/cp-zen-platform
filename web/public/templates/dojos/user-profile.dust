@@ -35,13 +35,25 @@
             </form>
           </div>
         </div>
+        <div class="panel panel-default parent-list" ng-if="profile.resolvedParents.length > 0">
+          <div class="panel-heading">Parent</div>
+          <div class="parent-body">
+            <ul>
+              <li ng-repeat="parent in profile.resolvedParents">
+                <a href="/dashboard/profile/{{ parent.userId }}">
+                  {{ parent.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <!--/col-3-->
       <div class="col-sm-8" contenteditable="false" style="">
           <general-info></general-info>
-          <projects-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
-          <programming-languages-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
-          <languages-spoken-list ng-if="hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
+          <projects-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
+          <programming-languages-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
+          <languages-spoken-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
           <children-list ng-if="hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>
           <parents-list ng-if="hasAccess(profile.userTypes, ['attendee-o13, attendee-u13'])"></parents-list>
           <badges-list ng-if="hasAccess(profile.userTypes, ['attendee-o13'])"></badges-list>

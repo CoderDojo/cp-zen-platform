@@ -9,7 +9,7 @@
             <thead>
               <tr>
                 <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-                <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
+                <th><span ng-click="toggleSort($event, 'dates')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
                 <th>{@i18n key="Capacity"/}</th>
                 <th>{@i18n key="Applicants"/}</th>
                 <th>{@i18n key="Attending"/}</th>

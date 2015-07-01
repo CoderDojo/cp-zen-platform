@@ -40,7 +40,7 @@
                         }
                       };
 
-      $scope.sort = $scope.sort ? $scope.sort :[{ date: {order: 'asc', ignore_unmapped: true }}];
+      $scope.sort = $scope.sort ? $scope.sort :[{ dates: {order: 'asc', ignore_unmapped: true }}];
 
       var query = _.omit({
         dojo_id: filter.dojo_id,
@@ -61,7 +61,18 @@
       cdEventsService.search(dojoQuery).then(function (result) {
         var events = [];
         _.each(result.records, function (event) {
-          event.formattedDate = moment(event.date).format('MMMM Do YYYY, h:mm');
+
+          if(event.type === 'recurring') {
+            var startDate = event.dates[0];
+            var lastIndex = event.dates.length - 1;
+            var endDate = event.dates[lastIndex];
+            event.formattedDate = moment(startDate).format('MMMM Do YYYY') + ' - ' + moment(endDate).format('MMMM Do YYYY');
+          } else {
+            //One-off event
+            var eventDate = event.dates[0];
+            event.formattedDate = moment(eventDate).format('MMMM Do YYYY');
+          }
+          
           //Retrieve number of applicants & attendees
           var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
           cdEventsService.searchApplications(cdApplicationsQuery, function (result) {

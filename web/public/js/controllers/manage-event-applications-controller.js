@@ -14,24 +14,31 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
   });
 
-  $scope.dojoMemberSelected = function (item) {
+  $scope.saveNewApplicant = function (item) {
     var dojoMember = item;
     $scope.newApplicantClicked = false;
 
-    var newApplicant = {
+    cdUsersService.listProfiles({userId:dojoMember.id}, function (response) {
+      var userProfile = response;
+
+      var newApplicant = {
         name: dojoMember.name,
-        attended: false,
-        dateOfBirth: null,
+        dateOfBirth: userProfile.dob,
         event_id: eventId,
         status:'pending',
         user_id: dojoMember.id
-    };
+      };
 
-    cdEventsService.saveApplication(newApplicant, function (response) {
-      $scope.loadPage($scope.filter, true);
+      cdEventsService.saveApplication(newApplicant, function (response) {
+        $scope.loadPage($scope.filter, true);
+      }, function (err) {
+        alertService.showError($translate.instant('Error saving new applicant') + '<br>' + JSON.stringify(err));
+      });
     }, function (err) {
-      alertService.showError($translate.instant('Error saving new applicant') + '<br>' + JSON.stringify(err));
+      alertService.showError($translate.instant('Error loading profile') + '<br>' + JSON.stringify(err));
     });
+
+    
   }
 
   $scope.removeApplicant = function(applicant) {
@@ -92,10 +99,23 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.approved[application.id] = false;
         }
 
+        application.age = moment().diff(application.dateOfBirth, 'years');
+
         cdUsersService.load(application.userId, function (response) {
           application.user = response;
-          cb();
+          application.parents = [];
+          cdUsersService.listProfiles({userId:application.user.id}, function (response) {
+            async.each(response.parents, function (parentUserId, cb) {
+              cdUsersService.load(parentUserId, function (response) {
+                application.parents.push(response);
+                cb();
+              });
+            }, cb);
+          });
+          
+          
         });
+
       }, function (err) {
         $scope.applications = result.records;
         $scope.totalItems = result.total;
@@ -182,7 +202,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       $scope.waitlist++;
     }
 
-    delete application.user;
+    application = _.omit(application, ['user', 'age' , 'parents']);
     cdEventsService.updateApplication(application, null, function (err) {
       alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
     });
