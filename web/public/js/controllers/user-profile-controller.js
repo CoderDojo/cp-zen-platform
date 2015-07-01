@@ -1,13 +1,31 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields) {
   
 
-  if(profile.err || loggedInUser.err || usersDojos.err){
+
+  if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
     return;
   }
+
+  $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
+
+  function getHiddenFields(hiddenFields, userTypes){
+    var retHiddenFields = [];
+
+    _.each(userTypes, function(userType){
+      var filteredFields = _.filter(hiddenFields, function(hiddenField){
+        return _.contains(hiddenField.allowedUserTypes, userType);
+      });
+
+      retHiddenFields = _.union(retHiddenFields, filteredFields);
+    });
+
+    return retHiddenFields;
+  }
+
 
   $scope.hasAccess = utils.hasAccess;
 
@@ -237,5 +255,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams' , cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields' ,cdUserProfileCtrl]);
 
