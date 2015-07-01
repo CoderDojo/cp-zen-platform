@@ -10,9 +10,22 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return;
   }
 
-  console.log("hiddenFields", hiddenFields);
+  $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
 
-  $scope.hiddenFields =  hiddenFields.data;
+  function getHiddenFields(hiddenFields, userTypes){
+    var retHiddenFields = [];
+
+    _.each(userTypes, function(userType){
+      var filteredFields = _.filter(hiddenFields, function(hiddenField){
+        return _.contains(hiddenField.allowedUserTypes, userType);
+      });
+
+      retHiddenFields = _.union(retHiddenFields, filteredFields);
+    });
+
+    return retHiddenFields;
+  }
+
 
   $scope.hasAccess = utils.hasAccess;
 
