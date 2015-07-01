@@ -2,10 +2,6 @@
 <header id="header" ng-controller="login">
     <div class="container header-container" ng-controller="header">
         {>"common/content-header" /}
-        <div ng-if="!user">
-            <a ui-sref="login"><span ng-click="selectTab('login')" ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-1">Login</span></a>
-            <a ui-sref="start-dojo-wizard"><span ng-click="selectTab('register')" ng-class="{'cd-active-tab': isSelected('register')}" class="cd-header-button cd-color-2">Create a Dojo</span></a>
-        </div>
     </div>
     <alert-banner></alert-banner>
 </header>

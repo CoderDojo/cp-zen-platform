@@ -1,4 +1,4 @@
-<footer class="container">
+<footer id="footer" class="container">
     <span class="col-sm-9 footer-column pull-left">
         <span class="col-sm-5 footer-left-column">
             <a ui-sref="home"><div class="cd-logo-small"></div></a>
@@ -32,5 +32,4 @@
         </span>
     </span>
 </footer>
-<div style="margin-top: 5em;"></div>
 
