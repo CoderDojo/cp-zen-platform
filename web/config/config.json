@@ -54,6 +54,30 @@
             }
         }
 
+        ,"session": {
+            "enabled": true,
+            "priority": 100,
+            "module": {
+                "name": "path:./lib/redis-store.js",
+                "arguments": [
+                    {
+                        "key": "CD.ZENPLATFORM",
+                        "secret": "seneca",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "resave": true,
+                        "saveUninitialized": true,
+                        "proxy": null
+                    }
+                    // the next section here is an omission of necessity
+                    // and is handled in the kraken onconfig method
+                ]
+            }
+        }
+
         ,"seneca": {
             "priority": 105,
             "enabled": true,
