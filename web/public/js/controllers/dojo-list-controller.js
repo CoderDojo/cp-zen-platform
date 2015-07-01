@@ -398,39 +398,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     $location.path('/dojo/' + dojo.urlSlug);
   }
 
-  $scope.searchForDojo = function() {
-    var dojoName = $scope.search.dojo;
-
-    $scope.searchSelected = true;
-    $scope.countrySelected = false;
-    $scope.stateSelected = false;
-    $scope.countryName = '';
-
-    var search = {
-      query: {
-        multi_match: {
-          query: dojoName,
-          fields: ['name', 'placeName', 'admin1Name', 'admin2Name', 'address1', 'address2', 'countryName']
-        }
-      }
-    }
-
-    cdDojoService.search(search).then(function(result) {
-      var byCountry = _.groupBy(result.records, 'countryName');
-      _.each(_.keys(byCountry), function(countryName) {
-        var dojos = byCountry[countryName];
-        var byState = _.groupBy(dojos, 'admin1Name');
-        byCountry[countryName] = { states: byState };
-      });
-
-      $scope.dojoData =_.map(byCountry, function(dojoData, countryName) {
-        var pair = {}; pair[countryName] = dojoData; return pair;
-      });
-
-      $scope.dojos = result.records;
-    });
-  }
-
   function getKeyByValue(obj, value) {
     for(var prop in obj) {
       if(obj.hasOwnProperty(prop)) {
@@ -449,18 +416,25 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   function addMarkersToMap(dojos) {
     $scope.countryMarkers = [];
+
+    if($scope.markerClusterer) $scope.markerClusterer.clearMarkers();
+
     _.each(dojos, function(dojo) {
       if(dojo.coordinates) {
         var coordinates = dojo.coordinates.split(',');
+        var pinColor = dojo.private === 1 ? 'FF0000' : '008000';
         var marker = new google.maps.Marker({
           map:$scope.model.map,
           dojo:dojo.name,
           dojoID:dojo.id,
+          icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
           position: new google.maps.LatLng(coordinates[0], coordinates[1])
         });
         $scope.countryMarkers.push(marker);
       }
     });
+
+    $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.countryMarkers);
   }
 
   $scope.search = function() {
@@ -503,6 +477,24 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
   $scope.searchNearest = function(location) {
     var searchNearest = {
+      query: {
+        filtered: {
+          query : {
+            match_all : {}
+          },
+          filter: {
+            bool: {
+              must_not: [{
+                term: {stage: 4}
+              },{
+                term: {deleted: 1}
+              },{
+                term: {verified: 0}
+              }]
+            }
+          }
+        }
+      },
       size: 10,
       sort: [{
         _geo_distance: {
@@ -537,12 +529,27 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   $scope.searchBounds = function(location, bounds, fallbackToNearest) {
     var searchInBounds = {
       filter: {
-        geo_bounding_box: {
-          geoPoint: {
-            top_left: { lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng() },
-            bottom_right: { lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng() }
+        and: [
+          {
+            bool: {
+              must_not: [{
+                term: {stage: 4}
+              },{
+                term: {deleted: 1}
+              },{
+                term: {verified: 0}
+              }]
+            }
+          },
+          {
+            geo_bounding_box: {
+              geoPoint: {
+                top_left: {lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng()},
+                bottom_right: {lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng()}
+              }
+            }
           }
-        }
+        ]
       },
       from: 0,
       size: 100
@@ -566,7 +573,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
   $scope.mapDragEnd = function() {
     if ($scope.searchResult) {
       $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
-      console.log('drag end');
     }
   }
 
