@@ -92,10 +92,26 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.approved[application.id] = false;
         }
 
+        application.age = moment().diff(application.dateOfBirth, 'years');
+
         cdUsersService.load(application.userId, function (response) {
           application.user = response;
-          cb();
+          if(application.user.isUnder13) {
+            application.parents = [];
+            cdUsersService.listProfiles({userId:application.user.id}, function (response) {
+              async.each(response.parents, function (parentUserId, cb) {
+                cdUsersService.load(parentUserId, function (response) {
+                  application.parents.push(response);
+                  cb();
+                });
+              }, cb);
+            });
+          } else {
+            cb();
+          }
+          
         });
+
       }, function (err) {
         $scope.applications = result.records;
         $scope.totalItems = result.total;
