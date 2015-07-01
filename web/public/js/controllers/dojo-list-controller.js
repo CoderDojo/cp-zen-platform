@@ -486,6 +486,10 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
             bool: {
               must_not: [{
                 term: {stage: 4}
+              },{
+                term: {deleted: 1}
+              },{
+                term: {verified: 0}
               }]
             }
           }
@@ -530,6 +534,10 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
             bool: {
               must_not: [{
                 term: {stage: 4}
+              },{
+                term: {deleted: 1}
+              },{
+                term: {verified: 0}
               }]
             }
           },
