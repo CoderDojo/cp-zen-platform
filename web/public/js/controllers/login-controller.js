@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService) {
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;
   }
-
 
   var msgmap = {
     'unknown': $translate.instant('login.msgmap.unknown'),
@@ -34,6 +33,17 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
     $scope.errorMessage = ''
 
     $scope.currentView = view
+  }
+
+  // This redirect function is not strictly to do with login, just lives here for convenience.
+  // Gets the redirect link to the Adult Forum from the server side 'webclient' config.
+  $scope.adultForums = function() {
+    cdConfigService.get('adultforum', function(kv) {
+      var url = kv.adultforum;
+      $window.location.href = url;
+    }, function(err) {
+         console.error('Error getting config: ', err);
+       });
   }
 
   $scope.doRegister = function(user) {

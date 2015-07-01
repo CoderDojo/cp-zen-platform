@@ -142,6 +142,7 @@
     <script src="/js/services/spinner-service.js"></script>
     <script src="/js/services/table-utils.js"></script>
     <script src="/js/services/cd-users-service.js"></script>
+    <script src="/js/services/cd-config-service.js"></script>
     <script src="/js/services/cd-agreements-service.js"></script>
     <script src="/js/services/utils-service.js"></script>
 

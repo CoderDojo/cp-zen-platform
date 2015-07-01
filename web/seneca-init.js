@@ -27,6 +27,7 @@ seneca
   .use('../lib/profiles/cd-profiles.js')
   .use('../lib/events/cd-events.js')
   .use('../lib/oauth2/cd-oauth2.js')
+  .use('../lib/config/cd-config.js', options.webclient)
 ;
 
 _.each(options.client, function(opts) {
