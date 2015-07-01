@@ -99,18 +99,12 @@
         <label for="notes" class="col-sm-4 control-label">{@i18n key="Notes"/} </label>
         <div class="col-sm-8">
           <textarea class="form-control"  ng-model="profile.notes" placeholder="Notes" rows="3"></textarea>
-          <label for="hideNotesField">{@i18n key="Hide Notes"/}&nbsp;&nbsp;</label>
-          <input type="checkbox" ng-model="profile.optionalHiddenFields['notes']" value="false">
         </div>
       </div>
       <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
         <label for="projects" class="col-sm-4 control-label">{@i18n key="Projects"/} </label>
         <div class="col-sm-8">
           <tags-input ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></tags-input>
-          <div ng-if="hasAccess(profile.userTypes, ['champion'])">
-            <label for="hideProjectsField">{@i18n key="Hide Projects"/}&nbsp;&nbsp;</label>
-            <input type="checkbox" ng-model="profile.optionalHiddenFields['projects']" value="false">
-          </div>
         </div>
       </div>
       <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
@@ -163,7 +157,7 @@
       </div>
       <div class="form-group" ng-repeat="hiddenField in hiddenFields">
         <div ng-if="hasAccess(profile.userTypes, hiddenField.allowedUserTypes)">
-          <label for="{{ hiddenField.name }} "  class="col-sm-4 control-label">{{ hiddenField.label }}&nbsp;&nbsp;</label>
+          <label for="{{ hiddenField.name }}"  class="col-sm-4 control-label">{{ hiddenField.label }}&nbsp;&nbsp;</label>
           <div class="col-sm-8">
             <input type="checkbox" name="{{ hiddenField.name }}" ng-model="profile.optionalHiddenFields[hiddenField.modelName]" value="false">
           </div>
