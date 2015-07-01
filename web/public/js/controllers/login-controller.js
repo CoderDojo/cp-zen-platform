@@ -4,7 +4,11 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
 function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
-  
+  if ($location.search().redirect) {
+    $scope.redirect = $location.search().redirect;
+  }
+
+
   var msgmap = {
     'unknown': $translate.instant('login.msgmap.unknown'),
     'user-not-found': $translate.instant('login.msgmap.user-not-found'),
@@ -45,7 +49,7 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
         alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
       }
     }, function() {
-      
+
     });
   }
 
@@ -59,7 +63,11 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
 
     auth.login($scope.login,
       function(data){
-        $window.location.href = '/dashboard' + $scope.referer;
+        if ($scope.redirect) {
+          $window.location.href = $scope.redirect;
+        } else {
+          $window.location.href = '/dashboard' + $scope.referer;
+        }
       },
       function(){
         $scope.errorMessage = $translate.instant('Invalid email or password');
