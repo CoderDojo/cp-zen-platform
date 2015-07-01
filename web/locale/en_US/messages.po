@@ -1210,10 +1210,10 @@ msgid "Everyone"
 msgstr "Everyone"
 
 msgid "attendee-u13"
-msgstr "Youths over 13"
+msgstr "Youths under 13"
 
 msgid "attendee-o13"
-msgstr "Youths under 13"
+msgstr "Youths over 13"
 
 msgid "parent-guardian"
 msgstr "Parents/Guardians"
