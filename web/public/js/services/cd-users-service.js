@@ -51,6 +51,14 @@ function cdUsersService(cdApi, $q){
     },
     acceptParent: function(data, win, fail) {
       cdApi.post('profiles/accept-parent-guardian', {data: data}, win, fail || topfail);
+    },
+    getHiddenFieldsPromise: function(win, fail){
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      cdApi.get('profiles/hidden-fields', deferred.resolve, deferred.reject || topfail);
+
+      return promise;
     }
   };
 }
