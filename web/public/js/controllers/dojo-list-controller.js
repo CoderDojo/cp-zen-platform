@@ -227,6 +227,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     Geocoder.boundsForContinent(continentSelected).then(function (data) {
       $scope.model.map.fitBounds(data);
       $scope.model.map.setZoom(3);
+      $scope.currentZoom = $scope.model.map.getZoom();
     });
 
     var continentCountries = dojoCountData.dojos.continents[continentSelected].countries;
@@ -265,32 +266,31 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     _.each($scope.continentMarkers, function(marker) {
       marker.setMap(null);
     });
-
-
   }
 
   $scope.showCountryDojos = function(marker) {
     $scope.countrySelected = true;
     $scope.stateSelected = false;
     var countrySelected = marker.country;
-    Geocoder.boundsForCountry('country:'+countrySelected).then(function (data) {
+    Geocoder.boundsForCountry('country:' + countrySelected).then(function (data) {
       $scope.model.map.fitBounds(data);
       $scope.model.map.setZoom(5);
+      $scope.currentZoom = $scope.model.map.getZoom();
     });
 
-    cdDojoService.list({alpha2:countrySelected}, function(response) {
+    cdDojoService.list({alpha2: countrySelected}, function (response) {
       $scope.countryName = Object.keys(response)[0];
       $scope.dojosByCountry = response[$scope.countryName].states;
     });
 
-    cdDojoService.dojosStateCount(countrySelected, function(response) {
+    cdDojoService.dojosStateCount(countrySelected, function (response) {
       var states = response[countrySelected];
-      _.each(Object.keys(states), function(state) {
-        if(state !== 'undefined' && state !== 'null' && state !== '') {
+      _.each(Object.keys(states), function (state) {
+        if (state !== 'undefined' && state !== 'null' && state !== '') {
           var stateData = states[state];
           var marker = new google.maps.Marker({
-            map:$scope.model.map,
-            state:state,
+            map: $scope.model.map,
+            state: state,
             icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + stateData.total + '|009900|000000',
             position: new google.maps.LatLng(stateData.latitude, stateData.longitude)
           });
@@ -300,22 +300,21 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     });
 
 
-   if($scope.currentLevels.length < 3) {
-      _.each($scope.currentLevels, function(currentLevel) {
+    if ($scope.currentLevels.length < 3) {
+      _.each($scope.currentLevels, function (currentLevel) {
         currentLevel.style = '';
       })
 
       $scope.currentLevels.push({
-        text:countriesContinentsData.countries[countrySelected].name,
-        type:'country',
-        style:'active'
+        text: countriesContinentsData.countries[countrySelected].name,
+        type: 'country',
+        style: 'active'
       });
     }
 
-    _.each($scope.markers, function(marker) {
+    _.each($scope.markers, function (marker) {
       marker.setMap(null);
     });
-
   }
 
   $scope.showStateMarkers = function(marker) {
@@ -376,6 +375,8 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 
       Geocoder.boundsMinMax(minCoords, maxCoords).then(function (data) {
         $scope.model.map.fitBounds(data);
+        $scope.model.map.setZoom(8);
+        $scope.currentZoom = $scope.model.map.getZoom();
       });
     });
   }
@@ -435,6 +436,7 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     });
 
     $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.countryMarkers);
+    $scope.currentZoom = $scope.model.map.getZoom();
   }
 
   $scope.search = function() {
@@ -552,7 +554,17 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         ]
       },
       from: 0,
-      size: 100
+      size: 100,
+      sort: [{
+        _geo_distance: {
+          geoPoint: {
+            lat: location.lat(),
+            lon: location.lng()
+          },
+          order: 'asc',
+          unit: 'km'
+        }
+      }]
     };
 
     cdDojoService.search(searchInBounds).then(function(result) {
@@ -584,23 +596,28 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         $scope.resetMap('earth');
       }
 
-      if ($scope.model.map.getZoom() > 2 && $scope.model.map.getZoom() < 4 && $scope.currentLevels.length > 2) {
+      if ($scope.model.map.getZoom() === 3 && $scope.currentLevels.length > 2) {
         $scope.resetMap('continent', $scope.currentLevels[1].text);
         $scope.model.map.setZoom(3);
       }
 
-      if ($scope.model.map.getZoom() > 4 && $scope.model.map.getZoom() < 6 && $scope.currentLevels.length > 3) {
+      if ($scope.model.map.getZoom() === 5 && $scope.currentLevels.length > 3) {
         $scope.resetMap('country', $scope.currentLevels[2].text);
         $scope.model.map.setZoom(5);
+      }
+
+      if($scope.model.map.getZoom() === 8){
+        $scope.currentZoom = 8;
+        $scope.resetMap('state', $scope.currentLevels[3].text);
+        $scope.model.map.setZoom(8);
       }
 
       if ($scope.searchResult && $scope.model.map.getZoom() > 2) {
         $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
       }
     }
-
-    $scope.currentZoom = $scope.model.map.getZoom();
   }
+
 }
 
 angular.module('cpZenPlatform')
