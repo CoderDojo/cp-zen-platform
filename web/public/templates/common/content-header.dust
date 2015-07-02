@@ -12,6 +12,11 @@
     <a ui-sref="login"><span ng-click="selectTab('login')" ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-1">{@i18n key="Login"/}</span></a>
     <a ui-sref="start-dojo-wizard"><span ng-click="selectTab('register')" ng-class="{'cd-active-tab': isSelected('register')}" class="cd-header-button cd-color-2">{@i18n key="Create a Dojo"/}</span></a>
 </span>
-<span class="col-md-2 language-selector">
+<span class="col-md-2 language-selector" ng-controller="languageController">
+  <select name="language" 
+      class="form-control" 
+      ng-model="selectedLanguage"
+      ng-change="updateLocale()" 
+      ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
 </span>
 
