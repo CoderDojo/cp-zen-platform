@@ -69,6 +69,8 @@
     <script src="/components/bootbox/bootbox.js"></script>
 
     <script src="/components/angular/angular.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+    <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
     <script src="/components/moment/min/moment.min.js"></script>
