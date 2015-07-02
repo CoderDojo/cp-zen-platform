@@ -1,62 +1,66 @@
 #header {
-  background: #13181a;
-  -webkit-box-shadow: inset 0 -1px rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
-  -moz-box-shadow: inset 0 -1px 0 rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
-  box-shadow: inset 0 -1px 0 rgba(0, 86, 132, 0.8), 0 1px 3px rgba(0, 86, 132, 0.4);
+  baackground: white;
   position: relative;
   z-index: 900;
 }
+.header-container{
+  text-align: center;
+}
 .cd-logo {
+  margin-top: 25px;
+  display: inline-block;
   background-image: url("../img/logo.png");
   background-repeat: no-repeat;
-  height: 23px;
-  width: auto;
-  background-size:contain;
+  height: 4em;
+  width: 15em;
+  background-size: contain;
 }
-.cd-logo-container {
-  margin:10px 0px 10px 5px;
-  width:100px;
-  float:left;
+.cd-header-button-group {
+  display: inline-block;
 }
-.cd-user-name {
-  &:extend(.cp-pn-reg);
-  float: right;
-  text-align: right;
-  color: #f1f1f1;
+.cd-header-button {
+  width: 10em;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  color: white;
+  padding: 5px;
+  line-height: 1.8em;
+  height: 2.6em;
   font-size: 14px;
-  width:200px;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  overflow:hidden;
+  cursor: pointer;
 }
-.cd-user-name-container{
-  margin:10px 5px;
+.cd-header-button a {
+  color: white;
+  font-size: 14px;
 }
-.cd-logout {
-  &:extend(.cp-pn-reg);
-  float:right;
-  text-align:right;
-  color:#f1f1f1;
-  font-size:14px;
-  cursor:pointer;
-  margin-left:5px;
+.cd-color-1 {
+  background-color: #61C93F;
 }
-.cd-header-text {
-  color:white;
-  font-weight:bold;
-  font-size:13px;
-  text-decoration:none;
-  cursor:pointer;
-  &:hover {
-    text-decoration:underline;
-    color:white;
-  }
-  &:focus {
-    text-decoration:none;
-    color:white;
-  }
+.cd-color-2 {
+  background-color: #2E7AC7;
+}
+.cd-color-3 {
+  background-color: #FBCC33;
+}
+.cd-color-4 {
+  background-color: #ED462F;
+}
+.cd-color-5 {
+  background-color: #2C9CFB;
+}
+.cd-active-tab {
+  height: 3.8em;
+  line-height: 2.85em;
+  font-weight: bold;
 }
 
+.language-selector {
+  width:14.5em;
+  float:right;
+  margin-top: 5px;
+  display: inline-block;
+}
 
 .alert-message{
 

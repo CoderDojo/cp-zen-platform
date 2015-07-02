@@ -1,6 +1,6 @@
 'use strict';
 
-function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, gmap) {
+function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, $translate, gmap) {
   $scope.model = {};
   $scope.markers = [];
   $scope.continentMarkers = [];
@@ -48,18 +48,18 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     });
   }
 
-  $scope.$on('$viewContentLoaded', function () {
-    jQuery('body').cookieDisclaimer({
+  $scope.$on('$viewContentLoaded', function() {
+    jQuery('body').cookieDisclaimer({ 
+      text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."),
       style: "light", // dark,light
       cssPosition: "relative", //fixed,absolute,relative
-      policyBtn: {
-        link: "http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2", // cookie policy page URL
-      },
+      acceptBtn: { text: 'x' },
+      policyBtn: { active: false },
       cookie: {
         name: "cookieDisclaimer",
         val: "confirmed",
         path: "/",
-        expire: 1
+        expire: 365
       }
     });
   });
@@ -619,4 +619,4 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-controller', ['$window', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', 'gmap', cdDojoListCtrl]);
+  .controller('dojo-list-controller', ['$window', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', '$translate', 'gmap', cdDojoListCtrl]);

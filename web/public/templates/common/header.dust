@@ -1,15 +1,7 @@
 {>"common/global-menu" /}
 <header id="header" ng-controller="login">
-    <div class="container">
+    <div class="container header-container" ng-controller="header">
         {>"common/content-header" /}
-        <div ng-if="user" class="col-lg-3 cd-user-name-container">
-            <a href=""><span class="cd-logout" ng-click="logout()">Logout</span></a>
-            <span class="cd-user-name">{{ user.name }} |</span>
-        </div>
-        <div ng-if="!user" class="col-lg-3 cd-user-name-container">
-            <a ui-sref="login"><span class="cd-logout">Login</span></a> 
-            <a ui-sref="start-dojo-wizard"><span class="cd-logout">Create a Dojo |</span></a>
-        </div>
     </div>
     <alert-banner></alert-banner>
 </header>
