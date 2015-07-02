@@ -1247,3 +1247,7 @@ msgstr "Recurring"
 
 msgid "one-off"
 msgstr "One off"
+
+msgid "Select event date..."
+msgstr "Select event date..."
+

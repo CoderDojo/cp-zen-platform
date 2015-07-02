@@ -40,6 +40,12 @@ function cdEventsService(cdApi, $q){
     },
     removeApplicant: function(application, win, fail) {
       cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
+    },
+    searchAttendance: function(search, win, fail) {
+      cdApi.post('events/attendance/search', {search: search}, win, fail || topfail);
+    },
+    saveAttendance: function(attendance, win, fail) {
+      cdApi.post('events/attendance/save', {attendance: attendance}, win, fail || topfail);
     }
   };
 }

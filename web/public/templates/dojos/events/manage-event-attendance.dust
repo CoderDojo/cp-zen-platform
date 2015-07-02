@@ -1,14 +1,14 @@
 <h3>Manage Attendance for: {{ event.name }}</h3>
 
-<dl class="l-inline">
-  <dt>Capacity:</dt>
-  <dd>{{ event.capacity }}</dd>
-  <dt>Attending:</dt>
-  <dd>{{ attending }}</dd>
-  <dt>Attended:</dt>
-  <dd>{{ attended }}</dd>
-</dl>
-
+<div class="col-lg-3">
+  <ui-select name="eventDateAttendance" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
+    <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
+    <ui-select-choices repeat="eventDate in event.dates">
+      <span ng-bind-html="eventDate.text"></span>
+    </ui-select-choices>
+  </ui-select>
+</div>
+  
 <div class="row table-responsive">
   <table id="eventApplicationsTable" class="table cd-grid-table">
     <thead>
@@ -27,15 +27,19 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="application in approvedApplications">
-        <td>{{ application.name }}</td>
-        <td></td>
-        <td></td>
+      <tr ng-repeat="attendance in attendanceRecords">
+        <td>{{ attendance.name }}</td>
+        <td>{{ attendance.age }}</td>
+        <td>
+          <div ng-repeat="parent in attendance.parents">
+            <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
+          </div>
+        </td>
         <td>
           <div class="checkbox">
             <input type="checkbox"
-                   ng-model="application.attended"
-                   ng-click="onAttendedClicked(application)"
+                   ng-model="attendance.attended"
+                   ng-click="onAttendedClicked(attendance)"
                    id="{{ 'approvedApplicationsCheckbox-' + $index }}">
             <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
           </div>
