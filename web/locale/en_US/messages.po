@@ -381,6 +381,9 @@ msgstr "Logout"
 msgid "Create a Dojo"
 msgstr "Create a Dojo"
 
+msgid "Adult Forums"
+msgstr "Adult Forums"
+
 msgid "User Invitation"
 msgstr "User Invitation"
 

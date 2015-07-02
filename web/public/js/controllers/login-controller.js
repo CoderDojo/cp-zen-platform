@@ -1,10 +1,13 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService) {
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
-  
+  if ($location.search().redirect) {
+    $scope.redirect = $location.search().redirect;
+  }
+
   var msgmap = {
     'unknown': $translate.instant('login.msgmap.unknown'),
     'user-not-found': $translate.instant('login.msgmap.user-not-found'),
@@ -32,6 +35,17 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
     $scope.currentView = view
   }
 
+  // This redirect function is not strictly to do with login, just lives here for convenience.
+  // Gets the redirect link to the Adult Forum from the server side 'webclient' config.
+  $scope.adultForums = function() {
+    cdConfigService.get('adultforum', function(kv) {
+      var url = kv.adultforum;
+      $window.location.href = url;
+    }, function(err) {
+         console.error('Error getting config: ', err);
+       });
+  }
+
   $scope.doRegister = function(user) {
     auth.register(user, function(data) {
       if(data.ok) {
@@ -45,7 +59,7 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
         alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
       }
     }, function() {
-      
+
     });
   }
 
@@ -59,7 +73,11 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
 
     auth.login($scope.login,
       function(data){
-        $window.location.href = '/dashboard' + $scope.referer;
+        if ($scope.redirect) {
+          $window.location.href = $scope.redirect;
+        } else {
+          $window.location.href = '/dashboard' + $scope.referer;
+        }
       },
       function(){
         $scope.errorMessage = $translate.instant('Invalid email or password');
