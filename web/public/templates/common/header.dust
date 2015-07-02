@@ -1,24 +1,7 @@
 {>"common/global-menu" /}
 <header id="header" ng-controller="login">
-    <div class="container">
+    <div class="container header-container" ng-controller="header">
         {>"common/content-header" /}
-        <div ng-if="user" class="col-lg-3 cd-user-name-container">
-            <span class="" style="color:white"><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
-            <span class=""><a ng-click="adultForums()" style="color:white">{@i18n key="Adult Forums"/}</a> | </span>
-            <span class="" ng-click="logout()"><a href="" style="color:white">{@i18n key="Logout"/}</a></span>
-        </div>
-        <div ng-if="!user" class="col-lg-3 cd-user-name-container">
-            <a ui-sref="login"><span class="cd-logout">{@i18n key="Login"/}</span></a>
-            <a ng-click="adultForums()"><span class="cd-logout">{@i18n key="Adult Forums"/} |</span></a>
-            <a ui-sref="start-dojo-wizard"><span class="cd-logout">{@i18n key="Create a Dojo"/} |</span></a>
-        </div>
-            <div class="language-selector" ng-controller="languageController">
-                <select name="language" 
-                    class="form-control" 
-                    ng-model="selectedLanguage"
-                    ng-change="updateLocale()" 
-                    ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
-            </div>
     </div>
     <alert-banner></alert-banner>
 </header>
