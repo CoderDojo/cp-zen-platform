@@ -213,6 +213,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     function setupStep1() {
       $scope.hideIndicators = true;
       currentStepInt = 0;
+      cdUsersService.getInitUserTypes(function (response) {
+        $scope.initUserTypes = response;
+      });
       $scope.doRegister = function(user) {
         auth.register(user, function(data) {
           if(data.ok) {
