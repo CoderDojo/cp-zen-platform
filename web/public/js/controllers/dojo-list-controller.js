@@ -272,11 +272,13 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
     $scope.countrySelected = true;
     $scope.stateSelected = false;
     var countrySelected = marker.country;
-    Geocoder.boundsForCountry('country:' + countrySelected).then(function (data) {
-      $scope.model.map.fitBounds(data);
-      $scope.model.map.setZoom(5);
-      $scope.currentZoom = $scope.model.map.getZoom();
-    });
+    var internalPosition = marker.internalPosition ? marker.internalPosition : null;
+
+    if (internalPosition) {
+      $scope.model.map.setCenter({lat: internalPosition.A, lng: internalPosition.F});
+    }
+    $scope.model.map.setZoom(4);
+    $scope.currentZoom = $scope.model.map.getZoom();
 
     cdDojoService.list({alpha2: countrySelected}, function (response) {
       $scope.countryName = Object.keys(response)[0];
@@ -456,12 +458,6 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         return;
       }
 
-      $scope.currentLevels.push({
-        text: $scope.search.dojo,
-        type: 'search',
-        style: 'active'
-      });
-
       $scope.search.dojo = '';
 
       var location = results[0].geometry.location;
@@ -603,9 +599,9 @@ function cdDojoListCtrl($window, $stateParams, $scope, $location, cdDojoService,
         $scope.model.map.setZoom(3);
       }
 
-      if ($scope.model.map.getZoom() === 5 && $scope.currentLevels.length > 3) {
+      if ($scope.model.map.getZoom() === 4 && $scope.currentLevels.length > 3) {
         $scope.resetMap('country', $scope.currentLevels[2].text);
-        $scope.model.map.setZoom(5);
+        $scope.model.map.setZoom(4);
       }
 
       if ($scope.model.map.getZoom() === 8) {
