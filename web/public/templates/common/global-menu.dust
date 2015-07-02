@@ -7,7 +7,7 @@
         <span class="cdgm-button"><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></span>
         <span class="cdgm-button"><a ng-click="adultForums()">{@i18n key="Adult Forums"/}</a></span>
         <span ng-if="user" class="cdgm-right">
-            <span>{{ user.name }} | </span>
+             <span class="" style="color:white"><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
             <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">{@i18n key="Logout"/}</a></span>
         </span>
     </div>
