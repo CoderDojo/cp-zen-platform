@@ -98,6 +98,7 @@
     <script src="/components/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
     <script src="/components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js"></script>
     <script src="/components/angular-truncate/src/truncate.js"></script>
+    <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 
