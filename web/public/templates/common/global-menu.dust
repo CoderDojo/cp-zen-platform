@@ -5,9 +5,9 @@
         <span class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></span>
         <span class="cdgm-button"><a href="http://help.coderdojo.com/">FAQ</a></span>
         <span class="cdgm-button"><a href="http://coolestprojects.org/">CoolestProjects2015</a></span>
-        <span class="cdgm-right">
+        <span ng-if="user" class="cdgm-right">
             <span>{{ user.name }} | </span>
-            <span ng-click="logout()" class="cdgm-button"><a href="">Logout</a></span>
+            <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
         </span>
     </div>
 </div>
