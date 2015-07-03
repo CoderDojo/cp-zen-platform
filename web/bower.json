@@ -41,7 +41,7 @@
     "messageformat": "0.1.8",
     "angular-translate": "2.7.0",
     "angular-translate-interpolation-messageformat": "2.7.0",
-    "angular-translate-loader-url": "2.7.0"
+    "angular-translate-loader-url": "2.7.0",
     "angular-recaptcha": "2.2.4"
   },
   "devDependencies": {
