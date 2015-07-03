@@ -33,9 +33,13 @@
           </div>
         </div>
         <span class="help-block"></span>
-        {{ recap.publicKey }}
-        <div vc-recaptcha key="recap.publicKey"></div>
-        <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">Register</button>
+        
+        <div class="row">
+          <div class="col-lg-6 col-md-offset-3">
+            <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary col-lg-6 col-lg-offset-3 register-btn" type="submit">Register</button>
       </form>
     </div>
   </div>

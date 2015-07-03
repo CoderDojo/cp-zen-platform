@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -209,6 +209,12 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.hideIndicators = true;
       currentStepInt = 0;
       $scope.doRegister = function(user) {
+      if(vcRecaptchaService.getResponse() === ""){
+        return alertService.showError("Please resolve the captcha");
+      }
+      
+      user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+
         auth.register(user, function(data) {
           if(data.ok) {
             auth.login(user, function(data) {
@@ -517,5 +523,5 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', startDojoWizardCtrl]);
 
