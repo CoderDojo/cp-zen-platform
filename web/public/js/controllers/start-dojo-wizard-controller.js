@@ -209,6 +209,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.hideIndicators = true;
       currentStepInt = 0;
       $scope.doRegister = function(user) {
+        // TODO - this isChampion a tmp hack until phase1 catchs up with master
+        user.isChampion = true;
         auth.register(user, function(data) {
           if(data.ok) {
             auth.login(user, function(data) {
@@ -515,4 +517,3 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
 angular.module('cpZenPlatform')
     .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', startDojoWizardCtrl]);
-
