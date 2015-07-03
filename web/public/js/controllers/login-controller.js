@@ -45,8 +45,8 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
           var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
           alertService.showAlert('There was a problem registering your account: ' + reason);
         }
-      }, function() {
-        
+      }, function(err) {
+        alertService.showError('An error occurred while registering account');
       });
     };
 
