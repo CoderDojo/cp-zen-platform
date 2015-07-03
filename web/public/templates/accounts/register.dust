@@ -2,7 +2,7 @@
 <div class="row">
   <div class="cp-login">
     <div id="main">
-      <script src=“https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit“ async defer></script>
+      <!-- <script src=“https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit“ async defer></script> -->
       <form name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form">
         <legend>Register</legend>
         <div class="row">
@@ -33,7 +33,6 @@
           </div>
         </div>
         <span class="help-block"></span>
-        <!-- <script src=“//www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit“ async defer></script> -->
         {{ recap.publicKey }}
         <div vc-recaptcha key="recap.publicKey"></div>
         <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">Register</button>
