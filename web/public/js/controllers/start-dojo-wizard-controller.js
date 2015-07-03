@@ -231,6 +231,14 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     //--Step Two:
     function setupStep2(subStep) {
+      var initialDate = new Date();
+      initialDate.setFullYear(initialDate.getFullYear()-18);
+      $scope.dobDateOptions = {
+          formatYear: 'yy',
+          startingDay: 1,
+          initDate: initialDate
+        };
+
       $scope.hideIndicators = false;
       currentStepInt = 1;
 
@@ -253,15 +261,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.championRegistrationFormVisible = true;
 
         $scope.champion = {};
-
-        $scope.initialDate = new Date();
-        $scope.initialDate.setFullYear($scope.initialDate.getFullYear()-18);
-
-        $scope.dateOptions = {
-          formatYear: 'yy',
-          startingDay: 1
-        };
-
+        
         $scope.picker = {opened: false};
 
         $scope.open = function ($event) {

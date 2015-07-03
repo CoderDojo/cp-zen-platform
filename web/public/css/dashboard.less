@@ -1,3 +1,6 @@
+@cd-light-blue: #2c9cfb;
+@cd-green: #61c93f;
+
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -132,11 +135,6 @@ label {
       padding: 5px;
       margin:10px;
     }
-    .wizardSlideableDiv {
-      border: 1px dashed rgb(66, 139, 202);
-      padding: 5px;
-      margin:10px;
-    }
   }
   .dojoWizardComplete {
     width:100%;
@@ -144,6 +142,16 @@ label {
     color:white;
     padding:10px;
     border-radius:5px;
+  }
+}
+
+#charterForm {
+  margin-top: 25px;
+  .checkbox {
+    label.validationMessage {
+      font-weight: bold;
+      margin-left: -25px;
+    }
   }
 }
 
@@ -174,11 +182,22 @@ label {
 
 #cd-charter-text {
 	width: 75%;
-  	min-width: 275px;
-  	margin: auto;
-  	input {
-  		margin-bottom:15px;
-  	}
+  min-width: 275px;
+  margin: auto;
+  input {
+  	margin-bottom:15px;
+  }
+  ul {
+    list-style-type: square;
+    li {
+      font-size: 15px;
+      color: @cd-green;
+      span {
+        font-size: 13px;
+        color: black;
+      }
+    }
+  }
 }
 
 .cd-dojo-list-container {
@@ -417,13 +436,13 @@ label {
     right: 0%;
   }
   .steps-indicator li.done a:before {
-    background-color: #61c93f;
+    background-color: @cd-green;
   }
   .steps-indicator li.current a:before {
-    background-color: #2c9cfb;
+    background-color: @cd-light-blue;
   }
   .start-dojo-wizard-step {
-    margin-bottom:50px;
+    margin-bottom:30px;
   }
 }
 
