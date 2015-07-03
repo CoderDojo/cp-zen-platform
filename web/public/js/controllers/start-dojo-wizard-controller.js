@@ -1,7 +1,7 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate, utilsService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -230,6 +230,20 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }, function() {
 
         });
+      }
+
+      $scope.validatePassword = function (password, email) {
+        var validationResult = utilsService.validatePassword(password, email);
+        if(!validationResult.valid) $scope.invalidPasswordMessage = $translate.instant(validationResult.msg);
+        return validationResult.valid;
+      }
+
+      $scope.matchesPassword = function(password, passwordConfirm) {
+        if(passwordConfirm !== password) {
+          $scope.invalidConfirmPasswordMessage = $translate.instant('Passwords do not match');
+          return false;
+        }
+        return true;
       }
 
       WizardHandler.wizard().goTo(0);
@@ -547,5 +561,5 @@ angular.module('cpZenPlatform')
     .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state',
       '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler',
       'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'cdUsersService', 'Geocoder',
-      'gmap', '$translate',startDojoWizardCtrl]);
+      'gmap', '$translate', 'utilsService', startDojoWizardCtrl]);
 
