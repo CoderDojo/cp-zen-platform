@@ -11,6 +11,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
                       'Dojo Listing'
                     ];
 
+    $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
+
     //Check if user has already started the wizard.
     auth.get_loggedin_user(function(user) {
       var currentPath = $location.path();
