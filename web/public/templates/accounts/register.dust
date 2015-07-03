@@ -2,7 +2,6 @@
 <div class="row">
   <div class="cp-login">
     <div id="main">
-
       <form name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form">
         <legend>Register</legend>
         <div class="row">
@@ -33,8 +32,13 @@
           </div>
         </div>
         <span class="help-block"></span>
-
-        <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">Register</button>
+        
+        <div class="row">
+          <div class="col-lg-6 col-md-offset-3">
+            <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary col-lg-6 col-lg-offset-3 register-btn" type="submit">Register</button>
       </form>
     </div>
   </div>
