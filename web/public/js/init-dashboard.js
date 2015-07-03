@@ -159,6 +159,15 @@
         }
       }
     ])
+    .config(function($intercomProvider) {
+      // Either include your app_id here or later on boot
+      $intercomProvider
+        .appID('z2ovnp7s');
+
+      // you can include the Intercom's script yourself or use the built in async loading feature
+      $intercomProvider
+        .asyncLoading(true)
+    })
     .config(['$httpProvider',
       function($httpProvider) {
         $httpProvider.interceptors.push('authHttpResponseInterceptor');
