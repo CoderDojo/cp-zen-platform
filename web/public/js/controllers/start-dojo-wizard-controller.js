@@ -254,6 +254,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
         $scope.champion = {};
 
+        $scope.initialDate = new Date();
+        $scope.initialDate.setFullYear($scope.initialDate.getFullYear()-18);
+
         $scope.dateOptions = {
           formatYear: 'yy',
           startingDay: 1
