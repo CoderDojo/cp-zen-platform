@@ -212,6 +212,9 @@ label {
     }
   }
   #createChampionForm {
+    .preGameWarning {
+      padding: 15px;
+    }
     .form-group {
       margin-top:15px;
     }
@@ -219,10 +222,11 @@ label {
       width:100%;
     }
     label {
-      text-align:left;
+      text-align:right;
+      padding-top: 5px;
     }
     textarea {
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
     legend {
       margin-top:20px;
@@ -237,7 +241,7 @@ label {
       margin-bottom:15px;
     }
     .registerButton {
-      margin-top:15px;
+      margin-top: 30px;
     }
   }
   #createDojoForm {
@@ -402,8 +406,25 @@ label {
   margin-left: 10px;
 }
 
-.start-dojo-wizard-step {
-  margin-bottom:50px;
+.start-dojo-wizard {
+  .steps-indicator {
+    margin: 20px 0 0 0;
+    height: 30px;
+    position: relative;
+  }
+  .steps-indicator.steps-4:before {
+    left: 0%;
+    right: 0%;
+  }
+  .steps-indicator li.done a:before {
+    background-color: #61c93f;
+  }
+  .steps-indicator li.current a:before {
+    background-color: #2c9cfb;
+  }
+  .start-dojo-wizard-step {
+    margin-bottom:50px;
+  }
 }
 
 .cd-grid-table {
