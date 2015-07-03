@@ -1257,3 +1257,8 @@ msgstr "Select event date..."
 msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
 msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
 
+msgid "Password must be a minimum of 8 characters in length and contain at least one number or punctuation character"
+msgstr "Password must be a minimum of 8 characters in length and contain at least one number or punctuation character"
+
+msgid "Password must not be the same as your email address"
+msgstr "Password must not be the same as your email address"

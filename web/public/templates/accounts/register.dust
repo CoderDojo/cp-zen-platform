@@ -16,18 +16,19 @@
           <input type="email" class="form-control" name="emailAddress" required required-message="'{@i18n key="Email is empty"/}'" ng-model="registerUser.email" placeholder="{@i18n key="EMAIL"/}">
         </div>
       </div>
+
       <span class="help-block"></span>
       <div class="row">
         <div class="input-group col-lg-6 col-md-offset-3">
           <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" class="form-control" name="password" required required-message="'{@i18n key="Password is empty"/}'" ng-model="registerUser.password" placeholder="{@i18n key="PASSWORD"/}"/>
+          <input type="password" class="form-control" name="password" required required-message="'{@i18n key="Password is empty"/}'" ng-model="registerUser.password" placeholder="{@i18n key="PASSWORD"/}" validator="validatePassword(registerUser.password, registerUser.email)" invalid-message="invalidPasswordMessage"/>
         </div>
       </div>
       <span class="help-block"></span>
       <div class="row">
         <div class="input-group col-lg-6 col-md-offset-3">
           <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message= "'{@i18n key="Passwords do not match"/}'" validator="registerUser.password === passwordConfirm" required required-message="'{@i18n key="Confirm Password is empty"/}'"  validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
+          <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message="invalidConfirmPasswordMessage" validator="matchesPassword(registerUser.password, passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
         </div>
       </div>
       <span class="help-block"></span>

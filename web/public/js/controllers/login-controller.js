@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService) {
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;
@@ -112,6 +112,19 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
     window.location.href = '/'
   }
 
+  $scope.validatePassword = function (password, email) {
+    var validationResult = utilsService.validatePassword(password, email);
+    if(!validationResult.valid) $scope.invalidPasswordMessage = $translate.instant(validationResult.msg);
+    return validationResult.valid;
+  }
+
+  $scope.matchesPassword = function(password, passwordConfirm) {
+    if(passwordConfirm !== password) {
+      $scope.invalidConfirmPasswordMessage = $translate.instant('Passwords do not match');
+      return false;
+    }
+    return true;
+  }
 
   auth.instance(function(data){
     if( data.user ) {
