@@ -39,8 +39,7 @@
                      is-open="picker.opened"
                      min-date="'1900-01-01'"
                      max-date="today"
-                     init-date="initialDate"
-                     datepicker-options="dateOptions"
+                     datepicker-options="dobDateOptions"
                      ng-click="open($event)" />
 
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
@@ -151,10 +150,11 @@
             </div>
           </div>
         </div>
+
         <div class="row">
-        <div class="col-lg-2">
-          <button class="btn btn-primary registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
-        </div>
+          <div class="col-lg-2 col-lg-offset-1">
+            <button class="btn btn-primary registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
+          </div>
         </div>
       </div>
 
