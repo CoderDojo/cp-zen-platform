@@ -273,7 +273,8 @@
                 }, function(err){
                   return {err: err};
                 });
-            }, hiddenFields: function(cdUsersService){
+            },
+            hiddenFields: function(cdUsersService){
               return cdUsersService.getHiddenFieldsPromise().then(function(data){
                 return {data: data};
               }, function(err){
