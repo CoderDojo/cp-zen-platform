@@ -20,24 +20,14 @@
     return dates;
   }
 
-  function goToManageDojoEvents($state, dojoId) {
+  function goToManageDojoEvents($state, usSpinnerService, dojoId) {
+    usSpinnerService.stop('create-event-spinner');
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
     });
   }
 
-  function dojoEventFormCtrl(
-    $scope,
-    $stateParams,
-    $state,
-    cdEventsService,
-    cdDojoService,
-    cdUsersService,
-    cdCountriesService,
-    auth,
-    $translate,
-    cdLanguagesService
-  ) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
 
@@ -150,6 +140,7 @@
     };
 
     $scope.submit = function($event, eventInfo, publish) {
+      usSpinnerService.spin('create-event-spinner');
       $event.preventDefault();
       $event.stopPropagation();
 
@@ -177,7 +168,7 @@
       
       cdEventsService.saveEvent(
         eventInfo,
-        goToManageDojoEvents.bind(null, $state, dojoId),
+        goToManageDojoEvents.bind(null, $state, usSpinnerService, dojoId),
         console.error.bind(console)
       );
     };
@@ -315,6 +306,7 @@
       'auth',
       '$translate',
       'cdLanguagesService',
+      'usSpinnerService',
       dojoEventFormCtrl
     ]);
 })();

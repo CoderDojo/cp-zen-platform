@@ -1262,3 +1262,7 @@ msgstr "Password must be a minimum of 8 characters in length and contain at leas
 
 msgid "Password must not be the same as your email address"
 msgstr "Password must not be the same as your email address"
+
+msgid "Add a user type"
+msgstr "Add a user type"
+

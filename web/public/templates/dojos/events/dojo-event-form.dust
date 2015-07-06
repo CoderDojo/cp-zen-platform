@@ -1,7 +1,5 @@
 <div class="cd-dashboard">
-
   <form name="eventForm" novalidate>
-
     <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
     <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
 
@@ -151,11 +149,17 @@
       </tags-input>
     </div>
 
+    <div class="row">
+      <div class="col-lg-12">
+         <span spinner-key="create-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+      </div>
+    </div>
+    
     <div class="btn-toolbar">
       <button type="button" class="btn btn-default" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
       <button type="button" class="btn btn-primary" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo)">{@i18n key="Save"/}</button>
       <button type="button" class="btn btn-success" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo, true)">{@i18n key="Publish"/}</button>
-    </div>
+    </div> 
   </form>
 
 </div>
