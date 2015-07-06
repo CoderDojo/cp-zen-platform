@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('intercomService', function($rootScope, $localStorage, $window, cdUsersService, alertService) {
+angular.module('cpZenPlatform').factory('intercomService', function ($rootScope, $localStorage, $window, cdUsersService, alertService) {
 
   var intercomService = {};
 
@@ -9,23 +9,22 @@ angular.module('cpZenPlatform').factory('intercomService', function($rootScope, 
   };
 
   function userIsChampion(cb) {
-    cdUsersService.isChampion($rootScope.user.id, function(res){
-      return cb(res);
-    }, function(err) {
-      alertService.showError(
-        'An error has occurred while checking user: <br /> '+
-        (err.error || JSON.stringify(err))
-      );
+    cdUsersService.isChampion($rootScope.user.id, cb,
+      function (err) {
+        alertService.showError(
+          'An error has occurred while checking user: <br /> ' +
+          (err.error || JSON.stringify(err))
+        );
 
-      return cb(err);
-    })
+        return cb(err);
+      })
   }
 
-  function bootIntercom(dojos){
+  function bootIntercom(dojos) {
     var dojoIds = null;
     $localStorage.dojoIds = null;
 
-    if(dojos){
+    if (dojos) {
       dojoIds = _.pluck(dojos.records, 'id').toString();
       $localStorage.dojoIds = dojoIds;
     }
@@ -45,16 +44,16 @@ angular.module('cpZenPlatform').factory('intercomService', function($rootScope, 
     $window.Intercom('boot', userData);
   }
 
-  intercomService.updateIntercom = function(dojoId){
+  intercomService.updateIntercom = function (dojoId) {
     $localStorage.dojoIds = $localStorage.dojoIds.concat(',', dojoId);
     $window.Intercom('update', {"dojos": $localStorage.dojoIds});
   }
 
-  intercomService.shutDown = function(){
+  intercomService.shutDown = function () {
     $window.Intercom('shutdown');
   }
 
-  intercomService.InitIntercom = function() {
+  intercomService.InitIntercom = function () {
     if ($rootScope.user) {
       if (userIsCDFAdmin()) {
         bootIntercom();
