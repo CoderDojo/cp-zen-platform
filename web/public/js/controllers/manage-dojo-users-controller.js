@@ -10,14 +10,15 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.selectedUserPermissions = {};
   $scope.canUpdateUserPermissions = false;
   $scope.canRemoveUsers = false;
+  $scope.userPermissionsModel = {};
 
   auth.get_loggedin_user(function (user) {
     currentUser = user;
     //Updating user permissions and user types require the same permissions.
     //Remove users also requires the same permissions,
     //therefore we can check if the user can update user permissions & delete users by checking the result from the
-    //canUpdateUserTypes method.
-    canUpdateUserTypes(function (result) {
+    //canUpdateUser method.
+    canUpdateUser(function (result) {
       $scope.canUpdateUserPermissions = result;
       $scope.canRemoveUsers = result;
     });
@@ -69,13 +70,18 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     cdDojoService.getUsersDojos(query, function (response) {
       usersDojosLink = response;
     });
-
+    //TODO: search for dojo users using elastic search.
     cdDojoService.loadDojoUsers(query, function (response) {
       _.each(response, function (user) {
         var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
         user.types = thisUsersDojoLink.userTypes;
         user.permissions = thisUsersDojoLink.userPermissions;
         $scope.selectedUserPermissions[user.id] = user.permissions;
+        $scope.userPermissionsModel[user.id] = {};
+        _.each(user.permissions, function (permission) {
+          $scope.userPermissionsModel[user.id][permission.name] = true;
+        });
+
       });
       $scope.users = response;
       $scope.totalItems = response.length;
@@ -84,51 +90,49 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
   };
 
-  $scope.userHasPermission = function(user, permission) {
-    var permissionFound = _.findWhere($scope.selectedUserPermissions[user.id], {name:permission.name});
-    if(permissionFound) return true;
-    return false;
-  }
-
   $scope.updateUserPermissions = function(user, permission) {
-    if($scope.canUpdateUserPermissions) {
-      var query = {dojoId:dojoId};
-      delete permission.$$hashKey;
-      var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
-      if(!$scope.userHasPermission(user, permission)) {
-        //Add to user permissions
-        if(!userDojoLink.userPermissions) userDojoLink.userPermissions = [];
-        userDojoLink.userPermissions.push(permission);
-        //Save to db
-        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
-        cdDojoService.saveUsersDojos(userDojoLink, function (response) {
-
-        }, function (err) {
-          alertService.showError($translate.instant('Error saving permission') + ' ' + err);
-        });
+    var hasPermission = false;
+    canUpdateUser(function (result) {
+      hasPermission = result;
+      if (hasPermission) {
+        var query = {dojoId:dojoId};
+        delete permission.$$hashKey;
+        var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+        if($scope.userPermissionsModel[user.id][permission.name]) {
+          //Add to user permissions
+          if(!userDojoLink.userPermissions) userDojoLink.userPermissions = [];
+          userDojoLink.userPermissions.push(permission);
+          //Save to db
+          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+          cdDojoService.saveUsersDojos(userDojoLink, null, function (err) {
+            alertService.showError($translate.instant('Error saving permission') + ' ' + err);
+            //Revert checkbox 
+            $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
+          });
+        } else {
+          //Remove from user permissions
+          var indexToRemove;
+          _.find(user.permissions, function(userPermission, userPermissionIndex){
+            if(_.isEqual(userPermission, permission)) {
+              return indexToRemove = userPermissionIndex;
+            }
+          });
+          user.permissions.splice(indexToRemove, 1);
+          userDojoLink.userPermissions = user.permissions;
+          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+          //Save to db
+          cdDojoService.saveUsersDojos(userDojoLink, null, function (err) {
+            alertService.showError($translate.instant('Error removing permission') + ' ' +err);
+            //Revert checkbox 
+            $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
+          });
+        }
       } else {
-        //Remove from user permissions
-        var indexToRemove;
-        _.find(user.permissions, function(userPermission, userPermissionIndex){
-          if(_.isEqual(userPermission, permission)) {
-            return indexToRemove = userPermissionIndex;
-          }
-        });
-        user.permissions.splice(indexToRemove, 1);
-        userDojoLink.userPermissions = user.permissions;
-        if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
-        //Save to db
-        cdDojoService.saveUsersDojos(userDojoLink, function (response) {
-
-        }, function (err) {
-          alertService.showError($translate.instant('Error removing permission') + ' ' +err);
-        });
+        alertService.showAlert($translate.instant('You do not have permission to update user permissions'));
+        //Revert checkbox 
+        $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
       }
-    } else {
-      alertService.showAlert($translate.instant('You do not have permission to update user permissions'));
-    }
-
-
+    });
   }
 
   $scope.loadUserTypes = function(query) {
@@ -138,7 +142,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
   $scope.pushChangedUser = function(user, method, $tag) {
     var hasPermission = false;
-    canUpdateUserTypes(function (result) {
+    canUpdateUser(function (result) {
       hasPermission = result;
 
       if(hasPermission) {
@@ -159,7 +163,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     });
   }
 
-  function canUpdateUserTypes(cb) {
+  function canUpdateUser(cb) {
     //Can update user types if:
     // - Current user is champion
     // - Current user is Dojo Admin

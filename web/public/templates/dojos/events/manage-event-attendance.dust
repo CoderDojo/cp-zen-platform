@@ -1,59 +1,60 @@
-<h3>Manage Attendance for: {{ event.name }}</h3>
+<div ng-if="isTicketingAdmin">
+  <h3>Manage Attendance for: {{ event.name }}</h3>
 
-<div class="col-lg-3">
-  <ui-select name="eventDateAttendance" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
-    <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
-    <ui-select-choices repeat="eventDate in event.dates">
-      <span ng-bind-html="eventDate.text"></span>
-    </ui-select-choices>
-  </ui-select>
-</div>
-  
-<div class="row table-responsive">
-  <table id="eventApplicationsTable" class="table cd-grid-table">
-    <thead>
-      <tr>
-        <th>
-          <span ng-click="sort.toggleDirection()"
-                class="pointer sortable glyphicon"
-                ng-class="(sort.direction === 'asc') ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'">
-            &nbsp;
-          </span>{@i18n key="Name"/}
-        </th>
-        <th>{@i18n key="Age"/}</th>
-        <th>{@i18n key="Parents/Guardians"/}</th>
-        <th>{@i18n key="Attended"/}</th>
-      </tr>
-    </thead>
+  <div class="col-lg-3">
+    <ui-select name="eventDateAttendance" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
+      <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
+      <ui-select-choices repeat="eventDate in event.dates">
+        <span ng-bind-html="eventDate.text"></span>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+    
+  <div class="row table-responsive">
+    <table id="eventApplicationsTable" class="table cd-grid-table">
+      <thead>
+        <tr>
+          <th>
+            <span ng-click="sort.toggleDirection()"
+                  class="pointer sortable glyphicon"
+                  ng-class="(sort.direction === 'asc') ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'">
+              &nbsp;
+            </span>{@i18n key="Name"/}
+          </th>
+          <th>{@i18n key="Age"/}</th>
+          <th>{@i18n key="Parents/Guardians"/}</th>
+          <th>{@i18n key="Attended"/}</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr ng-repeat="attendance in attendanceRecords">
-        <td>{{ attendance.name }}</td>
-        <td>{{ attendance.age }}</td>
-        <td>
-          <div ng-repeat="parent in attendance.parents">
-            <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
-          </div>
-        </td>
-        <td>
-          <div class="checkbox">
-            <input type="checkbox"
-                   ng-model="attendance.attended"
-                   ng-click="onAttendedClicked(attendance)"
-                   id="{{ 'approvedApplicationsCheckbox-' + $index }}">
-            <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        <tr ng-repeat="attendance in attendanceRecords">
+          <td>{{ attendance.name }}</td>
+          <td>{{ attendance.age }}</td>
+          <td>
+            <div ng-repeat="parent in attendance.parents">
+              <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
+            </div>
+          </td>
+          <td>
+            <div class="checkbox">
+              <input type="checkbox"
+                     ng-model="attendance.attended"
+                     ng-click="onAttendedClicked(attendance)"
+                     id="{{ 'approvedApplicationsCheckbox-' + $index }}">
+              <label for="{{ 'approvedApplicationsCheckbox-' + $index }}"></label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-  <div class="text-center" ng-if="pagination.totalItems > pagination.itemsPerPage">
-    <pagination total-items="pagination.totalItems"
-                ng-change="pagination.change()"
-                items-per-page="pagination.itemsPerPage"
-                ng-model="pagination.currentPage">
-    </pagination>
+    <div class="text-center" ng-if="pagination.totalItems > pagination.itemsPerPage">
+      <pagination total-items="pagination.totalItems"
+                  ng-change="pagination.change()"
+                  items-per-page="pagination.itemsPerPage"
+                  ng-model="pagination.currentPage">
+      </pagination>
+    </div>
   </div>
 </div>
-
