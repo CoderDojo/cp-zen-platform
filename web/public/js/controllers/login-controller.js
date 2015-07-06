@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService' ,loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
 
   function loginCtrl($state, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
     var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
@@ -87,9 +87,10 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     $scope.logout = function(){
       auth.logout(function(data){
-        $window.location.href = '/';
-      });
-    };
+        $window.Intercom('shutdown');
+        $window.location.href = '/'
+      })
+    }
 
     $scope.goHome = function() {
       window.location.href = '/'

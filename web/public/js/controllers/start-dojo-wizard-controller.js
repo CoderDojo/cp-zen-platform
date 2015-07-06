@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, $localStorage, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -462,6 +462,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
+
+              $localStorage.dojoIds = $localStorage.dojoIds.concat(',', response.dojo_id);
+              $window.Intercom('update', {"dojos": $localStorage.dojoIds});
+
               $state.go('home',
               { bannerType:'success',
                 bannerMessage: 'Thank you for submitting your dojo listing. \
@@ -525,5 +529,5 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', startDojoWizardCtrl]);
 

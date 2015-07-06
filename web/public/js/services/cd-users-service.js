@@ -14,6 +14,9 @@ function cdUsersService(cdApi){
     },
     getUsersByEmails: function(email, win, fail) {
       cdApi.post('users/emails', {email: email}, win, fail || topfail);
+    },
+    isChampion: function(id, win, fail){
+      cdApi.post('users/isChampion', {id: id}, win, fail || topfail);
     }
   };
 }
