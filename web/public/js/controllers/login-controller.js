@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService', loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
+  function loginCtrl($state, $rootScope, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
     var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     var msgmap = {
       'unknown': 'Unable to perform your request at this time - please try again later.',
@@ -87,7 +87,6 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     $scope.logout = function(){
       auth.logout(function(data){
-        $window.Intercom('shutdown');
         $window.location.href = '/'
       })
     }
@@ -100,6 +99,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     auth.instance(function(data){
       if( data.user ) {
         $scope.user = data.user;
+        $rootScope.user = data.user;
         if (path==='/') {
           $window.location.href = 'dashboard';
         }
