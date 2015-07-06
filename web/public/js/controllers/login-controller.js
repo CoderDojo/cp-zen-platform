@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService', loginCtrl]);
 
   function loginCtrl($state, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
     var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
@@ -31,7 +31,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
       if(vcRecaptchaService.getResponse() === ""){
         return alertService.showError("Please resolve the captcha");
       }
-      
+
       user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
       auth.register(user, function(data) {
