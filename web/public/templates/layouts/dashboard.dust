@@ -121,6 +121,7 @@
     <script src="/js/services/table-utils.js"></script>
     <script src="/js/services/cd-users-service.js"></script>
     <script src="/js/services/cd-agreements-service.js"></script>
+    <script src="/js/services/intercom-service.js"></script>
 
     <script src="/js/directives/country-select.js"></script>
 

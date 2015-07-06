@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, $localStorage, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, $localStorage, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService, intercomService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -214,7 +214,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       if(vcRecaptchaService.getResponse() === ""){
         return alertService.showError("Please resolve the captcha");
       }
-      
+
       user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
         auth.register(user, function(data) {
@@ -269,7 +269,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.championRegistrationFormVisible = true;
 
         $scope.champion = {};
-        
+
         $scope.picker = {opened: false};
 
         $scope.open = function ($event) {
@@ -291,6 +291,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           dojoLead.completed = false;
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             $scope.showCharterAgreement();
+            intercomService.InitIntercom();
           });
         }
 
@@ -463,8 +464,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
 
-              $localStorage.dojoIds = $localStorage.dojoIds.concat(',', response.dojo_id);
-              $window.Intercom('update', {"dojos": $localStorage.dojoIds});
+              //update intercom champion dojos
+              intercomService.updateIntercom(response.dojo_id);
 
               $state.go('home',
               { bannerType:'success',
@@ -529,5 +530,5 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', startDojoWizardCtrl]);
+    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
 
