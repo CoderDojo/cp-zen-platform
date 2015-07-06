@@ -238,6 +238,13 @@
                 }, function(err){
                   return {err: err};
                 });
+            },
+            hiddenFields: function(cdUsersService){
+              return cdUsersService.getHiddenFieldsPromise().then(function(data){
+                return {data: data};
+              }, function(err){
+                return {err: err};
+              });
             }
           },
           controller: 'user-profile-controller'
