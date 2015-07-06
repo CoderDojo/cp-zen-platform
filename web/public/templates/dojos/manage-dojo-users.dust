@@ -24,28 +24,28 @@
         <thead>
           <tr>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Email"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Email"/}</th>
             <th class="ten-percent-width">{@i18n key="Profile"/}</th>
-            <th class="ten-percent-width">{@i18n key="User Types"/}</th>
-            <th class="ten-percent-width">{@i18n key="User Permissions"/}</th>
-            <th class="ten-percent-width"></th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width"></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="user in users">
             <td>{{ user.name }}</td>
-            <td><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
+            <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
             <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View Profile"/}</a></td>
-            <td><tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
-            <td>
+            <td ng-if="canUpdateUserPermissions"><tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
+            <td ng-if="canUpdateUserPermissions">
               <div class="checkbox" ng-repeat="userPermission in userPermissions">
-                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-checked="userHasPermission(user, userPermission)" ng-click="updateUserPermissions(user, userPermission)">
+                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-model="userPermissionsModel[user.id][userPermission.name]" ng-click="updateUserPermissions(user, userPermission)">
                 <label for="{{ userPermission.name }}-{{ user.id }}">
                     {{ userPermission.title }}
                 </label>
               </div>
             </td>
-            <td><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove User"/}</button></td>
+            <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove User"/}</button></td>
           </tr>
         </tbody>
       </table>

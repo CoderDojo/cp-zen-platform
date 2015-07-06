@@ -1,12 +1,21 @@
 (function() {
   'use strict';
 
-  function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate) {
+  function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojo_id: $scope.dojoId};
     $scope.itemsPerPage = 10;
     $scope.pagination = {};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
+
+    auth.get_loggedin_user(function (user) {
+      cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
+        var userDojo = response[0];
+        $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+          return permission.name === 'ticketing-admin';
+        });
+      });
+    });
 
     cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
@@ -145,7 +154,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', '$location', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', '$location', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', manageDojoEventsCtrl]);
 
 })();
 

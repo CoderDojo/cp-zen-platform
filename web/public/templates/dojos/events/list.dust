@@ -1,4 +1,5 @@
 <div class="cd-dashboard">
+  <a name="events"></a>
   <div class="row">
     <div class="my-dojos">
       <legend>{@i18n key="Events"/}</legend>

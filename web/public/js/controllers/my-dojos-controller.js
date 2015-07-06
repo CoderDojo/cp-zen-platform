@@ -79,6 +79,14 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
     });
   }
 
+  function getUsersDojos(query, cb) {
+    cdDojoService.getUsersDojos(query, function (response) {
+      return cb(null, response);
+    }, function (err) {
+      return cb(err);
+    });
+  }
+
   $scope.loadPage = function(currentUser, resetFlag, cb){
     cb = cb || function(){};
 
@@ -95,36 +103,49 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
     };
 
     cdDojoService.myDojos(search, currentUser).then(function(result) {
-      _.each(result.records, function (dojo) {
-        dojo.country = dojo.country.alpha2.toLowerCase();
-        var path = dojo.urlSlug.split('/');
-        path.splice(0, 1);
-        path = path.join('/');
-        dojo.path = path;
-        canDeleteDojo(dojo, function (result) {
-          dojo.canDelete$ = result;
+      async.each(result.records, function (dojo, cb) {
+          var query = {userId: currentUser.id, dojoId: dojo.id};
+          getUsersDojos(query, function (err, response) {
+            if(err) return cb(err);
+            var userDojo = response[0];
+            var isChampion = _.contains(userDojo.userTypes, 'champion');
+            var isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+              return permission.name === 'ticketing-admin';
+            });
+            dojo.isChampion = isChampion;
+            dojo.isTicketingAdmin = isTicketingAdmin;
+            dojo.country = dojo.country.alpha2.toLowerCase();
+            var path = dojo.urlSlug.split('/');
+            path.splice(0, 1);
+            path = path.join('/');
+            dojo.path = path;
+            canDeleteDojo(dojo, function (result) {
+              dojo.canDelete$ = result;
+            });
+            return cb();
         });
-      });
-      $scope.myDojos = result.records;
-      $scope.totalItems = result.total;
+      }, function (err) {
+        $scope.myDojos = result.records;
+        $scope.totalItems = result.total;
 
-      cdDojoService.uncompletedDojos(function(response){
-        if(response.length > 0){
-          var uncompletedDojo = response[0];
-          AlertBanner.publish({
-            type: 'info',
-            message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
-            autoClose: false,
-            onOpen: function() {
-              angular.element('.a-no-float').on('click', function(e){
-                if(angular.element('.alert-message').hasClass('active')){
-                  angular.element('.alert-message').removeClass('active');
-                }
-              });
-            }
-          });
-        }
-        return cb();
+        cdDojoService.uncompletedDojos(function(response){
+          if(response.length > 0){
+            var uncompletedDojo = response[0];
+            AlertBanner.publish({
+              type: 'info',
+              message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
+              autoClose: false,
+              onOpen: function() {
+                angular.element('.a-no-float').on('click', function(e){
+                  if(angular.element('.alert-message').hasClass('active')){
+                    angular.element('.alert-message').removeClass('active');
+                  }
+                });
+              }
+            });
+          }
+          return cb();
+        });
       });
     }, function(err) {
       alertService.showError(
