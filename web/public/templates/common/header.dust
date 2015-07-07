@@ -1,4 +1,6 @@
-{>"common/global-menu" /}
+<div class="navbar navbar-global" role="navigation">
+  {>"common/global-menu" /}
+</div>
 <header id="header" ng-controller="login">
     <div class="container header-container" ng-controller="header">
         {>"common/content-header" /}
