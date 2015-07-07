@@ -4,8 +4,8 @@
     <form name="setupYourDojoForm" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
       <accordion close-others="false">
         <div class="panel-group">
-          <div ng-repeat="step in steps" class="panel panel-default ng-isolate-scope pointer" ng-click="step.open = !step.open" ng-init="step.id = $index">
-            <div class="panel-heading cd-color-{{ step.id + 1 }}">
+          <div ng-repeat="step in steps" class="panel panel-default ng-isolate-scope" ng-init="step.id = $index">
+            <div class="panel-heading cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
               <h4 class="panel-title">
                 <span class="pointer">{{ step.title }}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i></span>
               </h4>
