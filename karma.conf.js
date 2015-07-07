@@ -40,6 +40,7 @@ module.exports = function(config) {
             './web/public/components/angular-sb-date-select/src/sb-date-select.js',
             './web/public/components/angular-alert-banner/dist/angular-alert-banner.js',
             './web/public/components/angular-translate-loader-url/angular-translate-loader-url.js',
+            './web/public/components/angular-recaptcha/release/angular-recaptcha.min.js',
             './lib/auth/public/auth-front.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',

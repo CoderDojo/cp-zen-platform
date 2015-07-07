@@ -1,3 +1,6 @@
+@cd-light-blue: #2c9cfb;
+@cd-green: #61c93f;
+
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -38,7 +41,7 @@ ul {
   box-shadow: 0 0 4px #bbbbbb;
   -moz-box-shadow: 0 0 4px #bbbbbb;
   -webkit-box-shadow: 0 0 4px #bbbbbb;
-  min-height: 350px;
+  min-height: 450px;
   margin:0 auto;
   width:80%;
   margin-top:80px;
@@ -53,6 +56,9 @@ ul {
       width: 261px;
       padding: 35px 32px 45px;
     }
+  }
+  .register-btn {
+    margin-top: 30px;
   }
 }
 
@@ -132,11 +138,6 @@ label {
       padding: 5px;
       margin:10px;
     }
-    .wizardSlideableDiv {
-      border: 1px dashed rgb(66, 139, 202);
-      padding: 5px;
-      margin:10px;
-    }
   }
   .dojoWizardComplete {
     width:100%;
@@ -144,6 +145,16 @@ label {
     color:white;
     padding:10px;
     border-radius:5px;
+  }
+}
+
+#charterForm {
+  margin-top: 25px;
+  .checkbox {
+    label.validationMessage {
+      font-weight: bold;
+      margin-left: -25px;
+    }
   }
 }
 
@@ -174,11 +185,22 @@ label {
 
 #cd-charter-text {
 	width: 75%;
-  	min-width: 275px;
-  	margin: auto;
-  	input {
-  		margin-bottom:15px;
-  	}
+  min-width: 275px;
+  margin: auto;
+  input {
+  	margin-bottom:15px;
+  }
+  ul {
+    list-style-type: square;
+    li {
+      font-size: 15px;
+      color: @cd-green;
+      span {
+        font-size: 13px;
+        color: black;
+      }
+    }
+  }
 }
 
 .cd-dojo-list-container {
@@ -212,6 +234,9 @@ label {
     }
   }
   #createChampionForm {
+    .preGameWarning {
+      padding: 15px;
+    }
     .form-group {
       margin-top:15px;
     }
@@ -219,10 +244,11 @@ label {
       width:100%;
     }
     label {
-      text-align:left;
+      text-align:right;
+      padding-top: 5px;
     }
     textarea {
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
     legend {
       margin-top:20px;
@@ -237,7 +263,7 @@ label {
       margin-bottom:15px;
     }
     .registerButton {
-      margin-top:15px;
+      margin-top: 30px;
     }
   }
   #createDojoForm {
@@ -402,8 +428,25 @@ label {
   margin-left: 10px;
 }
 
-.start-dojo-wizard-step {
-  margin-bottom:50px;
+.start-dojo-wizard {
+  .steps-indicator {
+    margin: 20px 0 0 0;
+    height: 30px;
+    position: relative;
+  }
+  .steps-indicator.steps-4:before {
+    left: 0%;
+    right: 0%;
+  }
+  .steps-indicator li.done a:before {
+    background-color: @cd-green;
+  }
+  .steps-indicator li.current a:before {
+    background-color: @cd-light-blue;
+  }
+  .start-dojo-wizard-step {
+    margin-bottom:30px;
+  }
 }
 
 .cd-grid-table {

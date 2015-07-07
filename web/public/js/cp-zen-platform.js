@@ -17,7 +17,8 @@
       'mgo-angular-wizard',
       'checklist-model',
       'sbDateSelect',
-      'angular-alert-banner'
+      'angular-alert-banner',
+      'vcRecaptcha'
   ]);
 })();
 
