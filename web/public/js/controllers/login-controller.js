@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService' ,loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService', loginCtrl]);
 
-  function loginCtrl($state, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
+  function loginCtrl($state, $rootScope, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
     var referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     var msgmap = {
       'unknown': 'Unable to perform your request at this time - please try again later.',
@@ -31,7 +31,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
       if(vcRecaptchaService.getResponse() === ""){
         return alertService.showError("Please resolve the captcha");
       }
-      
+
       user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
       auth.register(user, function(data) {
@@ -45,8 +45,8 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
           var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
           alertService.showAlert('There was a problem registering your account: ' + reason);
         }
-      }, function() {
-        
+      }, function(err) {
+        alertService.showError('An error occurred while registering account');
       });
     };
 
@@ -87,9 +87,9 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
 
     $scope.logout = function(){
       auth.logout(function(data){
-        $window.location.href = '/';
-      });
-    };
+        $window.location.href = '/'
+      })
+    }
 
     $scope.goHome = function() {
       window.location.href = '/'
@@ -99,6 +99,7 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$locat
     auth.instance(function(data){
       if( data.user ) {
         $scope.user = data.user;
+        $rootScope.user = data.user;
         if (path==='/') {
           $window.location.href = 'dashboard';
         }
