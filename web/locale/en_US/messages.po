@@ -1266,3 +1266,5 @@ msgstr "Password must not be the same as your email address"
 msgid "Add a user type"
 msgstr "Add a user type"
 
+msgid "Background Checked"
+msgstr "Background Checked"
