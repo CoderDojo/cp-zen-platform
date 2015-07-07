@@ -1,6 +1,6 @@
 
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
-  <i class="fa fa-navicon fa-2x"></i>
+<button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
+  <i class="fa fa-globe fa-2x"></i>
 </button>
 
 <div ng-controller="login" class="cdgm-container">

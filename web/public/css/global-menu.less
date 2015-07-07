@@ -74,10 +74,14 @@
   min-height: 0px;
   margin-bottom: 20px;
   border: none;
-  //background-color: transparent;
+  background-color: transparent;
 }
 
-.navbar-toggle {
+.global-toggle {
+  float: right;
+}
+
+.mainnav-toggle {
   float: left;
 }
 
@@ -101,6 +105,31 @@
   .dl-menu li :hover {
     border-left: solid 4px;
     border-color: #fff;
+  }
+
+  .cd-header-button-group {
+    display: block;
+  }
+  .cd-header-button {
+    clear: both;
+    float: left;
+    width: 100%;
+    display: block;
+    vertical-align: top;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    line-height: 1.8em;
+    height: 2.6em;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .cd-active-tab {
+    border-style: solid;
+    border-width: thin;
+    border-color: #000;
+    color: #000;
   }
 
 }
