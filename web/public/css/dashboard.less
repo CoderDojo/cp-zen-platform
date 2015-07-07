@@ -119,17 +119,9 @@ label {
     }
     .validationMessage {
       position: relative;
-      width: auto;
+      width: 100%;
       text-align: left;
-      line-height: normal;
-      float: right;
-      margin-right: 15px;
-    }
-    .form-control {
-      width: 95%;
-      margin-right: 15px;
-      margin-top: 10px;
-      font-size: 18px;
+      line-height: 30px;
     }
     .terms-conditions-checkbox {
       .validationMessage {
@@ -463,30 +455,44 @@ label {
   content: none;
 }
 
-html .container .cd-accordion {
-  margin: 30px;
-  overflow: auto;
-}
-.cd-accordion-head {
+html .container .cd-accordion-head {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-.cd-accordion .in {
-  padding-top: 15px;
-}
-.cd-accordion .panel-title {
-  font-size: 20px;
-}
-.cd-accordion label {
-  font-size: 18px;
-}
-.cd-accordion .checkbox {
-  margin-left: 15px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  min-height: 35px;
-  height: auto;
+html .container .cd-accordion {
+  margin: 30px;
   overflow: auto;
+  .in {
+    padding-top: 15px;
+  }
+  .panel-title {
+    font-size: 20px;
+  }
+  label {
+    font-size: 18px;
+  }
+  .checkbox {
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    min-height: 35px;
+    height: auto;
+    overflow: auto;
+  }
+  .validationMessage {
+    position: relative;
+    width: auto;
+    text-align: left;
+    line-height: normal;
+    float: right;
+    margin-right: 15px;
+  }
+  .form-control {
+    width: 95%;
+    margin-right: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+  }
 }
 
 .no-select {
