@@ -119,9 +119,17 @@ label {
     }
     .validationMessage {
       position: relative;
-      width: 100%;
+      width: auto;
       text-align: left;
-      line-height: 30px;
+      line-height: normal;
+      float: right;
+      margin-right: 15px;
+    }
+    .form-control {
+      width: 95%;
+      margin-right: 15px;
+      margin-top: 10px;
+      font-size: 18px;
     }
     .terms-conditions-checkbox {
       .validationMessage {
@@ -431,6 +439,9 @@ label {
 .green-text {
   color: #00FF00;
 }
+.white-text {
+  color: white;
+}
 
 .topValign{
   vertical-align: top !important;
@@ -448,14 +459,58 @@ label {
   }
 }
 
-#jQueryCookieDisclaimer{
-  padding:10px 10px;
-}
-
 .checkbox label.control-label.has-error.validationMessage:before {
   content: none;
 }
 
-.checkbox-inner {
+html .container .cd-accordion {
+  margin: 30px;
+  overflow: auto;
+}
+.cd-accordion-head {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.cd-accordion .in {
+  padding-top: 15px;
+}
+.cd-accordion .panel-title {
+  font-size: 20px;
+}
+.cd-accordion label {
+  font-size: 18px;
+}
+.cd-accordion .checkbox {
   margin-left: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  min-height: 35px;
+  height: auto;
+  overflow: auto;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable {
+  -webkit-touch-callout: initial;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+}
+
+.centered-child {
+  display: inline-block;
+}
+
+.center-children {
+  text-align: center;
 }
