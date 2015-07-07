@@ -36,7 +36,18 @@
             <td>{{ user.name }}</td>
             <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
             <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View Profile"/}</a></td>
-            <td ng-if="canUpdateUserPermissions"><tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input></td>
+            <td ng-if="canUpdateUserPermissions">
+
+              <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
+
+              <div ng-if="user.isMentor" class="checkbox checkbox-success">
+                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
+                <label for="background-check-{{ user.id }}">
+                  {@i18n key="Background Checked"/}
+                </label>
+              </div>
+
+            </td>
             <td ng-if="canUpdateUserPermissions">
               <div class="checkbox" ng-repeat="userPermission in userPermissions">
                 <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-model="userPermissionsModel[user.id][userPermission.name]" ng-click="updateUserPermissions(user, userPermission)">

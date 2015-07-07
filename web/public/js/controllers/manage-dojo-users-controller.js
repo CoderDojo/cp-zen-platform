@@ -76,8 +76,12 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
         var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
         user.types = thisUsersDojoLink.userTypes;
         user.permissions = thisUsersDojoLink.userPermissions;
+        user.isMentor = _.contains(user.types, 'mentor');
+        user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
+        user.userDojoId = thisUsersDojoLink.id;
         $scope.selectedUserPermissions[user.id] = user.permissions;
         $scope.userPermissionsModel[user.id] = {};
+
         _.each(user.permissions, function (permission) {
           $scope.userPermissionsModel[user.id][permission.name] = true;
         });
@@ -89,6 +93,17 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     });
 
   };
+
+  $scope.updateMentorBackgroundCheck = function (user) {
+    var userDojo = {
+      id: user.userDojoId,
+      backgroundChecked: user.backgroundChecked
+    };
+
+    cdDojoService.saveUsersDojos(userDojo, null, function (err) {
+      alertService.showError(JSON.stringify(err));
+    });
+  }
 
   $scope.updateUserPermissions = function(user, permission) {
     var hasPermission = false;
