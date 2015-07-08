@@ -100,9 +100,6 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
       if( data.user ) {
         $scope.user = data.user;
         $rootScope.user = data.user;
-        if (path==='/') {
-          $window.location.href = 'dashboard';
-        }
       }
       else {
         $scope.show('login');

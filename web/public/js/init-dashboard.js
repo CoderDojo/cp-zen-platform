@@ -141,7 +141,6 @@
           templateUrl: '/dojos/template/setup-dojo',
           controller: 'setup-dojo-controller'
         });
-      $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
