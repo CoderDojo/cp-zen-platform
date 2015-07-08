@@ -109,8 +109,7 @@
       </div>
 
       <div class="row">
-        <div class="form-group">
-          
+        <div class="form-group">      
           <div class="col-lg-offset-5 col-lg-6">
             <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
           </div>
@@ -204,7 +203,7 @@
               popover-title="{@i18n key="Google Group URL"/}"
               popover="{@i18n key="We recommend setting up a discussion group so people can sign up for the latest news and happenings."/}">
             </i>
-            <input type="text" ng-model="dojo.google_group" class="form-control info-button-input" name="dojoGoogleGroup" id="dojoGoogleGroup">
+            <input type="text" ng-model="dojo.googleGroup" class="form-control info-button-input" name="dojoGoogleGroup" id="dojoGoogleGroup">
           </div>
         </div>
       </div>
@@ -249,7 +248,7 @@
               popover-title="{@i18n key="Supporters Image URL"/}"
               popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
             </i>
-            <input type="text" ng-model="dojo.supporter_image" class="form-control info-button-input" name="dojoSupporterImage" id="dojoSupporterImage">
+            <input type="text" ng-model="dojo.supporterImage" class="form-control info-button-input" name="dojoSupporterImage" id="dojoSupporterImage">
           </div>
         </div>
       </div>
