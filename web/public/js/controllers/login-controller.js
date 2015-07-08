@@ -60,6 +60,10 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
 
       auth.login($scope.login,
         function(data){
+          var user = data.user;
+          if(_.contains(user.roles, 'cdf-admin')) {
+            referer = '/manage-dojos';
+          }
           $window.location.href = '/dashboard' + referer;
         },
         function(){
