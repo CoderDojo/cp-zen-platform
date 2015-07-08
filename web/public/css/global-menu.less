@@ -10,19 +10,29 @@
   color: #fff;
   text-transform:uppercase;
 }
+
+.login-container{
+  width: 100%;
+}
 .cdgm-menu {
   padding-left: 15px;
   padding-right: 15px;
   margin-left: 0px;
-  width: 80%;
+  width: 100%;
 }
 
 .cdgm-right {
-  float: right;
+  // float: right;
+  display: block;
   text-align: right;
   text-transform: none;
   vertical-align: initial;
-  width: 15em;
+  width: 1140px;
+  margin: 0px auto;
+}
+
+.alert-message .row{
+  width: 1130px;
 }
 .cdgm-button {
   padding-top: 9px;
@@ -85,6 +95,44 @@
   float: left;
 }
 
+@media only screen and (max-width : 1200px) {
+  .cd-logo, .cd-logo-container{
+    display: none;
+  }
+
+  .cd-mobile-logo {
+    display: inline-block;
+  }
+
+  .navbar-main {
+    margin-bottom: 0px;
+    min-height: 0px;
+  }
+
+  .cd-header-button-group {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  .cdgm-right {
+    width: 940px;
+  }
+
+  .alert-message .row{
+    width: 930px;
+  }
+
+}
+
+@media only screen and (max-width : 992px) {
+  .cdgm-right {
+    width: 720px;
+  }
+  .alert-message .row{
+    width: 710px;
+  }
+}
+
 @media only screen and (max-width : 768px) {
 
   .dl-menu li {
@@ -128,8 +176,29 @@
   .cd-active-tab {
     border-style: solid;
     border-width: thin;
-    border-color: #000;
-    color: #000;
+    border-color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+  }
+
+  #cd-mainnav-collapse {
+    border: none;
+    overflow-y: hidden;
+  }
+
+  #cd-navbar-collapse {
+    border: none;
+  }
+
+  .cdgm-right {
+    width: 100%;
+  }
+  .alert-message .row{
+    width: 100%;
+  }
+
+  .alert-message.active {
+    text-align: center;
+
   }
 
 }

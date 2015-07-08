@@ -1,4 +1,6 @@
-
+<button type="button" class="navbar-toggle mainnav-toggle" data-toggle="collapse" data-target="#cd-mainnav-collapse">
+  <i class="fa fa-navicon fa-2x"></i>
+</button>
 <button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
   <i class="fa fa-globe fa-2x"></i>
 </button>
@@ -11,13 +13,13 @@
       <li class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></li>
       <li class="cdgm-button"><a href="http://help.coderdojo.com/">FAQ</a></li>
       <li class="cdgm-button"><a href="http://coolestprojects.org/">CoolestProjects2015</a></li>
-  </ul>
-    <div class="navbar-header pull-right">
-    <span ng-if="user" class="container cdgm-menu cdgm-right">
+    </ul>
+
+    <div class="login-container">
+     <span ng-if="user" class="cdgm-right">
       <span>{{ user.name }} | </span>
       <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
     </span>
     </div>
   </div>
-
 </div>

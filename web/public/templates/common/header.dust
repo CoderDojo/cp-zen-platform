@@ -1,3 +1,5 @@
+
+
 <div class="navbar navbar-global" role="navigation">
   {>"common/global-menu" /}
 </div>
@@ -5,5 +7,8 @@
     <div class="navbar navbar-default navbar-main" ng-controller="header">
         {>"common/content-header" /}
     </div>
+    <span class="cd-mobile-logo-container">
+      <a ui-sref="home" class="text-center col-md-12 col-sm-12 col-xs-12"><span ng-click="selectTab('dojo-list')" class="cd-logo cd-mobile-logo"></span></a>
+    </span>
     <alert-banner></alert-banner>
 </header>
