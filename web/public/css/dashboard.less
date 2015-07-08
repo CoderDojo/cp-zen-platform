@@ -1,3 +1,8 @@
+
+* {
+  border-radius: 0px!important;
+}
+
 @cd-light-blue: #2c9cfb;
 @cd-green: #61c93f;
 
@@ -430,7 +435,7 @@ label {
 
 .start-dojo-wizard {
   .steps-indicator {
-    margin: 20px 0 0 0;
+    margin: 90px 0 0 0;
     height: 30px;
     position: relative;
   }
@@ -487,10 +492,98 @@ label {
   }
 }
 
-#jQueryCookieDisclaimer{
-  padding:10px 10px;
-}
-
 .checkbox label.control-label.has-error.validationMessage:before {
   content: none;
+}
+
+/* we want color schema in body to be different than color schema in header */
+html body .cd-dashboard .cd-color-1 {
+  background-color: #2C9CFB;
+}
+html body .cd-dashboard .cd-color-2 {
+  background-color: #61C93F;
+}
+html body .cd-dashboard .cd-color-3 {
+  background-color: #2E7AC7;
+}
+html body .cd-dashboard .cd-color-4 {
+  background-color: #FBCC33;
+}
+html body .cd-dashboard .cd-color-5 {
+  background-color: #2C9CFB;
+}
+
+html .container .cd-accordion {
+  margin: 3%;
+  overflow: auto;
+
+  .panel-heading {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: auto;
+    overflow: auto;
+
+    h4 {
+      display: inline-block;
+      width: 85%;
+    }
+  }
+  .in {
+    padding-top: 15px;
+  }
+  .panel-title {
+    font-size: 20px;
+    color: white;
+  }
+  label {
+    font-size: 18px;
+  }
+  .checkbox {
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    min-height: 35px;
+    height: auto;
+    overflow: auto;
+  }
+  .validationMessage {
+    position: relative;
+    width: auto;
+    text-align: left;
+    line-height: normal;
+    float: right;
+    margin-right: 15px;
+  }
+  .form-control {
+    width: 95%;
+    margin-right: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable {
+  -webkit-touch-callout: initial;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+}
+
+.centered-child {
+  display: inline-block;
+}
+
+.center-children {
+  text-align: center;
 }
