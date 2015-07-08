@@ -153,14 +153,8 @@ label {
 }
 
 .dojo-list-dashboard {
-  background: url(../img/main-bg.png) repeat-y;
   min-height: 350px;
   margin:0 auto;
-  width:975px;
-  #sidebar {
-    float: right;
-    margin-top: 30px;
-  }
 }
 
 .cd-text-heading1 {
@@ -183,9 +177,6 @@ label {
 
 .cd-dojo-list-container {
   padding:30px;
-  #main {
-    width: 590px;
-  }
 }
 
 .cd-create-dojo-container {
@@ -246,48 +237,58 @@ label {
   }
   #createDojoForm {
     margin-top:20px;
-    #main {
-      width: 590px;
-    }
-    label {
-      font-weight:normal;
+    legend {
+      margin-top: 35px;
+      margin-botton: 20px;
     }
     .form-group {
-      margin-top:15px;
-    }
-    p {
-      color:#99999F;
-    }
-    .angular-google-map-container {
-      height: 300px;
-    }
-    .google-map {
-      margin-top:15px;
-    }
-    .other-information {
-      margin-top:35px;
-    }
-    .mailingListCheckbox {
-      margin-top:-22px;
+      label {
+        text-align: right;
+        padding-top: 5px;
+        margin-bottom: 15px;
+      }
       p {
-        padding-top:10px;
+        color: #99999F;
+      }
+      .google-map {
+        margin-top:15px;
       }
     }
-    .widget {
-      padding-bottom:55px;
-      .widget-block {
-        padding-top:20px;
+    .info-button-container {
+      text-align: right;
+      margin-bottom: 35px;
+      i.info-button {
+        padding-right: 6px;
       }
-      .current-stage-radios {
-        padding-right: 25px;
-        margin-top: -8px;
-        float: left;
-        margin-left: 15px;
+      .info-button-input {
+        display: inline-block;
+        width: calc(~'100% - 25px');
+      }
+      .control-label {
+        margin-bottom: 0px;
       }
     }
-    input[name="dojoCoordinates"] {
-      margin-top:15px;
-      margin-bottom:15px;
+    .create-dojo-checkbox {
+      label {
+        padding-top: 8px;
+      }
+      .awesome-label {
+        text-align: left;
+        padding-top: 0px;
+      }
+    }
+    .create-dojo-radios {
+      label {
+        padding-top:8px;
+      }
+      .awesome-label {
+        text-align: left;
+        padding-top: 0px;
+        margin-bottom: 0px;
+      }
+    }
+    #createDojoButton {
+      margin-top: 30px;
     }
   }
 }
