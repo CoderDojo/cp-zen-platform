@@ -95,6 +95,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     });
 
     function initStep (step, subStep) {
+      step=3;
       switch(step) {
         case 0:
           setupStep1();
