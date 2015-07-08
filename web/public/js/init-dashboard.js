@@ -290,6 +290,11 @@
             }
           },
           controller: 'user-profile-controller'
+        })
+        .state('badges-dashboard', {
+          url:'/dashboard/badges',
+          controller:'badges-dashboard-controller',
+          templateUrl: '/dojos/template/badges/dashboard'
         });
         $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })

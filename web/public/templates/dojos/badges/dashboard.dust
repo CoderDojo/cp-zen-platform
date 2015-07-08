@@ -1,0 +1,27 @@
+<div class="cd-dashboard">
+  <div class="row">
+    <h2>{@i18n key="Intro"/}</h2>
+    <p>{@i18n key="Badges Welcome Text"/}</p>
+
+    <tabset justified="true">
+      <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}">
+        <div class="badges-category-container">
+          <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
+            <span class="help-block"></span>
+            <legend>{{ capitalizeFirstLetter(tag) }}</legend>
+            <div class="badge-container" ng-repeat="badge in badgesData">
+              <img ng-click="showBadgeInfo(tag, badge)" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
+              <p class="badge-name"><b>{{ badge.name }}</b></p>
+            </div>
+            <div ng-show="badgeInfoIsCollapsed[tag]">
+              <div class="well">
+                <p><b>{@i18n key="Name"/}:</b> {{ badgeInfo[tag].name }}</p>
+                <p><b>{@i18n key="Short Description"/}:</b> {{ badgeInfo[tag].strapline }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
