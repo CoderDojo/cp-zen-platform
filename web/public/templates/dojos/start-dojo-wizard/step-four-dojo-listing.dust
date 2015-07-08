@@ -112,7 +112,7 @@
         <div class="form-group">
           
           <div class="col-lg-offset-5 col-lg-6">
-            <input type="button" ng-click="getLocationFromAddress(dojo, $params)" class="btn btn-primary" value="Get location from address">
+            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
           </div>
           <div class="col-lg-6 col-lg-offset-5 google-map">
             <section ng-if="mapLoaded" id="map">
@@ -264,4 +264,3 @@
   </form>
 </div>
 </div>
-
