@@ -1,6 +1,6 @@
 
 <div class="horiz-align">
-  <span ng-controller="header" ng-if="user" class="col-lg-8 cd-header-button-group navbar-collapse collapse navbar-ex1-collapse" id="cd-mainnav-collapse">
+  <span ng-controller="header" ng-if="user" class="col-lg-8 cd-header-button-group navbar-collapse collapse" id="cd-mainnav-collapse">
     <a ui-sref="dojo-list"><span ng-click="selectTab('dojo-list')" ng-class="{'cd-active-tab': isSelected('dojo-list')}" class="cd-header-button cd-color-1" ng-if="user">Dojo List</span></a>
     <a ui-sref="my-dojos"><span ng-click="selectTab('my-dojos')" ng-class="{'cd-active-tab': isSelected('my-dojos')}" class="cd-header-button cd-color-2" ng-if="user">My Dojos</span></a>
     <a ui-sref="start-dojo-wizard"><span ng-click="selectTab('create-dojo')" ng-class="{'cd-active-tab': isSelected('create-dojo')}" class="cd-header-button cd-color-3" ng-if="user">Create Dojo</span></a>
