@@ -1,6 +1,6 @@
 'use strict';
 //TO DO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $sanitize) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -113,6 +113,12 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
   
   $scope.save = function(dojo) {
+    Object.keys(dojo).forEach(function(prop){
+      if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
+        dojo[prop] = $sanitize(dojo[prop]);
+      }
+    });
+
     cdDojoService.save(dojo, function(response) {
       alertService.showAlert("Your Dojo has been successfully saved", function() {
         $location.path('/dashboard/my-dojos');
@@ -162,4 +168,4 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$sanitize', cdEditDojoCtrl]);
