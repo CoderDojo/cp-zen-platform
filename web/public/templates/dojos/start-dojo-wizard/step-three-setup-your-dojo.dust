@@ -6,9 +6,8 @@
         <div class="panel-group no-select">
           <div ng-repeat="step in steps" class="panel panel-default ng-isolate-scope cd-accordion" ng-init="step.id = $index">
             <div class="panel-heading cd-accordion-head cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
-              <h4 class="panel-title white-text">
-                <span>{{ step.title }}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i></span>
-              </h4>
+                <h4 class="panel-title">{{ step.title }}</h4>
+                <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
             </div>
             <div class="panel-collapse collapse" ng-class="{'in': step.open}">
               <p></p>

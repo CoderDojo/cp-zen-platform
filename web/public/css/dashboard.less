@@ -431,9 +431,6 @@ label {
 .green-text {
   color: #00FF00;
 }
-.white-text {
-  color: white;
-}
 
 .topValign{
   vertical-align: top !important;
@@ -455,18 +452,28 @@ label {
   content: none;
 }
 
-html .container .cd-accordion-head {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
+
 html .container .cd-accordion {
   margin: 30px;
   overflow: auto;
+
+  .panel-heading {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: auto;
+    overflow: auto;
+
+    h4 {
+      display: inline-block;
+      width: 85%;
+    }
+  }
   .in {
     padding-top: 15px;
   }
   .panel-title {
     font-size: 20px;
+    color: white;
   }
   label {
     font-size: 18px;
