@@ -1268,3 +1268,12 @@ msgstr "Add a user type"
 
 msgid "Background Checked"
 msgstr "Background Checked"
+
+msgid "Intro"
+msgstr "Intro"
+
+msgid "Badges Welcome Text"
+msgstr "Welcome to the CoderDojo Badges dashboard."
+
+msgid "Short Description"
+msgstr "Short Description"
