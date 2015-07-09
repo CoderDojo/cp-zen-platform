@@ -1,7 +1,7 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate, utilsService,  $sanitize, vcRecaptchaService, intercomService) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, $localStorage, alertService, WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, Geocoder, gmap, $translate, utilsService, $sanitize, vcRecaptchaService, intercomService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -604,4 +604,4 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 }
 
 angular.module('cpZenPlatform')
-  .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', '$translate', 'utilsService', '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
+  .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', '$translate', 'utilsService', '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
