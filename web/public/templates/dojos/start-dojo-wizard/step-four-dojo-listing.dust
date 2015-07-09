@@ -172,7 +172,7 @@
             </div>
             <div class="radio">
               <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="3">
-              <label class="awesome-label"for="Full Up">{@i18n key="Full Up"/}</label>
+              <label class="awesome-label"for="fullUp">{@i18n key="Full Up"/}</label>
             </div>
           </div>
         </div>
