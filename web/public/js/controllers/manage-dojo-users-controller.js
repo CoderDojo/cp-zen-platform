@@ -1,6 +1,6 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, $translate) {
+function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, cdBadgesService, $translate) {
   var dojoId = $state.params.id;
   var usersDojosLink = [];
   var currentUser;
@@ -11,6 +11,9 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.canUpdateUserPermissions = false;
   $scope.canRemoveUsers = false;
   $scope.userPermissionsModel = {};
+  $scope.isDojoAdmin = false;
+  $scope.badgeModel = {};
+  $scope.awardBadgeButtonModel = {};
 
   auth.get_loggedin_user(function (user) {
     currentUser = user;
@@ -22,6 +25,10 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
       $scope.canUpdateUserPermissions = result;
       $scope.canRemoveUsers = result;
     });
+  });
+
+  cdBadgesService.listBadges(function (response) {
+    $scope.badges = response.badges;
   });
 
   $scope.pageChanged = function () {
@@ -193,6 +200,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
           isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
                           return userPermission.name === 'dojo-admin';
                         });
+          if(isDojoAdmin) $scope.isDojoAdmin = true;
           if(isChampion && isDojoAdmin) return resolve(true);
           return resolve(false);
         }, function (err) {
@@ -235,10 +243,29 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     }
   }
 
+  $scope.badgeSelected = function (user) {
+    $scope.awardBadgeButtonModel[user.id] = true;
+    $scope.$watch('badgeModel', function (val) {
+      if(!val[user.id]) $scope.awardBadgeButtonModel[user.id] = false;
+    });
+  }
+
+  $scope.awardBadge = function (user, badge) {
+    var applicationData = {
+      user: user,
+      badge: badge
+    };
+
+    cdBadgesService.sendBadgeApplication(applicationData, function (response) {
+      if(response.error) return alertService.showError(response.error);
+      alertService.showAlert($translate.instant('Badge Application Sent!'));
+    });
+  }
+
   $scope.loadPage(true);
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', '$translate' ,cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 'cdBadgesService', '$translate' ,cdManageDojoUsersCtrl]);
 

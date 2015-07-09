@@ -9,7 +9,7 @@
   <a ui-sref="manage-dojos"><span ng-click="selectTab('manage-dojos')" ng-class="{'cd-active-tab': isSelected('manage-dojos')}" class="cd-header-button cd-color-4" ng-if="userIsCDFAdmin()">{@i18n key="Manage Dojos"/}</span></a>
   <a ui-sref="stats"><span ng-click="selectTab('stats')" ng-class="{'cd-active-tab': isSelected('stats')}" class="cd-header-button cd-color-5" ng-if="userIsCDFAdmin()">{@i18n key="Stats"/}</span></a>
 </span>
-<span ng-if="!user" class="col-md-8 cd-header-button-group">
+<span ng-if="!user" class="col-md-4 col-md-offset-4 cd-header-button-group">
     <a ui-sref="login"><span ng-click="selectTab('login')" ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-1">{@i18n key="Login"/}</span></a>
     <a ui-sref="start-dojo-wizard"><span ng-click="selectTab('register')" ng-class="{'cd-active-tab': isSelected('register')}" class="cd-header-button cd-color-2">{@i18n key="Create a Dojo"/}</span></a>
 </span>

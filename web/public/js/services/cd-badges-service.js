@@ -10,6 +10,9 @@ function cdBadgesService(cdApi) {
     },
     getBadge: function(slug, win, fail) {
       cdApi.get('badges/' + slug, win, fail || topfail);
+    },
+    sendBadgeApplication: function (applicationData, win, fail) {
+      cdApi.post('badges/applications', {applicationData: applicationData}, win, fail || topfail);
     }
   };
 }
