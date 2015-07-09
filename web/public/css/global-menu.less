@@ -21,6 +21,7 @@
   position: relative;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 5px;
   margin-left: 0px;
   width: 75%;
   z-index: 9999;
@@ -31,7 +32,7 @@
   position: relative;
   top: 0;
   left: 0;
-  height: 25px;
+  height: 27px;
 }
 
 .cdgm-right {
@@ -200,9 +201,25 @@
   }
 
   .cd-header-button-group {
-    display: none;
+    display: block;
     float: none;
     padding: 0;
+  }
+
+  .collapse {
+    display: none;
+  }
+
+  .collapse.in {
+    display: block;
+  }
+
+  .collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height 0.35s ease;
+    transition: height 0.35s ease;
   }
 
   .cd-header-button {
