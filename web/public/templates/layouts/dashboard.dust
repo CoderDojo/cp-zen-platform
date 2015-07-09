@@ -53,7 +53,6 @@
   <body ng-app="cpZenPlatform" ng-cloak ng-class="{'lock-view':blockUI}" lock-view>
     {+body /}
     <script src="/components/jquery/dist/jquery.min.js"></script>
-    <script src="/components/underscore/underscore.js"></script>
     <script src="/components/angular/angular.min.js"></script>
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>

@@ -60,6 +60,10 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
 
       auth.login($scope.login,
         function(data){
+          var user = data.user;
+          if(_.contains(user.roles, 'cdf-admin')) {
+            referer = '/manage-dojos';
+          }
           $window.location.href = '/dashboard' + referer;
         },
         function(){
@@ -100,9 +104,6 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
       if( data.user ) {
         $scope.user = data.user;
         $rootScope.user = data.user;
-        if (path==='/') {
-          $window.location.href = 'dashboard';
-        }
       }
       else {
         $scope.show('login');
