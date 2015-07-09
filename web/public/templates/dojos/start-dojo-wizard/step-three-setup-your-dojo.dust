@@ -1,22 +1,33 @@
 <div id="main">
-    <div class="cd-create-dojo-container">
-      <p>{@i18n key="Click on each step to get started"/}</p>
-      <form name="setupYourDojoForm" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
-        <accordion close-others="false">
-          <accordion-group ng-repeat="step in steps track by $index" is-open="step.open">
-            <accordion-heading>
-              <span class="pointer">{{ step.title }}{{ step.required }}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i></span>
-            </accordion-heading>
-            <div class="checkbox checkbox-primary" ng-repeat="checkboxInput in step.checkboxes track by $index">
-              <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}" ng-init="setupDojo[checkboxInput.name]=false" ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'" ng-model="setupDojo[checkboxInput.name]">
-              <label for="{{ checkboxInput.name }}">
-                {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
-              </label>
-              <input type="text" ng-if="checkboxInput.textField" ng-init="setupDojo[checkboxInput.name + '-text']=''" ng-show="setupDojo[checkboxInput.name] === true" class="form-control" placeholder="{{ checkboxInput.placeholder }}" ng-model="setupDojo[checkboxInput.name + '-text']"/>
+  <div class="cd-create-dojo-container">
+    <p>{@i18n key="Click on each step to get started"/}</p>
+    <form name="setupYourDojoForm" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
+      <accordion close-others="false">
+        <div class="panel-group no-select">
+          <div ng-repeat="step in steps track by $index" is-open="step.open" class="panel panel-default ng-isolate-scope cd-accordion" ng-init="step.id = $index">
+            <div class="panel-heading cd-accordion-head cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
+                <h4 class="panel-title">{{ step.title }}{{ step.required }}</h4>
+                <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
             </div>
-          </accordion-group>
-        </accordion>
-        <button class="btn btn-primary col-lg-3 col-lg-offset-4" ng-click="openAllSteps(this)" type="submit">{@i18n key="Next"/}</button>
-      </form>
-    </div>
+            <div class="panel-collapse collapse" ng-class="{'in': step.open}">
+              <p></p>
+              <div>
+                <div class="checkbox checkbox-primary" ng-repeat="checkboxInput in step.checkboxes">
+                  <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}" ng-init="setupDojo[checkboxInput.name]=false" ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'" ng-model="setupDojo[checkboxInput.name]">
+                  <label for="{{ checkboxInput.name }}" class="pull-left">
+                    {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
+                  </label>
+                  <br ng-if="checkboxInput.textField">
+                    <input type="text" ng-if="checkboxInput.textField" ng-init="setupDojo[checkboxInput.name + '-text']=''" ng-show="setupDojo[checkboxInput.name] === true" class="form-control" placeholder="{{ checkboxInput.placeholder }}" ng-model="setupDojo[checkboxInput.name + '-text']"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </accordion>
+      <div class="col-md-12 center-children">
+        <button class="centered-child btn btn-primary cd-color-5" ng-click="openAllSteps(this)" type="submit">{@i18n key="Next"/}</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -174,11 +174,6 @@
           templateUrl: '/dojos/template/stats',
           controller: 'stats-controller'
         })
-        .state("champion-onboarding", {
-          url: "/dashboard/champion-onboarding",
-          templateUrl: '/champion/template/create',
-          controller: 'champion-onboarding-controller'
-        })
         .state("start-dojo-wizard", {
           url: "/dashboard/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
@@ -301,7 +296,6 @@
           controller:'accept-badge-controller',
           templateUrl: '/dojos/template/badges/accept'
         });
-        $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
@@ -339,4 +333,3 @@
       prefix: '/api/1.0/'
     }));
 })();
-

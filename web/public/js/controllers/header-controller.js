@@ -1,14 +1,13 @@
 'use strict';
 
-function headerCtrl($window, $scope, cdDojoService, $localStorage) {
+function headerCtrl($window, $scope, $localStorage , intercomService) {
   $scope.navigateTo = function (page) {
     $window.location.href = '/' + page;
   };
 
   $scope.userIsCDFAdmin = function () {
-  	if(_.contains($scope.user.roles, 'cdf-admin')) return true;
-  	return false;
-  }
+  	return _.contains($scope.user.roles, 'cdf-admin');
+  };
 
   $scope.selectTab = function (tab) {
     $localStorage.selectedTab = tab;
@@ -19,8 +18,10 @@ function headerCtrl($window, $scope, cdDojoService, $localStorage) {
     else return false;
   }
 
+  intercomService.InitIntercom();
+
   $scope.selectedTab = $localStorage.selectedTab;
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', 'cdDojoService', '$localStorage', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$localStorage', 'intercomService', headerCtrl]);

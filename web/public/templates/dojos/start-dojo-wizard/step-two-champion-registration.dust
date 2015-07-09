@@ -3,7 +3,7 @@
     <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
         <h3>{@i18n key="CoderDojo Champion Registration Form"/}</h3>
-        <div class="pre-game-warning center-block">
+        <div class="col-lg-12 pre-game-warning center-block">
           <p>{@i18n key="champion.registration.p1"/}</p>
           <p>{@i18n key="champion.registration.p2"/}</p>
           <p>{@i18n key="champion.registration.p3"/}<a href="http://kata.coderdojo.com" target="_blank">http://kata.coderdojo.com/</a></p>
@@ -12,7 +12,7 @@
         <legend>{@i18n key="General Information"/}</legend>
         <div class="row">
           <div class="form-group">
-            <label for="emailAddress" class="col-lg-4">{@i18n key="Email Address"/}*</label>
+            <label for="emailAddress" class="col-lg-5">{@i18n key="Email Address"/}*</label>
               <div class="col-lg-6">
                 <input type="email" readonly required required-message="'{@i18n key="Email is empty"/}'" ng-model="champion.email" class="form-control" name="emailAddress" id="emailAddress">
               </div>
@@ -21,7 +21,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="fullName" class="col-lg-4">{@i18n key="Full Name"/}*</label>
+            <label for="fullName" class="col-lg-5">{@i18n key="Full Name"/}*</label>
               <div class="col-lg-6">
                 <input type="text" readonly required required-message="'{@i18n key="Name is empty"/}'" ng-model="champion.name" class="form-control" name="fullName" id="fullName">
               </div>
@@ -30,7 +30,7 @@
 
         <div class="row">
           <div class="form-group has-feedback">
-            <label for="dateOfBirth" class="col-lg-4">Date of Birth*</label>
+            <label for="dateOfBirth" class="col-lg-5">Date of Birth*</label>
             <div class="input-group col-lg-6" style="padding-right: 15px; padding-left: 15px;">
               <input type="text" required readonly="true"
                      class="form-control"
@@ -41,7 +41,8 @@
                      is-open="picker.opened"
                      min-date="'1900-01-01'"
                      max-date="today"
-                     datepicker-options="dateOptions" />
+                     datepicker-options="dobDateOptions"
+                     ng-click="open($event)" />
 
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -52,7 +53,7 @@
 
         <div class="row">
           <div class="form-group has-feedback">
-            <label for="telephoneNumber" class="col-lg-4">{@i18n key="Telephone Number"/}*</label>
+            <label for="telephoneNumber" class="col-lg-5">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-6">
               <input type="text" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" autocomplete="off">
             </div>
@@ -61,7 +62,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="championCountry" class="col-lg-4">{@i18n key="Country"/}*</label>
+            <label for="championCountry" class="col-lg-5">{@i18n key="Country"/}*</label>
             <div class="col-lg-6" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.country.$error.required}">
               <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required>
                 <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
@@ -77,7 +78,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="championPlace" class="col-lg-4">{@i18n key="CityTown"/}*</label>
+            <label for="championPlace" class="col-lg-5">{@i18n key="CityTown"/}*</label>
 
             <div class="col-lg-6" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
               <ui-select name="place" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
@@ -96,20 +97,16 @@
 
         <legend>{@i18n key="Experience"/}</legend>
         <div class="row">
-          <div class="col-lg-10">
-            <label for="projects" class="col-lg-3">{@i18n key="Technical Experience"/}</label>
-            <div class="col-lg-offset-5">
+          <label for="projects" class="col-lg-3">Technical Experience</label>
+          <div class="col-lg-8">
               <textarea name="projects" class="form-control" placeholder="{@i18n key="technicalexperience.placeholder"/}" rows="5" ng-model="champion.projects"></textarea>
-            </div>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-lg-10">
             <label for="youthExperience" class="col-lg-4">{@i18n key="Experience working with youth"/}</label>
-            <div class="col-lg-offset-5">
+          <div class="col-lg-8">
               <textarea name="youthExperience" class="form-control" placeholder="{@i18n key="experienceyouth.placeholder"/}" rows="5" ng-model="champion.youthExperience"></textarea>
-            </div>
           </div>
         </div>
 
@@ -117,7 +114,7 @@
         <legend>{@i18n key="Social"/}</legend>
         <div class="row">
           <div class="form-group">
-            <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
+            <label for="twitter" class="col-lg-5">{@i18n key="Twitter"/}</label>
               <div class="col-lg-6">
                 <input type="text" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
               </div>
@@ -126,7 +123,7 @@
 
         <div class="row">
           <div class="form-group">
-            <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
+            <label for="linkedIn" class="col-lg-5">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-6">
                 <input type="text" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
               </div>
@@ -135,17 +132,15 @@
 
         <legend>{@i18n key="Other"/}</legend>
         <div class="row">
-          <div class="col-lg-10">
-            <label for="projects" class="col-lg-3">{@i18n key="Notes"/}</label>
-            <div class="col-lg-offset-5">
-              <textarea name="notes" class="form-control" placeholder="{@i18n key="notes.placeholder"/}" rows="5" ng-model="champion.notes"></textarea>
-            </div>
+          <label for="projects" class="col-lg-3">{@i18n key="Notes"/}</label>
+          <div class="col-lg-8">
+            <textarea name="notes" class="form-control" placeholder="{@i18n key="notes.placeholder"/}" rows="5" ng-model="champion.notes"></textarea>
           </div>
         </div>
 
         <div class="row">
           <div class="form-group">
-            <label for="coderDojoReference" class="col-lg-4">{@i18n key="How did you hear about CoderDojo"/}</label>
+            <label for="coderDojoReference" class="col-lg-5">{@i18n key="How did you hear about CoderDojo"/}</label>
             <div class="col-lg-6">
               <ui-select name="coderDojoReference" ng-model="champion.coderDojoReference">
                   <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
@@ -157,7 +152,10 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-primary center-block registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
+
+        <div class="row center-children">
+          <button class="centered-child cd-color-5 btn btn-primary registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
+        </div>
       </div>
 
     </form>

@@ -1,5 +1,5 @@
-{>"common/global-menu" /}
 <header id="header" ng-controller="login">
+    {>"common/global-menu" /}
     <div class="container header-container" ng-controller="header">
         {>"common/content-header" /}
     </div>

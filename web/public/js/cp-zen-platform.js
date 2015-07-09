@@ -23,7 +23,7 @@
     'ngTagsInput',
     'ngBootbox',
     'ngCookies',
-    'ncy-angular-breadcrumb'
+    'ncy-angular-breadcrumb',
+    'vcRecaptcha'
   ]);
 })();
-
