@@ -9,7 +9,7 @@
 		    </div>
         <div class="col-lg-3">
           <ui-select name="inviteUserType" ng-model="invite.userType">
-            <ui-select-match allow-clear="true" placeholder="Select a user type to invite...">{{ $select.selected  }}</ui-select-match>
+            <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected  }}</ui-select-match>
             <ui-select-choices repeat="userType in userTypes">
               <span ng-bind-html="userType"></span>
             </ui-select-choices>
@@ -25,17 +25,18 @@
           <tr>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
             <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Email"/}</th>
-            <th class="ten-percent-width">{@i18n key="Profile"/}</th>
+            <th class="five-percent-width">{@i18n key="Profile"/}</th>
             <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
             <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
-            <th ng-if="canUpdateUserPermissions" class="ten-percent-width"></th>
+            <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="user in users">
             <td>{{ user.name }}</td>
             <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
-            <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View Profile"/}</a></td>
+            <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View"/}</a></td>
             <td ng-if="canUpdateUserPermissions">
 
               <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
@@ -56,7 +57,19 @@
                 </label>
               </div>
             </td>
-            <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove User"/}</button></td>
+
+            <td ng-if="isDojoAdmin">
+              <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
+                <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
+                <ui-select-choices repeat="badge in badges">
+                  <span ng-bind-html="badge.name"></span>
+                </ui-select-choices>
+              </ui-select>
+              <span class="help-block"></span>
+              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">Award Badge</button>
+            </td>
+
+            <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
           </tr>
         </tbody>
       </table>

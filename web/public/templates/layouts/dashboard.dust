@@ -139,6 +139,7 @@
     <script src="/js/controllers/manage-event-attendance-controller.js"></script>
 	<script src="/js/controllers/setup-dojo-controller.js"></script>
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
+    <script src="/js/controllers/accept-badge-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

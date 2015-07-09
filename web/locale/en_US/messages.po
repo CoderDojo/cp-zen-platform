@@ -1277,3 +1277,21 @@ msgstr "Welcome to the CoderDojo Badges dashboard."
 
 msgid "Short Description"
 msgstr "Short Description"
+
+msgid "Award Badge"
+msgstr "Award Badge"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Award a badge..."
+msgstr "Award a badge..."
+
+msgid "Select a user type to invite..."
+msgstr "Select a user type to invite..."
+
+msgid "Are you sure you want to award this badge to"
+msgstr "Are you sure you want to award this badge to"
+
+msgid "Badge Application Sent!"
+msgstr "Badge Application Sent!"

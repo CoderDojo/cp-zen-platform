@@ -295,6 +295,11 @@
           url:'/dashboard/badges',
           controller:'badges-dashboard-controller',
           templateUrl: '/dojos/template/badges/dashboard'
+        })
+        .state('accept-badge', {
+          url:'/dashboard/badges/verify/:userId/:badgeSlug',
+          controller:'accept-badge-controller',
+          templateUrl: '/dojos/template/badges/accept'
         });
         $urlRouterProvider.when('/dashboard', '/dashboard/dojo-list');
     })
