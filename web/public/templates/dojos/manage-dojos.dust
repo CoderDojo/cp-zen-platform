@@ -59,20 +59,7 @@
             <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.userEmail" ng-enter="filterDojos()">
           </div>
         </div>
-
-        <!--<div class="col-md-4">
-          <div class="form-group">
-            <label for="user-email">User Email</label>
-            <ui-select ng-model="filter.email" ng-disabled="false" on-select="getDojoIds($item)">
-              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
-              <ui-select-choices repeat="user in users"
-                  refresh="getUsersByEmails($select.search)"
-                  refresh-delay="500">
-                <span ng-bind-html="user.email | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>-->  
+        
       </div>
     </div>
     <div class="col-md-2">
