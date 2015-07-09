@@ -40,7 +40,7 @@
     "angular-translate-storage-cookie": "2.7.0",
     "ng-tags-input": "2.3.0",
     "ngBootbox": "0.0.5",
-    "angular-breadcrumb": "https://github.com/david-cahill/angular-breadcrumb.git#master"
+    "angular-breadcrumb": "https://github.com/david-cahill/angular-breadcrumb.git#master",
     "jed": "1.0.2",
     "messageformat": "0.1.8",
     "angular-translate": "2.7.0",
