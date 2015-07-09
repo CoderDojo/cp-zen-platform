@@ -96,7 +96,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       var nameQuery = {
         "multi_match": {
           "query":  filter.name,
-          "fields": ['location', 'name.search'],
+          "fields": ['address1', 'name.search'],
           "type": "cross_fields",
           "fuzziness": 2,
           "operator": "and"
