@@ -152,7 +152,7 @@
         </div>
 
         <div class="row center-children">
-          <button class="centered-child cd-color-5 btn btn-primary registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
+          <button class="centered-child btn btn-primary registerButton" ng-click="scrollToInvalid(createChampionForm)" type="submit">{@i18n key="Register"/}</button>
         </div>
       </div>
 

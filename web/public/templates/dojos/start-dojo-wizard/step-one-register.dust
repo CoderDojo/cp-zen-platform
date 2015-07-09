@@ -35,7 +35,7 @@
           <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
         </div>
         <div class="center-children">
-          <button class="centered-child cd-color-5 btn btn-primary register-btn" type="submit">Register</button>
+          <button class="centered-child btn btn-primary register-btn" type="submit">Register</button>
         </div>
       </div>
     </div>

@@ -255,8 +255,8 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-2 col-lg-offset-1">
-          <button id="createDojoButton" class="btn btn-primary" ng-click="scrollToInvalid(createDojoForm)" type="submit">{{ saveButtonText }}</button>
+        <div class="center-children">
+          <button id="createDojoButton" class="centered-child btn btn-primary" ng-click="scrollToInvalid(createDojoForm)" type="submit">{{ saveButtonText }}</button>
         </div>
       </div>
 
