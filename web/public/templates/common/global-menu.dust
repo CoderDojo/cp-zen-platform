@@ -16,7 +16,7 @@
     </ul>
 
     <div class="login-container">
-     <span ng-if="user" class="cdgm-right horiz-align">
+     <span ng-if="user" class="cdgm-right horiz-align text-right">
       <span>{{ user.name }} | </span>
       <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
     </span>
