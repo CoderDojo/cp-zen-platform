@@ -219,11 +219,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.initUserTypes = response;
       });
       $scope.doRegister = function(user) {
-      if(vcRecaptchaService.getResponse() === ""){
-        return alertService.showError("Please resolve the captcha");
-      }
+        // TODO - this isChampion a tmp hack until phase1 catchs up with master
+        user.isChampion = true;
+        if(vcRecaptchaService.getResponse() === ""){
+          return alertService.showError("Please resolve the captcha");
+        }
 
-      user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+        user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
         auth.register(user, function(data) {
           if(data.ok) {
@@ -500,11 +502,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }
       };
 
+      var sanitizeCdForms = {
+        createDojo: ["address1","email","googleGroups","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+      };
+
       $scope.save = function(dojo) {
 
-        Object.keys(dojo).forEach(function(prop){
-          if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
-            dojo[prop] = $sanitize(dojo[prop]);
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
           }
         });
 
