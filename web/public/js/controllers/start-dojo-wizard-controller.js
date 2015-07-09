@@ -455,13 +455,18 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }
       };
 
+      var sanitizeCdForms = {
+        createDojo: ["address1","email","googleGroups","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+      };
+
       $scope.save = function(dojo) {
 
-        Object.keys(dojo).forEach(function(prop){
-          if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
-            dojo[prop] = $sanitize(dojo[prop]);
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
           }
         });
+        console.log(dojo);
         
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;
