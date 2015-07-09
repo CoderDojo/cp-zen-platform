@@ -81,9 +81,9 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
       function(data){
           var user = data.user;
           if(_.contains(user.roles, 'cdf-admin')) {
-            referer = '/manage-dojos';
+            $scope.referer = '/manage-dojos';
           }
-          $window.location.href = '/dashboard' + referer;
+          $window.location.href = '/dashboard' + $scope.referer;
         },
         function(){
           $scope.errorMessage = $translate.instant('Invalid email or password');
