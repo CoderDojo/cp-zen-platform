@@ -8,6 +8,28 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return;
   }
 
+  /*angular.element('.btn-file :file').on('change', function() {
+    var numFiles = this.files ? this.files.length : 1,
+      label = this.value.replace(/\\/g, '/').replace(/.*\//, '');
+
+    angular.element('#avatar-form').submit();
+  });*/
+
+  $scope.uploadFile = function(files) {
+    var fd = new FormData();
+    //Take the first selected file
+    fd.append("file", files[0]);
+
+    $http.post('/api/1.0/profiles/change_avatar', fd, {
+      withCredentials: true,
+      headers: {'Content-Type': 'multipart/form-data'}
+    }).success(function () {
+      alert('success');
+    }).error(function () {
+      alert('error')
+    });
+  };
+
   $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -100,13 +122,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
     $scope.profile.languagesSpoken = utils.toTags($scope.profile.languagesSpoken);
     $scope.profile.projects = utils.toTags($scope.profile.projects);
-    $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
+    $scope.profile.private =  $scope.profile.private ? "true" : "false";
 
     $scope.profile.widget = {};
 
     $scope.profile.widget.projects = utils.frTags($scope.profile.projects);
     $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
-    $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken); 
+    $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken);
   }
 
 
@@ -117,7 +139,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       if(_.isEmpty($scope.dojos)) {
         //This user has no Dojos.
         //Use init user type to setup profile.
-      
+
         $scope.userType = loggedInUser.data.initUserType;
       } else {
         //Search usersdojos for highest user type
@@ -126,12 +148,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     }, function (err) {
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
-  }  
+  }
 
 
   function findHighestUserType() {
     var highestTypeFound = false;
-    
+
     function checkLinks(userType) {
       for(var i = 0; i < usersDojos.length; i++) {
         var userDojoLink = usersDojos[i];
@@ -149,7 +171,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     _.each(searchForUserTypes, function (searchForUserType) {
       if(!highestTypeFound){
         $scope.userType = checkLinks(searchForUserType);
-      } 
+      }
     });
 
   }
@@ -161,14 +183,14 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin']);
-    
+
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
     } else {
       saveDirect(profileCopy);
     }
   };
-  
+
   function saveYouthViaParent(profile){
     cdUsersService.saveYouthProfile(profile, function(){
       alertService.showAlert('Save was successful');
@@ -183,11 +205,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
     profile.projects = profile.projects && utils.frTags(profile.projects);
-    
+
 
     function win(profile){
       $scope.profile = profile;
-      $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
+      $scope.profile.private =  $scope.profile.private ? "true" : "false";
       alertService.showAlert('Profile has been saved successfully');
     }
 

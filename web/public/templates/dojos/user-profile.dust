@@ -3,20 +3,27 @@
   <div class="container target">
     <div class="row">
       <div class="col-sm-9">
-        <h1 class="">{{ profile.name || profile.alias }}</h1>
+
         <br>
       </div>
       <div class="col-sm-2">
-        <img title="profile image" class="img-circle img-responsive" src="/img/avatar.png">
+
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col-sm-3">
         <!--left col-->
-        <div class="panel panel-default">
+
+          <img title="profile image" class="img-circle img-responsive" src="/img/avatar.png">
+          <h1 class="">{{ profile.name || profile.alias }}</h1>
+          <span class="btn btn-primary btn-file">
+            {@i18n key="Upload new picture"/}<input type="file" onchange="angular.element(this).scope().uploadFile(this.files)" />
+          </span>
+
+        <div class="panel panel-default" style="margin-top: 35px;">
           <div class="panel-heading">{@i18n key="Social Media"/}</div>
-          <div class="panel-body"> 
+          <div class="panel-body">
             <a ng-if="profile.twitter" href="{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
             <a ng-if="profile.linkedin" href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
             <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
@@ -77,3 +84,4 @@
       <div id="push"></div>
     </div>
   </div>
+</div>

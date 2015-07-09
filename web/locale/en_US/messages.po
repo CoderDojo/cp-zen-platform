@@ -1269,6 +1269,9 @@ msgstr "Add a user type"
 msgid "Background Checked"
 msgstr "Background Checked"
 
+msgid "Upload new picture"
+msgstr "Upload new picture"
+
 msgid "Intro"
 msgstr "Intro"
 
