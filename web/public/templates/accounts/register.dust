@@ -4,14 +4,14 @@
     <form name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form">
       <legend>{@i18n key="Register"/}</legend>
       <div class="row">
-        <div class="input-group col-lg-6 col-md-offset-3">
+        <div class="input-group col-l6-6 col-md-offset-3">
           <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="NAME"/}">
         </div>
       </div>
       <span class="help-block"></span>
 
       <div class="row">
-        <div class="input-group col-lg-6 col-md-offset-3">
+        <div class="input-group col-l6-6 col-md-offset-3">
           <span class="input-group-addon"><span>@</span></span>
           <input type="email" class="form-control" name="emailAddress" required required-message="'{@i18n key="Email is empty"/}'" ng-model="registerUser.email" placeholder="{@i18n key="EMAIL"/}">
         </div>
@@ -44,6 +44,10 @@
           <label class="control-label has-error validationMessage"
             ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
         </div>
+      </div>
+
+      <div class="input-group col-lg-6 col-md-offset-3">
+        <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
       </div>
 
       <span class="help-block"></span>

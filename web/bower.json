@@ -2,13 +2,13 @@
   "name": "cp-zen-platform",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "~1.3.15",
+    "angular": "1.3.15",
     "angular-bootstrap": "0.13.0",
     "angular-google-maps": "2.0.17",
-    "angular-loading": "~0.1.4",
+    "angular-loading": "0.1.4",
     "angular-moment": "0.8.3",
-    "angular-route": "~1.3.15",
-    "angular-sanitize": "~1.3.15",
+    "angular-route": "1.3.15",
+    "angular-sanitize": "1.3.15",
     "angular-ui-map": "0.5.0",
     "angular-ui-router": "0.2.14",
     "angular-ui-select": "0.11.2",
@@ -27,8 +27,7 @@
     "ng-ckeditor": "https://github.com/david-cahill/ng-ckeditor.git#master",
     "ngstorage": "0.3.0",
     "spin.js": "2.0.2",
-    "tg-angular-validator": "1.2.5",
-    "underscore": "1.7.0",
+    "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
     "googlemaps-js-marker-clusterer": "1.0.0",
     "angular-truncate": "*",
     "angular-wizard": "https://github.com/david-cahill/angular-wizard.git#master",
@@ -38,27 +37,29 @@
     "jquery-cookie-disclaimer": "1.0.0",
     "angular-alert-banner": "https://github.com/ckiss/angular-alert-banner.git#master",
     "angular-spinner": "0.6.2",
-    "jed": "~1.0.2",
-    "messageformat": "~0.1.8",
-    "angular-translate": "2.7.0",
-    "angular-translate-interpolation-messageformat": "2.7.0",
-    "angular-translate-loader-url": "2.7.0",
     "angular-translate-storage-cookie": "2.7.0",
     "ng-tags-input": "2.3.0",
     "ngBootbox": "0.0.5",
     "angular-breadcrumb": "https://github.com/david-cahill/angular-breadcrumb.git#master"
+    "jed": "1.0.2",
+    "messageformat": "0.1.8",
+    "angular-translate": "2.7.0",
+    "angular-translate-interpolation-messageformat": "2.7.0",
+    "angular-translate-loader-url": "2.7.0",
+    "angular-recaptcha": "2.2.4"
   },
   "devDependencies": {
-    "angular-mocks": "~1.3.0",
-    "util": "~0.10.3"
+    "angular-mocks": "1.3.0",
+    "util": "0.10.12"
   },
   "resolutions": {
-    "angular": "~1.3.15",
+    "angular": "1.3.15",
     "bootstrap": "3.2.0",
     "jquery": "2.1.3",
     "spin.js": "2.0.2",
     "bootbox": "~4.4.0",
     "tg-angular-validator": "1.2.5",
-    "angular-translate": "2.7.0"
+    "angular-translate": "2.7.0",
+    "angular-mocks": "1.3.0"
   }
 }

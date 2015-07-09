@@ -8,66 +8,62 @@
       <div id="cd-charter-text">
         <h1>{@i18n key="Charter"/}</h1>
         <p>{@i18n key="charter.p2"/}</p>
-
         <p>{@i18n key="charter.p3"/}</p>
-
         <ul>
-          <li>{@i18n key="charter.li1"/}</li>
-          <li>{@i18n key="charter.li2"/}</li>
-          <li>{@i18n key="charter.li3"/}</li>
-          <li>{@i18n key="charter.li4"/}</li>
-          <li>{@i18n key="charter.li5"/}</li>
-          <li>{@i18n key="charter.li6"/}</li>
-          <li>{@i18n key="charter.li7"/}</li>
-          <li>{@i18n key="charter.li8"/}</li>
-          <li>{@i18n key="charter.li9"/}</li>
-          <li>{@i18n key="charter.li10"/}</li>
-      </ul>
-      <p>{@i18n key="charter.p4"/}</p>
-      <ul>
-          <li>{@i18n key="charter.li11"/}</li>
-          <li>{@i18n key="charter.li12"/}</li>
-          <li>{@i18n key="cheater.li13"/}</li>
-          <li>{@i18n key="charter.li14"/}</li>
-      </ul>
-      <h2>{@i18n key="Agreement"/}</h2>
-      <ul>
-          <li>{@i18n key="charter.li15"/}</li>
-          <li>{@i18n key="charter.li16"/}</li>
-          <li>{@i18n key="charter.li17"/}</li>
-          <li>{@i18n key="charter.li18"/}</li>
-          <li>{@i18n key="charter.li19"/}</li>
-          <li>{@i18n key="charter.li20"/}</li>
-          <li>{@i18n key="charter.li21"/}</li>
-          <li>{@i18n key="charter.li22"/}</li>
-      </ul>
-      <h2>{@i18n key="Disclaimer of Liability"/}</h2>
-      <ul>
-          <li>{@i18n key="charter.li23"/}</li>
-          <li>{@i18n key="charter.li24"/}</li>
-      </ul>
-      <div class="wizardSlideableDiv">
-        <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
-          <div class="row">
-            <div class="form-group">
-              <label for="agreedToBy" class="col-lg-3">{@i18n key="charter.fullname.label"/}</label>
-                <div class="col-lg-5">
-                  <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
-                </div>
-            </div>
-          </div>
-          <div class="col-lg-offset-3">
-            <div class="checkbox checkbox-primary">
-              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox" name="agreeToCharterCheckbox" required required-message="'{@i18n key="You must accept the charter"/}'" id="agreeToCharterCheckbox">
-              <label for="agreeToCharterCheckbox">
-                {@i18n key="I have read and accepted the above charter"/}
-              </label>
-            </div>
-          </div>
-          <button class="btn btn-primary center-block" type="submit">{@i18n key="Next"/}</button>
-        </form>
+          <li><span>{@i18n key="charter.li1"/}</span></li>
+          <li><span>{@i18n key="charter.li2"/}</span></li>
+          <li><span>{@i18n key="charter.li3"/}</span></li>
+          <li><span>{@i18n key="charter.li4"/}</span></li>
+          <li><span>{@i18n key="charter.li5"/}</span></li>
+          <li><span>{@i18n key="charter.li6"/}</span></li>
+          <li><span>{@i18n key="charter.li7"/}</span></li>
+          <li><span>{@i18n key="charter.li8"/}</span></li>
+          <li><span>{@i18n key="charter.li9"/}</span></li>
+          <li><span>{@i18n key="charter.li10"/}</span></li>
+        </ul>
+        <p>{@i18n key="charter.p4"/}</p>
+        <ul>
+          <li><span>{@i18n key="charter.li11"/}</span></li>
+          <li><span>{@i18n key="charter.li12"/}</span></li>
+          <li><span>{@i18n key="charter.li13"/}</li>
+          <li><span>{@i18n key="charter.li14"/}</span></li>
+        </ul>
+        <h2>{@i18n key="Agreement"/}</h2>
+        <ul>
+          <li><span>{@i18n key="charter.li15"/}</span></li>
+          <li><span>{@i18n key="charter.li16"/}</span></li>
+          <li><span>{@i18n key="charter.li17"/}</span></li>
+          <li><span>{@i18n key="charter.li18"/}</span></li>
+          <li><span>{@i18n key="charter.li19"/}</span></li>
+          <li><span>{@i18n key="charter.li20"/}</span></li>
+          <li><span>{@i18n key="charter.li21"/}</span></li>
+          <li><span>{@i18n key="charter.li22"/}</span></li>
+        </ul>
+        <h2>{@i18n key="Disclaimer of Liability"/}</h2>
+        <ul>
+          <li><span>{@i18n key="charter.li23"/}</span></li>
+          <li><span>{@i18n key="charter.li24"/}.</span></li>
+        </ul>
       </div>
+      <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
+        <div class="row">
+          <div class="form-group">
+            <label for="agreedToBy" class="col-lg-offset-2 col-lg-2">{@i18n key="charter.fullname.label"/}</label>
+            <div class="col-lg-6">
+              <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
+            </div>
+          </div>
+          <div class="col-lg-offset-4 col-lg-6">
+            <div class="checkbox checkbox-primary">
+              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox"  required required-message="'{@i18n key="You must accept the charter"/}'" name="agreeToCharterCheckbox" id="agreeToCharterCheckbox">
+              <label for="agreeToCharterCheckbox">{@i18n key="I have read and accepted the above charter"/}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row center-children">
+          <button class="centered-child cd-color-5 btn btn-primary" type="submit">{@i18n key="Next"/}</button>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 </div>

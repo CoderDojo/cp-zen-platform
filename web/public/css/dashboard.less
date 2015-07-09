@@ -1,3 +1,11 @@
+
+* {
+  border-radius: 0px!important;
+}
+
+@cd-light-blue: #2c9cfb;
+@cd-green: #61c93f;
+
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -38,13 +46,13 @@ ul {
   box-shadow: 0 0 4px #bbbbbb;
   -moz-box-shadow: 0 0 4px #bbbbbb;
   -webkit-box-shadow: 0 0 4px #bbbbbb;
-  min-height: 350px;
+  min-height: 250px;
   margin:0 auto;
   width:80%;
-  margin-top:80px;
+  margin-top:2.5em;
   #main {
     width: 590px;
-    padding: 40px 30px 20px 30px;
+    padding: 20px 30px 20px 30px;
   }
   #sidebar {
     margin-left:650px;
@@ -53,6 +61,9 @@ ul {
       width: 261px;
       padding: 35px 32px 45px;
     }
+  }
+  .register-btn {
+    margin-top: 30px;
   }
 }
 
@@ -132,11 +143,6 @@ label {
       padding: 5px;
       margin:10px;
     }
-    .wizardSlideableDiv {
-      border: 1px dashed rgb(66, 139, 202);
-      padding: 5px;
-      margin:10px;
-    }
   }
   .dojoWizardComplete {
     width:100%;
@@ -147,20 +153,24 @@ label {
   }
 }
 
+#charterForm {
+  margin-top: 25px;
+  .checkbox {
+    label.validationMessage {
+      font-weight: bold;
+      margin-left: -25px;
+    }
+  }
+}
+
 .cd-dashboard2 {
   padding-right: 0;
   padding-left: 0;
 }
 
 .dojo-list-dashboard {
-  background: url(../img/main-bg.png) repeat-y;
   min-height: 350px;
   margin:0 auto;
-  width:975px;
-  #sidebar {
-    float: right;
-    margin-top: 30px;
-  }
 }
 
 .cd-text-heading1 {
@@ -174,18 +184,26 @@ label {
 
 #cd-charter-text {
 	width: 75%;
-  	min-width: 275px;
-  	margin: auto;
-  	input {
-  		margin-bottom:15px;
-  	}
+  min-width: 275px;
+  margin: auto;
+  input {
+  	margin-bottom:15px;
+  }
+  ul {
+    list-style-type: square;
+    li {
+      font-size: 15px;
+      color: @cd-green;
+      span {
+        font-size: 13px;
+        color: black;
+      }
+    }
+  }
 }
 
 .cd-dojo-list-container {
   padding:30px;
-  #main {
-    width: 590px;
-  }
 }
 
 .cd-create-dojo-container {
@@ -212,6 +230,9 @@ label {
     }
   }
   #createChampionForm {
+    .preGameWarning {
+      padding: 15px;
+    }
     .form-group {
       margin-top:15px;
     }
@@ -219,10 +240,11 @@ label {
       width:100%;
     }
     label {
-      text-align:left;
+      text-align:right;
+      padding-top: 5px;
     }
     textarea {
-      margin-bottom:10px;
+      margin-bottom: 10px;
     }
     legend {
       margin-top:20px;
@@ -237,53 +259,63 @@ label {
       margin-bottom:15px;
     }
     .registerButton {
-      margin-top:15px;
+      margin-top: 30px;
     }
   }
   #createDojoForm {
     margin-top:20px;
-    #main {
-      width: 590px;
-    }
-    label {
-      font-weight:normal;
+    legend {
+      margin-top: 35px;
+      margin-botton: 20px;
     }
     .form-group {
-      margin-top:15px;
-    }
-    p {
-      color:#99999F;
-    }
-    .angular-google-map-container {
-      height: 300px;
-    }
-    .google-map {
-      margin-top:15px;
-    }
-    .other-information {
-      margin-top:35px;
-    }
-    .mailingListCheckbox {
-      margin-top:-22px;
+      label {
+        text-align: right;
+        padding-top: 5px;
+        margin-bottom: 15px;
+      }
       p {
-        padding-top:10px;
+        color: #99999F;
+      }
+      .google-map {
+        margin-top:15px;
       }
     }
-    .widget {
-      padding-bottom:55px;
-      .widget-block {
-        padding-top:20px;
+    .info-button-container {
+      text-align: right;
+      margin-bottom: 35px;
+      i.info-button {
+        padding-right: 6px;
       }
-      .current-stage-radios {
-        padding-right: 25px;
-        margin-top: -8px;
-        float: left;
-        margin-left: 15px;
+      .info-button-input {
+        display: inline-block;
+        width: calc(~'100% - 25px');
+      }
+      .control-label {
+        margin-bottom: 0px;
       }
     }
-    input[name="dojoCoordinates"] {
-      margin-top:15px;
-      margin-bottom:15px;
+    .create-dojo-checkbox {
+      label {
+        padding-top: 8px;
+      }
+      .awesome-label {
+        text-align: left;
+        padding-top: 0px;
+      }
+    }
+    .create-dojo-radios {
+      label {
+        padding-top:8px;
+      }
+      .awesome-label {
+        text-align: left;
+        padding-top: 0px;
+        margin-bottom: 0px;
+      }
+    }
+    #createDojoButton {
+      margin-top: 30px;
     }
   }
 }
@@ -402,8 +434,25 @@ label {
   margin-left: 10px;
 }
 
-.start-dojo-wizard-step {
-  margin-bottom:50px;
+.start-dojo-wizard {
+  .steps-indicator {
+    margin: 90px 0 0 0;
+    height: 30px;
+    position: relative;
+  }
+  .steps-indicator.steps-4:before {
+    left: 0%;
+    right: 0%;
+  }
+  .steps-indicator li.done a:before {
+    background-color: @cd-green;
+  }
+  .steps-indicator li.current a:before {
+    background-color: @cd-light-blue;
+  }
+  .start-dojo-wizard-step {
+    margin-bottom:30px;
+  }
 }
 
 .cd-grid-table {
@@ -442,10 +491,6 @@ label {
   .sb-date-select-year {
     margin-right:10px;
   }
-}
-
-#jQueryCookieDisclaimer{
-  padding:10px 10px;
 }
 
 .checkbox label.control-label.has-error.validationMessage:before {
@@ -495,4 +540,96 @@ div.badge-container {
 
 img.badge-thumbnail {
   width: 150px;
+}
+
+/* we want color schema in body to be different than color schema in header */
+html body .cd-dashboard .cd-color-1 {
+  background-color: #2C9CFB;
+}
+html body .cd-dashboard .cd-color-2 {
+  background-color: #61C93F;
+}
+html body .cd-dashboard .cd-color-3 {
+  background-color: #2E7AC7;
+}
+html body .cd-dashboard .cd-color-4 {
+  background-color: #FBCC33;
+}
+html body .cd-dashboard .cd-color-5 {
+  background-color: #2C9CFB;
+}
+
+html .container .cd-accordion {
+  margin: 3%;
+  overflow: auto;
+
+  .panel-heading {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: auto;
+    overflow: auto;
+
+    h4 {
+      display: inline-block;
+      width: 85%;
+    }
+  }
+  .in {
+    padding-top: 15px;
+  }
+  .panel-title {
+    font-size: 20px;
+    color: white;
+  }
+  label {
+    font-size: 18px;
+  }
+  .checkbox {
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    min-height: 35px;
+    height: auto;
+    overflow: auto;
+  }
+  .validationMessage {
+    position: relative;
+    width: auto;
+    text-align: left;
+    line-height: normal;
+    float: right;
+    margin-right: 15px;
+  }
+  .form-control {
+    width: 95%;
+    margin-right: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable {
+  -webkit-touch-callout: initial;
+  -webkit-user-select: initial;
+  -khtml-user-select: initial;
+  -moz-user-select: initial;
+  -ms-user-select: initial;
+  user-select: initial;
+}
+
+.centered-child {
+  display: inline-block;
+}
+
+.center-children {
+  text-align: center;
 }

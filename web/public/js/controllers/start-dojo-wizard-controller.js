@@ -1,7 +1,7 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate, utilsService) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, cdUsersService, Geocoder, gmap, $translate, utilsService,  $sanitize, vcRecaptchaService, intercomService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -11,6 +11,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
                       'Setup your Dojo',
                       'Dojo Listing'
                     ];
+
+    $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
 
     //Check if user has already started the wizard.
     auth.get_loggedin_user(function(user) {
@@ -217,6 +219,12 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.initUserTypes = response;
       });
       $scope.doRegister = function(user) {
+      if(vcRecaptchaService.getResponse() === ""){
+        return alertService.showError("Please resolve the captcha");
+      }
+
+      user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+
         auth.register(user, function(data) {
           if(data.ok) {
             auth.login(user, function(data) {
@@ -253,6 +261,14 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     //--Step Two:
     function setupStep2(subStep) {
+      var initialDate = new Date();
+      initialDate.setFullYear(initialDate.getFullYear()-18);
+      $scope.dobDateOptions = {
+          formatYear: 'yy',
+          startingDay: 1,
+          initDate: initialDate
+        };
+
       $scope.hideIndicators = false;
       currentStepInt = 1;
 
@@ -276,11 +292,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
         $scope.champion = {};
 
-        $scope.dateOptions = {
-          formatYear: 'yy',
-          startingDay: 1
-        };
-
         $scope.picker = {opened: false};
 
         $scope.open = function ($event) {
@@ -302,6 +313,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           dojoLead.completed = false;
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             $scope.showCharterAgreement();
+            intercomService.InitIntercom();
           });
         }
 
@@ -489,6 +501,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
       $scope.save = function(dojo) {
+
+        Object.keys(dojo).forEach(function(prop){
+          if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
+            dojo[prop] = $sanitize(dojo[prop]);
+          }
+        });
+
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;
           dojoLead.application.dojoListing = dojo;
@@ -496,6 +515,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
             cdDojoService.save(dojo, function (response) {
+
+              //update intercom champion dojos
+              intercomService.updateIntercom(response.dojo_id);
+
               $state.go('home', {
                 bannerType:'success',
                 bannerMessage: $translate.instant('dojo.create.success'),
@@ -544,22 +567,35 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               address = address + ', ' + dojo['admin'+adminidx+'Name'];
             }
           }
+
+          var addr1 = (typeof dojo.address1 != 'undefined') ? dojo.address1 + ', ' : "";
           address = address + ', ' + dojo.countryName;
-          Geocoder.latLngForAddress(address).then(function (data) {
-            $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-            $scope.model.map.panTo($scope.mapOptions.center);
+
+          Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+            placePinOnMap(data);
+          },
+          function (data) {
+            Geocoder.latLngForAddress(address).then(function (data2) {
+              placePinOnMap(data2);
+            });
           });
         }
       }
       WizardHandler.wizard().goTo(3, true);
       $scope.stepFinishedLoading = true;
     }
+
+    function placePinOnMap(data) {
+      $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+      $scope.model.map.panTo($scope.mapOptions.center);
+      $scope.markers.push(new google.maps.Marker({
+        map: $scope.model.map,
+        position: $scope.mapOptions.center
+      }));
+      $scope.dojo.coordinates = data.lat + ', ' + data.lng;
+    }
     //--
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state',
-      '$stateParams', '$location', 'auth', 'alertService', 'WizardHandler',
-      'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'cdUsersService', 'Geocoder',
-      'gmap', '$translate', 'utilsService', startDojoWizardCtrl]);
-
+  .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', '$translate', 'utilsService', '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);

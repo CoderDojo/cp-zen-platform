@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService) {
+function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService, vcRecaptchaService) {
   $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;
@@ -47,43 +47,50 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
   }
 
   $scope.doRegister = function(user) {
+    if(vcRecaptchaService.getResponse() === ""){
+      return alertService.showError("Please resolve the captcha");
+    }
+
+    user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+
     auth.register(user, function(data) {
       if(data.ok) {
-        alertService.showAlert($translate.instant('login.register.success'), function() {
+        alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo.', function() {
           auth.login(user, function(data) {
-            $window.location.href = '/dashboard' + $scope.referer;
+            $window.location.href = '/dashboard/start-dojo';
           });
         });
       } else {
         var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
         alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
       }
-    }, function() {
-
-    });
-  }
+    }, function(err) {
+         alertService.showError('An error occurred while registering account: ' + err);
+       });
+  };
 
   $scope.doLogin = function() {
-    $scope.message = ''
-    $scope.errorMessage = ''
+    $scope.message = '';
+    $scope.errorMessage = '';
 
     if (!$scope.loginForm.$valid) {
-      return
+      return;
     }
 
     auth.login($scope.login,
       function(data){
-        if ($scope.redirect) {
-          $window.location.href = $scope.redirect;
-        } else {
-          $window.location.href = '/dashboard' + $scope.referer;
+          var user = data.user;
+          if(_.contains(user.roles, 'cdf-admin')) {
+            referer = '/manage-dojos';
+          }
+          $window.location.href = '/dashboard' + referer;
+        },
+        function(){
+          $scope.errorMessage = $translate.instant('Invalid email or password');
+          $scope.errorMessage = 'Invalid email or password!';
         }
-      },
-      function(){
-        $scope.errorMessage = $translate.instant('Invalid email or password');
-      }
-    )
-  }
+     );
+  };
 
   $scope.sendPasswordResetEmail = function() {
     $scope.message = ''
@@ -102,14 +109,14 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
     })
   }
 
+  $scope.goHome = function() {
+    window.location.href = '/'
+  };
+
   $scope.logout = function(){
     auth.logout(function(data){
       $window.location.href = '/'
     })
-  }
-
-  $scope.goHome = function() {
-    window.location.href = '/'
   }
 
   $scope.validatePassword = function (password, email) {

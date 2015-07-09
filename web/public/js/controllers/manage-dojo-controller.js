@@ -92,15 +92,16 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
     if(filter.name){
       var nameQuery = {
-        "regexp": {
-          "name": {
-            "value": ".*" + filter.name + ".*"
-          }
+        "multi_match": {
+          "query":  filter.name,
+          "fields": ['address1', 'name.search'],
+          "type": "cross_fields",
+          "fuzziness": 2,
+          "operator": "and"
         }
       };
       filteredBoolQuery.bool.must.push(nameQuery);
     }
-
     var query = _.omit({
       verified: filter.verified,
       stage: filter.stage,

@@ -59,6 +59,9 @@ function cdUsersService(cdApi, $q){
       cdApi.get('profiles/hidden-fields', deferred.resolve, deferred.reject || topfail);
 
       return promise;
+    },
+    isChampion: function(id, win, fail){
+      cdApi.post('users/isChampion', {id: id}, win, fail || topfail);
     }
   };
 }
