@@ -211,11 +211,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.hideIndicators = true;
       currentStepInt = 0;
       $scope.doRegister = function(user) {
-      if(vcRecaptchaService.getResponse() === ""){
-        return alertService.showError("Please resolve the captcha");
-      }
+        // TODO - this isChampion a tmp hack until phase1 catchs up with master
+        user.isChampion = true;
+        if(vcRecaptchaService.getResponse() === ""){
+          return alertService.showError("Please resolve the captcha");
+        }
 
-      user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+        user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
         auth.register(user, function(data) {
           if(data.ok) {
