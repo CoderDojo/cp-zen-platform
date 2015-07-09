@@ -25,10 +25,22 @@
         </div>
 
         <div class="controls center-block text-center" ng-controller="header">
-          <input class="btn-primary" ng-click="doLogin(); selectTab('dojo-list')" style="padding: 5px 108px;" type="submit" value="Login">
+          <input class="btn btn-primary" ng-click="doLogin(); selectTab('dojo-list')" style="padding: 5px 108px;" type="submit" value="Login">
+        </div>
+
+        <span class="help-block"></span>
+
+        <div class="col-lg-4 col-lg-offset-3">
+          <a class="pointer" ng-click="show('forgot-password')">Forgot password?</a>
+        </div>
+
+        <div class="col-lg-4">
+          <a ui-sref="register-account">Register</a>
         </div>
 
       </form>
+
+      
 
       <form class="login-form" name="forgotPasswordForm" role="form" ng-show="isVisible('forgot-password')">
         <div class="input-group">
@@ -44,27 +56,15 @@
           <span class="help-block">{{ errorMessage }}</span>
         </div>
 
-        <button class="btn btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">REQUEST PASSWORD RESET</button>
+        <button class="btn btn-primary btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">Request Password Reset</button>
 
         <div class="input-group center-block text-center back-button">
-          <a ng-click="show('login')">Cancel</a>
+          <span class="help-block"></span>
+          <a class="pointer" ng-click="show('login')">Cancel</a>
         </div>
       </form>
 
     </div>
-
-    <div id="sidebar">
-      <div class="widget">
-        <legend>Other stuff</legend>
-         <div class="forgot-password">
-          <a ng-click="show('forgot-password')">Forgot password?</a>
-        </div>
-        <div class="create-account">
-          <a ng-href="/register">Register</a>
-        </div>
-      </div>
-    </div>
-
   </div>
 
 </div>

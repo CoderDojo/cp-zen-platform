@@ -1,6 +1,6 @@
  'use strict';
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, $localStorage, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, vcRecaptchaService, intercomService) {
+function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, $localStorage, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, Geocoder, gmap, $sanitize, vcRecaptchaService, intercomService) {
     $scope.stepFinishedLoading = false;
     $scope.wizardCurrentStep = '';
     var currentStepInt = 0;
@@ -456,6 +456,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
       $scope.save = function(dojo) {
+
+        Object.keys(dojo).forEach(function(prop){
+          if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
+            dojo[prop] = $sanitize(dojo[prop]);
+          }
+        });
+        
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;
           dojoLead.application.dojoListing = dojo;
@@ -516,19 +523,35 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               address = address + ', ' + dojo['admin'+adminidx+'Name'];
             }
           }
+          
+          var addr1 = (typeof dojo.address1 != 'undefined') ? dojo.address1 + ', ' : "";
           address = address + ', ' + dojo['countryName'];
-          Geocoder.latLngForAddress(address).then(function (data) {
-            $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-            $scope.model.map.panTo($scope.mapOptions.center);
+
+          Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+            placePinOnMap(data);
+          },
+          function (data) {
+            Geocoder.latLngForAddress(address).then(function (data2) {
+              placePinOnMap(data2);
+            });
           });
         }
       }
       WizardHandler.wizard().goTo(3, true);
       $scope.stepFinishedLoading = true;
     }
+
+    function placePinOnMap(data) {
+      $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+      $scope.model.map.panTo($scope.mapOptions.center);
+      $scope.markers.push(new google.maps.Marker({
+        map: $scope.model.map,
+        position: $scope.mapOptions.center
+      }));
+      $scope.dojo.coordinates = data.lat + ', ' + data.lng;
+    }
     //--
 }
 
 angular.module('cpZenPlatform')
-    .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
-
+  .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', '$localStorage', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
