@@ -111,12 +111,17 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       });
     });
   }
+
+  var sanitizeCdForms = {
+    editDojo: ["address1","email","googleGroup","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+  }
   
   $scope.save = function(dojo) {
-    Object.keys(dojo).forEach(function(prop){
-      if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
-        dojo[prop] = $sanitize(dojo[prop]);
-      }
+
+    _.each(sanitizeCdForms.editDojo, function(item, i) {
+        if(_.has(dojo, item)) {
+          dojo[item] = $sanitize(dojo[item]);
+        }
     });
 
     cdDojoService.save(dojo, function(response) {
