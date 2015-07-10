@@ -7,7 +7,8 @@ function cdRegisterAccount(){
       templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
       link: function (scope, element, attrs) { 
        
-      }
+      },
+      controller: 'login'
     }
   }
 

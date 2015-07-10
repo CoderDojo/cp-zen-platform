@@ -4,21 +4,45 @@
   position: relative;
   z-index: 900;
 }
-.header-container{
+
+.header-container {
   text-align: center;
 }
+
 .cd-logo {
-  margin-top: 25px;
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  height: 4em;
+  width: 15em;
+  background-size: contain;
+  float: left;
+  margin-top: 45px;
+  margin-left: 13px;
+}
+
+.cd-mobile-logo-container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+}
+
+.cd-mobile-logo {
+  margin-top: 30px;
   display: inline-block;
   background-image: url("../img/logo.png");
   background-repeat: no-repeat;
   height: 4em;
   width: 15em;
   background-size: contain;
+  display: none;
 }
+
 .cd-header-button-group {
   display: inline-block;
+  float: right;
 }
+
 .cd-header-button {
   width: 10em;
   display: inline-block;
@@ -29,26 +53,28 @@
   line-height: 1.8em;
   height: 2.6em;
   font-size: 14px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   cursor: pointer;
 }
+
 .cd-header-button a {
   color: white;
   font-size: 14px;
 }
+
 .cd-active-tab {
   height: 3.8em;
   line-height: 2.85em;
 }
 
 .language-selector {
-  width:14.5em;
-  float:right;
+  width: 14.5em;
+  float: right;
   margin-top: 5px;
   display: inline-block;
 }
 
-.alert-message{
+.alert-message {
 
   &.active {
     min-height: 45px;
@@ -58,40 +84,48 @@
     position: relative !important;
   }
 
-  .container{
-    padding-top:10px;
-    padding-bottom:10px;
+  .container {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
-  p{
+  p {
     width: 95%;
     display: inline-block;
   }
 }
 
-.a-no-float{
-  float:none !important;
-  &:hover{
+.a-no-float {
+  float: none !important;
+  &:hover {
     text-decoration: underline !important;
   }
 }
 
-html .container .cd-color-1 {
+.cd-color-1, html .container .cd-color-1 {
   background-color: #61C93F;
 }
-html .container .cd-color-2 {
+
+.cd-color-2, html .container .cd-color-2 {
   background-color: #2E7AC7;
 }
-html .container .cd-color-3 {
+
+.cd-color-3, html .container .cd-color-3 {
   background-color: #FBCC33;
 }
-html .container .cd-color-4 {
+
+.cd-color-4, html .container .cd-color-4 {
   background-color: #ED462F;
 }
-html .container .cd-color-5 {
+
+.cd-color-5, html .container .cd-color-5 {
   background-color: #2C9CFB;
 }
 
-#intercom-container .intercom-launcher{
+.cd-color-6, html .container .cd-color-5 {
+  background-color: orange;
+}
+
+#intercom-container .intercom-launcher {
   visibility: visible !important;
 }
