@@ -266,6 +266,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
 
   $scope.pushChangedDojo = function (dojo) {
+    console.log(dojo);
     var filterVerified, exists = !!(_.find(changedDojos, function (changedDojo) {
       return dojo.id === changedDojo.id;
     }));
