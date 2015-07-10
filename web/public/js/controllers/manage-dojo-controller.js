@@ -244,16 +244,18 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       });
     }
 
-    async.series([updateDojos, deleteDojos], function (err) {
-      delete $scope.dojosToBeDeleted;
-      delete $scope.dojosToBeUpdated;
-      changedDojos = [];
-      if (err) {
-        alertService.showError($translate.instant('An error has occurred while updating Dojos') + ' <br>' +
-        (err.error || JSON.stringify(err)));
-      }
-      $scope.loadPage($scope.filter, false);
-    });
+    if($scope.dojosToBeUpdated.length > 0 || $scope.dojosToBeDeleted.length > 0) { 
+      async.series([updateDojos, deleteDojos], function (err) {
+        delete $scope.dojosToBeDeleted;
+        delete $scope.dojosToBeUpdated;
+        changedDojos = [];
+        if (err) {
+          alertService.showError($translate.instant('An error has occurred while updating Dojos') + ' <br>' +
+          (err.error || JSON.stringify(err)));
+        }
+        $scope.loadPage($scope.filter, false);
+      });
+    }
   };
 
   cdCountriesService.listCountries(function (countries) {
