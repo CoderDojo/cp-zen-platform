@@ -35,6 +35,18 @@
   height: 27px;
 }
 
+.mobile-login-container {
+  padding-top: 15px;
+  display: none;
+  width: 60%;
+  margin: 0px auto;
+  float: left;
+}
+
+.mobile-login-subcontainer {
+  padding-left: 50px;
+}
+
 .cdgm-right {
   display: block;
   text-transform: none;
@@ -54,6 +66,29 @@
 .text-right {
   text-align: right;
 }
+
+.language-selector {
+  margin-top: 10px;
+  overflow: hidden;
+  padding-left: 0px;
+  width:30px;
+  float:right;
+  display: inline-block;
+}
+.language-selector select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background: url("../img/ireland.png");
+  background-repeat: no-repeat;
+  background-size: 30px 15px;
+  color: transparent;
+  font-size: 11px;
+  font-weight: bold;
+  height:15px;
+  width:30px;
+  cursor: pointer;
+}
+
 
 .alert-message .row {
   width: 1130px;
@@ -125,6 +160,7 @@
   float: left;
 }
 
+
 @media only screen and (max-width: 1200px) {
 
   .navbar-main {
@@ -149,6 +185,15 @@
     margin-left: 10px;
   }
 
+  .cd-logo, .cd-logo-container {
+    display: none;
+  }
+
+  .cd-mobile-logo {
+    display: inline-block;
+  }
+
+
 }
 
 @media only screen and (max-width: 992px) {
@@ -160,13 +205,16 @@
     width: 710px;
   }
 
-  .cd-logo, .cd-logo-container {
-    display: none;
+  .cd-mainnav-container {
+    width: 100%;
   }
 
-  .cd-mobile-logo {
-    display: inline-block;
+  .cd-header-button {
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
   }
+
 
 }
 
@@ -193,11 +241,21 @@
   }
 
   .login-container {
-    height: auto;
+      display: none;
+      height: auto;
+    }
+
+  .mobile-login-container {
+    display: inline-block;
   }
+
 
   .cdgm-right {
     position: static;
+  }
+
+  .cdgm-container {
+    min-height: 0px;
   }
 
   .cd-header-button-group {
@@ -263,6 +321,10 @@
 
   .alert-message.active {
     text-align: center;
+  }
+
+  .language-selector {
+    margin-top: 7px;
   }
 
 }

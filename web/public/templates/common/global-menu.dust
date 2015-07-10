@@ -1,6 +1,28 @@
 <button type="button" class="navbar-toggle mainnav-toggle" data-toggle="collapse" data-target="#cd-mainnav-collapse">
   <i class="fa fa-navicon fa-2x"></i>
 </button>
+
+
+<div class="mobile-login-container">
+    <div class="mobile-login-subcontainer">
+       <span ng-if="user" class="">
+        <span>{{ user.name }} | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
+       </span>
+
+        <span class="language-selector">
+      <select>
+        <option value="volvo">EN</option>
+        <option value="saab">DE</option>
+        <option value="mercedes">CH</option>
+        <option value="audi">FR</option>
+      </select>
+    </span>
+    </div>
+</div>
+
+
+
 <button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
   <i class="fa fa-globe fa-2x"></i>
 </button>
@@ -16,10 +38,20 @@
     </ul>
 
     <div class="login-container">
-     <span ng-if="user" class="cdgm-right horiz-align text-right">
-      <span>{{ user.name }} | </span>
-      <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
-    </span>
+       <span ng-if="user" class="cdgm-right horiz-align text-right">
+        <span>{{ user.name }} | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
+       </span>
+
+      <span class="language-selector">
+        <select>
+          <option value="volvo">EN</option>
+          <option value="saab">DE</option>
+          <option value="mercedes">CH</option>
+          <option value="audi">FR</option>
+        </select>
+      </span>
+
     </div>
   </div>
 </div>

@@ -1,5 +1,10 @@
 
 <div class="navbar navbar-global" role="navigation">
+
+
+
+
+
   {>"common/global-menu" /}
 </div>
 <header id="header" ng-controller="login">
