@@ -1,25 +1,53 @@
-<div ng-controller="login" class="cdgm-container">
-  <div class="container cdgm-menu">
-    <span class="cdgm-button"><a href="http://www.coderdojo.com">CoderDojo.com</a></span>
-    <span class="cdgm-button" ng-controller="header"><a ng-click="selectTab('dojo-list')" ui-sref="home">{@i18n key="Find a Dojo"/}</a></span>
-    <span class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">{@i18n key="Resources"/}</a></span>
-    <span class="cdgm-button"><a href="http://help.coderdojo.com/">{@i18n key="FAQ"/}</a></span>
-    <span class="cdgm-button"><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></span>
-    <span class="cdgm-button"><a ng-click="adultForums()">{@i18n key="Adult Forums"/}</a></span>
+<button type="button" class="navbar-toggle mainnav-toggle" data-toggle="collapse" data-target="#cd-mainnav-collapse">
+  <i class="fa fa-navicon fa-2x"></i>
+</button>
 
+<div class="mobile-login-container">
+    <div class="mobile-login-subcontainer">
+       <span ng-if="user" class="white-link horiz-align text-right">
+        <span class=""><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">{@i18n key="Logout"/}</a></span>
+       </span>
+
+        <span class="language-selector" ng-controller="languageController">
+      <select name="language"
+              class="form-control"
+              ng-model="selectedLanguage"
+              ng-change="updateLocale()"
+              ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
+    </span>
+    </div>
+</div>
+
+<button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
+  <i class="fa fa-globe fa-2x"></i>
+</button>
+
+<div class="cdgm-container">
+  <div class="navbar-collapse collapse" id="cd-navbar-collapse">
+    <ul class="container cdgm-menu dl-menu navbar-header pull-left">
+      <li class="cdgm-button"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
+      <li class="cdgm-button" ng-controller="header"><a ng-click="selectTab('dojo-list')" ui-sref="home">{@i18n key="Find a Dojo"/}</a></li>
+      <li class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">{@i18n key="Resources"/}</a></li>
+      <li class="cdgm-button"><a href="http://help.coderdojo.com/">{@i18n key="FAQ"/}</a></li>
+      <li class="cdgm-button"><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></li>
+      <li class="cdgm-button"><a ng-click="adultForums()">{@i18n key="Adult Forums"/}</a></li>
+    </ul>
+
+    <div class="login-container">
+       <span ng-if="user" class="cdgm-right horiz-align text-right white-link">
+        <span class=""><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">{@i18n key="Logout"/}</a></span>
+       </span>
     <span class="language-selector" ng-controller="languageController">
-      <select name="language" 
-        class="form-control" 
-        ng-model="selectedLanguage"
-        ng-change="updateLocale()" 
-        ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
-    </span>
-  
-    <span ng-if="user" class="cdgm-right cdgm-user">
-      <span class=""><a ui-sref="user-profile({userId: user.id })">{{ user.name }}</a> | </span>
-      <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">{@i18n key="Logout"/}</a></span>
+      <select name="language"
+              class="form-control"
+              ng-model="selectedLanguage"
+              ng-change="updateLocale()"
+              ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>
     </span>
 
+    </div>
   </div>
 </div>
 
