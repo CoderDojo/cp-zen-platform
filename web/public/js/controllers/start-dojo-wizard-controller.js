@@ -533,7 +533,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             }
           }
 
-          var addr1 = (typeof dojo.address1 != 'undefined') ? dojo.address1 + ', ' : "";
+          var addr1 = (typeof dojo.address1 !== 'undefined') ? dojo.address1 + ', ' : "";
           address = address + ', ' + dojo.countryName;
 
           Geocoder.latLngForAddress(addr1 + address).then(function (data) {

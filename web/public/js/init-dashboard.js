@@ -292,7 +292,7 @@
           templateUrl: '/dojos/template/badges/dashboard'
         })
         .state('accept-badge', {
-          url:'/dashboard/badges/verify/:userId/:badgeSlug',
+          url:'/dashboard/badges/accept/:userId/:badgeSlug',
           controller:'accept-badge-controller',
           templateUrl: '/dojos/template/badges/accept'
         });

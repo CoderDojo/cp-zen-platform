@@ -251,13 +251,15 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   }
 
   $scope.awardBadge = function (user, badge) {
+    usSpinnerService.spin('manage-dojo-users-spinner');
     var applicationData = {
       user: user,
       badge: badge
     };
 
     cdBadgesService.sendBadgeApplication(applicationData, function (response) {
-      if(response.error) return alertService.showError(response.error);
+      usSpinnerService.stop('manage-dojo-users-spinner');
+      if(response.error) return alertService.showError($translate.instant(response.error));
       alertService.showAlert($translate.instant('Badge Application Sent!'));
     });
   }
