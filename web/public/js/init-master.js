@@ -70,7 +70,7 @@
           controller: 'dojo-list-controller'
         })
         .state("login", {
-          url: "/login",
+          url: "/login?referer",
           templateUrl: '/templates/login',
           controller: 'login',
           params: {
@@ -128,16 +128,6 @@
           url: "/terms-and-conditions",
           templateUrl: '/templates/terms-and-conditions',
           controller: 'terms-and-conditions-controller'
-        })
-        .state("accept-dojo-user-invitation", {
-        url: "/accept_dojo_user_invitation/:dojoId/:userInviteToken",
-        templateUrl: '/dojos/template/accept-dojo-user-invitation',
-        controller: 'accept-dojo-user-invitation-controller'
-        })
-        .state("accept-dojo-user-request", {
-          url: "/accept_dojo_user_request/:userId/:userInviteToken",
-          templateUrl: '/dojos/template/accept-dojo-user-request',
-          controller: 'accept-dojo-user-request-controller'
         })
         .state('accept-child-invite',{
           url: '/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',

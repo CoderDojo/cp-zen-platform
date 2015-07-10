@@ -1,66 +1,70 @@
-<div class="cp-login">
-  <div id="main">
 
-    <form name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form">
-      <legend>{@i18n key="Register"/}</legend>
-      <div class="row">
-        <div class="input-group col-l6-6 col-md-offset-3">
+  <div class="cp-login">
+    <div id="sidebar">
+      <div class="widget">
+      <legend>{@i18n key="Already have an account"/}</legend>
+      <a ui-sref="login({referer: referer})">{@i18n key="Login"/}</a>
+      </div>
+    </div>
+    <div id="main">
+      <form name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form">
+        <legend>{@i18n key="Register"/}</legend>
+
+       
+        <div class="input-group col-lg-6 col-md-offset-3">
           <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="NAME"/}">
         </div>
-      </div>
-      <span class="help-block"></span>
+       
 
-      <div class="row">
-        <div class="input-group col-l6-6 col-md-offset-3">
+        <span class="help-block"></span>
+
+        
+        <div class="input-group col-lg-6 col-md-offset-3">
           <span class="input-group-addon"><span>@</span></span>
           <input type="email" class="form-control" name="emailAddress" required required-message="'{@i18n key="Email is empty"/}'" ng-model="registerUser.email" placeholder="{@i18n key="EMAIL"/}">
         </div>
-      </div>
+        
 
-      <span class="help-block"></span>
-      <div class="row">
+        <span class="help-block"></span>
+        
         <div class="input-group col-lg-6 col-md-offset-3">
           <span class="input-group-addon"><i class="fa fa-lock"></i></span>
           <input type="password" class="form-control" name="password" required required-message="'{@i18n key="Password is empty"/}'" ng-model="registerUser.password" placeholder="{@i18n key="PASSWORD"/}" validator="validatePassword(registerUser.password, registerUser.email)" invalid-message="invalidPasswordMessage"/>
         </div>
-      </div>
-      <span class="help-block"></span>
-      <div class="row">
+        
+        <span class="help-block"></span>
+        
         <div class="input-group col-lg-6 col-md-offset-3">
           <span class="input-group-addon"><i class="fa fa-lock"></i></span>
           <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message="invalidConfirmPasswordMessage" validator="matchesPassword(registerUser.password, passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
         </div>
-      </div>
-      <span class="help-block"></span>
+        
+        <span class="help-block"></span>
 
-      <div class="row">
-        <div class="col-lg-6 col-lg-offset-3" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
-          <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
-            <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
-            <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
-              <span ng-bind-html="initUserType.title"></span>
-            </ui-select-choices>
-          </ui-select>
-          <label class="control-label has-error validationMessage"
-            ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
+        <div class="row">
+          <div class="col-lg-6 col-lg-offset-3" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
+            <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
+              <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
+              <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
+                <span ng-bind-html="initUserType.title"></span>
+              </ui-select-choices>
+            </ui-select>
+            <label class="control-label has-error validationMessage"
+              ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
+          </div>
         </div>
-      </div>
+        <span class="help-block"></span>
 
-      <div class="input-group col-lg-6 col-md-offset-3">
-        <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
-      </div>
+        <div class="input-group col-lg-6 col-md-offset-3">
+          <div class="text-center" vc-recaptcha key="recap.publicKey"></div>
+        </div>
 
-      <span class="help-block"></span>
-      <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">{@i18n key="Register"/}</button>
-    </form>
-  </div>
-  <div id="sidebar">
-    <div class="widget">
-    <legend>{@i18n key="Already have an account"/}</legend>
-    <a ui-sref="login({referer: referer})">{@i18n key="Login"/}</a>
+        <span class="help-block"></span>
+
+        <button class="btn btn-primary col-lg-6 col-lg-offset-3" type="submit">{@i18n key="Register"/}</button>
+      </form>
     </div>
   </div>
-</div>
 
 
 

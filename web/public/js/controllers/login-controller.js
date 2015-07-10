@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', loginCtrl]);
 
-function loginCtrl($state, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService, vcRecaptchaService) {
-  $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
+function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService, vcRecaptchaService) {
+  $scope.referer = $state.params.referer;
+  
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;
   }
@@ -57,7 +58,7 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
       if(data.ok) {
         alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo.', function() {
           auth.login(user, function(data) {
-            $window.location.href = '/dashboard/start-dojo';
+            $window.location.href = $scope.referer || '/dashboard/start-dojo';
           });
         });
       } else {
@@ -65,7 +66,7 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
         alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
       }
     }, function(err) {
-         alertService.showError('An error occurred while registering account: ' + err);
+         alertService.showError(JSON.stringify(err));
        });
   };
 
@@ -81,9 +82,9 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
       function(data){
           var user = data.user;
           if(_.contains(user.roles, 'cdf-admin')) {
-            $scope.referer = '/manage-dojos';
+            $scope.referer = '/dashboard/manage-dojos';
           }
-          $window.location.href = '/dashboard' + $scope.referer;
+          $window.location.href = $scope.referer || '/dashboard/dojo-list';
         },
         function(){
           $scope.errorMessage = $translate.instant('Invalid email or password');
@@ -144,4 +145,6 @@ function loginCtrl($state, $scope, $location, $window, auth, alertService, $tran
       $scope.show('login')
     }
   });
+
+  $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
 }

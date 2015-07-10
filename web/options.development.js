@@ -6,9 +6,13 @@ var base = require('./options.base.js');
 module.exports = _.defaults({
   'agreement-version' : 2,
   auth: {
-    restrict: ['/dashboard'],
-    redirect:{
-      restrict: '/'
+    restrict: function (req, res, next) {
+      if(_.contains(req.url, '/dashboard') && !_.contains(req.url, '/login') && !req.seneca.user) {
+        //Not logged in, redirect to /login with referer parameter
+        var referer = encodeURIComponent(req.url);
+        return res.redirect('/login?referer=' + req.url);
+      }
+      return next();
     },
     sendemail: false,
     email: {
