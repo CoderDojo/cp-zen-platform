@@ -1,33 +1,34 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, cdBadgesService, utilsService) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
     return;
   }
 
-  /*angular.element('.btn-file :file').on('change', function() {
-    var numFiles = this.files ? this.files.length : 1,
-      label = this.value.replace(/\\/g, '/').replace(/.*\//, '');
-
-    angular.element('#avatar-form').submit();
-  });*/
-
-  $scope.uploadFile = function(files) {
-    var fd = new FormData();
-    //Take the first selected file
-    fd.append("file", files[0]);
-
-    $http.post('/api/1.0/profiles/change_avatar', fd, {
-      withCredentials: true,
-      headers: {'Content-Type': 'multipart/form-data'}
-    }).success(function () {
-      alert('success');
-    }).error(function () {
-      alert('error')
-    });
+  $scope.upload = function (files) {
+    if (files && files.length) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        Upload.upload({
+          url: '/api/1.0/profiles/change-avatar',
+          headers : {
+            'Content-Type': 'multipart/form-data'
+          },
+          file: file,
+          fields: {profileId: profile.data.id}
+        }).progress(function (evt) {
+          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+          console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+        }).success(function (data, status, headers, config) {
+          console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+        }).error(function (data, status, headers, config) {
+          console.log('error status: ' + status);
+        });
+      }
+    }
   };
 
   $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
@@ -321,5 +322,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
 
