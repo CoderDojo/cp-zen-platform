@@ -13,6 +13,12 @@ function cdBadgesService(cdApi) {
     },
     sendBadgeApplication: function (applicationData, win, fail) {
       cdApi.post('badges/applications', {applicationData: applicationData}, win, fail || topfail);
+    },
+    acceptBadge: function (badgeData, win, fail) {
+      cdApi.post('badges/accept', {badgeData: badgeData}, win, fail || topfail);
+    },
+    loadUserBadges: function(userId, win, fail) {
+      cdApi.get('badges/user/' + userId, win, fail || topfail);
     }
   };
 }

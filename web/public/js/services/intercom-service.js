@@ -6,7 +6,7 @@ angular.module('cpZenPlatform').factory('intercomService', function ($rootScope,
 
   function userIsCDFAdmin() {
     return _.contains($rootScope.user.roles, 'cdf-admin');
-  };
+  }
 
   function userIsChampion(cb) {
     cdUsersService.isChampion($rootScope.user.id, cb,

@@ -1295,3 +1295,16 @@ msgstr "Are you sure you want to award this badge to"
 
 msgid "Badge Application Sent!"
 msgstr "Badge Application Sent!"
+
+msgid "Badge Accepted! It is now visible on your profile page."
+msgstr "Badge Accepted! It is now visible on your profile page."
+
+msgid "Badge not found."
+msgstr "Badge not found."
+
+msgid "This badge has already been accepted."
+msgstr "This badge has already been accepted."
+
+msgid "Only the nominated user can accept this badge."
+msgstr "Only the nominated user can accept this badge."
+

@@ -1,9 +1,7 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields) {
-  
-
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, cdBadgesService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
@@ -26,11 +24,15 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return retHiddenFields;
   }
 
-
   $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
-  
+  //Load user's badges
+  cdBadgesService.loadUserBadges($scope.profile.userId, function (response) {
+    $scope.badges = response;
+  });
+
+
   $scope.loggedInUser = loggedInUser.data;
 
   $scope.inviteParent = function(data){
@@ -255,5 +257,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields' ,cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'cdBadgesService', cdUserProfileCtrl]);
 

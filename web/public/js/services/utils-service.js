@@ -21,7 +21,6 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     var returnType = _.find(allowedTypes, function(allowedType){
       return _.contains(userTypes, allowedType);
     });
-
     return (typeof returnType === 'undefined') ? false : true;
   };
 
