@@ -93,15 +93,12 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }
 
     if(filter.userEmail){
-      var emailQuery = {
-        "regexp" : {
-          "email" : {
-            //TODO: match against user email column
-            "value": ".*" + filter.userEmail + ".*"
-          }
+      var userEmailQuery = {
+        "wildcard": { 
+          "email": "*"+filter.userEmail+"*"
         }
-      };
-      filteredBoolQuery.bool.must.push(emailQuery); 
+      }
+      filteredBoolQuery.bool.must.push(userEmailQuery);
     }
 
     if(filter.name){
