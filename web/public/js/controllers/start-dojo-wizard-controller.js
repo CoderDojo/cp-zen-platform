@@ -210,28 +210,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     function setupStep1() {
       $scope.hideIndicators = true;
       currentStepInt = 0;
-      $scope.doRegister = function(user) {
-      if(vcRecaptchaService.getResponse() === ""){
-        return alertService.showError("Please resolve the captcha");
-      }
-
-      user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
-
-        auth.register(user, function(data) {
-          if(data.ok) {
-            auth.login(user, function(data) {
-              //User is now logged in, go to dashboard
-              $window.location.href = '/dashboard/start-dojo';
-            });
-          } else {
-            var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
-            alertService.showAlert('There was a problem registering your account: ' + reason);
-          }
-        }, function() {
-
-        });
-      }
-
       WizardHandler.wizard().goTo(0);
       $scope.stepFinishedLoading = true;
     }
@@ -455,13 +433,18 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }
       };
 
+      var sanitizeCdForms = {
+        createDojo: ["address1","email","googleGroups","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+      };
+
       $scope.save = function(dojo) {
 
-        Object.keys(dojo).forEach(function(prop){
-          if(dojo[prop] !== null && typeof dojo[prop] !== 'undefined' && typeof dojo[prop] !== 'object') {
-            dojo[prop] = $sanitize(dojo[prop]);
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
           }
         });
+        console.log(dojo);
         
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;

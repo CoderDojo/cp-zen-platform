@@ -1,13 +1,57 @@
-<div ng-controller="login" class="cdgm-container">
-    <div class="container cdgm-menu">
-        <span class="cdgm-button"><a href="http://www.coderdojo.com">CoderDojo.com</a></span>
-        <span class="cdgm-button" ng-controller="header"><a ng-click="selectTab('dojo-list')" ui-sref="home">Find a Dojo</a></span>
-        <span class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></span>
-        <span class="cdgm-button"><a href="http://help.coderdojo.com/">FAQ</a></span>
-        <span class="cdgm-button"><a href="http://coolestprojects.org/">CoolestProjects2015</a></span>
-        <span ng-if="user" class="cdgm-right">
-                <span>{{ user.name }} | </span>
-                <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
-        </span>
+<button type="button" class="navbar-toggle mainnav-toggle" data-toggle="collapse" data-target="#cd-mainnav-collapse">
+  <i class="fa fa-navicon fa-2x"></i>
+</button>
+
+
+<div class="mobile-login-container">
+    <div class="mobile-login-subcontainer">
+       <span ng-if="user" class="">
+        <span>{{ user.name }} | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
+       </span>
+
+        <span class="language-selector">
+      <select>
+        <option value="volvo">EN</option>
+        <option value="saab">DE</option>
+        <option value="mercedes">CH</option>
+        <option value="audi">FR</option>
+      </select>
+    </span>
     </div>
+</div>
+
+
+
+<button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
+  <i class="fa fa-globe fa-2x"></i>
+</button>
+
+<div ng-controller="login" class="cdgm-container">
+  <div class="navbar-collapse collapse" id="cd-navbar-collapse">
+    <ul class="container cdgm-menu dl-menu navbar-header pull-left">
+      <li class="cdgm-button"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
+      <li class="cdgm-button"><a ng-click="selectTab('dojo-list')" ui-sref="dojo-list">Find a Dojo</a></li>
+      <li class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></li>
+      <li class="cdgm-button"><a href="http://help.coderdojo.com/">FAQ</a></li>
+      <li class="cdgm-button"><a href="http://coolestprojects.org/">CoolestProjects2015</a></li>
+    </ul>
+
+    <div class="login-container">
+       <span ng-if="user" class="cdgm-right horiz-align text-right">
+        <span>{{ user.name }} | </span>
+        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
+       </span>
+
+      <span class="language-selector">
+        <select>
+          <option value="volvo">EN</option>
+          <option value="saab">DE</option>
+          <option value="mercedes">CH</option>
+          <option value="audi">FR</option>
+        </select>
+      </span>
+
+    </div>
+  </div>
 </div>
