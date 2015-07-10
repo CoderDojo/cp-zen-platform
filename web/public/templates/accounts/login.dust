@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-lg-4">
-          <a ui-sref="register-account">Register</a>
+          <a ui-sref="register-account({referer: referer})">Register</a>
         </div>
 
       </form>
