@@ -93,7 +93,40 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="form-group">
+            <label for="dojoAddress1" class="col-lg-5">{@i18n key="Address"/}*</label>
+            <div class="col-lg-6">
+              <input type="text" required required-message="'Address is empty'" ng-model="champion.address1" class="form-control" name="dojoAddress1" id="dojoAddress1">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">      
+            <div class="col-lg-offset-5 col-lg-6">
+              <input type="button" ng-if="showCoordinatesBtn" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="Get location from address">
+            </div>
+            <div class="col-lg-6 col-lg-offset-5 google-map">
+              <section ng-if="mapLoaded" id="map">
+                <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, champion)'}" ui-options="mapOptions" class="map-canvas"></div>
+              </section>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <div class="col-lg-6 col-lg-offset-5">
+              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
+            </div>
+          </div>
+        </div>
+
         <legend>Experience</legend>
+
         <div class="row">
           <label for="projects" class="col-lg-3">Technical Experience</label>
           <div class="col-lg-8">
