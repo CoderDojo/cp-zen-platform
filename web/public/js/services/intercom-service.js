@@ -45,6 +45,10 @@ angular.module('cpZenPlatform').factory('intercomService', function ($rootScope,
   }
 
   intercomService.updateIntercom = function (dojoId) {
+    if(!$localStorage.dojoIds){
+      $localStorage.dojoIds = '';
+    }
+
     $localStorage.dojoIds = $localStorage.dojoIds.concat(',', dojoId);
     $window.Intercom('update', {"dojos": $localStorage.dojoIds});
   }
