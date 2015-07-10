@@ -114,7 +114,13 @@
                       ng-options="state as state.label for state in getVerificationStates(dojo)">
               </select>
             </td>
-            <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
+            <td>
+            <!--<input style="width:100px;height:100px" type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted">-->
+            <div class="checkbox deleteCheckbox" >
+              <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="pushChangedDojo(dojo)">
+              <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
+            </div>
+            </td>
           </tr>
         </tbody>
       </table>
