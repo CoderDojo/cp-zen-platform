@@ -72,7 +72,7 @@
         })
         .state("register-account", {
           url: "/register",
-          templateUrl: '/templates/register',
+          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
           controller: 'login'
         })
         .state("create-dojo-public", {
