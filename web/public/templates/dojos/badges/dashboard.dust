@@ -4,7 +4,7 @@
     <p>{@i18n key="Badges Welcome Text"/}</p>
 
     <tabset justified="true">
-      <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}">
+      <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <span class="help-block"></span>

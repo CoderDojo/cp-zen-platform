@@ -19,6 +19,9 @@ function cdBadgesService(cdApi) {
     },
     loadUserBadges: function(userId, win, fail) {
       cdApi.get('badges/user/' + userId, win, fail || topfail);
+    },
+    loadBadgeCategories: function(win, fail) {
+      cdApi.get('badge_categories', win, fail || topfail);
     }
   };
 }
