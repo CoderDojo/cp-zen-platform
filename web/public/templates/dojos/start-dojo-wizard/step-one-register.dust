@@ -15,6 +15,20 @@
         <div class="form-group">
           <input type="password" class="form-control" ng-model="passwordConfirm" invalid-message="invalidConfirmPasswordMessage" validator="matchesPassword(registerUser.password, passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
         </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-lg-offset-3" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
+            <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
+              <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
+              <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
+                <span ng-bind-html="initUserType.title"></span>
+              </ui-select-choices>
+            </ui-select>
+            <label class="control-label has-error validationMessage"
+              ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
+          </div>
+        </div>
+
         <div class="form-group">
           <div class="checkbox">
             <input type="checkbox" title="{@i18n key="dojo.edit.mailinglist.description"/}" ng-model="registerUser.mailingList" id="mailingListCheckbox">
