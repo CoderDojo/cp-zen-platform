@@ -215,47 +215,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     function setupStep1() {
       $scope.hideIndicators = true;
       currentStepInt = 0;
-      cdUsersService.getInitUserTypes(function (response) {
-        $scope.initUserTypes = response;
-      });
-      $scope.doRegister = function(user) {
-        // TODO - this isChampion a tmp hack until phase1 catchs up with master
-        user.isChampion = true;
-        if(vcRecaptchaService.getResponse() === ""){
-          return alertService.showError("Please resolve the captcha");
-        }
-
-        user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
-
-        auth.register(user, function(data) {
-          if(data.ok) {
-            auth.login(user, function(data) {
-              //User is now logged in, go to dashboard
-              $window.location.href = '/dashboard/start-dojo';
-            });
-          } else {
-            var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
-            alertService.showAlert($translate.instant('login.register.failure') + ' ' + reason);
-          }
-        }, function() {
-
-        });
-      }
-
-      $scope.validatePassword = function (password, email) {
-        var validationResult = utilsService.validatePassword(password, email);
-        if(!validationResult.valid) $scope.invalidPasswordMessage = $translate.instant(validationResult.msg);
-        return validationResult.valid;
-      }
-
-      $scope.matchesPassword = function(password, passwordConfirm) {
-        if(passwordConfirm !== password) {
-          $scope.invalidConfirmPasswordMessage = $translate.instant('Passwords do not match');
-          return false;
-        }
-        return true;
-      }
-
       WizardHandler.wizard().goTo(0);
       $scope.stepFinishedLoading = true;
     }
