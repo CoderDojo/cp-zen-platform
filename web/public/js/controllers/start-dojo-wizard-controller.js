@@ -111,6 +111,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       }
     }
 
+    setupGoogleMap();
+
     $scope.scrollToInvalid = function(form){
 
       if(form.$invalid){
@@ -226,6 +228,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         };
 
       $scope.hideIndicators = false;
+
+      $scope.stepTwoShowGmap = true;
+      $scope.markers = [];
+
       currentStepInt = 1;
 
       $scope.showCharterAgreement = function () {
@@ -323,8 +329,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         }
       };
 
-      setupGoogleMap();
-
       $scope.referredBy = [
         "Google",
         "Newspaper/Magazine",
@@ -380,6 +384,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--Step Four:
     function setupStep4() {
       $scope.hideIndicators = false;
+      
+      $scope.stepFourShowGmap = true;
+      $scope.markers = [];
+      
       currentStepInt = 3;
       var currentUser;
       auth.get_loggedin_user(function(user) {
@@ -467,16 +475,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         })
       }
 
-      setupGoogleMap();
-
       WizardHandler.wizard().goTo(3, true);
       $scope.stepFinishedLoading = true;
     }
 
-    
-
     function setupGoogleMap() {
-      $scope.showCoordinatesBtn = true;
       $scope.markers = [];
       $scope.model = {};
 

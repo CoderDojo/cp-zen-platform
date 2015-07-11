@@ -108,10 +108,10 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" ng-if="stepFourShowGmap">
         <div class="form-group">      
           <div class="col-lg-offset-5 col-lg-6">
-            <input type="button" ng-if="showCoordinatesBtn" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
+            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
           </div>
           <div class="col-lg-6 col-lg-offset-5 google-map">
             <section ng-if="mapLoaded" id="map">
@@ -270,16 +270,10 @@
           </div>
         </div>
       </div>
-
-      <!--<div class="row">
-        <div class="col-lg-2 col-lg-offset-1">
-          <button id="createDojoButton" class="btn btn-primary" ng-click="scrollToInvalid(createDojoForm)" type="submit">{{ saveButtonText }}</button>
-        </div>
-      </div>-->
       
-        <div class="row center-children">
-          <button class="centered-child cd-color-5 btn btn-primary registerButton" ng-click="scrollToInvalid(createDojoForm)" type="submit">{@i18n key="Create Dojo"/}</button>
-        </div>
+      <div class="row center-children">
+        <button class="centered-child cd-color-5 btn btn-primary registerButton" ng-click="scrollToInvalid(createDojoForm)" type="submit">{@i18n key="Create Dojo"/}</button>
+      </div>
 
     </div>
   </form>
