@@ -271,7 +271,7 @@ label {
     .form-group {
       label {
         text-align: right;
-        padding-top: 5px;
+        padding-top: 8px;
         margin-bottom: 15px;
       }
       p {
@@ -282,7 +282,7 @@ label {
       }
     }
     .info-button-container {
-      text-align: right;
+      text-align: left;
       margin-bottom: 35px;
       i.info-button {
         padding-right: 6px;
@@ -296,6 +296,10 @@ label {
       }
     }
     .create-dojo-checkbox {
+      display: inline-block;
+      .infoCheckbox {
+        display: inline-block;
+      }
       label {
         padding-top: 8px;
       }
@@ -452,6 +456,14 @@ label {
   }
   .start-dojo-wizard-step {
     margin-bottom:30px;
+  }
+}
+
+#manageDojos {
+  .deleteCheckbox {
+    label {
+      padding-bottom: calc(~'100% - 6px');
+    }
   }
 }
 

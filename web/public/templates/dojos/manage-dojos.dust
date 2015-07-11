@@ -17,7 +17,7 @@
         <div class="col-md-3">
           <div class="form-group">          
             <label for="dojoStageFilter">Stage</label>
-            <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.stage" ng-change="filterDojos()">
+            <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-change="filterDojos()">
               <option value="">Any</option>
               <option value="1">In Planning</option>
               <option value="2">Open, come along</option>
@@ -43,28 +43,23 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="">Dojo Name</label>
-            <input type="text" placeholder="Search by dojo name" ng-model="filter.name" class="form-control">
+            <input type="text" placeholder="Search by dojo name" class="form-control" ng-model="filter.name" ng-enter="filterDojos()">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">          
             <label for="">Dojo Email</label>
-            <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.email">
+            <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.email" ng-enter="filterDojos()">
           </div>
         </div>
+
         <div class="col-md-4">
-          <div class="form-group">
-            <label for="user-email">User Email</label>
-            <ui-select ng-model="userEmail" ng-disabled="false" on-select="getDojoIds($item)">
-              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
-              <ui-select-choices repeat="user in users"
-                  refresh="getUsersByEmails($select.search)"
-                  refresh-delay="500">
-                <span ng-bind-html="user.email | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
+          <div class="form-group">          
+            <label for="">User Email</label>
+            <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.userEmail" ng-enter="filterDojos()">
           </div>
-        </div>        
+        </div>
+        
       </div>
     </div>
     <div class="col-md-2">
@@ -85,7 +80,7 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th><span ng-click="toggleSort($event, 'name.sort')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>Dojo</th>
+            <th><span ng-click="toggleSort($event, 'name')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>Dojo</th>
             <th></th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Stage</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>Country</th>
@@ -119,7 +114,13 @@
                       ng-options="state as state.label for state in getVerificationStates(dojo)">
               </select>
             </td>
-            <td><input type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted"></td>
+            <td>
+            <!--<input style="width:100px;height:100px" type="checkbox" ng-change="pushChangedDojo(dojo)" ng-model="dojo.toBeDeleted">-->
+            <div class="checkbox deleteCheckbox" >
+              <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="pushChangedDojo(dojo)">
+              <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
+            </div>
+            </td>
           </tr>
         </tbody>
       </table>
