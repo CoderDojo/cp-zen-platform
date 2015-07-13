@@ -22,6 +22,12 @@ function cdBadgesService(cdApi) {
     },
     loadBadgeCategories: function(win, fail) {
       cdApi.get('badge_categories', win, fail || topfail);
+    },
+    loadBadgeByCode: function(code, win, fail) {
+      cdApi.post('badges/code', {code: code}, win, fail || topfail);
+    },
+    claimBadge: function(badge, win, fail) {
+      cdApi.post('badges/claim', {badge: badge}, win, fail || topfail);
     }
   };
 }

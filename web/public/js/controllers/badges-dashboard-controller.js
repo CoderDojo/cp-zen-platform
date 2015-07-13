@@ -1,6 +1,6 @@
  'use strict';
 
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -50,8 +50,36 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService) {
     lastClicked = {};
     $scope.badgeInfoIsCollapsed = {};
   }
+
+  $scope.previewBadge = function (badgeClaimNumber) {
+    cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
+      if(response.error) return alertService.showError(response.error);
+      if(_.isEmpty(response)) {
+        $scope.hideBadgePreview();
+        return alertService.showAlert($translate.instant('Invalid Badge Claim Number.'));
+      }
+      $scope.previewBadgeData = response.badge;
+      $scope.showBadgePreview = true;
+    });
+  }
+
+  $scope.hideBadgePreview = function () {
+    $scope.badgeClaimNumber = '';
+    $scope.previewBadgeForm.submitted = false;
+    $scope.previewBadgeForm.$setPristine();
+    $scope.previewBadgeData = {};
+    $scope.showBadgePreview = false;
+  }
+
+  $scope.claimBadge = function () {
+    cdBadgesService.claimBadge($scope.previewBadgeData, function (response) {
+      $scope.hideBadgePreview();
+      if(response.error) return alertService.showError(response.error);
+      return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
+    });
+  }
     
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', cdBadgesDashboardCtrl]);

@@ -43,7 +43,7 @@
 
               <div ng-if="user.isMentor" class="checkbox checkbox-success">
                 <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
-                <label for="background-check-{{ user.id }}">
+                <label for="background-check-{{ user.id }}" class="font-13">
                   {@i18n key="Background Checked"/}
                 </label>
               </div>
