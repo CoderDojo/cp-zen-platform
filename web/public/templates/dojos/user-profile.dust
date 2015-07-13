@@ -15,10 +15,10 @@
       <div class="col-sm-3">
         <!--left col-->
 
-        <img title="profile image" class="img-circle img-responsive" src="" ng-src="/api/1.0/profiles/{{ profile.id }}/{{ profile.avatar.name }}">
+        <img title="profile image" class="img-circle img-responsive profile-avatar" ng-src="{{ profile.avatar }}">
         <h1 class="">{{ profile.name || profile.alias }}</h1>
 
-        <div class="button" ngf-select ngf-change="upload($files)">{@i18n key="Upload new picture"/}</div>
+        <div class="btn btn-default" ngf-select ngf-change="upload($files)">{@i18n key="Upload new picture"/}</div>
 
         <div class="panel panel-default" style="margin-top: 35px;">
           <div class="panel-heading">{@i18n key="Social Media"/}</div>

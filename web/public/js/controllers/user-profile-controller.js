@@ -23,9 +23,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
           console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
         }).success(function (data, status, headers, config) {
-          console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+          cdUsersService.getAvatar($scope.profile.id, function(response){
+            $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+          })
         }).error(function (data, status, headers, config) {
-          console.log('error status: ' + status);
+          console.log('error status:' + status);
         });
       }
     }
@@ -53,6 +55,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
+
+  cdUsersService.getAvatar($scope.profile.id, function(response){
+    $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+  })
+
   //Load user's badges
   cdBadgesService.loadBadgeCategories(function (response) {
     var categories = response.categories;
