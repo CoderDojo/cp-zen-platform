@@ -10,25 +10,26 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService) {
     var badges = response.badges;
 
     //Filter badges because badgekit api doesn't support querying by tags.
-    $scope.categories = ['programming', 'attendance', 'mentor'];
-    
-    _.each($scope.categories, function (category) {
-      _.each(badges, function (badge) {
-        var indexFound;
-        var categoryFound = _.find(badge.tags, function (tag, index) {
-          indexFound = index;
-          return tag.value === category;
-        });
-
-        if(categoryFound) {
-          var tmpBadge = angular.copy(badge);
-          tmpBadge.tags.splice(indexFound, 1);
-          if(!$scope.badges[category]) $scope.badges[category] = {};
-          _.each(tmpBadge.tags, function (tag) {
-            if(!$scope.badges[category][tag.value]) $scope.badges[category][tag.value] = [];
-            $scope.badges[category][tag.value].push(badge);
+    cdBadgesService.loadBadgeCategories(function (response) {
+      $scope.categories = response.categories;
+      _.each($scope.categories, function (category) {
+        _.each(badges, function (badge) {
+          var indexFound;
+          var categoryFound = _.find(badge.tags, function (tag, index) {
+            indexFound = index;
+            return tag.value === category;
           });
-        }
+
+          if(categoryFound) {
+            var tmpBadge = angular.copy(badge);
+            tmpBadge.tags.splice(indexFound, 1);
+            if(!$scope.badges[category]) $scope.badges[category] = {};
+            _.each(tmpBadge.tags, function (tag) {
+              if(!$scope.badges[category][tag.value]) $scope.badges[category][tag.value] = [];
+              $scope.badges[category][tag.value].push(badge);
+            });
+          }
+        });
       });
     });
   });
@@ -45,7 +46,12 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService) {
       $scope.badgeInfoIsCollapsed[tag] = !$scope.badgeInfoIsCollapsed[tag];
     }
     lastClicked[tag] = badge.id;
-  }  
+  }
+
+  $scope.categorySelected = function () {
+    lastClicked = {};
+    $scope.badgeInfoIsCollapsed = {};
+  }
     
 }
 
