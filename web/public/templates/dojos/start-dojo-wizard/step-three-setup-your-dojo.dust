@@ -26,7 +26,7 @@
         </div>
       </accordion>
       <div class="col-md-12 center-children">
-        <button class="centered-child btn btn-primary cd-color-5" ng-click="openAllSteps(this)" type="submit">{@i18n key="Next"/}</button>
+        <button class="centered-child btn btn-primary" ng-click="openAllSteps(this)" type="submit">{@i18n key="Next"/}</button>
       </div>
     </form>
   </div>

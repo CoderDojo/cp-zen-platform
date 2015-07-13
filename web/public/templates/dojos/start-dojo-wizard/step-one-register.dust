@@ -62,14 +62,9 @@
         <div class="row">
           <div class="col-lg-6 col-lg-offset-2" vc-recaptcha key="recap.publicKey"></div>
         </div>
-
-        <span class="help-block"></span>
-        <div class="row">
-          <div class="col-lg-3 col-lg-offset-4">
-            <button class="cd-color-5 btn btn-primary register-btn" type="submit">Register</button>
-          </div>
+        <div class="center-children">
+          <button class="centered-child btn btn-primary register-btn" type="submit">Register</button>
         </div>
-  
       </div>
     </div>
   </form>

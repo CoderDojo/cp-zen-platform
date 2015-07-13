@@ -612,8 +612,8 @@ msgstr "View"
 msgid "Apply"
 msgstr "Apply"
 
-msgid "Your Dojos"
-msgstr "Your Dojos"
+msgid "My Dojos"
+msgstr "My Dojos"
 
 msgid "Users"
 msgstr "Users"

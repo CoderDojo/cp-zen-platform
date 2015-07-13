@@ -86,7 +86,7 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
       return cb(err);
     });
   }
-
+  
   $scope.loadPage = function(currentUser, resetFlag, cb){
     cb = cb || function(){};
 
