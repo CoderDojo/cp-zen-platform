@@ -1,6 +1,6 @@
  'use strict';
 
-function cdBadgesDashboardCtrl($scope, cdBadgesService) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -34,9 +34,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService) {
     });
   });
 
-  $scope.capitalizeFirstLetter = function (string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
   $scope.showBadgeInfo = function (tag, badge) {
     if(lastClicked[tag] !== badge.id && $scope.badgeInfoIsCollapsed[tag]) {
@@ -56,4 +54,4 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService) {
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', cdBadgesDashboardCtrl]);

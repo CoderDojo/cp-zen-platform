@@ -2,14 +2,29 @@
   <div class="panel-heading">{@i18n key="Badges"/}</div>
   <div class="panel-body">
     <div class="col-md-12">
-      <div class="col-md-4" ng-if="badge.status === 'accepted'" ng-repeat="badge in badges">
-        <div class="thumbnail">
-          <img ng-src="{{ badge.imageUrl }}" alt="" class="img-responsive">
-        </div>
-        <div class="caption">
-          <h3>{{ badge.name }}</h3>
-        </div>
-      </div>
+      
+      <tabset justified="true">
+        <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
+          <div class="badges-category-container">
+            <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
+              <span class="help-block"></span>
+              <legend>{{ capitalizeFirstLetter(tag) }}</legend>
+              <div class="badge-container" ng-repeat="badge in badgesData">
+                <img ng-click="showBadgeInfo(tag, badge)" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
+                <p class="badge-name"><b>{{ badge.name }}</b></p>
+              </div>
+              <div ng-show="badgeInfoIsCollapsed[tag]">
+                <div class="well">
+                  <p><b>{@i18n key="Name"/}:</b> {{ badgeInfo[tag].name }}</p>
+                  <p><b>{@i18n key="Short Description"/}:</b> {{ badgeInfo[tag].strapline }}</p>
+                  <p><b>{@i18n key="Date Awarded"/}:</b> {{ badgeInfo[tag].formattedDateAccepted }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+
     </div>
   </div>
 </div>
