@@ -3,7 +3,7 @@
 </button>
 
 
-<div class="mobile-login-container">
+<div ng-controller="login" class="mobile-login-container">
     <div class="mobile-login-subcontainer">
        <span ng-if="user" class="">
         <span>{{ user.name }} | </span>
