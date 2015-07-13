@@ -1308,3 +1308,8 @@ msgstr "This badge has already been accepted."
 msgid "Only the nominated user can accept this badge."
 msgstr "Only the nominated user can accept this badge."
 
+msgid "Date Awarded"
+msgstr "Date Awarded"
+
+msgid "You can't request a badge application for your own user account."
+msgstr "You can't request a badge application for your own user account."

@@ -1,7 +1,7 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, cdBadgesService) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, cdBadgesService, utilsService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
@@ -9,6 +9,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
+  $scope.badgeInfo = {};
+  $scope.badgeInfoIsCollapsed = {};
+  var lastClicked = {};
 
   function getHiddenFields(hiddenFields, userTypes){
     var retHiddenFields = [];
@@ -28,10 +31,49 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.profile = profile.data;
   //Load user's badges
-  cdBadgesService.loadUserBadges($scope.profile.userId, function (response) {
-    $scope.badges = response;
+  cdBadgesService.loadBadgeCategories(function (response) {
+    var categories = response.categories;
+    $scope.categories = [];
+    $scope.badges = {};
+    cdBadgesService.loadUserBadges($scope.profile.userId, function (response) {
+      _.each(categories, function (mainCategory) {
+        _.each(response, function (badge) {
+          if(badge.status === 'accepted') {
+            var indexFound;
+            var mainCategoryFound = _.find(badge.tags, function (tag, index) {
+              indexFound = index;
+              return tag.value === mainCategory;
+            });
+            badge.formattedDateAccepted = moment(badge.dateAccepted).format('Do MMMM YYYY');
+            if(mainCategoryFound) {
+              badge.tags.splice(indexFound, 1);
+              if(!$scope.badges[mainCategoryFound.value]) $scope.badges[mainCategoryFound.value] = {};
+              _.each(badge.tags, function (tag) {
+                if(!$scope.badges[mainCategoryFound.value][tag.value]) $scope.badges[mainCategoryFound.value][tag.value] = [];
+                $scope.badges[mainCategoryFound.value][tag.value].push(badge);
+              });
+              var categoryAdded = _.find($scope.categories, function (category) {
+                return category === mainCategoryFound.value;
+              });
+              if(!categoryAdded) $scope.categories.push(mainCategoryFound.value);
+            }
+          }
+        });
+      });
+    });
   });
 
+  $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
+
+  $scope.showBadgeInfo = function (tag, badge) {
+    if(lastClicked[tag] !== badge.id && $scope.badgeInfoIsCollapsed[tag]) {
+      $scope.badgeInfo[tag] = badge;
+    } else {
+      $scope.badgeInfo[tag] = badge;
+      $scope.badgeInfoIsCollapsed[tag] = !$scope.badgeInfoIsCollapsed[tag];
+    }
+    lastClicked[tag] = badge.id;
+  }
 
   $scope.loggedInUser = loggedInUser.data;
 
@@ -257,5 +299,5 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'cdBadgesService', cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
 
