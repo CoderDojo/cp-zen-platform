@@ -3,7 +3,6 @@
 function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, cdBadgesService, $translate) {
   var dojoId = $state.params.id;
   var usersDojosLink = [];
-  var currentUser;
   $scope.itemsPerPage = 10;
   $scope.userTypes = [];
   $scope.userPermissions = [];
@@ -16,7 +15,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.awardBadgeButtonModel = {};
 
   auth.get_loggedin_user(function (user) {
-    currentUser = user;
+    $scope.currentUser = user;
     //Updating user permissions and user types require the same permissions.
     //Remove users also requires the same permissions,
     //therefore we can check if the user can update user permissions & delete users by checking the result from the
@@ -191,7 +190,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     // - Current user is Dojo Admin
     function getUsersDojos() {
       return $q(function (resolve, reject) {
-        var query = {userId: currentUser.id, dojoId: dojoId};
+        var query = {userId: $scope.currentUser.id, dojoId: dojoId};
         var isChampion;
         var isDojoAdmin;
         cdDojoService.getUsersDojos(query, function (response) {
