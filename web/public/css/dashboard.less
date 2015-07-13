@@ -271,7 +271,7 @@ label {
     .form-group {
       label {
         text-align: right;
-        padding-top: 5px;
+        padding-top: 8px;
         margin-bottom: 15px;
       }
       p {
@@ -282,11 +282,11 @@ label {
       }
     }
     .info-button-container {
-      text-align: right;
+      text-align: left;
       margin-bottom: 35px;
       padding-top: 5px;
-      .col-xs-11 {
-        padding-left: 0px;
+      .col-xs-10 {
+        padding-right: 0px;
       }
       i.info-button {
         padding-right: 6px;
@@ -302,6 +302,11 @@ label {
       }
     }
     .create-dojo-checkbox {
+      display: inline-block;
+      .infoCheckbox {
+        margin-top: 3px;
+        display: inline-block;
+      }
       label {
         padding-top: 8px;
       }
@@ -323,6 +328,19 @@ label {
     #createDojoButton {
       margin-top: 30px;
     }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .info-button-container {
+    .col-xs-10 {
+      padding-left: 0px;
+    }
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .infoCheckbox {
+    padding-left: 35px;
   }
 }
 
@@ -458,6 +476,14 @@ label {
   }
   .start-dojo-wizard-step {
     margin-bottom:30px;
+  }
+}
+
+#manageDojos {
+  .deleteCheckbox {
+    label {
+      padding-bottom: calc(~'100% - 6px');
+    }
   }
 }
 

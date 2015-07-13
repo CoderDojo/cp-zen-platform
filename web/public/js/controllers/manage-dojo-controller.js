@@ -92,11 +92,20 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       filteredBoolQuery.bool.must.push(emailQuery); 
     }
 
+    if(filter.userEmail){
+      var userEmailQuery = {
+        "wildcard": { 
+          "email": "*"+filter.userEmail+"*"
+        }
+      }
+      filteredBoolQuery.bool.must.push(userEmailQuery);
+    }
+
     if(filter.name){
       var nameQuery = {
         "multi_match": {
-          "query":  filter.name,
-          "fields": ['address1', 'name.search'],
+          "query": filter.name,
+          "fields": ['address1', 'name'],
           "type": "cross_fields",
           "fuzziness": 2,
           "operator": "and"
@@ -237,17 +246,19 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       });
     }
 
-    async.series([updateDojos, deleteDojos], function (err) {
-      delete $scope.dojosToBeDeleted;
-      delete $scope.dojosToBeUpdated;
-      changedDojos = [];
-      if (err) {
-        alertService.showError('An error has occurred while updating Dojos: <br>' +
-        (err.error || JSON.stringify(err)));
-      }
-      $scope.loadPage($scope.filter, false);
-    });
-  };
+    if($scope.dojosToBeUpdated.length > 0 || $scope.dojosToBeDeleted.length > 0) {
+      async.series([updateDojos, deleteDojos], function (err) {
+        delete $scope.dojosToBeDeleted;
+        delete $scope.dojosToBeUpdated;
+        changedDojos = [];
+        if (err) {
+          alertService.showError('An error has occurred while updating Dojos: <br>' +
+          (err.error || JSON.stringify(err)));
+        }
+        $scope.loadPage($scope.filter, false);
+      });
+    };
+  }
 
   cdCountriesService.listCountries(function (countries) {
     $scope.countries = _.map(countries, function (country) {
