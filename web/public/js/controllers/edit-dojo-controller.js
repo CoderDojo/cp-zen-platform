@@ -218,7 +218,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     });
   }
 
-  $scope.addMarker = function($event, $params) {
+  $scope.addMarker = function($event, $params, dojo) {
     angular.forEach($scope.markers, function(marker) {
       marker.setMap(null);
     });
@@ -226,7 +226,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       map: $scope.model.map,
       position: $params[0].latLng
     }));
-    $scope.dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
+    dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
   };
 
   $scope.getLocationFromAddress = function(dojo) {
