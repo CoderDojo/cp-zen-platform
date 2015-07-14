@@ -47,6 +47,8 @@
     "angular-translate-interpolation-messageformat": "2.7.0",
     "angular-translate-loader-url": "2.7.0",
     "angular-recaptcha": "2.2.4",
+    "ng-file-upload": "5.0.9",
+    "ng-file-upload-shim": "5.0.9",
     "ng-slide-down": "0.4.2"
   },
   "devDependencies": {
