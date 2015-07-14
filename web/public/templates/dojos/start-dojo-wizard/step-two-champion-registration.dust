@@ -97,7 +97,7 @@
 
         <legend>{@i18n key="Experience"/}</legend>
         <div class="row">
-          <label for="projects" class="col-lg-3">Technical Experience</label>
+          <label for="projects" class="col-lg-4">Technical Experience</label>
           <div class="col-lg-8">
               <textarea name="projects" class="form-control" placeholder="{@i18n key="technicalexperience.placeholder"/}" rows="5" ng-model="champion.projects"></textarea>
           </div>

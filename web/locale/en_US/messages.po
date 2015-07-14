@@ -1332,3 +1332,8 @@ msgstr "Go"
 msgid "Claim Now"
 msgstr "Claim Now"
 
+msgid "Champion and Dojo Admin permissions cannot be removed from a Dojo owner."
+msgstr "Champion and Dojo Admin permissions cannot be removed from a Dojo owner."
+
+msgid "Dojo owners cannot be removed."
+msgstr "Dojo owners cannot be removed."

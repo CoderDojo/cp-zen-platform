@@ -118,8 +118,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     $scope.scrollToInvalid = function(form){
       // temp fix
-      $scope.getLocationFromAddress($scope.dojo);
-      $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
+      if(currentStepInt === 4) {
+        $scope.getLocationFromAddress($scope.dojo);
+        $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
+      }
 
       if(form.$invalid){
         angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
@@ -213,6 +215,29 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         });
       }, console.error.bind(console));
     };
+
+    $scope.getLocationFromAddress = function(dojo) {
+      if(dojo && dojo.place) {
+        var address = dojo.placeName;
+        for (var adminidx=4; adminidx >= 1; adminidx--) {
+          if (dojo['admin'+adminidx+'Name']) {
+            address = address + ', ' + dojo['admin'+adminidx+'Name'];
+          }
+        }
+
+        var addr1 = (typeof dojo.address1 !== 'undefined') ? dojo.address1 + ', ' : "";
+        address = address + ', ' + dojo.countryName;
+
+        Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+          placePinOnMap(data);
+        },
+        function (data) {
+          Geocoder.latLngForAddress(address).then(function (data2) {
+            placePinOnMap(data2);
+          });
+        });
+      }
+    }
 
     //--Step One:
     function setupStep1() {
@@ -532,28 +557,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
       };
 
-      $scope.getLocationFromAddress = function(dojo) {
-        if(dojo && dojo.place) {
-          var address = dojo.placeName;
-          for (var adminidx=4; adminidx >= 1; adminidx--) {
-            if (dojo['admin'+adminidx+'Name']) {
-              address = address + ', ' + dojo['admin'+adminidx+'Name'];
-            }
-          }
-
-          var addr1 = (typeof dojo.address1 !== 'undefined') ? dojo.address1 + ', ' : "";
-          address = address + ', ' + dojo.countryName;
-
-          Geocoder.latLngForAddress(addr1 + address).then(function (data) {
-            placePinOnMap(data);
-          },
-          function (data) {
-            Geocoder.latLngForAddress(address).then(function (data2) {
-              placePinOnMap(data2);
-            });
-          });
-        }
-      }
       WizardHandler.wizard().goTo(3, true);
       $scope.stepFinishedLoading = true;
     }
