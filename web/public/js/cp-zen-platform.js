@@ -25,7 +25,7 @@
     'ngCookies',
     'ncy-angular-breadcrumb',
     'vcRecaptcha',
-	'ngFileUpload',
+    'ngFileUpload',
     'ng-slide-down'
   ]);
 })();

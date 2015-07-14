@@ -101,7 +101,7 @@
     <script src="/components/ngBootbox/dist/ngBootbox.min.js"></script>
     <script src="/components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
     <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
-	<script src="/components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+    <script src="/components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
 
