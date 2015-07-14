@@ -41,10 +41,8 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
 
       auth.register(user, function(data) {
         if(data.ok) {
-          alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now proceed to create a Dojo.', function() {
-            auth.login(user, function(data) {
-              $window.location.href = '/dashboard/start-dojo';
-            });
+          auth.login(user, function(data) {
+            $window.location.href = '/dashboard/start-dojo';
           });
         } else {
           var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
