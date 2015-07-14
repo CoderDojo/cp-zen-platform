@@ -41,7 +41,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, $scope.filterQuery, $scope.sort);
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
-    var query = {dojoId:dojoId};
+    var query = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
 
     cdDojoService.getUserTypes(function (response) {
       var mentorUserTypes   = ['mentor', 'parent-guardian', 'attendee-o13'];
@@ -95,7 +95,10 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
       });
       $scope.users = response;
-      $scope.totalItems = response.length;
+      //Query the loadDojoUsers service without the limit to get the total number of users.
+      cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
+        $scope.totalItems = response.length;
+      });
       return cb();
     });
 
