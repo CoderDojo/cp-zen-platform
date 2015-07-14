@@ -548,24 +548,24 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       obj.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
     };
 
-    $scope.getLocationFromAddress = function(dojo) {
-      if(dojo && dojo.place) {
-        var address = dojo.placeName;
+    $scope.getLocationFromAddress = function(obj) {
+      if(obj && obj.place) {
+        var address = obj.placeName;
         for (var adminidx=4; adminidx >= 1; adminidx--) {
-          if (dojo['admin'+adminidx+'Name']) {
-            address = address + ', ' + dojo['admin'+adminidx+'Name'];
+          if (obj['admin'+adminidx+'Name']) {
+            address = address + ', ' + obj['admin'+adminidx+'Name'];
           }
         }
 
-        var addr1 = (typeof dojo.address1 !== 'undefined') ? dojo.address1 + ', ' : "";
-        address = address + ', ' + dojo.countryName;
+        var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
+        address = address + ', ' + obj.countryName;
 
         Geocoder.latLngForAddress(addr1 + address).then(function (data) {
-          placePinOnMap(data, dojo);
+          placePinOnMap(data, obj);
         },
         function (data) {
           Geocoder.latLngForAddress(address).then(function (data2) {
-            placePinOnMap(data2, dojo);
+            placePinOnMap(data2, obj);
           });
         });
       }
