@@ -117,6 +117,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
 
     $scope.scrollToInvalid = function(form){
+      // temp fix
+      $scope.getLocationFromAddress($scope.dojo);
+      $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
 
       if(form.$invalid){
         angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
@@ -466,13 +469,18 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
       $scope.save = function(dojo) {
+        // handle glitchy booleans (db issue)
+        _.each(['mailingList', 'private', 'needMentors'], function(field) {
+          if (dojo[field] === true) dojo[field] = 1
+            else dojo[field] = 0;
+        });
 
         _.each(sanitizeCdForms.editDojo, function(item, i) {
           if(_.has(dojo, item)) {
             dojo[item] = $sanitize(dojo[item]);
           }
         });
-
+        
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;
           dojoLead.application.dojoListing = dojo;

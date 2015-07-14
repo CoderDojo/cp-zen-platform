@@ -25,6 +25,12 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var dojoId = $state.params.id;
       cdDojoService.load(dojoId, function(response) {
         if(!_.isEmpty(response)) {
+          // handle glitchy booleans (db issue)
+          _.each(['mailingList', 'private', 'needMentors'], function(field) {
+            if (response[field] === 1) response[field] = true
+              else response[field] = false;
+          });
+
           $scope.dojo = response;
           resolve();
         } else {
@@ -187,6 +193,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.save = function(dojo) {
+    // handle glitchy booleans (db issue)
+    _.each(['mailingList', 'private', 'needMentors'], function(field) {
+      if (dojo[field] === true) dojo[field] = 1
+        else dojo[field] = 0;
+    });
 
     _.each(sanitizeCdForms.editDojo, function(item, i) {
         if(_.has(dojo, item)) {
