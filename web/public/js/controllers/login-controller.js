@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$scope', '$location', '$window', 'auth', 'alertService', 'vcRecaptchaService', loginCtrl]);
-
   function loginCtrl($state, $rootScope, $scope, $location, $window, auth, alertService, vcRecaptchaService) {
     $scope.referer = $state.params.referer ? $state.params.referer : '/dojo-list';
     var msgmap = {
@@ -32,14 +31,18 @@ angular.module('cpZenPlatform').controller('login', ['$state', '$rootScope', '$s
         return alertService.showError("Please resolve the captcha");
       }
 
+      // We need to know if the user is registering as a champion to create a dojo.
+      // This is primarily for Salesforce on the backend.
+      if ($state.current.name ===  'start-dojo-wizard') {
+        user.isChampion = true;
+      }
+
       user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
 
       auth.register(user, function(data) {
         if(data.ok) {
-          alertService.showAlert('Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo.', function() {
-            auth.login(user, function(data) {
-              $window.location.href = '/dashboard/start-dojo';
-            });
+          auth.login(user, function(data) {
+            $window.location.href = '/dashboard/start-dojo';
           });
         } else {
           var reason = data.why === 'nick-exists' ? 'user name already exists' : 'server error';
