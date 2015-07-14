@@ -123,6 +123,7 @@
 
     <script src="/components/angular-truncate/src/truncate.js"></script>
     <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
+    <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 

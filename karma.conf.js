@@ -47,6 +47,7 @@ module.exports = function(config) {
             './web/public/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js',
             './web/public/components/angular-breadcrumb/dist/angular-breadcrumb.min.js',
             './web/public/components/angular-recaptcha/release/angular-recaptcha.min.js',
+            './web/public/components/ng-slide-down/dist/ng-slide-down.min.js',
             './lib/auth/public/auth-front.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
