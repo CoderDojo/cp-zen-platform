@@ -1,57 +1,26 @@
-<button type="button" class="navbar-toggle mainnav-toggle" data-toggle="collapse" data-target="#cd-mainnav-collapse">
-  <i class="fa fa-navicon fa-2x"></i>
-</button>
 
-
-<div ng-controller="login" class="mobile-login-container">
-    <div class="mobile-login-subcontainer">
-       <span ng-if="user" class="">
-        <span>{{ user.name }} | </span>
-        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
-       </span>
-
-        <span class="language-selector">
-      <select>
-        <option value="volvo">EN</option>
-        <option value="saab">DE</option>
-        <option value="mercedes">CH</option>
-        <option value="audi">FR</option>
-      </select>
-    </span>
-    </div>
-</div>
-
-
-
-<button type="button" class="navbar-toggle global-toggle" data-toggle="collapse" data-target="#cd-navbar-collapse">
-  <i class="fa fa-globe fa-2x"></i>
-</button>
-
-<div ng-controller="login" class="cdgm-container">
-  <div class="navbar-collapse collapse" id="cd-navbar-collapse">
-    <ul class="container cdgm-menu dl-menu navbar-header pull-left">
-      <li class="cdgm-button"><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
-      <li class="cdgm-button"><a ui-sref="charter">Charter</a></li>
-      <li class="cdgm-button"><a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">Resources</a></li>
-      <li class="cdgm-button"><a href="http://help.coderdojo.com/">FAQ</a></li>
-      <li class="cdgm-button"><a href="http://coolestprojects.org/">CoolestProjects2015</a></li>
+<div class="tempclass" style="position: absolute; z-index: 1; width: 100%; text-transform: uppercase;">
+  <span>
+    <ul class="tempclass2">
+      <li>CoderDojo.com</li>
+      <li>Charter</li>
+      <li>FAQ</li>
+      <li>CoolestProjects2015</li>
     </ul>
-
-    <div class="login-container">
-       <span ng-if="user" class="cdgm-right horiz-align text-right">
-        <span>{{ user.name }} | </span>
-        <span ng-click="logout()" class="cdgm-button" style="vertical-align: initial;"><a href="">Logout</a></span>
-       </span>
-
-      <span class="language-selector">
-        <select>
-          <option value="volvo">EN</option>
-          <option value="saab">DE</option>
-          <option value="mercedes">CH</option>
-          <option value="audi">FR</option>
-        </select>
-      </span>
-
-    </div>
-  </div>
+  <span>
+</div>
+<div class="container tempclass" style="position: relative; z-index: 2">
+  <span style="float: right; padding-left: 25px; padding-right: 25px">
+    <ul class="tempclass3">
+      <li>Start a Dojo</li>
+      <li>|</li>
+      <li>Manage Dojos</li>
+      <li>|</li>
+      <li>Stats</li>
+      <li>|</li>
+      <li>Admin</li>
+      <li>|</li>
+      <li>Logout</li>
+    </ul>
+  </span>
 </div>
