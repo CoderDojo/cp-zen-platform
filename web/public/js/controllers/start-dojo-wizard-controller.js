@@ -416,10 +416,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--Step Four:
     function setupStep4() {
       $scope.hideIndicators = false;
-      
+
       $scope.stepFourShowGmap = true;
       $scope.markers = [];
-      
+
       currentStepInt = 3;
       var currentUser;
       auth.get_loggedin_user(function(user) {
@@ -545,8 +545,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             }
           }
 
-          var addr1 = (typeof obj.address1 != 'undefined') ? obj.address1 + ', ' : "";
-          address = address + ', ' + obj['countryName'];
+          var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
+          address = address + ', ' + obj.countryName;
 
           Geocoder.latLngForAddress(addr1 + address).then(function (data) {
             placePinOnMap(data, obj);
