@@ -45,23 +45,12 @@
           </div>
         </div>
 
+        <span class="help-block"></span>
         <div class="row">
-          <div class="col-lg-7 col-lg-offset-2" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
-            <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
-              <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
-              <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
-                <span ng-bind-html="initUserType.title"></span>
-              </ui-select-choices>
-            </ui-select>
-            <label class="control-label has-error validationMessage"
-              ng-show="registerForm.$submitted && registerForm.initUserType.$error.required">{@i18n key="Select a user type"/}</label>
-          </div>
+          <div class="col-lg-6 col-lg-offset-3" vc-recaptcha key="recap.publicKey"></div>
         </div>
 
         <span class="help-block"></span>
-        <div class="row">
-          <div class="col-lg-6 col-lg-offset-2" vc-recaptcha key="recap.publicKey"></div>
-        </div>
         <div class="center-children">
           <button class="centered-child btn btn-primary register-btn" type="submit">Register</button>
         </div>

@@ -1,10 +1,9 @@
 <div class="cd-dashboard">
   <div class="row">
-    <h2>{@i18n key="Intro"/}</h2>
-    <p>{@i18n key="Badges Welcome Text"/}</p>
+    <h4>{@i18n key="Badges Welcome Text"/}</h4>
 
     <tabset justified="true">
-      <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
+      <tab ng-repeat="category in categories" class="badge-category-heading" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <span class="help-block"></span>
