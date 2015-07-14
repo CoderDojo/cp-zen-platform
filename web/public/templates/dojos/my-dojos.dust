@@ -1,7 +1,7 @@
 <div class="cd-dashboard">
   <div class="row">
     <div class="my-dojos">
-      <legend>Your Dojos</legend>
+      <legend>My Dojos</legend>
       <table id="myDojosTable" class="table cd-grid-table">
         <thead>
           <tr>
@@ -13,10 +13,10 @@
         </thead>
         <tbody>
           <tr ng-repeat="myDojo in myDojos">
-            <td>{{ myDojo.name }}</td>
+            <td><a class="pointer" ng-click="getDojo(myDojo)">{{ myDojo.name }}</a></td>
             <td>{{ myDojo.placeName }}</td>
             <td class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">Edit</a></td>
-            <td class="pointer" ng-click="deleteDojo(myDojo)">Delete</td>
+            <td class="pointer"><a ng-click="deleteDojo(myDojo)">Delete</a></td>
           </tr>
         </tbody>
       </table>

@@ -287,8 +287,14 @@ label {
     .info-button-container {
       text-align: left;
       margin-bottom: 35px;
+      padding-top: 5px;
+      .col-xs-10 {
+        padding-right: 0px;
+      }
       i.info-button {
         padding-right: 6px;
+        padding-top: 5px;
+        vertical-align: top;
       }
       .info-button-input {
         display: inline-block;
@@ -301,6 +307,7 @@ label {
     .create-dojo-checkbox {
       display: inline-block;
       .infoCheckbox {
+        margin-top: 3px;
         display: inline-block;
       }
       label {
@@ -324,6 +331,19 @@ label {
     #createDojoButton {
       margin-top: 30px;
     }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .info-button-container {
+    .col-xs-10 {
+      padding-left: 0px;
+    }
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .infoCheckbox {
+    padding-left: 35px;
   }
 }
 
@@ -526,6 +546,10 @@ html body .cd-dashboard .cd-color-4 {
   background-color: #FBCC33;
 }
 html body .cd-dashboard .cd-color-5 {
+  background-color: #2C9CFB;
+}
+.btn-primary {
+  /* currently we want buttons to be cd-color-5 */
   background-color: #2C9CFB;
 }
 

@@ -33,6 +33,16 @@ function cdMyDojosCtrl($scope, $window, $state, $stateParams, cdDojoService, $lo
     });
   }
 
+  $scope.getDojo = function (dojo) {
+    cdDojoService.load(dojo.id, function (response) {
+      $scope.viewDojo(response);
+    });
+  }
+
+  $scope.viewDojo = function (dojo) {
+    $location.path('/dojo/' + dojo.urlSlug);
+  }
+
   $scope.loadPage = function(currentUser, resetFlag, cb){
     cb = cb || function(){};
 
