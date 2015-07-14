@@ -62,6 +62,9 @@ function cdUsersService(cdApi, $q){
     },
     isChampion: function(id, win, fail){
       cdApi.post('users/isChampion', {id: id}, win, fail || topfail);
+    },
+    getAvatar: function(id, win, fail){
+      cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);
     }
   };
 }

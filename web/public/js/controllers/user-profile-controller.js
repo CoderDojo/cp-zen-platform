@@ -1,12 +1,35 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, cdBadgesService, utilsService) {
+function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
     return;
   }
+
+  $scope.upload = function (files) {
+    if (files && files.length) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        Upload.upload({
+          url: '/api/1.0/profiles/change-avatar',
+          headers : {
+            'Content-Type': 'multipart/form-data'
+          },
+          file: file,
+          fields: {profileId: profile.data.id}
+        }).progress(function (evt) {
+        }).success(function (data, status, headers, config) {
+          cdUsersService.getAvatar($scope.profile.id, function(response){
+            $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+          })
+        }).error(function (data, status, headers, config) {
+          alertService.showError('error status:' + status);
+        });
+      }
+    }
+  };
 
   $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
   $scope.badgeInfo = {};
@@ -30,6 +53,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.hasAccess = utils.hasAccess;
 
   $scope.profile = profile.data;
+
+  cdUsersService.getAvatar($scope.profile.id, function(response){
+    $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+  })
+
   //Load user's badges
   cdBadgesService.loadBadgeCategories(function (response) {
     var categories = response.categories;
@@ -100,13 +128,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
     $scope.profile.languagesSpoken = utils.toTags($scope.profile.languagesSpoken);
     $scope.profile.projects = utils.toTags($scope.profile.projects);
-    $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
+    $scope.profile.private =  $scope.profile.private ? "true" : "false";
 
     $scope.profile.widget = {};
 
     $scope.profile.widget.projects = utils.frTags($scope.profile.projects);
     $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
-    $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken); 
+    $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken);
   }
 
 
@@ -117,7 +145,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       if(_.isEmpty($scope.dojos)) {
         //This user has no Dojos.
         //Use init user type to setup profile.
-      
+
         $scope.userType = loggedInUser.data.initUserType;
       } else {
         //Search usersdojos for highest user type
@@ -126,12 +154,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     }, function (err) {
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
-  }  
+  }
 
 
   function findHighestUserType() {
     var highestTypeFound = false;
-    
+
     function checkLinks(userType) {
       for(var i = 0; i < usersDojos.length; i++) {
         var userDojoLink = usersDojos[i];
@@ -149,7 +177,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     _.each(searchForUserTypes, function (searchForUserType) {
       if(!highestTypeFound){
         $scope.userType = checkLinks(searchForUserType);
-      } 
+      }
     });
 
   }
@@ -161,14 +189,14 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin']);
-    
+
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
     } else {
       saveDirect(profileCopy);
     }
   };
-  
+
   function saveYouthViaParent(profile){
     cdUsersService.saveYouthProfile(profile, function(){
       alertService.showAlert('Save was successful');
@@ -183,11 +211,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
     profile.projects = profile.projects && utils.frTags(profile.projects);
-    
+
 
     function win(profile){
       $scope.profile = profile;
-      $scope.profile.private =  $scope.profile.private ? "true" : "false"; 
+      $scope.profile.private =  $scope.profile.private ? "true" : "false";
       alertService.showAlert('Profile has been saved successfully');
     }
 
@@ -298,6 +326,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
+  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
 
