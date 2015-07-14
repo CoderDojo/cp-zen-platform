@@ -130,7 +130,7 @@
           <div class="col-lg-6 col-lg-offset-5 google-map">
             <section ng-if="mapLoaded" id="map">
               <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
-              <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params)'}" ui-options="mapOptions" class="map-canvas"></div>
+              <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, dojo)'}" ui-options="mapOptions" class="map-canvas"></div>
             </section>
           </div>
           </div>

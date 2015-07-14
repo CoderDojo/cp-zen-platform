@@ -111,6 +111,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       }
     }
 
+    setupGoogleMap();
+
     $scope.scrollToInvalid = function(form){
       // temp fix
       $scope.getLocationFromAddress($scope.dojo);
@@ -229,6 +231,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         };
 
       $scope.hideIndicators = false;
+
+      $scope.stepTwoShowGmap = true;
+      $scope.markers = [];
+
       currentStepInt = 1;
 
       $scope.showCharterAgreement = function () {
@@ -381,6 +387,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--Step Four:
     function setupStep4() {
       $scope.hideIndicators = false;
+      
+      $scope.stepFourShowGmap = true;
+      $scope.markers = [];
+      
       currentStepInt = 3;
       var currentUser;
       auth.get_loggedin_user(function(user) {
@@ -388,8 +398,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       });
 
       $scope.dojo = {};
-      $scope.model = {};
-      $scope.saveButtonText = 'Create Dojo';
 
       auth.get_loggedin_user(function(user) {
         $scope.user = user;
@@ -451,7 +459,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           if(_.has(dojo, item)) {
             dojo[item] = $sanitize(dojo[item]);
           }
-        });        
+        });
+
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           var dojoLead = response;
           dojoLead.application.dojoListing = dojo;
@@ -474,7 +483,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         })
       }
 
+      WizardHandler.wizard().goTo(3, true);
+      $scope.stepFinishedLoading = true;
+    }
+
+    function setupGoogleMap() {
       $scope.markers = [];
+      $scope.model = {};
 
       if(gmap) {
         $scope.mapLoaded = true;
@@ -493,7 +508,30 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         });
       }
 
-      $scope.addMarker = function($event, $params) {
+      $scope.getLocationFromAddress = function(obj) {
+        if(obj && obj.place) {
+          var address = obj.placeName;
+          for (var adminidx=4; adminidx >= 1; adminidx--) {
+            if (obj['admin'+adminidx+'Name']) {
+              address = address + ', ' + obj['admin'+adminidx+'Name'];
+            }
+          }
+          
+          var addr1 = (typeof obj.address1 != 'undefined') ? obj.address1 + ', ' : "";
+          address = address + ', ' + obj['countryName'];
+
+          Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+            placePinOnMap(data, obj);
+          },
+          function () {
+            Geocoder.latLngForAddress(address).then(function (data) {
+              placePinOnMap(data, obj);
+            });
+          });
+        }
+      }
+
+      $scope.addMarker = function($event, $params, obj) {
         angular.forEach($scope.markers, function(marker) {
           marker.setMap(null);
         });
@@ -501,45 +539,20 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           map: $scope.model.map,
           position: $params[0].latLng
         }));
-        $scope.dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
+        obj.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
       };
 
-      $scope.getLocationFromAddress = function(dojo) {
-        if(dojo && dojo.place) {
-          var address = dojo.placeName;
-          for (var adminidx=4; adminidx >= 1; adminidx--) {
-            if (dojo['admin'+adminidx+'Name']) {
-              address = address + ', ' + dojo['admin'+adminidx+'Name'];
-            }
-          }
-          
-          var addr1 = (typeof dojo.address1 != 'undefined') ? dojo.address1 + ', ' : "";
-          address = address + ', ' + dojo['countryName'];
-
-          Geocoder.latLngForAddress(addr1 + address).then(function (data) {
-            placePinOnMap(data);
-          },
-          function (data) {
-            Geocoder.latLngForAddress(address).then(function (data2) {
-              placePinOnMap(data2);
-            });
-          });
-        }
+      function placePinOnMap(data, obj) {
+        $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+        $scope.model.map.panTo($scope.mapOptions.center);
+        $scope.markers.push(new google.maps.Marker({
+          map: $scope.model.map,
+          position: $scope.mapOptions.center
+        }));
+        obj.coordinates = data.lat + ', ' + data.lng;
       }
-      WizardHandler.wizard().goTo(3, true);
-      $scope.stepFinishedLoading = true;
-    }
 
-    function placePinOnMap(data) {
-      $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-      $scope.model.map.panTo($scope.mapOptions.center);
-      $scope.markers.push(new google.maps.Marker({
-        map: $scope.model.map,
-        position: $scope.mapOptions.center
-      }));
-      $scope.dojo.coordinates = data.lat + ', ' + data.lng;
     }
-    //--
 }
 
 angular.module('cpZenPlatform')
