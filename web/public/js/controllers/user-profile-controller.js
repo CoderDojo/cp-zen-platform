@@ -1,6 +1,6 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService, 
+function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
@@ -20,14 +20,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
           file: file,
           fields: {profileId: profile.data.id}
         }).progress(function (evt) {
-          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-          console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
         }).success(function (data, status, headers, config) {
           cdUsersService.getAvatar($scope.profile.id, function(response){
             $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
           })
         }).error(function (data, status, headers, config) {
-          console.log('error status:' + status);
+          alertService.showError('error status:' + status);
         });
       }
     }
@@ -328,6 +326,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService', 
+  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
 
