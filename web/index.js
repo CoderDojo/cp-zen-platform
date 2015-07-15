@@ -61,6 +61,16 @@ var controllers = requireindex('./web/controllers');
 //   server.route(controller);
 // })
 
+server.route({
+    method: 'GET',
+    path: '/{filename*}',
+    handler: {
+        directory: {
+            path: path.join(__dirname, 'public')
+        }
+    }
+});
+
 server.route(controllers.index);
 
 server.start(function () {
