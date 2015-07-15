@@ -131,24 +131,28 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   };
 
   $scope.preventEnterRegisterAccount = function () {
-    if(currentStepInt > 0) return false;
-    return true;
-  }
+      if(currentStepInt != 0) return false;
+      return true;
+    }
 
   $scope.preventEnterChampionRegistration = function () {
-    if(currentStepInt > 1) return false;
-    return true;
-  }
+      if(currentStepInt < 1) return false;
+      if(WizardHandler.wizard().currentStepNumber() > 1 ) setupStep2("dontShowCharter", true);
+      return true;
+    }
 
   $scope.preventEnterSetupDojo = function () {
-    if(currentStepInt > 2) return false;
-    return true;
-  }
+      if(currentStepInt < 2) return false;
+      if(WizardHandler.wizard().currentStepNumber() > 2 ) setupStep3(true);
+      return true;
+    }
 
   $scope.preventEnterDojoListing = function () {
-    if(currentStepInt > 3) return false;
-    return true;
-  }
+      if(currentStepInt < 3) return false;
+      if(WizardHandler.wizard().currentStepNumber() >= 3 ) setupStep4(true);
+
+      return true;
+    }
 
   $scope.accountSuccessfullyRegistered = function () {
     if(currentStepInt > 0) return true;
@@ -156,9 +160,13 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   }
 
   $scope.championApplicationSubmitted = function () {
-    if(currentStepInt > 1) return true;
-    return false;
-  }
+      if(currentStepInt > 1) return true;
+      if(WizardHandler.wizard().currentStepNumber() > 1) {
+        setupStep3(true);
+        return true;
+      }
+      return false;
+    }
 
   $scope.dojoSetup = function () {
     if(currentStepInt > 2) return true;
@@ -228,7 +236,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   //--
 
   //--Step Two:
-  function setupStep2(subStep) {
+  function setupStep2(subStep, wizardRedirect) {
     var initialDate = new Date();
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
@@ -238,7 +246,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
     $scope.hideIndicators = false;
-
     $scope.stepTwoShowGmap = true;
     $scope.markers = [];
 
@@ -347,13 +354,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $translate.instant('Other')
     ];
 
-    WizardHandler.wizard().goTo(1, true);
+    if(!wizardRedirect) {
+      WizardHandler.wizard().goTo(1, true);
+    }
     $scope.stepFinishedLoading = true;
   }
   //--
 
   //--Step Three:
-  function setupStep3() {
+  function setupStep3(wizardRedirect) {
     $scope.hideIndicators = false;
     currentStepInt = 2;
     $scope.setupDojo = {};
@@ -408,19 +417,22 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         });
       }
     }
-    WizardHandler.wizard().goTo(2, true);
+
+    if(!wizardRedirect) {
+      WizardHandler.wizard().goTo(2, true);
+    }
     $scope.stepFinishedLoading = true;
   }
-  //--
+    //--
 
   //--Step Four:
-  function setupStep4() {
+  function setupStep4(wizardRedirect) {
     $scope.hideIndicators = false;
     $scope.buttonText = "Create Dojo"
-    
+      
     $scope.stepFourShowGmap = true;
     $scope.markers = [];
-    
+      
     currentStepInt = 3;
     var currentUser;
     auth.get_loggedin_user(function(user) {
@@ -512,7 +524,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       })
     }
 
-    WizardHandler.wizard().goTo(3, true);
+    if(!wizardRedirect) {
+      WizardHandler.wizard().goTo(3, true);
+    }
     $scope.stepFinishedLoading = true;
   }
 
