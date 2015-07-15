@@ -30,7 +30,24 @@ server.views({
   partialsPath: path.join(__dirname, './public/templates/common')
 })
 
+server.register({
+    register: require('hapi-less'),
+    options: {
+        home: path.join(__dirname, './public/css'),
+        route: '/css/{filename*}',
+        less: {
+            compress: true
+        }
+    }
+}, function (err) {
+ 
+    if (err) {
+        console.log('Failed loading hapi-less: %s', err);
+    }
+});
+
 // TODO ? // require('./lib/dust-i18n.js');
+
 
 
 // TODO ? // app.use(bodyparser.urlencoded({ extended: true }))
