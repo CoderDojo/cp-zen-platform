@@ -408,7 +408,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         });
       }
     }
-
     WizardHandler.wizard().goTo(2, true);
     $scope.stepFinishedLoading = true;
   }
@@ -417,6 +416,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   //--Step Four:
   function setupStep4() {
     $scope.hideIndicators = false;
+    $scope.buttonText = "Create Dojo"
     
     $scope.stepFourShowGmap = true;
     $scope.markers = [];
