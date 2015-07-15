@@ -140,6 +140,10 @@
           url: "/dashboard/setup-dojo/:id",
           templateUrl: '/dojos/template/setup-dojo',
           controller: 'setup-dojo-controller'
+        })
+        .state('charter',{
+          url: '/charter',
+          templateUrl: '/charter/template/charter-info'
         });
     })
     .config(function(paginationConfig) {
