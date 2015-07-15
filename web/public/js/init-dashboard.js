@@ -187,10 +187,13 @@
           templateUrl: '/champion/template/review-application',
           controller: 'review-champion-application-controller'
         })
-        .state("manage-dojo-users", {
+        .state("my-dojos.manage-dojo-users", {
           url: "/dashboard/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
-          controller: 'manage-dojo-users-controller'
+          controller: 'manage-dojo-users-controller',
+          ncyBreadcrumb: {
+            label: '{{manageDojoUsersPageTitle}}'
+          }
         })
 		    .state("setup-dojo", {
           url: "/dashboard/setup-dojo/:id",

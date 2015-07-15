@@ -112,8 +112,12 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
             var isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
               return permission.name === 'ticketing-admin';
             });
+            var isDojoAdmin = _.find(userDojo.userPermissions, function (permission) {
+              return permission.name === 'dojo-admin';
+            });
             dojo.isChampion = isChampion;
             dojo.isTicketingAdmin = isTicketingAdmin;
+            dojo.isDojoAdmin = isDojoAdmin;
             dojo.country = dojo.country.alpha2.toLowerCase();
             var path = dojo.urlSlug.split('/');
             path.splice(0, 1);

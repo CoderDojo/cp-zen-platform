@@ -24,6 +24,8 @@
     'ngBootbox',
     'ngCookies',
     'ncy-angular-breadcrumb',
-    'vcRecaptcha'
+    'vcRecaptcha',
+    'ngFileUpload',
+    'ng-slide-down'
   ]);
 })();

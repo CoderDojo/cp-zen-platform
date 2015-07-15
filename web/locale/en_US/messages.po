@@ -1269,6 +1269,9 @@ msgstr "Add a user type"
 msgid "Background Checked"
 msgstr "Background Checked"
 
+msgid "Upload new picture"
+msgstr "Upload new picture"
+
 msgid "Intro"
 msgstr "Intro"
 
@@ -1313,3 +1316,27 @@ msgstr "Date Awarded"
 
 msgid "You can't request a badge application for your own user account."
 msgstr "You can't request a badge application for your own user account."
+
+msgid "Please enter a Badge Claim Number."
+msgstr "Please enter a Badge Claim Number."
+
+msgid "Invalid Badge Claim Number."
+msgstr "Invalid Badge Claim Number."
+
+msgid "You have successfully claimed a badge. It is now visible on your profile page."
+msgstr "You have successfully claimed a badge. It is now visible on your profile page."
+
+msgid "Enter Badge Claim Number"
+msgstr "Enter Badge Claim Number"
+
+msgid "Go"
+msgstr "Go"
+
+msgid "Claim Now"
+msgstr "Claim Now"
+
+msgid "Champion and Dojo Admin permissions cannot be removed from a Dojo owner."
+msgstr "Champion and Dojo Admin permissions cannot be removed from a Dojo owner."
+
+msgid "Dojo owners cannot be removed."
+msgstr "Dojo owners cannot be removed."

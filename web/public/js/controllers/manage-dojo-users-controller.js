@@ -13,7 +13,8 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.isDojoAdmin = false;
   $scope.badgeModel = {};
   $scope.awardBadgeButtonModel = {};
-
+  $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
+  
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
     //Updating user permissions and user types require the same permissions.
@@ -40,7 +41,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, $scope.filterQuery, $scope.sort);
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
-    var query = {dojoId:dojoId};
+    var query = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
 
     cdDojoService.getUserTypes(function (response) {
       var mentorUserTypes   = ['mentor', 'parent-guardian', 'attendee-o13'];
@@ -94,7 +95,10 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
       });
       $scope.users = response;
-      $scope.totalItems = response.length;
+      //Query the loadDojoUsers service without the limit to get the total number of users.
+      cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
+        $scope.totalItems = response.length;
+      });
       return cb();
     });
 
@@ -134,15 +138,22 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
           //Remove from user permissions
           var indexToRemove;
           _.find(user.permissions, function(userPermission, userPermissionIndex){
-            if(_.isEqual(userPermission, permission)) {
-              return indexToRemove = userPermissionIndex;
-            }
+            indexToRemove = userPermissionIndex;
+            return _.isEqual(userPermission, permission);
           });
           user.permissions.splice(indexToRemove, 1);
           userDojoLink.userPermissions = user.permissions;
           if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
           //Save to db
-          cdDojoService.saveUsersDojos(userDojoLink, null, function (err) {
+          cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+            if(response.error)  {
+              alertService.showError($translate.instant(response.error));
+              //Revert checkbox
+              $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
+              //Re-add permission
+              user.permissions.push(permission);
+            }
+          }, function (err) {
             alertService.showError($translate.instant('Error removing permission') + ' ' +err);
             //Revert checkbox 
             $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
@@ -173,6 +184,12 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
         if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
         userDojoLink.userTypes = user.types;
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+          if(response.error) { 
+            alertService.showError($translate.instant(response.error));
+            //Revert user types
+            if(method === 'add') user.types.pop();
+            if(method === 'remove') user.types.push($tag);
+          }
         }, function (err) {
           alertService.showError($translate.instant('Error saving user type') + ' ' + err);
         });
@@ -231,6 +248,9 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
       usSpinnerService.spin('manage-dojo-users-spinner');
       var userId = user.id;
       cdDojoService.removeUsersDojosLink(userId, dojoId, function (response) {
+        if(response.error) {
+          alertService.showError($translate.instant(response.error));
+        }
         usSpinnerService.stop('manage-dojo-users-spinner');
         $scope.loadPage(true);
       }, function (err) {
