@@ -1,0 +1,6 @@
+<select>
+  <option value="volvo">EN</option>
+  <option value="saab">DE</option>
+  <option value="mercedes">CH</option>
+  <option value="audi">FR</option>
+</select>

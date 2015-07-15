@@ -1,26 +1,60 @@
+<div class="cdgm-container">
+  <div class="cdgm cdgm-left cdgm-text">
+    <span>
+      <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#cd-mainnav-collapse">
+        <i class="fa fa-navicon fa-2x"></i>
+      </button>
+      <ul class="cdgm-buttons-left">
+        {>"common/components/cdgm-buttons-left" /}
+      </ul>
+    <span>
+  </div>
 
-<div class="tempclass" style="position: absolute; z-index: 1; width: 100%; text-transform: uppercase;">
-  <span>
-    <ul class="tempclass2">
-      <li>CoderDojo.com</li>
-      <li>Charter</li>
-      <li>FAQ</li>
-      <li>CoolestProjects2015</li>
-    </ul>
-  <span>
+  <div class="container cdgm cdgm-right cdgm-text center-children">
+    <span class="pull-right cdgm-right-inner">
+      
+      <ul class="cdgm-buttons-right">
+        {>"common/components/cdgm-buttons-right" /}
+        <li class="separator">|</li>
+        {>"common/components/cdgm-buttons-head" /}
+        <li>
+          <span class="language-selector language-selector-fullscreen">
+            {>"common/components/cdgm-lang-bar" /}
+          </span>
+        </li>
+      </ul>
+    </span>
+    <button type="button" style="padding-top: 5px; height: 40px" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#cdgm-mobile">
+      <i class="fa fa-globe fa-2x"></i>
+    </button> 
+    <span class="centered-child text-center cdgm-mobile-head">
+      <ul class="cdgm-buttons-mobile-head">
+        {>"common/components/cdgm-buttons-head" /}
+      </ul>
+    </span>
+  </div>
 </div>
-<div class="container tempclass" style="position: relative; z-index: 2">
-  <span style="float: right; padding-left: 25px; padding-right: 25px">
-    <ul class="tempclass3">
-      <li>Start a Dojo</li>
-      <li>|</li>
-      <li>Manage Dojos</li>
-      <li>|</li>
-      <li>Stats</li>
-      <li>|</li>
-      <li>Admin</li>
-      <li>|</li>
-      <li>Logout</li>
-    </ul>
-  </span>
+
+<div id="cdgm-mobile" class="navbar-collapse collapse">
+  <div>
+    <span class="col-xs-6 cdgm-mobile-inner cdgm-mobile-left cdgm-text center-children">
+      <span class="centered-child">
+        <ul class="text-left">
+          {>"common/components/cdgm-buttons-left" /}
+        </ul>
+      </span>
+    </span>
+    <span class="col-xs-6 cdgm-mobile-inner cdgm-mobile-right cdgm-text center-children">
+      <span class="centered-child">
+        <ul class="text-left">
+          {>"common/components/cdgm-buttons-right" /}
+        <li>
+          <span class="pull-left language-selector">
+            {>"common/components/cdgm-lang-bar" /}
+          </span>
+        </li>
+        </ul>
+      </span>
+    </span>
+  </div>
 </div>

@@ -1,24 +1,46 @@
 
+#cdgm-mobile {
+  padding: 0;
+  width: 100%;
+
+  .cdgm-mobile-inner {
+    ul {
+      padding-top: 10px;
+      padding-left: 0;
+    }
+  }
+  .cdgm-mobile-left {
+    ul {
+      padding-left: 20px;
+      float: left;
+    }
+  }
+  .cdgm-mobile-right {
+    ul {
+      padding-right: 20px;
+      float: right;
+    }
+  }
+}
+.cdgm-mobile-head {
+  margin-left: 2em;
+  a {
+    font-size: 15px;
+  }
+
+  .cdgm-buttons-mobile-head {
+    li {
+      line-height: 47px;
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+  }
+}
+
 .cdgm-container {
-  padding: 5px;
-  min-height: 40px;
-  line-height: normal;
-  background: #333;
-  font-size: 13px;
-  color: #fff;
-  text-transform: uppercase;
-  width: 100%;
+  height: 47px;
 }
-
-#cd-navbar-collapse {
-  width: 100%;
-  padding: 0px;
-}
-
-.tempclass {
-  font-size: 13px;
-
-  color: #fff;
+.cdgm {
   ul {
     margin: 0;
     padding: 0;
@@ -29,27 +51,61 @@
     }
   }
 }
-.tempclass2 {
-  li {
-    padding-left: 4px;
-    padding-right: 4px;
+.cdgm-text {
+  font-size: 13px;
+
+  color: #fff;
+  a {
+    font-size: 13px;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    padding-top: 5px;
+  }
+  a:hover {
+    border-top: solid 2px;
+  }
+
+  ul {
+    list-style-type: none;
   }
 }
-.tempclass3 {
-  li {
-    padding-left: 2px;
-    padding-right: 2px;
+.cdgm-left {
+  position: absolute;
+  z-index: 3;
+  width: 53%;
+  text-transform: uppercase;
+
+  .cdgm-buttons-left {
+    li {
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+  }
+}
+.cdgm-right {
+  position: relative;
+  z-index: 2;
+
+  .cdgm-right-inner {
+    width: 80%;
+    display: inline-block;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    .cdgm-buttons-right {
+      float: right;
+      li {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+    }
   }
 }
 
-.cdgm-menu {
-  position: relative;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 5px;
-  margin-left: 0px;
-  width: 85%;
-  z-index: 9999;
+.navbar-toggle {
+  margin: 0;
+  padding: 5px 0 0 5px;
 }
 
 .login-container {
@@ -58,29 +114,6 @@
   top: 0;
   left: 0;
   height: 27px;
-}
-
-.mobile-login-container {
-  padding-top: 15px;
-  display: none;
-  width: 60%;
-  margin: 0px auto;
-  float: left;
-}
-
-.mobile-login-subcontainer {
-  padding-left: 50px;
-}
-
-.cdgm-right {
-  display: block;
-  text-transform: none;
-  vertical-align: initial;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
 }
 
 .horiz-align {
@@ -95,10 +128,11 @@
 .language-selector {
   margin-top: 10px;
   overflow: hidden;
-  padding-left: 0px;
-  width:30px;
-  float:right;
-  display: inline-block;
+  width: 30px;
+  height: 15px;
+}
+.language-selector-fullscreen {
+  margin-top: 15px;
 }
 .language-selector select {
   -webkit-appearance: none;
@@ -117,24 +151,6 @@
 
 .alert-message .row {
   width: 1130px;
-}
-
-.cdgm-button {
-  padding-top: 7px;
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 2%;
-}
-
-.cdgm-button a {
-  text-decoration:none;
-  color:#fff;
-  cursor: pointer;
-}
-
-.cdgm-button:hover {
-  border-top: solid 2px;
-  border-color: #fff;
 }
 
 #jQueryCookieDisclaimer {
@@ -162,7 +178,7 @@
 }
 
 .navbar-global {
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: #333;
   border-color: #333;
   color: #fff;
@@ -178,14 +194,9 @@
   background-color: transparent;
 }
 
-.global-toggle {
-  float: right;
-}
-
 .mainnav-toggle {
   float: left;
 }
-
 
 @media only screen and (max-width: 1200px) {
 
@@ -244,7 +255,37 @@
 
 }
 
+@media only screen and (min-width: 768px) {
+  #cdgm-mobile {
+    display: none!important;
+  }
+  .cdgm-mobile-head {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 768px) {
+
+  .cdgm-left {
+    width: 20%;
+  }
+  .cdgm-buttons-left {
+    display: none;
+  }
+  .cdgm-buttons-right {
+    display: none;
+  }
+  .separator {
+    display: none;
+  }
+  .navbar-global {
+    ul {
+      line-height: 33px;
+    }
+  }
+  .language-selector-fullscreen {
+    display: none;
+  }
 
   .dl-menu li {
     clear: both;
@@ -264,19 +305,6 @@
   .dl-menu li :hover {
     border-left: solid 4px;
     border-color: #fff;
-  }
-
-  .login-container {
-      display: none;
-      height: auto;
-    }
-
-  .mobile-login-container {
-    display: inline-block;
-  }
-
-  .cdgm-container {
-    min-height: 0px;
   }
 
   .cd-header-button-group {
@@ -328,10 +356,6 @@
     overflow-y: hidden;
   }
 
-  #cd-navbar-collapse {
-    border: none;
-  }
-
   .horiz-align {
     width: 100%;
   }
@@ -344,8 +368,5 @@
     text-align: center;
   }
 
-  .language-selector {
-    margin-top: 7px;
-  }
-
 }
+
