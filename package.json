@@ -23,19 +23,11 @@
     "url": "https://github.com/CoderDojo/cp-zen-platform/issues"
   },
   "dependencies": {
-    "adaro": "0.1.5",
     "async": "0.9.2",
-    "body-parser": "1.4.3",
     "connect-redis": "2.3.0",
     "dustjs-helpers": "1.6.1",
     "dustjs-linkedin": "2.6.1",
-    "engine-munger": "0.2.0",
-    "express": "4.3.0",
-    "express-session": "1.6.5",
     "jed": "1.0.2",
-    "kraken-devtools": "1.0.0",
-    "kraken-devtools-browserify": "0.0.1",
-    "kraken-js": "1.0.1",
     "less": "1.7.3",
     "locale": "0.0.20",
     "localizr": "0.1.0",
@@ -48,8 +40,9 @@
     "seneca-ng-web": "git://github.com/iantocristian/seneca-ng-web.git",
     "seneca-user-roles": "0.1.0",
     "seneca-web-access": "0.1.0",
-    "serve-static": "1.4.0",
-    "slug": "0.9.1"
+    "slug": "0.9.1",
+    "hapi": "~8.8.0",
+    "hapi-dust": "~2.0.0"
   },
   "devDependencies": {
     "bower": "1.4.1",
@@ -76,13 +69,6 @@
     "mocha": "1.20.1",
     "pre-commit": "1.0.7",
     "supertest": "0.9.0"
-  },
-  "generator-kraken": {
-    "version": "1.1.0",
-    "template": "dustjs",
-    "css": "less",
-    "js": "browserify",
-    "task": "grunt"
   },
   "homepage": "https://github.com/CoderDojo/cp-zen-platform"
 }
