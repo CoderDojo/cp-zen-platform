@@ -121,7 +121,7 @@
         })
         .state('charter',{
           url: '/charter',
-          templateUrl: '/charter/template/index'
+          templateUrl: '/charter/template/charter-info'
         });
     })
     .config(function(paginationConfig) {
