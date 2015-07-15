@@ -42,7 +42,8 @@
     "seneca-web-access": "0.1.0",
     "slug": "0.9.1",
     "hapi": "~8.8.0",
-    "hapi-dust": "~2.0.0"
+    "hapi-dust": "~2.0.0",
+    "requireindex": "~1.1.0"
   },
   "devDependencies": {
     "bower": "1.4.1",

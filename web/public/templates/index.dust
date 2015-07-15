@@ -1,8 +1,8 @@
-{>"layouts/master" /}
+{>"master" /}
 {<body}
-  {>"common/header" /}
+  {>"header" /}
   <div class="container">
     <div ui-view></div> 
   </div>
-  {>"common/footer" /}
+  {>"footer" /}
 {/body}
