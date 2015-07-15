@@ -118,6 +118,10 @@
           url: "/terms-and-conditions",
           templateUrl: '/templates/terms-and-conditions',
           controller: 'terms-and-conditions-controller'
+        })
+        .state('charter',{
+          url: '/charter',
+          templateUrl: '/charter/template/charter-info'
         });
     })
     .config(function(paginationConfig) {

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (router) {
-  router.get('/template/index', function (req, res) {
-    res.render('charter/index');
-  });
+  router.get('/template/*', function (req, res) {
+     res.render('charter/' + req.params[0]);
+   });
 };
