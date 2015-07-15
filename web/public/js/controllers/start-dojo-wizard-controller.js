@@ -95,6 +95,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     });
 
     function initStep (step, subStep) {
+      step =3;
       switch(step) {
         case 0:
           setupStep1();
@@ -387,6 +388,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     //--Step Four:
     function setupStep4() {
       $scope.hideIndicators = false;
+      $scope.buttonText = "Create Dojo"
       
       $scope.stepFourShowGmap = true;
       $scope.markers = [];
