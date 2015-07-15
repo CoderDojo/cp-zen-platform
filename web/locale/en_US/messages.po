@@ -336,6 +336,9 @@ msgstr "Find a Dojo"
 msgid "Resources"
 msgstr "Resources"
 
+msgid "Charter"
+msgstr "Charter"
+
 msgid "FAQ"
 msgstr "FAQ"
 

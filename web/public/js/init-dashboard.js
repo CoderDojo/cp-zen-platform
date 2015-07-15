@@ -200,6 +200,10 @@
           templateUrl: '/dojos/template/setup-dojo',
           controller: 'setup-dojo-controller'
         })
+        .state('charter',{
+          url: '/charter',
+          templateUrl: '/charter/template/charter-info'
+        })
         .state("accept-dojo-user-invitation", {
           url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
           templateUrl: '/dojos/template/accept-dojo-user-invitation',

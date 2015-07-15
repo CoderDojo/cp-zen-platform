@@ -129,6 +129,10 @@
           templateUrl: '/templates/terms-and-conditions',
           controller: 'terms-and-conditions-controller'
         })
+        .state('charter',{
+          url: '/charter',
+          templateUrl: '/charter/template/charter-info'
+        })
         .state('accept-child-invite',{
           url: '/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
           controller: 'accept-child-controller',
