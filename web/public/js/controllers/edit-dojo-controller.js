@@ -4,7 +4,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
-  $scope.saveButtonText = 'Update Dojo';
+  $scope.buttonText = 'Update Dojo';
   var DEFAULT_COORDS = '53.3478,6.2597';
 
   auth.get_loggedin_user(function(user) {
