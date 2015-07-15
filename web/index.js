@@ -2,18 +2,12 @@
 
 require('newrelic');
 
-var bodyparser   = require('body-parser')
-var session      = require('express-session')
-var RedisStore = require('connect-redis')(session)
-
-
-var kraken = require('kraken-js')
-var app = require('express')()
+var Hapi = require('hapi');
+var path = require('path');
 var env = process.env.NODE_ENV || 'development';
 var so = require('./options.' + env  + '.js');
 
-var sessionStore = new RedisStore(so.redis)
-
+// TODO
 var options = {
     onconfig: function (config, next) {
       var sessionConfig = require('./config/sessions.json')
@@ -22,18 +16,27 @@ var options = {
       next(null, config);
     }
 }
+
+var server = new Hapi.Server()
 var port = process.env.PORT || 8000
 
-app.use(kraken(options))
+server.connection({ port: port })
 
-require('./lib/dust-i18n.js');
+server.views({
+  engines: { dust: require('hapi-dust') },
+  relativeTo: path.join(__dirname),
+  path: 'public/templates',
+  // TODO ? // helpersPath: 'path/to/helpers',
+})
+
+// TODO ? // require('./lib/dust-i18n.js');
 
 
-app.use(bodyparser.urlencoded({ extended: true }))
-app.use(bodyparser.json({ limit: so.bodyparser.json.limit }))
+// TODO ? // app.use(bodyparser.urlencoded({ extended: true }))
+// TODO ? // app.use(bodyparser.json({ limit: so.bodyparser.json.limit }))
 
-app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
+// TODO // app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
 
-app.listen(port, function (err) {
-    console.log('[%s] Listening on http://localhost:%d', app.settings.env, port);
+server.start(function () {
+    console.log('[%s] Listening on http://localhost:%d', env, port);
 })
