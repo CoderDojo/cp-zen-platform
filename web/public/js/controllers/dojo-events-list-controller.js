@@ -15,7 +15,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         var userDojo = response[0];
         var userTypes = userDojo.userTypes;
         $scope.isParent = _.contains(userTypes, 'parent-guardian');
-       
+        
         if($scope.isParent) {
           //retrieve this parent's children
           var query = {userId:$scope.currentUser.id};

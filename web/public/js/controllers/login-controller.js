@@ -83,7 +83,7 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
     auth.login($scope.login,
       function(data){
           var user = data.user;
-          if(_.contains(user.roles, 'cdf-admin')) {
+          if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
