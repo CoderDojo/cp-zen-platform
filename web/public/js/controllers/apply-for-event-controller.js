@@ -27,14 +27,9 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
           };
 
           cdEventsService.applyForEvent(applyData, function (response) {
-            if(response.error) {
-              usSpinnerService.stop('apply-for-event-spinner');
-              alertService.showError($translate.instant('Error applying for event') + ': ' + response.error);
-            } else {
-              usSpinnerService.stop('apply-for-event-spinner');
-              alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
-              $scope.showEventInfo(eventIndex, $scope.event.id);
-            } 
+            usSpinnerService.stop('apply-for-event-spinner');
+            alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+            $scope.showEventInfo(eventIndex, $scope.event.id);
           });
         } else {
           usSpinnerService.stop('apply-for-event-spinner');
