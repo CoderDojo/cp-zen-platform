@@ -1,9 +1,20 @@
 'use strict';
 
-function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
+
+  $rootScope.$watch(function() {
+      return $location.path();
+    },
+    function(path){
+      if(angular.element('.alert-message').hasClass('active') &&
+        angular.element('.alert-message').hasClass('info') && path !== '/'){
+        angular.element('.alert-message').removeClass('active');
+      }
+    }
+  );
 
   $scope.pageChanged = function(){
     $scope.loadPage(currentUser, false);
@@ -86,7 +97,7 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
       return cb(err);
     });
   }
-  
+
   $scope.loadPage = function(currentUser, resetFlag, cb){
     cb = cb || function(){};
 
@@ -169,4 +180,4 @@ function cdMyDojosCtrl($q, $scope, $window, $state, $stateParams, cdDojoService,
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$q', '$scope', '$window', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$q', '$rootScope', '$scope', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
