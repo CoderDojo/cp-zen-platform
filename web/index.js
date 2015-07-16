@@ -20,7 +20,7 @@ var so = require('./options.' + env  + '.js');
 // }
 
 var port = process.env.PORT || 8000
-var server = new Hapi.Server()
+var server = module.exports = new Hapi.Server()
 
 server.connection({ port: port })
 
@@ -71,8 +71,32 @@ server.route({
     }
 });
 
+// TODO check lib/auth/cd-auth.js for middleware that may or may not be active
+//      this servers the static file from that directory
+server.route({
+    method: 'GET',
+    path: '/content/auth/{filename*}',
+    handler: {
+        directory: {
+            path: path.join(__dirname, '../lib/auth/public')
+        }
+    }
+});
+
 server.route(controllers.index);
 
-server.start(function () {
+server.register({
+  register: require('hapi-seneca'),
+  options: {
+    seneca: require('seneca')(),
+    cors: true
+  }
+}, function (err) {
+  if (err) {
+    console.error(err);
+  }
+
+  server.start(function() {
     console.log('[%s] Listening on http://localhost:%d', env, port);
-})
+  });
+});
