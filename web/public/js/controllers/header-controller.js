@@ -10,18 +10,15 @@ function headerCtrl($window, $scope, $localStorage , intercomService) {
   	return _.contains($scope.user.roles, 'cdf-admin');
   };
 
-  $scope.selectTab = function (tab) {
-    $localStorage.selectedTab = tab;
-  }
-
   $scope.isSelected = function (tab) {
-    if ($localStorage.selectedTab === tab) return true;
+    if (tab === 'my-dojos' && $window.location.pathname.indexOf('edit-dojo') > -1) return true;
+    if (tab === 'events' && $window.location.pathname.indexOf('my-dojos') > -1) return false;
+    if (tab === 'dojo-list' && $window.location.pathname === '/') return true;
+    if ($window.location.pathname.indexOf(tab) > -1) return true
     else return false;
   }
 
   intercomService.InitIntercom();
-
-  $scope.selectedTab = $localStorage.selectedTab;
 }
 
 angular.module('cpZenPlatform')
