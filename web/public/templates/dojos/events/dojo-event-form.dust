@@ -103,6 +103,7 @@
                  name="city"
                  id="city"
                  ng-disabled="disabled"
+                 ng-change="eventInfo.address = null"
                  required>
         <ui-select-match placeholder="{@i18n key="Add a city name"/}">
           {{ $select.selected.nameWithHierarchy }}
