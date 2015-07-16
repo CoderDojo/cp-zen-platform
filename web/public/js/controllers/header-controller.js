@@ -1,6 +1,6 @@
 'use strict';
 
-function headerCtrl($window, $scope, $localStorage , intercomService) {
+function headerCtrl($window, $scope, $localStorage, $location, intercomService) {
   $scope.navigateTo = function (page) {
     $window.location.href = '/' + page;
   };
@@ -11,10 +11,11 @@ function headerCtrl($window, $scope, $localStorage , intercomService) {
   };
 
   $scope.isSelected = function (tab) {
-    if (tab === 'my-dojos' && $window.location.pathname.indexOf('edit-dojo') > -1) return true;
-    if (tab === 'events' && $window.location.pathname.indexOf('my-dojos') > -1) return false;
-    if (tab === 'dojo-list' && $window.location.pathname === '/') return true;
-    if ($window.location.pathname.indexOf(tab) > -1) return true
+    var path = $location.path();
+    if (tab === 'my-dojos' && path.indexOf('edit-dojo') > -1) return true;
+    if (tab === 'events' && path.indexOf('my-dojos') > -1) return false;
+    if (tab === 'dojo-list' && path === '/') return true;
+    if (path.indexOf(tab) > -1) return true
     else return false;
   }
 
@@ -22,4 +23,4 @@ function headerCtrl($window, $scope, $localStorage , intercomService) {
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', '$localStorage', 'intercomService', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$localStorage', '$location', 'intercomService', headerCtrl]);
