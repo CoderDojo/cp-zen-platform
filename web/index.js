@@ -2,9 +2,11 @@
 
 require('newrelic');
 
+var _ = require('lodash');
 var Hapi = require('hapi');
 var path = require('path');
 var requireindex = require('requireindex');
+var controllers = requireindex('./web/controllers');
 
 var env = process.env.NODE_ENV || 'development';
 var so = require('./options.' + env  + '.js');
@@ -46,7 +48,7 @@ server.register({
     }
 });
 
-// TODO ? // 
+// TODO ? //
 require('./lib/dust-i18n.js');
 
 
@@ -56,16 +58,9 @@ require('./lib/dust-i18n.js');
 
 // TODO // app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
 
-var controllers = requireindex('./web/controllers');
-
-// TODO
-// _.each(controllers, function (controller) { 
-//   server.route(controller);
-// })
-
-server.route(controllers.dojos);
-server.route(controllers.index);
-server.route(controllers.locale);
+_.each(controllers, function (controller) { 
+  server.route(controller);
+})
 
 server.route({
     method: 'GET',
