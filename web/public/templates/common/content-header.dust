@@ -4,10 +4,7 @@
 
   <a ui-sref="dojo-list"><span ng-click="selectTab('dojo-list')" ng-class="{'cd-active-tab': isSelected('dojo-list')}" class="cd-header-button cd-color-1" ng-if="user">{@i18n key="Dojo List"/}</span></a>
   <a ui-sref="my-dojos"><span ng-click="selectTab('my-dojos')" ng-class="{'cd-active-tab': isSelected('my-dojos')}" class="cd-header-button cd-color-2" ng-if="user">{@i18n key="My Dojos"/}</span></a>
-  <a ui-sref="start-dojo-wizard"><span ng-click="selectTab('create-dojo')" ng-class="{'cd-active-tab': isSelected('create-dojo')}" class="cd-header-button cd-color-3" ng-if="user">{@i18n key="Create Dojo"/}</span></a>
-  <a ui-sref="badges-dashboard"><span ng-click="selectTab('badges-dashboard')" ng-class="{'cd-active-tab': isSelected('badges-dashboard')}" class="cd-header-button cd-color-6" ng-if="user">{@i18n key="Badges"/}</span></a>
-  <a ui-sref="manage-dojos"><span ng-click="selectTab('manage-dojos')" ng-class="{'cd-active-tab': isSelected('manage-dojos')}" class="cd-header-button cd-color-4" ng-if="userIsCDFAdmin()">{@i18n key="Manage Dojos"/}</span></a>
-  <a ui-sref="stats"><span ng-click="selectTab('stats')" ng-class="{'cd-active-tab': isSelected('stats')}" class="cd-header-button cd-color-5" ng-if="userIsCDFAdmin()">{@i18n key="Stats"/}</span></a>
+  <a ui-sref="badges-dashboard"><span ng-click="selectTab('badges-dashboard')" ng-class="{'cd-active-tab': isSelected('badges-dashboard')}" class="cd-header-button cd-color-3" ng-if="user">{@i18n key="Badges"/}</span></a>
   </span>
   <span id="cd-mainnav-collapse" ng-if="!user" class="col-md-8 cd-header-button-group navbar-collapse collapse">
        <a ui-sref="login"><span ng-click="selectTab('login')" ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-1">{@i18n key="Login"/}</span></a>

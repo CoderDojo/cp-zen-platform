@@ -372,6 +372,9 @@ msgstr "My Dojos"
 msgid "Create Dojo"
 msgstr "Create Dojo"
 
+msgid "Start a Dojo"
+msgstr "Start a Dojo"
+
 msgid "Manage Dojos"
 msgstr "Manage Dojos"
 

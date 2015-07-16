@@ -6,6 +6,7 @@ function headerCtrl($window, $scope, $localStorage , intercomService) {
   };
 
   $scope.userIsCDFAdmin = function () {
+    if (!$scope.user) return false;
   	return _.contains($scope.user.roles, 'cdf-admin');
   };
 
