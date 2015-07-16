@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="ParentsGuardians"/}</div>
   <div class="panel-body">
-    <ul ng-repeat="parent in parents">
-      <li>{{ parent.name }}</li>
+    <ul ng-repeat="parent in profile.resolvedParents">
+      <li><a ui-sref="user-profile({userId: parent.userId })"> {{ parent.name }} </a></li>
     </ul>
   </div>
 </div>

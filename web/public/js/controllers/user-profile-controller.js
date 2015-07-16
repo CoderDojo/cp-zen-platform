@@ -55,8 +55,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.profile = profile.data;
 
   cdUsersService.getAvatar($scope.profile.id, function(response){
-    $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-  })
+    if(!_.isEmpty(response)) {
+      $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+    }
+  });
 
   //Load user's badges
   cdBadgesService.loadBadgeCategories(function (response) {
@@ -323,6 +325,20 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
+
+  $scope.validatePassword = function (password, email) {
+    var validationResult = utilsService.validatePassword(password, email);
+    if(!validationResult.valid) $scope.invalidPasswordMessage = $translate.instant(validationResult.msg);
+    return validationResult.valid;
+  }
+
+  $scope.matchesPassword = function(password, passwordConfirm) {
+    if(passwordConfirm !== password) {
+      $scope.invalidConfirmPasswordMessage = $translate.instant('Passwords do not match');
+      return false;
+    }
+    return true;
+  }
 }
 
 angular.module('cpZenPlatform')
