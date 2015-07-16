@@ -1,4 +1,5 @@
 <div class="row" ng-controller="login">
+  <span spinner-key="login-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="cp-login">
     <div id="main">
       
