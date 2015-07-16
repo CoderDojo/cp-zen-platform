@@ -77,6 +77,11 @@
             referer: null
           }
         })
+        .state("reset-password", {
+          url: "/reset_password/:token",
+          templateUrl: '/templates/reset_password',
+          controller: 'login'
+        })
         .state("register-account", {
           url: "/register",
           templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',

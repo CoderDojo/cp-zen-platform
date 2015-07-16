@@ -30,6 +30,10 @@ module.exports = function (router) {
     res.render('index');
   });
 
+  router.get('/reset_password/:token', function (req, res) {
+    res.render('index');
+  });
+
   router.get('/dojo/:alpha2([a-zA-Z]{2})/*', function (req, res) {
     res.render('index');
   });
@@ -60,6 +64,10 @@ module.exports = function (router) {
 
   router.get('/templates/register', function (req, res) {
     res.render('accounts/register');
+  });
+
+  router.get('/templates/reset_password', function (req, res) {
+    res.render('accounts/reset_password');
   });
 
   router.get('/templates/terms-and-conditions', function (req, res) {

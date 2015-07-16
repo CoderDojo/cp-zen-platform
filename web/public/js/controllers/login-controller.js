@@ -17,8 +17,9 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
 
   var path = window.location.pathname
 
-  $scope.login = {}
-  $scope.forgot = {}
+  $scope.login = {};
+  $scope.forgot = {};
+  $scope.reset = {};
 
   cdUsersService.getInitUserTypes(function (response) {
     $scope.initUserTypes = response;
@@ -134,6 +135,23 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
       return false;
     }
     return true;
+  }
+
+  $scope.doReset = function() {
+    auth.execute_reset({
+      token:$stateParams.token,
+      password:$scope.reset.newPassword,
+      repeat:$scope.reset.confirmNewPassword
+    }, function (response) {
+      if(response.ok) {
+        alertService.showAlert($translate.instant('Successfully updated password.'));
+        $state.go('login');
+      } else {
+        alertService.showError($translate.instant('Error') + ':' + $translate.instant(response.why));
+      }
+    }, function (err) {
+      alertService.showError(err);
+    });
   }
 
   auth.instance(function(data){
