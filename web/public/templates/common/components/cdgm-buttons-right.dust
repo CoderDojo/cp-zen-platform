@@ -1,5 +1,5 @@
-<li><a>Start a Dojo</a></li>
-<li class="separator">|</li>
-<li><a>Manage Dojos</a></li>
-<li class="separator">|</li>
-<li><a>Stats</a></li>
+<li ng-if="user"><a>Start a Dojo</a></li>
+<li ng-if="userIsCDFAdmin()" class="separator">|</li>
+<li ng-if="userIsCDFAdmin()"><a>Manage Dojos</a></li>
+<li ng-if="user" class="separator">|</li>
+<li ng-if="user"><a>Stats</a></li>
