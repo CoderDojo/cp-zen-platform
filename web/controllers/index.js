@@ -22,6 +22,10 @@ module.exports = function (router) {
     res.render('index');
   });
 
+  router.get('/charter', function (req, res) {
+    res.render('index');
+  });
+
   router.get('/dojo-list-index', function (req, res) {
     res.render('index');
   });

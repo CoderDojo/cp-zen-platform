@@ -3,9 +3,6 @@
   border-radius: 0px!important;
 }
 
-@cd-light-blue: #2c9cfb;
-@cd-green: #61c93f;
-
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -262,6 +259,7 @@ label {
       margin-top:15px;
     }
     .registerButton {
+      float:right;
       margin-top: 30px;
     }
   }
@@ -466,6 +464,9 @@ label {
     margin: 90px 0 0 0;
     height: 30px;
     position: relative;
+    li:first-child {
+      pointer-events: none;
+    }
   }
   .steps-indicator.steps-4:before {
     left: 0%;

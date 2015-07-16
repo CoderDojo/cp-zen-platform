@@ -336,6 +336,9 @@ msgstr "Find a Dojo"
 msgid "Resources"
 msgstr "Resources"
 
+msgid "Charter"
+msgstr "Charter"
+
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -650,6 +653,21 @@ msgstr "The purpose of us gathering this information is so we can tailor support
 
 msgid "champion.registration.p3"
 msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
+
+msgid "champion.dateOfBirth.placeholder"
+msgstr "You must be over 18 years old..."
+
+msgid "champion.telephoneNumber.placeholder"
+msgstr "Please include country code..."
+
+msgid "champion.address"
+msgstr "Address"
+
+msgid "champion.address.placeholder"
+msgstr "Enter your street level address..."
+
+msgid "champion.address.required"
+msgstr "Address is empty"
 
 msgid "General Information"
 msgstr "General Information"

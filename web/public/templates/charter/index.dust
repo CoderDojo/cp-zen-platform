@@ -1,50 +1,7 @@
 <div ng-show="!championRegistrationFormVisible"class="cd-dashboard">
   <div class="row">
     <div class="col-lg-12 cd-text-heading1">
-      <div class="cd-border-bottom">
-        <legend>{@i18n key="Hello World Foundation charter for CoderDojo"/}</legend>
-      </div>
-      <p>{@i18n key="charter.p1"/}</p>
-      <div id="cd-charter-text">
-        <h1>{@i18n key="Charter"/}</h1>
-        <p>{@i18n key="charter.p2"/}</p>
-        <p>{@i18n key="charter.p3"/}</p>
-        <ul>
-          <li><span>{@i18n key="charter.li1"/}</span></li>
-          <li><span>{@i18n key="charter.li2"/}</span></li>
-          <li><span>{@i18n key="charter.li3"/}</span></li>
-          <li><span>{@i18n key="charter.li4"/}</span></li>
-          <li><span>{@i18n key="charter.li5"/}</span></li>
-          <li><span>{@i18n key="charter.li6"/}</span></li>
-          <li><span>{@i18n key="charter.li7"/}</span></li>
-          <li><span>{@i18n key="charter.li8"/}</span></li>
-          <li><span>{@i18n key="charter.li9"/}</span></li>
-          <li><span>{@i18n key="charter.li10"/}</span></li>
-        </ul>
-        <p>{@i18n key="charter.p4"/}</p>
-        <ul>
-          <li><span>{@i18n key="charter.li11"/}</span></li>
-          <li><span>{@i18n key="charter.li12"/}</span></li>
-          <li><span>{@i18n key="charter.li13"/}</li>
-          <li><span>{@i18n key="charter.li14"/}</span></li>
-        </ul>
-        <h2>{@i18n key="Agreement"/}</h2>
-        <ul>
-          <li><span>{@i18n key="charter.li15"/}</span></li>
-          <li><span>{@i18n key="charter.li16"/}</span></li>
-          <li><span>{@i18n key="charter.li17"/}</span></li>
-          <li><span>{@i18n key="charter.li18"/}</span></li>
-          <li><span>{@i18n key="charter.li19"/}</span></li>
-          <li><span>{@i18n key="charter.li20"/}</span></li>
-          <li><span>{@i18n key="charter.li21"/}</span></li>
-          <li><span>{@i18n key="charter.li22"/}</span></li>
-        </ul>
-        <h2>{@i18n key="Disclaimer of Liability"/}</h2>
-        <ul>
-          <li><span>{@i18n key="charter.li23"/}</span></li>
-          <li><span>{@i18n key="charter.li24"/}.</span></li>
-        </ul>
-      </div>
+      {>"charter/charter-info" /}
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
         <div class="row">
           <div class="form-group">
