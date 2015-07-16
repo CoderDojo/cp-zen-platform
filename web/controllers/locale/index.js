@@ -4,24 +4,29 @@ var path = require('path');
 var po2json = require('po2json');
 var languages = require('../../config/languages');
 
-module.exports = function (router) {
+var controller = module.exports = [
 
-  router.get('/data', function (req, res) {
-    var locale = (res.locals && res.locals.context && res.locals.context.locality) || 'en_US';
-    var format = req.query.format || 'jed';
+  {
+    method: 'GET',
+    path: '/locale/data',
+    handler: function (request, reply) {
+	// TODO hapi equivalent of reply.locals?
+	var locale = (reply.locals && reply.locals.context && reply.locals.context.locality) || 'en_US';
+	var format = request.query.format || 'jed';
 
-    po2json.parseFile(path.join(__dirname, '../../locale/', locale, 'messages.po'), {
-      format: format,
-      domain: 'coder-dojo-platform'
-    }, function(err, data) {
-      if (err) { throw err; }
-      res.send(data);
-    });
+	po2json.parseFile(path.join(__dirname, '../../locale/', locale, 'messages.po'), {
+	    format: format,
+	    domain: 'coder-dojo-platform'
+	}, reply);
+    }
+  },
 
-  });
+  {
+    method: 'GET',
+    path: '/locale/languages',
+    handler: function (request, reply) {
+      reply(null, languages);
+    }
+  }
 
-  router.get('/languages', function(req, res){
-    res.send(languages);
-  });
-
-};
+];

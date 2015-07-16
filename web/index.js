@@ -46,7 +46,8 @@ server.register({
     }
 });
 
-// TODO ? // require('./lib/dust-i18n.js');
+// TODO ? // 
+require('./lib/dust-i18n.js');
 
 
 
@@ -57,9 +58,13 @@ server.register({
 
 var controllers = requireindex('./web/controllers');
 
+// TODO
 // _.each(controllers, function (controller) { 
 //   server.route(controller);
 // })
+
+server.route(controllers.index);
+server.route(controllers.locale);
 
 server.route({
     method: 'GET',
@@ -72,7 +77,7 @@ server.route({
 });
 
 // TODO check lib/auth/cd-auth.js for middleware that may or may not be active
-//      this servers the static file from that directory
+//      this route serves the static file from that directory
 server.route({
     method: 'GET',
     path: '/content/auth/{filename*}',
@@ -82,8 +87,6 @@ server.route({
         }
     }
 });
-
-server.route(controllers.index);
 
 server.register({
   register: require('hapi-seneca'),
