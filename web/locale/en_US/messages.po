@@ -333,8 +333,11 @@ msgstr "Dojo Menu"
 msgid "Find a Dojo"
 msgstr "Find a Dojo"
 
-msgid "Resources"
-msgstr "Resources"
+msgid "Events"
+msgstr "Events"
+
+msgid "Forum"
+msgstr "Forum"
 
 msgid "Charter"
 msgstr "Charter"
@@ -371,6 +374,9 @@ msgstr "My Dojos"
 
 msgid "Create Dojo"
 msgstr "Create Dojo"
+
+msgid "Start a Dojo"
+msgstr "Start a Dojo"
 
 msgid "Manage Dojos"
 msgstr "Manage Dojos"
@@ -1358,3 +1364,21 @@ msgstr "Champion and Dojo Admin permissions cannot be removed from a Dojo owner.
 
 msgid "Dojo owners cannot be removed."
 msgstr "Dojo owners cannot be removed."
+
+msgid "Successfully updated password."
+msgstr "Successfully updated password."
+
+msgid "Failed to update password."
+msgstr "Failed to update password."
+
+msgid "Reset not found."
+msgstr "Reset not found."
+
+msgid "Reset not active."
+msgstr "Reset not active."
+
+msgid "Reset stale."
+msgstr "Reset stale."
+
+msgid "Error"
+msgstr "Error"

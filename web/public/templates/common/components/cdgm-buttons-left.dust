@@ -1,0 +1,4 @@
+<li><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
+<li><a ui-sref="charter">{@i18n key="Charter"/}</a></li>
+<li><a href="http://help.coderdojo.com/">{@i18n key="FAQ"/}</a></li>
+<li><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></li>

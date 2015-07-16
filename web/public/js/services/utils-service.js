@@ -41,7 +41,7 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
           return false; 
         }
       }());
-
+      
       if ((password.length >= minPasswordLength) && (characterGroupCount >= 1) && !matchesEmail) {
         //Password valid
         return {valid: true};

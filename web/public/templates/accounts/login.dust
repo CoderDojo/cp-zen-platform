@@ -1,4 +1,5 @@
 <div class="row" ng-controller="login">
+  <span spinner-key="login-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="cp-login">
     <div id="main">
       
@@ -24,8 +25,8 @@
           <span class="help-block">{{ errorMessage }}</span>
         </div>
 
-        <div class="controls center-block text-center" ng-controller="header">
-          <input class="btn btn-primary" ng-click="doLogin(); selectTab('dojo-list')" style="padding: 5px 108px;" type="submit" value="Login">
+        <div class="controls center-block text-center">
+          <input class="btn btn-primary" ng-click="doLogin()" style="padding: 5px 108px;" type="submit" value="Login">
         </div>
 
         <span class="help-block"></span>

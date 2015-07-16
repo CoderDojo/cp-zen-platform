@@ -25,7 +25,7 @@
               <tr ng-repeat="application in applications">
                 <td><a ui-sref="user-profile({ userId:application.user.id })"><u>{{ application.name }}</u></a></td>
                 <td>{{ application.user.email }}</td>
-                <td>{{ application.age }}</td>
+                <td>{{ application.age || '' }}</td>
                 <td>
                   <div ng-repeat="parent in application.parents">
                     <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
