@@ -28,18 +28,13 @@ angular.module('cpZenPlatform').service('auth', function($http, $q) {
         success(win).error(fail||topfail)
     },
 
-    reset: function(creds,win,fail){
-      $http({method:'POST', url: '/auth/create_reset', data:creds, cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    reset_load: function(creds,win,fail){
-      $http({method:'POST', url: '/auth/load_reset', data:creds, cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    reset_execute: function(creds,win,fail){
-      $http({method:'POST', url: '/auth/execute_reset', data:creds, cache:false}).
+    reset: function (creds, win, fail) {
+      $http({method: 'POST', url: '/api/1.0/users/reset_password', data: creds, cache: false}).
+        success(win).error(fail||topfail);
+    },  
+    
+    execute_reset: function(creds,win,fail){
+      $http({method:'POST', url: '/api/1.0/users/execute_reset', data:creds, cache:false}).
         success(win).error(fail||topfail)
     },
 

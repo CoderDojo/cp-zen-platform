@@ -1358,3 +1358,21 @@ msgstr "Champion and Dojo Admin permissions cannot be removed from a Dojo owner.
 
 msgid "Dojo owners cannot be removed."
 msgstr "Dojo owners cannot be removed."
+
+msgid "Successfully updated password."
+msgstr "Successfully updated password."
+
+msgid "Failed to update password."
+msgstr "Failed to update password."
+
+msgid "Reset not found."
+msgstr "Reset not found."
+
+msgid "Reset not active."
+msgstr "Reset not active."
+
+msgid "Reset stale."
+msgstr "Reset stale."
+
+msgid "Error"
+msgstr "Error"

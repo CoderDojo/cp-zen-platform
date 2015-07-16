@@ -21,6 +21,7 @@
   }
 
   function goToManageDojoEvents($state, usSpinnerService, dojoId) {
+    console.log("go to manage dojo events");
     usSpinnerService.stop('create-event-spinner');
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
@@ -168,7 +169,7 @@
       
       cdEventsService.saveEvent(
         eventInfo,
-        goToManageDojoEvents.bind(null, $state, usSpinnerService, dojoId),
+        goToManageDojoEvents($state, usSpinnerService, dojoId),
         console.error.bind(console)
       );
     };
