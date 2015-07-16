@@ -131,7 +131,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   };
 
   $scope.preventEnterRegisterAccount = function () {
-      if(currentStepInt != 0) return false;
+      if(currentStepInt !== 0) return false;
       return true;
     }
 
