@@ -1,7 +1,7 @@
 'use strict';
-angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$location', '$window', 'auth', 'alertService', '$translate','$cookies', 'cdLanguagesService', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', 'usSpinnerService', loginCtrl]);
 
-function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService, vcRecaptchaService) {
+function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alertService, $translate, $cookies, cdLanguagesService, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, usSpinnerService) {
   $scope.referer = $state.params.referer;
 
   if ($location.search().redirect) {
@@ -97,6 +97,7 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
   };
 
   $scope.sendPasswordResetEmail = function() {
+    usSpinnerService.spin('login-spinner');
     $scope.message = ''
     $scope.errorMessage = ''
 
@@ -107,8 +108,10 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
     auth.reset({
       email:$scope.forgot.email
     }, function() {
+      usSpinnerService.stop('login-spinner');
       $scope.message = msgmap['reset-sent'];
     }, function(out) {
+      usSpinnerService.stop('login-spinner');
       $scope.errorMessage = msgmap[out.why] || msgmap.unknown
     })
   }
