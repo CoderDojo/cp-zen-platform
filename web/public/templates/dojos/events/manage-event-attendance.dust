@@ -30,7 +30,7 @@
       <tbody>
         <tr ng-repeat="attendance in attendanceRecords">
           <td>{{ attendance.name }}</td>
-          <td>{{ attendance.age }}</td>
+          <td>{{ attendance.age || '' }}</td>
           <td>
             <div ng-repeat="parent in attendance.parents">
               <p><a ui-sref="user-profile({userId: parent.id})"><u>{{ parent.name }}</u></a></p>
