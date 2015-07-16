@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $stateParams, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
@@ -144,7 +144,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, cdDojoServi
         $scope.totalItems = result.total;
 
         cdDojoService.uncompletedDojos(function(response){
-          if(response.length > 0){
+          if(response.length > 0 && !$localStorage.recommendedPracticesAlertShown){
             var uncompletedDojo = response[0];
             AlertBanner.publish({
               type: 'info',
@@ -156,6 +156,9 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, cdDojoServi
                     angular.element('.alert-message').removeClass('active');
                   }
                 });
+              },
+              onClose: function() {
+                $localStorage.recommendedPracticesAlertShown = true;
               }
             });
           }
@@ -180,4 +183,4 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, cdDojoServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$q', '$rootScope', '$scope', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$q', '$rootScope', '$localStorage', '$scope', '$state', '$stateParams', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
