@@ -63,6 +63,7 @@ var controllers = requireindex('./web/controllers');
 //   server.route(controller);
 // })
 
+server.route(controllers.dojos);
 server.route(controllers.index);
 server.route(controllers.locale);
 

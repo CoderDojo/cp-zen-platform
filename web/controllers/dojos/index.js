@@ -1,7 +1,10 @@
 'use strict';
 
-module.exports = function (router) {
-  router.get('/template/*', function (req, res) {
-    res.render('dojos/' + req.params[0]);
-  });
-};
+var controller = module.exports = [{
+  method: 'GET',
+  path: '/dojos/template/{name}',
+  handler: function (request, reply) {
+    // TODO seems like data should be passed in with the template
+    reply.view('dojos/' + request.params.name);
+  }
+}];
