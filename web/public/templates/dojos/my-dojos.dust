@@ -18,7 +18,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="myDojo in myDojos">
-                <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path, '#':'events'})">{{ myDojo.name }}</a></td>
+                <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})">{{ myDojo.name }}</a></td>
                 <td>{{ myDojo.placeName }}</td>
                 <td class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer">

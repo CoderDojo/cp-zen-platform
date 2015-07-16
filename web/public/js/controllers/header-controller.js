@@ -1,27 +1,26 @@
 'use strict';
 
-function headerCtrl($window, $scope, $localStorage , intercomService) {
+function headerCtrl($window, $scope, $localStorage, $location, intercomService) {
   $scope.navigateTo = function (page) {
     $window.location.href = '/' + page;
   };
 
   $scope.userIsCDFAdmin = function () {
+    if (!$scope.user) return false;
   	return _.contains($scope.user.roles, 'cdf-admin');
   };
 
-  $scope.selectTab = function (tab) {
-    $localStorage.selectedTab = tab;
-  }
-
   $scope.isSelected = function (tab) {
-    if ($localStorage.selectedTab === tab) return true;
+    var path = $location.path();
+    if (tab === 'my-dojos' && path.indexOf('edit-dojo') > -1) return true;
+    if (tab === 'events' && path.indexOf('my-dojos') > -1) return false;
+    if (tab === 'dojo-list' && path === '/') return true;
+    if (path.indexOf(tab) > -1) return true
     else return false;
   }
 
   intercomService.InitIntercom();
-
-  $scope.selectedTab = $localStorage.selectedTab;
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', '$localStorage', 'intercomService', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$localStorage', '$location', 'intercomService', headerCtrl]);

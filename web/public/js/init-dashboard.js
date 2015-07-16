@@ -129,6 +129,11 @@
           templateUrl: '/dojos/template/manage-dojos',
           controller: 'manage-dojo-controller'
         })
+        .state("user-events", {
+          url: "/dashboard/dojos/events/user-events/:userId",
+          templateUrl: '/dojos/template/events/user-events',
+          controller: 'user-events-controller'
+        })
         .state("my-dojos.manage-dojo-events", {
           url: "/:dojoId/events",
           templateUrl: '/dojos/template/events/manage-dojo-events',
