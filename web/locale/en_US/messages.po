@@ -333,8 +333,11 @@ msgstr "Dojo Menu"
 msgid "Find a Dojo"
 msgstr "Find a Dojo"
 
-msgid "Resources"
-msgstr "Resources"
+msgid "Events"
+msgstr "Events"
+
+msgid "Forum"
+msgstr "Forum"
 
 msgid "Charter"
 msgstr "Charter"
