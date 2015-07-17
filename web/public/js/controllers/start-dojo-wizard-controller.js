@@ -240,8 +240,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     var initialDate = new Date();
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
-        formatYear: 'yy',
+        formatYear: 'yyyy',
         startingDay: 1,
+        'datepicker-mode': "'year'",
         initDate: initialDate
       };
 
