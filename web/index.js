@@ -65,12 +65,43 @@ _.each(controllers, function (controller) {
 })
 
 // Serve public files
+// These are separate to allow routes from seneca-web a change to have their middleware triggered.
 server.route({
   method: 'GET',
-  path: '/{filename*}',
+  path: '/favicon.ico',
+  handler: {
+    file: {
+      path: path.join(__dirname, 'public/favicon.ico')
+    }
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/components/{filename*}',
   handler: {
     directory: {
-      path: path.join(__dirname, 'public')
+      path: path.join(__dirname, 'public/components')
+    }
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/img/{filename*}',
+  handler: {
+    directory: {
+      path: path.join(__dirname, 'public/img')
+    }
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/js/{filename*}',
+  handler: {
+    directory: {
+      path: path.join(__dirname, 'public/js')
     }
   }
 });
