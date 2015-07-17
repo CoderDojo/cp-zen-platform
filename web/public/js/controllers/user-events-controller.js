@@ -1,8 +1,8 @@
  'use strict';
 
-function userEventsCtrl($scope, $stateParams, $translate, cdEventsService, loggedInUser, alertService) {
+function userEventsCtrl($scope, $stateParams, $translate, cdEventsService, alertService) {
 
-  if(loggedInUser.data && $stateParams.userId){
+  if($stateParams.userId){
     cdEventsService.getUserDojosEvents($stateParams.userId, function (response) {
       $scope.events = response;
       if(_.isEmpty($scope.events)) {
@@ -15,4 +15,4 @@ function userEventsCtrl($scope, $stateParams, $translate, cdEventsService, logge
 }
 
 angular.module('cpZenPlatform')
-    .controller('user-events-controller', ['$scope', '$stateParams', '$translate', 'cdEventsService', 'loggedInUser', 'alertService', userEventsCtrl]);
+    .controller('user-events-controller', ['$scope', '$stateParams', '$translate', 'cdEventsService', 'alertService', userEventsCtrl]);
