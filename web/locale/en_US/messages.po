@@ -1382,3 +1382,7 @@ msgstr "Reset stale."
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Export Badges"
+msgstr "Export Badges"
+
