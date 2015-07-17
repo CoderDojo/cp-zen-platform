@@ -1386,3 +1386,7 @@ msgstr "Error"
 msgid "Export Badges"
 msgstr "Export Badges"
 
+
+msgid "Error loading Events"
+msgstr "Error loading Events:"
+
