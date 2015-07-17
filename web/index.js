@@ -15,39 +15,6 @@ var seneca = module.exports = require('seneca')(so.main);
 var server = new Hapi.Server()
 var port = process.env.PORT || 8000
 
-// Set up seneca
-
-seneca.options(so);
-
-seneca
-  .use('ng-web')
-  .use('../lib/users/user.js')
-  .use('auth')
-  .use('user-roles')
-  .use('web-access')
-  // TODO this causes an error loading the content script in the client
-  //      I think because seneca-hapi does not have functionality to cover
-  //      using Express response as a stream
-  // .use('../lib/auth/cd-auth.js')
-  .use('../lib/charter/cd-charter.js')
-  .use('../lib/dojos/cd-dojos.js')
-  .use('../lib/countries/cd-countries.js')
-  .use('../lib/geonames/cd-geonames.js')
-  .use('../lib/users/cd-users.js')
-  .use('../lib/agreements/cd-agreements.js')
-  .use('../lib/badges/cd-badges.js')
-  .use('../lib/profiles/cd-profiles.js')
-  .use('../lib/events/cd-events.js')
-  .use('../lib/oauth2/cd-oauth2.js')
-  .use('../lib/config/cd-config.js', so.webclient)
-  .use('../lib/sys/cd-sys.js')
-;
-
-_.each(so.client, function(opts) {
-   seneca.client(opts);
-});
-
-
 // Set up HAPI
 
 // TODO
@@ -91,9 +58,6 @@ server.register({
 require('./lib/dust-i18n.js');
 
 
-
-// TODO ? // app.use(bodyparser.urlencoded({ extended: true }))
-// TODO ? // app.use(bodyparser.json({ limit: so.bodyparser.json.limit }))
 
 // TODO // app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
 
@@ -139,3 +103,37 @@ server.register({
     console.log('[%s] Listening on http://localhost:%d', env, port);
   });
 });
+
+// Set up seneca
+
+seneca.options(so);
+
+seneca
+  .use('ng-web')
+  .use('../lib/users/user.js')
+  .use('auth')
+  .use('user-roles')
+  .use('web-access')
+  // TODO this causes an error loading the content script in the client
+  //      I think because seneca-hapi does not have functionality to cover
+  //      using Express response as a stream
+  // .use('../lib/auth/cd-auth.js')
+  .use('../lib/charter/cd-charter.js')
+  .use('../lib/dojos/cd-dojos.js')
+  .use('../lib/countries/cd-countries.js')
+  .use('../lib/geonames/cd-geonames.js')
+  .use('../lib/users/cd-users.js')
+  .use('../lib/agreements/cd-agreements.js')
+  .use('../lib/badges/cd-badges.js')
+  .use('../lib/profiles/cd-profiles.js')
+  .use('../lib/events/cd-events.js')
+  .use('../lib/oauth2/cd-oauth2.js')
+  .use('../lib/config/cd-config.js', so.webclient)
+  .use('../lib/sys/cd-sys.js')
+;
+
+_.each(so.client, function(opts) {
+   seneca.client(opts);
+});
+
+
