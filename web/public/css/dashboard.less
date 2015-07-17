@@ -320,6 +320,17 @@ label {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .fullscreen-only {
+    display: none!important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .mobile-only {
+    display: none!important;
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .info-button-container {
     .col-xs-10 {
@@ -393,17 +404,15 @@ label {
       padding-left:15px;
     }
   }
-  .main {
-    width: 590px;
-  }
   .dojo-detail-sidebar {
     position: relative;
     float: right;
     left: 20px;
     .widget {
-      padding-bottom:55px;
+      overflow: auto;
+      margin-bottom:55px;
       .widget-block {
-        padding-top:20px;
+        margin-top:20px;
       }
     }
   }

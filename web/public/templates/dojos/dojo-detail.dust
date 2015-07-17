@@ -3,7 +3,47 @@
     <span spinner-key="dojo-detail-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="row">
       <div class="dojo-detail">
-        <div class="dojo-detail-sidebar col-lg-4">
+        <div class="col-xs-12 col-lg-7">
+          <legend><b>{{ dojo.name }}</b></legend>
+          <table class="table" style="margin-left: 30px; margin-bottom: 10px">
+            <tbody>
+              <tr>
+                <td class="col-xs-2"><b>{@i18n key="Time"/}</b></td>
+                <td>{{ dojo.time }}</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2"><b>{@i18n key="Location"/}</b></td>
+                <td ng-if="dojo.address1">{{ dojo.address1 }}<span ng-if="dojo.address2">, {{ dojo.address2 }}</span></td>
+              </tr>
+              <tr>
+                <td class="col-xs-2"><b>{@i18n key="City/Town"/}</b></td>
+                <td ng-if="dojo.placeName">{{ dojo.placeName }}</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2"><b>{@i18n key="Country"/}</b></td>
+                <td>{{ dojo.countryName }}</td>
+              </tr>
+              <tr class="fullscreen-only">
+                <td class="col-xs-2"><b>{@i18n key="Notes"/}</b></td>
+                <td><div ng-bind-html="dojo.notes"></div></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mobile-only row" style="margin-left: 40px">
+            <b>{@i18n key="Notes"/}</b>
+            <div class="row" ng-bind-html="dojo.notes"></div>
+          </div>
+
+          <cd-dojo-events-list dojo-id="{{ dojo.id }}"></cd-dojo-events-list>
+
+          <legend>{@i18n key="Map"/}</legend>
+          <section ng-if="mapLoaded" id="map">
+            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+          </section>
+          <br><br>
+        </div>
+        <div class="dojo-detail-sidebar col-xs-12 col-lg-4">
           <div class="widget">
             <legend>{@i18n key="Status"/}</legend>
             <div class="status-wrapper">
@@ -39,9 +79,6 @@
             </form>
           </div>
 
-          <div class="widget"></div>
-          <div class="widget"></div>
-
           <div class="widget">
             <legend>{@i18n key="Contact"/}</legend>
             <table class="table">
@@ -65,43 +102,6 @@
                 </tbody>
               </table>
           </div>
-
-        </div>
-
-        <div class="main">
-          <legend><b>{{ dojo.name }}</b></legend>
-          <table class="table" style="margin-left: 30px;">
-            <tbody>
-              <tr>
-                <td class="col-lg-2"><b>{@i18n key="Time"/}</b></td>
-                <td>{{ dojo.time }}</td>
-              </tr>
-              <tr>
-                <td class="col-lg-2"><b>{@i18n key="Location"/}</b></td>
-                <td ng-if="dojo.address1">{{ dojo.address1 }}<span ng-if="dojo.address2">, {{ dojo.address2 }}</span></td>
-              </tr>
-              <tr>
-                <td class="col-lg-2"><b>{@i18n key="City/Town"/}</b></td>
-                <td ng-if="dojo.placeName">{{ dojo.placeName }}</td>
-              </tr>
-              <tr>
-                <td class="col-lg-2"><b>{@i18n key="Country"/}</b></td>
-                <td>{{ dojo.countryName }}</td>
-              </tr>
-              <tr>
-                <td class="col-lg-2"><b>{@i18n key="Notes"/}</b></td>
-                <td><div ng-bind-html="dojo.notes"></div></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <cd-dojo-events-list dojo-id="{{ dojo.id }}"></cd-dojo-events-list>
-
-          <legend>{@i18n key="Map"/}</legend>
-          <section ng-if="mapLoaded" id="map">
-            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
-            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
-          </section>
         </div>
       </div>
     </div>
