@@ -1,8 +1,8 @@
-{>"master" /}
+{>"common/master" /}
 {<body}
-  {>"header" /}
+  {>"common/header" /}
   <div class="container">
     <div ui-view></div> 
   </div>
-  {>"footer" /}
+  {>"common/footer" /}
 {/body}

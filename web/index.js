@@ -32,7 +32,7 @@ server.connection({ port: port })
 server.views({
   engines: { dust: require('hapi-dust') },
   path: path.join(__dirname, './public/templates'),
-  partialsPath: path.join(__dirname, './public/templates/common')
+  partialsPath: path.join(__dirname, './public/templates')
 })
 
 // Server CSS files.
