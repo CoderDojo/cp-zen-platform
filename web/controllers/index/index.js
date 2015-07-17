@@ -66,20 +66,16 @@ var controller = module.exports = [
     }
   },
 
-  // TODO
-  // {	    
-  //   method: 'GET',
-  //   path: '/dojo/:alpha2([a-zA-Z]{2})/*',
-  //   handler: function (request, reply) {
-  //     reply.view('index');
-  //   }
-  // });
-
-  {
+  {	    
     method: 'GET',
-    path: '/dojo/{id}',
+    path: '/dojo/{id}/{alpha2*}',
     handler: function (request, reply) {
-      reply.view('dashboard/index');
+      if (request.params.alpha2) {
+        reply.view('index');
+      }
+      else {
+        reply.view('dashboard/index');
+      }
     }
   },
 
