@@ -269,7 +269,7 @@ msgstr "HWF commits to act in the interest of the global CoderDojo community"
 msgid "charter.li12"
 msgstr "HWF commits to facilitating the community to share its knowledge"
 
-msgid "charter.li3"
+msgid "charter.li13"
 msgstr "HWF commits to sharing our resources for free"
 
 msgid "charter.li14"
