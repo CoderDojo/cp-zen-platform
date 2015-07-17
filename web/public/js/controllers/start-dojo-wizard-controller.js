@@ -120,7 +120,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
   $scope.scrollToInvalid = function(form){
     // temp fix
-    if(currentStepInt === 4) {
+    if(currentStepInt === 3) {
       $scope.getLocationFromAddress($scope.dojo);
       $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
     }
