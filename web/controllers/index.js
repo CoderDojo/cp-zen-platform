@@ -60,7 +60,11 @@ module.exports = function (router) {
 
   router.get('/profile/:userId', function (req, res) {
     res.render('index');
-  }); 
+  });
+
+  router.get('/404', function (req, res) {
+    res.render('index');
+  });
 
   router.get('/templates/login', function (req, res) {
     res.render('accounts/login');
