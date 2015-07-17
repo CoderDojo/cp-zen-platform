@@ -343,6 +343,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     }
     return true;
   }
+
+  $scope.exportBadges = function () {
+    cdBadgesService.exportBadges(function (response) {
+      //TODO
+    });
+  }
 }
 
 angular.module('cpZenPlatform')
