@@ -167,7 +167,7 @@
 
         <legend>{@i18n key="Other"/}</legend>
         <div class="row">
-          <label for="projects" class="col-lg-4">{@i18n key="Notes"/}</label>
+          <label for="notes" class="col-lg-4">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
             <textarea name="notes" class="form-control" placeholder="{@i18n key="notes.placeholder"/}" rows="5" ng-model="champion.notes"></textarea>
           </div>
