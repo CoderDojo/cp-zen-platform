@@ -27,10 +27,7 @@ var port = process.env.PORT || 8000
 //     }
 // }
 
-
-
 server.connection({ port: port })
-
 
 server.views({
   engines: { dust: require('hapi-dust') },
@@ -38,6 +35,7 @@ server.views({
   partialsPath: path.join(__dirname, './public/templates/common')
 })
 
+// Server CSS files.
 server.register({
   register: require('hapi-less'),
   options: {
@@ -61,10 +59,12 @@ require('./lib/dust-i18n.js');
 
 // TODO // app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
 
+// Add all the server routes from the controllers.
 _.each(controllers, function (controller) { 
   server.route(controller);
 })
 
+// Serve public files
 server.route({
   method: 'GET',
   path: '/{filename*}',
@@ -75,8 +75,8 @@ server.route({
   }
 });
 
-// TODO check lib/auth/cd-auth.js for middleware that may or may not be active
-//      this route serves the static file from that directory
+// Serve the auth .js files, etc.
+// TODO this breaks encapsulation in regards to the auth microservice
 server.route({
   method: 'GET',
   path: '/content/auth/{filename*}',
@@ -87,6 +87,7 @@ server.route({
   }
 });
 
+// Use the seneca-web middleware with Hapi
 server.register({
   register: require('hapi-seneca'),
   options: {
@@ -114,10 +115,7 @@ seneca
   .use('auth')
   .use('user-roles')
   .use('web-access')
-  // TODO this causes an error loading the content script in the client
-  //      I think because seneca-hapi does not have functionality to cover
-  //      using Express response as a stream
-  // .use('../lib/auth/cd-auth.js')
+  .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
   .use('../lib/countries/cd-countries.js')
@@ -135,5 +133,3 @@ seneca
 _.each(so.client, function(opts) {
    seneca.client(opts);
 });
-
-
