@@ -37,8 +37,11 @@
                 </div>
               </div>
             </form>
-
           </div>
+
+          <div class="widget"></div>
+          <div class="widget"></div>
+
           <div class="widget">
             <legend>{@i18n key="Contact"/}</legend>
             <table class="table">
