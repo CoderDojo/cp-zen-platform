@@ -60,8 +60,8 @@
           <div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Join"/}</legend>
             <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
-              <div class="col-lg-10">
-                <div class="form-group">
+              <div class="col-lg-12" style="padding: 0">
+                <div class="form-group join-dropdown">
                   <ui-select name="inviteUserType" ng-model="requestInvite.userType" on-select="userTypeSelected($item)">
                     <ui-select-match allow-clear="false" placeholder="{@i18n key="Join Dojo as..."/}">{{ $select.selected  }}</ui-select-match>
                     <ui-select-choices repeat="userType in userTypes">
@@ -70,8 +70,8 @@
                   </ui-select>
                 </div>
               </div>
-              <div class="col-lg-10">
-                <div class="form-group pull-right">
+              <div class="col-lg-12">
+                <div class="form-group pull-right" style="padding-right: 5px">
                   <button ng-show="approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Send Request"/}</button>
                   <button ng-show="!approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Join Dojo"/}</button>
                 </div>
