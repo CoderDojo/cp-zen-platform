@@ -4,8 +4,9 @@
       <div class="widget">
         <legend>{@i18n key="Register a Dojo"/}</legend>
         <p>{@i18n key="dojo.list.index.p1"/}</p>
-        <a href="#"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="Register"></a>
+        <a ui-sref="start-dojo-wizard"><input type="button" class="btn-primary center-block" style="padding: 5px 105px;" value="{@i18n key="Register"/}"></a>
       </div>
+      <br>
       <div class="widget">
         <legend>{@i18n key="Dojos"/}</legend>
         <p>{@i18n key="dojo.list.index.p2"/} <a href="http://kata.coderdojo.com/index.php?title=Unverified_Dojo_Listing" target="_blank">{@i18n key="Learn More"/}</a></p>
