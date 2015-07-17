@@ -1,7 +1,7 @@
 'use strict';
-angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage', 'usSpinnerService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage', 'usSpinnerService', loginCtrl]);
 
-function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, usSpinnerService) {
+function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window, auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, usSpinnerService) {
   $scope.referer = $state.params.referer;
 
   if ($location.search().redirect) {
@@ -161,6 +161,7 @@ function loginCtrl($state, $stateParams, $scope, $location, $window, auth, alert
   auth.instance(function(data){
     if( data.user ) {
       $scope.user = data.user;
+      $rootScope.user = data.user;
       if (path==='/') {
         $window.location.href = 'dashboard'
       }
