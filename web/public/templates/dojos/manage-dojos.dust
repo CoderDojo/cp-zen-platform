@@ -80,7 +80,7 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th><span ng-click="toggleSort($event, 'name')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>{@i18n key="Dojo"/}</th>
+            <th><span ng-click="toggleSort($event, 'name.sort')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>{@i18n key="Dojo"/}</th>
             <th></th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Stage"/}</th>
             <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Country"/}</th>

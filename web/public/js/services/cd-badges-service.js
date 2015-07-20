@@ -28,6 +28,9 @@ function cdBadgesService(cdApi) {
     },
     claimBadge: function(badge, win, fail) {
       cdApi.post('badges/claim', {badge: badge}, win, fail || topfail);
+    },
+    exportBadges: function(win, fail) {
+      cdApi.get('export_badges', win, fail || topfail);
     }
   };
 }
