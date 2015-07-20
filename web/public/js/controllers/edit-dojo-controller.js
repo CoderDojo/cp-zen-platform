@@ -15,6 +15,8 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   });
 
   $scope.scrollToInvalid = function(form){
+    $scope.getLocationFromAddress($scope.dojo);
+    $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
 
     if(form.$invalid){
       angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();

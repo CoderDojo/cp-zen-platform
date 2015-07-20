@@ -1406,3 +1406,9 @@ msgstr "Add Child over 13"
 
 msgid "This profile is private"
 msgstr "This profile is private"
+
+msgid "We need mentors!"
+msgstr "We need mentors!"
+
+msgid "Private"
+msgstr "Private"

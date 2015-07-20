@@ -1,4 +1,5 @@
 'use strict';
+
 angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage', 'usSpinnerService', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window, auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, usSpinnerService) {
