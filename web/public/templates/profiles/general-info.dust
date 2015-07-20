@@ -1,114 +1,116 @@
-<div class="panel panel-default">
+<div ng-if="editMode" class="panel panel-default">
   <div class="panel-heading">{@i18n key="General Info"/}</div>
   <div class="panel-body">
-    <div ng-if="!profile.ownProfileFlag && !profile.myChild">
-      <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">Name: {{ profile.name }}</p>
-      <p ng-if="profile.alias">Alias: {{ profile.alias }}</p>
-      <p ng-if="profile.notes">{{ profile.notes }}</p>
-    </div>
-    <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
-      <div class="form-group">
-        <label for="fullname" class="col-sm-4 control-label">Name* </label>
-        <div class="col-sm-8">
-          <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="Name" ng-model="profile.name">
-        </div>
+    <div>
+      <div ng-if="!profile.ownProfileFlag && !profile.myChild">
+        <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">Name: {{ profile.name }}</p>
+        <p ng-if="profile.alias">Alias: {{ profile.alias }}</p>
+        <p ng-if="profile.notes">{{ profile.notes }}</p>
       </div>
-      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])">
-        <label for="alias" class="col-sm-4 control-label">Alias* </label>
-        <div class="col-sm-8">
-          <input type="text" name="alias" class="form-control" placeholder="Alias" ng-model="profile.alias">
+      <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
+        <div class="form-group">
+          <label for="fullname" class="col-sm-4 control-label">Name* </label>
+          <div class="col-sm-8">
+            <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="Name" ng-model="profile.name">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="dateOfBirth" class="col-sm-4 text-right">Date of Birth*</label>
-        <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-          <input type="text" required readonly="true"
-                 class="form-control"
-                 name="dateOfBirth"
-                 required-message="'Date of birth is empty'"
-                 datepicker-popup="fullDate"
-                 ng-model="profile.dob"
-                 is-open="opened"
-                 min-date="'1900-01-01'"
-                 max-date="today"
-                 datepicker-options="dateOptions" />
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])">
+          <label for="alias" class="col-sm-4 control-label">Alias* </label>
+          <div class="col-sm-8">
+            <input type="text" name="alias" class="form-control" placeholder="Alias" ng-model="profile.alias">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth" class="col-sm-4 text-right">Date of Birth*</label>
+          <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
+            <input type="text" required readonly="true"
+                   class="form-control"
+                   name="dateOfBirth"
+                   required-message="'Date of birth is empty'"
+                   datepicker-popup="fullDate"
+                   ng-model="profile.dob"
+                   is-open="opened"
+                   min-date="'1900-01-01'"
+                   max-date="today"
+                   datepicker-options="dateOptions" />
 
-          <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
-            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
+            <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
+              <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
-        <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
-          <ui-select name="country"  ng-model="profile.country" on-select="setCountry(profile, $item)" required>
-            <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
-            <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
-              <span ng-bind-html="country.countryName | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
-          <label class="control-label has-error validationMessage"
-            ng-show="generalInfoForm.$submitted && generalInfoForm.country.$error.required">{@i18n key="Select a country"/}</label>
+        <div class="form-group">
+          <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
+          <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
+            <ui-select name="country"  ng-model="profile.country" on-select="setCountry(profile, $item)" required>
+              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
+              <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <label class="control-label has-error validationMessage"
+              ng-show="generalInfoForm.$submitted && generalInfoForm.country.$error.required">{@i18n key="Select a country"/}</label>
+          </div>
         </div>
-      </div>
 
 
-      <div class="form-group">
-        <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
-        <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
-          <ui-select name="place" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
-            <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
-            <ui-select-choices repeat="place in places"
-                refresh="getPlaces(profile.country.alpha2, $select.search)"
-                refresh-delay="500">
-              <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
-          <label class="control-label has-error validationMessage"
-                 ng-show="generalInfoForm.$submitted && generalInfoForm.place.$error.required">{@i18n key="Select a place"/}</label>
+        <div class="form-group">
+          <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
+          <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
+            <ui-select name="place" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
+              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-choices repeat="place in places"
+                  refresh="getPlaces(profile.country.alpha2, $select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <label class="control-label has-error validationMessage"
+                   ng-show="generalInfoForm.$submitted && generalInfoForm.place.$error.required">{@i18n key="Select a place"/}</label>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}* </label>
-        <div class="col-sm-8">
-          <input type="text" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address">
+        <div class="form-group">
+          <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}* </label>
+          <div class="col-sm-8">
+            <input type="text" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="email" class="col-sm-4 control-label">{@i18n key="Email"/} </label>
-        <div class="col-sm-8">
-          <input type="text"  class="form-control" id="email" placeholder="{@i18n key="Email"/}" ng-model="profile.email">
+        <div class="form-group">
+          <label for="email" class="col-sm-4 control-label">{@i18n key="Email"/} </label>
+          <div class="col-sm-8">
+            <input type="text"  class="form-control" id="email" placeholder="{@i18n key="Email"/}" ng-model="profile.email">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="phone" class="col-sm-4 control-label">{@i18n key="Phone"/} </label>
-        <div class="col-sm-8">
-          <input type="text"  class="form-control" id="phone" placeholder="{@i18n key="Phone"/}" ng-model="profile.phone">
+        <div class="form-group">
+          <label for="phone" class="col-sm-4 control-label">{@i18n key="Phone"/} </label>
+          <div class="col-sm-8">
+            <input type="text"  class="form-control" id="phone" placeholder="{@i18n key="Phone"/}" ng-model="profile.phone">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="linkedin" class="col-sm-4 control-label">{@i18n key="Linkedin"/} </label>
-        <div class="col-sm-8">
-          <input type="text"  class="form-control" id="linkedin" placeholder="{@i18n key="Linkedin"/}" ng-model="profile.linkedin">
+        <div class="form-group">
+          <label for="linkedin" class="col-sm-4 control-label">{@i18n key="Linkedin"/} </label>
+          <div class="col-sm-8">
+            <input type="text"  class="form-control" id="linkedin" placeholder="{@i18n key="Linkedin"/}" ng-model="profile.linkedin">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="twitter" class="col-sm-4 control-label">{@i18n key="Twitter"/} </label>
-        <div class="col-sm-8">
-          <input type="text"  class="form-control" id="twitter" placeholder="{@i18n key="Twitter"/}" ng-model="profile.twitter">
+        <div class="form-group">
+          <label for="twitter" class="col-sm-4 control-label">{@i18n key="Twitter"/} </label>
+          <div class="col-sm-8">
+            <input type="text"  class="form-control" id="twitter" placeholder="{@i18n key="Twitter"/}" ng-model="profile.twitter">
+          </div>
         </div>
-      </div>
-      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
-        <label for="notes" class="col-sm-4 control-label">{@i18n key="Notes"/} </label>
-        <div class="col-sm-8">
-          <textarea class="form-control"  ng-model="profile.notes" placeholder="Notes" rows="3"></textarea>
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
+          <label for="notes" class="col-sm-4 control-label">{@i18n key="Notes"/} </label>
+          <div class="col-sm-8">
+            <textarea class="form-control"  ng-model="profile.notes" placeholder="Notes" rows="3"></textarea>
+          </div>
         </div>
-      </div>
-      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
-        <label for="projects" class="col-sm-4 control-label">{@i18n key="Projects"/} </label>
-        <div class="col-sm-8">
-          <tags-input ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></tags-input>
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+          <label for="projects" class="col-sm-4 control-label">{@i18n key="Projects"/} </label>
+          <div class="col-sm-8">
+            <tags-input ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></tags-input>
+          </div>
         </div>
       </div>
       <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
@@ -118,59 +120,59 @@
             <auto-complete source="loadProgrammmingLanguagesTags($query)"></auto-complete>
           </tags-input>
         </div>
-      </div>
-      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
-        <label for="languagesSpoken" class="col-sm-4 control-label">{@i18n key="Languages Spoken"/} </label>
-        <div class="col-sm-8">
-          <tags-input ng-model="profile.languagesSpoken"  placeholder="Languages Spoken"></tags-input>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">{@i18n key="Gender"/} </label>
-        <div class="col-sm-8">
-          <label class="radio-inline">
-            <input type="radio"  ng-model="profile.gender" value="Female"> {@i18n key="Female"/}
-          </label>
-          <label class="radio-inline">
-            <input type="radio"  ng-model="profile.gender" value="Male"> {@i18n key="Male"/}
-          </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">{@i18n key="Private profile"/} </label>
-        <div class="col-sm-8">
-          <label class="radio-inline">
-            <input type="radio"  ng-model="profile.private" value="true"> {@i18n key="Yes"/}
-          </label>
-          <label class="radio-inline">
-            <input type="radio"  ng-model="profile.private" value="false"> {@i18n key="No"/}
-          </label>
-        </div>
-      </div>
-      <div ng-if="hasAccess(profile.userTypes, ['attendee-o13']) && !profile.id">
-        <div class="form-group">
-          <label for="password" class="col-sm-4 control-label">{@i18n key="Password"/} </label>
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+          <label for="languagesSpoken" class="col-sm-4 control-label">{@i18n key="Languages Spoken"/} </label>
           <div class="col-sm-8">
-            <input type="password" class="form-control" name="password" validator="validatePassword(profile.password, profile.email)" required required-message="'{@i18n key="Password is empty"/}'" invalid-message="invalidPasswordMessage" ng-model="profile.password" placeholder="{@i18n key="PASSWORD"/}"/>
+            <tags-input ng-model="profile.languagesSpoken"  placeholder="Languages Spoken"></tags-input>
           </div>
         </div>
         <div class="form-group">
-          <label for="password" class="col-sm-4 control-label">{@i18n key="Confirm Password"/} </label>
+          <label class="col-sm-4 control-label">{@i18n key="Gender"/} </label>
           <div class="col-sm-8">
-            <input type="password" class="form-control" ng-model="profile.passwordConfirm" invalid-message="'{@i18n key="Passwords do not match"/}'" validator="matchesPassword(profile.password, profile.passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" invalid-message="invalidConfirmPasswordMessage" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
+            <label class="radio-inline">
+              <input type="radio"  ng-model="profile.gender" value="Female"> {@i18n key="Female"/}
+            </label>
+            <label class="radio-inline">
+              <input type="radio"  ng-model="profile.gender" value="Male"> {@i18n key="Male"/}
+            </label>
           </div>
         </div>
-      </div>
-      <div class="form-group" ng-repeat="hiddenField in hiddenFields">
-        <div ng-if="hasAccess(profile.userTypes, hiddenField.allowedUserTypes)">
-          <label for="{{ hiddenField.name }}"  class="col-sm-4 control-label">{{ hiddenField.label }}&nbsp;&nbsp;</label>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">{@i18n key="Private profile"/} </label>
           <div class="col-sm-8">
-            <input type="checkbox" name="{{ hiddenField.name }}" ng-model="profile.optionalHiddenFields[hiddenField.modelName]" value="false">
+            <label class="radio-inline">
+              <input type="radio"  ng-model="profile.private" value="true"> {@i18n key="Yes"/}
+            </label>
+            <label class="radio-inline">
+              <input type="radio"  ng-model="profile.private" value="false"> {@i18n key="No"/}
+            </label>
           </div>
         </div>
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary pull-right">{@i18n key="Save"/}</button>
-    </form>
+        <div ng-if="hasAccess(profile.userTypes, ['attendee-o13']) && !profile.id">
+          <div class="form-group">
+            <label for="password" class="col-sm-4 control-label">{@i18n key="Password"/} </label>
+            <div class="col-sm-8">
+              <input type="password" class="form-control" name="password" validator="validatePassword(profile.password, profile.email)" required required-message="'{@i18n key="Password is empty"/}'" invalid-message="invalidPasswordMessage" ng-model="profile.password" placeholder="{@i18n key="PASSWORD"/}"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-sm-4 control-label">{@i18n key="Confirm Password"/} </label>
+            <div class="col-sm-8">
+              <input type="password" class="form-control" ng-model="profile.passwordConfirm" invalid-message="'{@i18n key="Passwords do not match"/}'" validator="matchesPassword(profile.password, profile.passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" invalid-message="invalidConfirmPasswordMessage" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-repeat="hiddenField in hiddenFields">
+          <div ng-if="hasAccess(profile.userTypes, hiddenField.allowedUserTypes)">
+            <label for="{{ hiddenField.name }}"  class="col-sm-4 control-label">{{ hiddenField.label }}&nbsp;&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="checkbox" name="{{ hiddenField.name }}" ng-model="profile.optionalHiddenFields[hiddenField.modelName]" value="false">
+            </div>
+          </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary pull-right">{@i18n key="Save"/}</button>
+      </form>
+    </div>
   </div>
 </div>

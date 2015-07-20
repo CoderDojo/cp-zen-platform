@@ -1383,10 +1383,16 @@ msgstr "Reset stale."
 msgid "Error"
 msgstr "Error"
 
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+msgid "View Profile"
+msgstr "View Profile"
+
 msgid "Export Badges"
 msgstr "Export Badges"
 
-
 msgid "Error loading Events"
 msgstr "Error loading Events:"
+
 

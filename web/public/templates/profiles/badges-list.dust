@@ -3,7 +3,6 @@
     <button ng-click="exportBadges()" class="btn btn-sm btn-primary margin-left-60-percent">{@i18n key="Export Badges"/}</button>
   </div>
   <div class="panel-body">
-    <div class="col-md-12">
       
       <tabset justified="true">
         <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
@@ -27,6 +26,5 @@
         </tab>
       </tabset>
 
-    </div>
   </div>
 </div>
