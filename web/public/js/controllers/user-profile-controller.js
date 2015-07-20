@@ -1,11 +1,8 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-<<<<<<< HEAD
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService, cdProgrammingLanguagesService) {
-=======
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService, initUserTypes) {
->>>>>>> user profile improvements
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService) {
+
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
@@ -361,12 +358,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return true;
   }
 
-<<<<<<< HEAD
   $scope.exportBadges = function () {
     cdBadgesService.exportBadges(function (response) {
       //TODO
     });
-=======
+  }
+  
   $scope.editProfile = function () {
     $state.go('edit-user-profile', {userId: loggedInUser.data.id});
   }
@@ -381,16 +378,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     urlSlugArray.splice(0, 1);
     var path = urlSlugArray.join('/');
     $state.go('dojo-detail',{country:country, path:path});
->>>>>>> user profile improvements
   }
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
-<<<<<<< HEAD
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'cdProgrammingLanguagesService', cdUserProfileCtrl]);
-=======
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', cdUserProfileCtrl]);
->>>>>>> user profile improvements
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', cdUserProfileCtrl]);
 
