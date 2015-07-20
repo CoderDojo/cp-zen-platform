@@ -1,7 +1,7 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
   if(!dojo || !dojo.id){
     $state.go('error-404');
   }
@@ -27,8 +27,11 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
     $scope.userMemberCheckComplete = true;
   });
 
-  cdDojoService.getUserTypes(function (response) {
-    $scope.userTypes = response;
+  cdUsersService.getInitUserTypes(function (response) {
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].name.indexOf('u13') > -1)  response.splice(i, 1); // remove u13 option
+    }
+    $scope.initUserTypes = response;
   });
 
   $scope.$watch('model.map', function(map){
@@ -62,7 +65,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   }
 
   $scope.requestToJoin = function (requestInvite) {
-    var userType = requestInvite.userType;
+    var userType = requestInvite.userType.name;
 
     auth.get_loggedin_user(function (user) {
       usSpinnerService.spin('dojo-detail-spinner');
@@ -123,5 +126,5 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 

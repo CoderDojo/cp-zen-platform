@@ -62,10 +62,10 @@
             <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
               <div class="col-lg-12" style="padding: 0">
                 <div class="form-group join-dropdown">
-                  <ui-select name="inviteUserType" ng-model="requestInvite.userType" on-select="userTypeSelected($item)">
-                    <ui-select-match allow-clear="false" placeholder="{@i18n key="Join Dojo as..."/}">{{ $select.selected  }}</ui-select-match>
-                    <ui-select-choices repeat="userType in userTypes">
-                      <span ng-bind-html="userType"></span>
+                  <ui-select name="inviteUserType" ng-model="requestInvite.userType" on-select="userTypeSelected($item.name)">
+                    <ui-select-match allow-clear="false" placeholder="{@i18n key="Join Dojo as..."/}">{{ $select.selected.title  }}</ui-select-match>
+                    <ui-select-choices repeat="userType in initUserTypes">
+                      <span ng-bind-html="userType.title"></span>
                     </ui-select-choices>
                   </ui-select>
                 </div>
