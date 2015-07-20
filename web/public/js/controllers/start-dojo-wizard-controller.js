@@ -441,6 +441,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     });
 
     $scope.dojo = {};
+    $scope.dojo.stage = "0";
 
     auth.get_loggedin_user(function(user) {
       $scope.user = user;
