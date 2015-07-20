@@ -28,10 +28,11 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   });
 
   cdUsersService.getInitUserTypes(function (response) {
-    for (var i = 0; i < response.length; i++) {
-      if (response[i].name.indexOf('u13') > -1)  response.splice(i, 1); // remove u13 option
-    }
-    $scope.initUserTypes = response;
+    var userTypes = _.filter(response, function(type) {
+      if (type.name.indexOf('u13') > -1) return false;
+      else return true;
+    });
+    $scope.initUserTypes = userTypes;
   });
 
   $scope.$watch('model.map', function(map){
