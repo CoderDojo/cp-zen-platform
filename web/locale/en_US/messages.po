@@ -1395,4 +1395,8 @@ msgstr "Export Badges"
 msgid "Error loading Events"
 msgstr "Error loading Events:"
 
+msgid "We need mentors!"
+msgstr "We need mentors!"
 
+msgid "Private"
+msgstr "Private"

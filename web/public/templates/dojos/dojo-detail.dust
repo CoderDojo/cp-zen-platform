@@ -8,6 +8,15 @@
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
               <tr>
+                <td class="col-xs-2"><b>{@i18n key="Private"/}</b></td>
+                <td ng-if="dojo.private">{@i18n key="Yes"/}</td>
+                <td ng-if="!dojo.private">{@i18n key="No"/}</td>
+              </tr>
+              <tr>
+                <td class="col-xs-2"><b>{@i18n key="Stage"/}</b></td>
+                <td>{@i18n key="{{ dojo.stage }}"/}</td>
+              </tr>
+              <tr>
                 <td class="col-xs-2"><b>{@i18n key="Time"/}</b></td>
                 <td>{{ dojo.time }}</td>
               </tr>
@@ -61,7 +70,7 @@
             <legend>{@i18n key="Join"/}</legend>
             <div class="need-mentors-notice center-children">
               <div ng-if="dojo.needMentors">
-                We need mentors!
+                {@i18n key="We need mentors!"/}
               </div>
             </div>
             <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">

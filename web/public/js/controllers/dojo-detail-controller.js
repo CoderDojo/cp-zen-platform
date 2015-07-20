@@ -2,10 +2,17 @@
 /* global google */
 
 function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+  
+  $scope.setStage = function () {
+    var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
+    $scope.dojo.stage = stages[$scope.dojo.stage];
+  }
+
   if(!dojo || !dojo.id){
     $state.go('error-404');
   }
   $scope.dojo = dojo;
+  $scope.setStage();
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
