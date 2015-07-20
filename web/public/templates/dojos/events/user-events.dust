@@ -1,3 +1,43 @@
-<div class="center-children">
-  <h1 class="centered-child"> TODO </h1>
+<div class="cd-dashboard">
+  <div class="row">
+    <div class="my-dojos" ng-repeat="dojoEvents in dojosEvents | filter:hasEvents">
+      <legend>{@i18n key="Events for Dojo"/}: {{ dojoEvents.dojo.name }}</legend>
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          <table id="dojoEventsTable" class="table cd-grid-table">
+            <thead>
+            <tr>
+              <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Event"/}
+              </th>
+              <th><span ng-click="toggleSort($event, 'date')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}
+              </th>
+              <th>{@i18n key="Type"/}</th>
+              <th>{@i18n key="For"/}</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="event in dojoEvents.events" ng-switch on="dojoEvents.events[$index].isCollapsed">
+            <tr>
+            <td>{{ event.name }}</td>
+              <td>{{ event.formattedDate }}</td>
+              <td>{{ event.type }}</td>
+            <td>{{ event.for }}</td>
+              <td class="pointer">
+                <button ng-click="showEventInfo(dojoEvents, $index)" class="btn btn-primary"
+                        type="button">{@i18n key="Info"/}</button>
+              </td>
+            </tr>
+            <tr ng-switch-when="true">
+              <td colspan="9">
+                <div class="span9">
+                  <cd-apply-for-event></cd-apply-for-event>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
