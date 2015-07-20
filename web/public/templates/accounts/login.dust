@@ -1,76 +1,65 @@
 <div class="row" ng-controller="login">
   <span spinner-key="login-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="cp-login">
-    <div id="main">
-      
+    <div id="main">  
       <form class="login-form" role="form" name="loginForm" ng-show="isVisible('login')">
         <legend>{@i18n key="Login"/}</legend>
-        <div class="row">
-          <div class="input-group col-lg-6 col-md-offset-3">
-            <span class="input-group-addon"><span>@</span></span>
-            <input type="email" class="form-control" required ng-model="login.email" placeholder="{@i18n key="EMAIL"/}">
+        <div class="row cd-input-row">
+          <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-6">
+              <input type="email" class="form-control" required ng-model="login.email" placeholder="{@i18n key="EMAIL"/}">
+            </div>
           </div>
         </div>
-
-        <span class="help-block"></span>
-        <div class="row">
-          <div class="input-group col-lg-6 col-md-offset-3">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" class="form-control" required ng-model="login.password" placeholder="{@i18n key="PASSWORD"/}">
+        <div class="row cd-input-row">
+          <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-6">
+              <input type="password" class="form-control" required ng-model="login.password" placeholder="{@i18n key="PASSWORD"/}">
+            </div>
           </div>
         </div>
-        <span class="help-block"></span>
-
-        <div class="center-block text-center error" ng-show="errorMessage">
-          <span class="help-block">{{ errorMessage }}</span>
+        <div class="row cd-info-row" ng-show="errorMessage">
+          <span class="col-lg-offset-3 col-lg-6 help-block cd-msg-warn">{{ errorMessage }}</span>
         </div>
-
-        <div class="controls center-block text-center">
-          <input class="btn btn-primary" ng-click="doLogin()" style="padding: 5px 108px;" type="submit" value="Login">
+        <div class="row cd-btn-row">
+          <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-6">
+              <input class="col-xs-12 col-sm-6 col-lg-6 btn btn-primary" ng-click="doLogin()" type="submit" value="Login">
+            </div>
+          </div>
         </div>
-
-        <span class="help-block"></span>
-
-        <div class="col-lg-4 col-lg-offset-3">
-          <a class="pointer" ng-click="show('forgot-password')">Forgot password?</a>
+        <div class="row cd-link-row">
+          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('forgot-password')">Forgot password?</a>
         </div>
-
-        <div class="col-lg-4">
-          <a ui-sref="register-account({referer: referer})">Register</a>
+        <div class="row cd-link-row">
+          <a class="col-lg-offset-3 col-lg-6" ui-sref="register-account({referer: referer})">Register</a>
         </div>
-
       </form>
-
-      
-
       <form class="login-form" name="forgotPasswordForm" role="form" ng-show="isVisible('forgot-password')">
-        <div class="input-group">
-          <span class="input-group-addon"><span>@</span></span>
-          <input type="email" class="form-control" required ng-model="forgot.email" placeholder="{@i18n key="EMAIL"/}">
+        <div class="row cd-input-row">
+          <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-6">
+              <input type="email" class="form-control" required ng-model="forgot.email" placeholder="{@i18n key="EMAIL"/}">
+            </div>
+          </div>
         </div>
-        <span class="help-block"></span>
-
-        <div class="center-block text-center" ng-show="message">
-          <span class="help-block">{{ message }}</span>
+        <div class="row cd-info-row" ng-show="message">
+          <span class="col-lg-offset-3 col-lg-6 help-block cd-msg-info">{{ message }}</span>
         </div>
-        <div class="center-block text-center error" ng-show="errorMessage">
-          <span class="help-block">{{ errorMessage }}</span>
+        <div class="row cd-info-row" ng-show="errorMessage">
+          <span class="col-lg-offset-3 col-lg-6 help-block cd-msg-error">{{ errorMessage }}</span>
         </div>
-
-        <button class="btn btn-primary btn-block submit" ng-click="sendPasswordResetEmail()" type="submit">{@i18n key="Request Password Reset"/}</button>
-        <div class="input-group center-block text-center back-button">
-          <span class="help-block"></span>
-          <a class="pointer" ng-click="show('login')">{@i18n key="Cancel"/}</a>
+        <div class="row cd-btn-row">
+          <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-6">
+              <input class="col-xs-12 col-sm-6 col-lg-6 btn btn-primary" ng-click="sendPasswordResetEmail()" type="submit" value="{@i18n key="Request Password Reset"/}">
+            </div>
+          </div>
+        </div>
+        <div class="row cd-link-row back-button">
+          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('login')">{@i18n key="Cancel"/}</a>
         </div>
       </form>
     </div>
   </div>
-
 </div>
-
-
-
-
-
-
-
