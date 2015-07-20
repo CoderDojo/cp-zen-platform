@@ -39,28 +39,28 @@ ul {
 }
 
 .cp-login {
-	background: url(../img/main-bg.png) repeat-y #ffffff;
-  box-shadow: 0 0 4px #bbbbbb;
-  -moz-box-shadow: 0 0 4px #bbbbbb;
-  -webkit-box-shadow: 0 0 4px #bbbbbb;
-  min-height: 250px;
-  overflow:auto;
-  margin:0 auto;
-  width:80%;
-  margin-top:2.5em;
-  padding:20px;
-  #main {
-    width: 590px;
+  .cd-input-row {
+    margin: 25px 0px;
   }
-  #sidebar {
-    float:right;
-    .widget {
-      width: 261px;
-      padding: 0px 32px 45px;
+  .cd-info-row {
+    margin: 0px;
+    span {
+      &.cd-msg-info {
+        color: @cd-blue;
+      }
+      &.cd-msg-warn {
+        color: @cd-orange;
+      }
+      &.cd-msg-error {
+        color: @cd-red;
+      }
     }
   }
-  .register-btn {
-    margin-top: 30px;
+  .cd-btn-row {
+    margin: 15px 0px;
+  }
+  .cd-link-row {
+    margin: 5px 0px;
   }
 }
 
