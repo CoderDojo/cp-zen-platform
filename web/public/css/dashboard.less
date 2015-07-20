@@ -258,11 +258,11 @@ label {
     .google-map {
       margin-top:15px;
     }
-    .registerButton {
-      float:right;
-      margin-top: 30px;
-    }
   }
+
+  #setup-dojo-form {
+  }
+
   #createDojoForm {
     margin-top:20px;
     legend {
@@ -282,41 +282,24 @@ label {
         margin-top:15px;
       }
     }
-    .info-button-container {
-      text-align: left;
-      margin-bottom: 35px;
-      padding-top: 5px;
-      .col-xs-10 {
-        padding-right: 0px;
-      }
-      i.info-button {
-        padding-right: 6px;
-        padding-top: 5px;
-        vertical-align: top;
-      }
-      .info-button-input {
+    .cd-info-btn {
+      display:inline-block;
+      padding-left: 10px;
+      float: none;
+      text-decoration:none;
+      color: inherit;
+    }
+    .cd-create-dojo-checkbox {
+      .checkbox {
         display: inline-block;
-        width: calc(~'100% - 25px');
-      }
-      .control-label {
-        margin-bottom: 0px;
+        .awesome-label {
+          text-align: right;
+          padding-top: 0px;
+          padding-bottom: 8px;
+        }
       }
     }
-    .create-dojo-checkbox {
-      display: inline-block;
-      .infoCheckbox {
-        margin-top: 3px;
-        display: inline-block;
-      }
-      label {
-        padding-top: 8px;
-      }
-      .awesome-label {
-        text-align: left;
-        padding-top: 0px;
-      }
-    }
-    .create-dojo-radios {
+    .cd-create-dojo-radios {
       label {
         padding-top:8px;
       }
@@ -329,6 +312,11 @@ label {
     #createDojoButton {
       margin-top: 30px;
     }
+  }
+
+  .cd-wizard-submit {
+    margin-top: 30px;
+    float:right;
   }
 }
 
@@ -611,7 +599,7 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 html .container .cd-accordion {
-  margin: 3%;
+  margin: 3% 0%;
   overflow: auto;
 
   .panel-heading {
@@ -633,7 +621,7 @@ html .container .cd-accordion {
     color: white;
   }
   label {
-    font-size: 18px;
+    font-size: 16px;
   }
   .checkbox {
     margin-left: 15px;
@@ -731,4 +719,8 @@ html .container .cd-accordion {
 
 .profile-avatar {
   border: 1px solid #ccc;
+}
+
+.margin-left-60-percent {
+  margin-left: 60%;
 }

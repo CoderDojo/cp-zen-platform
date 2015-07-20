@@ -178,7 +178,13 @@
             }
           },
           controller: 'user-profile-controller'
+        })
+        .state('error-404', {
+          url:'/404',
+          templateUrl: '/errors/template/404'
         });
+      // Example of using function rule as param
+      $urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;

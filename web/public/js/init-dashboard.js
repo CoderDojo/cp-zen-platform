@@ -307,7 +307,12 @@
           url:'/dashboard/badges/accept/:userId/:badgeSlug',
           controller:'accept-badge-controller',
           templateUrl: '/dojos/template/badges/accept'
+        })
+        .state('error-404', {
+          url:'/404',
+          templateUrl: '/errors/template/404'
         });
+      $urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;

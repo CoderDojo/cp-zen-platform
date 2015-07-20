@@ -1,6 +1,7 @@
-<select>
-  <option>EN</option>
-  <option>DE</option>
-  <option>CH</option>
-  <option>FR</option>
+<select ng-controller="languageController"
+    name="language" 
+    class="form-control" 
+    ng-model="selectedLanguage"
+    ng-change="updateLocale()" 
+    ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>>
 </select>

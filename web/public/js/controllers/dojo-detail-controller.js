@@ -2,6 +2,9 @@
 /* global google */
 
 function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+  if(!dojo || !dojo.id){
+    $state.go('error-404');
+  }
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
