@@ -7,9 +7,7 @@
     {>"common/content-header" /}
   </div>
 
-    <span class="cd-mobile-logo-container">
-      <a ui-sref="home" class="text-center col-md-12 col-sm-12 col-xs-12"><span class="cd-mobile-logo"></span></a>
-    </span>
+  <div class="text-center col-xs-12"></div>
   <alert-banner></alert-banner>
 </header>
 

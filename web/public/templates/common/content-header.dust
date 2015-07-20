@@ -1,18 +1,36 @@
-<div class="horiz-align text-right  cd-mainnav-container">
-  <a ui-sref="home"><span class="cd-logo"></span></a>
-  <span id="cd-mainnav-collapse" ng-controller="header" ng-if="user" class="col-lg-8 cd-header-button-group navbar-collapse collapse">
-    <a ui-sref="dojo-list"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}" class="cd-header-button cd-color-1">{@i18n key="Dojo List"/}</span></a>
-    <a ui-sref="my-dojos"><span ng-class="{'cd-active-tab': isSelected('my-dojos')}" class="cd-header-button cd-color-2">{@i18n key="My Dojos"/}</span></a>
-    <a><span ng-click="adultForums()" class="cd-header-button cd-color-3">{@i18n key="Forum"/}</span></a>
-    <a ui-sref="user-events({ userId: user.id })"><span ng-class="{'cd-active-tab': isSelected('events')}" class="cd-header-button cd-color-4">{@i18n key="Events"/}</span></a>
-    <a ui-sref="badges-dashboard"><span ng-class="{'cd-active-tab': isSelected('badges')}" class="cd-header-button cd-color-5">{@i18n key="Badges"/}</span></a>
-    <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page"><span class="cd-header-button cd-color-6">{@i18n key="Resources"/}</span></a>
-  </span>
-  <span id="cd-mainnav-collapse" ng-if="!user" class="col-md-8 cd-header-button-group navbar-collapse collapse">
-    <a ui-sref="dojo-list-index"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}" class="cd-header-button cd-color-4">{@i18n key="Dojo List"/}</span></a>
-    <a ui-sref="login"><span ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-1">{@i18n key="Login"/}</span></a>
-    <a ui-sref="start-dojo-wizard"><span ng-class="{'cd-active-tab': isSelected('start-dojo')}" class="cd-header-button cd-color-2">{@i18n key="Create a Dojo"/}</span></a>
-    <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page"><span class="cd-header-button cd-color-3">{@i18n key="Resources"/}</span></a>
-  </span>
-
+<div class="container cd-header">
+  <div class="cd-header-menu">
+        <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse in" ng-if="user">
+          <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
+                                  class="cd-header-button cd-color-1">
+                                  {@i18n key="Find a Dojo"/}</span></a>
+          <span class="cd-header-button cd-color-2">{@i18n key="My Dojos"/}</span>
+          <span class="cd-header-button cd-color-3">{@i18n key="Events"/}</span>
+          <span class="cd-header-button cd-color-4">{@i18n key="Forum"/}</span>
+          <span class="cd-header-button cd-color-5">{@i18n key="Badges"/}</span>
+          <span class="cd-header-button cd-color-6">{@i18n key="Resources"/}</span>
+        </span>
+        <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse" ng-if="!user">
+          <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
+                                  class="cd-header-button cd-color-1">
+                                  {@i18n key="Find a Dojo"/}</span></a>
+          <a ui-sref="login"><span ng-class="{'cd-active-tab': isSelected('login')}"
+                                   class="cd-header-button cd-color-2">
+                                   {@i18n key="Login"/}</span></a>
+          <a ui-sref="start-dojo-wizard"><span ng-class="{'cd-active-tab': isSelected('start-dojo')}"
+                                               class="cd-header-button cd-color-3">
+                                               {@i18n key="Register"/}</span></a>
+          <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
+                                            {@i18n key="Forum"/}</span></a>
+          <a ui-sref="start-dojo-wizard"><span ng-class="{'cd-active-tab': isSelected('start-dojo')}"
+                                               class="cd-header-button cd-color-5">
+                                               {@i18n key="Create a Dojo"/}</span></a>
+          <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
+            <span class="cd-header-button cd-color-3">
+            {@i18n key="Resources"/}</span></a>
+      </span>
+      <span class="cd-logo-container">
+        <a ui-sref="home"><span class="cd-logo"></span></a>
+      </span>
+  </div>
 </div>
