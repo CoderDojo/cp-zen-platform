@@ -1,11 +1,19 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService) {
+
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
     return;
+  }
+
+  $scope.editMode = false;
+  if($state.current.name === 'edit-user-profile') { 
+    var profileUserId = $state.params.userId;
+    var loggedInUserId = loggedInUser.data.id;
+    if(profileUserId === loggedInUserId) $scope.editMode = true;
   }
 
   $scope.upload = function (files) {
@@ -52,6 +60,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.hasAccess = utils.hasAccess;
 
+  profile.data.formattedDateOfBirth = moment(profile.data.dob).format('DD MMMM YYYY');
+  var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
+    return initUserType.name === profile.data.userType;
+  });
+  profile.data.userType = userTypeFound.title;
   $scope.profile = profile.data;
 
   cdUsersService.getAvatar($scope.profile.id, function(response){
@@ -106,6 +119,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.loggedInUser = loggedInUser.data;
+
+  $scope.loadProgrammmingLanguagesTags = function(query) {
+    return cdProgrammingLanguagesService.get();
+  };
 
   $scope.inviteParent = function(data){
     var win = function(){
@@ -190,7 +207,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin']);
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 'formattedDateOfBirth']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
@@ -219,6 +236,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       $scope.profile = profile;
       $scope.profile.private =  $scope.profile.private ? "true" : "false";
       alertService.showAlert('Profile has been saved successfully');
+      $state.go('user-profile', {userId: loggedInUserId});
     }
 
     function fail(){
@@ -339,9 +357,32 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     }
     return true;
   }
+
+  $scope.exportBadges = function () {
+    cdBadgesService.exportBadges(function (response) {
+      //TODO
+    });
+  }
+  
+  $scope.editProfile = function () {
+    $state.go('edit-user-profile', {userId: loggedInUser.data.id});
+  }
+
+  $scope.viewProfile = function () {
+    $state.go('user-profile', {userId: loggedInUser.data.id});
+  }
+
+  $scope.viewDojo = function(dojo) {
+    var urlSlugArray = dojo.urlSlug.split('/');
+    var country = urlSlugArray[0].toString();
+    urlSlugArray.splice(0, 1);
+    var path = urlSlugArray.join('/');
+    $state.go('dojo-detail',{country:country, path:path});
+  }
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', cdUserProfileCtrl]);
 

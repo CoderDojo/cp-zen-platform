@@ -110,7 +110,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <inout type="text" class="form-control" form="createDojoForm" required required-message="'Address is empty'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1">
+            <input type="text" class="form-control" form="createDojoForm" required required-message="'Address is empty'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1">
           </div>
         </div>
       </div>

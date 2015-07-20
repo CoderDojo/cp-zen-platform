@@ -25,6 +25,14 @@ function cdUsersService(cdApi, $q){
     getInitUserTypes: function(win, fail) {
       cdApi.get('users/init_user_types', win, fail || topfail);
     },
+    getInitUserTypesPromise: function() {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      cdApi.get('users/init_user_types', deferred.resolve, deferred.reject || topfail);
+
+      return promise;
+    },
     listProfiles: function(query, win, fail) {
       cdApi.post('profiles', {query:query}, win, fail || topfail);
     },

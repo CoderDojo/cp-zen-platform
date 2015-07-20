@@ -1,11 +1,18 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+  
+  $scope.setStage = function () {
+    var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
+    $scope.dojo.stage = stages[$scope.dojo.stage];
+  }
+
   if(!dojo || !dojo.id){
     $state.go('error-404');
   }
   $scope.dojo = dojo;
+  $scope.setStage();
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
@@ -27,8 +34,9 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
     $scope.userMemberCheckComplete = true;
   });
 
-  cdDojoService.getUserTypes(function (response) {
-    $scope.userTypes = response;
+  cdUsersService.getInitUserTypes(function (response) {
+    var userTypes = _.filter(response, function(type) { return type.name.indexOf('u13') !== -1; });
+    $scope.initUserTypes = userTypes;
   });
 
   $scope.$watch('model.map', function(map){
@@ -62,7 +70,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   }
 
   $scope.requestToJoin = function (requestInvite) {
-    var userType = requestInvite.userType;
+    var userType = requestInvite.userType.name;
 
     auth.get_loggedin_user(function (user) {
       usSpinnerService.spin('dojo-detail-spinner');
@@ -123,5 +131,5 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 

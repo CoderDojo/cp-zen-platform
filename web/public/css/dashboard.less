@@ -85,7 +85,7 @@ label {
     color:#315169;
   }
   .my-dojos {
-    padding:20px;
+    padding: 10px;
   }
   .setup-dojo{
     padding:20px;
@@ -320,6 +320,17 @@ label {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .fullscreen-only {
+    display: none!important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .mobile-only {
+    display: none!important;
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .info-button-container {
     .col-xs-10 {
@@ -387,23 +398,44 @@ label {
 
 .dojo-detail {
   padding:20px;
+  cd-dojo-events-list {
+    .cd-dashboard {
+      padding: 0;
+    }
+  }
   td {
     border:none !important;
     ul {
       padding-left:15px;
     }
   }
-  .main {
-    width: 590px;
-  }
   .dojo-detail-sidebar {
     position: relative;
     float: right;
     left: 20px;
     .widget {
-      padding-bottom:55px;
+      margin-bottom:55px;
       .widget-block {
-        padding-top:20px;
+        margin-top:20px;
+      }
+      .contact {
+        overflow: auto
+      }
+      .join-dropdown {
+        padding-left: 20px;
+        padding-right: 20px;
+        .ui-select-toggle,
+        .ui-select-search,
+        .ui-select-choices-row-inner {
+          line-height: 31px;
+          height: 45px;
+        }
+        .ui-select-choices-row-inner {
+          line-height: 38px;
+        }
+      }
+      .need-mentors-notice {
+        margin-bottom: 20px;
       }
     }
   }
@@ -720,3 +752,35 @@ html .container .cd-accordion {
 .profile-avatar {
   border: 1px solid #ccc;
 }
+
+.table-general-info > tbody > tr {
+  border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-general-info > tbody > tr:first-child {
+  border-top: 0;
+}
+
+.table-general-info > tbody > tr > td {
+  border-top: 0;
+  font-size:12px;
+}
+
+div.dojo-container {
+  width: 150px;
+  height: 150px;
+  margin: 25px;
+  margin-top: 0px;
+  margin-left: 40px;
+  display: inline-block;
+  text-align: center;
+}
+
+img.dojo-thumbnail {
+  width: 150px;
+}
+
+.margin-left-60-percent {
+  margin-left: 60%;
+}
+

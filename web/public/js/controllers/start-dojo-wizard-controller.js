@@ -120,7 +120,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
   $scope.scrollToInvalid = function(form){
     // temp fix
-    if(currentStepInt === 4) {
+    if(currentStepInt === 3) {
       $scope.getLocationFromAddress($scope.dojo);
       $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
     }
@@ -240,8 +240,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     var initialDate = new Date();
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
-        formatYear: 'yy',
+        formatYear: 'yyyy',
         startingDay: 1,
+        'datepicker-mode': "'year'",
         initDate: initialDate
       };
 

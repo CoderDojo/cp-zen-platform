@@ -117,6 +117,7 @@
     <script src="/js/services/languages-service.js"></script>
     <script src="/js/services/cd-events-service.js"></script>
     <script src="/js/services/cd-badges-service.js"></script>
+    <script src="/js/services/programming-languages-service.js"></script>
 
     <script src="/js/controllers/login-controller.js"></script>
     <script src="/js/controllers/header-controller.js"></script>
