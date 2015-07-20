@@ -1,7 +1,8 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
+  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, parentsForUser) {
 
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
@@ -10,10 +11,26 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.editMode = false;
-  if($state.current.name === 'edit-user-profile') { 
-    var profileUserId = $state.params.userId;
-    var loggedInUserId = loggedInUser.data.id;
-    if(profileUserId === loggedInUserId) $scope.editMode = true;
+  var profileUserId = $state.params.userId;
+
+  var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
+
+  if($state.current.name === 'edit-user-profile') {   
+    if(profileUserId === loggedInUserId) { 
+      $scope.editMode = true;
+    } else {
+      //No permission
+      $state.go('error-404');
+    }
+  }
+
+  if($state.current.name === 'add-child') {
+    if(profileUserId === loggedInUserId) {
+      $scope.editMode = true;
+    } else {
+      //No permission
+      $state.go('error-404');
+    }
   }
 
   $scope.upload = function (files) {
@@ -61,10 +78,30 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.hasAccess = utils.hasAccess;
 
   profile.data.formattedDateOfBirth = moment(profile.data.dob).format('DD MMMM YYYY');
+  $scope.highestUserType = getHighestUserType(profile.data.userTypes);
   var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
-    return initUserType.name === profile.data.userType;
+    return initUserType.name === $scope.highestUserType;
   });
-  profile.data.userType = userTypeFound.title;
+
+  if(userTypeFound) profile.data.userTypeTitle = userTypeFound.title;
+
+  $scope.isPrivate = profile.data.private;
+  var loggedInUserIsChampion;
+  var loggedInUserIsParent;
+
+  if(!loggedInUser.data) {
+    loggedInUserIsChampion = false;
+    loggedInUserIsParent = false;
+  } else {
+    loggedInUserIsChampion = _.find(championsForUser.data, function (championForUser) {
+      return championForUser.id === loggedInUser.data.id;
+    });
+
+    loggedInUserIsParent = _.find(parentsForUser.data, function (parentForUser) {
+      return parentForUser.id === loggedInUser.data.id;
+    });
+  }
+  
   $scope.profile = profile.data;
 
   cdUsersService.getAvatar($scope.profile.id, function(response){
@@ -207,7 +244,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 'formattedDateOfBirth']);
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 'formattedDateOfBirth', 'userTypeTitle']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
@@ -379,10 +416,59 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var path = urlSlugArray.join('/');
     $state.go('dojo-detail',{country:country, path:path});
   }
+
+  $scope.profileVisible = function () {
+    var highestUserType = getHighestUserType(profile.data.userTypes);
+    switch (highestUserType) {
+      case 'champion':
+        return true; //Always public
+      case 'mentor':
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsChampion) return true;
+        return !$scope.isPrivate;
+      case 'parent-guardian':
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsChampion) return true;
+        return !$scope.isPrivate;
+      case 'attendee-o13': 
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsChampion) return true;
+        if(loggedInUserIsParent) return true;
+        return !$scope.isPrivate;
+      case 'attendee-u13':
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsChampion) return true;
+        if(loggedInUserIsParent) return true;
+        return false; //Always private
+      default: 
+        return true;
+    }
+  }
+
+  function getHighestUserType(userTypes) {
+    var userTypesByPermissionLevel = {
+      'champion': 1,
+      'mentor': 2,
+      'parent-guardian': 3,
+      'attendee-o13': 4,
+      'attendee-u13': 5
+    };
+
+    var userTypeNumbers = [];
+
+    _.each(userTypes, function (userType) {
+      userTypeNumbers.push(userTypesByPermissionLevel[userType]);
+    });
+
+    var sortedUserTypeNumbers = _.sortBy(userTypeNumbers);
+    var highestUserType = utilsService.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
+    return highestUserType;
+  }
+
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', cdUserProfileCtrl]);
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 'championsForUser', 'parentsForUser', cdUserProfileCtrl]);
 
