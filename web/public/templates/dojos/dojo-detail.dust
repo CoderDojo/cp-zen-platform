@@ -59,6 +59,11 @@
  
           <div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Join"/}</legend>
+            <div class="need-mentors-notice center-children">
+              <div ng-if="dojo.needMentors">
+                We need mentors!
+              </div>
+            </div>
             <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
               <div class="col-lg-12" style="padding: 0">
                 <div class="form-group join-dropdown">
