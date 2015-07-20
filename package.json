@@ -45,7 +45,7 @@
     "hapi-dust": "~2.0.0",
     "requireindex": "~1.1.0",
     "hapi-less": "~0.1.1",
-    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#0605174faceba89c52502f8b6507e4513cb9ca86"
+    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#3f7e4b7d284c1fff679e27d72133c95d0d3c79d3"
   },
   "devDependencies": {
     "bower": "1.4.1",
