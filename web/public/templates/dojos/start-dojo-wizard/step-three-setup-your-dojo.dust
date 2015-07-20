@@ -30,7 +30,7 @@
                           {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
                         </label>
                         <br ng-if="checkboxInput.textField">
-                        <input type="text" ng-if="checkboxInput.textField" ng-init="setupDojo[checkboxInput.name + '-text']=''" ng-show="setupDojo[checkboxInput.name] === true" class="form-control" placeholder="{{ checkboxInput.placeholder }}" ng-model="setupDojo[checkboxInput.name + '-text']"/>
+                        <input type="text" ng-if="checkboxInput.textField" ng-init="setupDojo[checkboxInput.name + 'Text']=''" ng-show="setupDojo[checkboxInput.name] === true" class="form-control" placeholder="{{ checkboxInput.placeholder }}" ng-model="setupDojo[checkboxInput.name + 'Text']" />
                       </div>
                     </div>
                   </div>
