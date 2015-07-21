@@ -289,7 +289,7 @@
         .state('add-child',{
           url: "/dashboard/profile/child/add/:userType/:parentId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: profileHelpers,
+          resolve: resolves,
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{
