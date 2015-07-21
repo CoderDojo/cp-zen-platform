@@ -1,13 +1,17 @@
 
-<div class="navbar navbar-global" role="navigation">
-  {>"common/global-menu" /}
-</div>
 <header id="header" ng-controller="login">
-  <div class="navbar navbar-default navbar-main" ng-controller="header">
-    {>"common/content-header" /}
+  <div ng-controller="header">
+    <div class="navbar navbar-global" role="navigation">
+      {>"common/global-menu" /}
+    </div>
+    <div ng-if="userIsCDFAdmin()" class="navbar navbar-admin">
+      {>"common/admin-menu" /}
+    </div>
+    <div ng-controller="header" class="navbar navbar-default navbar-main">
+      {>"common/content-header" /}
+    </div>
+    <div class="text-center col-xs-12"></div>
   </div>
-
-  <div class="text-center col-xs-12"></div>
   <alert-banner></alert-banner>
 </header>
 

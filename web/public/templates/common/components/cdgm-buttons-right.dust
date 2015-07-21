@@ -1,5 +1,1 @@
 <li ng-if="user"><a ui-sref="start-dojo-wizard">{@i18n key="Start a Dojo"/}</a></li>
-<li ng-if="userIsCDFAdmin()" class="separator">|</li>
-<li ng-if="userIsCDFAdmin()"><a ui-sref="manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
-<li ng-if="userIsCDFAdmin()" class="separator">|</li>
-<li ng-if="userIsCDFAdmin()"><a ui-sref="stats">{@i18n key="Stats"/}</a></li>
