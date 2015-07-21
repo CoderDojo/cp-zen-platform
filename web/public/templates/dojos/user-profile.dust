@@ -85,7 +85,7 @@
       <projects-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></projects-list>
       <programming-languages-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
       <languages-spoken-list ng-if="(!profile.ownProfileFlag || profile.myChild) && hasAccess(profile.userTypes, ['mentor', 'champion'])"></languages-spoken-list>
-      <children-list ng-if="loggedInUserIsParent()"></children-list>
+      <children-list ng-if="hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>
       <parents-list ng-if="!hideProfileBlock()"></parents-list>
       <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
 
