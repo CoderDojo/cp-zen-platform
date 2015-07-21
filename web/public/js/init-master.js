@@ -46,6 +46,68 @@
     return dfd.promise;
   };
 
+  var profileHelpers = {
+    profile: function($stateParams, cdUsersService){
+      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+        function(data){
+          return {data: data};
+        }, function(err){
+          return {err: err};
+        });
+    },
+    initUserTypes: function(cdUsersService) {
+      return cdUsersService.getInitUserTypesPromise().then(
+        function (data){
+          return {data: data};
+        }, function (err) {
+          return {err: err};
+        });
+    },
+    loggedInUser: function(auth){
+      return auth.get_loggedin_user_promise().then(function(data){
+        return {data: data};
+      }, function(err){
+        return {err: err};
+      });
+    },
+    usersDojos: function($stateParams, cdDojoService){
+      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
+        .then(function(data){
+          return {data: data};
+        }, function(err){
+          return {err: err};
+        });
+    },
+    hiddenFields: function(cdUsersService){
+      return cdUsersService.getHiddenFieldsPromise().then(function(data){
+        return {data: data};
+      }, function(err){
+        return {err: err};
+      });
+    },
+    championsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
+    },
+    parentsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
+    },
+    badgeCategories: function(cdBadgesService) {
+      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
+    }
+  };
+
   angular.module('cpZenPlatform')
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
@@ -146,37 +208,7 @@
         .state("user-profile", {
           url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: {
-            profile: function($stateParams, cdUsersService){
-              return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
-                function(data){
-                  return {data: data};
-                }, function(err){
-                  return {err: err};
-                });
-            },
-            loggedInUser: function(auth){
-              return auth.get_loggedin_user_promise().then(function(data){
-                return {data: data};
-              }, function(err){
-                return {err: err};
-              });
-            },
-            usersDojos: function($stateParams, cdDojoService){
-              return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
-                .then(function(data){
-                  return {data: data};
-                }, function(err){
-                  return {err: err};
-                });
-            }, hiddenFields: function(cdUsersService){
-              return cdUsersService.getHiddenFieldsPromise().then(function(data){
-                return {data: data};
-              }, function(err){
-                return {err: err};
-              });
-            }
-          },
+          resolve: profileHelpers,
           controller: 'user-profile-controller'
         })
         .state('error-404', {

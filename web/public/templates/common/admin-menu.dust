@@ -1,0 +1,21 @@
+<div class="cdgm-container">
+  <div class="cdgm cdgm-left cdgm-text">
+    <span>
+      <ul class="cdgm-buttons-left">
+      </ul>
+    <span>
+  </div>
+
+  <div class="container cdgm cdgm-right cdgm-text center-children">
+    <span class="pull-right cdgm-right-inner">
+      <ul class="cdgm-buttons-right">
+        {>"common/components/cdgm-buttons-admin" /}
+      </ul>
+    </span>
+    <span class="centered-child text-center cdgm-mobile-head" style="margin: 0">
+      <ul class="cdgm-buttons-mobile-head">
+        {>"common/components/cdgm-buttons-admin" /}
+      </ul>
+    </span>
+  </div>
+</div>

@@ -87,6 +87,27 @@
       }, function(err){
         return {err: err};
       });
+    },
+    championsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
+    },
+    parentsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
+    },
+    badgeCategories: function(cdBadgesService) {
+      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
     }
   };
 
@@ -263,38 +284,7 @@
         .state('add-child',{
           url: "/dashboard/profile/child/add/:userType/:parentId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: {
-            profile: function($stateParams, cdUsersService){
-              return cdUsersService.listProfilesPromise({userId: $stateParams.parentId}).then(
-                function(data){
-                  return {data: data};
-                }, function(err){
-                  return {err: err};
-                });
-            },
-            loggedInUser: function(auth){
-              return auth.get_loggedin_user_promise().then(function(data){
-                return {data: data};
-              }, function(err){
-                return {err: err};
-              });
-            },
-            usersDojos: function($stateParams, cdDojoService){
-              return cdDojoService.getUsersDojosPromise({userId: $stateParams.parentId})
-                .then(function(data){
-                  return {data: data};
-                }, function(err){
-                  return {err: err};
-                });
-            },
-            hiddenFields: function(cdUsersService){
-              return cdUsersService.getHiddenFieldsPromise().then(function(data){
-                return {data: data};
-              }, function(err){
-                return {err: err};
-              });
-            }
-          },
+          resolve: profileHelpers,
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{

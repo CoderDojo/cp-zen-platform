@@ -18,7 +18,7 @@ function headerCtrl($window, $scope, $localStorage, $location, intercomService) 
     if (path.indexOf(tab) > -1) return true
     else return false;
   }
-
+  
   intercomService.InitIntercom();
 }
 

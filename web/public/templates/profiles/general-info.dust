@@ -112,13 +112,13 @@
             <tags-input ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></tags-input>
           </div>
         </div>
-      </div>
-      <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
-        <label for="programmingLanguages" class="col-sm-4 control-label">{@i18n key="Programming Languages"/} </label>
-        <div class="col-sm-8">
-          <tags-input ng-model="profile.test" add-from-autocomplete-only="true" placeholder="{@i18n key="Programming Languages"/}">
-            <auto-complete source="loadProgrammmingLanguagesTags($query)"></auto-complete>
-          </tags-input>
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+          <label for="programmingLanguages" class="col-sm-4 control-label">{@i18n key="Programming Languages"/} </label>
+          <div class="col-sm-8">
+            <tags-input ng-model="profile.programmingLanguages" add-from-autocomplete-only="true" placeholder="{@i18n key="Programming Languages"/}">
+              <auto-complete source="loadProgrammmingLanguagesTags($query)"></auto-complete>
+            </tags-input>
+          </div>
         </div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
           <label for="languagesSpoken" class="col-sm-4 control-label">{@i18n key="Languages Spoken"/} </label>
@@ -126,25 +126,39 @@
             <tags-input ng-model="profile.languagesSpoken"  placeholder="Languages Spoken"></tags-input>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-4 control-label">{@i18n key="Gender"/} </label>
-          <div class="col-sm-8">
-            <label class="radio-inline">
-              <input type="radio"  ng-model="profile.gender" value="Female"> {@i18n key="Female"/}
+        <div class="form-group form-inline">
+          <label class="col-sm-4 control-label" for="gender-selection">{@i18n key="Gender"/}:</label>
+          <div class="radio">
+            <input type="radio" name="gender" id="female" value="Female">
+            <label for="female">
+              {@i18n key="Female"/}
             </label>
-            <label class="radio-inline">
-              <input type="radio"  ng-model="profile.gender" value="Male"> {@i18n key="Male"/}
+          </div>
+          <div class="radio">
+            <input type="radio" ng-model="profile.gender" name="gender" id="male" value="Male">
+            <label for="female">
+              {@i18n key="Male"/}
+            </label>
+          </div>
+          <div class="radio">
+            <input type="radio" ng-model="profile.gender" name="gender" id="undisclosed" value="Undisclosed">
+            <label for="undisclosed">
+              {@i18n key="Undisclosed"/}
             </label>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-4 control-label">{@i18n key="Private profile"/} </label>
-          <div class="col-sm-8">
-            <label class="radio-inline">
-              <input type="radio"  ng-model="profile.private" value="true"> {@i18n key="Yes"/}
+        <div class="form-group form-inline" ng-if="highestUserType !== 'champion'">
+          <label class="col-sm-4 control-label">{@i18n key="Private Profile"/} </label>
+          <div class="radio">
+            <input type="radio" ng-model="profile.private" name="privateProfile" id="privateProfile-yes" value="true">
+            <label for="privateProfile-yes">
+              {@i18n key="Yes"/}
             </label>
-            <label class="radio-inline">
-              <input type="radio"  ng-model="profile.private" value="false"> {@i18n key="No"/}
+          </div>
+          <div class="radio">
+            <input type="radio" ng-model="profile.private" name="privateProfile" id="privateProfile-no" value="false">
+            <label for="privateProfile-no">
+              {@i18n key="No"/}
             </label>
           </div>
         </div>
@@ -162,11 +176,13 @@
             </div>
           </div>
         </div>
-        <div class="form-group" ng-repeat="hiddenField in hiddenFields">
-          <div ng-if="hasAccess(profile.userTypes, hiddenField.allowedUserTypes)">
-            <label for="{{ hiddenField.name }}"  class="col-sm-4 control-label">{{ hiddenField.label }}&nbsp;&nbsp;</label>
-            <div class="col-sm-8">
-              <input type="checkbox" name="{{ hiddenField.name }}" ng-model="profile.optionalHiddenFields[hiddenField.modelName]" value="false">
+        <div class="margin-left-35-percent" ng-if="highestUserType !== 'champion'">
+          <div ng-repeat="hiddenField in hiddenFields" ng-if="hasAccess(profile.userTypes, hiddenField.allowedUserTypes)">
+            <div class="checkbox">
+              <input type="checkbox" name="{{ hiddenField.name }}" id="{{ hiddenField.name }}" ng-model="profile.optionalHiddenFields[hiddenField.modelName]" value="false">
+              <label for="{{ hiddenField.name }}">
+                {{ hiddenField.label }}
+              </label>
             </div>
           </div>
         </div>

@@ -919,7 +919,7 @@ msgid "dojo.create.success"
 msgstr "Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 
 msgid "NewspaperMagazine"
-msgstr ""Newspaper/Magazine""
+msgstr "Newspaper/Magazine"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1176,8 +1176,8 @@ msgstr "Gender"
 msgid "Female"
 msgstr "Female"
 
-msgid "Private profile"
-msgstr "Private profile"
+msgid "Private Profile"
+msgstr "Private Profile"
 
 msgid "None"
 msgstr "None"
@@ -1395,8 +1395,30 @@ msgstr "Export Badges"
 msgid "Error loading Events"
 msgstr "Error loading Events:"
 
+msgid "Undisclosed"
+msgstr "Undisclosed"
+
+msgid "Add Child under 13"
+msgstr "Add Child under 13"
+
+msgid "Add Child over 13"
+msgstr "Add Child over 13"
+
+msgid "This profile is private"
+msgstr "This profile is private"
+
 msgid "We need mentors!"
 msgstr "We need mentors!"
 
 msgid "Private"
 msgstr "Private"
+
+msgid "Profile has been saved successfully"
+msgstr "Profile has been saved successfully"
+
+msgid "An error has occurred while saving profile"
+msgstr "An error has occurred while saving profile"
+
+msgid "Ninja"
+msgstr "Ninja"
+

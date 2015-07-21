@@ -73,6 +73,21 @@ function cdUsersService(cdApi, $q){
     },
     getAvatar: function(id, win, fail){
       cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);
+    },
+    loadChampionsForUser: function(userId, win, fail) {
+      cdApi.get('users/champions_for_user/' + userId, win, fail || topfail);
+    },
+    loadChampionsForUserPromise: function (userId) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      cdApi.get('users/champions_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      return promise;
+    },
+    loadParentsForUserPromise: function (userId) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      cdApi.get('profiles/parents_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      return promise;
     }
   };
 }
