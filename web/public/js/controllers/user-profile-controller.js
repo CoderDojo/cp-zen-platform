@@ -1,12 +1,17 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
-  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, parentsForUser, badgeCategories) {
-
-  if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, 
+  hiddenFields, Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
+  agreement, $window, championsForUser, parentsForUser, badgeCategories) {
+  
+  if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError('An error has occurred');
     return;
+  }
+
+  if(_.isEmpty(agreement.data)){
+    $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ $state.params.userId);
   }
 
   $scope.editMode = false;
@@ -499,5 +504,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 'championsForUser', 'parentsForUser', 'badgeCategories', cdUserProfileCtrl]);
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
+    'agreement','$window', 'championsForUser', 'parentsForUser', 'badgeCategories',cdUserProfileCtrl]);
+
 
