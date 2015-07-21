@@ -159,7 +159,7 @@
               popover="{@i18n key="Meed Mentors"/}">
             </a>
           </label>       
-          <div class="col-lg-8 cd-checkbox">
+          <div class="col-lg-8 cd-awesome-checkbox">
             <div class="checkbox">
               <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
               <label class="awesome-label" for="needMentorsCheckbox"></label>
@@ -171,7 +171,7 @@
       <div class="row cd-input-row">
         <div class="form-group">
           <label class="col-lg-4">{@i18n key="Current Stage"/}</label>
-          <div class="col-lg-8 cd-radios">
+          <div class="col-lg-8 cd-awesome-radios">
             <div class="radio">
               <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="0">
               <label class="awesome-label" for="inPlanning">{@i18n key="In Planning"/}</label>
@@ -193,7 +193,7 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group cd-checkbox">
+        <div class="form-group cd-awesome-checkbox">
           <label for="dojoName" class="col-lg-4">{@i18n key="Private"/}</label>       
           <div class="col-lg-8">
             <div class="checkbox">
@@ -281,7 +281,7 @@
               popover="{@i18n key="dojo.edit.mailinglist.description"/}">
             </a>
           </label>       
-          <div class="col-lg-8 cd-checkbox">
+          <div class="col-lg-8 cd-awesome-checkbox">
             <div class="checkbox">
               <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
               <label class="awesome-label" for="mailingListCheckbox"></label>

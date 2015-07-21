@@ -150,11 +150,6 @@ label {
   }
 }
 
-.cd-dashboard2 {
-  padding-right: 0;
-  padding-left: 0;
-}
-
 .dojo-list-dashboard {
   min-height: 350px;
   margin:0 auto;
@@ -195,11 +190,6 @@ label {
 
 .cd-create-dojo-container {
   padding:0px;
-  .create-dojo-sidebar {
-    position: relative;
-    float: right;
-    left: 20px;
-  }
   .pre-game-warning {
     background-color: #FBF9E4;
     width: 550px;
@@ -378,30 +368,6 @@ label {
   margin-left: 10px;
 }
 
-.start-dojo-wizard {
-  .steps-indicator {
-    margin: 90px 0 0 0;
-    height: 30px;
-    position: relative;
-    li:first-child {
-      pointer-events: none;
-    }
-  }
-  .steps-indicator.steps-4:before {
-    left: 0%;
-    right: 0%;
-  }
-  .steps-indicator li.done a:before {
-    background-color: @cd-green;
-  }
-  .steps-indicator li.current a:before {
-    background-color: @cd-light-blue;
-  }
-  .start-dojo-wizard-step {
-    margin-bottom:30px;
-  }
-}
-
 .cp-onboarding-wizard {
   .cd-page-title {
     margin: 20px 0px;
@@ -458,7 +424,7 @@ label {
       }
     }
   }
-  .cd-radios {
+  .cd-awesome-radios {
     label {
       padding-top:8px;
     }
@@ -468,7 +434,7 @@ label {
       margin-bottom: 0px;
     }
   }
-  .cd-checkbox {
+  .cd-awesome-checkbox {
     .checkbox {
       display: inline-block;
       .awesome-label {
@@ -476,9 +442,9 @@ label {
         padding-top: 0px;
         padding-bottom: 8px;
       }
-      p {
-        color: @cd-gray;
-      }
+    }
+    p {
+      color: @cd-light-gray;
     }
   }
 
@@ -498,6 +464,27 @@ label {
   }
 
   #setup-dojo-form {
+    .steps-indicator {
+      margin: 90px 0 0 0;
+      height: 30px;
+      position: relative;
+      li:first-child {
+        pointer-events: none;
+      }
+    }
+    .steps-indicator.steps-4:before {
+      left: 0%;
+      right: 0%;
+    }
+    .steps-indicator li.done a:before {
+      background-color: @cd-green;
+    }
+    .steps-indicator li.current a:before {
+      background-color: @cd-light-blue;
+    }
+    .start-dojo-wizard-step {
+      margin-bottom:30px;
+    }
   }
 
   #createDojoForm { 
