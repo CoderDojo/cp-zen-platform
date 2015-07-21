@@ -1412,3 +1412,13 @@ msgstr "We need mentors!"
 
 msgid "Private"
 msgstr "Private"
+
+msgid "Profile has been saved successfully"
+msgstr "Profile has been saved successfully"
+
+msgid "An error has occurred while saving profile"
+msgstr "An error has occurred while saving profile"
+
+msgid "Ninja"
+msgstr "Ninja"
+

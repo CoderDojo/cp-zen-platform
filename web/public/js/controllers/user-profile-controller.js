@@ -2,8 +2,7 @@
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
-  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, parentsForUser) {
-
+  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, parentsForUser, badgeCategories) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
@@ -12,11 +11,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.editMode = false;
   var profileUserId = $state.params.userId;
-
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
 
-  if($state.current.name === 'edit-user-profile') {   
-    if(profileUserId === loggedInUserId) { 
+  if($state.current.name === 'edit-user-profile') {
+    if(profileUserId === loggedInUserId || loggedInUserIsParent()) { 
       $scope.editMode = true;
     } else {
       //No permission
@@ -77,70 +75,62 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.hasAccess = utils.hasAccess;
 
-  profile.data.formattedDateOfBirth = moment(profile.data.dob).format('DD MMMM YYYY');
+  if(profile.data.dob) profile.data.formattedDateOfBirth = moment(profile.data.dob).format('DD MMMM YYYY');
   $scope.highestUserType = getHighestUserType(profile.data.userTypes);
   var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
     return initUserType.name === $scope.highestUserType;
   });
 
-  if(userTypeFound) profile.data.userTypeTitle = userTypeFound.title;
+  if(userTypeFound) {
+    switch(userTypeFound.title) {
+      case 'Youth Under 13':
+        userTypeFound.title = $translate.instant('Ninja');
+        break;
+      case 'Youth Over 13':
+        userTypeFound.title = $translate.instant('Ninja');
+        break;
+    }
+    profile.data.userTypeTitle = userTypeFound.title;
+  }
 
   $scope.isPrivate = profile.data.private;
-  var loggedInUserIsChampion;
-  var loggedInUserIsParent;
 
-  if(!loggedInUser.data) {
-    loggedInUserIsChampion = false;
-    loggedInUserIsParent = false;
-  } else {
-    loggedInUserIsChampion = _.find(championsForUser.data, function (championForUser) {
-      return championForUser.id === loggedInUser.data.id;
-    });
+  //Load user's badges
+  $scope.categories = [];
+  $scope.badges = {};
+  var profileBadges = angular.copy(profile.data.badges);
 
-    loggedInUserIsParent = _.find(parentsForUser.data, function (parentForUser) {
-      return parentForUser.id === loggedInUser.data.id;
+  _.each(badgeCategories.data.categories, function (mainCategory) {
+    _.each(profileBadges, function (badge) {
+      if(badge.status === 'accepted') {
+        var indexFound;
+        var mainCategoryFound = _.find(badge.tags, function (tag, index) {
+          indexFound = index;
+          return tag.value === mainCategory;
+        });
+        badge.formattedDateAccepted = moment(badge.dateAccepted).format('Do MMMM YYYY');
+        if(mainCategoryFound) {
+          badge.tags.splice(indexFound, 1);
+          if(!$scope.badges[mainCategoryFound.value]) $scope.badges[mainCategoryFound.value] = {};
+          _.each(badge.tags, function (tag) {
+            if(!$scope.badges[mainCategoryFound.value][tag.value]) $scope.badges[mainCategoryFound.value][tag.value] = [];
+            $scope.badges[mainCategoryFound.value][tag.value].push(badge);
+          });
+          var categoryAdded = _.find($scope.categories, function (category) {
+            return category === mainCategoryFound.value;
+          });
+          if(!categoryAdded) $scope.categories.push(mainCategoryFound.value);
+        }
+      }
     });
-  }
-  
+  });
+
   $scope.profile = profile.data;
 
   cdUsersService.getAvatar($scope.profile.id, function(response){
     if(!_.isEmpty(response)) {
       $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
     }
-  });
-
-  //Load user's badges
-  cdBadgesService.loadBadgeCategories(function (response) {
-    var categories = response.categories;
-    $scope.categories = [];
-    $scope.badges = {};
-    cdBadgesService.loadUserBadges($scope.profile.userId, function (response) {
-      _.each(categories, function (mainCategory) {
-        _.each(response, function (badge) {
-          if(badge.status === 'accepted') {
-            var indexFound;
-            var mainCategoryFound = _.find(badge.tags, function (tag, index) {
-              indexFound = index;
-              return tag.value === mainCategory;
-            });
-            badge.formattedDateAccepted = moment(badge.dateAccepted).format('Do MMMM YYYY');
-            if(mainCategoryFound) {
-              badge.tags.splice(indexFound, 1);
-              if(!$scope.badges[mainCategoryFound.value]) $scope.badges[mainCategoryFound.value] = {};
-              _.each(badge.tags, function (tag) {
-                if(!$scope.badges[mainCategoryFound.value][tag.value]) $scope.badges[mainCategoryFound.value][tag.value] = [];
-                $scope.badges[mainCategoryFound.value][tag.value].push(badge);
-              });
-              var categoryAdded = _.find($scope.categories, function (category) {
-                return category === mainCategoryFound.value;
-              });
-              if(!categoryAdded) $scope.categories.push(mainCategoryFound.value);
-            }
-          }
-        });
-      });
-    });
   });
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
@@ -255,9 +245,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   function saveYouthViaParent(profile){
     cdUsersService.saveYouthProfile(profile, function(){
-      alertService.showAlert('Save was successful');
+      alertService.showAlert($translate.instant('Profile has been saved successfully'));
+      $state.go('user-profile', {userId: $stateParams.userId});
     }, function(){
-      alertService.showError('An error has occurred');
+      alertService.showError($translate.instant('An error has occurred while saving profile'));
     });
   }
 
@@ -272,12 +263,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     function win(profile){
       $scope.profile = profile;
       $scope.profile.private =  $scope.profile.private ? "true" : "false";
-      alertService.showAlert('Profile has been saved successfully');
-      $state.go('user-profile', {userId: loggedInUserId});
+      alertService.showAlert($translate.instant('Profile has been saved successfully'));
+      $state.go('user-profile', {userId: $stateParams.userId});
     }
 
     function fail(){
-      alertService.showError('An error has occurred while saving profile');
+      alertService.showError($translate.instant('An error has occurred while saving profile'));
     }
 
     cdUsersService.saveProfile(profile, win, fail);
@@ -402,11 +393,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
   
   $scope.editProfile = function () {
-    $state.go('edit-user-profile', {userId: loggedInUser.data.id});
+    $state.go('edit-user-profile', {userId: $stateParams.userId});
   }
 
   $scope.viewProfile = function () {
-    $state.go('user-profile', {userId: loggedInUser.data.id});
+    $state.go('user-profile', {userId: $stateParams.userId});
   }
 
   $scope.viewDojo = function(dojo) {
@@ -424,24 +415,24 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         return true; //Always public
       case 'mentor':
         if($scope.profile.ownProfileFlag) return true;
-        if(loggedInUserIsChampion) return true;
+        if(loggedInUserIsChampion()) return true;
         return !$scope.isPrivate;
       case 'parent-guardian':
         if($scope.profile.ownProfileFlag) return true;
-        if(loggedInUserIsChampion) return true;
+        if(loggedInUserIsChampion()) return true;
         return !$scope.isPrivate;
       case 'attendee-o13': 
         if($scope.profile.ownProfileFlag) return true;
-        if(loggedInUserIsChampion) return true;
-        if(loggedInUserIsParent) return true;
+        if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsParent()) return true;
         return !$scope.isPrivate;
       case 'attendee-u13':
         if($scope.profile.ownProfileFlag) return true;
-        if(loggedInUserIsChampion) return true;
-        if(loggedInUserIsParent) return true;
+        if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsParent()) return true;
         return false; //Always private
       default: 
-        return true;
+        return false;
     }
   }
 
@@ -465,10 +456,39 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return highestUserType;
   }
 
+  function loggedInUserIsParent() {
+    if(!loggedInUser.data) return false;
+    return _.find(parentsForUser.data, function (parentForUser) {
+      return parentForUser.id === loggedInUser.data.id;
+    });
+  }
+
+  function loggedInUserIsChampion() {
+    if(!loggedInUser.data) return false;
+    return _.find(championsForUser.data, function (championForUser) {
+      return championForUser.id === loggedInUser.data.id;
+    });
+  }
+
+  $scope.hideProfileBlock = function (block) {
+    if($scope.highestUserType === 'attendee-o13') {
+      if(loggedInUserIsChampion()) return false;
+      if(loggedInUserIsParent()) return false;
+      if($scope.profile.ownProfileFlag) return false;
+      if(block && $scope.profile.optionalHiddenFields) {
+        if(!$scope.profile.optionalHiddenFields[block]) return false;
+        return true; 
+      }
+      return true;
+    }
+    return false;
+  }
+
+
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 'championsForUser', 'parentsForUser', cdUserProfileCtrl]);
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 'championsForUser', 'parentsForUser', 'badgeCategories', cdUserProfileCtrl]);
 

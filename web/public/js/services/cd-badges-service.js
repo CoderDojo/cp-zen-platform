@@ -1,6 +1,6 @@
 'use strict'
 
-function cdBadgesService(cdApi) {
+function cdBadgesService(cdApi, $q) {
   function topfail(err){
     console.log(err);
   }
@@ -23,6 +23,12 @@ function cdBadgesService(cdApi) {
     loadBadgeCategories: function(win, fail) {
       cdApi.get('badge_categories', win, fail || topfail);
     },
+    loadBadgeCategoriesPromise: function () {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      cdApi.get('badge_categories', deferred.resolve, deferred.reject || topfail);
+      return promise;
+    },
     loadBadgeByCode: function(code, win, fail) {
       cdApi.post('badges/code', {code: code}, win, fail || topfail);
     },
@@ -36,4 +42,4 @@ function cdBadgesService(cdApi) {
 }
 
 angular.module('cpZenPlatform')
-  .service('cdBadgesService', ['cdApi', cdBadgesService]);
+  .service('cdBadgesService', ['cdApi', '$q', cdBadgesService]);

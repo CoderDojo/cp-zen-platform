@@ -14,7 +14,8 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.badgeModel = {};
   $scope.awardBadgeButtonModel = {};
   $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
-  
+  $scope.invite = {};
+
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
     //Updating user permissions and user types require the same permissions.
