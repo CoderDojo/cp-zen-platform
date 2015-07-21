@@ -271,6 +271,14 @@
           url: '/charter',
           templateUrl: '/charter/template/charter-info'
         })
+        .state('charter-page', {
+          url: '/dashboard/charter',
+          templateUrl: '/charter/template/index',
+          controller: 'charter-controller',
+          resolve: {
+            currentUser: profileHelpers.loggedInUser
+          }
+        })
         .state("accept-dojo-user-invitation", {
           url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
           templateUrl: '/dojos/template/accept-dojo-user-invitation',

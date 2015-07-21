@@ -1,4 +1,4 @@
-<div ng-show="!championRegistrationFormVisible"class="cd-dashboard">
+<div ng-show="!showCharterAgreementFlag"class="cd-dashboard">
   <div class="row">
     <div class="col-lg-12 cd-text-heading1">
       {>"charter/charter-info" /}

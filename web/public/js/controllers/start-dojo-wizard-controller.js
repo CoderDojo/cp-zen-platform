@@ -254,7 +254,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     currentStepInt = 1;
 
     $scope.showCharterAgreement = function () {
-      $scope.championRegistrationFormVisible = false;
+      $scope.showCharterAgreementFlag = false;
     }
 
     var currentUser;
@@ -269,7 +269,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     if(subStep && subStep === 'charter'){
       $scope.showCharterAgreement();
     } else {
-      $scope.championRegistrationFormVisible = true;
+      $scope.showCharterAgreementFlag = true;
 
       $scope.champion = {};
 
