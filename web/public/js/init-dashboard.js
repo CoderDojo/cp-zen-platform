@@ -101,6 +101,13 @@
       }, function (err) {
         return {err: err};
       });
+    },
+    badgeCategories: function(cdBadgesService) {
+      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
     }
   };
 
