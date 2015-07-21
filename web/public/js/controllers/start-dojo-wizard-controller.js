@@ -238,6 +238,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   //--Step Two:
   function setupStep2(subStep, wizardRedirect) {
     var initialDate = new Date();
+    $scope.buttonText = "Register Champion"
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
         formatYear: 'yyyy',

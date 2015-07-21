@@ -150,16 +150,6 @@ label {
   }
 }
 
-#charterForm {
-  margin-top: 25px;
-  .checkbox {
-    label.validationMessage {
-      font-weight: bold;
-      margin-left: -25px;
-    }
-  }
-}
-
 .cd-dashboard2 {
   padding-right: 0;
   padding-left: 0;
@@ -226,42 +216,6 @@ label {
       color:#C09853;
     }
   }
-  #createChampionForm {
-    .preGameWarning {
-      padding: 15px;
-    }
-    .form-group {
-      margin-top:15px;
-    }
-    .pre-game-warning {
-      width:100%;
-    }
-    label {
-      text-align:right;
-      padding-top: 5px;
-    }
-    textarea {
-      margin-bottom: 10px;
-    }
-    legend {
-      margin-top:20px;
-    }
-    .other-languages {
-      margin-bottom:15px;
-    }
-    .venueInfoTextArea {
-      margin-bottom:15px;
-    }
-    .cdReferenceOther {
-      margin-bottom:15px;
-    }
-    .google-map {
-      margin-top:15px;
-    }
-  }
-
-  #setup-dojo-form {
-  }
 
   #createDojoForm {
     margin-top:20px;
@@ -314,10 +268,10 @@ label {
     }
   }
 
-  .cd-wizard-submit {
+  /*.cd-wizard-submit {
     margin-top: 30px;
     float:right;
-  }
+  }*/
 }
 
 @media only screen and (max-width: 768px) {
@@ -500,6 +454,66 @@ label {
   }
   .start-dojo-wizard-step {
     margin-bottom:30px;
+  }
+}
+
+.cp-onboarding-wizard {
+  .cd-page-title {
+    margin: 20px 0px;
+  }
+  .cd-page-header {
+    margin: 20px 0px;
+  }
+  .cd-page-intro {
+    margin: 20px 0px;
+  }
+  legend.cd-section-header {
+    margin: 20px 0px;
+  }
+  .cd-input-row {
+    margin: 20px 0px;
+    label {
+      text-align:right;
+      padding-top: 5px;
+    }
+  }
+  .cd-btn-row {
+    margin: 30px 0px;
+  }
+  .dob-picker {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .form-group {
+    margin: 0px;
+  }
+  textarea {
+    margin: 0px;
+  }
+  .google-map {
+    margin-top:15px;
+  }
+  .cd-wizard-submit {
+    margin-top: 30px;
+    float:right;
+  }
+
+  #createChampionForm { 
+  }
+
+  #charterForm {
+    .checkbox {
+      label.validationMessage {
+        font-weight: bold;
+        margin-left: -25px;
+      }
+    }
+    .cd-wizard-submit {
+      float:left;
+    }
+  }
+
+  #setup-dojo-form {
   }
 }
 
