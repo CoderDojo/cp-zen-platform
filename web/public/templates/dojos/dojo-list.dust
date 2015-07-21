@@ -1,10 +1,10 @@
 <div class="cd-dashboard">
 
   <tabset justified="true">
-    <tab  class="dojofind-tab-heading" heading="Map">
+    <tab class="dojofind-tab-heading" heading="Map">
       {>"dojos/map-search" /}
     </tab>
-    <tab  class="dojofind-tab-heading" heading="List">
+    <tab class="dojofind-tab-heading" heading="List">
       {>"dojos/dojo-list-index" /}
     </tab>
   </tabset>
