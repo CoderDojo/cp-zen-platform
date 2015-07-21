@@ -5,7 +5,7 @@
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="agreedToBy" class="col-lg-4">{@i18n key="charter.fullname.label"/}</label>
+            <label for="agreedToBy" class="col-lg-4 text-right">{@i18n key="charter.fullname.label"/}</label>
             <div class="col-lg-6">
               <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
             </div>
