@@ -23,7 +23,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   if($state.current.name === 'add-child') {
-    if(profileUserId === loggedInUserId) {
+    if($state.params.parentId === loggedInUserId) {
       $scope.editMode = true;
     } else {
       //No permission
@@ -83,10 +83,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   if(userTypeFound) {
     switch(userTypeFound.title) {
-      case 'Youth Under 13':
+      case 'Ninja Under 13':
         userTypeFound.title = $translate.instant('Ninja');
         break;
-      case 'Youth Over 13':
+      case 'Ninja Over 13':
         userTypeFound.title = $translate.instant('Ninja');
         break;
     }
@@ -409,6 +409,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.profileVisible = function () {
+    if($state.current.name === 'add-child') return true;
     var highestUserType = getHighestUserType(profile.data.userTypes);
     switch (highestUserType) {
       case 'champion':
@@ -420,7 +421,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       case 'parent-guardian':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
-        return !$scope.isPrivate;
+        return false; //Always private
       case 'attendee-o13': 
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
@@ -484,6 +485,14 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return false;
   }
 
+  $scope.canMakeProfilePrivate = function () {
+    if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') return true;
+    return false;
+  }
+
+  $scope.canUpdateHiddenField = function (hiddenField) {
+    return _.contains(hiddenField.allowedUserTypes, $scope.highestUserType);
+  }
 
 }
 
