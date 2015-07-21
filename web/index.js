@@ -164,3 +164,5 @@ seneca
 _.each(so.client, function(opts) {
    seneca.client(opts);
 });
+
+// TODO add session, cookie middleware here using seneca web?
