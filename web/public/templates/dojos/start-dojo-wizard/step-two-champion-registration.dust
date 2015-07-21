@@ -121,7 +121,7 @@
           </div>
         </div>
 
-        <div class="row cd-input-row">
+        <div class="row">
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
               <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">

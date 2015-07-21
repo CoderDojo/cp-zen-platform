@@ -216,63 +216,8 @@ label {
       color:#C09853;
     }
   }
-
-  #createDojoForm {
-    margin-top:20px;
-    legend {
-      margin-top: 35px;
-      margin-botton: 20px;
-    }
-    .form-group {
-      label {
-        text-align: right;
-        padding-top: 8px;
-        margin-bottom: 15px;
-      }
-      p {
-        color: #99999F;
-      }
-      .google-map {
-        margin-top:15px;
-      }
-    }
-    .cd-info-btn {
-      display:inline-block;
-      padding-left: 10px;
-      float: none;
-      text-decoration:none;
-      color: inherit;
-    }
-    .cd-create-dojo-checkbox {
-      .checkbox {
-        display: inline-block;
-        .awesome-label {
-          text-align: right;
-          padding-top: 0px;
-          padding-bottom: 8px;
-        }
-      }
-    }
-    .cd-create-dojo-radios {
-      label {
-        padding-top:8px;
-      }
-      .awesome-label {
-        text-align: left;
-        padding-top: 0px;
-        margin-bottom: 0px;
-      }
-    }
-    #createDojoButton {
-      margin-top: 30px;
-    }
-  }
-
-  /*.cd-wizard-submit {
-    margin-top: 30px;
-    float:right;
-  }*/
 }
+  
 
 @media only screen and (max-width: 768px) {
   .fullscreen-only {
@@ -467,8 +412,10 @@ label {
   .cd-page-intro {
     margin: 20px 0px;
   }
-  legend.cd-section-header {
-    margin: 20px 0px;
+  .cd-section-header {
+    margin: 30px 0px;
+    font-size: 16px;
+    border-bottom: 1px solid @cd-gray;
   }
   .cd-input-row {
     margin: 20px 0px;
@@ -497,6 +444,43 @@ label {
     margin-top: 30px;
     float:right;
   }
+  .with-info-btn {
+    label {
+      text-align: right;
+      padding-top: 8px;
+      margin-bottom: 15px;
+      .cd-info-btn {
+        display:inline-block;
+        padding-left: 10px;
+        float: none;
+        text-decoration:none;
+        color: inherit;
+      }
+    }
+  }
+  .cd-radios {
+    label {
+      padding-top:8px;
+    }
+    .awesome-label {
+      text-align: left;
+      padding-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+  .cd-checkbox {
+    .checkbox {
+      display: inline-block;
+      .awesome-label {
+        text-align: right;
+        padding-top: 0px;
+        padding-bottom: 8px;
+      }
+      p {
+        color: @cd-gray;
+      }
+    }
+  }
 
   #createChampionForm { 
   }
@@ -514,6 +498,9 @@ label {
   }
 
   #setup-dojo-form {
+  }
+
+  #createDojoForm { 
   }
 }
 
