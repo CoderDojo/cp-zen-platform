@@ -41,10 +41,10 @@
     "seneca-user-roles": "0.1.0",
     "seneca-web-access": "0.1.0",
     "slug": "0.9.1",
-    "hapi": "~8.8.0",
-    "hapi-dust": "~2.0.0",
-    "requireindex": "~1.1.0",
-    "hapi-less": "~0.1.1",
+    "hapi": "8.8.0",
+    "hapi-dust": "2.0.0",
+    "requireindex": "1.1.0",
+    "hapi-less": "0.1.1",
     "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#3f7e4b7d284c1fff679e27d72133c95d0d3c79d3"
   },
   "devDependencies": {
