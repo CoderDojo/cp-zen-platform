@@ -10,8 +10,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return;
   }
 
-  if(_.isEmpty(agreement.data)){
-    $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ $state.params.userId);
+  var isYouthProfile = $state.current.name === 'add-child';
+
+  if(_.isEmpty(agreement.data) && !isYouthProfile){
+    $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ loggedInUser.data.id);
   }
 
   $scope.editMode = false;
