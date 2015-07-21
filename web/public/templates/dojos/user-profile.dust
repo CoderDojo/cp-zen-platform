@@ -1,11 +1,14 @@
 <div class="container target">
-  <div class="row">
+  <div class="row" ng-if="!profileVisible()">
+    <h3>{@i18n key="This profile is private"/}</h3>
+  </div>
+  <div class="row" ng-if="profileVisible()">
     <div class="col-sm-3">
       <!--left col-->
 
       <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
       <h1>{{ profile.name || profile.alias }}</h1>
-      <h4>{{ profile.userType }}</h4>
+      <h4>{{ profile.userTypeTitle }}</h4>
       <div ng-if="editMode" class="btn btn-default center-block" ngf-select ngf-change="upload($files)">{@i18n key="Upload new picture"/}</div>
 
       <span class="help-block"></span>

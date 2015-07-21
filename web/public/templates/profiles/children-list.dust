@@ -1,14 +1,15 @@
 <div class="panel panel-default">
   <div class="panel-heading">{@i18n key="Children"/}
-    <span class="pull-right">
-      <a href="/dashboard/profile/child/add/attendee-u13/{{ profile.userId }}">Add child under 13</a>
-      &nbsp;|&nbsp;
-      <a href="/dashboard/profile/child/add/attendee-o13/{{ profile.userId }}">Add child over 13</a>
-    </span>
+    <div ng-if="editMode && (loggedInUser.id === profile.userId)" class="pull-right">
+      <div class="btn-group">
+        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Child under 13"/}</a>
+        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Child over 13"/}</a>
+      </div>
+    </div>
   </div>
   <div class="panel-body">
     <ul ng-repeat="child in profile.resolvedChildren">
-      <li><a href="/dashboard/profile/{{ child.userId }}">{{ child.name }}</a></li>
+      <li><a ui-sref="user-profile({userId: child.userId})">{{ child.name }}</a></li>
     </ul>
   </div>
 </div>

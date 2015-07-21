@@ -7,6 +7,11 @@ module.exports = _.defaults({
   'agreement-version' : 2,
   auth: {
     restrict: function (req, res, next) {
+      var profileUrl = '/dashboard/profile';
+      if(_.contains(req.url, profileUrl) && !req.seneca.user) {
+        var userId = req.url.split('/')[3];
+        return res.redirect('/profile/' + userId);
+      }
       if(_.contains(req.url, '/dashboard') && !_.contains(req.url, '/login') && !req.seneca.user) {
         //Not logged in, redirect to /login with referer parameter
         var referer = encodeURIComponent(req.url);
@@ -53,7 +58,6 @@ module.exports = _.defaults({
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-profiles,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-oauth2,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'},
     {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10306, pin: 'role:cd-events,cmd:*'}

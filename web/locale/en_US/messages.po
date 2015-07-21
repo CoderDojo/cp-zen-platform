@@ -1176,8 +1176,8 @@ msgstr "Gender"
 msgid "Female"
 msgstr "Female"
 
-msgid "Private profile"
-msgstr "Private profile"
+msgid "Private Profile"
+msgstr "Private Profile"
 
 msgid "None"
 msgstr "None"
@@ -1394,6 +1394,18 @@ msgstr "Export Badges"
 
 msgid "Error loading Events"
 msgstr "Error loading Events:"
+
+msgid "Undisclosed"
+msgstr "Undisclosed"
+
+msgid "Add Child under 13"
+msgstr "Add Child under 13"
+
+msgid "Add Child over 13"
+msgstr "Add Child over 13"
+
+msgid "This profile is private"
+msgstr "This profile is private"
 
 msgid "We need mentors!"
 msgstr "We need mentors!"

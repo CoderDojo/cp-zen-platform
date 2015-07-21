@@ -60,5 +60,14 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  utils.keyForValue = function (obj, value) {
+    for( var prop in obj ) {
+      if( obj.hasOwnProperty( prop ) ) {
+        if( obj[ prop ] === value )
+          return prop;
+      }
+    }
+  }
+
   return utils;
 });
