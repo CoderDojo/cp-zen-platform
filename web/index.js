@@ -56,9 +56,6 @@ server.register({
 require('./lib/dust-i18n.js');
 
 
-
-// TODO // app.use(session({ store: sessionStore, secret: 'seneca', name: 'CD.ZENPLATFORM', saveUninitialized: true, resave: true }))
-
 // Add all the server routes from the controllers.
 _.each(controllers, function (controller) { 
   server.route(controller);
