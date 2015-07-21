@@ -57,7 +57,7 @@
           <div class="form-group has-feedback">
             <label for="telephoneNumber" class="col-lg-4">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="text" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="champion.telephoneNumber.placeholder"/}"  autocomplete="off">
+              <input type="tel" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="champion.telephoneNumber.placeholder"/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="text" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
+                <input type="url" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
               </div>
           </div>
         </div>
@@ -160,7 +160,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="text" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
+                <input type="url" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
               </div>
           </div>
         </div>
