@@ -4,67 +4,67 @@
     <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
       <div id="main">
 
-      <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
+        <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
 
-      <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoName" class="col-lg-4">{@i18n key="Dojo Name"/}*
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
-              popover-trigger="mouseenter"
-              popover-placement="left" 
-              popover-title="{@i18n key="Dojo Name"/}"
-              popover="{@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}">
-            </a>
-          </label>       
-          <div class="col-lg-8">
-            <input type="text" class="form-control" form="createDojoForm" required required-message="{@i18n key="Name is empty"/}" ng-model="dojo.name"  name="dojoName" id="dojoName">
+        <div class="row cd-input-row">
+          <div class="form-group with-info-btn">
+            <label for="dojoName" class="col-lg-4">{@i18n key="Dojo Name"/}*
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+                popover-trigger="mouseenter"
+                popover-placement="left" 
+                popover-title="{@i18n key="Dojo Name"/}"
+                popover="{@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}">
+              </a>
+            </label>       
+            <div class="col-lg-8">
+              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name..."/}">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoEmail" class="col-lg-4">{@i18n key="Email"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
-              popover-trigger="mouseenter"
-              popover-placement="left" 
-              popover-title="{@i18n key="Email"/}"
-              popover="{@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}">
-            </a>
-          </label>
-          <div class="col-lg-8">
-            <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail">
+        <div class="row cd-input-row">
+          <div class="form-group with-info-btn">
+            <label for="dojoEmail" class="col-lg-4">{@i18n key="Email"/}
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+                popover-trigger="mouseenter"
+                popover-placement="left" 
+                popover-title="{@i18n key="Email"/}"
+                popover="{@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}">
+              </a>
+            </label>
+            <div class="col-lg-8">
+              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address..."/}">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoTimes" class="col-lg-4">{@i18n key="Times"/}*
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
-              popover-placement="left" 
-              popover-title="{@i18n key="Times"/}"
-              popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
-            </a>
-          </label>
-          <div class="col-lg-8">
-            <input type="text" class="form-control" form="createDojoForm" required required-message="{@i18n key="Times is empty"/}" ng-model="dojo.time" name="dojoTimes" id="dojoTimes">
+        <div class="row cd-input-row">
+          <div class="form-group with-info-btn">
+            <label for="dojoTimes" class="col-lg-4">{@i18n key="Times"/}*
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
+                popover-trigger="mouseenter"
+                popover-placement="left" 
+                popover-title="{@i18n key="Times"/}"
+                popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
+              </a>
+            </label>
+            <div class="col-lg-8">
+              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Times is Empty"/}'" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoCountry" class="col-lg-4">{@i18n key="Country"/}*
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
-              popover-placement="left" 
-              popover-title="{@i18n key="Country"/}"
-              popover="{@i18n key="Country"/}">
-            </a>
-          </label>
-          <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
+        <div class="row cd-input-row">
+          <div class="form-group with-info-btn">
+            <label for="dojoCountry" class="col-lg-4">{@i18n key="Country"/}*
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
+                popover-trigger="mouseenter"
+                popover-placement="left" 
+                popover-title="{@i18n key="Country"/}"
+                popover="{@i18n key="Country"/}">
+              </a>
+            </label>
+            <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
               <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required>
                 <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
@@ -75,7 +75,6 @@
             </div>
           </div>
         </div>
-      </div>
 
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">
@@ -94,8 +93,8 @@
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
+            <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
           </div>
-          <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
         </div>
       </div>
      
@@ -110,7 +109,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" form="createDojoForm" required required-message="'Address is empty'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1">
+            <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address..."/}">
           </div>
         </div>
       </div>
@@ -151,7 +150,7 @@
 
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">
-          <label class="col-lg-4">{@i18n key="Need Mentors"/}*
+          <label class="col-lg-4">{@i18n key="Need Mentors"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -218,7 +217,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL..."/}">
           </div>
         </div>
       </div>
@@ -234,7 +233,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL..."/}">
           </div>
         </div>
       </div>
@@ -250,7 +249,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter">
+            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL..."/}">
           </div>
         </div>
       </div>
@@ -266,7 +265,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage">
+            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL..."/}">
           </div>
         </div>
       </div>

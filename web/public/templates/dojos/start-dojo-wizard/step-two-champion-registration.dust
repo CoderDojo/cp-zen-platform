@@ -155,7 +155,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
+                <input type="url" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}">
               </div>
           </div>
         </div>
@@ -164,7 +164,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
+                <input type="url" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}">
               </div>
           </div>
         </div>

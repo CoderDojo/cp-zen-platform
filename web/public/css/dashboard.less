@@ -368,7 +368,7 @@ label {
   margin-left: 10px;
 }
 
-.cp-onboarding-wizard {
+.cp-onboarding-wizard, .user-registration {
   .cd-page-title {
     margin: 20px 0px;
   }
@@ -447,10 +447,13 @@ label {
       color: @cd-light-gray;
     }
   }
-
+  label.validationMessage {
+    text-align: left;
+    width: 100%;
+    color: @cd-red;
+  }
   #createChampionForm { 
   }
-
   #charterForm {
     .checkbox {
       label.validationMessage {
@@ -462,7 +465,6 @@ label {
       float:left;
     }
   }
-
   #setup-dojo-form {
     .steps-indicator {
       margin: 90px 0 0 0;
@@ -485,9 +487,31 @@ label {
     .start-dojo-wizard-step {
       margin-bottom:30px;
     }
+    .cd-checkbox {
+      label.validationMessage {
+        margin-left: -25px;
+         
+        width: 100%;
+      }
+    }
   }
-
   #createDojoForm { 
+  }
+  #user-registration-form {
+    label.validationMessage {
+      text-align: left;
+      width: auto;
+    }
+    .checkbox {
+      label.validationMessage {
+        font-weight: bold;  
+        margin-left: -25px;
+      }
+    }
+    .cd-wizard-submit {
+      margin-top: 0px;
+      float:left;
+    }
   }
 }
 
@@ -653,7 +677,7 @@ html .container .cd-accordion {
   }
   .validationMessage {
     position: relative;
-    width: auto;
+    width: 100%;
     text-align: left;
     line-height: normal;
     float: right;
