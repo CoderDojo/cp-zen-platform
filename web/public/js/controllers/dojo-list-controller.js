@@ -6,12 +6,17 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   $scope.markers = [];
   $scope.continentMarkers = [];
   $scope.stateMarkers = [];
+  $scope.dojoData = [];
   var countriesLatLongData;
   var continentsLatLongData;
   var countriesContinentsData;
   var dojoCountData;
   $scope.currentLevels = [];
 
+  cdDojoService.list({}, function(response) {
+    $scope.dojoList = response;
+  });
+  
   cdCountriesService.loadContinentsLatLongData(function (response) {
     continentsLatLongData = response;
   });
@@ -220,6 +225,12 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
       resetAllMarkers();
     }
   });
+  
+  window.setTimeout(function(){
+    var center = $scope.model.map.getCenter();
+    google.maps.event.trigger($scope.model.map, 'resize');
+    $scope.model.map.setCenter(center);
+  },100);
 
   $scope.showContinentDojos = function (marker) {
     $scope.countrySelected = false;

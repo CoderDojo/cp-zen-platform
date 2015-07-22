@@ -3,22 +3,26 @@
     <div class="col-lg-12 cd-text-heading1">
       {>"charter/charter-info" /}
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
-        <div class="row">
+        <div class="row cd-input-row">
           <div class="form-group">
-            <label for="agreedToBy" class="col-lg-offset-2 col-lg-2">{@i18n key="charter.fullname.label"/}</label>
+            <label for="agreedToBy" class="col-lg-4">{@i18n key="charter.fullname.label"/}</label>
             <div class="col-lg-6">
               <input type="text" ng-model="agreement.agreedToBy" class="form-control" required required-message="'{@i18n key="You must enter your full name"/}'" name="agreedToBy" id="agreedToBy">
             </div>
           </div>
           <div class="col-lg-offset-4 col-lg-6">
             <div class="checkbox checkbox-primary">
-              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox"  required required-message="'{@i18n key="You must accept the charter"/}'" name="agreeToCharterCheckbox" id="agreeToCharterCheckbox">
+              <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox" required required-message="'{@i18n key="You must accept the charter"/}'" name="agreeToCharterCheckbox" id="agreeToCharterCheckbox">
               <label for="agreeToCharterCheckbox">{@i18n key="I have read and accepted the above charter"/}</label>
             </div>
           </div>
         </div>
-        <div class="row center-children">
-          <button class="centered-child cd-color-5 btn btn-primary" type="submit">{@i18n key="Next"/}</button>
+        <div class="row cd-btn-row">
+          <div class="form-group">
+            <div class="col-lg-offset-4 col-lg-6">
+              <button class="col-xs-12 col-sm-4 col-lg-3 btn btn-primary cd-wizard-submit" type="submit">{@i18n key="Next"/}</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

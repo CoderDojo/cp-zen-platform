@@ -22,8 +22,10 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   $scope.forgot = {};
   $scope.reset = {};
 
-  cdUsersService.getInitUserTypes(function (response) {
-    $scope.initUserTypes = response;
+  cdUsersService.getInitUserTypes(function (userTypes) {
+    $scope.initUserTypes = _.filter(userTypes, function(userType){
+      return userType.name !== 'attendee-u13';
+    });
   });
 
   $scope.isVisible = function(view) {
