@@ -6,6 +6,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   $scope.markers = [];
   $scope.continentMarkers = [];
   $scope.stateMarkers = [];
+  $scope.dojoData = [];
   var countriesLatLongData;
   var continentsLatLongData;
   var countriesContinentsData;
@@ -13,7 +14,7 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   $scope.currentLevels = [];
 
   cdDojoService.list({}, function(response) {
-    $scope.dojoData = response;
+    $scope.dojoList = response;
   });
   
   cdCountriesService.loadContinentsLatLongData(function (response) {

@@ -69,5 +69,22 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     }
   }
 
+  utils.getHighestUserType = function (userTypes) {
+    var userTypesByPermissionLevel = {
+      'champion': 1,
+      'mentor': 2,
+      'parent-guardian': 3,
+      'attendee-o13': 4,
+      'attendee-u13': 5
+    };
+
+    var userTypeNumbers = _.map(userTypes, function (userType) {
+      return userTypesByPermissionLevel[userType];
+    });
+    
+    var sortedUserTypeNumbers = _.sortBy(userTypeNumbers);
+    return utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
+  }
+
   return utils;
 });

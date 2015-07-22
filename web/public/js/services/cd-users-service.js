@@ -88,6 +88,12 @@ function cdUsersService(cdApi, $q){
       var promise = deferred.promise;
       cdApi.get('profiles/parents_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
       return promise;
+    },
+    loadDojoAdminsForUserPromise: function (userId) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      cdApi.get('users/dojo_admins_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      return promise;
     }
   };
 }

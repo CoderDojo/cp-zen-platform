@@ -35,7 +35,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   });
 
   cdUsersService.getInitUserTypes(function (response) {
-    var userTypes = _.filter(response, function(type) { return type.name.indexOf('u13') !== -1; });
+    var userTypes = _.filter(response, function(type) { return type.name.indexOf('u13') === -1; });
     $scope.initUserTypes = userTypes;
   });
 

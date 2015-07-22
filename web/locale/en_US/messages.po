@@ -1398,11 +1398,11 @@ msgstr "Error loading Events:"
 msgid "Undisclosed"
 msgstr "Undisclosed"
 
-msgid "Add Child under 13"
-msgstr "Add Child under 13"
+msgid "Add Ninja under 13"
+msgstr "Add Ninja under 13"
 
-msgid "Add Child over 13"
-msgstr "Add Child over 13"
+msgid "Add Ninja over 13"
+msgstr "Add Ninja over 13"
 
 msgid "This profile is private"
 msgstr "This profile is private"
@@ -1422,3 +1422,11 @@ msgstr "An error has occurred while saving profile"
 msgid "Ninja"
 msgstr "Ninja"
 
+msgid "Ninjas"
+msgstr "Ninjas"
+
+msgid "Weekly"
+msgstr "Weekly"
+
+msgid "Every two weeks"
+msgstr "Every two weeks"

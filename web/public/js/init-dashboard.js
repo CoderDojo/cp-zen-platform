@@ -84,6 +84,9 @@
     },
     agreement: function(cdAgreementsService, $stateParams, $window){
       return cdAgreementsService.loadUserAgreementPromise($stateParams.userId).then(winCb, failCb);
+    },
+    dojoAdminsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
     }
   };
 
