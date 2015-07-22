@@ -422,7 +422,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         return false; //Always private
-      case 'attendee-o13': 
+      case 'attendee-o13':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsParent()) return true;
@@ -472,7 +472,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.hideProfileBlock = function (block) {
-    if($scope.highestUserType === 'attendee-o13') {
+    //Only mentors and attendees-o13 can hide certain fields.
+    if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
       if(loggedInUserIsChampion()) return false;
       if(loggedInUserIsParent()) return false;
       if($scope.profile.ownProfileFlag) return false;
@@ -480,9 +481,16 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         if(!$scope.profile.optionalHiddenFields[block]) return false;
         return true; 
       }
-      return true;
+      return true; 
     }
     return false;
+  }
+
+  $scope.hideGeneralInfoBlock = function () {
+    if(loggedInUserIsChampion()) return false;
+    if(loggedInUserIsParent()) return false;
+    if($scope.profile.ownProfileFlag) return false;
+    return true;
   }
 
   $scope.canMakeProfilePrivate = function () {
