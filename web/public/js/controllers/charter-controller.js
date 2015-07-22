@@ -8,14 +8,11 @@ function charterCtrl($scope, $http, $stateParams, cdAgreementsService, currentUs
     agreementObj.userId = currentUser.data.id;
     agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
-    $http.get('http://ipinfo.io/json').
-      success(function (data) {
-        agreementObj.ipAddress = data.ip;
 
-        cdAgreementsService.save(agreementObj, function (response) {
-          $window.location.href = $stateParams.referer || '/dashboard/dojo-list';
-        });
-      });
+    cdAgreementsService.save(agreementObj, function (response) {
+      $window.location.href = $stateParams.referer || '/dashboard/dojo-list';
+    });
+
   }
 }
 
