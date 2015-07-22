@@ -499,7 +499,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.hideChampionProfileBlock = function (block) {
     if($scope.profile.ownProfileFlag) return false;
-    if($scope.profile.optionalHiddenFields[block]) return true;
+    if($scope.profile.optionalHiddenFields && $scope.profile.optionalHiddenFields[block]) return true;
     return false;
   }
 

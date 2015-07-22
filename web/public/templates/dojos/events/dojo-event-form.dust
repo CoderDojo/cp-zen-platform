@@ -39,6 +39,26 @@
           {@i18n key="One off"/}
         </label>
       </div>
+
+      <span class="help-block"></span>
+
+      <div class="row" ng-if="eventInfo.type === 'recurring'">
+        <div class="col-lg-4">
+          <div class="radio">
+            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" id="weekly" value="weekly">
+            <label for="weekly">
+              {@i18n key="Weekly"/}
+            </label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" id="biweekly" value="biweekly">
+            <label for="biweekly">
+              {@i18n key="Every two weeks"/}
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">

@@ -5,10 +5,20 @@
 <div class="modal-body">
   <p><b>{@i18n key="Description"/}</b>: {{ event.description }}</p>
 
-  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Day"/}</b>: {{ event.day }}</p>
-  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Dates"/}</b>: {{ event.formattedDate }}</p>
+  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Day"/}</b>: {{ event.day }} - {{ event.formattedRecurringType }}</p>
+  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Dates"/}</b>:</p>
 
+  <div ng-if="event.type === 'recurring'">
+    <ul>
+      <li ng-repeat="eventDate in event.formattedDates">
+        {{ eventDate }}
+      </li>
+    </ul>
+  </div>
+  
   <p ng-if="event.type === 'one-off'"><b>{@i18n key="Date"/}</b>: {{ event.formattedDate }}</p>
+
+  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Time"/}</b>: {{ event.time }}</p>
 
   <p><b>{@i18n key="CityTown"/}:</b> {{ event.city.nameWithHierarchy }}</p>
 
