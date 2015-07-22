@@ -78,15 +78,12 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
       'attendee-u13': 5
     };
 
-    var userTypeNumbers = [];
-
-    _.each(userTypes, function (userType) {
-      userTypeNumbers.push(userTypesByPermissionLevel[userType]);
+    var userTypeNumbers = _.map(userTypes, function (userType) {
+      return userTypesByPermissionLevel[userType];
     });
-
+    
     var sortedUserTypeNumbers = _.sortBy(userTypeNumbers);
-    var highestUserType = utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
-    return highestUserType;
+    return utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
   }
 
   return utils;
