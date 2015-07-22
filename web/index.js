@@ -80,7 +80,7 @@ server.register({
   }
 });
 
-// TODO does this work as-is? //
+
 require('./lib/dust-i18n.js');
 
 
@@ -132,7 +132,6 @@ server.route({
 });
 
 // Serve the auth .js files, etc.
-// TODO this breaks encapsulation in regards to the auth microservice
 server.route({
   method: 'GET',
   path: '/content/auth/{filename*}',
