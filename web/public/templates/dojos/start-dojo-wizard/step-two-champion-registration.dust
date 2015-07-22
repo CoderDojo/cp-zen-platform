@@ -1,4 +1,4 @@
-<div ng-show="championRegistrationFormVisible">
+<div ng-show="showCharterAgreementFlag">
   <div class="cd-create-dojo-container">
     <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">

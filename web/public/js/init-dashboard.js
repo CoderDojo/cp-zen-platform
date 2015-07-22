@@ -28,6 +28,7 @@
     return dfd.promise;
   }
 
+
   var resolveDojo = function($q, $stateParams, cdDojoService) {
     var dfd = $q.defer();
     if ($stateParams.id) {
@@ -47,74 +48,45 @@
       });
     }
     return dfd.promise;
-  }
+  };
+  
+  var failCb = function(err){
+    return {err: err};
+  };
 
-  var profileHelpers = {
+  var winCb = function(data){
+    return {data: data};
+  }
+  var resolves = {
     profile: function($stateParams, cdUsersService){
-      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
-        function(data){
-          return {data: data};
-        }, function(err){
-          return {err: err};
-        });
+      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(winCb, failCb);
     },
     initUserTypes: function(cdUsersService) {
-      return cdUsersService.getInitUserTypesPromise().then(
-        function (data){
-          return {data: data};
-        }, function (err) {
-          return {err: err};
-        });
+      return cdUsersService.getInitUserTypesPromise().then(winCb, failCb);
     },
     loggedInUser: function(auth){
-      return auth.get_loggedin_user_promise().then(function(data){
-        return {data: data};
-      }, function(err){
-        return {err: err};
-      });
+      return auth.get_loggedin_user_promise().then(winCb, failCb);
     },
     usersDojos: function($stateParams, cdDojoService){
-      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
-        .then(function(data){
-          return {data: data};
-        }, function(err){
-          return {err: err};
-        });
+      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId}).then(winCb, failCb);
     },
     hiddenFields: function(cdUsersService){
-      return cdUsersService.getHiddenFieldsPromise().then(function(data){
-        return {data: data};
-      }, function(err){
-        return {err: err};
-      });
+      return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
     },
     championsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     parentsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     badgeCategories: function(cdBadgesService) {
-      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
+    },
+    agreement: function(cdAgreementsService, $stateParams, $window){
+      return cdAgreementsService.loadUserAgreementPromise($stateParams.userId).then(winCb, failCb);
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
     }
   };
 
@@ -278,6 +250,17 @@
           url: '/charter',
           templateUrl: '/charter/template/charter-info'
         })
+        .state('charter-page', {
+          url: '/dashboard/charter?referer',
+          templateUrl: '/charter/template/index',
+          controller: 'charter-controller',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            referer: null
+          }
+        })
         .state("accept-dojo-user-invitation", {
           url: "/dashboard/accept_dojo_user_invitation/:dojoId/:userInviteToken",
           templateUrl: '/dojos/template/accept-dojo-user-invitation',
@@ -291,7 +274,7 @@
         .state('add-child',{
           url: "/dashboard/profile/child/add/:userType/:parentId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: profileHelpers,
+          resolve: resolves,
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{
@@ -302,13 +285,13 @@
         .state("user-profile", {
           url: "/dashboard/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: profileHelpers,
+          resolve: resolves,
           controller: 'user-profile-controller'
         })
         .state('edit-user-profile', {
           url:'/dashboard/profile/:userId/edit',
           controller: 'user-profile-controller',
-          resolve: profileHelpers,
+          resolve: resolves,
           templateUrl: '/dojos/template/user-profile'
         })
         .state('badges-dashboard', {
