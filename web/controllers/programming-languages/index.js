@@ -2,14 +2,15 @@
 
 var programmingLanguages = require('../../config/programmingLanguages.js');
 
-module.exports = function(router){
-  router.get('/', function (req, res) {
+module.exports = [{
+  method: 'GET',
+  path: '/programming-languages',
+  handler: function (request, reply) {
     if(programmingLanguages.length < 1){
       console.log("error");
-      return res.status(404).json({ error: 'List is empty'});
+      return reply({ error: 'List is empty'}).code(404);
     }
 
-
-    res.send(programmingLanguages);
-  });
-}
+    reply(programmingLanguages);
+  }
+}];
