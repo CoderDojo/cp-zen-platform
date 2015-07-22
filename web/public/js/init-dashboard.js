@@ -54,54 +54,36 @@
     return {err: err};
   };
 
+  var winCb = function(data){
+    return {data: data};
+  }
   var resolves = {
     profile: function($stateParams, cdUsersService){
-      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
-        function(data){
-          return {data: data};
-        }, failCb);
+      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(winCb, failCb);
     },
     initUserTypes: function(cdUsersService) {
-      return cdUsersService.getInitUserTypesPromise().then(
-        function (data){
-          return {data: data};
-        }, failCb);
+      return cdUsersService.getInitUserTypesPromise().then(winCb, failCb);
     },
     loggedInUser: function(auth){
-      return auth.get_loggedin_user_promise().then(function(data){
-        return {data: data};
-      }, failCb);
+      return auth.get_loggedin_user_promise().then(winCb, failCb);
     },
     usersDojos: function($stateParams, cdDojoService){
-      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
-        .then(function(data){
-          return {data: data};
-        }, failCb);
+      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId}).then(winCb, failCb);
     },
     hiddenFields: function(cdUsersService){
-      return cdUsersService.getHiddenFieldsPromise().then(function(data){
-        return {data: data};
-      }, failCb);
+      return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
     },
     championsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, failCb);
+      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     parentsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, failCb);
+      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     badgeCategories: function(cdBadgesService) {
-      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
-        return {data: data};
-      }, failCb);
+      return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
     },
     agreement: function(cdAgreementsService, $stateParams, $window){
-      return cdAgreementsService.loadUserAgreementPromise($stateParams.userId).then(function(data){
-        return {data: data};
-      }, failCb);
+      return cdAgreementsService.loadUserAgreementPromise($stateParams.userId).then(winCb, failCb);
     }
   };
 
