@@ -1425,3 +1425,8 @@ msgstr "Ninja"
 msgid "Ninjas"
 msgstr "Ninjas"
 
+msgid "Weekly"
+msgstr "Weekly"
+
+msgid "Every two weeks"
+msgstr "Every two weeks"

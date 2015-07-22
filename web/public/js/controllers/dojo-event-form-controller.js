@@ -2,15 +2,25 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday) {
+  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday, eventType) {
     var currentDate = dateStart;
     var dates = [];
+    var biWeeklyEventSwitch = false;
 
     while (currentDate <= dateEnd) {
       currentDate = new Date(currentDate);
 
       if (currentDate.getDay() === targetWeekday) {
-        dates.push(currentDate);
+        if(eventType === 'weekly') {
+          dates.push(currentDate);
+        } else {
+          if(!biWeeklyEventSwitch) {
+            dates.push(currentDate);
+            biWeeklyEventSwitch = true;
+          } else {
+            biWeeklyEventSwitch = false;
+          }
+        }
       }
 
       var d = new Date(currentDate.valueOf());
@@ -21,7 +31,6 @@
   }
 
   function goToManageDojoEvents($state, usSpinnerService, dojoId) {
-    console.log("go to manage dojo events");
     usSpinnerService.stop('create-event-spinner');
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
@@ -158,11 +167,21 @@
 
       if (eventInfo.type === 'recurring' && isDateRange) {
         // Extend eventInfo
-        eventInfo.dates = getEveryTargetWeekdayInDateRange(
-          eventInfo.date,
-          eventInfo.toDate,
-          $scope.weekdayPicker.selection.id
-        );
+        if(eventInfo.recurringType === 'weekly') {
+          eventInfo.dates = getEveryTargetWeekdayInDateRange(
+            eventInfo.date,
+            eventInfo.toDate,
+            $scope.weekdayPicker.selection.id,
+            'weekly'
+          );
+        } else {
+          eventInfo.dates = getEveryTargetWeekdayInDateRange(
+            eventInfo.date,
+            eventInfo.toDate,
+            $scope.weekdayPicker.selection.id,
+            'biweekly'
+          );
+        }
       } else {
         eventInfo.dates = [eventInfo.date];
       }
