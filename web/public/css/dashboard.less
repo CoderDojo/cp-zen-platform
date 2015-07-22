@@ -3,6 +3,19 @@
   border-radius: 0px!important;
 }
 
+legend {
+  border-bottom: 3px solid black;
+  position: relative;
+}
+legend::after {
+    content: "";
+    display: block;
+    background-color: black;
+    width: 62%;
+    height: 8px;
+    position: absolute;
+}
+
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -620,26 +633,49 @@ img.badge-thumbnail {
 
 /* we want color schema in body to be different than color schema in header */
 html body .cd-dashboard .cd-color-1 {
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-1;
 }
 html body .cd-dashboard .cd-color-2 {
-  background-color: #61C93F;
+  background-color: @cd-body-color-2;
 }
 html body .cd-dashboard .cd-color-3 {
-  background-color: #2E7AC7;
+  background-color: @cd-body-color-3;
 }
 html body .cd-dashboard .cd-color-4 {
-  background-color: #FBCC33;
+  background-color: @cd-body-color-4;
 }
 html body .cd-dashboard .cd-color-5 {
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-5;
 }
 html body .cd-dashboard .cd-color-6 {
-  background-color: #FFA500;
+  background-color: @cd-body-color-6;
+}
+html body .cd-dashboard .cd-color-1-underline {
+  legend { border-color: @cd-body-color-1; }
+  legend::after { background-color: @cd-body-color-1; }
+}
+html body .cd-dashboard .cd-color-2-underline {
+  legend { border-color: @cd-body-color-2; }
+  legend::after { background-color: @cd-body-color-2; }
+}
+html body .cd-dashboard .cd-color-3-underline {
+  legend { border-color: @cd-body-color-3; }
+  legend::after { background-color: @cd-body-color-3; }
+}
+html body .cd-dashboard .cd-color-4-underline {
+  legend { border-color: @cd-body-color-4; }
+  legend::after { background-color: @cd-body-color-4; }
+}
+html body .cd-dashboard .cd-color-5-underline {
+  legend { border-color: @cd-body-color-5; }
+  legend::after { background-color: @cd-body-color-5; }
+}
+html body .cd-dashboard .cd-color-6-underline {
+  legend { border-color: @cd-body-color-6; }
+  legend::after { background-color: @cd-body-color-6; }
 }
 .btn-primary {
-  /* currently we want buttons to be cd-color-5 */
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-5;
   height: 35px;
 }
 
