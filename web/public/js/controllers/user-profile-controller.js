@@ -2,7 +2,8 @@
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
-  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, parentsForUser, badgeCategories) {
+  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, championsForUser, 
+  parentsForUser, badgeCategories, dojoAdminsForUser) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err){
     alertService.showError('An error has occurred');
@@ -12,6 +13,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.editMode = false;
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
+  var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) { 
@@ -417,44 +419,28 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       case 'mentor':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
         return !$scope.isPrivate;
       case 'parent-guardian':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
         return false; //Always private
       case 'attendee-o13':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return !$scope.isPrivate;
       case 'attendee-u13':
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return false; //Always private
       default: 
         return false;
     }
-  }
-
-  function getHighestUserType(userTypes) {
-    var userTypesByPermissionLevel = {
-      'champion': 1,
-      'mentor': 2,
-      'parent-guardian': 3,
-      'attendee-o13': 4,
-      'attendee-u13': 5
-    };
-
-    var userTypeNumbers = [];
-
-    _.each(userTypes, function (userType) {
-      userTypeNumbers.push(userTypesByPermissionLevel[userType]);
-    });
-
-    var sortedUserTypeNumbers = _.sortBy(userTypeNumbers);
-    var highestUserType = utilsService.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
-    return highestUserType;
   }
 
   function loggedInUserIsParent() {
@@ -471,10 +457,18 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     });
   }
 
+  function loggedInUserIsDojoAdmin() {
+    if(!loggedInUser.data) return false;
+    return _.find(dojoAdminsForUser.data, function (dojoAdminForUser) {
+      return dojoAdminForUser.id === loggedInUser.data.id;
+    });
+  }
+
   $scope.hideProfileBlock = function (block) {
     //Only mentors and attendees-o13 can hide certain fields.
     if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
       if(loggedInUserIsChampion()) return false;
+      if(loggedInUserIsDojoAdmin()) return false;
       if(loggedInUserIsParent()) return false;
       if($scope.profile.ownProfileFlag) return false;
       if(block && $scope.profile.optionalHiddenFields) {
@@ -488,6 +482,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.hideGeneralInfoBlock = function () {
     if(loggedInUserIsChampion()) return false;
+    if(loggedInUserIsDojoAdmin()) return false;
     if(loggedInUserIsParent()) return false;
     if($scope.profile.ownProfileFlag) return false;
     return true;
@@ -507,5 +502,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 'championsForUser', 'parentsForUser', 'badgeCategories', cdUserProfileCtrl]);
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 
+    'championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', cdUserProfileCtrl]);
 

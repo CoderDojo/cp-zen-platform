@@ -1,9 +1,9 @@
 <div class="panel panel-default">
-  <div class="panel-heading">{@i18n key="Children"/}
+  <div class="panel-heading">{@i18n key="Ninjas"/}
     <div ng-if="editMode && (loggedInUser.id === profile.userId)" class="pull-right">
       <div class="btn-group">
-        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Child under 13"/}</a>
-        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Child over 13"/}</a>
+        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Ninja under 13"/}</a>
+        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Ninja over 13"/}</a>
       </div>
     </div>
   </div>
