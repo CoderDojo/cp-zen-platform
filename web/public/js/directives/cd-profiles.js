@@ -50,6 +50,13 @@ function listOfProjects(){
   }
 }
 
+function notes() {
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/notes'
+  };
+}
+
 angular
   .module('cpZenPlatform')
   .directive('projectsList', listOfProjects)
@@ -58,6 +65,7 @@ angular
   .directive('badgesList', listOfBadges)
   .directive('childrenList', listOfChildren)
   .directive('generalInfo', generalInfo)
-  .directive('parentsList', listOfParents);
+  .directive('parentsList', listOfParents)
+  .directive('notes', notes);
  
 }());

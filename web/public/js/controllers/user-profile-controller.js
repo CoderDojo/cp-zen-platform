@@ -236,7 +236,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 'formattedDateOfBirth', 'userTypeTitle']);
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 
+      'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
@@ -465,7 +466,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.hideProfileBlock = function (block) {
-    //Only mentors and attendees-o13 can hide certain fields.
     if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
       if(loggedInUserIsChampion()) return false;
       if(loggedInUserIsDojoAdmin()) return false;
@@ -495,6 +495,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.canUpdateHiddenField = function (hiddenField) {
     return _.contains(hiddenField.allowedUserTypes, $scope.highestUserType);
+  }
+
+  $scope.hideChampionProfileBlock = function (block) {
+    if($scope.profile.ownProfileFlag) return false;
+    if($scope.profile.optionalHiddenFields[block]) return true;
+    return false;
   }
 
 }
