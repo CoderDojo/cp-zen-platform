@@ -10,8 +10,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/locale/data',
     handler: function (request, reply) {
-	// TODO hapi equivalent of reply.locals?
-	var locale = (reply.locals && reply.locals.context && reply.locals.context.locality) || 'en_US';
+	var locale = (request.locals && request.locals.context && request.locals.context.locality) || 'en_US';
 	var format = request.query.format || 'jed';
 
 	po2json.parseFile(path.join(__dirname, '../../locale/', locale, 'messages.po'), {

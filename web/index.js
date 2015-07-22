@@ -11,8 +11,12 @@ var requireindex = require('requireindex');
 var controllers = requireindex('./web/controllers');
 var so = require('./options.' + env  + '.js');
 var seneca = module.exports = require('seneca')(so.main);
+var locale = require('locale');
+var languages = require('./config/languages.js');
+var _ = require('lodash');
 
-var server = new Hapi.Server()
+var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
+var server = new Hapi.Server(so.hapi)
 var port = process.env.PORT || 8000
 
 // Set up HAPI
@@ -34,6 +38,30 @@ server.views({
   path: path.join(__dirname, './public/templates'),
   partialsPath: path.join(__dirname, './public/templates')
 })
+
+server.ext('onPreAuth', function (request, reply) {
+  var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, '')) 
+    || request.headers['accept-language'];
+    
+  var requestLocales = new locale.Locales(localesFormReq);
+    
+  request.locals = {
+    context: {
+      locality: requestLocales.best(availableLocales).code
+    }
+  };
+
+  return reply.continue();
+});
+
+server.state('NG_TRANSLATE_LANG_KEY', {
+  ttl: null,
+  isSecure: false,
+  isHttpOnly: false,
+  encoding: 'none',
+  clearInvalid: false, // remove invalid cookies
+  strictHeader: false // don't allow violations of RFC 6265
+});
 
 // Server CSS files.
 server.register({

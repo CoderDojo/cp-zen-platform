@@ -4,6 +4,6 @@ var controller = module.exports = [{
   method: 'GET',
   path: '/charter/template/{name*}',  
   handler: function (request, reply) {
-    reply.view('charter/' + request.params.name);
+    reply.view('charter/' + request.params.name, request.locals);
   }
 }];
