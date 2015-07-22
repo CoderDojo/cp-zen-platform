@@ -3,7 +3,7 @@
 function cdDojoListIndexCtrl($scope, $location, cdDojoService) {
 
   cdDojoService.list({}, function(response) {
-    $scope.dojoData = response;
+    $scope.dojoList = response;
   });
 
   $scope.viewDojo = function(dojo) {

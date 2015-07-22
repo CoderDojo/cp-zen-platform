@@ -17,7 +17,7 @@
     </div>
     <div dw-loading="main" class="col-xs-12 col-lg-7">
       <div id="main">
-        <div ng-repeat="(country, statesData) in dojoData">
+        <div ng-repeat="(country, statesData) in dojoList">
           <legend style="margin-bottom:5px;">{{ country }}</legend>
           <div ng-repeat="(state, dojos) in statesData.states">
             <h5 class="state-heading">{{ state }}</h5>
