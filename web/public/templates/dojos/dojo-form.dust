@@ -1,5 +1,5 @@
 
-<div class="dojo-list-dashboard">
+<div class="dojo-list-dashboard cd-color-3-underline">
   <div class="cd-create-dojo-container">
     <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
       <div id="main">

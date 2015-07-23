@@ -3,6 +3,20 @@
   border-radius: 0px!important;
 }
 
+legend {
+  line-height: 40px;
+  border-bottom: 3px solid black;
+  position: relative;
+}
+legend::after {
+    content: "";
+    display: block;
+    background-color: black;
+    width: 62%;
+    height: 13px;
+    position: absolute;
+}
+
 body {
 	background:white;
 	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', sans-serif;
@@ -389,7 +403,6 @@ label {
   .cd-section-header {
     margin: 30px 0px;
     font-size: 16px;
-    border-bottom: 1px solid @cd-gray;
   }
   .cd-input-row {
     margin: 20px 0px;
@@ -530,6 +543,15 @@ label {
   }
 }
 
+.charter-sign {
+  legend {
+    border-bottom: 0;
+  }
+  legend::after {
+    display: none;
+  }
+}
+
 #manageDojos {
   .deleteCheckbox, .verifiedCheckbox {
     label {
@@ -636,26 +658,49 @@ img.badge-thumbnail {
 
 /* we want color schema in body to be different than color schema in header */
 html body .cd-dashboard .cd-color-1 {
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-1;
 }
 html body .cd-dashboard .cd-color-2 {
-  background-color: #61C93F;
+  background-color: @cd-body-color-2;
 }
 html body .cd-dashboard .cd-color-3 {
-  background-color: #2E7AC7;
+  background-color: @cd-body-color-3;
 }
 html body .cd-dashboard .cd-color-4 {
-  background-color: #FBCC33;
+  background-color: @cd-body-color-4;
 }
 html body .cd-dashboard .cd-color-5 {
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-5;
 }
 html body .cd-dashboard .cd-color-6 {
-  background-color: #FFA500;
+  background-color: @cd-body-color-6;
+}
+.cd-color-1-underline {
+  legend { border-color: @cd-body-color-1!important; }
+  legend::after { background-color: @cd-body-color-1!important; }
+}
+.cd-color-2-underline {
+  legend { border-color: @cd-body-color-2!important; }
+  legend::after { background-color: @cd-body-color-2!important; }
+}
+.cd-color-3-underline {
+  legend { border-color: @cd-body-color-3!important; }
+  legend::after { background-color: @cd-body-color-3!important; }
+}
+.cd-color-4-underline {
+  legend { border-color: @cd-body-color-4!important; }
+  legend::after { background-color: @cd-body-color-4!important; }
+}
+.cd-color-5-underline {
+  legend { border-color: @cd-body-color-5!important; }
+  legend::after { background-color: @cd-body-color-5!important; }
+}
+.cd-color-6-underline {
+  legend { border-color: @cd-body-color-6!important; }
+  legend::after { background-color: @cd-body-color-6!important; }
 }
 .btn-primary {
-  /* currently we want buttons to be cd-color-5 */
-  background-color: #2C9CFB;
+  background-color: @cd-body-color-5;
   height: 35px;
 }
 

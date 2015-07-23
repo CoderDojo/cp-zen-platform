@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-3-underline">
   <div class="row">
     <div class="my-dojos" ui-view>
       <legend>{@i18n key="My Dojos"/}</legend>

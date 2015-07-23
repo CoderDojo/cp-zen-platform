@@ -10,7 +10,7 @@ function charterCtrl($scope, $http, $stateParams, cdAgreementsService, currentUs
 
 
     cdAgreementsService.save(agreementObj, function (response) {
-      $window.location.href = $stateParams.referer || '/dashboard/dojo-list';
+      $window.location.href = $stateParams.referer || '/dashboard/profile/' + currentUser.data.id + '/edit';
     });
 
   }
