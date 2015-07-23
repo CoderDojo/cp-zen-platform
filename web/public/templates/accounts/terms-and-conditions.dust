@@ -1,4 +1,4 @@
-<div class="cd-container">
+<div class="cd-container cd-color-2-underline">
   <legend>{@i18n key="Terms and Conditions"/}</legend>
 </div>
 

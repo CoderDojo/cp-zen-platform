@@ -1,5 +1,5 @@
-<div class="cd-dashboard">
-  <div class="row cd-color-1-underline">
+<div class="cd-dashboard cd-color-4-underline">
+  <div class="row">
     <div class="my-dojos" ng-repeat="dojoEvents in dojosEvents | filter:hasEvents">
       <legend>{@i18n key="Events for Dojo"/}: {{ dojoEvents.dojo.name }}</legend>
       <div class="row">

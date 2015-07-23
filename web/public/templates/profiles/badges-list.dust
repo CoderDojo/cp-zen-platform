@@ -1,4 +1,4 @@
-<div class="panel panel-default badge-panel">
+<div class="panel panel-default badge-panel cd-color-2-underline">
   <div class="panel-heading">{@i18n key="Badges"/}
     <button ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary margin-left-78-percent">{@i18n key="Export Badges"/}</button>
   </div>

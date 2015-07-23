@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-3-underline">
   <form name="eventForm" novalidate>
     <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
     <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>

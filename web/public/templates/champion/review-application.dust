@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-2-underline">
   <div id="main">
     <div class="cd-create-dojo-container">
       <h1>{@i18n key="Champion Application"/}</h1>

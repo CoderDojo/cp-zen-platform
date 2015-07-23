@@ -1,5 +1,5 @@
 <div ng-show="!championRegistrationFormVisible"class="cd-dashboard">
-  <div class="row">
+  <div class="row charter-sign">
     <div class="col-lg-12 cd-text-heading1">
       {>"charter/charter-info" /}
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">

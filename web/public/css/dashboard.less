@@ -4,6 +4,7 @@
 }
 
 legend {
+  line-height: 40px;
   border-bottom: 3px solid black;
   position: relative;
 }
@@ -12,7 +13,7 @@ legend::after {
     display: block;
     background-color: black;
     width: 62%;
-    height: 8px;
+    height: 13px;
     position: absolute;
 }
 
@@ -394,7 +395,6 @@ label {
   .cd-section-header {
     margin: 30px 0px;
     font-size: 16px;
-    border-bottom: 1px solid @cd-gray;
   }
   .cd-input-row {
     margin: 20px 0px;
@@ -528,6 +528,15 @@ label {
   }
 }
 
+.charter-sign {
+  legend {
+    border-bottom: 0;
+  }
+  legend::after {
+    display: none;
+  }
+}
+
 #manageDojos {
   .deleteCheckbox {
     label {
@@ -650,29 +659,29 @@ html body .cd-dashboard .cd-color-5 {
 html body .cd-dashboard .cd-color-6 {
   background-color: @cd-body-color-6;
 }
-html body .cd-dashboard .cd-color-1-underline {
-  legend { border-color: @cd-body-color-1; }
-  legend::after { background-color: @cd-body-color-1; }
+.cd-color-1-underline {
+  legend { border-color: @cd-body-color-1!important; }
+  legend::after { background-color: @cd-body-color-1!important; }
 }
-html body .cd-dashboard .cd-color-2-underline {
-  legend { border-color: @cd-body-color-2; }
-  legend::after { background-color: @cd-body-color-2; }
+.cd-color-2-underline {
+  legend { border-color: @cd-body-color-2!important; }
+  legend::after { background-color: @cd-body-color-2!important; }
 }
-html body .cd-dashboard .cd-color-3-underline {
-  legend { border-color: @cd-body-color-3; }
-  legend::after { background-color: @cd-body-color-3; }
+.cd-color-3-underline {
+  legend { border-color: @cd-body-color-3!important; }
+  legend::after { background-color: @cd-body-color-3!important; }
 }
-html body .cd-dashboard .cd-color-4-underline {
-  legend { border-color: @cd-body-color-4; }
-  legend::after { background-color: @cd-body-color-4; }
+.cd-color-4-underline {
+  legend { border-color: @cd-body-color-4!important; }
+  legend::after { background-color: @cd-body-color-4!important; }
 }
-html body .cd-dashboard .cd-color-5-underline {
-  legend { border-color: @cd-body-color-5; }
-  legend::after { background-color: @cd-body-color-5; }
+.cd-color-5-underline {
+  legend { border-color: @cd-body-color-5!important; }
+  legend::after { background-color: @cd-body-color-5!important; }
 }
-html body .cd-dashboard .cd-color-6-underline {
-  legend { border-color: @cd-body-color-6; }
-  legend::after { background-color: @cd-body-color-6; }
+.cd-color-6-underline {
+  legend { border-color: @cd-body-color-6!important; }
+  legend::after { background-color: @cd-body-color-6!important; }
 }
 .btn-primary {
   background-color: @cd-body-color-5;

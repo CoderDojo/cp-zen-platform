@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-2-underline">
 
   <tabset justified="true">
     <tab class="dojofind-tab-heading" heading="Map">

@@ -1,4 +1,4 @@
-<div class="cd-border-bottom">
+<div class="cd-border-bottom cd-color-2-underline">
   <legend>{@i18n key="Hello World Foundation charter for CoderDojo"/}</legend>
 </div>
 <p>{@i18n key="charter.p1"/}</p>
