@@ -504,8 +504,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
                 term: {stage: 4}
               }, {
                 term: {deleted: 1}
-              }, {
-                term: {verified: 0}
+              }],
+              must: [{
+                term: {verified: 1}
               }]
             }
           }
@@ -552,8 +553,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
                 term: {stage: 4}
               }, {
                 term: {deleted: 1}
-              }, {
-                term: {verified: 0}
+              }],
+              must: [{
+                term: {verified: 1}
               }]
             }
           },

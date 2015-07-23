@@ -20,7 +20,6 @@
         <div ng-repeat="(country, statesData) in dojoList">
           <legend style="margin-bottom:5px;">{{ country }}</legend>
           <div ng-repeat="(state, dojos) in statesData.states">
-            <h5 class="state-heading">{{ state }}</h5>
             <ul ng-repeat="dojo in dojos">
               <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
             </ul>
