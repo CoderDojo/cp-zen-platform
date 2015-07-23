@@ -14,6 +14,12 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.user = user;
   });
 
+  cdDojoService.getDojoConfig(function(json){
+    $scope.dojoConfig = json;
+    $scope.dojoStages = json.dojoStages;
+    $scope.dojoStates = json.verificationStates;
+  });
+
   $scope.scrollToInvalid = function(form){
     $scope.getLocationFromAddress($scope.dojo);
     $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
