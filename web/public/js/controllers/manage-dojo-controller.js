@@ -9,24 +9,17 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     $scope.loadPage($scope.filter, false);
   };
 
-  var verificationStates = [
-    {label: $translate.instant('Unverified'), value: 0},
-    {label: $translate.instant('Verified'), value: 1},
-    {label: $translate.instant('Previous'), value: 2}
-  ];
-
   var changedDojos = [];
 
-  $scope.getVerificationStates = function (dojo) {
-    var states = verificationStates.slice();
+  cdDojoService.getDojoConfig(function(json){
+    $scope.dojoConfig = json;
+    $scope.dojoStages = json.dojoStages;
+    $scope.dojoStates = json.verificationStates;
+  });
 
-    if (!allSigned(dojo)) {
-      
-      states = _.reject(states, function (state) { return state.value === 1 });
-    }
-
-    return states;
-  };
+  $scope.getDojoStateLabel = function(stage) {
+    return (_.find($scope.dojoStages, function(item) { return item.value == stage })).label;
+  }
 
   $scope.setStyle = function(dojo){
     return !allSigned(dojo) ? {'background-color' :'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
@@ -157,7 +150,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     filteredQuery.query.filtered.query = filteredBoolQuery;
     cdDojoService.search(filteredQuery).then(function (result) {
       $scope.dojos = _.map(result.records, function (dojo) {
-        dojo.verified = _.findWhere(verificationStates, {value: dojo.verified});
+        dojo.origVerified = dojo.verified;
         return dojo;
       });
 
@@ -270,7 +263,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       return dojo.id === changedDojo.id;
     }));
 
-
     filterVerified = $scope.filter && $scope.filter.verified;
 
     if ((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)) {
@@ -283,7 +275,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
         return dojo.id !== filteredDojo.id;
       });
     }
-
   };
 
   $scope.toggleSort = function ($event, columnName) {

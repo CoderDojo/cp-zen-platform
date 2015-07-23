@@ -1,1 +1,3 @@
-{>"dojos/dojo-form" /}
+<div class="cd-dojo-main">
+	{>"dojos/dojo-form" /}
+</div>

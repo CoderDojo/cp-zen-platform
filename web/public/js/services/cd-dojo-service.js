@@ -131,6 +131,9 @@
       },
       uncompletedDojos: function(win, fail){
         cdApi.get('uncompleted_dojos', win, fail || topfail);
+      },
+      getDojoConfig: function(win, fail) {
+        cdApi.get('get_dojo_config', win, fail || topfail);
       }
     };
   }
