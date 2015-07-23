@@ -1436,3 +1436,6 @@ msgstr "An error has occured verifying your profile."
 
 msgid "Please complete your profile before continuing."
 msgstr "Please complete your profile before continuing."
+
+msgid "An error has occured verifying the charter agreement."
+msgstr "An error has occured verifying the charter agreement."
