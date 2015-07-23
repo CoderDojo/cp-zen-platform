@@ -105,6 +105,13 @@
       }, function (err) {
         return {err: err};
       });
+    },
+    dojoAdminsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(function (data) {
+        return {data: data};
+      }, function (err) {
+        return {err: err};
+      });
     }
   };
 

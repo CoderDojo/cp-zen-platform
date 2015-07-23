@@ -1,30 +1,28 @@
 <div class="cd-dashboard cd-color-2-underline">
   <legend>{@i18n key="Manage Dojos"/}</legend>
   <div class="row">
-
     <div class="col-md-10">
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="dojoVerifiedFilter">{@i18n key="Verification"/}</label>
-            <select name="dojoVerifiedFilter" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-model="filter.verified" ng-change="filterDojos()">
-              <option value="">{@i18n key="Any"/}</option>
-              <option value="1" selected="true">{@i18n key="Verified"/}</option>
-              <option value="0">{@i18n key="Unverified"/}</option>
-            </select> 
+            <ui-select name="dojoVerifiedFilter" ng-model="filter.verified" ng-disabled="disabled" ng-change="filterDojos()" >
+              <ui-select-match allow-clear="true" placeholder="Select state...">{{ $select.selected.label }}</ui-select-match>
+              <ui-select-choices repeat="dojoState.value as dojoState in dojoStates | filter: { label: $select.search }">
+                <span ng-bind-html="dojoState.label | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select> 
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">          
             <label for="dojoStageFilter">{@i18n key="Stage"/}</label>
-            <select name="dojoStageFilter" ng-model="filter.stage" class="form-control data-filter-wrapper" id="dojosDataFilter" ng-change="filterDojos()">
-              <option value="">{@i18n key="Any"/}</option>
-              <option value="1">{@i18n key="In Planning"/}</option>
-              <option value="2">{@i18n key="Open, come along"/}</option>
-              <option value="3">{@i18n key="Register ahead"/}</option>
-              <option value="4">{@i18n key="Full up"/}</option>
-              <option value="5">{@i18n key="Inactive"/}</option>
-            </select>
+            <ui-select name="dojoStageFilter" ng-model="filter.stage" ng-disabled="disabled" ng-change="filterDojos()" >
+              <ui-select-match allow-clear="true" placeholder="Select stage...">{{ $select.selected.label }}</ui-select-match>
+              <ui-select-choices repeat="dojoStage.value as dojoStage in dojoStages | filter: { label: $select.search }">
+                <span ng-bind-html="dojoStage.label | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
         <div class="col-md-6">
@@ -88,15 +86,15 @@
             <th>{@i18n key="User"/}</th>
             <th>{@i18n key="Application"/}</th>
             <th>{@i18n key="Edit"/}</th>
-            <th>{@i18n key="Verify"/}</th>
+            <th>{@i18n key="Verified"/}</th>
             <th>{@i18n key="Delete"/}</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="dojo in dojos" ng-style="setStyle(dojo)">
             <td>{{ dojo.name }}</td>
-            <td><span ng-show="allSigned(dojo) && (dojo.verified.value === 1)" class="green-text glyphicon glyphicon-ok-sign"></span></td>
-            <td>{{ dojo.stage }}</td>
+            <td><span ng-show="allSigned(dojo) && (dojo.origVerified === 1)" class="green-text glyphicon glyphicon-ok-sign"></span></td>
+            <td>{{ getDojoStateLabel(dojo.stage) }}</td>
             <td>{{ dojo.alpha2 }}</td>
             <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
             <td>
@@ -110,9 +108,10 @@
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
             <td>
-              <select name="verified" id="verifiedSelectBox" ng-model="dojo.verified" ng-change="pushChangedDojo(dojo)" class="form-control"
-                      ng-options="state as state.label for state in getVerificationStates(dojo)">
-              </select>
+            <div class="checkbox verifiedCheckbox" >
+              <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="pushChangedDojo(dojo)">
+              <label class="awesome-label" for="{{dojo.id + 'verifiedCheckbox'}}"></label>
+            </div>
             </td>
             <td>
             <div class="checkbox deleteCheckbox" >

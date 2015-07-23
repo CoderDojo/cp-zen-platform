@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="row cd-info-row" ng-show="errorMessage">
-          <span class="col-lg-offset-3 col-lg-6 help-block cd-msg-warn">{{ errorMessage }}</span>
+          <span class="col-lg-offset-3 col-lg-6 help-block cd-msg-error">{{ errorMessage }}</span>
         </div>
         <div class="row cd-btn-row">
           <div class="form-group">
