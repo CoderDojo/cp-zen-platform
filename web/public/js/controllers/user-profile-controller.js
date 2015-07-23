@@ -305,11 +305,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   };
   $scope.toggleMin();
 
-  $scope.open = function($event) {
+  $scope.picker = {opened: false};
+
+  $scope.open = function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
-    $scope.opened = true;
+    $scope.picker.opened = true;
   };
 
   cdCountriesService.listCountries(function(countries) {
@@ -318,9 +320,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     });
   });
 
-  $scope.dateOptions = {
-    formatYear: 'yy',
-    startingDay: 1
+  var initialDate = new Date();
+  initialDate.setFullYear(initialDate.getFullYear()-18);
+  $scope.dobDateOptions = {
+    formatYear: 'yyyy',
+    startingDay: 1,
+    'datepicker-mode': "'year'",
+    initDate: initialDate
   };
 
   $scope.setCountry = function(profile, country) {

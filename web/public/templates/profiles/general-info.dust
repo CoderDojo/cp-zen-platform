@@ -24,16 +24,18 @@
           <label for="dateOfBirth" class="col-sm-4 text-right">Date of Birth*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
             <input type="text" required readonly="true"
-                   class="form-control"
-                   name="dateOfBirth"
-                   required-message="'Date of birth is empty'"
-                   datepicker-popup="fullDate"
-                   ng-model="profile.dob"
-                   is-open="opened"
-                   min-date="'1900-01-01'"
-                   max-date="today"
-                   datepicker-options="dateOptions" />
-
+                  class="form-control"
+                  name="dateOfBirth"
+                  required-message="'Date of birth is empty'"
+                  datepicker-popup="fullDate"
+                  ng-model="profile.dob"
+                  is-open="picker.opened"
+                  min-date="'1900-01-01'"
+                  max-date="today"
+                  datepicker-options="dobDateOptions"
+                  ng-click="open($event)" 
+                  placeholder="{@i18n key="Enter your date of birth here..."/}" 
+                  />
             <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
               <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
