@@ -20,6 +20,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     if(!_.isEmpty(user) && currentPath === '/start-dojo') {
       $window.location.href = '/dashboard/start-dojo';
     } else {
+      cdDojoService.getDojoConfig(function(json){
+        $scope.dojoConfig = json;
+        $scope.dojoStages = json.dojoStages;
+        $scope.dojoStates = json.verificationStates;
+      });
 
       var query = { query : {
         filtered : {
