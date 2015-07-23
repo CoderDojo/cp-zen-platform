@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-2-underline">
   <legend>{@i18n key="Manage Dojos"/}</legend>
   <div class="row">
     <div class="col-md-10">

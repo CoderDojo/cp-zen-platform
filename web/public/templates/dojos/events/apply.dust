@@ -27,7 +27,7 @@
   <p><b>{@i18n key="For"/}:</b> {@i18n key="{{ event.for }}"/}</p>
 
   <div ng-if="childUsers.length > 0" class="well">
-    <legend>{@i18n key="Children Attending"/}</legend>
+    <h4>{@i18n key="Children Attending"/}</h4>
     <div class="control-group" ng-repeat="childUser in childUsers">
       <div class="checkbox">
         <input checklist-model="applyData.childrenSelected" checklist-value="childUser.id" type="checkbox" name="{{ childUser.id }}" id="{{ childUser.id }}">
