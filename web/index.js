@@ -76,7 +76,7 @@ server.register({
 }, function (err) {
   if (err) {
     console.error('Failed loading hapi-less:');
-    console.error(err);
+    throw err;
   }
 });
 
@@ -152,7 +152,7 @@ server.register({
 }, function (err) {
   if (err) {
     console.error('hapi-seneca plugin did not load:');
-    console.error(err);
+    throw err;
   }
 
   server.start(function() {
