@@ -348,27 +348,48 @@
         .fallbackLanguage('en_US');
       }
     ])
-    .run(function($rootScope, $state, $cookieStore, $translate, verifyProfileComplete, alertService) {
+    .run(function($rootScope, $state, $cookieStore, $translate, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete')) {
-          if(toState.name !== 'edit-user-profile') {
-            var verifyProfile = verifyProfileComplete().then(function (verifyProfileResult) {
-              if(!verifyProfileResult.complete) {
-                $state.go('edit-user-profile', {
-                  userId: verifyProfileResult.userId,
-                  bannerType:'info',
-                  bannerMessage: $translate.instant('Please complete your profile before continuing.'),
-                  bannerTimeCollapse: 5000
+          verifyCharterSigned().then(function (verifyAgreementResult) {
+            if(!_.isEmpty(verifyAgreementResult)) {
+              if(toState.name !== 'edit-user-profile') {
+                verifyProfileComplete().then(function (verifyProfileResult) {
+                  if(!verifyProfileResult.complete) {
+                    $state.go('edit-user-profile', {
+                      userId: verifyProfileResult.userId,
+                      bannerType:'info',
+                      bannerMessage: $translate.instant('Please complete your profile before continuing.'),
+                      bannerTimeCollapse: 5000
+                    });
+                  } else {
+                    $cookieStore.put('verifyProfileComplete', true);
+                  }
+                }, function (err) {
+                  alertService.showError($translate.instant('An error has occured verifying your profile.'));
                 });
-              } else {
-                $cookieStore.put('verifyProfileComplete', true);
-              }
-            }, function (err) {
-              alertService.showError($translate.instant('An error has occured verifying your profile.'));
-            });
-          }
+              } 
+            }
+          }, function (err) {
+            alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
+          });
         }
       });
+    })
+    .factory('verifyCharterSigned', function (auth, cdAgreementsService, $q) {
+      return function () {
+        var deferred = $q.defer();
+        auth.get_loggedin_user_promise().then(function (user) {
+          cdAgreementsService.loadUserAgreementPromise(user.id).then(function (agreement) {
+            deferred.resolve(agreement);
+          }, function (err) {
+            deferred.reject(err);
+          });
+        }, function (err) {
+          deferred.reject(err);
+        });
+        return deferred.promise;
+      }
     })
     .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
       return function () {
