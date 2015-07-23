@@ -82,8 +82,10 @@
     badgeCategories: function(cdBadgesService) {
       return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
     },
-    agreement: function(cdAgreementsService, $stateParams, $window){
-      return cdAgreementsService.loadUserAgreementPromise($stateParams.userId).then(winCb, failCb);
+    agreement: function(cdAgreementsService, $stateParams, $window, auth){
+      return auth.get_loggedin_user_promise().then(function (user) {
+        return cdAgreementsService.loadUserAgreementPromise(user.id).then(winCb, failCb);
+      });
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
@@ -292,6 +294,11 @@
           url:'/dashboard/profile/:userId/edit',
           controller: 'user-profile-controller',
           resolve: resolves,
+          params: {
+            bannerType: null,
+            bannerMessage: null,
+            bannerTimeCollapse: null
+          },
           templateUrl: '/dojos/template/user-profile'
         })
         .state('badges-dashboard', {
@@ -341,6 +348,43 @@
         .fallbackLanguage('en_US');
       }
     ])
+    .run(function($rootScope, $state, $cookieStore, $translate, verifyProfileComplete, alertService) {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if(!$cookieStore.get('verifyProfileComplete')) {
+          if(toState.name !== 'edit-user-profile') {
+            var verifyProfile = verifyProfileComplete().then(function (verifyProfileResult) {
+              if(!verifyProfileResult.complete) {
+                $state.go('edit-user-profile', {
+                  userId: verifyProfileResult.userId,
+                  bannerType:'info',
+                  bannerMessage: $translate.instant('Please complete your profile before continuing.'),
+                  bannerTimeCollapse: 5000
+                });
+              } else {
+                $cookieStore.put('verifyProfileComplete', true);
+              }
+            }, function (err) {
+              alertService.showError($translate.instant('An error has occured verifying your profile.'));
+            });
+          }
+        }
+      });
+    })
+    .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
+      return function () {
+        var deferred = $q.defer();
+        auth.get_loggedin_user_promise().then(function (user) {
+          cdUsersService.listProfilesPromise({userId: user.id}).then(function (profile) {
+            deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
+          }, function (err) {
+            deferred.reject(err);
+          });
+        }, function (err) {
+          deferred.reject(err);
+        });
+        return deferred.promise;
+      }
+    })
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'

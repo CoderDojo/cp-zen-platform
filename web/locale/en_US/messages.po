@@ -1430,3 +1430,9 @@ msgstr "Weekly"
 
 msgid "Every two weeks"
 msgstr "Every two weeks"
+
+msgid "An error has occured verifying your profile."
+msgstr "An error has occured verifying your profile."
+
+msgid "Please complete your profile before continuing."
+msgstr "Please complete your profile before continuing."
