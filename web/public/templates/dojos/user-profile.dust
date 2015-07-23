@@ -12,7 +12,7 @@
 
       <span class="help-block"></span>
       <button ng-if="!editMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
-      <button ng-if="editMode" class="btn btn-default btn-block" ng-click="viewProfile()">{@i18n key="View Profile"/}</button>
+      <button ng-if="editMode && currentStateName !== 'add-child'" class="btn btn-default btn-block" ng-click="viewProfile()">{@i18n key="View Profile"/}</button>
 
       <span class="help-block"></span>
 
