@@ -1357,3 +1357,78 @@ msgstr "An error has occured verifying your profile."
 
 msgid "Please complete your profile before continuing."
 msgstr "Please complete your profile before continuing."
+
+msgid "An error has occured verifying the charter agreement."
+msgstr "An error has occured verifying the charter agreement."
+
+msgid "error.general"
+msgstr "There was an error on this page. Our technical staff have been notified"
+
+msgid "Gather your Team"
+msgstr "Gather your Team"
+
+msgid "Find a Venue"
+msgstr "Find a Venue"
+
+msgid "Plan your Dojo"
+msgstr "Plan your Dojo"
+
+msgid "Promote your Dojo"
+msgstr "Promote your Dojo"
+
+msgid "Find technical mentors"
+msgstr "Find technical mentors"
+
+msgid "Find non-technical mentors"
+msgstr "Find non-technical mentors"
+
+msgid "Background check"
+msgstr "Background check"
+
+msgid "Locate suitable venue within your community"
+msgstr "Locate suitable venue within your community"
+
+msgid "Ensure health and saftey best practices are met"
+msgstr "Ensure health and saftey best practices are met"
+
+msgid "Ensure public liability insurance is covered"
+msgstr "Ensure public liability insurance is covered"
+
+msgid "Set launch date and regular time for your Dojo"
+msgstr "Set launch date and regular time for your Dojo"
+
+msgid "Create a content plan with your mentors"
+msgstr "Create a content plan with your mentors"
+
+msgid "Setup ticketing and registration for your Dojo"
+msgstr "Setup ticketing and registration for your Dojo"
+
+msgid "Set an email address specifically for your Dojo"
+msgstr "Set an email address specifically for your Dojo"
+
+msgid "Set up social media presence for your Dojo"
+msgstr "Set up social media presence for your Dojo"
+
+msgid "Connect with other Dojos on social media and CoderDojo discussion forums"
+msgstr "Connect with other Dojos on social media and CoderDojo discussion forums"
+
+msgid "You must find technical mentors before continuing."
+msgstr "You must find technical mentors before continuing."
+
+msgid "You must locate a suitable venue before continuing."
+msgstr "You must locate a suitable venue before continuing."
+
+msgid "You must set a Date and time for your Dojo to take place."
+msgstr "You must set a Date and time for your Dojo to take place."
+
+msgid "You must set an email address for your Dojo."
+msgstr "You must set an email address for your Dojo."
+
+msgid "Please describe how you have background checked your team."
+msgstr "Please describe how you have background checked your team."
+
+msgid "Please describe how you have ensured health and safety best practices."
+msgstr "Please describe how you have ensured health and safety best practices."
+
+msgid "Please describe how you have ensured public liability is covered"
+msgstr "Please describe how you have ensured public liability is covered"
