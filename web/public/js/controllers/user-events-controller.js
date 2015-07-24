@@ -1,20 +1,16 @@
  'use strict';
 
-function userEventsCtrl($scope, $stateParams, $translate, cdEventsService, alertService, auth) {
-  auth.get_loggedin_user(function (user) {
-    $scope.currentUser = user;
-  });
-
+function userEventsCtrl($scope, $translate, cdEventsService, alertService, currentUser) {
   $scope.applyData = {};
 
-  if($stateParams.userId){
-    cdEventsService.getUserDojosEvents($stateParams.userId, function (response) {
+  if(currentUser.data.id){
+    cdEventsService.getUserDojosEvents(currentUser.data.id, function (response) {
       $scope.dojosEvents = response;
       if(_.isEmpty($scope.dojosEvents)) {
         //This user has no Events.
       } else {
         _.each($scope.dojosEvents, function (dojoEvents) {
-          if(dojoEvents.events.length > 0){
+          if(dojoEvents.events.length > 0) {
             var events = [];
             _.each(dojoEvents.events, function(event){
               if(event.type === 'recurring') {
@@ -72,4 +68,4 @@ function userEventsCtrl($scope, $stateParams, $translate, cdEventsService, alert
 }
 
 angular.module('cpZenPlatform')
-    .controller('user-events-controller', ['$scope', '$stateParams', '$translate', 'cdEventsService', 'alertService', 'auth', userEventsCtrl]);
+    .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'alertService', 'currentUser', userEventsCtrl]);

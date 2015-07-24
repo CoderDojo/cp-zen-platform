@@ -112,6 +112,15 @@
       }, function (err) {
         return {err: err};
       });
+    },
+    agreement: function(cdAgreementsService, $stateParams, $window, auth){
+      return auth.get_loggedin_user_promise().then(function (user) {
+        return cdAgreementsService.loadUserAgreementPromise(user.id).then(function (data) {
+          return {data: data};
+        }, function (err) {
+          return {err: err};
+        });
+      });
     }
   };
 
