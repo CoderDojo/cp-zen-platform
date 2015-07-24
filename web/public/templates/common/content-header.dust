@@ -4,15 +4,15 @@
           <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
                                   class="cd-header-button cd-color-1">
                                   {@i18n key="Find a Dojo"/}</span></a>
-          <a ui-sref="my-dojos"><span ng-class="{'cd-active-tab': isSelected('my-dojos')}"
+          <a ng-click="goTo('my-dojos')"><span ng-class="{'cd-active-tab': isSelected('my-dojos')}"
                                       class="cd-header-button cd-color-2">
                                       {@i18n key="My Dojos"/}</span></a>
-          <a ui-sref="user-events({ userId: user.id })"><span ng-class="{'cd-active-tab': isSelected('events')}"
+          <a ng-click="goTo('user-events')"><span ng-class="{'cd-active-tab': isSelected('events')}"
                                                               class="cd-header-button cd-color-3">
                                                               {@i18n key="Events"/}</span></a>
           <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
                                             {@i18n key="Forum"/}</span></a>
-          <a ui-sref="badges-dashboard"><span ng-class="{'cd-active-tab': isSelected('badges')}"
+          <a ng-click="goTo('badges-dashboard')"><span ng-class="{'cd-active-tab': isSelected('badges')}"
                                               class="cd-header-button cd-color-5">
                                               {@i18n key="Badges"/}</span></a>
           <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
