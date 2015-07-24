@@ -160,6 +160,17 @@ server.register({
   });
 });
 
+server.ext('onPreResponse', function (request, reply) {
+  var status = request.response.statusCode;
+
+  if (status !== 404) {
+    return reply.continue();
+  }
+
+  return reply.view('errors/404', request.locals);
+});
+
+
 // Set up seneca
 
 seneca.options(so);
