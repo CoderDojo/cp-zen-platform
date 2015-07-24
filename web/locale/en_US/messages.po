@@ -1440,6 +1440,9 @@ msgstr "Please complete your profile before continuing."
 msgid "An error has occured verifying the charter agreement."
 msgstr "An error has occured verifying the charter agreement."
 
+msgid "error.general"
+msgstr "There was an error on this page. Our technical staff have been notified"
+
 msgid "Gather your Team"
 msgstr "Gather your Team"
 

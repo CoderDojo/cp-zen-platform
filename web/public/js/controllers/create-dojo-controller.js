@@ -97,8 +97,7 @@ function cdCreateDojoCtrl($scope, $window, $location, cdDojoService, cdCountries
       });
     }, function(err) {
       alertService.showError(
-        $translate.instant('An error has occurred while saving') + ' <br /> '+
-        (err.error || JSON.stringify(err))
+        $translate.instant('An error has occurred while saving')
       );
     });
   }
