@@ -26,9 +26,6 @@ msgstr "No"
 msgid "Register a Dojo"
 msgstr "Register a Dojo"
 
-msgid "Login"
-msgstr "Login"
-
 msgid "REQUEST PASSWORD RESET"
 msgstr "REQUEST PASSWORD RESET"
 
@@ -119,9 +116,6 @@ msgstr "Planned Dojo Location is empty"
 msgid "Date of Birth"
 msgstr "Date of Birth"
 
-msgid "Date of Birth"
-msgstr "Date of Birth"
-
 msgid "Telephone Number"
 msgstr "Telephone Number"
 
@@ -191,9 +185,6 @@ msgstr "Dojos cannot be hosted in private residences, they must be in a public s
 msgid "Champion Application"
 msgstr "Champion Application"
 
-msgid "General Information"
-msgstr "General Information"
-
 msgid "Country"
 msgstr "Country"
 
@@ -221,11 +212,8 @@ msgstr "Hello World Foundation charter for CoderDojo"
 msgid "charter.p1"
 msgstr "All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."
 
-msgid "Charter"
-msgstr "Charter"
-
 msgid "charter.p2"
-msgstr "For the purposes of this Charter, "CoderDojo" shall mean the open source, volunteer led movement orientated around running free not-for-profit coding clubs. "Dojos" shall mean the not-for profit coding clubs established to support communities and spread the philosophy of CoderDojo."
+msgstr "For the purposes of this Charter, \"CoderDojo\" shall mean the open source, volunteer led movement orientated around running free not-for-profit coding clubs. \"Dojos\" shall mean the not-for profit coding clubs established to support communities and spread the philosophy of CoderDojo."
 
 msgid "charter.p3"
 msgstr "All Dojos are independent, autonomous, community groups set up to inspire young people to learn code. All Dojos have different styles of operating but they all hold the same ethos."
@@ -329,10 +317,6 @@ msgstr "Next"
 msgid "Dojo Menu"
 msgstr "Dojo Menu"
 
-
-msgid "Find a Dojo"
-msgstr "Find a Dojo"
-
 msgid "Events"
 msgstr "Events"
 
@@ -356,15 +340,6 @@ msgstr "Find a Dojo"
 
 msgid "Resources"
 msgstr "Resources"
-
-msgid "FAQ"
-msgstr "FAQ"
-
-msgid "CoolestProjects2015"
-msgstr "CoolestProjects2015"
-
-msgid "Opens in new window"
-msgstr "Opens in new window"
 
 msgid "Dojo List"
 msgstr "Dojo List"
@@ -582,9 +557,6 @@ msgstr "Unverified"
 msgid "Stage"
 msgstr "Stage"
 
-msgid "Dojo Name"
-msgstr "Dojo Name"
-
 msgid "Dojo Email"
 msgstr "Dojo Email"
 
@@ -621,9 +593,6 @@ msgstr "View"
 msgid "Apply"
 msgstr "Apply"
 
-msgid "My Dojos"
-msgstr "My Dojos"
-
 msgid "Users"
 msgstr "Users"
 
@@ -642,14 +611,8 @@ msgstr "I have read and accept the"
 msgid "Terms and Conditions here"
 msgstr "Terms and Conditions here"
 
-msgid "Next"
-msgstr "Next"
-
 msgid "Click on each step to get started"
 msgstr "Click on each step to get started"
-
-msgid "CoderDojo Champion Registration Form"
-msgstr "CoderDojo Champion Registration Form"
 
 msgid "champion.registration.p1"
 msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
@@ -674,9 +637,6 @@ msgstr "Enter your street level address..."
 
 msgid "champion.address.required"
 msgstr "Address is empty"
-
-msgid "General Information"
-msgstr "General Information"
 
 msgid "Technical Experience"
 msgstr "Technical Experience"
@@ -867,12 +827,6 @@ msgstr "There was a problem registering your account:"
 msgid "Invalid email or password"
 msgstr "Invalid email or password!"
 
-msgid "Unverified"
-msgstr "Unverified"
-
-msgid "Verified"
-msgstr "Verified"
-
 msgid "Previous"
 msgstr "Previous"
 
@@ -908,12 +862,6 @@ msgstr "Error removing user:"
 
 msgid "An error has occurred while deleting dojo"
 msgstr "An error has occurred while deleting dojo: "
-
-msgid "Other"
-msgstr "Other"
-
-msgid "Create Dojo"
-msgstr "Create Dojo"
 
 msgid "dojo.create.success"
 msgstr "Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
@@ -987,9 +935,6 @@ msgstr "Children"
 msgid "Select a user type"
 msgstr "Select a user type"
 
-msgid "Languages Spoken"
-msgstr "Languages Spoken"
-
 msgid "Programming Languages"
 msgstr "Programming Languages"
 
@@ -1007,9 +952,6 @@ msgstr "Type"
 
 msgid "For"
 msgstr "For"
-
-msgid "Events"
-msgstr "Events"
 
 msgid "Name"
 msgstr "Name"
@@ -1088,9 +1030,6 @@ msgstr "Event Name"
 
 msgid "To"
 msgstr "To"
-
-msgid "For"
-msgstr "For"
 
 msgid "City"
 msgstr "City"
@@ -1194,15 +1133,6 @@ msgstr "Address is required"
 msgid "Phone"
 msgstr "Phone"
 
-msgid "Hide Notes"
-msgstr "Hide Notes"
-
-msgid "Confirm Password"
-msgstr "Confirm Password"
-
-msgid "Save"
-msgstr "Save"
-
 msgid "Dojo Staff"
 msgstr "Dojo Staff"
 
@@ -1277,9 +1207,6 @@ msgstr "One off"
 
 msgid "Select event date..."
 msgstr "Select event date..."
-
-msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
-msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
 
 msgid "Password must be a minimum of 8 characters in length and contain at least one number or punctuation character"
 msgstr "Password must be a minimum of 8 characters in length and contain at least one number or punctuation character"
@@ -1386,9 +1313,6 @@ msgstr "Error"
 msgid "Edit Profile"
 msgstr "Edit Profile"
 
-msgid "View Profile"
-msgstr "View Profile"
-
 msgid "Export Badges"
 msgstr "Export Badges"
 
@@ -1409,9 +1333,6 @@ msgstr "This profile is private"
 
 msgid "We need mentors!"
 msgstr "We need mentors!"
-
-msgid "Private"
-msgstr "Private"
 
 msgid "Profile has been saved successfully"
 msgstr "Profile has been saved successfully"
@@ -1436,78 +1357,3 @@ msgstr "An error has occured verifying your profile."
 
 msgid "Please complete your profile before continuing."
 msgstr "Please complete your profile before continuing."
-
-msgid "An error has occured verifying the charter agreement."
-msgstr "An error has occured verifying the charter agreement."
-
-msgid "error.general"
-msgstr "There was an error on this page. Our technical staff have been notified"
-
-msgid "Gather your Team"
-msgstr "Gather your Team"
-
-msgid "Find a Venue"
-msgstr "Find a Venue"
-
-msgid "Plan your Dojo"
-msgstr "Plan your Dojo"
-
-msgid "Promote your Dojo"
-msgstr "Promote your Dojo"
-
-msgid "Find technical mentors"
-msgstr "Find technical mentors"
-
-msgid "Find non-technical mentors"
-msgstr "Find non-technical mentors"
-
-msgid "Background check"
-msgstr "Background check"
-
-msgid "Locate suitable venue within your community"
-msgstr "Locate suitable venue within your community"
-
-msgid "Ensure health and saftey best practices are met"
-msgstr "Ensure health and saftey best practices are met"
-
-msgid "Ensure public liability insurance is covered"
-msgstr "Ensure public liability insurance is covered"
-
-msgid "Set launch date and regular time for your Dojo"
-msgstr "Set launch date and regular time for your Dojo"
-
-msgid "Create a content plan with your mentors"
-msgstr "Create a content plan with your mentors"
-
-msgid "Setup ticketing and registration for your Dojo"
-msgstr "Setup ticketing and registration for your Dojo"
-
-msgid "Set an email address specifically for your Dojo"
-msgstr "Set an email address specifically for your Dojo"
-
-msgid "Set up social media presence for your Dojo"
-msgstr "Set up social media presence for your Dojo"
-
-msgid "Connect with other Dojos on social media and CoderDojo discussion forums"
-msgstr "Connect with other Dojos on social media and CoderDojo discussion forums"
-
-msgid "You must find technical mentors before continuing."
-msgstr "You must find technical mentors before continuing."
-
-msgid "You must locate a suitable venue before continuing."
-msgstr "You must locate a suitable venue before continuing."
-
-msgid "You must set a Date and time for your Dojo to take place."
-msgstr "You must set a Date and time for your Dojo to take place."
-
-msgid "You must set an email address for your Dojo."
-msgstr "You must set an email address for your Dojo."
-
-msgid "Please describe how you have background checked your team."
-msgstr "Please describe how you have background checked your team."
-
-msgid "Please describe how you have ensured health and safety best practices."
-msgstr "Please describe how you have ensured health and safety best practices."
-
-msgid "Please describe how you have ensured public liability is covered"
-msgstr "Please describe how you have ensured public liability is covered"
