@@ -158,7 +158,7 @@ label {
   .dojoWizardComplete {
     width:100%;
     background: #5cb85c;
-    color:white;
+    color:@cd-white;
     padding:10px;
     border-radius:5px;
   }
@@ -704,10 +704,14 @@ html body .cd-dashboard .cd-color-6 {
   height: 35px;
 }
 
-html .container .cd-accordion {
+.cd-accordian {
   margin: 3% 0%;
   overflow: auto;
 
+  .panel {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
   .panel-heading {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -719,37 +723,22 @@ html .container .cd-accordion {
       width: 85%;
     }
   }
-  .in {
-    padding-top: 15px;
-  }
   .panel-title {
     font-size: 20px;
-    color: white;
+    color: @cd-white;
   }
   label {
     font-size: 16px;
   }
-  .checkbox {
-    margin-left: 15px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    min-height: 35px;
-    height: auto;
-    overflow: auto;
+  .panel-collapse {
+    margin: 20px;
   }
   .validationMessage {
-    position: relative;
-    width: 100%;
-    text-align: left;
-    line-height: normal;
-    float: right;
-    margin-right: 15px;
+    margin-left: -25px;
   }
-  .form-control {
-    width: 95%;
-    margin-right: 15px;
-    margin-top: 10px;
-    font-size: 18px;
+  .btn-left {
+    margin-top: 30px;
+    float: left;
   }
 }
 
