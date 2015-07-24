@@ -7,8 +7,8 @@
         <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
 
         <div class="row cd-input-row">
-          <div class="form-group with-info-btn">
-            <label for="dojoName" class="col-lg-4">{@i18n key="Dojo Name"/}*
+          <div class="form-group">
+            <label for="dojoName" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Dojo Name"/}*
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
                 popover-trigger="mouseenter"
                 popover-placement="left" 
@@ -23,8 +23,8 @@
         </div>
 
         <div class="row cd-input-row">
-          <div class="form-group with-info-btn">
-            <label for="dojoEmail" class="col-lg-4">{@i18n key="Email"/}
+          <div class="form-group">
+            <label for="dojoEmail" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Email"/}
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
                 popover-trigger="mouseenter"
                 popover-placement="left" 
@@ -39,8 +39,8 @@
         </div>
 
         <div class="row cd-input-row">
-          <div class="form-group with-info-btn">
-            <label for="dojoTimes" class="col-lg-4">{@i18n key="Times"/}*
+          <div class="form-group">
+            <label for="dojoTimes" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Times"/}*
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
                 popover-placement="left" 
@@ -55,8 +55,8 @@
         </div>
 
         <div class="row cd-input-row">
-          <div class="form-group with-info-btn">
-            <label for="dojoCountry" class="col-lg-4">{@i18n key="Country"/}*
+          <div class="form-group">
+            <label for="dojoCountry" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Country"/}*
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
                 popover-placement="left" 
@@ -77,8 +77,8 @@
         </div>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoPlace" class="col-lg-4">{@i18n key="City/Town"/}*
+        <div class="form-group">
+          <label for="dojoPlace" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="City/Town"/}*
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -99,8 +99,8 @@
       </div>
      
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoAddress1" class="col-lg-4">{@i18n key="Address"/}*
+        <div class="form-group">
+          <label for="dojoAddress1" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Address"/}*
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -138,7 +138,7 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoNotes" class="col-lg-4">{@i18n key="Notes"/}</label>
+          <label for="dojoNotes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
             <textarea ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes"></textarea>
           </div>
@@ -149,8 +149,8 @@
 
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label class="col-lg-4">{@i18n key="Need Mentors"/}
+        <div class="form-group">
+          <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Need Mentors"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -158,10 +158,10 @@
               popover="{@i18n key="Meed Mentors"/}">
             </a>
           </label>       
-          <div class="col-lg-8 cd-awesome-checkbox">
-            <div class="checkbox">
+          <div class="col-lg-8">
+            <div class="checkbox cd-checkbox checkbox-primary">
               <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
-              <label class="awesome-label" for="needMentorsCheckbox"></label>
+              <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
             </div>
           </div>
         </div>
@@ -169,9 +169,9 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label class="col-lg-4">{@i18n key="Current Stage"/}</label>
-          <div class="col-lg-8 cd-awesome-radios">
-            <div ng-repeat="dojoStage in dojoStages" class="radio">
+          <label class="col-lg-4 cd-form-label1">{@i18n key="Current Stage"/}</label>
+          <div class="col-lg-8">
+            <div ng-repeat="dojoStage in dojoStages" class="radio radio-primary">
               <input type="radio" name="currentStage" ng-model="dojo.stage" id="{{ dojoStage.value + 'Radio'}}" value="{{ dojoStage.value }}">
               <label for="{{ dojoStage.value + 'Radio' }}" class="awesome-label">{{ dojoStage.label }}</label>
             </div>
@@ -180,23 +180,23 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group cd-awesome-checkbox">
-          <label for="dojoName" class="col-lg-4">{@i18n key="Private"/}</label>       
+        <div class="form-group">
+          <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>       
           <div class="col-lg-8">
-            <div class="checkbox">
+            <div class="checkbox cd-checkbox checkbox-primary">
               <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
-              <label class="awesome-label" for="privateCheckbox"></label>
+              <label class="cd-checkbox-label1" for="privateCheckbox"></label>
             </div>
-            <p>{@i18n key="Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."/}</p>
+            <p class="col-lg-6 cd-private-msg">{@i18n key="Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."/}</p>
           </div>
         </div>
       </div>
 
-      <div class="cd-section-header">{@i18n key="Other Information"/}</div>
+      <legend class="cd-section-header">{@i18n key="Other Information"/}</legend>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoGoogleGroup" class="col-lg-4">{@i18n key="Google Group URL"/}
+        <div class="form-group">
+          <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Google Group URL"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -211,8 +211,8 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoGoogleGroup" class="col-lg-4">{@i18n key="Website"/}
+        <div class="form-group">
+          <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Website"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -227,8 +227,8 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoTwitter" class="col-lg-4">{@i18n key="Twitter"/}
+        <div class="form-group">
+          <label for="dojoTwitter" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Twitter"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -243,8 +243,8 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label for="dojoSupporterImage" class="col-lg-4">{@i18n key="Supporters Image URL"/}
+        <div class="form-group">
+          <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Supporters Image URL"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -259,8 +259,8 @@
       </div>
 
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">
-          <label class="col-lg-4">{@i18n key="Mailing List"/}*
+        <div class="form-group">
+          <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Mailing List"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
               popover-placement="left" 
@@ -268,10 +268,10 @@
               popover="{@i18n key="dojo.edit.mailinglist.description"/}">
             </a>
           </label>       
-          <div class="col-lg-8 cd-awesome-checkbox">
-            <div class="checkbox">
+          <div class="col-lg-8">
+            <div class="checkbox cd-checkbox checkbox-primary">
               <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
-              <label class="awesome-label" for="mailingListCheckbox"></label>
+              <label class="cd-checkbox-label1" for="mailingListCheckbox"></label>
             </div>
           </div>
         </div>

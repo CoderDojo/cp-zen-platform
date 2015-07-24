@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="col-lg-offset-4 col-lg-6">
-            <div class="checkbox checkbox-primary">
+            <div class="checkbox cd-checkbox checkbox-primary">
               <input type="checkbox" ng-model="agreement.agreeToCharterCheckbox" required required-message="'{@i18n key="You must accept the charter"/}'" name="agreeToCharterCheckbox" id="agreeToCharterCheckbox">
               <label for="agreeToCharterCheckbox">{@i18n key="I have read and accepted the above charter"/}</label>
             </div>

@@ -390,7 +390,7 @@ label {
   background-size: 18px 18px;
 }
 
-.cp-onboarding-wizard, .user-registration, .cd-dojo-main {
+.user-registration, .cd-dojo-main {
   .cd-page-title {
     margin: 20px 0px;
   }
@@ -406,9 +406,21 @@ label {
   }
   .cd-input-row {
     margin: 20px 0px;
-    label {
+    .cd-form-label1 {
       text-align:right;
       padding-top: 5px;
+      &.with-info-btn {
+        .cd-info-btn {
+          display:inline-block;
+          padding-left: 10px;
+          float: none;
+          text-decoration:none;
+          color: inherit;
+        }
+      }
+      &.with-checkbox {
+        padding-top: 8px;
+      }
     }
   }
   .cd-btn-row {
@@ -427,46 +439,21 @@ label {
   .google-map {
     margin-top:15px;
   }
+  .cd-checkbox {
+    &.checkbox.has-error {
+      margin-top: 0px;
+      label.validationMessage {
+        margin-left: -25px;
+        font-weight: 700;
+      }
+    }
+    label.cd-checkbox-label1{
+      padding-bottom:32px;
+    }
+  }
   .cd-wizard-submit {
     margin-top: 30px;
     float:right;
-  }
-  .with-info-btn {
-    label {
-      text-align: right;
-      padding-top: 8px;
-      margin-bottom: 15px;
-      .cd-info-btn {
-        display:inline-block;
-        padding-left: 10px;
-        float: none;
-        text-decoration:none;
-        color: inherit;
-      }
-    }
-  }
-  .cd-awesome-radios {
-    label {
-      padding-top:8px;
-    }
-    .awesome-label {
-      text-align: left;
-      padding-top: 0px;
-      margin-bottom: 0px;
-    }
-  }
-  .cd-awesome-checkbox {
-    .checkbox {
-      display: inline-block;
-      .awesome-label {
-        text-align: right;
-        padding-top: 0px;
-        padding-bottom: 8px;
-      }
-    }
-    p {
-      color: @cd-light-gray;
-    }
   }
   label.validationMessage {
     text-align: left;
@@ -476,12 +463,6 @@ label {
   #createChampionForm { 
   }
   #charterForm {
-    .checkbox {
-      label.validationMessage {
-        font-weight: bold;
-        margin-left: -25px;
-      }
-    }
     .cd-wizard-submit {
       float:left;
     }
@@ -508,33 +489,17 @@ label {
     .start-dojo-wizard-step {
       margin-bottom:30px;
     }
-    .cd-checkbox {
-      .checkbox.has-error {
-        margin-top: 0px;
-      }
-      p {
-        margin-bottom: 10px;
-      }
-      label.validationMessage {
-        margin-left: -25px;
-        float: left;
-        margin-bottom: 10px;
-        width: 100%;
-      }
-    }
   }
-  #createDojoForm { 
+  #createDojoForm {
+    .cd-private-msg {
+      color: @cd-light-gray;
+      padding-left: 0px;
+    }
   }
   #user-registration-form {
     label.validationMessage {
       text-align: left;
       width: auto;
-    }
-    .checkbox {
-      label.validationMessage {
-        font-weight: bold;  
-        margin-left: -25px;
-      }
     }
     .cd-wizard-submit {
       margin-top: 0px;

@@ -51,12 +51,12 @@
     <div class="row cd-input-row">    
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
-          <div class="checkbox">
+          <div class="checkbox cd-checkbox checkbox-primary">
             <input type="checkbox" title="{@i18n key="dojo.edit.mailinglist.description"/}" ng-model="registerUser.mailingList" id="mailingListCheckbox">
             <label for="mailingListCheckbox">{@i18n key="Join Mailing List"/}</label>
           </div>
         
-          <div class="checkbox">
+          <div class="checkbox cd-checkbox checkbox-primary">
             <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="registerUser.termsConditionsAccepted" required required-message="'{@i18n key="You must accept the Terms and Conditions"/}'" id="termsAndConditionsCheckbox">
             <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the"/} <a ui-sref="terms-and-conditions" target="_blank"><b>{@i18n key="Terms and Conditions here"/}</b></a>
             </label>
