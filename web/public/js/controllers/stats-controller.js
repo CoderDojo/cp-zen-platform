@@ -12,8 +12,7 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
         cb();
       },
       function(err){
-        alertService.showError($translate.instant('An error has occurred while loading Dojos') + ' <br>' +
-          (err.error || JSON.stringify(err))
+        alertService.showError($translate.instant('An error has occurred while loading Dojos')
         );
         cb(err);
       });
@@ -27,9 +26,7 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
         cb();
       },
       function(err){
-        alertService.showError($translate.instant('An error has occurred while loading Dojos') + ' <br>' +
-          (err.error || JSON.stringify(err))
-        );
+        alertService.showError($translate.instant('An error has occurred while loading Dojos'));
         cb(err);
       }
     );

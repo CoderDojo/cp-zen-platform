@@ -11,7 +11,12 @@ module.exports = function (router) {
   });
 
   router.get('/register', function (req, res) {
-    res.render('index');
+    var langCookie = req.cookies && req.cookies.NG_TRANSLATE_LANG_KEY;
+
+    var code = langCookie ? langCookie.replace(/\"/g, "").split('_')[0] : 'en';
+    
+    var captchaURL = 'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + code;
+    res.render('index', {captchaURL: captchaURL});
   });
 
   router.get('/create-dojo', function (req, res) {

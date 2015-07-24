@@ -5,6 +5,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
 
+  var errorMsg = $translate.instant('error.general');
+
   $scope.pageChanged = function () {
     $scope.loadPage($scope.filter, false);
   };
@@ -50,10 +52,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       $location.path('/dashboard/edit-dojo/'+ dojo.id);
     }, function (err) {
       if (err) {
-        alertService.showError(
-          $translate.instant('An error has occurred while editing dojo') +' <br /> ' +
-          (err.error || JSON.stringify(err))
-        );
+        alertService.showError(errorMsg);
       }
     });
   };
@@ -209,8 +208,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
         return cb();
       }, function (err) {
-        alertService.showError($translate.instant("An error has occurred while updating Dojos") + ' <br>' +
-        (err.error || JSON.stringify(err)));
+        alertService.showError(errorMsg);
 
         cb(err);
       });
@@ -230,8 +228,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
         return cb();
       }, function (err) {
-        alertService.showError($translate.instant('An error has occurred while deleting Dojos') + ' <br>' +
-        (err.error || JSON.stringify(err)));
+        alertService.showError(errorMsg);
 
         cb(err);
       });
@@ -243,8 +240,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
         delete $scope.dojosToBeUpdated;
         changedDojos = [];
         if (err) {
-          alertService.showError($translate.instant('An error has occurred while updating Dojos') + ' <br>' +
-          (err.error || JSON.stringify(err)));
+          alertService.showError(errorMsg);
         }
         $scope.loadPage($scope.filter, false);
       });
