@@ -31,7 +31,7 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
         }
       }, function (err) {
         usSpinnerService.stop('user-request-spinner');
-        alertService.showError($translate.instant('Error validating user request') + err);
+        alertService.showError($translate.instant('Error validating user request'));
       });
     }
 

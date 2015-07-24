@@ -5,6 +5,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
   var lastClicked = {};
+  var errorMsg = $translate.instant('error.general');
 
   cdBadgesService.listBadges(function (response) {
     var badges = response.badges;
@@ -53,7 +54,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
 
   $scope.previewBadge = function (badgeClaimNumber) {
     cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
-      if(response.error) return alertService.showError(response.error);
+      if(response.error) return alertService.showError(errorMsg);
       if(_.isEmpty(response)) {
         $scope.hideBadgePreview();
         return alertService.showAlert($translate.instant('Invalid Badge Claim Number.'));
@@ -74,7 +75,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   $scope.claimBadge = function () {
     cdBadgesService.claimBadge($scope.previewBadgeData, function (response) {
       $scope.hideBadgePreview();
-      if(response.error) return alertService.showError(response.error);
+      if(response.error) return alertService.showError(errorMsg);
       return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
     });
   }
