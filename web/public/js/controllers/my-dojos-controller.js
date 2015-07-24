@@ -26,8 +26,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
     }, function (err){
       if(err){
         alertService.showError(
-          $translate.instant('An error has occurred while editing dojo') + ' <br /> '+
-          (err.error || JSON.stringify(err))
+          $translate.instant('An error has occurred while editing dojo')
         );
       }
     });
@@ -43,8 +42,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
         }, function (err) {
           if(err){
             alertService.showError(
-              $translate.instant('An error has occurred while deleting dojo') + ' <br /> '+
-              (err.error || JSON.stringify(err))
+              $translate.instant('An error has occurred while deleting dojo')
             );
           }
         });
@@ -77,8 +75,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
            if(isChampion && isDojoAdmin && isDojoOwner) resolve(true);
            else resolve(false);
         }, function (err) {
-          reject( $translate.instant('Error loading user dojo entity') + ' <br /> ' +
-          (err.error || JSON.stringify(err)));
+          reject( $translate.instant('Error loading user dojo entity'));
         });
       });
     }
@@ -167,8 +164,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
       });
     }, function(err) {
       alertService.showError(
-        $translate.instant('An error has occurred while loading Dojos') + ' <br /> '+
-        (err.error || JSON.stringify(err))
+        $translate.instant('An error has occurred while loading Dojos')
       );
 
       return cb(err);

@@ -31,7 +31,7 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
         }
       }, function (err) {
         usSpinnerService.stop('mentor-invitation-spinner');
-        alertService.showError($translate.instant('Error accepting invitation')+ err);
+        alertService.showError($translate.instant('Error accepting invitation'));
       });
     }
 
