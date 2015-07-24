@@ -1,3 +1,4 @@
+<div class="cd-dojo-main">
 <div class="cd-dashboard cd-color-5-underline">
     <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
         <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
@@ -19,4 +20,5 @@
             <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>
     </wizard>
+</div>
 </div>
