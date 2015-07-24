@@ -1,7 +1,10 @@
 'use strict';
 
-module.exports = function (router) {
-  router.get('/template/*', function (req, res) {
-    res.render('champion/' + req.params[0]);
-  });
-};
+var controller = module.exports = [{
+
+  method: 'GET',
+  path: '/champion/template/{name*}',
+  handler: function (request, reply) {
+    reply.view('champion/' + request.params.name, request.locals);
+  }
+}];

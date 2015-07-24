@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = function (router) {
-  router.get('/template/*', function (req, res) {
-    res.render('profiles/' + req.params[0]);
-  });
-};
+var controller = module.exports = [{
+  method: 'GET',
+  path: '/profiles/template/{name*}',
+  handler: function (request, reply) {
+    reply.view('profiles/' + request.params.name, request.locals);
+  }
+}];

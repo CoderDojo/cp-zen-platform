@@ -1,9 +1,11 @@
 'use strict';
 
-module.exports = function (router) {
-	
-  router.get('/*', function (req, res) {
-    res.render('dashboard/index');
-  });
+var controller = module.exports = [{
 
-};
+  method: 'GET',
+  path: '/dashboard/{followin*}',
+  handler: function (request, reply) {
+    reply.view('dashboard/index', request.locals);
+  }
+
+}];
