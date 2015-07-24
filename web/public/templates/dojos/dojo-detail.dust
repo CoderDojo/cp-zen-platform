@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div ng-if="dojoMember && userMemberCheckComplete" class="widget">
+          <div ng-if="dojoMember && !dojoOwner && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Leave"/}</legend>
             <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
           </div>

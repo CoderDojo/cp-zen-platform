@@ -1,6 +1,6 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, cdBadgesService, $translate) {
+function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, cdBadgesService, $translate, cdUsersService, initUserTypes) {
   var dojoId = $state.params.id;
   var usersDojosLink = [];
   $scope.itemsPerPage = 10;
@@ -44,30 +44,29 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     $scope.myDojos = [];
     var query = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
     
-    cdDojoService.getUserTypes(function (response) {
-      var mentorUserTypes   = ['mentor', 'parent-guardian', 'attendee-o13'];
-      var parentUserTypes   = ['parent-guardian', 'attendee-o13'];
-      var attendeeUserTypes = ['attendee-o13'];
-
-      auth.get_loggedin_user(function (user) {
-        var query = {userId: user.id, dojoId: dojoId};
-        cdDojoService.getUsersDojos(query, function (usersDojos) {
-          var userDojo = usersDojos[0]
-          user.userTypes = userDojo.userTypes;
-          user.userPermissions = userDojo.userPermissions;
-          if(_.contains(user.userTypes, 'champion')) {
-            $scope.userTypes = response;
-          } else if(_.contains(user.userTypes, 'mentor')) {
-            response.splice(3, 1); //Mentors shouldn't be able to invite champions
-          } else if(_.contains(user.userTypes, 'parent-guardian')) {
-            response.splice(2, 2);
-          } else if(_.contains(user.userTypes, 'attendee-o13')) {
-            response.splice(1, 3);
-          } else {
-            response = [];
-          }
-          $scope.userTypes = response;
-        });
+    auth.get_loggedin_user(function (user) {
+      var query = {userId: user.id, dojoId: dojoId};
+      cdDojoService.getUsersDojos(query, function (usersDojos) {
+        var userDojo = usersDojos[0]
+        user.userTypes = userDojo.userTypes;
+        var inviteUserTypes = angular.copy(initUserTypes.data);
+        if(_.contains(user.userTypes, 'mentor')) {
+          inviteUserTypes = _.without(inviteUserTypes, _.findWhere(inviteUserTypes, {name: 'champion'}));
+        } else if(_.contains(user.userTypes, 'parent-guardian')) {
+          inviteUserTypes = _.chain(inviteUserTypes)
+            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
+            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
+            .value();
+        } else if(_.contains(user.userTypes, 'attendee-o13')) {
+          $scope.userTypes = _.chain(inviteUserTypes)
+            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
+            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
+            .without(_.findWhere(inviteUserTypes, {name: 'parent-guardian'}))
+            .value();
+        } else if(_.contains(user.userTypes, 'attendee-u13')) {
+          inviteUserTypes = [];
+        }
+        $scope.userTypes = inviteUserTypes;
       });
     });
 
@@ -78,13 +77,20 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     cdDojoService.getUsersDojos(query, function (response) {
       usersDojosLink = response;
     });
-    //TODO: search for dojo users using elastic search.
+
     cdDojoService.loadDojoUsers(query, function (response) {
       _.each(response, function (user) {
         var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
         user.types = thisUsersDojoLink.userTypes;
+        user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
+          var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
+            return userType === initUserType.name;
+          });
+          return $translate.instant(userTypeFound.title);
+        });
         user.permissions = thisUsersDojoLink.userPermissions;
         user.isMentor = _.contains(user.types, 'mentor');
+        user.isDojoOwner = (thisUsersDojoLink.owner === 1) ? true : false;
         user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
         user.userDojoId = thisUsersDojoLink.id;
         $scope.selectedUserPermissions[user.id] = user.permissions;
@@ -130,7 +136,15 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
           userDojoLink.userPermissions.push(permission);
           //Save to db
           if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
-          cdDojoService.saveUsersDojos(userDojoLink, null, function (err) {
+          cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+            if(response.error) {
+              alertService.showError($translate.instant(response.error));
+              //Revert checkbox
+              $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
+            } else {
+              alertService.showAlert($translate.instant('User permissions successfully updated.'));
+            }
+          }, function (err) {
             alertService.showError($translate.instant('Error saving permission') + ' ' + err);
             //Revert checkbox 
             $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
@@ -153,6 +167,8 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
               $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
               //Re-add permission
               user.permissions.push(permission);
+            } else {
+              alertService.showAlert($translate.instant('User permissions successfully updated.'));
             }
           }, function (err) {
             alertService.showError($translate.instant('Error removing permission') + ' ' +err);
@@ -169,7 +185,14 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   }
 
   $scope.loadUserTypes = function(query) {
-    var filteredUserTypes = _.filter($scope.userTypes, function (userType) { return userType.indexOf(query) > -1; })
+    var filteredUserTypes = _.chain(initUserTypes.data)
+      .filter(function (userType) {
+       return userType.title.toLowerCase().indexOf(query.toLowerCase()) > -1; 
+      })
+      .map(function (userType) {
+        return userType.title;
+      })
+      .value();
     return filteredUserTypes;
   }
 
@@ -180,24 +203,35 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
       if(hasPermission) {
 
-        user.types = _.pluck(user.types, 'text');
+        var updatedUserTypes = _.chain(angular.copy(user.frontEndTypes))
+          .pluck('text')
+          .map(function (userType) {
+            var initUserTypeFound = _.find(initUserTypes.data, function (initUserType) {
+              return initUserType.title === userType;
+            });
+            return initUserTypeFound.name;
+          })
+          .value();
+
         var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
         if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
-        userDojoLink.userTypes = user.types;
+        userDojoLink.userTypes = updatedUserTypes;
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
           if(response.error) { 
             alertService.showError($translate.instant(response.error));
             //Revert user types
-            if(method === 'add') user.types.pop();
-            if(method === 'remove') user.types.push($tag);
+            if(method === 'add') user.frontEndTypes.pop();
+            if(method === 'remove') user.frontEndTypes.push($tag);
+          } else {
+            alertService.showAlert($translate.instant('User types successfully updated.'));
           }
         }, function (err) {
           alertService.showError($translate.instant('Error saving user type') + ' ' + err);
         });
       } else {
         alertService.showAlert($translate.instant('You do not have permission to update user types'));
-        if(method === 'add') user.types.pop();
-        if(method === 'remove') user.types.push($tag);
+        if(method === 'add') user.frontEndTypes.pop();
+        if(method === 'remove') user.frontEndTypes.push($tag);
       }
     });
   }
@@ -234,7 +268,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
   $scope.inviteUser = function (invite, context) {
     usSpinnerService.spin('manage-dojo-users-spinner');
-    cdDojoService.generateUserInviteToken({email:invite.email, userType:invite.userType, dojoId:dojoId}, function (response) {
+    cdDojoService.generateUserInviteToken({email:invite.email, userType:invite.userType.name, dojoId:dojoId}, function (response) {
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showAlert($translate.instant('Invite Sent'));
       context.inviteMentorForm.reset();
@@ -250,10 +284,13 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
       var userId = user.id;
       cdDojoService.removeUsersDojosLink(userId, dojoId, function (response) {
         if(response.error) {
+          usSpinnerService.stop('manage-dojo-users-spinner');
           alertService.showError($translate.instant(response.error));
+        } else {
+          usSpinnerService.stop('manage-dojo-users-spinner');
+          alertService.showAlert($translate.instant('User successfully removed from Dojo.'));
+          $scope.loadPage(true);
         }
-        usSpinnerService.stop('manage-dojo-users-spinner');
-        $scope.loadPage(true);
       }, function (err) {
         usSpinnerService.stop('manage-dojo-users-spinner');
         alertService.showError($translate.instant('Error removing user') + ' ' + err);
@@ -289,5 +326,5 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 'cdBadgesService', '$translate' ,cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', cdManageDojoUsersCtrl]);
 

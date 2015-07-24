@@ -244,6 +244,9 @@
           controller: 'manage-dojo-users-controller',
           ncyBreadcrumb: {
             label: '{{manageDojoUsersPageTitle}}'
+          },
+          resolve: {
+            initUserTypes: resolves.initUserTypes
           }
         })
 		    .state("setup-dojo", {

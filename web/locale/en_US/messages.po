@@ -1432,3 +1432,21 @@ msgstr "Please describe how you have ensured health and safety best practices."
 
 msgid "Please describe how you have ensured public liability is covered"
 msgstr "Please describe how you have ensured public liability is covered"
+
+msgid "Admin permissions cannot be removed from a Dojo owner."
+msgstr "Admin permissions cannot be removed from a Dojo owner."
+
+msgid "User permissions successfully updated."
+msgstr "User permissions successfully updated."
+
+msgid "User types successfully updated."
+msgstr "User types successfully updated."
+
+msgid "User successfully removed from Dojo."
+msgstr "User successfully removed from Dojo."
+
+msgid "Ninja Over 13"
+msgstr "Ninja Over 13"
+
+msgid "Ninja Under 13"
+msgstr "Ninja Under 13"
