@@ -1,6 +1,18 @@
 'use strict';
 
-function headerCtrl($window, $scope, $localStorage, $location, intercomService) {
+function headerCtrl($window, $scope, $localStorage, $location, $state, intercomService, auth) {
+
+  var currentUser;
+  auth.get_loggedin_user(function (user) {
+    currentUser = user;
+  });
+
+  var stateUrls = {
+    'my-dojos': '/dashboard/my-dojos',
+    'user-events': '/dashboard/dojos/events/user-events',
+    'badges-dashboard': '/dashboard/badges'
+  };
+
   $scope.navigateTo = function (page) {
     $window.location.href = '/' + page;
   };
@@ -18,9 +30,17 @@ function headerCtrl($window, $scope, $localStorage, $location, intercomService) 
     if (path.indexOf(tab) > -1) return true
     else return false;
   }
+
+  $scope.goTo = function (state) {
+    if(currentUser && !_.contains($state.current.url, '/dashboard') && $state.current.url !== '/') {
+      $window.location.href = stateUrls[state];
+    } else {
+      $state.go(state);
+    }
+  }
   
   intercomService.InitIntercom();
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', '$localStorage', '$location', 'intercomService', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$localStorage', '$location', '$state', 'intercomService', 'auth', headerCtrl]);

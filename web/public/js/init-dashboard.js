@@ -173,9 +173,12 @@
           controller: 'manage-dojo-controller'
         })
         .state("user-events", {
-          url: "/dashboard/dojos/events/user-events/:userId",
+          url: "/dashboard/dojos/events/user-events",
           templateUrl: '/dojos/template/events/user-events',
-          controller: 'user-events-controller'
+          controller: 'user-events-controller',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
         })
         .state("my-dojos.manage-dojo-events", {
           url: "/:dojoId/events",
