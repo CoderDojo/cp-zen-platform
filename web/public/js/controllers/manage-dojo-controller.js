@@ -198,7 +198,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function (dojo) {
         return {
           id: dojo.id,
-          verified: dojo.verified.value,
+          verified: dojo.verified,
           dojoLeadId: dojo.dojoLeadId
         }
       });
