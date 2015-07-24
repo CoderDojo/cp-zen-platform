@@ -1,6 +1,6 @@
 'use strict';
 
-function cdAgreementsService(cdApi){
+function cdAgreementsService(cdApi, $q){
   function topfail(err){
     console.log(err);
   }
@@ -18,9 +18,16 @@ function cdAgreementsService(cdApi){
     },
     loadUserAgreement: function(id, win, fail){
       cdApi.get('agreements/' + id, win, fail || topfail);
+    },
+    loadUserAgreementPromise: function(id){
+      var deferred = $q.defer();
+
+      cdApi.get('agreements/' + id, deferred.resolve, deferred.reject);
+
+      return deferred.promise;
     }
   };
 }
 
 angular.module('cpZenPlatform')
-  .service('cdAgreementsService', ['cdApi', cdAgreementsService]);
+  .service('cdAgreementsService', ['cdApi', '$q', cdAgreementsService]);

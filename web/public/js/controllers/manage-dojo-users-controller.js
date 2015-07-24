@@ -43,7 +43,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
     var query = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
-
+    
     cdDojoService.getUserTypes(function (response) {
       var mentorUserTypes   = ['mentor', 'parent-guardian', 'attendee-o13'];
       var parentUserTypes   = ['parent-guardian', 'attendee-o13'];

@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-2-underline">
   <div class="dojo-list-dashboard">
     <div class="col-xs-12 col-lg-4 pull-right">
       <div class="widget">
@@ -6,7 +6,7 @@
         <p>{@i18n key="dojo.list.index.p1"/}</p>
         <span class="col-xs-1"></span>
         <a ui-sref="start-dojo-wizard">
-          <input type="button" class="col-xs-10 btn-primary center-block register-btn" value="{@i18n key="Register"/}">
+          <input type="button" class="col-xs-5 btn btn-primary pull-right" value="{@i18n key="Register"/}">
         </a>
       </div>
       <br>
@@ -18,9 +18,8 @@
     <div dw-loading="main" class="col-xs-12 col-lg-7">
       <div id="main">
         <div ng-repeat="(country, statesData) in dojoList">
-          <legend style="margin-bottom:5px;">{{ country }}</legend>
+          <legend>{{ country }}</legend>
           <div ng-repeat="(state, dojos) in statesData.states">
-            <h5 class="state-heading">{{ state }}</h5>
             <ul ng-repeat="dojo in dojos">
               <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
             </ul>

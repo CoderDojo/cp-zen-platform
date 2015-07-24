@@ -1,5 +1,5 @@
 
-<div class="dojo-list-dashboard">
+<div class="dojo-list-dashboard cd-color-3-underline">
   <div class="cd-create-dojo-container">
     <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
       <div id="main">
@@ -171,21 +171,9 @@
         <div class="form-group">
           <label class="col-lg-4">{@i18n key="Current Stage"/}</label>
           <div class="col-lg-8 cd-awesome-radios">
-            <div class="radio">
-              <input type="radio" name="currentStage" ng-model="dojo.stage" id="inPlanning" value="0">
-              <label class="awesome-label" for="inPlanning">{@i18n key="In Planning"/}</label>
-            </div>
-            <div class="radio">
-              <input type="radio" name="currentStage" ng-model="dojo.stage" id="openComeAlong" value="1">
-              <label class="awesome-label" for="openComeAlong">{@i18n key="Open, come along"/}</label>
-            </div>
-            <div class="radio">
-              <input type="radio" name="currentStage" ng-model="dojo.stage" id="registerAhead" value="2">
-              <label class="awesome-label" for="registerAhead">{@i18n key="Register Ahead"/}</label>
-            </div>
-            <div class="radio">
-              <input type="radio" name="currentStage" ng-model="dojo.stage" id="fullUp" value="3">
-              <label class="awesome-label" for="fullUp">{@i18n key="Full Up"/}</label>
+            <div ng-repeat="dojoStage in dojoStages" class="radio">
+              <input type="radio" name="currentStage" ng-model="dojo.stage" id="{{ dojoStage.value + 'Radio'}}" value="{{ dojoStage.value }}">
+              <label for="{{ dojoStage.value + 'Radio' }}" class="awesome-label">{{ dojoStage.label }}</label>
             </div>
           </div>
         </div>
@@ -296,7 +284,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </form>
 </div>

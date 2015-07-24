@@ -1,8 +1,13 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage', 'usSpinnerService', loginCtrl]);
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 
+  'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage',
+  'usSpinnerService', '$cookieStore', loginCtrl]);
 
-function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window, auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, usSpinnerService) {
+function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
+  auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, 
+  usSpinnerService, $cookieStore) {
+
   $scope.referer = $state.params.referer;
 
   if ($location.search().redirect) {
@@ -65,7 +70,18 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     auth.register(user, function(data) {
       if(data.ok) {
         auth.login(user, function(data) {
-          $window.location.href = $scope.referer || '/dashboard/start-dojo';
+          var initUserTypeStr = data.user && data.user.initUserType;
+          var initUserType = JSON.parse(initUserTypeStr);
+
+
+          var isChampion = (initUserType.name === 'champion');
+
+          if(isChampion){
+            $window.location.href = $scope.referer || '/dashboard/start-dojo';
+          } else {
+            $window.location.href = '/dashboard/charter';
+          }
+
         });
       } else {
         var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
@@ -124,7 +140,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     window.location.href = '/'
   };
 
-  $scope.logout = function(){
+  $scope.logout = function() {
+    $cookieStore.remove('verifyProfileComplete');
     auth.logout(function(data){
       $window.location.href = '/'
     })

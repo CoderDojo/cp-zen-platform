@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-5-underline">
     <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
         <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
             <legend><h1 class="cd-page-header">{@i18n key="Register Account"/}</h1></legend>

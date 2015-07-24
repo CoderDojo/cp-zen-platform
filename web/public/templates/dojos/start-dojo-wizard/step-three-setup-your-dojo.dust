@@ -18,14 +18,14 @@
 
                 <div ng-repeat="step in steps track by $index" is-open="step.open" class="panel panel-default ng-isolate-scope cd-accordion" ng-init="step.id = $index">
                   <div class="panel-heading cd-accordion-head cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
-                    <h4 class="panel-title">{{ step.title }}{{ step.required }}</h4>
+                    <h4 class="panel-title">{{ step.title }}</h4>
                     <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
                   </div>
                   <div class="panel-collapse collapse" ng-class="{'in': step.open}">
-                    <p></p> 
                     <div class="cd-checkbox">
                       <div class="checkbox" ng-repeat="checkboxInput in step.checkboxes">
-                        <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}" ng-init="setupDojo[checkboxInput.name]=false" ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'" ng-model="setupDojo[checkboxInput.name]">
+                        <p></p>
+                        <input type="checkbox" ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}" ng-init="setupDojo[checkboxInput.name]=false"   ng-model="setupDojo[checkboxInput.name]">
                         <label for="{{ checkboxInput.name }}" class="awesome-label">
                           {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
                         </label>
@@ -35,7 +35,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </accordion>
           </div>

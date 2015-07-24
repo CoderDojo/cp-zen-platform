@@ -20,6 +20,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     if(!_.isEmpty(user) && currentPath === '/start-dojo') {
       $window.location.href = '/dashboard/start-dojo';
     } else {
+      cdDojoService.getDojoConfig(function(json){
+        $scope.dojoConfig = json;
+        $scope.dojoStages = json.dojoStages;
+        $scope.dojoStates = json.verificationStates;
+      });
 
       var query = { query : {
         filtered : {
@@ -254,7 +259,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     currentStepInt = 1;
 
     $scope.showCharterAgreement = function () {
-      $scope.championRegistrationFormVisible = false;
+      $scope.showCharterAgreementFlag = false;
     }
 
     var currentUser;
@@ -269,7 +274,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     if(subStep && subStep === 'charter'){
       $scope.showCharterAgreement();
     } else {
-      $scope.championRegistrationFormVisible = true;
+      $scope.showCharterAgreementFlag = true;
 
       $scope.champion = {};
 
@@ -312,15 +317,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       agreementObj.userId = currentUser.id;
       agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
-      $http.get('http://ipinfo.io/json').
-        success(function (data) {
-          agreementObj.ipAddress = data.ip;
+      cdAgreementsService.save(agreementObj, function (response) {
+        setupStep3();
+      });
 
-          cdAgreementsService.save(agreementObj, function (response) {
-            setupStep3();
-          });
 
-        });
     }
 
     $scope.otherLanguageSelected = function () {

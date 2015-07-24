@@ -1,4 +1,4 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard cd-color-4-underline">
   <div class="row manage-dojo-wrapper">
     <legend>{@i18n key="Charter"/}</legend>
     <div>{{ count.noOfAgreements }} {@i18n key="stats.p1"/}</div>
