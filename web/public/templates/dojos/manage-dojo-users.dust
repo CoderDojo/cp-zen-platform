@@ -9,9 +9,9 @@
 	    </div>
       <div class="col-lg-3">
         <ui-select name="inviteUserType" ng-model="invite.userType">
-          <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected  }}</ui-select-match>
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected.title  }}</ui-select-match>
           <ui-select-choices repeat="userType in userTypes">
-            <span ng-bind-html="userType"></span>
+            <span ng-bind-html="userType.title"></span>
           </ui-select-choices>
         </ui-select>
       </div>
@@ -39,7 +39,7 @@
           <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View"/}</a></td>
           <td ng-if="canUpdateUserPermissions">
 
-            <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.types"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
+            <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.frontEndTypes"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
 
             <div ng-if="user.isMentor" class="checkbox checkbox-success">
               <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
@@ -71,7 +71,7 @@
             </div>
           </td>
 
-          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
+          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
         </tr>
       </tbody>
     </table>

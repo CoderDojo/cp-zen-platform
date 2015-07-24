@@ -27,6 +27,8 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
     var query = {dojoId:dojo.id, userId:user.id};
     cdDojoService.getUsersDojos(query, function (response) {
       $scope.dojoMember = !_.isEmpty(response);
+      $scope.dojoOwner = false;
+      if($scope.dojoMember) $scope.dojoOwner = (response[0].owner === 1) ? true : false;
       $scope.userMemberCheckComplete = true;
     });
   }, function () {
