@@ -5,26 +5,35 @@
       <div class="row">
         <div class="form-group">
           <div class="col-lg-12">
+            <p>{@i18n key="Click on each step to get started"/}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <div class="col-lg-12">
+            <accordion close-others="false">
             <div class="panel-group no-select">
               <div class="panel-group" id="accordion">
                 <div ng-repeat="step in steps track by $index" is-open="step.open" class="panel panel-default ng-isolate-scope" ng-init="step.id = $index">
                   <div class="panel-heading cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
-                    <h4 class="panel-title">{{ step.title }}</h4>
+                    <h4 class="panel-title">{@i18n key="{{ step.title }}"/}</h4>
                     <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
                   </div>
                   <div class="panel-collapse collapse" ng-class="{'in': step.open}" ng-repeat="checkboxInput in step.checkboxes">
                     <div class="checkbox checkbox-primary">
                       <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}"
                         ng-init="dojoLead.application.setupYourDojo[checkboxInput.name]"
-                        ng-required="{{ checkboxInput.required }}" required-message="'{{ checkboxInput.requiredMessage }}'"
+                        ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
                         ng-model="dojoLead.application.setupYourDojo[checkboxInput.name]">
                       <label for="{{ checkboxInput.name }}">
-                        {{ checkboxInput.title }}<span ng-show="checkboxInput.required===true">*</span>
+                        {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
                       </label>
                       <input type="text" ng-if="checkboxInput.textField"
                         ng-init="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']"
                         ng-show="dojoLead.application.setupYourDojo[checkboxInput.name] === true"
-                        class="form-control" placeholder="{{ checkboxInput.placeholder }}"
+                        class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
                         ng-model="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']">
                     </div>
                   </div>
