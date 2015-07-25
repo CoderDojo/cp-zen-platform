@@ -28,7 +28,7 @@ var controller = module.exports = [
 
       var captchaURL = 'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + code;
 
-      request.locals.context.captchaURL = captchaURL;
+      request.locals.captchaURL = captchaURL;
        
       reply.view('index', request.locals);
     }
