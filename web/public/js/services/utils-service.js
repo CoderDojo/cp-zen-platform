@@ -89,60 +89,27 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
   utils.getPlaces = function (countryCode, $select) {
     var deferred = $q.defer();
     var search = $select.search;
-    var places = [];
     
     if (!countryCode || !search.length || search.length < 3) {
-      deferred.resolve(places);
+      deferred.resolve([]);
     } else {
       var query = {
-        query: {
-          filtered: {
-            query: {
-              multi_match: {
-                query: search,
-                type: "phrase_prefix",
-                fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
-              }
-            },
-            filter: {
-              bool: {
-                must: [
-                  {
-                    term: {
-                      countryCode: countryCode
-                    }
-                  },
-                  {
-                    term: {
-                      featureClass: "P"
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        },
-        from: 0,
-        size: 100,
-        sort: [
-          { asciiname: "asc" }
-        ]
+        countryCode: countryCode,
+        search: search
       };
 
-      cdCountriesService.listPlaces(query, function (result) {
-        places = _.map(result, function(place) {
-          return _.omit(place, 'entity$');
-        });
-        if(_.isEmpty(places)) {
-          if($select.search && !$select.clickTriggeredSelect) {
-            places.push({nameWithHierarchy: $select.search});
-          }
+      cdCountriesService.listPlaces(query, function (places) {
+        if(_.isEmpty(places) && $select.search && !$select.clickTriggeredSelect) {
+          places.push($select.search);
         }
-        deferred.resolve(places);
+        deferred.resolve(_.map(places, function (name) {
+          return { nameWithHierarchy: name };
+        }));
       }, function (err) {
         deferred.reject(err);
       });
     }
+
     return deferred.promise;
   }
 
