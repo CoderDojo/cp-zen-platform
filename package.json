@@ -18,7 +18,8 @@
     "type": "git",
     "url": "https://github.com/CoderDojo/cp-zen-platform.git"
   },
-  "author": "",
+  "author": "@nearform",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CoderDojo/cp-zen-platform/issues"
   },
