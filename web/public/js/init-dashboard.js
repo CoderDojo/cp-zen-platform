@@ -133,14 +133,6 @@
             label: '{{myDojosPageTitle}}'
           }
         })
-        .state("create-dojo", {
-          url: "/dashboard/create-dojo",
-          templateUrl: '/dojos/template/edit-dojo',
-          resolve: {
-            gmap: gmap
-          },
-          controller: 'create-dojo-controller'
-        })
         .state("edit-dojo", {
           url: "/dashboard/edit-dojo/:id",
           templateUrl: '/dojos/template/edit-dojo',
