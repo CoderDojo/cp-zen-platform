@@ -1454,3 +1454,5 @@ msgstr "Ninja Under 13"
 msgid "Please add your location manually by clicking on the map."
 msgstr "Please add your location manually by clicking on the map."
 
+msgid "Page not found"
+msgstr "PAGE NOT FOUND!"
