@@ -11,6 +11,8 @@ COPY lib /usr/src/app/lib/
 COPY web /usr/src/app/web/
 COPY tasks /usr/src/app/tasks/
 COPY *.js /usr/src/app/
-RUN npm install --production && rm -rf /root/.npm  
+RUN npm install --production 
 
+RUN apk del make gcc g++ python && rm -rf /tmp/* /root/.npm /root/.node-gyp
+  
 VOLUME ["/usr/src/app/public"]
