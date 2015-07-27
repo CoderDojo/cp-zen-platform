@@ -22,6 +22,14 @@ var controller = module.exports = [
     method: 'GET',
     path: '/register',
     handler: function (request, reply) {
+      var langCookie = request.state.NG_TRANSLATE_LANG_KEY;
+      
+      var code = langCookie ? langCookie.replace(/%22/g, '').split('_')[0] : 'en';
+
+      var captchaURL = 'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + code;
+
+      request.locals.captchaURL = captchaURL;
+       
       reply.view('index', request.locals);
     }
   },
