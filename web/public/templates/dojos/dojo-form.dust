@@ -163,8 +163,8 @@
               <input type="checkbox"
                      ng-model="dojo.needMentors"
                      id="needMentorsCheckbox"
-                     ng-true-value=1
-                     ng-false-value=0
+                     ng-true-value="1"
+                     ng-false-value="0"
                   >
               <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
             </div>
@@ -192,8 +192,8 @@
               <input type="checkbox"
                      ng-model="dojo.private"
                      id="privateCheckbox"
-                     ng-true-value=1
-                     ng-false-value=0
+                     ng-true-value="1"
+                     ng-false-value="0"
                   >
               <label class="cd-checkbox-label1" for="privateCheckbox"></label>
             </div>
@@ -283,8 +283,8 @@
               <input type="checkbox"
                      ng-model="dojo.mailingList"
                      id="mailingListCheckbox"
-                     ng-true-value=1
-                     ng-false-value=0
+                     ng-true-value="1"
+                     ng-false-value="0"
                   >
               <label class="cd-checkbox-label1" for="mailingListCheckbox"></label>
             </div>

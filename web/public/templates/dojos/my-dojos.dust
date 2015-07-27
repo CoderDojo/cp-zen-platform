@@ -9,17 +9,16 @@
               <tr>
                 <th class="ten-percent-width">{@i18n key="Dojo"/}</th>
                 <th class="ten-percent-width">{@i18n key="Location"/}</th>
-                <th class="ten-percent-width">{@i18n key="Edit"/}</th>
                 <th class="ten-percent-width">{@i18n key="Users"/}</th>
                 <th class="ten-percent-width">{@i18n key="Events"/}</th>
                 <th class="ten-percent-width">{@i18n key="Listing"/}</th>
+                <th class="ten-percent-width"></th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="myDojo in myDojos">
                 <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})">{{ myDojo.name }}</a></td>
                 <td>{{ myDojo.placeName }}</td>
-                <td class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
                 <td class="pointer">
                   <a ng-if="myDojo.isChampion && myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="Manage"/}</a>
                   <a ng-if="!myDojo.isChampion || !myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="View"/}</a>
@@ -29,6 +28,7 @@
                   <a ng-if="!myDojo.isTicketingAdmin" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path, '#':'events'})">{@i18n key="View"/}</a>
                 </td>
                 <td class="pointer"><a ui-sref="dojo-detail({country:myDojo.country, path:myDojo.path})">{@i18n key="View"/}</a></td>
+                <td class="pointer"><a ng-if="myDojo.isDojoAdmin" ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
                 </tr>
               </tbody>
           </table>
