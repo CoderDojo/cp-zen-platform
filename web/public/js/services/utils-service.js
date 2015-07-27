@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('utilsService', function() {
+angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '$q', function(cdCountriesService, $q) {
   var utils = {};
 
   utils.toTags = function(values){
@@ -86,5 +86,65 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     return utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
   }
 
+  utils.getPlaces = function (countryCode, $select) {
+    var deferred = $q.defer();
+    var search = $select.search;
+    var places = [];
+    
+    if (!countryCode || !search.length || search.length < 3) {
+      deferred.resolve(places);
+    } else {
+      var query = {
+        query: {
+          filtered: {
+            query: {
+              multi_match: {
+                query: search,
+                type: "phrase_prefix",
+                fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
+              }
+            },
+            filter: {
+              bool: {
+                must: [
+                  {
+                    term: {
+                      countryCode: countryCode
+                    }
+                  },
+                  {
+                    term: {
+                      featureClass: "P"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        from: 0,
+        size: 100,
+        sort: [
+          { asciiname: "asc" }
+        ]
+      };
+
+      cdCountriesService.listPlaces(query, function (result) {
+        places = _.map(result, function(place) {
+          return _.omit(place, 'entity$');
+        });
+        if(_.isEmpty(places)) {
+          if($select.search && !$select.clickTriggeredSelect) {
+            places.push({nameWithHierarchy: $select.search});
+          }
+        }
+        deferred.resolve(places);
+      }, function (err) {
+        deferred.reject(err);
+      });
+    }
+    return deferred.promise;
+  }
+
   return utils;
-});
+}]);

@@ -67,7 +67,7 @@
             <label for="championCountry" class="col-lg-4 cd-form-label1">{@i18n key="Country"/}*</label>
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.country.$error.required}">
               <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required>
-                <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
+                <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
                 </ui-select-choices>
@@ -83,10 +83,10 @@
             <label for="championPlace" class="col-lg-4 cd-form-label1">{@i18n key="CityTown"/}*</label>
 
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
-              <ui-select name="place" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
+              <ui-select name="place" ng-disabled="!champion.country" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
                 <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                 <ui-select-choices repeat="place in places"
-                    refresh="getPlaces(champion.country.alpha2, $select.search)"
+                    refresh="getPlaces(champion.country.alpha2, $select)"
                     refresh-delay="500">
                   <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
                 </ui-select-choices>

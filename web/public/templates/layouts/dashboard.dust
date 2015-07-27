@@ -125,7 +125,6 @@
     <script src="/js/controllers/my-dojos-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/dojo-list-index-controller.js"></script>
-    <script src="/js/controllers/create-dojo-controller.js"></script>
     <script src="/js/controllers/edit-dojo-controller.js"></script>
     <script src="/js/controllers/manage-dojo-controller.js"></script>
     <script src="/js/controllers/stats-controller.js"></script>

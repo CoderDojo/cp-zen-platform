@@ -1,6 +1,5 @@
 <div id="main">
   <div class="cd-create-dojo-container">
-    <p>{@i18n key="Click on each step to get started"/}</p>
     <form name="setupYourDojoForm" class="cd-accordian" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
       <div class="row">
         <div class="form-group">

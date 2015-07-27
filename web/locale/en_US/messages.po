@@ -450,7 +450,7 @@ msgid "Select a country"
 msgstr "Select a country"
 
 msgid "dojo.edit.place.citytown.placeholder"
-msgstr "Select or search a place in the list..."
+msgstr "Search for or enter your area"
 
 msgid "Select a place"
 msgstr "Select a place"
@@ -1450,3 +1450,7 @@ msgstr "Ninja Over 13"
 
 msgid "Ninja Under 13"
 msgstr "Ninja Under 13"
+
+msgid "Please add your location manually by clicking on the map."
+msgstr "Please add your location manually by clicking on the map."
+

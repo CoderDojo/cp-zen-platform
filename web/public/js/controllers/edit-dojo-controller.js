@@ -2,7 +2,7 @@
 /* global google */
 
 //TODO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -129,53 +129,14 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     });
   }
 
-  $scope.getPlaces = function(countryCode, search) {
-    if (!countryCode || !search.length || search.length < 3) {
+  $scope.getPlaces = function (countryCode, $select) {
+    return utilsService.getPlaces(countryCode, $select).then(function (data) {
+      $scope.places = data;
+    }, function (err) {
       $scope.places = [];
-      return;
-    }
-
-    var query = {
-      query: {
-        filtered: {
-          query: {
-            multi_match: {
-              query: search,
-              type: "phrase_prefix",
-              fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
-            }
-          },
-          filter: {
-            bool: {
-              must: [
-                {
-                  term: {
-                    countryCode: countryCode
-                  }
-                },
-                {
-                  term: {
-                    featureClass: "P"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      from: 0,
-      size: 100,
-      sort: [
-        { asciiname: "asc" }
-      ]
-    };
-
-    cdCountriesService.listPlaces(query, function(result) {
-      $scope.places = _.map(result, function(place) {
-        return _.omit(place, 'entity$');
-      });
-    }, console.error.bind(console));
-  };
+      console.error(err);
+    });
+  }
 
   $scope.setCountry = function(dojo, country) {
     dojo.countryName = country.countryName;
@@ -263,5 +224,5 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', cdEditDojoCtrl]);
 

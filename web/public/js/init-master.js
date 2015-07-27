@@ -168,14 +168,6 @@
           },
           controller: 'login'
         })
-        .state("create-dojo-public", {
-          url: "/create-dojo",
-          templateUrl: '/dojos/template/edit-dojo',
-          resolve: {
-            gmap: gmap
-          },
-          controller: 'create-dojo-controller'
-        })
         .state("dojo-list-index", {
           url: "/dojo-list-index",
           templateUrl: '/dojos/template/dojo-list-index',
