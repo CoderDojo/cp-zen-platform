@@ -1,8 +1,7 @@
 'use strict';
 /* global google */
 
-//TODO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService, currentUser) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -34,12 +33,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var dojoId = $state.params.id;
       cdDojoService.load(dojoId, function(response) {
         if(!_.isEmpty(response)) {
-          // handle glitchy booleans (db issue)
-          _.each(['mailingList', 'private', 'needMentors'], function(field) {
-            if (response[field] === 1) response[field] = true
-              else response[field] = false;
-          });
-
           $scope.dojo = response;
           resolve();
         } else {
@@ -163,28 +156,28 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.save = function(dojo) {
-    // handle glitchy booleans (db issue)
-    _.each(['mailingList', 'private', 'needMentors'], function(field) {
-      if (dojo[field] === true) dojo[field] = 1
-        else dojo[field] = 0;
-    });
+    canUpdateDojo().then(function (isDojoAdmin) {
+      if(isDojoAdmin) {
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
+          }
+        });
 
-    _.each(sanitizeCdForms.editDojo, function(item, i) {
-        if(_.has(dojo, item)) {
-          dojo[item] = $sanitize(dojo[item]);
-        }
-    });
-
-    cdDojoService.save(dojo, function(response) {
-      alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
-        $location.path('/dashboard/my-dojos');
-        $scope.$apply();
-      });
-    }, function(err) {
-      alertService.showError(
-        $translate.instant('An error has occurred while saving') + ': <br /> '+
-        (err.error || JSON.stringify(err))
-      );
+        cdDojoService.save(dojo, function(response) {
+          alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+            $location.path('/dashboard/my-dojos');
+            $scope.$apply();
+          });
+        }, function(err) {
+          alertService.showError(
+            $translate.instant('An error has occurred while saving') + ': <br /> '+
+            (err.error || JSON.stringify(err))
+          );
+        });
+      } else {
+        alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
+      }
     });
   }
 
@@ -215,6 +208,20 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   }
 
+  function canUpdateDojo() {
+    var deferred = $q.defer();
+    var query = {userId: currentUser.data.id, dojoId: $state.params.id};
+    cdDojoService.getUsersDojos(query, function (userDojo) {
+      var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
+        return userPermission.name === 'dojo-admin';
+      });
+      deferred.resolve(isDojoAdmin);
+    }, function (err) {
+      deferred.reject(err);
+    });
+    return deferred.promise;
+  }
+
   $scope.editorOptions = {
     language: 'en',
     uiColor: '#000000',
@@ -224,5 +231,5 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', cdEditDojoCtrl]);
 

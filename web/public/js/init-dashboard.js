@@ -142,7 +142,8 @@
           url: "/dashboard/edit-dojo/:id",
           templateUrl: '/dojos/template/edit-dojo',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'edit-dojo-controller'
         })
