@@ -28,7 +28,7 @@
                   <a ng-if="!myDojo.isTicketingAdmin" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path, '#':'events'})">{@i18n key="View"/}</a>
                 </td>
                 <td class="pointer"><a ui-sref="dojo-detail({country:myDojo.country, path:myDojo.path})">{@i18n key="View"/}</a></td>
-                <td ng-if="myDojo.isDojoAdmin" class="pointer"><a ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
+                <td class="pointer"><a ng-if="myDojo.isDojoAdmin" ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
                 </tr>
               </tbody>
           </table>
