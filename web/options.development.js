@@ -51,20 +51,20 @@ module.exports = _.defaults({
   },
 
   client: [
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-geonames,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-profiles,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-oauth2,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'},
-    {type: 'web', host: process.env.TARGETIP || '127.0.0.1', port: 10306, pin: 'role:cd-events,cmd:*'}
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-geonames,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-profiles,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-oauth2,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'},
+    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10306, pin: 'role:cd-events,cmd:*'}
   ],
 
   redis: {
-    "host": process.env.TARGETIP || (process.env.DOCKER_HOST ? require('url').parse(process.env.DOCKER_HOST).hostname : '127.0.0.1'),
+    "host": process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1',
     "port": 6379 // this isn't optioned
   }
 
