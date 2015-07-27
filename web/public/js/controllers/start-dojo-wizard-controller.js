@@ -235,9 +235,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
   //--Step One:
   function setupStep1() {
+    $scope.registerUser = {initUserType:{name:'champion', title:'Champion'}};
     $scope.hideIndicators = true;
     currentStepInt = 0;
     WizardHandler.wizard().goTo(0);
+    $scope.onStartDojoWizard = true;
     $scope.stepFinishedLoading = true;
   }
   //--
