@@ -1,45 +1,45 @@
 <div class="container cd-header">
   <div class="cd-header-menu">
-        <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse" ng-if="user">
-          <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
-                                  class="cd-header-button cd-color-1">
-                                  {@i18n key="Find a Dojo"/}</span></a>
-          <a ng-click="goTo('my-dojos')"><span ng-class="{'cd-active-tab': isSelected('my-dojos')}"
-                                      class="cd-header-button cd-color-2">
-                                      {@i18n key="My Dojos"/}</span></a>
-          <a ng-click="goTo('user-events')"><span ng-class="{'cd-active-tab': isSelected('events')}"
-                                                              class="cd-header-button cd-color-3">
-                                                              {@i18n key="Events"/}</span></a>
-          <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
-                                            {@i18n key="Forum"/}</span></a>
-          <a ng-click="goTo('badges-dashboard')"><span ng-class="{'cd-active-tab': isSelected('badges')}"
-                                              class="cd-header-button cd-color-5">
-                                              {@i18n key="Badges"/}</span></a>
-          <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
-            <span class="cd-header-button cd-color-3">
-            {@i18n key="Resources"/}</span></a>
-        </span>
-        <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse" ng-if="!user">
-          <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
-                                  class="cd-header-button cd-color-1">
-                                  {@i18n key="Find a Dojo"/}</span></a>
-          <a ui-sref="login"><span ng-class="{'cd-active-tab': isSelected('login')}"
-                                   class="cd-header-button cd-color-2">
-                                   {@i18n key="Login"/}</span></a>
-          <a ui-sref="register-account"><span ng-class="{'cd-active-tab': isSelected('register')}"
-                                               class="cd-header-button cd-color-3">
-                                               {@i18n key="Register"/}</span></a>
-          <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
-                                            {@i18n key="Forum"/}</span></a>
-          <a ui-sref="start-dojo-wizard"><span ng-class="{'cd-active-tab': isSelected('start-dojo')}"
-                                               class="cd-header-button cd-color-5">
-                                               {@i18n key="Create a Dojo"/}</span></a>
-          <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
-            <span class="cd-header-button cd-color-3">
-            {@i18n key="Resources"/}</span></a>
-      </span>
-      <span class="cd-logo-container">
-        <a ui-sref="home"><span class="cd-logo"></span></a>
-      </span>
+    <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse" ng-if="user">
+      <a ng-click="goTo('dojo-list')"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
+                              class="cd-header-button cd-color-1">
+        {@i18n key="Find a Dojo"/}</span></a>
+      <a ng-click="goTo('my-dojos')"><span ng-class="{'cd-active-tab': isSelected('my-dojos')}"
+                                           class="cd-header-button cd-color-2">
+        {@i18n key="My Dojos"/}</span></a>
+      <a ng-click="goTo('user-events')"><span ng-class="{'cd-active-tab': isSelected('events')}"
+                                              class="cd-header-button cd-color-3">
+        {@i18n key="Events"/}</span></a>
+      <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
+        {@i18n key="Forum"/}</span></a>
+      <a ng-click="goTo('badges-dashboard')"><span ng-class="{'cd-active-tab': isSelected('badges')}"
+                                                   class="cd-header-button cd-color-5">
+        {@i18n key="Badges"/}</span></a>
+      <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
+        <span class="cd-header-button cd-color-3">
+          {@i18n key="Resources"/}</span></a>
+    </span>
+    <span id="cd-mainnav-collapse" class="cd-header-menu-inner navbar-collapse collapse" ng-if="!user">
+      <a ui-sref="home"><span ng-class="{'cd-active-tab': isSelected('dojo-list')}"
+                              class="cd-header-button cd-color-1">
+        {@i18n key="Find a Dojo"/}</span></a>
+      <a ui-sref="login"><span ng-class="{'cd-active-tab': isSelected('login')}"
+                               class="cd-header-button cd-color-2">
+        {@i18n key="Login"/}</span></a>
+      <a ui-sref="register-account"><span ng-class="{'cd-active-tab': isSelected('register')}"
+                                          class="cd-header-button cd-color-3">
+        {@i18n key="Register"/}</span></a>
+      <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
+        {@i18n key="Forum"/}</span></a>
+      <a ui-sref="start-dojo-wizard"><span ng-class="{'cd-active-tab': isSelected('start-dojo')}"
+                                           class="cd-header-button cd-color-5">
+        {@i18n key="Create a Dojo"/}</span></a>
+      <a target="_blank" href="http://kata.coderdojo.com/wiki/Main_Page">
+        <span class="cd-header-button cd-color-3">
+          {@i18n key="Resources"/}</span></a>
+    </span>
+    <span class="cd-logo-container">
+      <a ui-sref="home"><span class="cd-logo"></span></a>
+    </span>
   </div>
 </div>

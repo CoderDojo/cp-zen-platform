@@ -25,7 +25,7 @@ module.exports = {
           '/dashboard/dojo-list': 1,
           '/dashboard/my-dojos': 1,
           '/dashboard/start-dojo': 1,
-          '/dashboard/manage-dojos': 1,
+          //'/dashboard/manage-dojos': 1,
           '/dashboard/stats': 1
         }
       }
@@ -39,7 +39,7 @@ module.exports = {
       '/dashboard/dojo-list',
       '/dashboard/my-dojos',
       '/dashboard/start-dojo',
-      '/dashboard/manage-dojos',
+      //'/dashboard/manage-dojos',
       '/dashboard/stats',
       '/admin'
     ]
