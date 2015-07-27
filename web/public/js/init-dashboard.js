@@ -123,6 +123,11 @@
           resolve: {
             gmap: gmap
           },
+          params: {
+            bannerType: null,
+            bannerMessage: null,
+            bannerTimeCollapse: null
+          },
           controller: 'dojo-list-controller'
         })
         .state("my-dojos", {
