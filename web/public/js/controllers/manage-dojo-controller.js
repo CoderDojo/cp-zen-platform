@@ -198,7 +198,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function (dojo) {
         return {
           id: dojo.id,
-          verified: dojo.verified.value,
+          verified: dojo.verified,
           dojoLeadId: dojo.dojoLeadId
         }
       });
@@ -220,7 +220,11 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       }
 
       var dojos = _.map($scope.dojosToBeDeleted, function (dojo) {
-        return {id: dojo.id, creator: dojo.creator};
+        return {
+          id: dojo.id,
+          creator: dojo.creator,
+          dojoLeadId: dojo.dojoLeadId
+        };
       });
 
       cdDojoService.bulkDelete(dojos).then(function (response) {

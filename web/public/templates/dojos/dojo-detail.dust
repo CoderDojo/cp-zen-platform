@@ -82,6 +82,7 @@
                       <span ng-bind-html="userType.title"></span>
                     </ui-select-choices>
                   </ui-select>
+                  <label class="validationMessage" ng-show="requestInvite.validate">{@i18n key="You must choose a user type"/}</label>
                 </div>
               </div>
               <div class="col-lg-12">

@@ -153,14 +153,19 @@
           <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Need Mentors"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Need Mentors"/}"
               popover="{@i18n key="Meed Mentors"/}">
             </a>
-          </label>       
+          </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.needMentors"
+                     id="needMentorsCheckbox"
+                     ng-true-value=1
+                     ng-false-value=0
+                  >
               <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
             </div>
           </div>
@@ -184,7 +189,12 @@
           <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>       
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.private"
+                     id="privateCheckbox"
+                     ng-true-value=1
+                     ng-false-value=0
+                  >
               <label class="cd-checkbox-label1" for="privateCheckbox"></label>
             </div>
             <p class="col-lg-6 cd-private-msg">{@i18n key="Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."/}</p>
@@ -263,14 +273,19 @@
           <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Mailing List"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Mailing List"/}"
               popover="{@i18n key="dojo.edit.mailinglist.description"/}">
             </a>
-          </label>       
+          </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.mailingList"
+                     id="mailingListCheckbox"
+                     ng-true-value=1
+                     ng-false-value=0
+                  >
               <label class="cd-checkbox-label1" for="mailingListCheckbox"></label>
             </div>
           </div>

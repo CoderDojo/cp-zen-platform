@@ -72,52 +72,57 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
   }
 
   $scope.requestToJoin = function (requestInvite) {
-    var userType = requestInvite.userType.name;
+    if(!$scope.requestInvite.userType) {
+      $scope.requestInvite.validate="false";
+      return
+    } else {
+      $scope.requestInvite.validate="true";
 
-    auth.get_loggedin_user(function (user) {
-      usSpinnerService.spin('dojo-detail-spinner');
-      var data = {user:user, dojoId:dojo.id, userType:userType};
+      var userType = requestInvite.userType.name;
 
-      if(_.contains(approvalRequired, userType)) {
-        cdDojoService.requestInvite(data, function (response) {
-          usSpinnerService.stop('dojo-detail-spinner');
-          alertService.showAlert($translate.instant('Invite Request Sent!'));
-        });
-      } else {
-        //Check if user is already a member of this Dojo
-        var query = {userId:user.id, dojoId:dojo.id};
-        var userDojo = {};
-        cdDojoService.getUsersDojos(query, function (response) {
-          if(_.isEmpty(response)) {
-            //Save
-            userDojo.owner = 0;
-            userDojo.userId = user.id;
-            userDojo.dojoId = dojo.id;
-            userDojo.userTypes = [userType];
-            cdDojoService.saveUsersDojos(userDojo, function (response) {
-              usSpinnerService.stop('dojo-detail-spinner');
-              $state.go($state.current, {}, {reload: true});
-              alertService.showAlert($translate.instant('Successfully Joined Dojo'));
-            });
-          } else {
-            //Update
-            userDojo = response[0];
-            if(!userDojo.userTypes) userDojo.userTypes = [];
-            userDojo.userTypes.push(userType);
-            cdDojoService.saveUsersDojos(userDojo, function (response) {
-              usSpinnerService.stop('dojo-detail-spinner');
-              $state.go($state.current, {}, {reload: true});
-              alertService.showAlert($translate.instant('Successfully Joined Dojo'));
-            });
-          }
-        });
+      auth.get_loggedin_user(function (user) {
+        usSpinnerService.spin('dojo-detail-spinner');
+        var data = {user:user, dojoId:dojo.id, userType:userType};
 
-
-      }
-    }, function () {
-      //Not logged in
-      $state.go('register-account', {referer:$location.url()});
-    });
+        if(_.contains(approvalRequired, userType)) {
+          cdDojoService.requestInvite(data, function (response) {
+            usSpinnerService.stop('dojo-detail-spinner');
+            alertService.showAlert($translate.instant('Invite Request Sent!'));
+          });
+        } else {
+          //Check if user is already a member of this Dojo
+          var query = {userId:user.id, dojoId:dojo.id};
+          var userDojo = {};
+          cdDojoService.getUsersDojos(query, function (response) {
+            if(_.isEmpty(response)) {
+              //Save
+              userDojo.owner = 0;
+              userDojo.userId = user.id;
+              userDojo.dojoId = dojo.id;
+              userDojo.userTypes = [userType];
+              cdDojoService.saveUsersDojos(userDojo, function (response) {
+                usSpinnerService.stop('dojo-detail-spinner');
+                $state.go($state.current, {}, {reload: true});
+                alertService.showAlert($translate.instant('Successfully Joined Dojo'));
+              });
+            } else {
+              //Update
+              userDojo = response[0];
+              if(!userDojo.userTypes) userDojo.userTypes = [];
+              userDojo.userTypes.push(userType);
+              cdDojoService.saveUsersDojos(userDojo, function (response) {
+                usSpinnerService.stop('dojo-detail-spinner');
+                $state.go($state.current, {}, {reload: true});
+                alertService.showAlert($translate.instant('Successfully Joined Dojo'));
+              });
+            }
+          });
+        }
+      }, function () {
+        //Not logged in
+        $state.go('register-account', {referer:$location.url()});
+      });
+    }
   }
 
   $scope.leaveDojo = function () {
