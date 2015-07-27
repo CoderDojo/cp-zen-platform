@@ -40,11 +40,11 @@ server.views({
 })
 
 server.ext('onPreAuth', function (request, reply) {
-  var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, '')) 
+  var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, ''))
     || request.headers['accept-language'];
-    
+
   var requestLocales = new locale.Locales(localesFormReq);
-    
+
   request.locals = {
     context: {
       locality: requestLocales.best(availableLocales).code
@@ -85,7 +85,7 @@ require('./lib/dust-i18n.js');
 
 
 // Add all the server routes from the controllers.
-_.each(controllers, function (controller) { 
+_.each(controllers, function (controller) {
   server.route(controller);
 })
 
@@ -159,6 +159,17 @@ server.register({
     console.log('[%s] Listening on http://localhost:%d', env, port);
   });
 });
+
+server.ext('onPreResponse', function (request, reply) {
+  var status = request.response.statusCode;
+
+  if (status !== 404) {
+    return reply.continue();
+  }
+
+  return reply.view('errors/404', request.locals);
+});
+
 
 // Set up seneca
 

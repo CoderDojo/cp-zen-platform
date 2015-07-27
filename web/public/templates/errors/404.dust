@@ -1,5 +1,5 @@
 <div class="container">
-  <div >
+  <div>
     {@i18n key="Page not found"/}
   </div>
 </div>
