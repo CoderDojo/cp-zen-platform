@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = [{
+var controller = module.exports = [{
   method: 'GET',
   path: '/errors/template/{name*}',
   handler: function (request, reply) {

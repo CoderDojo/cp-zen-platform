@@ -49,7 +49,7 @@
     }
     return dfd.promise;
   };
-  
+
   var failCb = function(err){
     return {err: err};
   };
@@ -315,10 +315,10 @@
           templateUrl: '/dojos/template/badges/accept'
         })
         .state('error-404', {
-          url:'/404',
+          url:'/dashboard/404',
           templateUrl: '/errors/template/404'
         });
-      $urlRouterProvider.otherwise('/404');
+      $urlRouterProvider.otherwise('/dashboard/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
@@ -371,7 +371,7 @@
                 }, function (err) {
                   alertService.showError($translate.instant('An error has occured verifying your profile.'));
                 });
-              } 
+              }
             }
           }, function (err) {
             alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
