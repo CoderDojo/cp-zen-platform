@@ -60,7 +60,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           //Check if user has deleted the Dojo
           cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
             if (!_.isEmpty(response)) {
-              $state.go('home',
+              $state.go('dojo-list',
                 { bannerType:'success',
                   bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.<br> ' +
                   'If you need help completing your initial Dojo application, please contact us at <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
@@ -497,12 +497,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     };
 
     $scope.save = function(dojo) {
-      // handle glitchy booleans (db issue)
-      _.each(['mailingList', 'private', 'needMentors'], function(field) {
-        if (dojo[field] === true) dojo[field] = 1
-          else dojo[field] = 0;
-      });
-
       _.each(sanitizeCdForms.editDojo, function(item, i) {
         if(_.has(dojo, item)) {
           dojo[item] = $sanitize(dojo[item]);
