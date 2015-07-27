@@ -1,8 +1,8 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
-  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, 
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
+  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
   agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
@@ -35,7 +35,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
-    if(profileUserId === loggedInUserId || loggedInUserIsParent()) { 
+    if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
     } else {
       //No permission
@@ -62,7 +62,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
             'Content-Type': 'multipart/form-data'
           },
           file: file,
-          fields: {profileId: profile.data.id}
+          fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
         }).progress(function (evt) {
         }).success(function (data, status, headers, config) {
           cdUsersService.getAvatar($scope.profile.id, function(response){
@@ -255,7 +255,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
       'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
@@ -380,7 +380,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       //TODO
     });
   }
-  
+
   $scope.editProfile = function () {
     $state.go('edit-user-profile', {userId: $stateParams.userId});
   }
@@ -425,7 +425,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return false; //Always private
-      default: 
+      default:
         return false;
     }
   }
@@ -459,9 +459,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       if($scope.profile.ownProfileFlag) return false;
       if(block && $scope.profile.optionalHiddenFields) {
         if(!$scope.profile.optionalHiddenFields[block]) return false;
-        return true; 
+        return true;
       }
-      return true; 
+      return true;
     }
     return false;
   }
@@ -493,7 +493,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
     'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', cdUserProfileCtrl]);
 

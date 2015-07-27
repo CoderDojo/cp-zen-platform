@@ -25,7 +25,7 @@ module.exports = {
           '/dashboard/dojo-list': 1,
           '/dashboard/my-dojos': 1,
           '/dashboard/start-dojo': 1,
-          '/dashboard/manage-dojos': 1,
+          //'/dashboard/manage-dojos': 1,
           '/dashboard/stats': 1
         }
       }
@@ -39,14 +39,14 @@ module.exports = {
       '/dashboard/dojo-list',
       '/dashboard/my-dojos',
       '/dashboard/start-dojo',
-      '/dashboard/manage-dojos',
+      //'/dashboard/manage-dojos',
       '/dashboard/stats',
       '/admin'
     ]
   },
 
   redis: {
-    "host": process.env.REDIS_HOST || process.env.TARGETIP || (process.env.DOCKER_HOST ? require('url').parse(process.env.DOCKER_HOST).hostname : '127.0.0.1'),
+    "host": process.env.REDIS_HOST || process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1',
     "port": process.env.REDIS_PORT || 6379 // this is either configurable or in docker locally
   },
 
