@@ -127,7 +127,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     // temp fix
     if(currentStepInt === 3) {
       $scope.getLocationFromAddress($scope.dojo);
-      $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
+      if($scope.dojo.place) {
+        $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
+      }
     }
 
     if(form.$invalid){
