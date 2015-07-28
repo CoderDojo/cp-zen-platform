@@ -104,8 +104,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       $scope.founder.previousFounderId = $scope.prevFounder.userId;
       $scope.founder.dojoId = $scope.dojo.id;
     }
-
-    console.log(founder);
   }
 
   function loadDojoMap() {
