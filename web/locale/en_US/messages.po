@@ -1459,3 +1459,13 @@ msgstr "You do not have permission to update this Dojo."
 
 msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
+
+msgid "Event Date"
+msgstr "Event Date"
+
+msgid "Waitlist"
+msgstr "Waitlist"
+
+msgid "New Applicant"
+msgstr "New Applicant"
+

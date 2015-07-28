@@ -75,7 +75,7 @@
       <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
       <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -89,7 +89,7 @@
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
       <label for="to-date">{@i18n key="To"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"

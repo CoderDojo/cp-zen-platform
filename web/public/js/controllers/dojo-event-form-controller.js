@@ -40,6 +40,7 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
+    $scope.today = new Date();
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
@@ -50,6 +51,7 @@
     $scope.eventInfo.toDate = new Date(
       $scope.eventInfo.date.getTime()
     );
+    $scope.eventInfo.recurringType = 'weekly';
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;

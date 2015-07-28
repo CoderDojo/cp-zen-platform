@@ -5,10 +5,10 @@
       <div class="row">
         <div class="col-md-12 table-responsive">
           <div class="margin-bottom-15 col-md-8">
-            <span class="col-md-3"><b>Capacity:</b> {{ event.capacity }}</span>
-            <span class="col-md-3"><b>Attending:</b> {{ attending }}</span>
-            <span class="col-md-3"><b>Waitlist:</b> {{ waitlist }}</span>
-            <span class="col-md-3"><button ng-click="createNewApplicant()" class="btn btn-primary">New Applicant</button>
+            <span class="col-md-3"><b>{@i18n key="Capacity"/}:</b> {{ event.capacity }}</span>
+            <span class="col-md-3"><b>{@i18n key="Attending"/}:</b> {{ attending }}</span>
+            <span class="col-md-3"><b>{@i18n key="Waitlist"/}:</b> {{ waitlist }}</span>
+            <span class="col-md-3"><button ng-click="createNewApplicant()" class="btn btn-primary">{@i18n key="New Applicant"/}</button>
           </div>
           <table id="eventApplicationsTable" class="table cd-grid-table">
             <thead>
@@ -37,7 +37,7 @@
                     <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
                   </div>
                 </td>
-                <td><button class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to delete this application?" ng-bootbox-confirm-action="removeApplicant(application)">Delete</button>
+                <td><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}" ng-bootbox-confirm-action="removeApplicant(application)">Delete</button>
               </tr>
               <tr ng-switch-when="true">
                 <td>
