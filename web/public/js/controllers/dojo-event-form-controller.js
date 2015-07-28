@@ -31,7 +31,9 @@
   }
 
   function goToManageDojoEvents($state, usSpinnerService, dojoId) {
-    usSpinnerService.stop('create-event-spinner');
+    if(usSpinnerService) {
+      usSpinnerService.stop('create-event-spinner');
+    }
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
     });
@@ -153,7 +155,7 @@
       $event.preventDefault();
       $event.stopPropagation();
 
-      goToManageDojoEvents($state, dojoId);
+      goToManageDojoEvents($state, null, dojoId);
     };
 
     $scope.submit = function($event, eventInfo, publish) {
