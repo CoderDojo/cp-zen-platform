@@ -291,7 +291,22 @@
           </div>
         </div>
       </div>
-
+      <div class="row cd-input-row">
+        <div class="form-group">
+          <label for="" class="col-lg-4"></label>
+          <div class="col-lg-8">
+            <input name="founder" class="form-control" disabled type="text" ng-model="founder.name">
+            <ui-select ng-model="founder" ng-disabled="false" on-select="setFounder($item)">
+              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-choices repeat="user in users"
+                  refresh="getUsersByEmails($select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="user.email | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
       <div class="row cd-btn-row">
         <div class="form-group">
           <div class="col-lg-12">

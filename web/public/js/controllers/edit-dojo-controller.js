@@ -1,7 +1,7 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService, currentUser) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -28,25 +28,80 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   };
 
-  function loadDojo() {
-    return $q(function(resolve, reject) {
-      var dojoId = $state.params.id;
-      cdDojoService.load(dojoId, function(response) {
-        if(!_.isEmpty(response)) {
-          $scope.dojo = response;
-          resolve();
-        } else {
-          reject($translate.instant('Failed to load Dojo'));
-        }
-      });
+  //TODO ADD ALERTS FOR ERRORS
+  async.waterfall([function(done){
+    var dojoId = $state.params.id;
+    
+    cdDojoService.load(dojoId, function(response) {
+      if(!_.isEmpty(response)) {
+        return done(null,response);
+      } else {
+        return done($translate.instant('Failed to load Dojo'));
+      }
     });
-  }
+  }, function(dojo, done){
+    var query = {};
 
-  loadDojo().then(function() {
+    query.dojoId = dojo.id;
+    
+    query.owner = 1;
+    
+    cdDojoService.getUsersDojos(query, function(response){
+
+      return done(null, dojo, response[0]);
+      }, function(){
+        console.log("error");
+        return done('error');
+      });
+
+
+  }, function(dojo, prevFounder , done){
+    cdUsersService.load(prevFounder.userId, function(response){
+      prevFounder.email = response.email;
+      prevFounder.name = response.name;
+
+      return done(null, dojo, prevFounder);
+    }, function(err){
+      return done(err);
+    });
+  }], function(err, dojo, prevFounder){
+    if(err){
+      alertService.showError(err);
+      return;
+    }
+
+    $scope.dojo = dojo;
+    $scope.prevFounder = prevFounder;
+    $scope.founder  = angular.copy(prevFounder);
     loadDojoMap();
-  }, function (error) {
-    alertService.showError(error);
   });
+  
+  $scope.getUsersByEmails = function(email){
+    if(!email || !email.length || email.length < 3) {
+      $scope.users = [];
+      return;
+    }
+
+    var win = function(users){
+      $scope.users = users;
+    };
+
+    var fail = function(){
+      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
+    };
+
+    cdUsersService.getUsersByEmails(email, win, fail);
+  }; 
+
+  $scope.setFounder = function(founder){
+    if(founder){
+      $scope.founder = founder;
+      $scope.founder.previousFounderId = $scope.prevFounder.userId;
+      $scope.founder.dojoId = $scope.dojo.id;
+    }
+
+    console.log(founder);
+  }
 
   function loadDojoMap() {
     $scope.$watch('model.map', function(map){
@@ -231,5 +286,5 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', cdEditDojoCtrl]);
 
