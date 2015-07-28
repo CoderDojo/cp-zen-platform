@@ -77,8 +77,6 @@
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/components/angular-ui-utils/ui-utils.min.js"></script>
-
-    <script src={captchaURL}></script>
     <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
@@ -124,7 +122,7 @@
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
 
     <script src="/components/angular-truncate/src/truncate.js"></script>
-    <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
+
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
 
     <script src="/seneca/init.js"></script>
