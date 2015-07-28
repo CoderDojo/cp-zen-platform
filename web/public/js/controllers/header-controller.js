@@ -46,7 +46,7 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
     if($state.current.url === '^'){
       $window.location.href = stateUrls[state];
     } else {
-      if (currentUser && !_.contains($state.current.url, '/dashboard') && $state.current.url !== '/') {
+      if (currentUser && !_.contains($location.path(), '/dashboard') && $state.current.url !== '/') {
         $window.location.href = stateUrls[state];
       } else {
         $state.go(state);
