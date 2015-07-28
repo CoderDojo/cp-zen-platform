@@ -1,4 +1,4 @@
-<div class="cd-dashboard cd-color-1-underline">
+<div class="cd-dashboard cd-color-1-underline cd-badges-dashboard">
   <div class="row">
     <h4>{@i18n key="Badges Welcome Text"/}</h4>
 
