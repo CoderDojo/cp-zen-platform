@@ -35,7 +35,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   };
 
-  //TODO ADD ALERTS FOR ERRORS
   async.waterfall([function(done){
     var dojoId = $state.params.id;
     
