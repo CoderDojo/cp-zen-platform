@@ -27,7 +27,7 @@ function cdCountriesService($q, cdApi){
         cdApi.get('geo/countries_lat_long', win, fail || topfail);
       },
       loadCountriesContinents: function(win, fail) {
-        cdApi.get('countries_continents', win, fail || topfail);
+        cdApi.get('geo/countries_continents', win, fail || topfail);
       },
       getContinentCodes: function(win, fail){
         cdApi.get('geo/continent_codes', win, fail || topfail);
