@@ -8,9 +8,20 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
   });
 
   var stateUrls = {
+    //dashboard states
     'my-dojos': '/dashboard/my-dojos',
     'user-events': '/dashboard/dojos/events/user-events',
-    'badges-dashboard': '/dashboard/badges'
+    'badges-dashboard': '/dashboard/badges',
+    'dojo-list': '/dashboard/dojo-list',
+    'manage-dojos': '/dashboard/manage-dojos',
+    'stats':'/dashboard/stats',
+    'charter': '/charter',
+
+    //master states
+    'home': '/',
+    'login': '/login',
+    'register-account':'/register',
+    'start-dojo-wizard': '/start-dojo'
   };
 
   $scope.navigateTo = function (page) {
@@ -31,14 +42,18 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
     else return false;
   }
 
-  $scope.goTo = function (state) {
-    if(currentUser && !_.contains($state.current.url, '/dashboard') && $state.current.url !== '/') {
+  $scope.goTo = function (state, param) {
+    if($state.current.url === '^'){
       $window.location.href = stateUrls[state];
     } else {
-      $state.go(state);
+      if (currentUser && !_.contains($state.current.url, '/dashboard') && $state.current.url !== '/') {
+        $window.location.href = stateUrls[state];
+      } else {
+        $state.go(state);
+      }
     }
   }
-  
+
   intercomService.InitIntercom();
 }
 
