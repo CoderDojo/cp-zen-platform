@@ -6,6 +6,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   $scope.model = {};
   $scope.markers = [];
   $scope.buttonText = $translate.instant('Update Dojo');
+  $scope.hideUserSelect = true;
+
+  $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
 
   var DEFAULT_COORDS = '53.3478,6.2597';
 
@@ -18,6 +21,10 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.dojoStages = json.dojoStages;
     $scope.dojoStates = json.verificationStates;
   });
+
+  $scope.toggleUserSelect = function(event){
+    $scope.hideUserSelect = !$scope.hideUserSelect;
+  };
 
   $scope.scrollToInvalid = function(form){
     $scope.getLocationFromAddress($scope.dojo);
@@ -220,10 +227,22 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
         });
 
         cdDojoService.save(dojo, function(response) {
-          alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
-            $location.path('/dashboard/my-dojos');
-            $scope.$apply();
-          });
+          if($scope.founder.id !== $scope.prevFounder.id){
+            cdDojoService.updateFounder($scope.founder, function(response){
+              alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+                $state.go('my-dojos');
+                $scope.$apply();
+              });
+            }, function(err){
+              alertService.showError($translate.instant('An error has occurred while saving'));
+            });
+          } else {
+            alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+              $state.go('my-dojos');
+              $scope.$apply();
+            });
+          }
+
         }, function(err) {
           alertService.showError(
             $translate.instant('An error has occurred while saving') + ': <br /> '+

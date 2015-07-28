@@ -1459,3 +1459,6 @@ msgstr "You do not have permission to update this Dojo."
 
 msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
+
+msgid "Founder"
+msgstr "Founder"
