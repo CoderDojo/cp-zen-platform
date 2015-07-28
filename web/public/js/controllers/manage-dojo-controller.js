@@ -204,7 +204,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       });
 
       cdDojoService.bulkUpdate(dojosToBeUpdated).then(function (response) {
-        // TODO: review, should notify user on successfull update?
+        alertService.showAlert($translate.instant('Dojo has been successfully updated'));
 
         return cb();
       }, function (err) {
@@ -228,7 +228,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       });
 
       cdDojoService.bulkDelete(dojos).then(function (response) {
-        // TODO: review, should notify user on successfull delete?
+        alertService.showAlert($translate.instant('Dojo has been successfully deleted'));
 
         return cb();
       }, function (err) {
