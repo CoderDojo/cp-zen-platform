@@ -390,6 +390,21 @@ label {
   background-size: 18px 18px;
 }
 
+.cd-badges-dashboard {
+  .nav-tabs.nav-justified>.active>a {
+    color: @cd-orange;
+    border: 1px solid @cd-orange;
+    border-bottom-color: @cd-white;
+  }
+  input.has-error {
+    border: 1px solid @cd-red;
+  }
+  label.validationMessage {
+    color: @cd-red;
+    margin-left: 10px;
+  }
+}
+
 .user-registration, .cd-dojo-main {
   .cd-page-title {
     margin: 20px 0px;
@@ -781,6 +796,7 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 .badge-category-heading {
+  border-color: @cd-orange;
   font-size: 16px;
   font-weight: bold;
 }
