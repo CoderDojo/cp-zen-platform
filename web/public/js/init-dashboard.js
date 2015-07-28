@@ -237,7 +237,7 @@
           controller: 'review-champion-application-controller'
         })
         .state("my-dojos.manage-dojo-users", {
-          url: "/dashboard/dojo/:id/users",
+          url: "/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
           ncyBreadcrumb: {
