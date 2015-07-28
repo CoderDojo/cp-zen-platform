@@ -91,7 +91,7 @@ label {
 
 .cd-dashboard {
 	background: white;
-	padding: 20px;
+	padding: 0px 20px;
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
@@ -390,6 +390,21 @@ label {
   background-size: 18px 18px;
 }
 
+.cd-badges-dashboard {
+  .nav-tabs.nav-justified>.active>a {
+    color: @cd-orange;
+    border: 1px solid @cd-orange;
+    border-bottom-color: @cd-white;
+  }
+  input.has-error {
+    border: 1px solid @cd-red;
+  }
+  label.validationMessage {
+    color: @cd-red;
+    margin-left: 10px;
+  }
+}
+
 .user-registration, .cd-dojo-main {
   .cd-page-title {
     margin: 20px 0px;
@@ -439,6 +454,7 @@ label {
   .google-map {
     margin-top:15px;
   }
+
   .cd-checkbox {
     &.checkbox.has-error {
       margin-top: 0px;
@@ -551,6 +567,10 @@ label {
     min-width: 120px;
   }
 }
+
+.gm-style-iw {
+        left: 26px !important;
+      }
 
 .green-text {
   color: #00FF00;
@@ -781,6 +801,7 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 .badge-category-heading {
+  border-color: @cd-orange;
   font-size: 16px;
   font-weight: bold;
 }
@@ -819,6 +840,14 @@ div.dojo-container {
 
 img.dojo-thumbnail {
   width: 150px;
+}
+
+.panel-heading-with-buttons {
+  overflow:hidden;
+  .panel-heading-button {
+    float: right;
+    margin-left:10px;
+  }
 }
 
 .margin-left-78-percent {

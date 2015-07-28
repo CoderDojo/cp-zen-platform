@@ -237,7 +237,7 @@
           controller: 'review-champion-application-controller'
         })
         .state("my-dojos.manage-dojo-users", {
-          url: "/dashboard/dojo/:id/users",
+          url: "/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
           ncyBreadcrumb: {
@@ -316,10 +316,10 @@
           templateUrl: '/dojos/template/badges/accept'
         })
         .state('error-404', {
-          url:'/dashboard/404',
-          templateUrl: '/errors/template/404'
+          url:'/404',
+          templateUrl: '/errors/template/404_no_headers'
         });
-      $urlRouterProvider.otherwise('/dashboard/404');
+      $urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;

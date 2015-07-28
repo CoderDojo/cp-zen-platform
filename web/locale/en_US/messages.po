@@ -1462,3 +1462,13 @@ msgstr "PAGE NOT FOUND!"
 
 msgid "Founder"
 msgstr "Founder"
+
+msgid "Event Date"
+msgstr "Event Date"
+
+msgid "Waitlist"
+msgstr "Waitlist"
+
+msgid "New Applicant"
+msgstr "New Applicant"
+
