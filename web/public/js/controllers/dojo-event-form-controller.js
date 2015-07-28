@@ -37,7 +37,12 @@
     });
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService) {
+  function goToMyDojos($state, usSpinnerService) {
+    usSpinnerService.stop('create-event-spinner');
+    $state.go('my-dojos');
+  }
+
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
     $scope.today = new Date();
@@ -187,12 +192,17 @@
       } else {
         eventInfo.dates = [eventInfo.date];
       }
-      
-      cdEventsService.saveEvent(
-        eventInfo,
-        goToManageDojoEvents($state, usSpinnerService, dojoId),
-        console.error.bind(console)
-      );
+
+      if($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+        cdEventsService.saveEvent(
+          eventInfo,
+          goToManageDojoEvents($state, usSpinnerService, dojoId),
+          console.error.bind(console)
+        );
+      } else {
+        alertService.showError($translate.instant('Error setting up event'));
+        goToMyDojos($state, usSpinnerService, dojoId)
+      }
     };
 
     function addMap(eventPosition) {
@@ -233,7 +243,7 @@
           lat: parseFloat(position[0]),
           lng: parseFloat(position[1])
         });
-
+        $scope.dojoInfo = dojoInfo;
         done(null, dojoInfo);
 
       }, done);
@@ -329,6 +339,7 @@
       '$translate',
       'cdLanguagesService',
       'usSpinnerService',
+      'alertService',
       dojoEventFormCtrl
     ]);
 })();

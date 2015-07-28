@@ -1460,6 +1460,9 @@ msgstr "You do not have permission to update this Dojo."
 msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
 
+msgid "Error setting up event"
+msgstr "You can not setup an event for an Unverified or Inactive Dojo"
+
 msgid "Event Date"
 msgstr "Event Date"
 
