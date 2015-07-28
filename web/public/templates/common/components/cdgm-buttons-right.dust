@@ -1,1 +1,1 @@
-<li ng-if="user"><a ui-sref="start-dojo-wizard">{@i18n key="Start a Dojo"/}</a></li>
+<li ng-if="user"><a ng-click="goTo('start-dojo-wizard')">{@i18n key="Start a Dojo"/}</a></li>

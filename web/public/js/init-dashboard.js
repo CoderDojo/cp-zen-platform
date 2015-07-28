@@ -317,7 +317,7 @@
         })
         .state('error-404', {
           url:'/404',
-          templateUrl: '/errors/template/404'
+          templateUrl: '/errors/template/404_no_headers'
         });
       $urlRouterProvider.otherwise('/404');
     })

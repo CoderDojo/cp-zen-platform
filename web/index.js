@@ -163,7 +163,7 @@ server.register({
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
 
-  if (status !== 404) {
+  if (status !== 404 && status !== 401) {
     return reply.continue();
   }
 
