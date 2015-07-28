@@ -256,6 +256,18 @@
         .fallbackLanguage('en_US');
       }
     ])
+    .run(function ($window, $cookieStore) {
+      var doc = $window.document;
+      var googleCaptchaScriptId = 'loadCaptchaService';
+      var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
+      googleCaptchaScriptTag = doc.createElement('script');
+      googleCaptchaScriptTag.id = googleCaptchaScriptId;
+      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
+      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      googleCaptchaScriptTag.setAttribute('src',
+        'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
+      doc.head.appendChild(googleCaptchaScriptTag);
+    })
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'
     }));
