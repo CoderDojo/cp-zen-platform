@@ -13,7 +13,6 @@ var so = require('./options.' + env  + '.js');
 var seneca = module.exports = require('seneca')(so.main);
 var locale = require('locale');
 var languages = require('./config/languages.js');
-var _ = require('lodash');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new Hapi.Server(so.hapi)

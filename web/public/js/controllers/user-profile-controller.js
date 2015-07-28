@@ -322,9 +322,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   };
 
   cdCountriesService.listCountries(function(countries) {
-    $scope.countries = _.map(countries, function(country) {
-      return _.omit(country, 'entity$');
-    });
+    $scope.countries = countries;
   });
 
   var initialDate = new Date();
