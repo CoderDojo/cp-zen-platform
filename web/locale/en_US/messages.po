@@ -1472,3 +1472,5 @@ msgstr "Waitlist"
 msgid "New Applicant"
 msgstr "New Applicant"
 
+msgid "'Cannot find founder of dojo'"
+msgstr "'Cannot find founder of dojo'"

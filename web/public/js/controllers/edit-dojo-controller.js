@@ -61,6 +61,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 
 
   }, function(dojo, prevFounder , done){
+    
+    if(_.isEmpty(prevFounder)){
+      return done(null, dojo);
+    }
+
     cdUsersService.load(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
@@ -223,7 +228,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
         });
 
         cdDojoService.save(dojo, function(response) {
-          if($scope.founder.id !== $scope.prevFounder.id){
+          if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
             cdDojoService.updateFounder($scope.founder, function(response){
               alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
                 $state.go('my-dojos');
