@@ -7,7 +7,7 @@ function cdCountriesService($q, cdApi){
 
     return {
       listCountries: function(win, fail){
-        cdApi.get('geo/countries', function (countries) { 
+        cdApi.get('geo/countries', function (countries) {
           // Convert to array (and ensure array exists).
           countries = _.map(countries);
           // Sort based on browser/OS's locale.

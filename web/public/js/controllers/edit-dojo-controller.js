@@ -170,7 +170,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 
   $scope.setPlace = function(dojo, place) {
     dojo.placeName = place.name;
-      // TODO is this geonameId still used?
     dojo.placeGeonameId = place.geonameId;
     dojo.county = {};
     dojo.state = {};

@@ -252,7 +252,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   cdCountriesService.listCountries(function (countries) {
-    $scope.countries = _.map(countries);
+    $scope.countries = countries;
   });
 
   $scope.pushChangedDojo = function (dojo) {
