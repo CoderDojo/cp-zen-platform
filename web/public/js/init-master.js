@@ -223,7 +223,6 @@
           url:'/404',
           templateUrl: '/errors/template/404'
         });
-      //$urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
