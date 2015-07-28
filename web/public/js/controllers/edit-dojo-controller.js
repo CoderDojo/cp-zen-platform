@@ -56,8 +56,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 
       return done(null, dojo, response[0]);
       }, function(){
-        console.log("error");
-        return done('error');
+        return done($translate.instant('Failed to load Dojo'));
       });
 
 
