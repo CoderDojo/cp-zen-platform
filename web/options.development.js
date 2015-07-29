@@ -4,6 +4,13 @@ var path = require('path');
 var base = require('./options.base.js');
 
 module.exports = _.defaults({
+
+  log:{
+    map:[{
+      level:'debug', handler:function(){
+        console.log(JSON.stringify(arguments));
+      }}]
+  },
   'agreement-version' : 2,
   auth: {
     restrict: function (req, res, next) {
@@ -67,5 +74,4 @@ module.exports = _.defaults({
     "host": process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1',
     "port": 6379 // this isn't optioned
   }
-
 }, base);
