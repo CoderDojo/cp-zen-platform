@@ -41,7 +41,8 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         title: $translate.instant('Invite Ninja over 13'),
         templateUrl: '/profiles/template/invite-ninja-over-13',
         placement: 'top',
-        placeholder: $translate.instant('Enter Ninja Email Address')
+        placeholder: $translate.instant('Enter Ninja Email Address'),
+        show: false
       };
     } else {
       //No permission
@@ -500,10 +501,18 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     cdUsersService.inviteNinja(ninjaEmail, function (response) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showAlert($translate.instant('Invite Sent'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
     }, function (err) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showError($translate.instant('Error inviting Ninja'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
     });
+  }
+
+  $scope.toggleInviteNinjaPopover = function () {
+    $scope.inviteNinjaPopover.show = !$scope.inviteNinjaPopover.show;
   }
 
 }
