@@ -31,13 +31,20 @@
   }
 
   function goToManageDojoEvents($state, usSpinnerService, dojoId) {
-    usSpinnerService.stop('create-event-spinner');
+    if(usSpinnerService) {
+      usSpinnerService.stop('create-event-spinner');
+    }
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
     });
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService) {
+  function goToMyDojos($state, usSpinnerService) {
+    usSpinnerService.stop('create-event-spinner');
+    $state.go('my-dojos');
+  }
+
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
     $scope.today = new Date();
@@ -148,7 +155,7 @@
       $event.preventDefault();
       $event.stopPropagation();
 
-      goToManageDojoEvents($state, dojoId);
+      goToManageDojoEvents($state, null, dojoId);
     };
 
     $scope.submit = function($event, eventInfo, publish) {
@@ -164,7 +171,7 @@
       // Extend eventInfo
       eventInfo.position = eventPosition;
       eventInfo.status = publish ? 'published' : 'saved';
-    
+
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -187,12 +194,16 @@
       } else {
         eventInfo.dates = [eventInfo.date];
       }
-      
-      cdEventsService.saveEvent(
-        eventInfo,
-        goToManageDojoEvents($state, usSpinnerService, dojoId),
-        console.error.bind(console)
-      );
+
+      if($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+        cdEventsService.saveEvent(
+          eventInfo,
+          goToManageDojoEvents($state, usSpinnerService, dojoId)
+        );
+      } else {
+        alertService.showError($translate.instant('Error setting up event'));
+        goToMyDojos($state, usSpinnerService, dojoId)
+      }
     };
 
     function addMap(eventPosition) {
@@ -233,7 +244,7 @@
           lat: parseFloat(position[0]),
           lng: parseFloat(position[1])
         });
-
+        $scope.dojoInfo = dojoInfo;
         done(null, dojoInfo);
 
       }, done);
@@ -280,7 +291,7 @@
         var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
-        
+
         $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         done(null, event);
@@ -329,6 +340,7 @@
       '$translate',
       'cdLanguagesService',
       'usSpinnerService',
+      'alertService',
       dojoEventFormCtrl
     ]);
 })();
