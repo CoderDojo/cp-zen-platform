@@ -22,7 +22,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.dojoStates = json.verificationStates;
   });
 
-  $scoop.noop = angular.noop;
+  $scope.noop = angular.noop;
 
   $scope.toggleUserSelect = function(event){
     $scope.hideUserSelect = !$scope.hideUserSelect;
