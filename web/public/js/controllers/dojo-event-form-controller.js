@@ -171,7 +171,7 @@
       // Extend eventInfo
       eventInfo.position = eventPosition;
       eventInfo.status = publish ? 'published' : 'saved';
-    
+
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -198,8 +198,7 @@
       if($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
         cdEventsService.saveEvent(
           eventInfo,
-          goToManageDojoEvents($state, usSpinnerService, dojoId),
-          console.error.bind(console)
+          goToManageDojoEvents($state, usSpinnerService, dojoId)
         );
       } else {
         alertService.showError($translate.instant('Error setting up event'));
@@ -292,7 +291,7 @@
         var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
-        
+
         $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         done(null, event);

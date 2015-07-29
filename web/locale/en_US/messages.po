@@ -1461,7 +1461,7 @@ msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
 
 msgid "Error setting up event"
-msgstr "You can not setup an event for an Unverified or Inactive Dojo"
+msgstr "You cannot set up an event for an unverified or inactive Dojo"
 
 msgid "Event Date"
 msgstr "Event Date"
