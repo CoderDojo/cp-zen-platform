@@ -133,5 +133,13 @@ var controller = module.exports = [
     handler: function (request, reply) {
       reply.view('accounts/terms-and-conditions', request.locals);
     }
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/dojo-setup-confirm',
+    handler: function (request, reply){
+      reply.view('dojos/dojo-setup-confirm', request.locals);
+    }
   }
 ];
