@@ -32,7 +32,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       cdEventsService.saveApplication(newApplicant, function (response) {
         $scope.loadPage($scope.filter, true);
       }, function (err) {
-        alertService.showError($translate.instant('Error saving new applicant') + '<br>' + JSON.stringify(err));
+        alertService.showError($translate.instant('Error saving new applicant'));
       });
     }, function (err) {
       alertService.showError($translate.instant('Error loading profile') + '<br>' + JSON.stringify(err));

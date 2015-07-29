@@ -1475,5 +1475,11 @@ msgstr "Waitlist"
 msgid "New Applicant"
 msgstr "New Applicant"
 
+msgid "Check In"
+msgstr "Check In"
+
+msgid "This Dojo currently has no active events"
+msgstr "This Dojo currently has no active events"
+
 msgid "'Cannot find founder of dojo'"
 msgstr "'Cannot find founder of dojo'"
