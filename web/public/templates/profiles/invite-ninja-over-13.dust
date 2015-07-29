@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="input-group">
+    <div class="col-lg-10">
+      <form id="inviteNinjaForm" novalidate angular-validator angular-validator-submit="inviteNinja(inviteNinjaPopover.email)" name="inviteNinjaForm">
+        <span class="input-group-btn">
+          <input type="email" class="form-control" required placeholder="{{ inviteNinjaPopover.placeholder }}" name="ninjaEmail" id="ninjaEmail" ng-model="inviteNinjaPopover.email">
+          <button class="btn btn-success" type="submit">{@i18n key="Invite"/}</button>
+        </span>
+      </form>
+    </div>
+  </div>
+</div>

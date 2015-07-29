@@ -26,6 +26,7 @@
     'ncy-angular-breadcrumb',
     'vcRecaptcha',
     'ngFileUpload',
-    'ng-slide-down'
+    'ng-slide-down',
+    'popoverToggle'
   ]);
 })();
