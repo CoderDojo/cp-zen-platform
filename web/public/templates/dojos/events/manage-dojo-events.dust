@@ -4,7 +4,7 @@
     <legend>{@i18n key="Events for Dojo"/}: {{ dojo.name }}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
-        <div class="row">
+        <div class="row" ng-if="events.length > 0">
           <div class="col-md-12 table-responsive">
             <table id="dojoEventsTable" class="table cd-grid-table">
               <thead>
@@ -41,12 +41,15 @@
             </table>
           </div>
         </div>
-        <div class="row col-lg-6 col-lg-offset-4">
-        <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" boundary-links="true"></pagination>
+        <div class="row col-lg-6 col-lg-offset-4" ng-if="events.length > 0">
+          <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" boundary-links="true"></pagination>
+        </div>
+        <div ng-if="!events || events.length < 1">
+          {@i18n key="This Dojo currently has no active events"/}
+        </div>
+        <span class="help-block"></span>
+        <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
       </div>
-      <span class="help-block"></span>
-      <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
     </div>
   </div>
-</div>
 </div>

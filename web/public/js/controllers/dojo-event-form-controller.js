@@ -171,6 +171,7 @@
       // Extend eventInfo
       eventInfo.position = eventPosition;
       eventInfo.status = publish ? 'published' : 'saved';
+      eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
