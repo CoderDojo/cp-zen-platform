@@ -94,6 +94,12 @@ function cdUsersService(cdApi, $q){
       var promise = deferred.promise;
       cdApi.get('users/dojo_admins_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
       return promise;
+    },
+    inviteNinja: function (ninjaEmail, win, fail) {
+      cdApi.post('profiles/invite_ninja', {ninjaEmail: ninjaEmail}, win, fail || topfail);
+    },
+    approveInviteNinja: function (data, win, fail) {
+      cdApi.post('profiles/approve_invite_ninja', {data: data}, win, fail || topfail);
     }
   };
 }

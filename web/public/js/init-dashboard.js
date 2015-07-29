@@ -318,6 +318,14 @@
         .state('error-404', {
           url:'/404',
           templateUrl: '/errors/template/404_no_headers'
+        })
+        .state('approve-invite-ninja', {
+          url:'/dashboard/approve_invite_ninja/:parentProfileId/:inviteTokenId',
+          controller:'approve-invite-ninja-controller',
+          templateUrl: '/profiles/template/approve-invite-ninja',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
         });
       $urlRouterProvider.otherwise('/404');
     })

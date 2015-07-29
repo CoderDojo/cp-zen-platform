@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError('An error has occurred');
@@ -37,6 +37,12 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   if($state.current.name === 'edit-user-profile') {
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
+      $scope.inviteNinjaPopover = {
+        title: $translate.instant('Invite Ninja over 13'),
+        templateUrl: '/profiles/template/invite-ninja-over-13',
+        placement: 'top',
+        placeholder: $translate.instant('Enter Ninja Email Address')
+      };
     } else {
       //No permission
       $state.go('error-404');
@@ -489,11 +495,22 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return false;
   }
 
+  $scope.inviteNinja = function (ninjaEmail) {
+    usSpinnerService.spin('user-profile-spinner');
+    cdUsersService.inviteNinja(ninjaEmail, function (response) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showAlert($translate.instant('Invite Sent'));
+    }, function (err) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showError($translate.instant('Error inviting Ninja'));
+    });
+  }
+
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', cdUserProfileCtrl]);
 

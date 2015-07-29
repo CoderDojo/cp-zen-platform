@@ -1472,3 +1472,21 @@ msgstr "Waitlist"
 msgid "New Applicant"
 msgstr "New Applicant"
 
+msgid "Invite Ninja over 13"
+msgstr "Invite Ninja over 13"
+
+msgid "Enter Ninja Email Address"
+msgstr "Enter Ninja Email Address"
+
+msgid "Error inviting Ninja"
+msgstr "Error inviting Ninja"
+
+msgid "Successfully approved invite Ninja request."
+msgstr "Successfully approved invite Ninja request."
+
+msgid "Error approving invite Ninja request."
+msgstr "Error approving invite Ninja request."
+
+msgid "Approve Invite Ninja Request"
+msgstr "Approve Invite Ninja Request"
+
