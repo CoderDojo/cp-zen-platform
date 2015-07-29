@@ -134,6 +134,9 @@
       },
       getDojoConfig: function(win, fail) {
         cdApi.get('get_dojo_config', win, fail || topfail);
+      },
+      updateFounder: function(founder, win, fail) {
+        cdApi.post('update_founder', {founder: founder},  win, fail || topfail);
       }
     };
   }

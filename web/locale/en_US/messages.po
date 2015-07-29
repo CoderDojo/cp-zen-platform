@@ -1460,6 +1460,9 @@ msgstr "You do not have permission to update this Dojo."
 msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
 
+msgid "Founder"
+msgstr "Founder"
+
 msgid "Error setting up event"
 msgstr "You cannot set up an event for an unverified or inactive Dojo"
 
@@ -1490,3 +1493,11 @@ msgstr "Error approving invite Ninja request."
 msgid "Approve Invite Ninja Request"
 msgstr "Approve Invite Ninja Request"
 
+msgid "Check In"
+msgstr "Check In"
+
+msgid "This Dojo currently has no active events"
+msgstr "This Dojo currently has no active events"
+
+msgid "'Cannot find founder of dojo'"
+msgstr "'Cannot find founder of dojo'"

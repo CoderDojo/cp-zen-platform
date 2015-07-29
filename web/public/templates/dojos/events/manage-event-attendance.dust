@@ -13,7 +13,7 @@
   <div ng-if="event.type === 'one-off'" class="col-lg-4">
     <span class="col-md-10"><b>{@i18n key="Event Date"/}</b>: {{ event.dates[0].text }}</span>
   </div>
-    
+
   <div class="row table-responsive">
     <table id="eventApplicationsTable" class="table cd-grid-table">
       <thead>
@@ -27,7 +27,7 @@
           </th>
           <th>{@i18n key="Age"/}</th>
           <th>{@i18n key="Parents/Guardians"/}</th>
-          <th>{@i18n key="Attended"/}</th>
+          <th>{@i18n key="Check In"/}</th>
         </tr>
       </thead>
 

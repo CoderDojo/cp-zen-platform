@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage',
   'usSpinnerService', '$cookieStore', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
-  auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, 
+  auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage,
   usSpinnerService, $cookieStore) {
 
   $scope.referer = $state.params.referer;
@@ -102,17 +102,20 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
+        if ($scope.redirect) {
+          $window.location.href = $scope.redirect;
+        } else {
           var user = data.user;
           if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
           $localStorage.recommendedPracticesAlertShown = false;
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
-        },
-        function(){
-          $scope.errorMessage = $translate.instant('Invalid email or password');
-          $scope.errorMessage = 'Invalid email or password!';
         }
+      },
+      function(){
+        $scope.errorMessage = $translate.instant('Invalid email or password');
+      }
      );
   };
 

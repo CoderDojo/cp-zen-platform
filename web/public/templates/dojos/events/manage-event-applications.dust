@@ -8,10 +8,10 @@
             <span class="col-md-3"><b>{@i18n key="Capacity"/}:</b> {{ event.capacity }}</span>
             <span class="col-md-3"><b>{@i18n key="Attending"/}:</b> {{ attending }}</span>
             <span class="col-md-3"><b>{@i18n key="Waitlist"/}:</b> {{ waitlist }}</span>
-            <span class="col-md-3"><button ng-click="createNewApplicant()" class="btn btn-primary">{@i18n key="New Applicant"/}</button>
+            <span class="col-md-3"><span ng-click="createNewApplicant()" class="btn btn-primary">{@i18n key="New Applicant"/}</span></span>
           </div>
           <table id="eventApplicationsTable" class="table cd-grid-table">
-            <thead>
+            <thead ng-if="applications.length > 0">
               <tr>
                 <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
                 <th class="ten-percent-width">{@i18n key="Email"/}
@@ -41,7 +41,7 @@
               </tr>
               <tr ng-switch-when="true">
                 <td>
-                  <ui-select name="dojoMembersList" ng-model="newApplicant.member"> 
+                  <ui-select name="dojoMembersList" ng-model="newApplicant.member">
                     <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a Dojo member..."/}">{{ $select.selected.name  }}</ui-select-match>
                     <ui-select-choices repeat="dojoMember in dojoMembers">
                       <span ng-bind-html="dojoMember.name"></span>
@@ -49,7 +49,7 @@
                   </ui-select>
                 </td>
                 <td>
-                  <button class="btn btn-success" ng-click="saveNewApplicant(newApplicant.member)">{@i18n key="Save"/}</button> 
+                  <button class="btn btn-success" ng-click="saveNewApplicant(newApplicant.member)">{@i18n key="Save"/}</button>
                   <button class="btn btn-primary" ng-click="cancelNewApplicant()">{@i18n key="Cancel"/}</button>
                 </td>
                 <td></td>
@@ -59,8 +59,9 @@
           </table>
         </div>
       </div>
-      <div class="row col-lg-6 col-lg-offset-4">
+      <div class="row col-lg-6 col-lg-offset-4" ng-if="applications.length > 0">
       <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" boundary-links="true"></pagination>
     </div>
   </div>
+</div>
 </div>
