@@ -200,4 +200,14 @@ _.each(so.client, function(opts) {
    seneca.client(opts);
 });
 
+//Capture seneca messages:
+seneca.sub({}, captureAllMessages);
+
+function captureAllMessages(args) {
+  var point = {};
+  var meta  = args.meta$;
+  point['pattern'] = meta.pattern;
+  console.log('*** captured = ', args);
+}
+
 // TODO add session, cookie middleware here using seneca web?
