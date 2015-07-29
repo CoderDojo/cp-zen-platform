@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '$q', function(cdCountriesService, $q) {
+angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '$q', 'Geocoder', function(cdCountriesService, $q, Geocoder) {
   var utils = {};
 
   utils.toTags = function(values){
@@ -142,6 +142,29 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
       }, function (err) {
         deferred.reject(err);
       });
+    }
+    return deferred.promise;
+  }
+
+  utils.getLocationFromAddress = function(obj) {
+    var deferred = $q.defer();
+    if(obj && obj.place) {
+      if(!obj.placeName) obj.placeName = obj.place.nameWithHierarchy;
+      var address = obj.placeName;
+      for (var adminidx=4; adminidx >= 1; adminidx--) {
+        if (obj['admin'+adminidx+'Name']) {
+          address = address + ', ' + obj['admin'+adminidx+'Name'];
+        }
+      }
+      var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
+      address = address + ', ' + obj.countryName;
+      Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+        deferred.resolve(data);
+      }, function (err) {
+        deferred.reject('Error geocoding');
+      });
+    } else {
+      deferred.reject('No data to geocode');
     }
     return deferred.promise;
   }

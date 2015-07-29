@@ -2,7 +2,7 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, $localStorage, alertService,
-  WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, Geocoder, gmap, $translate, utilsService,
+  WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
   $sanitize, vcRecaptchaService, intercomService) {
 
   $scope.stepFinishedLoading = false;
@@ -16,7 +16,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
                   ];
 
   $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
-
+  setupGoogleMap();
   //Check if user has already started the wizard.
   auth.get_loggedin_user(function(user) {
     var currentPath = $location.path();
@@ -124,8 +124,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
   }
 
-  setupGoogleMap();
-
   $scope.scrollToInvalid = function(form){
     // temp fix
     if(currentStepInt === 3) {
@@ -222,7 +220,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     $scope.hideIndicators = false;
     $scope.stepTwoShowGmap = true;
-    $scope.markers = [];
 
     currentStepInt = 1;
 
@@ -402,7 +399,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     $scope.buttonText = "Create Dojo"
       
     $scope.stepFourShowGmap = true;
-    $scope.markers = [];
       
     currentStepInt = 3;
     var currentUser;
@@ -497,8 +493,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   }
 
   function setupGoogleMap() {
-    $scope.markers = [];
-    $scope.model = {};
+    $scope.model = {markers:[]};
 
     if(gmap) {
       $scope.mapLoaded = true;
@@ -518,10 +513,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
 
     $scope.addMarker = function($event, $params, obj) {
-      angular.forEach($scope.markers, function(marker) {
+      angular.forEach($scope.model.markers, function(marker) {
         marker.setMap(null);
       });
-      $scope.markers.push(new google.maps.Marker({
+      $scope.model.markers.push(new google.maps.Marker({
         map: $scope.model.map,
         position: $params[0].latLng
       }));
@@ -529,37 +524,21 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     };
 
     $scope.getLocationFromAddress = function(obj) {
-      if(obj && obj.place) {
-        if(!obj.placeName) return alertService.showAlert($translate.instant('Please add your location manually by clicking on the map.'));
-        var address = obj.placeName;
-        for (var adminidx=4; adminidx >= 1; adminidx--) {
-          if (obj['admin'+adminidx+'Name']) {
-            address = address + ', ' + obj['admin'+adminidx+'Name'];
-          }
-        }
-
-        var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
-        address = address + ', ' + obj.countryName;
-
-        Geocoder.latLngForAddress(addr1 + address).then(function (data) {
-          placePinOnMap(data, obj);
-        },
-        function (data) {
-          Geocoder.latLngForAddress(address).then(function (data2) {
-            placePinOnMap(data2, obj);
-          });
-        });
-      }
-
-      function placePinOnMap(data, obj) {
+      utilsService.getLocationFromAddress(obj).then(function (data) {
         $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
         $scope.model.map.panTo($scope.mapOptions.center);
-        $scope.markers.push(new google.maps.Marker({
+        angular.forEach($scope.model.markers, function(marker) {
+          marker.setMap(null);
+        });
+        $scope.model.markers.push(new google.maps.Marker({
           map: $scope.model.map,
           position: $scope.mapOptions.center
         }));
         obj.coordinates = data.lat + ', ' + data.lng;
-      }
+      }, function (err) {
+        //Ask user to add location manually if google geocoding can't find location.
+        alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+      });
     }
 
   }
@@ -568,5 +547,5 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 
-  'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'Geocoder', 'gmap', '$translate', 'utilsService',
+  'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
   '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
