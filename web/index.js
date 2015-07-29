@@ -200,14 +200,11 @@ _.each(so.client, function(opts) {
    seneca.client(opts);
 });
 
-//Capture seneca messages:
+// capture seneca messages - leaving this here as we *may* do something with it
+// if the debug level json is not good enough logging.
+/*
 seneca.sub({}, captureAllMessages);
-
 function captureAllMessages(args) {
-  var point = {};
-  var meta  = args.meta$;
-  point['pattern'] = meta.pattern;
-  console.log('*** captured = ', args);
+  console.log('*** captured = ', JSON.stringify(args));
 }
-
-// TODO add session, cookie middleware here using seneca web?
+*/
