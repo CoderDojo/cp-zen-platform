@@ -161,7 +161,7 @@
           controller: 'login'
         })
         .state("register-account", {
-          url: "/register",
+          url: "/register?referer",
           templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
           params: {
             referer:null

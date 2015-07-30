@@ -120,7 +120,7 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
         }
       }, function () {
         //Not logged in
-        $state.go('register-account', {referer:$location.url()});
+        $window.location.href = '/register?referer=' + encodeURIComponent($location.url());
       });
     }
   }
