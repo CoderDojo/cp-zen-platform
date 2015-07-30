@@ -14,7 +14,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   var isYouthProfile = $state.current.name === 'add-child';
 
-  if(_.isEmpty(agreement.data) && !isYouthProfile){
+  if(_.isEmpty(agreement.data) && !isYouthProfile && !_.isEmpty(loggedInUser.data)){
     $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ loggedInUser.data.id);
   }
 
