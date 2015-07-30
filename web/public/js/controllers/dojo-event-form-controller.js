@@ -196,14 +196,18 @@
         eventInfo.dates = [eventInfo.date];
       }
 
-      if($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-        cdEventsService.saveEvent(
-          eventInfo,
-          goToManageDojoEvents($state, usSpinnerService, dojoId)
-        );
-      } else {
-        alertService.showError($translate.instant('Error setting up event'));
-        goToMyDojos($state, usSpinnerService, dojoId)
+      if(!$scope.dojoInfo) {
+        loadDojo(function(){
+          if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+            cdEventsService.saveEvent(
+              eventInfo,
+              goToManageDojoEvents($state, usSpinnerService, dojoId)
+            );
+          } else {
+            alertService.showError($translate.instant('Error setting up event'));
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+        })
       }
     };
 
@@ -295,6 +299,7 @@
 
         $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
+        $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         done(null, event);
       }, done);
     }
