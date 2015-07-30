@@ -23,17 +23,15 @@
                   <div class="panel-collapse collapse" ng-class="{'in': step.open}" ng-repeat="checkboxInput in step.checkboxes">
                     <div class="checkbox checkbox-primary">
                       <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}"
-                        ng-init="dojoLead.application.setupYourDojo[checkboxInput.name]"
                         ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
-                        ng-model="dojoLead.application.setupYourDojo[checkboxInput.name]">
+                        ng-model="setupDojo[checkboxInput.name]">
                       <label for="{{ checkboxInput.name }}">
                         {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
                       </label>
                       <input type="text" ng-if="checkboxInput.textField"
-                        ng-init="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']"
-                        ng-show="dojoLead.application.setupYourDojo[checkboxInput.name] === true"
+                        ng-show="setupDojo[checkboxInput.name] === true"
                         class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
-                        ng-model="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']">
+                        ng-model="setupDojo[checkboxInput.name + 'Text']">
                     </div>
                   </div>
                 </div>
