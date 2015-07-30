@@ -18,6 +18,19 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
   $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
   setupGoogleMap();
+
+  var fail = function(){
+    alertService.showError($translate.instant('error.general'));
+  };
+
+  var failSave = function(){
+    alertService.showError($translate.instant('An error has occurred while saving dojo lead'));
+  };
+
+  var failAuth = function(){
+    alertService.showError($translate.instant('Unable to retrieve user details'));
+  };
+
   //Check if user has already started the wizard.
   auth.get_loggedin_user(function(user) {
     var currentPath = $location.path();
@@ -28,7 +41,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.dojoConfig = json;
         $scope.dojoStages = json.dojoStages;
         $scope.dojoStates = json.verificationStates;
-      });
+      }, fail);
 
       var query = { query : {
         filtered : {
@@ -74,7 +87,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               //Go back to Dojo Listing step
               initStep(3);
             }
-          });
+          }, fail);
         } else if(results.length > 0 && !uncompletedDojoLead) {
           //make a copy of dojoLead here then initStep 2
           var dojoLead = _.cloneDeep(results[0]);
@@ -85,8 +98,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           delete dojoLead.id;
 
           cdDojoService.saveDojoLead(dojoLead, function(response) {
-            initStep(2);
-          });
+              initStep(2);
+            }, failSave);
         } else {
           if(uncompletedDojoLead){
             cdAgreementsService.loadUserAgreement(user.id, function(response){
@@ -96,12 +109,14 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               } else {
                 initStep(1, 'charter');
               }
-            });
+            }, fail);
           } else {
             //go to champion registration page
             initStep(1);
           }
         }
+      }, function(){
+        alertService.showError($translate.instant('error.general'));
       });
     }
   }, function () {
@@ -236,7 +251,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.champion.email = $scope.champion ? currentUser.email : '';
         $scope.champion.name = $scope.champion ? currentUser.name : '';
       }
-    });
+    }, failAuth);
 
     if(subStep && subStep === 'charter'){
       $scope.showCharterAgreement();
@@ -268,7 +283,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             $scope.showCharterAgreement();
             intercomService.InitIntercom();
-          });
+          },failSave);
         };
 
         openConfirmation(win);
@@ -278,7 +293,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.countries = _.map(countries, function (country) {
           return _.omit(country, 'entity$');
         });
-      });
+      }, fail);
     }
 
     $scope.acceptCharterAgreement = function (agreement) {
@@ -290,7 +305,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
       cdAgreementsService.save(agreementObj, function (response) {
         setupStep3();
-      });
+      },failSave);
 
 
     }
@@ -343,7 +358,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     var currentUser;
     auth.get_loggedin_user(function (user) {
       currentUser = user;
-    });
+    }, failAuth);
 
     cdDojoService.loadSetupDojoSteps(function (steps) {
       $scope.steps = _.map(steps, function(step){
@@ -370,7 +385,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         return steps;
       });
       $scope.steps = steps;
-    });
+    }, fail);
 
     $scope.submitSetupYourDojo = function (setupDojo) {
 
@@ -381,7 +396,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           updatedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
             setupStep4();
-          });
+          }, failSave);
         });
       };
 
@@ -416,14 +431,14 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     var currentUser;
     auth.get_loggedin_user(function(user) {
       currentUser = user;
-    });
+    }, failAuth);
 
     $scope.dojo = {};
     $scope.dojo.stage = "0";
 
     auth.get_loggedin_user(function(user) {
       $scope.user = user;
-    });
+    }, failAuth);
 
 
 
@@ -434,7 +449,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.countries = _.map(countries, function(country) {
         return _.omit(country, 'entity$');
       });
-    });
+    }, fail);
 
 
     $scope.setCountry = function(dojo, country) {
@@ -499,8 +514,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
                 bannerTimeCollapse: 150000
               });
             });
-          });
-        }); 
+          },failSave);
+        }, fail); 
       };
 
       openConfirmation(win);
