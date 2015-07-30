@@ -197,11 +197,19 @@
       }
 
       if(!$scope.dojoInfo) {
-        loadDojo(function(){
+        loadDojo(function(err){
+          if(err) {
+            alertService.showError($translate.instant('An error has occurred while loading Dojo') + ' ' + err);
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
           if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
             cdEventsService.saveEvent(
               eventInfo,
-              goToManageDojoEvents($state, usSpinnerService, dojoId)
+              goToManageDojoEvents($state, usSpinnerService, dojoId),
+              function(err){
+                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+                goToMyDojos($state, usSpinnerService, dojoId)
+              }
             );
           } else {
             alertService.showError($translate.instant('Error setting up event'));
@@ -212,7 +220,11 @@
         if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
           cdEventsService.saveEvent(
             eventInfo,
-            goToManageDojoEvents($state, usSpinnerService, dojoId)
+            goToManageDojoEvents($state, usSpinnerService, dojoId),
+            function(err){
+              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+              goToMyDojos($state, usSpinnerService, dojoId)
+            }
           );
         } else {
           alertService.showError($translate.instant('Error setting up event'));

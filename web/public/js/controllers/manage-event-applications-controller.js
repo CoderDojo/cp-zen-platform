@@ -124,18 +124,17 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         $scope.totalItems = result.total;
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
           var dojoMembers = response;
-          var dojoMembersToDelete = [];
+          var availableMembers = [];
 
           //Only show users that are not already in $scope.applications
           for (var i = dojoMembers.length - 1; i >= 0; i--) {
             var application = _.findWhere($scope.applications, {userId: dojoMembers[i].id});
-            if (application) dojoMembers.splice(i, 1);
+            if (!application) { availableMembers.push(dojoMembers[i]) }
           }
 
-          $scope.dojoMembers = dojoMembers;
+          $scope.dojoMembers = availableMembers;
         });
       });
-
     });
   }
 
