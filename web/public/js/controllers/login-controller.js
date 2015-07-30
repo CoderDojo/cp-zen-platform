@@ -125,7 +125,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.errorMessage = ''
 
     if (!$scope.forgotPasswordForm.$valid) {
-      return
+      usSpinnerService.stop('login-spinner');
+      return;
     }
 
     auth.reset({
