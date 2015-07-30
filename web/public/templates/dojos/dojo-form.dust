@@ -88,7 +88,7 @@
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
             <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
-              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
               </ui-select-choices>
@@ -290,7 +290,7 @@
               popover-trigger="mouseenter"
               popover-placement="left"
               popover-title="{@i18n key="Mailing List"/}"
-              popover="{@i18n key="dojo.edit.mailinglist.description"/}">
+              popover="{@i18n key="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."/}">
             </a>
           </label>
           <div class="col-lg-8">

@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+  /*global $*/
 
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
     $scope.dojoId = $stateParams.dojoId;
@@ -36,7 +37,7 @@
         $scope.loadPage($scope.filter, true);
       });
     }
-        
+
     $scope.loadPage = function (filter, resetFlag, cb) {
       cb = cb || function () {};
       //Only list events for this Dojo
@@ -64,7 +65,7 @@
             var eventDate = event.dates[0];
             event.formattedDate = moment(eventDate).format('MMMM Do YYYY');
           }
-          
+
           //Retrieve number of applicants & attendees
           cdEventsService.searchApplications({event_id: event.id}, function (result) {
             var numOfApplicants = result.length;
