@@ -579,4 +579,4 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 
   'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
-  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', '$timeout', startDojoWizardCtrl]);
+  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', startDojoWizardCtrl]);
