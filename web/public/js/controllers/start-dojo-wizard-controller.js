@@ -5,6 +5,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
   WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
   $sanitize, vcRecaptchaService, intercomService, $modal) {
 
+  $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
   $scope.wizardCurrentStep = '';
   var currentStepInt = 0;
@@ -125,7 +126,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
   }
 
-  var scrollToInvalid = function(form){
+  $scope.scrollToInvalid = function(form){
     // temp fix
     if(currentStepInt === 3) {
       $scope.getLocationFromAddress($scope.dojo);
@@ -136,15 +137,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     if(form.$invalid){
       angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
-    }
-  };
-
-  $scope.preSubmitForm = function(form, $event){
-    scrollToInvalid(form);
-
-    $event.preventDefault();
-    if(form.$valid){
-      $scope.openConfirmation(form);
     }
   };
 
@@ -266,17 +258,21 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.answers = ['Yes', 'No'];
 
       $scope.save = function (champion) {
-        var dojoLead = {application: {}};
-        dojoLead.application.championDetails = champion;
-        dojoLead.userId = currentUser.id;
-        dojoLead.email = currentUser.email;
-        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        dojoLead.completed = false;
-        cdDojoService.saveDojoLead(dojoLead, function (response) {
-          $scope.showCharterAgreement();
-          intercomService.InitIntercom();
-        });
-      }
+        var win = function(){
+          var dojoLead = {application: {}};
+          dojoLead.application.championDetails = champion;
+          dojoLead.userId = currentUser.id;
+          dojoLead.email = currentUser.email;
+          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          dojoLead.completed = false;
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            $scope.showCharterAgreement();
+            intercomService.InitIntercom();
+          });
+        };
+
+        openConfirmation(win);
+      };
 
       cdCountriesService.listCountries(function (countries) {
         $scope.countries = _.map(countries, function (country) {
@@ -377,15 +373,20 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     });
 
     $scope.submitSetupYourDojo = function (setupDojo) {
-      cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-        var updatedDojoLead = response;
-        updatedDojoLead.application.setupYourDojo = setupDojo;
-        updatedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
-          setupStep4();
+
+      var win = function(){
+        cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
+          var updatedDojoLead = response;
+          updatedDojoLead.application.setupYourDojo = setupDojo;
+          updatedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          cdDojoService.saveDojoLead(updatedDojoLead, function(response) {
+            setupStep4();
+          });
         });
-      });
-    }
+      };
+
+      openConfirmation(win);
+    };
 
     $scope.openAllSteps = function (context) {
       var formInvalid = context.setupYourDojoForm.$invalid;
@@ -393,8 +394,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.steps.map(function(step){
           step.open = true;
         });
-      }
-    }
+      } 
+    };
 
     if(!wizardRedirect) {
       WizardHandler.wizard().goTo(2, true);
@@ -411,6 +412,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     $scope.stepFourShowGmap = true;
       
     currentStepInt = 3;
+    
     var currentUser;
     auth.get_loggedin_user(function(user) {
       currentUser = user;
@@ -423,23 +425,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.user = user;
     });
 
-    $scope.openConfirmation = function (form) {
-
-    var modalInstance = $modal.open({
-        animation: true,
-        templateUrl: '/templates/dojo-setup-confirm',
-        controller: 'dojoSetupConfirmationCtrl',
-      });
-
-      modalInstance.result.then(function (submitForm) {
-        if(submitForm === true){
-          var name = form.$name;
-          angular.element('form[name=' + name +  ']').submit();
-        }
-      }, function () {
-        
-      });
-    };
 
 
 
@@ -451,7 +436,6 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       });
     });
 
-    $scope.noop = angular.noop;
 
     $scope.setCountry = function(dojo, country) {
       dojo.countryName = country.countryName;
@@ -491,32 +475,36 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     };
 
     $scope.save = function(dojo) {
-      _.each(sanitizeCdForms.editDojo, function(item, i) {
-        if(_.has(dojo, item)) {
-          dojo[item] = $sanitize(dojo[item]);
-        }
-      });
+      var win = function(){
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
+          }
+        });
 
-      cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-        var dojoLead = response;
-        dojoLead.application.dojoListing = dojo;
-        dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        cdDojoService.saveDojoLead(dojoLead, function (response) {
-          dojo.dojoLeadId = response.id;
-          cdDojoService.save(dojo, function (response) {
+        cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
+          var dojoLead = response;
+          dojoLead.application.dojoListing = dojo;
+          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            dojo.dojoLeadId = response.id;
+            cdDojoService.save(dojo, function (response) {
 
-            //update intercom champion dojos
-            intercomService.updateIntercom(response.dojo_id);
+              //update intercom champion dojos
+              intercomService.updateIntercom(response.dojo_id);
 
-            $state.go('home', {
-              bannerType:'success',
-              bannerMessage: $translate.instant('dojo.create.success'),
-              bannerTimeCollapse: 150000
+              $state.go('home', {
+                bannerType:'success',
+                bannerMessage: $translate.instant('dojo.create.success'),
+                bannerTimeCollapse: 150000
+              });
             });
           });
-        });
-      })
-    }
+        }); 
+      };
+
+      openConfirmation(win);
+    };
 
     if(!wizardRedirect) {
       WizardHandler.wizard().goTo(3, true);
@@ -575,10 +563,20 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
 
   }
+  var openConfirmation = function (win, fail) {
+
+    var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: '/templates/dojo-setup-confirm',
+        controller: 'dojoSetupConfirmationCtrl',
+      });
+
+    modalInstance.result.then(win, fail);
+  };
 
 }
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 
   'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
-  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', startDojoWizardCtrl]);
+  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', '$timeout', startDojoWizardCtrl]);
