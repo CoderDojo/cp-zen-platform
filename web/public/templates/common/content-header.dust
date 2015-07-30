@@ -39,7 +39,7 @@
           {@i18n key="Resources"/}</span></a>
     </span>
     <span class="cd-logo-container">
-      <a ng-click="goTo('home')"><span class="cd-logo"></span></a>
+      <a class="pointer" ng-click="goTo('home')"><span class="cd-logo"></span></a>
     </span>
   </div>
 </div>
