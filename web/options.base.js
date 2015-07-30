@@ -5,7 +5,7 @@ var log = function() {
 
   // seneca custom log handlers
   function debugHandler() {
-    console.log(JSON.stringify(arguments));
+    //    console.log(JSON.stringify(arguments));
 
     if (process.env.LOGENTRIES_ENABLED === 'true') {
       assert.ok(process.env.LOGENTRIES_DEBUG_TOKEN, 'No LOGENTRIES_DEBUG_TOKEN set');

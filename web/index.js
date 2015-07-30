@@ -200,6 +200,8 @@ _.each(so.client, function(opts) {
    seneca.client(opts);
 });
 
+//seneca.logroute( {level:'all' });
+
 // capture seneca messages - leaving this here as we *may* do something with it
 // if the debug level json is not good enough logging.
 /*
