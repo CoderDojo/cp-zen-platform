@@ -203,15 +203,16 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       $scope.attending--;
       $scope.waitlist++;
     }
-    
-    application = _.omit(application, ['user', 'age', 'parents']);
-    cdEventsService.updateApplication(application, function(response){
 
-      AlertBanner.publish({
-        type: 'info',
-        message: $translate.instant(response.name + ' ' + 'has been successfully approved'),
-        timeCollapse: 5000
-      });
+    application = _.omit(application, ['user', 'age', 'parents']);
+    cdEventsService.updateApplication(application, function (response) {
+      if (response.status === 'approved') {
+        AlertBanner.publish({
+          type: 'info',
+          message: response.name + ' ' + $translate.instant('has been successfully approved'),
+          timeCollapse: 5000
+        });
+      }
     }, function (err) {
       alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
     });

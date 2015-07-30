@@ -208,6 +208,16 @@
             goToMyDojos($state, usSpinnerService, dojoId)
           }
         })
+      } else {
+        if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+          cdEventsService.saveEvent(
+            eventInfo,
+            goToManageDojoEvents($state, usSpinnerService, dojoId)
+          );
+        } else {
+          alertService.showError($translate.instant('Error setting up event'));
+          goToMyDojos($state, usSpinnerService, dojoId)
+        }
       }
     };
 
