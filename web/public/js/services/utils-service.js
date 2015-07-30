@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('utilsService', function() {
+angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '$q', 'Geocoder', function(cdCountriesService, $q, Geocoder) {
   var utils = {};
 
   utils.toTags = function(values){
@@ -86,5 +86,55 @@ angular.module('cpZenPlatform').factory('utilsService', function() {
     return utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
   }
 
+  utils.getPlaces = function (countryCode, $select) {
+    var deferred = $q.defer();
+    var search = $select.search;
+    
+    if (!countryCode || !search.length || search.length < 3) {
+      deferred.resolve([]);
+    } else {
+      var query = {
+        countryCode: countryCode,
+        search: search
+      };
+
+      cdCountriesService.listPlaces(query, function (places) {
+        if(_.isEmpty(places) && $select.search && !$select.clickTriggeredSelect) {
+          places.push($select.search);
+        }
+        deferred.resolve(_.map(places, function (name) {
+          return { nameWithHierarchy: name };
+        }));
+      }, function (err) {
+        deferred.reject(err);
+      });
+    }
+
+    return deferred.promise;
+  }
+
+  utils.getLocationFromAddress = function(obj) {
+    var deferred = $q.defer();
+    if(obj && obj.place) {
+      if(!obj.placeName) obj.placeName = obj.place.nameWithHierarchy;
+      var address = obj.placeName;
+      for (var adminidx=4; adminidx >= 1; adminidx--) {
+        if (obj['admin'+adminidx+'Name']) {
+          address = address + ', ' + obj['admin'+adminidx+'Name'];
+        }
+      }
+      var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
+      address = address + ', ' + obj.countryName;
+      Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+        deferred.resolve(data);
+      }, function (err) {
+        deferred.reject('Error geocoding');
+      });
+    } else {
+      deferred.reject('No data to geocode');
+    }
+    return deferred.promise;
+  }
+
   return utils;
-});
+}]);

@@ -45,8 +45,8 @@
         <div class="form-group">
           <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
-            <ui-select name="country"  ng-model="profile.country" on-select="setCountry(profile, $item)" required>
-              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
+            <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)" required>
+              <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
               <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                 <span ng-bind-html="country.countryName | highlight: $select.search"></span>
               </ui-select-choices>
@@ -60,10 +60,10 @@
         <div class="form-group">
           <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
-            <ui-select name="place" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
+            <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
               <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places"
-                  refresh="getPlaces(profile.country.alpha2, $select.search)"
+                  refresh="getPlaces(profile.country.alpha2, $select)"
                   refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
               </ui-select-choices>
@@ -111,7 +111,7 @@
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
           <label for="projects" class="col-sm-4 control-label">{@i18n key="Projects"/} </label>
           <div class="col-sm-8">
-            <tags-input ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></tags-input>
+            <textarea class="form-control" ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></textarea>
           </div>
         </div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
@@ -138,7 +138,7 @@
           </div>
           <div class="radio">
             <input type="radio" ng-model="profile.gender" name="gender" id="male" value="Male">
-            <label for="female">
+            <label for="male">
               {@i18n key="Male"/}
             </label>
           </div>

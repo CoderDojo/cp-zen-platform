@@ -1,6 +1,6 @@
 <div ng-show="showCharterAgreementFlag">
   <div class="cd-create-dojo-container">
-    <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
+    <form id="createChampionForm" ng-enter="noop()" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
         <h3 class="cd-page-header">{@i18n key="CoderDojo Champion Registration Form"/}</h3>
         <div class="col-lg-12 center-block">
@@ -67,7 +67,7 @@
             <label for="championCountry" class="col-lg-4 cd-form-label1">{@i18n key="Country"/}*</label>
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.country.$error.required}">
               <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required>
-                <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.countryName }}</ui-select-match>
+                <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
                 </ui-select-choices>
@@ -83,10 +83,10 @@
             <label for="championPlace" class="col-lg-4 cd-form-label1">{@i18n key="CityTown"/}*</label>
 
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
-              <ui-select name="place" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
+              <ui-select name="place" ng-disabled="!champion.country" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
                 <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                 <ui-select-choices repeat="place in places"
-                    refresh="getPlaces(champion.country.alpha2, $select.search)"
+                    refresh="getPlaces(champion.country.alpha2, $select)"
                     refresh-delay="500">
                   <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
                 </ui-select-choices>
@@ -113,7 +113,7 @@
             </div>
             <div class="col-lg-8 col-lg-offset-4 google-map">
               <section ng-if="mapLoaded" id="map">
-                <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                <div ng-repeat="marker in model.markers" ui-map-marker="model.markers[$index]"></div>
                 <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, champion)'}" ui-options="mapOptions" class="map-canvas"></div>
               </section>
             </div>

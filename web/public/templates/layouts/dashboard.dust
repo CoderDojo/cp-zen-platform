@@ -104,6 +104,7 @@
     <script src="/components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
+    <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
 
     <script src="/seneca/init.js"></script>
 
@@ -125,7 +126,6 @@
     <script src="/js/controllers/my-dojos-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/dojo-list-index-controller.js"></script>
-    <script src="/js/controllers/create-dojo-controller.js"></script>
     <script src="/js/controllers/edit-dojo-controller.js"></script>
     <script src="/js/controllers/manage-dojo-controller.js"></script>
     <script src="/js/controllers/stats-controller.js"></script>
@@ -148,6 +148,8 @@
     <script src="/js/controllers/accept-badge-controller.js"></script>
     <script src="/js/controllers/user-events-controller.js"></script>
     <script src="/js/controllers/charter-controller.js"></script>
+    <script src="/js/controllers/approve-invite-ninja-controller.js"></script>
+    <script src="/js/controllers/dojo-setup-confirmation-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

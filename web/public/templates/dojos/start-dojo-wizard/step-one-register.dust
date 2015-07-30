@@ -1,5 +1,5 @@
 <div id="main" class="user-registration cd-color-4-underline">
-  <form id="user-registration-form" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
+  <form id="user-registration-form" ng-enter="noop()" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
     <legend>{@i18n key="Register"/}</legend>
     <div class="row"></div>
     <div class="row cd-input-row">
@@ -36,8 +36,8 @@
 
     <div class="row cd-input-row">
       <div class="form-group">
-        <div class="col-lg-offset-3 col-lg-4" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
-          <ui-select name="initUserType" ng-model="registerUser.initUserType" required>
+        <div class="col-lg-offset-3 col-lg-6" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
+          <ui-select name="initUserType" ng-disabled="onStartDojoWizard" ng-model="registerUser.initUserType" required>
             <ui-select-match allow-clear="false" placeholder="Select User Type">{{ $select.selected.title }}</ui-select-match>
             <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
               <span ng-bind-html="initUserType.title"></span>

@@ -1,4 +1,50 @@
+var LogEntries = require('le_node');
+var assert = require('assert');
+
+var log = function() {
+
+  // seneca custom log handlers
+  function debugHandler() {
+    //    console.log(JSON.stringify(arguments));
+
+    if (process.env.LOGENTRIES_ENABLED === 'true') {
+      assert.ok(process.env.LOGENTRIES_DEBUG_TOKEN, 'No LOGENTRIES_DEBUG_TOKEN set');
+      var le = new LogEntries({
+        token: process.env.LOGENTRIES_DEBUG_TOKEN,
+        flatten: true,
+        flattenArrays: true
+      });
+
+      le.log('debug', arguments);
+    }
+  }
+
+  function errorHandler() {
+    console.error(JSON.stringify(arguments));
+
+    if (process.env.LOGENTRIES_ENABLED === 'true') {
+      assert.ok(process.env.LOGENTRIES_ERRORS_TOKEN, 'No LOGENTRIES_ERROR_TOKEN set');
+      var le = new LogEntries({
+        token: process.env.LOGENTRIES_ERRORS_TOKEN,
+        flatten: true,
+        flattenArrays: true
+      });
+
+      le.log('err', arguments);
+    }
+  }
+
+  return {
+    map:[{
+      level:'debug', handler: debugHandler
+    }, {
+      level:'error', handler: errorHandler
+    }]
+  };
+}
+
 module.exports = {
+  log: log(),
 
   'main': {
     'timeout': 66666
@@ -46,7 +92,7 @@ module.exports = {
   },
 
   redis: {
-    "host": process.env.REDIS_HOST || process.env.TARGETIP || (process.env.DOCKER_HOST ? require('url').parse(process.env.DOCKER_HOST).hostname : '127.0.0.1'),
+    "host": process.env.REDIS_HOST || process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1',
     "port": process.env.REDIS_PORT || 6379 // this is either configurable or in docker locally
   },
 

@@ -1,2 +1,10 @@
-<h1>{@pre type="content" key="header"/}</h1>
-{!<p>{@pre type="content" key="description"/}</p>!}
+{>"layouts/master" /}
+{<body}
+  {>"common/header" /}
+  <div class="container">
+    <div>
+      {@i18n key="Page not found"/}
+    </div>
+  </div>
+  {>"common/footer" /}
+{/body}

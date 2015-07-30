@@ -151,12 +151,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
           });
         } else {
           //Remove from user permissions
-          var indexToRemove;
-          _.find(user.permissions, function(userPermission, userPermissionIndex){
-            indexToRemove = userPermissionIndex;
-            return _.isEqual(userPermission, permission);
-          });
-          user.permissions.splice(indexToRemove, 1);
+          user.permissions = _.without(user.permissions, _.findWhere(user.permissions, {name: permission.name}));
           userDojoLink.userPermissions = user.permissions;
           if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
           //Save to db

@@ -115,6 +115,7 @@
     },
     agreement: function(cdAgreementsService, $stateParams, $window, auth){
       return auth.get_loggedin_user_promise().then(function (user) {
+        if(!user) return {data:{}};
         return cdAgreementsService.loadUserAgreementPromise(user.id).then(function (data) {
           return {data: data};
         }, function (err) {
@@ -167,14 +168,6 @@
             referer:null
           },
           controller: 'login'
-        })
-        .state("create-dojo-public", {
-          url: "/create-dojo",
-          templateUrl: '/dojos/template/edit-dojo',
-          resolve: {
-            gmap: gmap
-          },
-          controller: 'create-dojo-controller'
         })
         .state("dojo-list-index", {
           url: "/dojo-list-index",
@@ -231,8 +224,6 @@
           url:'/404',
           templateUrl: '/errors/template/404'
         });
-      // Example of using function rule as param
-      $urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
@@ -265,6 +256,18 @@
         .fallbackLanguage('en_US');
       }
     ])
+    .run(function ($window, $cookieStore) {
+      var doc = $window.document;
+      var googleCaptchaScriptId = 'loadCaptchaService';
+      var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
+      googleCaptchaScriptTag = doc.createElement('script');
+      googleCaptchaScriptTag.id = googleCaptchaScriptId;
+      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
+      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      googleCaptchaScriptTag.setAttribute('src',
+        'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
+      doc.head.appendChild(googleCaptchaScriptTag);
+    })
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'
     }));

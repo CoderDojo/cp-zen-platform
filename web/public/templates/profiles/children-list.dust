@@ -1,11 +1,8 @@
 <div class="panel panel-default">
-  <div class="panel-heading">{@i18n key="Ninjas"/}
-    <div ng-if="editMode && (loggedInUser.id === profile.userId)" class="pull-right">
-      <div class="btn-group">
-        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Ninja under 13"/}</a>
-        <a class="btn btn-xs btn-primary" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Ninja over 13"/}</a>
-      </div>
-    </div>
+  <div class="panel-heading panel-heading-with-buttons" id="ninjaProfileBlock">{@i18n key="Ninjas"/}
+    <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button">{@i18n key="Invite Ninja over 13"/}</button>
+    <button ng-if="editMode && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Ninja under 13"/}</button>
+    <button ng-if="editMode && (loggedInUser.id === profile.userId)" class="btn btn-xs btn-primary panel-heading-button" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Ninja over 13"/}</button>
   </div>
   <div class="panel-body">
     <ul ng-repeat="child in profile.resolvedChildren">

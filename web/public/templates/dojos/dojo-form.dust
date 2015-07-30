@@ -1,7 +1,7 @@
 
 <div class="dojo-list-dashboard cd-color-3-underline">
   <div class="cd-create-dojo-container">
-    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm"  ng-enter="noop()">
       <div id="main">
 
         <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
@@ -66,7 +66,7 @@
             </label>
             <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
               <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required>
-                <ui-select-match placeholder="Select or search a country in the list...">{{ $select.selected.countryName }}</ui-select-match>
+                <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
                 </ui-select-choices>
@@ -87,9 +87,9 @@
             </a>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
-            <ui-select name="place" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
-              <ui-select-match placeholder="Select or search a place in the list...">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
-              <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select.search)" refresh-delay="500">
+            <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
+              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
@@ -113,7 +113,22 @@
           </div>
         </div>
       </div>
-
+      <div class="row cd-input-row" ng-show="isCDFAdmin">
+        <div class="form-group">
+          <label for="founder" class="col-lg-4 cd-form-label1">{@i18n key="Founder"/}</label>
+          <div class="col-lg-8">
+            <input name="founder" class="form-control col-lg-6" disabled type="text" ng-model="founder.name"><span ng-click="toggleUserSelect($event)"><a>{@i18n key="Edit"/}</a></span>
+            <ui-select ng-hide="hideUserSelect"  ng-model="founder" ng-disabled="false" on-select="setFounder($item)">
+              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-choices repeat="user in users"
+                  refresh="getUsersByEmails($select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="user.email | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">      
           <div class="col-lg-offset-4 col-lg-8">
@@ -153,14 +168,19 @@
           <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Need Mentors"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Need Mentors"/}"
               popover="{@i18n key="Meed Mentors"/}">
             </a>
-          </label>       
+          </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.needMentors" id="needMentorsCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.needMentors"
+                     id="needMentorsCheckbox"
+                     ng-true-value="1"
+                     ng-false-value="0"
+                  >
               <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
             </div>
           </div>
@@ -184,7 +204,12 @@
           <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>       
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.private" id="privateCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.private"
+                     id="privateCheckbox"
+                     ng-true-value="1"
+                     ng-false-value="0"
+                  >
               <label class="cd-checkbox-label1" for="privateCheckbox"></label>
             </div>
             <p class="col-lg-6 cd-private-msg">{@i18n key="Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."/}</p>
@@ -263,20 +288,24 @@
           <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Mailing List"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Mailing List"/}"
               popover="{@i18n key="dojo.edit.mailinglist.description"/}">
             </a>
-          </label>       
+          </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox" ng-model="dojo.mailingList" id="mailingListCheckbox">
+              <input type="checkbox"
+                     ng-model="dojo.mailingList"
+                     id="mailingListCheckbox"
+                     ng-true-value="1"
+                     ng-false-value="0"
+                  >
               <label class="cd-checkbox-label1" for="mailingListCheckbox"></label>
             </div>
           </div>
         </div>
       </div>
-
       <div class="row cd-btn-row">
         <div class="form-group">
           <div class="col-lg-12">

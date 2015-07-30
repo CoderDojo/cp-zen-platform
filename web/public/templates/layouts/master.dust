@@ -77,8 +77,6 @@
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/components/angular-ui-utils/ui-utils.min.js"></script>
-
-    <script src={captchaURL}></script>
     <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
     <script src="/components/angular-ui-map/ui-map.min.js"></script>
@@ -122,10 +120,9 @@
     <script src="/components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
     <script src="/components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
-
     <script src="/components/angular-truncate/src/truncate.js"></script>
-    <script src="/components/angular-recaptcha/release/angular-recaptcha.min.js"></script>
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
+    <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
 
     <script src="/seneca/init.js"></script>
 
@@ -134,7 +131,6 @@
 
     <script src="/js/controllers/header-controller.js"></script>
     <script src="/js/controllers/dojo-list-controller.js"></script>
-    <script src="/js/controllers/create-dojo-controller.js"></script>
     <script src="/js/controllers/dojo-list-index-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>

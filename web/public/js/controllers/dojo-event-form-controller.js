@@ -31,15 +31,23 @@
   }
 
   function goToManageDojoEvents($state, usSpinnerService, dojoId) {
-    usSpinnerService.stop('create-event-spinner');
+    if(usSpinnerService) {
+      usSpinnerService.stop('create-event-spinner');
+    }
     $state.go('my-dojos.manage-dojo-events', {
       dojoId: dojoId
     });
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService) {
+  function goToMyDojos($state, usSpinnerService) {
+    usSpinnerService.stop('create-event-spinner');
+    $state.go('my-dojos');
+  }
+
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
+    $scope.today = new Date();
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
@@ -50,6 +58,7 @@
     $scope.eventInfo.toDate = new Date(
       $scope.eventInfo.date.getTime()
     );
+    $scope.eventInfo.recurringType = 'weekly';
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
@@ -146,7 +155,7 @@
       $event.preventDefault();
       $event.stopPropagation();
 
-      goToManageDojoEvents($state, dojoId);
+      goToManageDojoEvents($state, null, dojoId);
     };
 
     $scope.submit = function($event, eventInfo, publish) {
@@ -162,7 +171,8 @@
       // Extend eventInfo
       eventInfo.position = eventPosition;
       eventInfo.status = publish ? 'published' : 'saved';
-    
+      eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
+
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -185,12 +195,42 @@
       } else {
         eventInfo.dates = [eventInfo.date];
       }
-      
-      cdEventsService.saveEvent(
-        eventInfo,
-        goToManageDojoEvents($state, usSpinnerService, dojoId),
-        console.error.bind(console)
-      );
+
+      if(!$scope.dojoInfo) {
+        loadDojo(function(err){
+          if(err) {
+            alertService.showError($translate.instant('An error has occurred while loading Dojo') + ' ' + err);
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+          if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+            cdEventsService.saveEvent(
+              eventInfo,
+              goToManageDojoEvents($state, usSpinnerService, dojoId),
+              function(err){
+                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+                goToMyDojos($state, usSpinnerService, dojoId)
+              }
+            );
+          } else {
+            alertService.showError($translate.instant('Error setting up event'));
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+        })
+      } else {
+        if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+          cdEventsService.saveEvent(
+            eventInfo,
+            goToManageDojoEvents($state, usSpinnerService, dojoId),
+            function(err){
+              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+              goToMyDojos($state, usSpinnerService, dojoId)
+            }
+          );
+        } else {
+          alertService.showError($translate.instant('Error setting up event'));
+          goToMyDojos($state, usSpinnerService, dojoId)
+        }
+      }
     };
 
     function addMap(eventPosition) {
@@ -231,7 +271,7 @@
           lat: parseFloat(position[0]),
           lng: parseFloat(position[1])
         });
-
+        $scope.dojoInfo = dojoInfo;
         done(null, dojoInfo);
 
       }, done);
@@ -278,9 +318,10 @@
         var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
-        
+
         $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
+        $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         done(null, event);
       }, done);
     }
@@ -327,6 +368,7 @@
       '$translate',
       'cdLanguagesService',
       'usSpinnerService',
+      'alertService',
       dojoEventFormCtrl
     ]);
 })();

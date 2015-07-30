@@ -21,7 +21,7 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/register',
-    handler: function (request, reply) {
+    handler: function (request, reply) { 
       reply.view('index', request.locals);
     }
   },
@@ -109,6 +109,14 @@ var controller = module.exports = [
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
+  },
+
+  {
+    method: 'GET',
+    path: '/reset_password/{token}',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
   }, 
 
   {
@@ -132,6 +140,14 @@ var controller = module.exports = [
     path: '/templates/terms-and-conditions',
     handler: function (request, reply) {
       reply.view('accounts/terms-and-conditions', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/reset_password',
+    handler: function (request, reply) {
+      reply.view('accounts/reset_password', request.locals);
     }
   }
 ];

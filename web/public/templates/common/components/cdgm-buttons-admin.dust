@@ -1,5 +1,5 @@
-<li><a ui-sref="manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+<li><a ng-click="goTo('manage-dojos')">{@i18n key="Manage Dojos"/}</a></li>
 <li ng-if="user" class="separator">|</li>
 <li><a target="_blank" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
 <li ng-if="user" class="separator">|</li>
-<li><a ui-sref="stats">{@i18n key="Stats"/}</a></li>
+<li><a ng-click="goTo('stats')">{@i18n key="Stats"/}</a></li>

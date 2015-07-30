@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window', 
+angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage',
   'usSpinnerService', '$cookieStore', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
-  auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage, 
+  auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage,
   usSpinnerService, $cookieStore) {
 
   $scope.referer = $state.params.referer;
@@ -18,7 +18,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     'unknown': $translate.instant('login.msgmap.unknown'),
     'user-not-found': $translate.instant('login.msgmap.user-not-found'),
     'invalid-password': $translate.instant('login.msgmap.invalid-password'),
-    'reset-sent': $translate.instant('login.msgmap.reset-sent')
+    'reset-sent': $translate.instant('login.msgmap.reset-sent'),
+    'email-not-found': $translate.instant('Email address not found')
   }
 
   var path = window.location.pathname
@@ -61,7 +62,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
-    if ($state.current.name ===  'start-dojo-wizard') {
+    if (user.initUserType.name ===  'champion') {
       user.isChampion = true;
     }
 
@@ -102,17 +103,20 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
+        if ($scope.redirect) {
+          $window.location.href = $scope.redirect;
+        } else {
           var user = data.user;
           if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
           $localStorage.recommendedPracticesAlertShown = false;
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
-        },
-        function(){
-          $scope.errorMessage = $translate.instant('Invalid email or password');
-          $scope.errorMessage = 'Invalid email or password!';
         }
+      },
+      function(){
+        $scope.errorMessage = $translate.instant('Invalid email or password');
+      }
      );
   };
 
@@ -122,19 +126,27 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.errorMessage = ''
 
     if (!$scope.forgotPasswordForm.$valid) {
-      return
+      usSpinnerService.stop('login-spinner');
+      return;
     }
 
     auth.reset({
       email:$scope.forgot.email
-    }, function() {
+    }, function(response) {
       usSpinnerService.stop('login-spinner');
-      $scope.message = msgmap['reset-sent'];
+
+      if(!response.ok && response.why === 'user-not-found'){
+        alertService.showError(msgmap['email-not-found']);
+      } else {
+        $scope.message = msgmap['reset-sent'];
+      }
+
     }, function(out) {
       usSpinnerService.stop('login-spinner');
       $scope.errorMessage = msgmap[out.why] || msgmap.unknown
     })
   }
+
 
   $scope.goHome = function() {
     window.location.href = '/'

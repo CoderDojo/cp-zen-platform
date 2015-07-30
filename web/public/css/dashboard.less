@@ -91,7 +91,7 @@ label {
 
 .cd-dashboard {
 	background: white;
-	padding: 20px;
+	padding: 0px 20px;
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
@@ -221,7 +221,7 @@ label {
     }
   }
 }
-  
+
 
 @media only screen and (max-width: 768px) {
   .fullscreen-only {
@@ -353,6 +353,10 @@ label {
 
 .ten-percent-width {
   width: 10%;
+
+  .checkbox{
+    margin-top:-10px;
+  }
 }
 
 .manage-dojo-wrapper {
@@ -388,6 +392,21 @@ label {
   appearance: none;
   background: url("../img/cd-select-arrow_48x48.png") no-repeat right center;
   background-size: 18px 18px;
+}
+
+.cd-badges-dashboard {
+  .nav-tabs.nav-justified>.active>a {
+    color: @cd-orange;
+    border: 1px solid @cd-orange;
+    border-bottom-color: @cd-white;
+  }
+  input.has-error {
+    border: 1px solid @cd-red;
+  }
+  label.validationMessage {
+    color: @cd-red;
+    margin-left: 10px;
+  }
 }
 
 .user-registration, .cd-dojo-main {
@@ -439,6 +458,7 @@ label {
   .google-map {
     margin-top:15px;
   }
+
   .cd-checkbox {
     &.checkbox.has-error {
       margin-top: 0px;
@@ -460,7 +480,7 @@ label {
     width: 100%;
     color: @cd-red;
   }
-  #createChampionForm { 
+  #createChampionForm {
   }
   #charterForm {
     .cd-wizard-submit {
@@ -525,6 +545,14 @@ label {
   }
 }
 
+#requestToJoinDojo {
+  label.validationMessage {
+    text-align: left;
+    width: 100%;
+    color: @cd-red;
+  }
+}
+
 .cd-grid-table {
   font-size: 13px;
 
@@ -543,6 +571,10 @@ label {
     min-width: 120px;
   }
 }
+
+.gm-style-iw {
+        left: 26px !important;
+      }
 
 .green-text {
   color: #00FF00;
@@ -671,7 +703,6 @@ html body .cd-dashboard .cd-color-6 {
 
 .cd-accordian {
   margin: 3% 0%;
-  overflow: auto;
 
   .panel {
     margin-top: 20px;
@@ -733,7 +764,7 @@ html body .cd-dashboard .cd-color-6 {
   text-align: center;
 }
 
-.font-13 { 
+.font-13 {
   font-size: 13px;
 }
 
@@ -773,6 +804,7 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 .badge-category-heading {
+  border-color: @cd-orange;
   font-size: 16px;
   font-weight: bold;
 }
@@ -788,6 +820,7 @@ html body .cd-dashboard .cd-color-6 {
 
 .table-general-info > tbody > tr {
   border-top: 1px solid rgb(221, 221, 221);
+  word-break: break-all;
 }
 
 .table-general-info > tbody > tr:first-child {
@@ -813,6 +846,14 @@ img.dojo-thumbnail {
   width: 150px;
 }
 
+.panel-heading-with-buttons {
+  overflow:hidden;
+  .panel-heading-button {
+    float: right;
+    margin-left:10px;
+  }
+}
+
 .margin-left-78-percent {
   margin-left: 78%;
 }
@@ -821,3 +862,36 @@ img.dojo-thumbnail {
   margin-left: 35%;
 }
 
+/* ---------------------------- date picker styling --------------------- */
+
+.btn-success {
+  background-color: @cd-green;
+}
+
+.btn-danger {
+  background-color: @cd-red;
+}
+
+.btn-info{
+  background-color: @cd-light-blue;
+
+  &.active{
+    background-color: @cd-blue;
+
+    span{
+      color:white !important;
+    }
+  }
+}
+/* -------------------------- end date picker styling --------------------- */
+
+#ninjaProfileBlock {
+  .popover {
+    width:45%;
+    max-width: 100%;
+  }
+}
+
+.form-inline .form-control {
+  width:100% !important;
+}

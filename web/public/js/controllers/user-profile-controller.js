@@ -1,9 +1,9 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields, 
-  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService, 
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner) {
+  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
+  Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError('An error has occurred');
@@ -14,7 +14,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   var isYouthProfile = $state.current.name === 'add-child';
 
-  if(_.isEmpty(agreement.data) && !isYouthProfile){
+  if(_.isEmpty(agreement.data) && !isYouthProfile && !_.isEmpty(loggedInUser.data)){
     $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ loggedInUser.data.id);
   }
 
@@ -35,8 +35,15 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
-    if(profileUserId === loggedInUserId || loggedInUserIsParent()) { 
+    if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
+      $scope.inviteNinjaPopover = {
+        title: $translate.instant('Invite Ninja over 13'),
+        templateUrl: '/profiles/template/invite-ninja-over-13',
+        placement: 'top',
+        placeholder: $translate.instant('Enter Ninja Email Address'),
+        show: false
+      };
     } else {
       //No permission
       $state.go('error-404');
@@ -62,7 +69,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
             'Content-Type': 'multipart/form-data'
           },
           file: file,
-          fields: {profileId: profile.data.id}
+          fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
         }).progress(function (evt) {
         }).success(function (data, status, headers, config) {
           cdUsersService.getAvatar($scope.profile.id, function(response){
@@ -255,7 +262,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
       'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
@@ -337,53 +344,14 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     profile.alpha3 = country.alpha3;
   };
 
-  $scope.getPlaces = function(countryCode, search) {
-    if (!countryCode || !search.length || search.length < 3) {
+  $scope.getPlaces = function (countryCode, $select) {
+    return utilsService.getPlaces(countryCode, $select).then(function (data) {
+      $scope.places = data;
+    }, function (err) {
       $scope.places = [];
-      return;
-    }
-
-    var query = {
-      query: {
-        filtered: {
-          query: {
-            multi_match: {
-              query: search,
-              type: "phrase_prefix",
-              fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
-            }
-          },
-          filter: {
-            bool: {
-              must: [
-                {
-                  term: {
-                    countryCode: countryCode
-                  }
-                },
-                {
-                  term: {
-                    featureClass: "P"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      from: 0,
-      size: 100,
-      sort: [
-        { asciiname: "asc" }
-      ]
-    };
-
-    cdCountriesService.listPlaces(query, function(results) {
-      $scope.places = _.map(results, function(place) {
-        return _.omit(place, 'entity$');
-      });
-    }, console.error.bind(console));
-  };
+      console.error(err);
+    });
+  }
 
   $scope.setPlace = function(profile, place) {
     profile.placeName = place.name;
@@ -419,7 +387,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       //TODO
     });
   }
-  
+
   $scope.editProfile = function () {
     $state.go('edit-user-profile', {userId: $stateParams.userId});
   }
@@ -464,7 +432,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return false; //Always private
-      default: 
+      default:
         return false;
     }
   }
@@ -498,9 +466,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       if($scope.profile.ownProfileFlag) return false;
       if(block && $scope.profile.optionalHiddenFields) {
         if(!$scope.profile.optionalHiddenFields[block]) return false;
-        return true; 
+        return true;
       }
-      return true; 
+      return true;
     }
     return false;
   }
@@ -528,11 +496,30 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return false;
   }
 
+  $scope.inviteNinja = function (ninjaEmail) {
+    usSpinnerService.spin('user-profile-spinner');
+    cdUsersService.inviteNinja(ninjaEmail, function (response) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showAlert($translate.instant('Invite Sent'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
+    }, function (err) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showError($translate.instant('Error inviting Ninja'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
+    });
+  }
+
+  $scope.toggleInviteNinjaPopover = function () {
+    $scope.inviteNinjaPopover.show = !$scope.inviteNinjaPopover.show;
+  }
+
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams', 
-    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService', 
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', cdUserProfileCtrl]);
+    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
+    'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', cdUserProfileCtrl]);
 

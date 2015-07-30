@@ -1,12 +1,14 @@
 'use strict';
 /* global google */
 
-//TODO: Move edit dojo controller into create-dojo-controller
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService) {
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
   $scope.buttonText = $translate.instant('Update Dojo');
+  $scope.hideUserSelect = true;
+
+  $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
 
   var DEFAULT_COORDS = '53.3478,6.2597';
 
@@ -20,6 +22,12 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.dojoStates = json.verificationStates;
   });
 
+  $scope.noop = angular.noop;
+
+  $scope.toggleUserSelect = function(event){
+    $scope.hideUserSelect = !$scope.hideUserSelect;
+  };
+
   $scope.scrollToInvalid = function(form){
     $scope.getLocationFromAddress($scope.dojo);
     $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
@@ -29,31 +37,81 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   };
 
-  function loadDojo() {
-    return $q(function(resolve, reject) {
-      var dojoId = $state.params.id;
-      cdDojoService.load(dojoId, function(response) {
-        if(!_.isEmpty(response)) {
-          // handle glitchy booleans (db issue)
-          _.each(['mailingList', 'private', 'needMentors'], function(field) {
-            if (response[field] === 1) response[field] = true
-              else response[field] = false;
-          });
-
-          $scope.dojo = response;
-          resolve();
-        } else {
-          reject($translate.instant('Failed to load Dojo'));
-        }
-      });
+  async.waterfall([function(done){
+    var dojoId = $state.params.id;
+    
+    cdDojoService.load(dojoId, function(response) {
+      if(!_.isEmpty(response)) {
+        return done(null,response);
+      } else {
+        return done($translate.instant('Failed to load Dojo'));
+      }
     });
-  }
+  }, function(dojo, done){
+    var query = {};
 
-  loadDojo().then(function() {
+    query.dojoId = dojo.id;
+    
+    query.owner = 1;
+    
+    cdDojoService.getUsersDojos(query, function(response){
+
+      return done(null, dojo, response[0]);
+      }, function(){
+        return done($translate.instant('Failed to load Dojo'));
+      });
+
+
+  }, function(dojo, prevFounder , done){
+    
+    if(_.isEmpty(prevFounder)){
+      return done(null, dojo);
+    }
+
+    cdUsersService.load(prevFounder.userId, function(response){
+      prevFounder.email = response.email;
+      prevFounder.name = response.name;
+
+      return done(null, dojo, prevFounder);
+    }, function(err){
+      return done(err);
+    });
+  }], function(err, dojo, prevFounder){
+    if(err){
+      alertService.showError(err);
+      return;
+    }
+
+    $scope.dojo = dojo;
+    $scope.prevFounder = prevFounder;
+    $scope.founder  = angular.copy(prevFounder);
     loadDojoMap();
-  }, function (error) {
-    alertService.showError(error);
   });
+  
+  $scope.getUsersByEmails = function(email){
+    if(!email || !email.length || email.length < 3) {
+      $scope.users = [];
+      return;
+    }
+
+    var win = function(users){
+      $scope.users = users;
+    };
+
+    var fail = function(){
+      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
+    };
+
+    cdUsersService.getUsersByEmails(email, win, fail);
+  }; 
+
+  $scope.setFounder = function(founder){
+    if(founder){
+      $scope.founder = founder;
+      $scope.founder.previousFounderId = $scope.prevFounder.userId;
+      $scope.founder.dojoId = $scope.dojo.id;
+    }
+  }
 
   function loadDojoMap() {
     $scope.$watch('model.map', function(map){
@@ -129,53 +187,14 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     });
   }
 
-  $scope.getPlaces = function(countryCode, search) {
-    if (!countryCode || !search.length || search.length < 3) {
+  $scope.getPlaces = function (countryCode, $select) {
+    return utilsService.getPlaces(countryCode, $select).then(function (data) {
+      $scope.places = data;
+    }, function (err) {
       $scope.places = [];
-      return;
-    }
-
-    var query = {
-      query: {
-        filtered: {
-          query: {
-            multi_match: {
-              query: search,
-              type: "phrase_prefix",
-              fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
-            }
-          },
-          filter: {
-            bool: {
-              must: [
-                {
-                  term: {
-                    countryCode: countryCode
-                  }
-                },
-                {
-                  term: {
-                    featureClass: "P"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      from: 0,
-      size: 100,
-      sort: [
-        { asciiname: "asc" }
-      ]
-    };
-
-    cdCountriesService.listPlaces(query, function(result) {
-      $scope.places = _.map(result, function(place) {
-        return _.omit(place, 'entity$');
-      });
-    }, console.error.bind(console));
-  };
+      console.error(err);
+    });
+  }
 
   $scope.setCountry = function(dojo, country) {
     dojo.countryName = country.countryName;
@@ -202,28 +221,40 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.save = function(dojo) {
-    // handle glitchy booleans (db issue)
-    _.each(['mailingList', 'private', 'needMentors'], function(field) {
-      if (dojo[field] === true) dojo[field] = 1
-        else dojo[field] = 0;
-    });
+    canUpdateDojo().then(function (isDojoAdmin) {
+      if(isDojoAdmin) {
+        _.each(sanitizeCdForms.editDojo, function(item, i) {
+          if(_.has(dojo, item)) {
+            dojo[item] = $sanitize(dojo[item]);
+          }
+        });
 
-    _.each(sanitizeCdForms.editDojo, function(item, i) {
-        if(_.has(dojo, item)) {
-          dojo[item] = $sanitize(dojo[item]);
-        }
-    });
+        cdDojoService.save(dojo, function(response) {
+          if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
+            cdDojoService.updateFounder($scope.founder, function(response){
+              alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+                $state.go('my-dojos');
+                $scope.$apply();
+              });
+            }, function(err){
+              alertService.showError($translate.instant('An error has occurred while saving'));
+            });
+          } else {
+            alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+              $state.go('my-dojos');
+              $scope.$apply();
+            });
+          }
 
-    cdDojoService.save(dojo, function(response) {
-      alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
-        $location.path('/dashboard/my-dojos');
-        $scope.$apply();
-      });
-    }, function(err) {
-      alertService.showError(
-        $translate.instant('An error has occurred while saving') + ': <br /> '+
-        (err.error || JSON.stringify(err))
-      );
+        }, function(err) {
+          alertService.showError(
+            $translate.instant('An error has occurred while saving') + ': <br /> '+
+            (err.error || JSON.stringify(err))
+          );
+        });
+      } else {
+        alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
+      }
     });
   }
 
@@ -254,6 +285,20 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   }
 
+  function canUpdateDojo() {
+    var deferred = $q.defer();
+    var query = {userId: currentUser.data.id, dojoId: $state.params.id};
+    cdDojoService.getUsersDojos(query, function (userDojo) {
+      var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
+        return userPermission.name === 'dojo-admin';
+      });
+      deferred.resolve(isDojoAdmin);
+    }, function (err) {
+      deferred.reject(err);
+    });
+    return deferred.promise;
+  }
+
   $scope.editorOptions = {
     language: 'en',
     uiColor: '#000000',
@@ -263,5 +308,5 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', cdEditDojoCtrl]);
 

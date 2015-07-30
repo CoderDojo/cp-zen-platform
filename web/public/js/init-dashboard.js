@@ -49,7 +49,7 @@
     }
     return dfd.promise;
   };
-  
+
   var failCb = function(err){
     return {err: err};
   };
@@ -123,6 +123,11 @@
           resolve: {
             gmap: gmap
           },
+          params: {
+            bannerType: null,
+            bannerMessage: null,
+            bannerTimeCollapse: null
+          },
           controller: 'dojo-list-controller'
         })
         .state("my-dojos", {
@@ -133,19 +138,12 @@
             label: '{{myDojosPageTitle}}'
           }
         })
-        .state("create-dojo", {
-          url: "/dashboard/create-dojo",
-          templateUrl: '/dojos/template/edit-dojo',
-          resolve: {
-            gmap: gmap
-          },
-          controller: 'create-dojo-controller'
-        })
         .state("edit-dojo", {
           url: "/dashboard/edit-dojo/:id",
           templateUrl: '/dojos/template/edit-dojo',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'edit-dojo-controller'
         })
@@ -239,7 +237,7 @@
           controller: 'review-champion-application-controller'
         })
         .state("my-dojos.manage-dojo-users", {
-          url: "/dashboard/dojo/:id/users",
+          url: "/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
           ncyBreadcrumb: {
@@ -319,7 +317,15 @@
         })
         .state('error-404', {
           url:'/404',
-          templateUrl: '/errors/template/404'
+          templateUrl: '/errors/template/404_no_headers'
+        })
+        .state('approve-invite-ninja', {
+          url:'/dashboard/approve_invite_ninja/:parentProfileId/:inviteTokenId',
+          controller:'approve-invite-ninja-controller',
+          templateUrl: '/profiles/template/approve-invite-ninja',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
         });
       $urlRouterProvider.otherwise('/404');
     })
@@ -374,7 +380,7 @@
                 }, function (err) {
                   alertService.showError($translate.instant('An error has occured verifying your profile.'));
                 });
-              } 
+              }
             }
           }, function (err) {
             alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
