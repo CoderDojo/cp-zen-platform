@@ -4,13 +4,6 @@ var path = require('path');
 var base = require('./options.base.js');
 
 module.exports = _.defaults({
-
-  log:{
-    map:[{
-      level:'debug', handler:function(){
-        console.log(JSON.stringify(arguments));
-      }}]
-  },
   'agreement-version' : 2,
   auth: {
     restrict: function (req, res, next) {
