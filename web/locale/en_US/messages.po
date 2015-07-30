@@ -1503,7 +1503,7 @@ msgid "'Cannot find founder of dojo'"
 msgstr "'Cannot find founder of dojo'"
 
 msgid "dojo.setup.confirmation"
-msgstr "Are you sure that you have filled out the information correctly and wish to proceed?"
+msgstr "Are you sure you have filled out all the information correctly and wish to proceed?"
 
 msgid "Confirmation"
 msgstr "Confirmation"
