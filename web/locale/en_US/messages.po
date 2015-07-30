@@ -1501,3 +1501,17 @@ msgstr "This Dojo currently has no active events"
 
 msgid "'Cannot find founder of dojo'"
 msgstr "'Cannot find founder of dojo'"
+
+msgid "dojo.setup.confirmation"
+msgstr "Are you sure you have filled out all the information correctly and wish to proceed?"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "An error has occurred while saving dojo lead"
+msgstr "An error has occurred while saving dojo lead"
+
+msgid "Unable to retrieve user details"
+msgstr "Unable to retrieve user details"
+
+
