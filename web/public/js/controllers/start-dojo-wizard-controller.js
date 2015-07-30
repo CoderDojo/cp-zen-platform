@@ -567,7 +567,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     var modalInstance = $modal.open({
         animation: true,
-        templateUrl: '/templates/dojo-setup-confirm',
+        templateUrl: ' /dojos/template/dojo-setup-confirm',
         controller: 'dojoSetupConfirmationCtrl',
       });
 
