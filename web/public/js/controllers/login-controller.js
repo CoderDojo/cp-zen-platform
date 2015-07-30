@@ -18,7 +18,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     'unknown': $translate.instant('login.msgmap.unknown'),
     'user-not-found': $translate.instant('login.msgmap.user-not-found'),
     'invalid-password': $translate.instant('login.msgmap.invalid-password'),
-    'reset-sent': $translate.instant('login.msgmap.reset-sent')
+    'reset-sent': $translate.instant('login.msgmap.reset-sent'),
+    'email-not-found': $translate.instant('Email address not found')
   }
 
   var path = window.location.pathname
@@ -131,14 +132,21 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.reset({
       email:$scope.forgot.email
-    }, function() {
+    }, function(response) {
       usSpinnerService.stop('login-spinner');
-      $scope.message = msgmap['reset-sent'];
+
+      if(!response.ok && response.why === 'user-not-found'){
+        alertService.showError(msgmap['email-not-found']);
+      } else {
+        $scope.message = msgmap['reset-sent'];
+      }
+
     }, function(out) {
       usSpinnerService.stop('login-spinner');
       $scope.errorMessage = msgmap[out.why] || msgmap.unknown
     })
   }
+
 
   $scope.goHome = function() {
     window.location.href = '/'

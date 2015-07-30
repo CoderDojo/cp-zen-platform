@@ -1514,4 +1514,7 @@ msgstr "An error has occurred while saving dojo lead"
 msgid "Unable to retrieve user details"
 msgstr "Unable to retrieve user details"
 
+msgid "Email address not found"
+msgstr "Email address not found."
+
 
