@@ -16,26 +16,28 @@ msgstr ""
 "X-Poedit-SearchPath-0: web/public\n"
 "X-Poedit-SearchPathExcluded-0: web/public/components\n"
 
+#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "Yes"
-msgstr "Registra un Dojo"
+msgstr "No"
 
+#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "No"
-msgstr "RICHIESTA PASSWORD RESET"
+msgstr "Sì"
 
 msgid "Register a Dojo"
 msgstr "Cancellare"
 
 msgid "REQUEST PASSWORD RESET"
-msgstr "No"
+msgstr "RICHIESTA PASSWORD RESET"
 
 msgid "Cancel"
-msgstr "Sì"
+msgstr "Registra un Dojo"
 
 msgid "Forgot password"
-msgstr "Registrazione"
+msgstr "Ha dimenticato la password?"
 
 msgid "Register"
-msgstr "Ha dimenticato la password?"
+msgstr "PASSWORD"
 
 msgid "EMAIL"
 msgstr "EMAIL"
@@ -44,7 +46,7 @@ msgid "PASSWORD"
 msgstr "altre cose"
 
 msgid "Other stuff"
-msgstr "PASSWORD"
+msgstr "Registrazione"
 
 msgid "Name is empty"
 msgstr "Nome è vuoto"
@@ -56,49 +58,49 @@ msgid "Email is empty"
 msgstr "NOME"
 
 msgid "Password is empty"
-msgstr "Le password non corrispondono!"
-
-msgid "Passwords do not match"
 msgstr "La password è vuoto"
 
-msgid "Confirm Password is empty"
-msgstr "Conferma password è vuota"
+msgid "Passwords do not match"
+msgstr "Le password non corrispondono!"
 
-msgid "CONFIRM PASSWORD"
+msgid "Confirm Password is empty"
 msgstr "CONFERMA PASSWORD"
 
+msgid "CONFIRM PASSWORD"
+msgstr "Conferma password è vuota"
+
 msgid "Already have an account"
-msgstr "Hai già un account?"
+msgstr "Login"
 
 msgid "Login"
-msgstr "Login"
+msgstr "Hai già un account?"
 
 msgid "Terms and Conditions"
 msgstr "termini e condizioni"
 
 msgid "CoderDojo Champion Registration Form"
-msgstr "Benvenuti Nuovo Campione! Il primo passo verso la creazione di un Dojo nella vostra zona sta riempiendo questo modulo e dandoci qualche informazione in più su di te."
-
-msgid "pre-game-warning-p1"
-msgstr "Lo scopo di noi raccogliere queste informazioni in modo che possiamo adattare il supporto a voi come il vostro inizio il viaggio Dojo!"
-
-msgid "pre-game-warning-p2"
 msgstr "Modulo di Registrazione CoderDojo Champion"
 
-msgid "pre-game-warning-p3"
+msgid "pre-game-warning-p1"
 msgstr "Se volete saperne di più su come avviare una CoderDojo nella vostra zona si veda:"
 
-msgid "General Information"
-msgstr "Informazione Generale"
+msgid "pre-game-warning-p2"
+msgstr "Lo scopo di noi raccogliere queste informazioni in modo che possiamo adattare il supporto a voi come il vostro inizio il viaggio Dojo!"
 
-msgid "Email Address"
+msgid "pre-game-warning-p3"
+msgstr "Benvenuti Nuovo Campione! Il primo passo verso la creazione di un Dojo nella vostra zona sta riempiendo questo modulo e dandoci qualche informazione in più su di te."
+
+msgid "General Information"
 msgstr "Indirizzo E-Mail"
 
+msgid "Email Address"
+msgstr "Informazione Generale"
+
 msgid "champion.registration.email.tooltip"
-msgstr "Si prega di fornire un indirizzo e-mail personale."
+msgstr "Nome Completo"
 
 msgid "Full Name"
-msgstr "Nome Completo"
+msgstr "Si prega di fornire un indirizzo e-mail personale."
 
 msgid "champion.registration.fullname.tooltip"
 msgstr "Si prega di fornire il proprio nome completo"
@@ -107,34 +109,34 @@ msgid "Planned Dojo Location"
 msgstr "Planned Dojo Località"
 
 msgid "champion.registration.planneddojo.tooltip"
-msgstr "Fateci sapere quale parte del mondo si prevede di impostare il Dojo. ad es. Città, Città, Provincia, Nazione"
+msgstr "data di nascita"
 
 msgid "Planned Dojo Location is empty"
-msgstr "Numero di telefono è vuoto"
-
-msgid "Date of Birth"
 msgstr "Numero Di Telefono"
 
-msgid "Telephone Number"
+msgid "Date of Birth"
 msgstr "Previsto Dojo posizione è vuoto"
 
+msgid "Telephone Number"
+msgstr "Numero di telefono è vuoto"
+
 msgid "Telephone Number is empty"
-msgstr "data di nascita"
+msgstr "Fateci sapere quale parte del mondo si prevede di impostare il Dojo. ad es. Città, Città, Provincia, Nazione"
 
 msgid "Experience"
 msgstr "Esperienza"
 
 msgid "Do you have any relevant experience working with young people"
-msgstr "Avete qualche esperienza in materia di lavoro con i giovani?"
-
-msgid "Experience is empty"
 msgstr "Si prega di includere il codice paese."
 
+msgid "Experience is empty"
+msgstr "L'esperienza è vuoto"
+
 msgid "champion.registration.telephone.tooltip"
-msgstr "Fateci sapere di alcuna esperienza tecnica che avete che vi aiuterà a gestire la vostra Dojo. Ciò non è necessario organizzare un Dojo, fino a trovare un solido team di mentori tecnici. Se nessuno, rispondi N / A."
+msgstr "Avete qualche esperienza in materia di lavoro con i giovani?"
 
 msgid "champion.registration.experience.tooltop"
-msgstr "L'esperienza è vuoto"
+msgstr "Fateci sapere di alcuna esperienza tecnica che avete che vi aiuterà a gestire la vostra Dojo. Ciò non è necessario organizzare un Dojo, fino a trovare un solido team di mentori tecnici. Se nessuno, rispondi N / A."
 
 msgid "Please list any relevant technical experience"
 msgstr "Si prega di elencare alcuna esperienza tecnica."
@@ -158,10 +160,10 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 msgid "champion.registration.social.linkedin.tooltip"
-msgstr "Se lo si desidera si prega di fornire il proprio nome utente o un link alla tua pagina di LinkedIn."
+msgstr "Google+"
 
 msgid "Google+"
-msgstr "Google+"
+msgstr "Se lo si desidera si prega di fornire il proprio nome utente o un link alla tua pagina di LinkedIn."
 
 msgid "champion.registration.social.google.tooltip"
 msgstr "Se lo si desidera si prega di fornire il proprio nome utente o un link al tuo Google+"
@@ -170,40 +172,40 @@ msgid "Do you have access to technical mentors"
 msgstr "Avete accesso a mentori tecnici?"
 
 msgid "champion.registration.technicalmentors.tooltip"
-msgstr "Si consiglia di trovare una squadra di volontari interessati tecniche locali di mentore e di trovare i volontari non tecnici, come i genitori, che possono dare una mano e di volontariato quando portano i loro figli, ecc Non c'è bisogno di avere una grande squadra ma è è sempre meglio avere il supporto di un team al momento di organizzare un Dojo. È quindi possibile avere incontri di pianificazione con il team prima della configurazione del Dojo"
-
-msgid "Select an option"
 msgstr "Selezionare un'opzione"
 
-msgid "Do you have access to a venue"
-msgstr "Dojo non possono essere ospitati in residenze private, devono essere in uno spazio pubblico come una biblioteca, affari, mense, scuole o centri comunitari. Si raccomanda che i giovani frequentano portare il proprio computer portatile in modo che il luogo dovrebbe avere, almeno, prese di corrente per i computer portatili, accesso a internet e tavoli e sedie per i partecipanti."
-
-msgid "champion.registration.venue.tooltip"
+msgid "Select an option"
 msgstr "Avete accesso a una sede?"
 
-msgid "Champion Application"
+msgid "Do you have access to a venue"
 msgstr "Champion Applicazione"
+
+msgid "champion.registration.venue.tooltip"
+msgstr "Città / Paese"
+
+msgid "Champion Application"
+msgstr "Dojo non possono essere ospitati in residenze private, devono essere in uno spazio pubblico come una biblioteca, affari, mense, scuole o centri comunitari. Si raccomanda che i giovani frequentano portare il proprio computer portatile in modo che il luogo dovrebbe avere, almeno, prese di corrente per i computer portatili, accesso a internet e tavoli e sedie per i partecipanti."
 
 msgid "Country"
 msgstr "Nazione"
 
 msgid "CityTown"
-msgstr "Città / Paese"
+msgstr "Si consiglia di trovare una squadra di volontari interessati tecniche locali di mentore e di trovare i volontari non tecnici, come i genitori, che possono dare una mano e di volontariato quando portano i loro figli, ecc Non c'è bisogno di avere una grande squadra ma è è sempre meglio avere il supporto di un team al momento di organizzare un Dojo. È quindi possibile avere incontri di pianificazione con il team prima della configurazione del Dojo"
 
 msgid "Languages Spoken"
 msgstr "Lingue Parlate"
 
 msgid "Projects"
-msgstr "Progetti"
+msgstr "Altro"
 
 msgid "Other"
-msgstr "Altro"
+msgstr "Prerequisiti"
 
 msgid "Prerequisites"
 msgstr "Note"
 
 msgid "Notes"
-msgstr "Prerequisiti"
+msgstr "Progetti"
 
 msgid "Hello World Foundation charter for CoderDojo"
 msgstr "Ciao World Foundation carta per CoderDojo"
@@ -212,10 +214,10 @@ msgid "charter.p1"
 msgstr "Tutti i Dojo sono tenuti a concordare con il sotto CoderDojo Carta. Questa Carta abbraccia gli aspetti fondamentali ethos e fondamentali del movimento CoderDojo, che tutti i Dojo si fondano su. L'introduzione della Carta è stata annunciata dal co-fondatore James Whelton al Organizzatori Gruppo CoderDojo il 3 dicembre 2013."
 
 msgid "charter.p2"
-msgstr "Ai fini della presente Carta, "CoderDojo" si intende l'open source, volontario ha condotto il movimento orientato intorno correre liberi i club non-profit di codifica. "Dojo" si intendono i club non-profit per la codifica istituiti per sostenere le comunità e diffondere la filosofia di CoderDojo."
+msgstr "Tutti Dojo sono indipendenti, gruppi di comunità autonome, istituiti per ispirare i giovani a imparare il codice. Tutti Dojo hanno diversi stili di gestione, ma tutti mantengono lo stesso ethos."
 
 msgid "charter.p3"
-msgstr "Tutti Dojo sono indipendenti, gruppi di comunità autonome, istituiti per ispirare i giovani a imparare il codice. Tutti Dojo hanno diversi stili di gestione, ma tutti mantengono lo stesso ethos."
+msgstr "Ai fini della presente Carta, "CoderDojo" si intende l'open source, volontario ha condotto il movimento orientato intorno correre liberi i club non-profit di codifica. "Dojo" si intendono i club non-profit per la codifica istituiti per sostenere le comunità e diffondere la filosofia di CoderDojo."
 
 msgid "charter.li1"
 msgstr "Ci impegniamo a ispirare e sostenere i giovani a imparare a creare la tecnologia"
@@ -224,10 +226,10 @@ msgid "charter.li2"
 msgstr "Ci impegniamo a ispirare e sostenere i giovani a imparare a creare la tecnologia"
 
 msgid "charter.li3"
-msgstr "Ci impegniamo a non carica i bambini che frequentano né i loro genitori"
+msgstr "Ci impegniamo al massimo livello possibile di protezione dei bambini nella nostra giurisdizione"
 
 msgid "charter.li4"
-msgstr "Ci impegniamo al massimo livello possibile di protezione dei bambini nella nostra giurisdizione"
+msgstr "Ci impegniamo a non carica i bambini che frequentano né i loro genitori"
 
 msgid "charter.li5"
 msgstr "Ci impegniamo a incoraggiare la partecipazione dei genitori all'interno del nostro Dojo"
@@ -254,16 +256,16 @@ msgid "charter.li11"
 msgstr "ASC impegna ad agire nell'interesse della comunità globale CoderDojo"
 
 msgid "charter.li12"
-msgstr "ASC si impegna a facilitare la comunità di condividere le proprie conoscenze"
-
-msgid "charter.li13"
 msgstr "ASC si impegna a condividere le nostre risorse gratis"
 
+msgid "charter.li13"
+msgstr "ASC si impegna a facilitare la comunità di condividere le proprie conoscenze"
+
 msgid "charter.li14"
-msgstr "ASC si impegna a incoraggiare il coinvolgimento attivo nella nostra organizzazione"
+msgstr "Accordo"
 
 msgid "Agreement"
-msgstr "Accordo"
+msgstr "ASC si impegna a incoraggiare il coinvolgimento attivo nella nostra organizzazione"
 
 msgid "charter.li15"
 msgstr "Al momento della registrazione si stanno facendo un accordo con la Fondazione Mondo Ciao e accettando di seguire l'ethos CoderDojo."
@@ -272,13 +274,13 @@ msgid "charter.li16"
 msgstr "Avete il diritto di utilizzare il nome, il logo e il sito web CoderDojo per promuovere la vostra attività per uso non commerciale"
 
 msgid "charter.li17"
-msgstr "Avete il diritto di raccogliere fondi a condizione che sia reso esplicito di farlo per il vostro Dojo o come gruppo di Dojo sotto un nome di gruppo (EG Dojo della California) e la raccolta fondi appropriati è una violazione del presente Statuto."
-
-msgid "charter.li18"
 msgstr "E 'vostra responsabilità di controllare che sia conforme alla legislazione in ogni giurisdizione in cui intraprendere le attività, compresa la raccolta di fondi, per il vostro Dojo o un gruppo di Dojo."
 
-msgid "charter.li19"
+msgid "charter.li18"
 msgstr "Se i termini della presente Carta sono aperti un varco, Ciao World Foundation si riserva il diritto di rimuovere il gruppo dal sito. In questo caso il vostro club di codifica cesserà con il CoderDojo nome, marchio e logo per la promozione del vostro club di codifica e sui siti web di terze parti."
+
+msgid "charter.li19"
+msgstr "Avete il diritto di raccogliere fondi a condizione che sia reso esplicito di farlo per il vostro Dojo o come gruppo di Dojo sotto un nome di gruppo (EG Dojo della California) e la raccolta fondi appropriati è una violazione del presente Statuto."
 
 msgid "charter.li20"
 msgstr "Le opinioni espresse da qualsiasi persona o persone nel Dojo Dojo registrato non rappresentano il punto di vista Ciao World Foundation."
@@ -287,19 +289,19 @@ msgid "charter.li21"
 msgstr "Ciao World Foundation può recedere dal presente Statuto con qualsiasi Dojo senza motivo con un preavviso di 30 giorni."
 
 msgid "charter.li22"
-msgstr "Come Ciao World Foundation è un ente irlandese, questa Carta è soggetta alla legge irlandese e l'utente accetta di che."
-
-msgid "Disclaimer of Liability"
 msgstr "Esclusione di responsabilità"
 
+msgid "Disclaimer of Liability"
+msgstr "Come Ciao World Foundation è un ente irlandese, questa Carta è soggetta alla legge irlandese e l'utente accetta di che."
+
 msgid "charter.li23"
-msgstr "Sei il solo responsabile per le attività svolte dal proprio Dojo. Accettando di questa Carta non comporta approvazione di tali attività da parte della World Foundation Ciao."
+msgstr "Nome Completo:"
 
 msgid "charter.li24"
 msgstr "Ciao World Foundation e CoderDojo declina ogni responsabilità o responsabilità in cui una parte è ferito mentre sono impegnati nelle attività di un gruppo registrato. E 'responsabilità di ogni club per assicurarsi che mantengano un'assicurazione valida e appropriata."
 
 msgid "charter.fullname.label"
-msgstr "Nome Completo:"
+msgstr "Sei il solo responsabile per le attività svolte dal proprio Dojo. Accettando di questa Carta non comporta approvazione di tali attività da parte della World Foundation Ciao."
 
 msgid "You must enter your full name"
 msgstr "Devi inserire il tuo nome completo"
@@ -308,40 +310,40 @@ msgid "You must accept the charter"
 msgstr "È necessario accettare la carta"
 
 msgid "I have read and accepted the above charter"
-msgstr "Ho letto e accettato la carta sopra"
+msgstr "Il Prossimo"
 
 msgid "Next"
-msgstr "Il Prossimo"
+msgstr "Eventi"
 
 msgid "Dojo Menu"
 msgstr "Dojo Menu"
 
 msgid "Events"
-msgstr "Eventi"
+msgstr "Ho letto e accettato la carta sopra"
 
 msgid "Forum"
-msgstr "Foro"
-
-msgid "Charter"
-msgstr "FAQ"
-
-msgid "FAQ"
 msgstr "Carta"
 
-msgid "CoolestProjects2015"
+msgid "Charter"
+msgstr "Foro"
+
+msgid "FAQ"
 msgstr "CoolestProjects2015"
 
-msgid "Opens in new window"
+msgid "CoolestProjects2015"
 msgstr "Apre in una nuova finestra"
+
+msgid "Opens in new window"
+msgstr "FAQ"
 
 msgid "Find a Dojo"
 msgstr "Trova un Dojo"
 
 msgid "Resources"
-msgstr "Risorse"
+msgstr "Lista Dojo"
 
 msgid "Dojo List"
-msgstr "Lista Dojo"
+msgstr "Risorse"
 
 msgid "My Dojos"
 msgstr "I miei Dojo"
@@ -353,16 +355,16 @@ msgid "Start a Dojo"
 msgstr "Avviare un Dojo"
 
 msgid "Manage Dojos"
-msgstr "Statistiche"
-
-msgid "Stats"
 msgstr "Gestire Dojo"
 
+msgid "Stats"
+msgstr "Statistiche"
+
 msgid "Logout"
-msgstr "Disconnettersi"
+msgstr "Creare un Dojo"
 
 msgid "Create a Dojo"
-msgstr "Creare un Dojo"
+msgstr "Disconnettersi"
 
 msgid "Adult Forums"
 msgstr "Forum per adulti"
@@ -380,88 +382,88 @@ msgid "Status"
 msgstr "Stato"
 
 msgid "Join"
-msgstr "Aderire"
-
-msgid "Send Request"
 msgstr "Invia Richiesta"
 
-msgid "Contact"
-msgstr "Contatto"
+msgid "Send Request"
+msgstr "Aderire"
 
-msgid "Email"
+msgid "Contact"
 msgstr "Email"
 
-msgid "Website"
+msgid "Email"
 msgstr "Sito web"
 
-msgid "Google Group"
+msgid "Website"
 msgstr "Google Group"
 
+msgid "Google Group"
+msgstr "Contatto"
+
 msgid "Time"
-msgstr "Tempo"
+msgstr "Posizione"
 
 msgid "Location"
-msgstr "Posizione"
+msgstr "Tempo"
 
 msgid "Map"
 msgstr "Mappa"
 
 msgid "dojo.list.index.p1"
-msgstr "Per registrare un Dojo è necessario prima un account. Iscriviti qui:"
+msgstr "Le Dojo qui elencati sono tutti verificati dal team CoderDojo."
 
 msgid "dojo.list.index.p2"
-msgstr "Le Dojo qui elencati sono tutti verificati dal team CoderDojo."
+msgstr "Per registrare un Dojo è necessario prima un account. Iscriviti qui:"
 
 msgid "Learn more"
 msgstr "Impara di più..."
 
 msgid "Search Results"
-msgstr "I vostri dojo più vicini"
-
-msgid "Your closest dojos"
 msgstr "Risultati Di Ricerca"
 
-msgid "dojo.list.search.placeholder"
-msgstr "dove sei? Inserire un indirizzo qui e troveremo il dojo più vicino a voi."
+msgid "Your closest dojos"
+msgstr "I vostri dojo più vicini"
 
-msgid "Dojo Information"
+msgid "dojo.list.search.placeholder"
 msgstr "Dojo Informazioni"
 
-msgid "Dojo Name"
+msgid "Dojo Information"
 msgstr "Nome Dojo"
+
+msgid "Dojo Name"
+msgstr "dove sei? Inserire un indirizzo qui e troveremo il dojo più vicino a voi."
 
 msgid "dojo.edit.information.description"
 msgstr "Normalmente il nome da una zona, come "tappo", o se ci sono più Dojo sono nella vostra zona "San Francisco @ GitHub". Prova astenersi dal prefisso il nome con "CoderDojo"."
 
 msgid "dojo.edit.email.description"
-msgstr "Questa dovrebbe essere diverso per la posta elettronica personale hai creato un account qui con. Per il proprio indirizzo email CoderDojo (es limerick@coderdojo.com), vi preghiamo di contattarci e lasciare il campo vuoto."
-
-msgid "Times are empty"
 msgstr "I tempi sono vuote"
 
-msgid "dojo.edit.times.description"
-msgstr "Stato che si tratti di ogni settimana o in un determinato giorno (es. "Ogni Venerdì, 17:30-08:00" o "Sabato 25, 12:00-3:00")"
-
-msgid "dojo.edit.country.placeholder"
-msgstr "Selezionare un paese"
-
-msgid "Select a country"
+msgid "Times are empty"
 msgstr "Selezionare o ricercare un paese nella lista ..."
 
+msgid "dojo.edit.times.description"
+msgstr "Questa dovrebbe essere diverso per la posta elettronica personale hai creato un account qui con. Per il proprio indirizzo email CoderDojo (es limerick@coderdojo.com), vi preghiamo di contattarci e lasciare il campo vuoto."
+
+msgid "dojo.edit.country.placeholder"
+msgstr "Stato che si tratti di ogni settimana o in un determinato giorno (es. "Ogni Venerdì, 17:30-08:00" o "Sabato 25, 12:00-3:00")"
+
+msgid "Select a country"
+msgstr "Selezionare un paese"
+
 msgid "dojo.edit.place.citytown.placeholder"
-msgstr "Selezionare o cercare un posto nella lista ..."
+msgstr "Cercare o inserire la vostra zona"
 
 msgid "Select a place"
-msgstr "Scegliere un posto"
-
-msgid "Address"
 msgstr "Indirizzo"
 
+msgid "Address"
+msgstr "Scegliere un posto"
+
 msgid "dojo.edit.address.description"
-msgstr "Indirizzo del Dojo (ad esempio LIT City Centre)"
+msgstr "Coordinate"
 
 msgid "Coordinates"
-msgstr "Coordinate"
+msgstr "Indirizzo del Dojo (ad esempio LIT City Centre)"
 
 msgid "Address is empty"
 msgstr "Address è vuoto"
@@ -470,61 +472,61 @@ msgid "Get location from address"
 msgstr "Prendi posizione dall'indirizzo"
 
 msgid "dojo.edit.map.placeholder"
-msgstr "Clicca sulla mappa per selezionare una posizione"
+msgstr "Altre Informazioni"
 
 msgid "Other Information"
-msgstr "Altre Informazioni"
+msgstr "Clicca sulla mappa per selezionare una posizione"
 
 msgid "Google Group URL"
 msgstr "URL di Google Group"
 
 msgid "dojo.edit.googleurl.description"
-msgstr "Si consiglia la creazione di un gruppo di discussione così la gente può iscriversi per ricevere le ultime notizie e avvenimenti."
+msgstr "Mailing List"
 
 msgid "dojo.edit.twitter.description"
 msgstr "Anche in questo caso, un modo utile per la condivisione di informazioni e di essere trovato. Possiamo anche aiutare i messaggi di condivisione di seguaci."
 
 msgid "Mailing List"
-msgstr "Mailing List"
+msgstr "Si consiglia la creazione di un gruppo di discussione così la gente può iscriversi per ricevere le ultime notizie e avvenimenti."
 
 msgid "dojo.edit.mailinglist.description"
-msgstr "Ricevi aggiornamenti mensili al tuo indirizzo di posta elettronica dell'utente da parte della comunità CoderDojo tutto il mondo che si mantiene informati e aiutarvi con in esecuzione il Dojo."
-
-msgid "Status Messages"
 msgstr "Messaggi di stato"
 
-msgid "Need Mentors"
-msgstr "Hai bisogno di mentori"
-
-msgid "Current Stage"
+msgid "Status Messages"
 msgstr "Fase attuale"
 
-msgid "In Planning"
+msgid "Need Mentors"
+msgstr "Ricevi aggiornamenti mensili al tuo indirizzo di posta elettronica dell'utente da parte della comunità CoderDojo tutto il mondo che si mantiene informati e aiutarvi con in esecuzione il Dojo."
+
+msgid "Current Stage"
 msgstr "In Planning"
+
+msgid "In Planning"
+msgstr "Hai bisogno di mentori"
 
 msgid "Open, come along"
 msgstr "Aperto, vieni"
 
 msgid "Register Ahead"
-msgstr "Completo"
-
-msgid "Full Up"
 msgstr "Registrati Ahead"
 
-msgid "Private"
-msgstr "Privato"
+msgid "Full Up"
+msgstr "Completo"
 
-msgid "dojo.edit.private.description"
+msgid "Private"
 msgstr "Seleziona solo se il vostro Dojo sarà accessibile esclusivamente ai partecipanti all'interno della vostra organizzazione, ad esempio scuole / università / figli dei dipendenti / etc dell'organizzazione."
 
-msgid "Supporters Image URL"
+msgid "dojo.edit.private.description"
 msgstr "URL Tifosi di immagine"
 
+msgid "Supporters Image URL"
+msgstr "Gestisci utenti Dojo"
+
 msgid "Manage Dojo Users"
-msgstr "Invia invito"
+msgstr "Privato"
 
 msgid "Send Invite"
-msgstr "Gestisci utenti Dojo"
+msgstr "Invia invito"
 
 msgid "Profile"
 msgstr "Profilo"
@@ -545,7 +547,7 @@ msgid "Verification"
 msgstr "Verifica"
 
 msgid "Any"
-msgstr "Any"
+msgstr "Qualsiasi"
 
 msgid "Verified"
 msgstr "Verificato"
@@ -572,10 +574,10 @@ msgid "User"
 msgstr "Utente"
 
 msgid "Application"
-msgstr "Applicazione"
+msgstr "Modifica"
 
 msgid "Edit"
-msgstr "Modifica"
+msgstr "Applicazione"
 
 msgid "Verify"
 msgstr "Verificare"
@@ -590,10 +592,10 @@ msgid "View"
 msgstr "Vista"
 
 msgid "Apply"
-msgstr "Applicare"
+msgstr "Utenti"
 
 msgid "Users"
-msgstr "Utenti"
+msgstr "Applicare"
 
 msgid "Listing"
 msgstr "Listato"
@@ -611,16 +613,16 @@ msgid "Terms and Conditions here"
 msgstr "Ho letto e accetto le"
 
 msgid "Click on each step to get started"
-msgstr "Benvenuti Nuovo Campione! Il primo passo verso la creazione di un Dojo nella vostra zona sta riempiendo questo modulo e dandoci qualche informazione in più su di te."
-
-msgid "champion.registration.p1"
 msgstr "Clicca su ogni passaggio per iniziare"
 
+msgid "champion.registration.p1"
+msgstr "Benvenuti Nuovo Campione! Il primo passo verso la creazione di un Dojo nella vostra zona sta riempiendo questo modulo e dandoci qualche informazione in più su di te."
+
 msgid "champion.registration.p2"
-msgstr "Lo scopo di noi raccogliere queste informazioni in modo che possiamo adattare il supporto a voi come il vostro inizio il viaggio Dojo!"
+msgstr "Se volete saperne di più su come avviare una CoderDojo nella vostra zona si veda:"
 
 msgid "champion.registration.p3"
-msgstr "Se volete saperne di più su come avviare una CoderDojo nella vostra zona si veda:"
+msgstr "Lo scopo di noi raccogliere queste informazioni in modo che possiamo adattare il supporto a voi come il vostro inizio il viaggio Dojo!"
 
 msgid "champion.dateOfBirth.placeholder"
 msgstr "È necessario avere più di 18 anni ..."
@@ -632,22 +634,22 @@ msgid "champion.address"
 msgstr "Indirizzo"
 
 msgid "champion.address.placeholder"
-msgstr "Inserisci il tuo indirizzo livello della strada ..."
+msgstr "Address è vuoto"
 
 msgid "champion.address.required"
-msgstr "Address è vuoto"
+msgstr "Inserisci il tuo indirizzo livello della strada ..."
 
 msgid "Technical Experience"
 msgstr "Esperienza tecnica"
 
 msgid "technicalexperience.placeholder"
-msgstr "Descrivere eventuali siti web, applicazioni o lavoro open source che avete fatto."
-
-msgid "Experience working with youth"
 msgstr "Esperienza di lavoro con i giovani"
 
-msgid "experienceyouth.placeholder"
+msgid "Experience working with youth"
 msgstr "Descrivi la tua esperienza di lavoro con i giovani."
+
+msgid "experienceyouth.placeholder"
+msgstr "Descrivere eventuali siti web, applicazioni o lavoro open source che avete fatto."
 
 msgid "notes.placeholder"
 msgstr "Si prega di aggiungere qualsiasi altra informazione pertinente."
@@ -659,10 +661,10 @@ msgid "Register Account"
 msgstr "Registrati Account"
 
 msgid "wizard.p1"
-msgstr "Per iniziare, si prega di compilare il seguente modulo di registrazione."
+msgstr "Champion Registrazione"
 
 msgid "Champion Registration"
-msgstr "Champion Registrazione"
+msgstr "Per iniziare, si prega di compilare il seguente modulo di registrazione."
 
 msgid "Setup your Dojo"
 msgstr "Imposta il tuo Dojo"
@@ -677,19 +679,19 @@ msgid "wizard.p3"
 msgstr "Un membro del team CoderDojo Fondazione rivedere la tua inserzione e sarà contatteremo al più presto."
 
 msgid "stats.p1"
-msgstr "persone hanno firmato la versione corrente della Carta"
+msgstr "Attivo"
 
 msgid "Active"
-msgstr "Attivo"
+msgstr "persone hanno firmato la versione corrente della Carta"
 
 msgid "Total"
 msgstr "Totale"
 
 msgid "Send me an email"
-msgstr "Congiunto"
+msgstr "mandami un email"
 
 msgid "Joined"
-msgstr "mandami un email"
+msgstr "Congiunto"
 
 msgid "Social Media"
 msgstr "Social Media"
@@ -701,31 +703,31 @@ msgid "A description about me"
 msgstr "Una descrizione di me."
 
 msgid "Member of Dojos"
-msgstr "Membro di Dojo"
-
-msgid "Gather your Team"
 msgstr "Raccogliere la tua squadra"
 
-msgid "Gather Team"
+msgid "Gather your Team"
 msgstr "Raccogliere Squadra"
 
-msgid "You must gather a team before continuing."
-msgstr "È necessario raccogliere una squadra prima di continuare."
+msgid "Gather Team"
+msgstr "Membro di Dojo"
 
-msgid "Find Mentors"
+msgid "You must gather a team before continuing."
 msgstr "Trova Mentori"
 
-msgid "You must find mentors before continuing."
-msgstr "Dovete trovare mentori prima di continuare."
+msgid "Find Mentors"
+msgstr "È necessario raccogliere una squadra prima di continuare."
 
-msgid "Background Check"
+msgid "You must find mentors before continuing."
 msgstr "Controllo Dei Precedenti"
 
+msgid "Background Check"
+msgstr "Dovete trovare mentori prima di continuare."
+
 msgid "Please describe how you have background checked your team."
-msgstr "Si prega di descrivere come avete controllato il vostro sfondo squadra."
+msgstr "Trova il tuo Venue"
 
 msgid "Find your Venue"
-msgstr "Trova il tuo Venue"
+msgstr "Si prega di descrivere come avete controllato il vostro sfondo squadra."
 
 msgid "Plan your Dojo"
 msgstr "Organizza il tuo Dojo"
@@ -749,13 +751,13 @@ msgid "Set up Website"
 msgstr "Imposta Pagina Web"
 
 msgid "Plan the content you will use"
-msgstr "Pianificare il contenuto che si intende utilizzare"
-
-msgid "Invitation Accepted"
 msgstr "Invito accettato!"
 
-msgid "Invalid Invitation"
+msgid "Invitation Accepted"
 msgstr "Invito non valido"
+
+msgid "Invalid Invitation"
+msgstr "Pianificare il contenuto che si intende utilizzare"
 
 msgid "Error accepting invitation"
 msgstr "'Errore di accettare l'invito:'"
@@ -764,10 +766,10 @@ msgid "User Successfully Validated"
 msgstr "Utente convalidato correttamente!"
 
 msgid "Invalid Invite Request"
-msgstr "Errore convalida di richiesta utente:"
+msgstr "Valido Invita Richiesta"
 
 msgid "Error validating user request"
-msgstr "Valido Invita Richiesta"
+msgstr "Errore convalida di richiesta utente:"
 
 msgid "Your Dojo has been successfully saved"
 msgstr "Il tuo Dojo è stato salvato con successo"
@@ -785,22 +787,22 @@ msgid "dojo.create.initcontent.li3"
 msgstr "Invita Richiesta inviata!"
 
 msgid "Invite Request Sent"
-msgstr "un genitore! (molto importante). Se siete 12 o sotto, il vostro genitore deve stare con voi durante la sessione."
+msgstr "Iscritto con successo Dojo!"
 
 msgid "Successfully Joined Dojo"
-msgstr "Iscritto con successo Dojo!"
+msgstr "un genitore! (molto importante). Se siete 12 o sotto, il vostro genitore deve stare con voi durante la sessione."
 
 msgid "Update Dojo"
 msgstr "Aggiornamento Dojo"
 
 msgid "An error has occurred while loading Dojo"
-msgstr "Si è verificato un errore durante il caricamento Dojo"
+msgstr "Impossibile caricare Dojo"
 
 msgid "Failed to load Dojo"
-msgstr "Impossibile eseguire la richiesta in questo momento - si prega di riprovare più tardi."
+msgstr "Si è verificato un errore durante il caricamento Dojo"
 
 msgid "login.msgmap.unknown"
-msgstr "Impossibile caricare Dojo"
+msgstr "Impossibile eseguire la richiesta in questo momento - si prega di riprovare più tardi."
 
 msgid "login.msgmap.user-not-found"
 msgstr "Indirizzo e-mail non è riconosciuto."
@@ -812,13 +814,13 @@ msgid "login.msgmap.reset-sent"
 msgstr "Una e-mail con le istruzioni di reimpostazione password è stata inviata a voi."
 
 msgid "login.register.success"
-msgstr "grazie per la registrazione. Il tuo account CoderDojo è stato creato correttamente. È ora possibile registrarsi per diventare un campione e creare un Dojo."
+msgstr "Errore del server"
 
 msgid "user name already exists"
 msgstr "esiste già il nome utente"
 
 msgid "server error"
-msgstr "Errore del server"
+msgstr "grazie per la registrazione. Il tuo account CoderDojo è stato creato correttamente. È ora possibile registrarsi per diventare un campione e creare un Dojo."
 
 msgid "login.register.failure"
 msgstr "C'è stato un problema registrare il tuo account:"
@@ -827,13 +829,13 @@ msgid "Invalid email or password"
 msgstr "E-mail o password non validi!"
 
 msgid "Previous"
-msgstr "Precedente"
-
-msgid "An error has occurred while editing dojo"
 msgstr "Si è verificato un errore durante la modifica dojo:"
 
-msgid "An error has occurred while loading Dojos"
+msgid "An error has occurred while editing dojo"
 msgstr "Si è verificato un errore durante il caricamento Dojo"
+
+msgid "An error has occurred while loading Dojos"
+msgstr "Precedente"
 
 msgid "An error has occurred while updating Dojos"
 msgstr "Si è verificato un errore durante l'aggiornamento Dojo:"
@@ -860,22 +862,22 @@ msgid "Error removing user"
 msgstr "Errore durante la rimozione utente:"
 
 msgid "An error has occurred while deleting dojo"
-msgstr "Si è verificato un errore durante l'eliminazione dojo:"
+msgstr "Grazie per aver inviato la tua inserzione dojo. Un membro del team CoderDojo Fondazione rivedere la tua inserzione e sarà contatteremo al più presto."
 
 msgid "dojo.create.success"
-msgstr "Grazie per aver inviato la tua inserzione dojo. Un membro del team CoderDojo Fondazione rivedere la tua inserzione e sarà contatteremo al più presto."
+msgstr "Si è verificato un errore durante l'eliminazione dojo:"
 
 msgid "NewspaperMagazine"
 msgstr "Giornale / Rivista"
 
 msgid "Radio"
-msgstr "Radio"
-
-msgid "FamilyFriends"
 msgstr "Amici Di Famiglia"
 
-msgid "Error loading profile"
+msgid "FamilyFriends"
 msgstr "Errore profilo di carico:"
+
+msgid "Error loading profile"
+msgstr "Radio"
 
 msgid "Error loading Dojos"
 msgstr "Errore durante il caricamento Dojo:"
@@ -890,10 +892,10 @@ msgid "Leave"
 msgstr "Errore lasciando Dojo"
 
 msgid "Error leaving Dojo"
-msgstr "Sei sicuro di volere lasciare questo Dojo?"
+msgstr "Lascia Dojo"
 
 msgid "Are you sure you want to leave this Dojo?"
-msgstr "Lascia Dojo"
+msgstr "Sei sicuro di volere lasciare questo Dojo?"
 
 msgid "Leave Dojo"
 msgstr "Lasciare"
@@ -917,13 +919,13 @@ msgid "Error loading user dojo entity"
 msgstr "Errore durante il caricamento entità dojo utente"
 
 msgid "You do not have permission to update user types"
-msgstr "Non si dispone dell'autorizzazione per aggiornare tipi di utente"
+msgstr "Genitori / tutori"
 
 msgid "You do not have permission to remove users"
-msgstr "Non hai il permesso di rimuovere gli utenti"
+msgstr "Non si dispone dell'autorizzazione per aggiornare tipi di utente"
 
 msgid "ParentsGuardians"
-msgstr "Genitori / tutori"
+msgstr "Non hai il permesso di rimuovere gli utenti"
 
 msgid "Badges"
 msgstr "Badge"
@@ -932,10 +934,10 @@ msgid "Children"
 msgstr "Bambini"
 
 msgid "Select a user type"
-msgstr "Selezionare un tipo di utente"
+msgstr "Linguaggi Di Programmazione"
 
 msgid "Programming Languages"
-msgstr "Linguaggi Di Programmazione"
+msgstr "Selezionare un tipo di utente"
 
 msgid "Events for Dojo"
 msgstr "Eventi per Dojo"
@@ -947,25 +949,25 @@ msgid "Date"
 msgstr "Tipo"
 
 msgid "Type"
-msgstr "Data"
-
-msgid "For"
-msgstr "Per"
-
-msgid "Name"
 msgstr "Nome"
 
-msgid "Capacity"
+msgid "For"
 msgstr "Capacità"
 
-msgid "Applicants"
-msgstr "I candidati"
+msgid "Name"
+msgstr "Data"
 
-msgid "Attending"
+msgid "Capacity"
+msgstr "Per"
+
+msgid "Applicants"
 msgstr "Assistere"
 
-msgid "Create Event"
+msgid "Attending"
 msgstr "Crea evento"
+
+msgid "Create Event"
+msgstr "I candidati"
 
 msgid "Manage"
 msgstr "Gestire"
@@ -977,73 +979,73 @@ msgid "Manage Dojo Events"
 msgstr "Gestire Dojo Eventi"
 
 msgid "Are you sure you want to cancel this event?"
-msgstr "Sei sicuro di voler annullare questo evento?"
-
-msgid "Are you sure you want to delete this Dojo?"
-msgstr "Sei sicuro di voler eliminare questo Dojo?"
-
-msgid "Apply for Event"
-msgstr "La tua candidatura per evento"
-
-msgid "Description"
 msgstr "Descrizione"
 
-msgid "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
-msgstr "Grazie. La tua domanda è stata ricevuta. Sarete avvisati via e-mail se si è approvato per questo evento."
+msgid "Are you sure you want to delete this Dojo?"
+msgstr "La tua candidatura per evento"
 
-msgid "Error applying for event"
+msgid "Apply for Event"
+msgstr "Sei sicuro di voler annullare questo evento?"
+
+msgid "Description"
+msgstr "Sei sicuro di voler eliminare questo Dojo?"
+
+msgid "Thank You. Your application has been received. You will be notified by email if you are approved for this event."
 msgstr "Errore applicazione per l'evento"
 
-msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
-msgstr "Utilizzando il presente sito web l'utente accetta l'uso di cookie. Potete leggere la nostra politica dei cookie <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>qui</a> ."
-
-msgid "Add the event name"
-msgstr "Aggiungere il nome dell'evento"
-
-msgid "All"
+msgid "Error applying for event"
 msgstr "Tutti"
 
+msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."
+msgstr "Aggiungere il nome dell'evento"
+
+msgid "Add the event name"
+msgstr "Utilizzando il presente sito web l'utente accetta l'uso di cookie. Potete leggere la nostra politica dei cookie <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>qui</a> ."
+
+msgid "All"
+msgstr "Grazie. La tua domanda è stata ricevuta. Sarete avvisati via e-mail se si è approvato per questo evento."
+
 msgid "Add a description"
-msgstr "Età"
+msgstr "Aggiungere una descrizione"
 
 msgid "Age"
-msgstr "Aggiungere una descrizione"
+msgstr "One off"
 
 msgid "One off"
 msgstr "Ogni"
 
 msgid "Every"
-msgstr "Da"
+msgstr "Età"
 
 msgid "From"
-msgstr "One off"
+msgstr "Da"
 
 msgid "Close"
-msgstr "Chiudere"
-
-msgid "is public"
 msgstr "è pubblico"
 
-msgid "Event Name"
+msgid "is public"
 msgstr "Nome evento"
 
+msgid "Event Name"
+msgstr "Chiudere"
+
 msgid "To"
-msgstr "Città"
+msgstr "A"
 
 msgid "City"
-msgstr "A"
+msgstr "Città"
 
 msgid "Add a city name"
 msgstr "Aggiungere il nome della città"
 
 msgid "Add the address to the event"
-msgstr "Aggiungere l'indirizzo all'evento"
+msgstr "Inviti"
 
 msgid "Add the maximum amount of participants"
 msgstr "Aggiungere la quantità massima di partecipanti"
 
 msgid "Invites"
-msgstr "Inviti"
+msgstr "Aggiungere l'indirizzo all'evento"
 
 msgid "Invite dojo users"
 msgstr "Invitare gli utenti dojo"
@@ -1052,19 +1054,19 @@ msgid "Save"
 msgstr "Pubblicare"
 
 msgid "Publish"
-msgstr "Salva"
-
-msgid "Parents/Guardians"
-msgstr "Applicazioni di aggiornamento Errore"
-
-msgid "Approve"
 msgstr "Genitori / tutori"
 
-msgid "Error updating applications"
+msgid "Parents/Guardians"
 msgstr "Approvare"
 
-msgid "Sunday"
+msgid "Approve"
+msgstr "Salva"
+
+msgid "Error updating applications"
 msgstr "Domenica"
+
+msgid "Sunday"
+msgstr "Applicazioni di aggiornamento Errore"
 
 msgid "Monday"
 msgstr "Lunedi"
@@ -1073,94 +1075,94 @@ msgid "Tuesday"
 msgstr "Martedì"
 
 msgid "Wednesday"
-msgstr "Mercoledì"
-
-msgid "Thursday"
-msgstr "Giovedi"
-
-msgid "Friday"
 msgstr "Venerdì"
 
-msgid "Saturday"
+msgid "Thursday"
+msgstr "Mercoledì"
+
+msgid "Friday"
 msgstr "Sabato"
+
+msgid "Saturday"
+msgstr "Giovedi"
 
 msgid "Applications successfully updated"
 msgstr "Applicazioni aggiornati correttamente"
 
 msgid "No applications have been changed."
-msgstr "Nessuna applicazione sono state modificate."
+msgstr "Invita Parent"
 
 msgid "Invite Parent"
-msgstr "Invita Parent"
+msgstr "Nessuna applicazione sono state modificate."
 
 msgid "Are you sure you want to delete this application?"
 msgstr "Sei sicuro di voler cancellare questa applicazione?"
 
 msgid "Select a Dojo member..."
-msgstr "Nascondi Note"
-
-msgid "Please click the Join Dojo button before applying for events."
-msgstr "Si prega di fare clic sul pulsante Join Dojo prima di applicare per gli eventi."
-
-msgid "Hide Notes"
 msgstr "Selezionare un membro Dojo ..."
 
-msgid "Hide Projects"
+msgid "Please click the Join Dojo button before applying for events."
+msgstr "Nascondi Note"
+
+msgid "Hide Notes"
 msgstr "Nascondi Progetti"
 
-msgid "Gender"
+msgid "Hide Projects"
 msgstr "Genere"
+
+msgid "Gender"
+msgstr "Si prega di fare clic sul pulsante Join Dojo prima di applicare per gli eventi."
 
 msgid "Female"
 msgstr "Femminile"
 
 msgid "Private Profile"
-msgstr "/ Email del Guardian Capogruppo"
-
-msgid "None"
-msgstr "Nessuno"
-
-msgid "parent.guardian.email"
 msgstr "Profilo personale"
 
-msgid "Invite"
+msgid "None"
 msgstr "Invitare"
 
-msgid "Address is required"
+msgid "parent.guardian.email"
+msgstr "Nessuno"
+
+msgid "Invite"
 msgstr "È richiesto indirizzo"
+
+msgid "Address is required"
+msgstr "/ Email del Guardian Capogruppo"
 
 msgid "Phone"
 msgstr "Telefono"
 
 msgid "Dojo Staff"
-msgstr "<13"
-
-msgid "< 13"
 msgstr "Dojo Personale"
 
+msgid "< 13"
+msgstr "<13"
+
 msgid "> 13"
-msgstr "Applicazione aggiornamento Errore"
+msgstr "> 13"
 
 msgid "Error updating application"
-msgstr "> 13"
+msgstr "Applicazione aggiornamento Errore"
 
 msgid "Error saving new applicant"
 msgstr "Risparmio nuovo richiedente Errore"
 
 msgid "Error removing applicant"
-msgstr "Bambini Assistere"
-
-msgid "Children Attending"
 msgstr "Errore durante la rimozione richiedente"
 
-msgid "Dates"
-msgstr "Giorno"
-
-msgid "Day"
+msgid "Children Attending"
 msgstr "Date"
 
-msgid "to"
+msgid "Dates"
+msgstr "Bambini Assistere"
+
+msgid "Day"
 msgstr "a"
+
+msgid "to"
+msgstr "Giorno"
 
 msgid "Everyone"
 msgstr "Tutti"
@@ -1181,10 +1183,10 @@ msgid "champion"
 msgstr "Mentori / Volontari"
 
 msgid "all-user-types"
-msgstr "Champions"
+msgstr "Giovani Under 13"
 
 msgid "Youth Under 13"
-msgstr "Giovani Under 13"
+msgstr "Champions"
 
 msgid "Youth Over 13"
 msgstr "Giovani Oltre 13"
@@ -1196,58 +1198,58 @@ msgid "Mentor/Volunteer"
 msgstr "Mentor / Volontariato"
 
 msgid "Champion"
-msgstr "Campione"
-
-msgid "recurring"
 msgstr "Periodico"
 
-msgid "one-off"
+msgid "recurring"
 msgstr "One off"
+
+msgid "one-off"
+msgstr "Campione"
 
 msgid "Select event date..."
 msgstr "Scegli la data ..."
 
 msgid "Password must be a minimum of 8 characters in length and contain at least one number or punctuation character"
-msgstr "La password deve essere di almeno 8 caratteri e contenere almeno un numero o un carattere di punteggiatura"
+msgstr "Aggiungere un tipo di utente"
 
 msgid "Password must not be the same as your email address"
 msgstr "La password non deve essere lo stesso come il tuo indirizzo e-mail"
 
 msgid "Add a user type"
-msgstr "Aggiungere un tipo di utente"
-
-msgid "Background Checked"
 msgstr "Sfondo Controllato"
 
+msgid "Background Checked"
+msgstr "La password deve essere di almeno 8 caratteri e contenere almeno un numero o un carattere di punteggiatura"
+
 msgid "Upload new picture"
-msgstr "Intro"
+msgstr "Carica nuova foto"
 
 msgid "Intro"
-msgstr "Carica nuova foto"
+msgstr "Breve Descrizione"
 
 msgid "Badges Welcome Text"
 msgstr "Benvenuti al cruscotto CoderDojo Badge."
 
 msgid "Short Description"
-msgstr "Premio Badge"
+msgstr "Intro"
 
 msgid "Award Badge"
-msgstr "Breve Descrizione"
+msgstr "Premio Badge"
 
 msgid "Remove"
-msgstr "Attribuire il distintivo ..."
+msgstr "Rimuovere"
 
 msgid "Award a badge..."
-msgstr "Rimuovere"
+msgstr "Attribuire il distintivo ..."
 
 msgid "Select a user type to invite..."
 msgstr "Selezionare un tipo di utente di invitare ..."
 
 msgid "Are you sure you want to award this badge to"
-msgstr "Sei sicuro di voler assegnare questo distintivo a"
+msgstr "Distintivo Applicazione Sent!"
 
 msgid "Badge Application Sent!"
-msgstr "Distintivo Applicazione Sent!"
+msgstr "Sei sicuro di voler assegnare questo distintivo a"
 
 msgid "Badge Accepted! It is now visible on your profile page."
 msgstr "Badge non trovato."
@@ -1262,37 +1264,37 @@ msgid "Only the nominated user can accept this badge."
 msgstr "Data Premiato"
 
 msgid "Date Awarded"
-msgstr "Non è possibile richiedere un'applicazione distintivo per il proprio account utente."
+msgstr "Solo l'utente nominato può accettare questo distintivo."
 
 msgid "You can't request a badge application for your own user account."
 msgstr "Si prega di inserire un numero di Claim Badge."
 
 msgid "Please enter a Badge Claim Number."
-msgstr "Non valido Badge Claim numero."
+msgstr "Non è possibile richiedere un'applicazione distintivo per il proprio account utente."
 
 msgid "Invalid Badge Claim Number."
-msgstr "Solo l'utente nominato può accettare questo distintivo."
+msgstr "Non valido Badge Claim numero."
 
 msgid "You have successfully claimed a badge. It is now visible on your profile page."
 msgstr "Inserisci Badge Numero rivendicazione"
 
 msgid "Enter Badge Claim Number"
-msgstr "Andare"
+msgstr "Hai sostenuto con successo un badge. E 'ora visibile sulla pagina del tuo profilo."
 
 msgid "Go"
 msgstr "Richiedi Ora"
 
 msgid "Claim Now"
-msgstr "Hai sostenuto con successo un badge. E 'ora visibile sulla pagina del tuo profilo."
+msgstr "Andare"
 
 msgid "Champion and Dojo Admin permissions cannot be removed from a Dojo owner."
-msgstr "Autorizzazioni di amministratore Champion e Dojo non possono essere rimossi da un proprietario di Dojo."
+msgstr "Successo aggiornato password."
 
 msgid "Dojo owners cannot be removed."
-msgstr "Proprietari Dojo non possono essere rimossi."
+msgstr "Autorizzazioni di amministratore Champion e Dojo non possono essere rimossi da un proprietario di Dojo."
 
 msgid "Successfully updated password."
-msgstr "Successo aggiornato password."
+msgstr "Proprietari Dojo non possono essere rimossi."
 
 msgid "Failed to update password."
 msgstr "Impossibile aggiornare la password."
@@ -1313,13 +1315,13 @@ msgid "Edit Profile"
 msgstr "Modifica Profilo"
 
 msgid "Export Badges"
-msgstr "Badge Export"
+msgstr "Non Dichiarato"
 
 msgid "Error loading Events"
 msgstr "Errore durante il caricamento Eventi:"
 
 msgid "Undisclosed"
-msgstr "Non Dichiarato"
+msgstr "Badge Export"
 
 msgid "Add Ninja under 13"
 msgstr "Aggiungere Ninja sotto i 13"
@@ -1328,28 +1330,28 @@ msgid "Add Ninja over 13"
 msgstr "Aggiungere Ninja oltre 13"
 
 msgid "This profile is private"
-msgstr "Abbiamo bisogno di mentori!"
+msgstr "Questo profilo è privato"
 
 msgid "We need mentors!"
-msgstr "Questo profilo è privato"
+msgstr "Abbiamo bisogno di mentori!"
 
 msgid "Profile has been saved successfully"
 msgstr "Il tuo profilo è stato salvato con successo"
 
 msgid "An error has occurred while saving profile"
-msgstr "Si è verificato un errore durante il salvataggio del profilo"
+msgstr "Ninja"
 
 msgid "Ninja"
-msgstr "Ninja"
+msgstr "Si è verificato un errore durante il salvataggio del profilo"
 
 msgid "Ninjas"
 msgstr "Ninjas"
 
 msgid "Weekly"
-msgstr "Settimanale"
+msgstr "ogni due settimane"
 
 msgid "Every two weeks"
-msgstr "ogni due settimane"
+msgstr "Settimanale"
 
 msgid "An error has occured verifying your profile."
 msgstr "È verificato un errore nella verifica del tuo profilo."
@@ -1409,28 +1411,28 @@ msgid "Set up social media presence for your Dojo"
 msgstr "Impostare presenza sui social media per il Dojo"
 
 msgid "Connect with other Dojos on social media and CoderDojo discussion forums"
-msgstr "Dovete trovare mentori tecnici prima di continuare."
+msgstr "Connettiti con gli altri Dojo sui social media e forum di discussione CoderDojo"
 
 msgid "You must find technical mentors before continuing."
-msgstr "Connettiti con gli altri Dojo sui social media e forum di discussione CoderDojo"
+msgstr "Dovete trovare mentori tecnici prima di continuare."
 
 msgid "You must locate a suitable venue before continuing."
 msgstr "È necessario individuare un luogo adatto prima di continuare."
 
 msgid "You must set a Date and time for your Dojo to take place."
-msgstr "È necessario impostare una data e ora per il vostro Dojo di prendere posto."
+msgstr "Si prega di descrivere come avete controllato il vostro sfondo squadra."
 
 msgid "You must set an email address for your Dojo."
 msgstr "È necessario impostare un indirizzo email per il Dojo."
 
 msgid "Please describe how you have background checked your team."
-msgstr "Si prega di descrivere come avete controllato il vostro sfondo squadra."
+msgstr "È necessario impostare una data e ora per il vostro Dojo di prendere posto."
 
 msgid "Please describe how you have ensured health and safety best practices."
-msgstr "Si prega di descrivere come si è assicurata le migliori pratiche di salute e sicurezza."
+msgstr "Si prega di descrivere come si è assicurato responsabilità pubblica è coperto"
 
 msgid "Please describe how you have ensured public liability is covered"
-msgstr "Si prega di descrivere come si è assicurato responsabilità pubblica è coperto"
+msgstr "Si prega di descrivere come si è assicurata le migliori pratiche di salute e sicurezza."
 
 msgid "Admin permissions cannot be removed from a Dojo owner."
 msgstr "Autorizzazioni di amministratore non possono essere rimossi da un proprietario di Dojo."
@@ -1442,10 +1444,82 @@ msgid "User types successfully updated."
 msgstr "Tipi di utente aggiornati correttamente."
 
 msgid "User successfully removed from Dojo."
-msgstr "Utente rimosso con successo dal Dojo."
+msgstr "Ninja Oltre 13"
 
 msgid "Ninja Over 13"
-msgstr "Ninja Oltre 13"
+msgstr "Utente rimosso con successo dal Dojo."
 
 msgid "Ninja Under 13"
 msgstr "Ninja Under 13"
+
+msgid "Please add your location manually by clicking on the map."
+msgstr "Non si dispone dell'autorizzazione per aggiornare questo Dojo."
+
+msgid "You do not have permission to update this Dojo."
+msgstr "Si prega di aggiungere la vostra posizione manualmente, facendo clic sulla mappa."
+
+msgid "Page not found"
+msgstr "PAGINA NON TROVATA!"
+
+msgid "Founder"
+msgstr "Fondatore"
+
+msgid "Error setting up event"
+msgstr "Waitlist"
+
+msgid "Event Date"
+msgstr "Evento Data"
+
+msgid "Waitlist"
+msgstr "Non è possibile impostare un evento per un Dojo verificato o inattivo"
+
+msgid "New Applicant"
+msgstr "Nuovo candidato"
+
+msgid "Invite Ninja over 13"
+msgstr "Invitare Ninja oltre 13"
+
+msgid "Enter Ninja Email Address"
+msgstr "Errore invitando Ninja"
+
+msgid "Error inviting Ninja"
+msgstr "Inserisci Ninja Indirizzo e-mail"
+
+msgid "Successfully approved invite Ninja request."
+msgstr "Approvato con successo invitare richiesta Ninja."
+
+msgid "Error approving invite Ninja request."
+msgstr "Errore approvando invitare richiesta Ninja."
+
+msgid "Approve Invite Ninja Request"
+msgstr "Approva Invita Ninja Richiesta"
+
+msgid "Check In"
+msgstr "Check In"
+
+msgid "This Dojo currently has no active events"
+msgstr "Questo Dojo attualmente non eventi attivi"
+
+msgid "'Cannot find founder of dojo'"
+msgstr "'Impossibile trovare fondatore di dojo'"
+
+msgid "dojo.setup.confirmation"
+msgstr "Conferma"
+
+msgid "Confirmation"
+msgstr "Sei sicuro di aver compilato tutte le informazioni in modo corretto e si desidera procedere?"
+
+msgid "An error has occurred while saving dojo lead"
+msgstr "Impossibile recuperare i dettagli dell'utente"
+
+msgid "Unable to retrieve user details"
+msgstr "è stata controllata con successo in"
+
+msgid "has been successfully checked in"
+msgstr "Si è verificato un errore durante il salvataggio dojo piombo"
+
+msgid "Email address not found"
+msgstr "Indirizzo e-mail non trovato."
+
+msgid "has been successfully approved"
+msgstr "è stato approvato con successo"
