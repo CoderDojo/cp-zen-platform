@@ -1,5 +1,5 @@
 <div id="main" class="user-registration cd-color-4-underline">
-  <form id="user-registration-form" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
+  <form id="user-registration-form" ng-enter="noop()" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
     <legend>{@i18n key="Register"/}</legend>
     <div class="row"></div>
     <div class="row cd-input-row">
