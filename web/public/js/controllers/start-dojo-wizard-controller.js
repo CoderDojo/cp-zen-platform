@@ -507,7 +507,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               //update intercom champion dojos
               intercomService.updateIntercom(response.dojo_id);
 
-              $state.go('home', {
+              $state.go('dojo-list', {
                 bannerType:'success',
                 bannerMessage: $translate.instant('dojo.create.success'),
                 bannerTimeCollapse: 150000
