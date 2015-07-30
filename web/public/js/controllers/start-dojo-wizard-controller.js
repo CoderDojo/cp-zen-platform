@@ -3,7 +3,7 @@
 
 function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, $localStorage, alertService,
   WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
-  $sanitize, vcRecaptchaService, intercomService) {
+  $sanitize, vcRecaptchaService, intercomService, $modal) {
 
   $scope.stepFinishedLoading = false;
   $scope.wizardCurrentStep = '';
@@ -90,6 +90,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           if(uncompletedDojoLead){
             cdAgreementsService.loadUserAgreement(user.id, function(response){
               if(response && response.id){
+
                 initStep(uncompletedDojoLead.currentStep);
               } else {
                 initStep(1, 'charter');
@@ -124,7 +125,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }
   }
 
-  $scope.scrollToInvalid = function(form){
+  var scrollToInvalid = function(form){
     // temp fix
     if(currentStepInt === 3) {
       $scope.getLocationFromAddress($scope.dojo);
@@ -135,6 +136,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     if(form.$invalid){
       angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+    }
+  };
+
+  $scope.preSubmitForm = function(form, $event){
+    scrollToInvalid(form);
+
+    $event.preventDefault();
+    if(form.$valid){
+      $scope.openConfirmation(form);
     }
   };
 
@@ -413,6 +423,26 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       $scope.user = user;
     });
 
+    $scope.openConfirmation = function (form) {
+
+    var modalInstance = $modal.open({
+        animation: true,
+        templateUrl: '/templates/dojo-setup-confirm',
+        controller: 'dojoSetupConfirmationCtrl',
+      });
+
+      modalInstance.result.then(function (submitForm) {
+        if(submitForm === true){
+          var name = form.$name;
+          angular.element('form[name=' + name +  ']').submit();
+        }
+      }, function () {
+        
+      });
+    };
+
+
+
     $scope.createDojoUrl = $state.current.url;
 
     cdCountriesService.listCountries(function(countries) {
@@ -420,6 +450,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         return _.omit(country, 'entity$');
       });
     });
+
+    $scope.noop = angular.noop;
 
     $scope.setCountry = function(dojo, country) {
       dojo.countryName = country.countryName;
@@ -507,6 +539,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           setTimeout(function () {
             google.maps.event.trigger($scope.model.map, 'resize');
             var center = new google.maps.LatLng(53.344415, -6.260147);
+  
           }, 100);
         }
       });
@@ -548,4 +581,4 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 
   'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
-  '$sanitize', 'vcRecaptchaService', 'intercomService', startDojoWizardCtrl]);
+  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', startDojoWizardCtrl]);
