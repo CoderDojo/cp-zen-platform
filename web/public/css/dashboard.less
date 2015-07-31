@@ -202,6 +202,7 @@ label {
   }
 }
 
+
 .cd-create-dojo-container {
   padding:0px;
   .pre-game-warning {
@@ -470,6 +471,11 @@ label {
     label.cd-checkbox-label1{
       padding-bottom:32px;
     }
+    label.cd-checkbox-label2{
+      padding-bottom:5px;
+      /* font-size:14 - needed to keep label text correctly aligned with checkbox */
+      font-size: 14px;
+    }
   }
   .cd-wizard-submit {
     margin-top: 30px;
@@ -508,6 +514,17 @@ label {
     }
     .start-dojo-wizard-step {
       margin-bottom:30px;
+    }
+    .subItemsList {
+        list-style-type: square;
+        li {
+          font-size: 15px;
+          color: @cd-green;
+          span {
+            font-size: 13px;
+            color: black;
+          }
+        }
     }
   }
   #createDojoForm {

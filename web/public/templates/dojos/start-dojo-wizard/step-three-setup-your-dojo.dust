@@ -1,6 +1,6 @@
 <div id="main">
   <div class="cd-create-dojo-container">
-    <form name="setupYourDojoForm" ng-enter="noop()" class="cd-accordian" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
+    <form id="setup-dojo-form" name="setupYourDojoForm" ng-enter="noop()" class="cd-accordian" novalidate angular-validator angular-validator-submit="submitSetupYourDojo(setupDojo)" role="form">
       <div class="row">
         <div class="form-group">
           <div class="col-lg-12">
@@ -21,13 +21,18 @@
                     <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
                   </div>
                   <div class="panel-collapse collapse" ng-class="{'in': step.open}" ng-repeat="checkboxInput in step.checkboxes">
-                    <div class="checkbox checkbox-primary">
+                    <div class="checkbox cd-checkbox checkbox-primary">
                       <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}"
                         ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
                         ng-model="setupDojo[checkboxInput.name]">
-                      <label for="{{ checkboxInput.name }}">
-                        {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
+                      <label class="cd-checkbox-label2" for="{{ checkboxInput.name }}"><span>
+                        {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span></span>
                       </label>
+                      <ul class="subItemsList" ng-if="checkboxInput.subList === true">
+                        <li ng-repeat="listItem in checkboxInput.subListItems">
+                          <span>{@i18n key="{{ listItem }}"/}</span>
+                        </li>
+                      </ul>
                       <input type="text" ng-if="checkboxInput.textField"
                         ng-show="setupDojo[checkboxInput.name] === true"
                         class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
