@@ -1,6 +1,6 @@
 'use strict';
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner) {
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
   var eventId = $stateParams.eventId;
   var dojoId = $stateParams.dojoId;
   $scope.filter = {event_id: eventId};
@@ -59,12 +59,10 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.approved = {};
     $scope.attending = 0;
     $scope.waitlist = 0;
-
-    var eventApplicationsQuery = {query: {match: {event_id: eventId}}};
-    $scope.sort = $scope.sort ? $scope.sort : [{name: {order: 'asc', ignore_unmapped: true}}];
+    $scope.sort = $scope.sort ? $scope.sort: {name: 1};
 
     var query = _.omit({
-      event_id: filter.event_id,
+      eventId: filter.eventId,
     }, function (value) {
       return value === '' || _.isNull(value) || _.isUndefined(value)
     });
@@ -73,16 +71,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.applications = [];
 
-    var meta = {
-      sort: $scope.sort,
-      from: loadPageData.skip,
-      size: $scope.itemsPerPage
-    };
-
-    var eventApplicationsQueryNoLimit = angular.copy(eventApplicationsQuery);
-    //Query elasticsearch to get total number of applicants.
-    cdEventsService.searchApplications(eventApplicationsQueryNoLimit, function (result) {
-      _.each(result.records, function (application) {
+    cdEventsService.searchApplications({eventId: eventId}, function (result) {
+      $scope.totalItems = result.length;
+      _.each(result, function (application) {
         if (application.status === 'approved') {
           $scope.attending++;
         } else {
@@ -91,11 +82,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       });
     });
 
-    eventApplicationsQuery = _.extend(eventApplicationsQuery, meta);
-
-    cdEventsService.searchApplications(eventApplicationsQuery, function (result) {
-
-      async.each(result.records, function (application, cb) {
+    cdEventsService.searchApplications({eventId: eventId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}, function (result) {
+      async.each(result, function (application, cb) {
         if (application.status === 'approved') {
           $scope.approved[application.id] = true;
         } else {
@@ -120,8 +108,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         });
 
       }, function (err) {
-        $scope.applications = result.records;
-        $scope.totalItems = result.total;
+        $scope.applications = result;
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
           var dojoMembers = response;
           var availableMembers = [];
@@ -139,50 +126,25 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   }
 
   $scope.toggleSort = function ($event, columnName) {
-    var className, descFlag, sortConfig = {}, sort = [], currentTargetEl;
-
+    var className, descFlag, sortConfig = {};
     var DOWN = 'glyphicon-chevron-down';
     var UP = 'glyphicon-chevron-up';
-    var ACTIVE_COL = 'green-text';
-    var ACTIVE_COL_CLASS = ".green-text";
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-
       return result > -1 ? true : false;
     }
 
-    currentTargetEl = angular.element($event.currentTarget);
-
-    className = $event.currentTarget.className;
-
-    angular.element(ACTIVE_COL_CLASS).removeClass(ACTIVE_COL);
+    className = $($event.target).attr('class');
 
     descFlag = isDesc(className);
-
     if (descFlag) {
-      sortConfig[columnName] = {order: "asc", ignore_unmapped: true};
-      sort.push(sortConfig);
-
-      currentTargetEl
-        .removeClass(DOWN)
-        .addClass(UP);
+      sortConfig[columnName] = 1;
     } else {
-      sortConfig[columnName] = {order: "desc", ignore_unmapped: true};
-      sort.push(sortConfig);
-      currentTargetEl
-        .removeClass(UP)
-        .addClass(DOWN);
+      sortConfig[columnName] = -1;
     }
 
-    currentTargetEl.addClass(ACTIVE_COL);
-
-    angular.element("span.sortable")
-      .not(ACTIVE_COL_CLASS)
-      .removeClass(UP)
-      .addClass(DOWN);
-
-    $scope.sort = sort;
+    $scope.sort = sortConfig;
     $scope.loadPage($scope.filter, true);
   }
 
@@ -231,7 +193,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.cancelNewApplicant = function () {
     $scope.newApplicantClicked = false;
   }
+
+  $scope.getSortClass = utilsService.getSortClass;
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', manageEventApplicationsControllerCtrl]);
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', manageEventApplicationsControllerCtrl]);

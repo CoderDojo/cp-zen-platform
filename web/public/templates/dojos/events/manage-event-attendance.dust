@@ -18,13 +18,7 @@
     <table id="eventApplicationsTable" class="table cd-grid-table">
       <thead>
         <tr>
-          <th>
-            <span ng-click="sort.toggleDirection()"
-                  class="pointer sortable glyphicon"
-                  ng-class="(sort.direction === 'asc') ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'">
-              &nbsp;
-            </span>{@i18n key="Name"/}
-          </th>
+          <th>{@i18n key="Name"/}</th>
           <th>{@i18n key="Age"/}</th>
           <th>{@i18n key="Parents/Guardians"/}</th>
           <th>{@i18n key="Check In"/}</th>
