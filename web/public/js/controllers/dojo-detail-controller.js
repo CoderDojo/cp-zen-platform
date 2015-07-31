@@ -1,8 +1,8 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
-  
+function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+
   $scope.setStage = function () {
     var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
     $scope.dojo.stage = stages[$scope.dojo.stage];
@@ -138,5 +138,5 @@ function cdDojoDetailCtrl($scope, $window, $state, $stateParams, $location, cdDo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$window', '$state', '$stateParams', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 
