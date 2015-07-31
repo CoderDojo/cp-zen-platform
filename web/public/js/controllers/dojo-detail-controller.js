@@ -76,8 +76,6 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
       $scope.requestInvite.validate="false";
       return
     } else {
-      $scope.requestInvite.validate="true";
-
       var userType = requestInvite.userType.name;
 
       auth.get_loggedin_user(function (user) {
