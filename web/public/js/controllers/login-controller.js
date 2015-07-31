@@ -85,8 +85,19 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
         });
       } else {
-        var reason = data.why === 'nick-exists' ? $translate.instant('user name already exists') : $translate.instant('server error');
-        alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason);
+        var reason;
+
+        if(data.why === 'nick-exists'){
+          reason = $translate.instant('user name already exists');
+        }
+
+        if(data.error === 'captcha-failed'){
+          reason = $translate.instant('captcha error');
+        }
+
+        alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason, function(){
+          $window.location.href = '/register';
+        });
       }
     }, function(err) {
          alertService.showError(JSON.stringify(err));

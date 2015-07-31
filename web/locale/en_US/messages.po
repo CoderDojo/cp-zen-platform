@@ -1522,3 +1522,6 @@ msgstr "Email address not found."
 
 msgid "has been successfully approved"
 msgstr "has been successfully approved"
+
+msgid "captcha error"
+msgstr "captcha error"
