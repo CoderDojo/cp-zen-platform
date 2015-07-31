@@ -108,13 +108,13 @@
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
             <td><button class="btn btn-link" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
             <td>
-            <div class="checkbox verifiedCheckbox" >
+            <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="pushChangedDojo(dojo)">
-              <label class="awesome-label" for="{{dojo.id + 'verifiedCheckbox'}}"></label>
+              <label class="awesome-label" for="{{dojo.id + 'checkbox-primary'}}"></label>
             </div>
             </td>
             <td>
-            <div class="checkbox deleteCheckbox" >
+            <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="pushChangedDojo(dojo)">
               <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
             </div>
