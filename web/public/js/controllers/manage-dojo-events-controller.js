@@ -3,7 +3,7 @@
 
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth) {
     $scope.dojoId = $stateParams.dojoId;
-    $scope.filter = {dojo_id: $scope.dojoId};
+    $scope.filter = {dojoId: $scope.dojoId};
     $scope.itemsPerPage = 10;
     $scope.pagination = {};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
@@ -43,8 +43,8 @@
       var dojoQuery = { query: {
                           bool: {
                             must:[
-                              { match: { dojo_id: $scope.dojoId }}
-                            ]   
+                              { match: { dojoId: $scope.dojoId }}
+                            ]
                           }
                         }
                       };
@@ -52,7 +52,7 @@
       $scope.sort = $scope.sort ? $scope.sort :[{ dates: {order: 'asc', ignore_unmapped: true }}];
 
       var query = _.omit({
-        dojo_id: filter.dojo_id,
+        dojoId: filter.dojoId,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
       var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
@@ -83,7 +83,7 @@
           }
           
           //Retrieve number of applicants & attendees
-          var cdApplicationsQuery = {query:{match:{event_id:event.id}}};
+          var cdApplicationsQuery = {query:{match:{eventId:event.id}}};
           cdEventsService.searchApplications(cdApplicationsQuery, function (result) {
             var numOfApplicants = result.total;
             var numAttending = 0;

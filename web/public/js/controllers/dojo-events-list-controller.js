@@ -2,7 +2,7 @@
 
 function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdUsersService, cdDojoService, tableUtils, alertService, auth) {
   var dojoId = $scope.dojoId;
-  $scope.filter = {dojo_id:dojoId};
+  $scope.filter = {dojoId:dojoId};
   $scope.itemsPerPage = 10;
   $scope.applyData = {};
 
@@ -56,7 +56,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       query: {
         bool: {
           must:[
-            { match: { dojo_id: dojoId }},
+            { match: { dojoId: dojoId }},
             { match: { status: 'published' }},
             { match: { public: true}},
             { 
@@ -80,7 +80,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     $scope.sort = $scope.sort ? $scope.sort :[{ dates: {order:'asc', ignore_unmapped:true}}];
 
     var query = _.omit({
-      dojo_id: filter.dojo_id,
+      dojoId: filter.dojoId,
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);

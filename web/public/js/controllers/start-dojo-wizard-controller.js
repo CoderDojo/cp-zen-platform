@@ -505,7 +505,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             cdDojoService.save(dojo, function (response) {
 
               //update intercom champion dojos
-              intercomService.updateIntercom(response.dojo_id);
+              intercomService.updateIntercom(response.dojoId);
 
               $state.go('dojo-list', {
                 bannerType:'success',
