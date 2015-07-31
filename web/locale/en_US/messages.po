@@ -1459,3 +1459,66 @@ msgstr "You do not have permission to update this Dojo."
 
 msgid "Page not found"
 msgstr "PAGE NOT FOUND!"
+
+msgid "Founder"
+msgstr "Founder"
+
+msgid "Error setting up event"
+msgstr "You cannot set up an event for an unverified or inactive Dojo"
+
+msgid "Event Date"
+msgstr "Event Date"
+
+msgid "Waitlist"
+msgstr "Waitlist"
+
+msgid "New Applicant"
+msgstr "New Applicant"
+
+msgid "Invite Ninja over 13"
+msgstr "Invite Ninja over 13"
+
+msgid "Enter Ninja Email Address"
+msgstr "Enter Ninja Email Address"
+
+msgid "Error inviting Ninja"
+msgstr "Error inviting Ninja"
+
+msgid "Successfully approved invite Ninja request."
+msgstr "Successfully approved invite Ninja request."
+
+msgid "Error approving invite Ninja request."
+msgstr "Error approving invite Ninja request."
+
+msgid "Approve Invite Ninja Request"
+msgstr "Approve Invite Ninja Request"
+
+msgid "Check In"
+msgstr "Check In"
+
+msgid "This Dojo currently has no active events"
+msgstr "This Dojo currently has no active events"
+
+msgid "'Cannot find founder of dojo'"
+msgstr "'Cannot find founder of dojo'"
+
+msgid "dojo.setup.confirmation"
+msgstr "Are you sure you have filled out all the information correctly and wish to proceed?"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "An error has occurred while saving dojo lead"
+msgstr "An error has occurred while saving dojo lead"
+
+msgid "Unable to retrieve user details"
+msgstr "Unable to retrieve user details"
+
+msgid "has been successfully checked in"
+msgstr "has been successfully checked in"
+
+msgid "Email address not found"
+msgstr "Email address not found."
+
+msgid "has been successfully approved"
+msgstr "has been successfully approved"

@@ -1,6 +1,6 @@
 'use strict';
 
-require('newrelic');
+if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -200,4 +200,13 @@ _.each(so.client, function(opts) {
    seneca.client(opts);
 });
 
-// TODO add session, cookie middleware here using seneca web?
+//seneca.logroute( {level:'all' });
+
+// capture seneca messages - leaving this here as we *may* do something with it
+// if the debug level json is not good enough logging.
+/*
+seneca.sub({}, captureAllMessages);
+function captureAllMessages(args) {
+  console.log('*** captured = ', JSON.stringify(args));
+}
+*/

@@ -221,7 +221,7 @@ label {
     }
   }
 }
-  
+
 
 @media only screen and (max-width: 768px) {
   .fullscreen-only {
@@ -353,6 +353,10 @@ label {
 
 .ten-percent-width {
   width: 10%;
+
+  .checkbox{
+    margin-top:-10px;
+  }
 }
 
 .manage-dojo-wrapper {
@@ -476,7 +480,7 @@ label {
     width: 100%;
     color: @cd-red;
   }
-  #createChampionForm { 
+  #createChampionForm {
   }
   #charterForm {
     .cd-wizard-submit {
@@ -699,7 +703,6 @@ html body .cd-dashboard .cd-color-6 {
 
 .cd-accordian {
   margin: 3% 0%;
-  overflow: auto;
 
   .panel {
     margin-top: 20px;
@@ -761,7 +764,7 @@ html body .cd-dashboard .cd-color-6 {
   text-align: center;
 }
 
-.font-13 { 
+.font-13 {
   font-size: 13px;
 }
 
@@ -817,6 +820,7 @@ html body .cd-dashboard .cd-color-6 {
 
 .table-general-info > tbody > tr {
   border-top: 1px solid rgb(221, 221, 221);
+  word-break: break-all;
 }
 
 .table-general-info > tbody > tr:first-child {
@@ -858,3 +862,36 @@ img.dojo-thumbnail {
   margin-left: 35%;
 }
 
+/* ---------------------------- date picker styling --------------------- */
+
+.btn-success {
+  background-color: @cd-green;
+}
+
+.btn-danger {
+  background-color: @cd-red;
+}
+
+.btn-info{
+  background-color: @cd-light-blue;
+
+  &.active{
+    background-color: @cd-blue;
+
+    span{
+      color:white !important;
+    }
+  }
+}
+/* -------------------------- end date picker styling --------------------- */
+
+#ninjaProfileBlock {
+  .popover {
+    width:45%;
+    max-width: 100%;
+  }
+}
+
+.form-inline .form-control {
+  width:100% !important;
+}

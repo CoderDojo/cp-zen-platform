@@ -5,11 +5,8 @@
     $scope,
     $stateParams,
     $translate,
-    alertService,
+    AlertBanner,
     cdEventsService,
-    tableUtils,
-    usSpinnerService,
-    cdDojoService,
     cdUsersService
   ) {
     var eventId = $stateParams.eventId;
@@ -40,8 +37,17 @@
     };
 
     $scope.onAttendedClicked = function(attendanceRecord) {
+      var attendanceName = attendanceRecord.name;
       attendanceRecord = _.omit(attendanceRecord, 'parents', 'age', 'name');
-      cdEventsService.saveAttendance(attendanceRecord, null, function() {
+      cdEventsService.saveAttendance(attendanceRecord, function(response){
+        if (response.attended === true) {
+          AlertBanner.publish({
+            type: 'info',
+            message: attendanceName + ' ' + $translate.instant('has been successfully checked in'),
+            timeCollapse: 5000
+          });
+        }
+      }, function() {
         // Revert on error
         attendanceRecord.attended = !attendanceRecord.attended;
       });
@@ -67,7 +73,7 @@
       var meta = {
         sort: {
           event_date: {
-            order: sortDirection, 
+            order: sortDirection,
             ignore_unmapped: true
           }
         },
@@ -95,7 +101,7 @@
       loadEventData,
       retrieveAttendanceData
     ]);
-    
+
     function loadEventData(done) {
       cdEventsService.getEvent(eventId, function (response) {
         _.each(response.dates, function (date, index) {
@@ -103,7 +109,7 @@
         });
         $scope.event = response;
         //TODO: Set eventDate to most recent date.
-        $scope.attendance.eventDate = _.first($scope.event.dates); 
+        $scope.attendance.eventDate = _.first($scope.event.dates);
         $scope.manageDojoEventAttendancePageTitle = $scope.event.name;
         done();
       });
@@ -146,11 +152,8 @@
       '$scope',
       '$stateParams',
       '$translate',
-      'alertService',
+      'AlertBanner',
       'cdEventsService',
-      'tableUtils',
-      'usSpinnerService',
-      'cdDojoService',
       'cdUsersService',
       manageEventAttendanceCtrl
     ]);

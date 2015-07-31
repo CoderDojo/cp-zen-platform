@@ -120,10 +120,9 @@
     <script src="/components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
     <script src="/components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
-
     <script src="/components/angular-truncate/src/truncate.js"></script>
-
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
+    <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
 
     <script src="/seneca/init.js"></script>
 

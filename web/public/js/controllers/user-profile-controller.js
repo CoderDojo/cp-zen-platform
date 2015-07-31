@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError('An error has occurred');
@@ -14,7 +14,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   var isYouthProfile = $state.current.name === 'add-child';
 
-  if(_.isEmpty(agreement.data) && !isYouthProfile){
+  if(_.isEmpty(agreement.data) && !isYouthProfile && !_.isEmpty(loggedInUser.data)){
     $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ loggedInUser.data.id);
   }
 
@@ -37,6 +37,13 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   if($state.current.name === 'edit-user-profile') {
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
+      $scope.inviteNinjaPopover = {
+        title: $translate.instant('Invite Ninja over 13'),
+        templateUrl: '/profiles/template/invite-ninja-over-13',
+        placement: 'top',
+        placeholder: $translate.instant('Enter Ninja Email Address'),
+        show: false
+      };
     } else {
       //No permission
       $state.go('error-404');
@@ -489,11 +496,30 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     return false;
   }
 
+  $scope.inviteNinja = function (ninjaEmail) {
+    usSpinnerService.spin('user-profile-spinner');
+    cdUsersService.inviteNinja(ninjaEmail, function (response) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showAlert($translate.instant('Invite Sent'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
+    }, function (err) {
+      usSpinnerService.stop('user-profile-spinner');
+      alertService.showError($translate.instant('Error inviting Ninja'));
+      $scope.inviteNinjaPopover.show = false;
+      $scope.inviteNinjaPopover.email = '';
+    });
+  }
+
+  $scope.toggleInviteNinjaPopover = function () {
+    $scope.inviteNinjaPopover.show = !$scope.inviteNinjaPopover.show;
+  }
+
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', cdUserProfileCtrl]);
 

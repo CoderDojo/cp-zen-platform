@@ -75,7 +75,7 @@
       <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
       <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -89,7 +89,7 @@
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
       <label for="to-date">{@i18n key="To"/}:</label>
       <div class="input-group">
-        <input type="date" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -109,12 +109,12 @@
     <div class="form-group form-inline">
       <label for="group-type-1">{@i18n key="For"/}:</label>
 
-      <div class="radio" ng-repeat="userType in eventInfo.userTypes">
-        <input type="radio" id="{{ userType.name }}" value="{{ userType.name }}" name="userTypes" ng-model="eventInfo.userType">
-        <label for="{{ userType.name }}">
-          {{ userType.title }}
-        </label>
-      </div>
+      <ui-select name="dojoMembersList" ng-model="eventInfo.userType">
+      <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type"/}">{{ $select.selected.title }}</ui-select-match>
+        <ui-select-choices repeat="userType in eventInfo.userTypes">
+          <span ng-bind-html="userType.title"></span>
+        </ui-select-choices>
+      </ui-select>
     </div>
 
     <div class="form-group">

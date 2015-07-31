@@ -1,7 +1,7 @@
 
 <div class="dojo-list-dashboard cd-color-3-underline">
   <div class="cd-create-dojo-container">
-    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
+    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm"  ng-enter="noop()">
       <div id="main">
 
         <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
@@ -113,7 +113,22 @@
           </div>
         </div>
       </div>
-
+      <div class="row cd-input-row" ng-show="isCDFAdmin">
+        <div class="form-group">
+          <label for="founder" class="col-lg-4 cd-form-label1">{@i18n key="Founder"/}</label>
+          <div class="col-lg-8">
+            <input name="founder" class="form-control col-lg-6" disabled type="text" ng-model="founder.name"><span ng-click="toggleUserSelect($event)"><a>{@i18n key="Edit"/}</a></span>
+            <ui-select ng-hide="hideUserSelect"  ng-model="founder" ng-disabled="false" on-select="setFounder($item)">
+              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-choices repeat="user in users"
+                  refresh="getUsersByEmails($select.search)"
+                  refresh-delay="500">
+                <span ng-bind-html="user.email | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">      
           <div class="col-lg-offset-4 col-lg-8">
@@ -291,7 +306,6 @@
           </div>
         </div>
       </div>
-
       <div class="row cd-btn-row">
         <div class="form-group">
           <div class="col-lg-12">

@@ -10,7 +10,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, alertService, curre
         //This user has no Events.
       } else {
         _.each($scope.dojosEvents, function (dojoEvents) {
-          if(dojoEvents.events.length > 0) {
+          if(dojoEvents && dojoEvents.events && dojoEvents.events.length > 0) {
             var events = [];
             _.each(dojoEvents.events, function(event){
               if(event.type === 'recurring') {

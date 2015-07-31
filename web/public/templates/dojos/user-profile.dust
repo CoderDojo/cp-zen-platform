@@ -1,4 +1,5 @@
 <div class="container target">
+  <span spinner-key="user-profile-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="row" ng-if="!profileVisible()">
     <h3>{@i18n key="This profile is private"/}</h3>
   </div>
@@ -7,7 +8,7 @@
       <!--left col-->
       <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
       <h1 ng-bind="profile.name || profile.alias"></h1>
-      <h4 ng-bind="profile.userType"></h4>
+      <h4 ng-bind="profile.userTypeTitle"></h4>
       <div ng-if="editMode" class="btn btn-default center-block" ngf-select ngf-change="upload($files)">{@i18n key="Upload new picture"/}</div>
 
       <span class="help-block"></span>

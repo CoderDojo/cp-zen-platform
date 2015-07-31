@@ -1,0 +1,12 @@
+<div id="myModal">
+    <div class="modal-header">
+        <h3 class="modal-title">{@i18n key="Confirmation"/}</h3>
+    </div>
+    <div class="modal-body">
+        <p>{@i18n key="dojo.setup.confirmation"/}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">{@i18n key="Yes"/}</button>
+        <button class="btn btn-warning" ng-click="cancel()">{@i18n key="No"/}</button>
+    </div>
+</div>

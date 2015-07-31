@@ -1,6 +1,6 @@
 <div ng-show="showCharterAgreementFlag">
   <div class="cd-create-dojo-container">
-    <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
+    <form id="createChampionForm" ng-enter="noop()" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
         <h3 class="cd-page-header">{@i18n key="CoderDojo Champion Registration Form"/}</h3>
         <div class="col-lg-12 center-block">
@@ -113,7 +113,7 @@
             </div>
             <div class="col-lg-8 col-lg-offset-4 google-map">
               <section ng-if="mapLoaded" id="map">
-                <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+                <div ng-repeat="marker in model.markers" ui-map-marker="model.markers[$index]"></div>
                 <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, champion)'}" ui-options="mapOptions" class="map-canvas"></div>
               </section>
             </div>
