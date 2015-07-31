@@ -2,7 +2,11 @@
 
 var _ = require('lodash');
 var path = require('path');
+var requireindex = require('requireindex');
 var controllers = requireindex(__dirname);
+
+// Remove package.json, it's not a controller.  All other non-index files/directories should be.
+delete controllers.package;
 
 module.exports.register = function (server, options, next) {
   // Add all the server routes from the controllers.
@@ -11,7 +15,7 @@ module.exports.register = function (server, options, next) {
   });
 
   // Serve public files
-  // These are separate to allow routes from seneca-web a change to have their middleware triggered.
+  // These are separate to allow routes from seneca-web a chance to have their middleware triggered.
   server.route({
     method: 'GET',
     path: '/favicon.ico',
@@ -53,6 +57,7 @@ module.exports.register = function (server, options, next) {
   });
 
   // Serve the auth .js files, etc.
+  // TODO move this back to the root lib directory.
   server.route({
     method: 'GET',
     path: '/content/auth/{filename*}',
