@@ -29,7 +29,8 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
             var applyData = {
               eventId: $scope.event.id,
               children: $scope.applyData.childrenSelected,
-              user: $scope.currentUser
+              user: $scope.currentUser,
+              emailSubject: $translate.instant('Event application received')
             };
 
             $scope.applyForEvent(applyData, $scope.event.id, eventIndex);
@@ -43,7 +44,8 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
         var applyData = {
           eventId: dojoEvents.events[eventIndex].id,
           children: $scope.applyData.childrenSelected,
-          user: $scope.currentUser
+          user: $scope.currentUser,
+          emailSubject: $translate.instant('Event application received')
         };
 
         $scope.applyForEvent(applyData, null, eventIndex, dojoEvents);

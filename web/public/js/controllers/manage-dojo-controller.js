@@ -67,15 +67,18 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    $scope.sort = $scope.sort ? $scope.sort : { created: -1 };
+    //sort ascending = -1
+    //sort descending = 1
+    $scope.sort = $scope.sort ? $scope.sort : { created: 1 };
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
-
+    
     var query = _.omit({
       name: filter.name,
       verified: filter.verified,
       email: filter.email,
+      creatorEmail: filter.creatorEmail,
       stage: filter.stage,
       alpha2: filter.country && filter.country.alpha2,
       limit$: $scope.itemsPerPage,
@@ -190,17 +193,12 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   });
 
   $scope.pushChangedDojo = function (dojo) {
-    var filterVerified, exists = !!(_.find(changedDojos, function (changedDojo) {
+    var exists = !!(_.find(changedDojos, function (changedDojo) {
       return dojo.id === changedDojo.id;
     }));
-
-    filterVerified = $scope.filter && $scope.filter.verified;
-
-    if ((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)) {
-      if (!exists) {
-        changedDojos.push(dojo);
-      }
-    } else if (dojo.verified.value === filterVerified && !dojo.toBeDeleted) {
+    if((dojo.verified !== dojo.origVerified) || (dojo.toBeDeleted)) {
+      if(!exists) changedDojos.push(dojo);
+    } else if((dojo.verified === dojo.origVerified) && (!dojo.toBeDeleted)) {
       changedDojos = _.filter(changedDojos, function (filteredDojo) {
         return dojo.id !== filteredDojo.id;
       });

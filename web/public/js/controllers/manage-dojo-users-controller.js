@@ -264,7 +264,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 
   $scope.inviteUser = function (invite, context) {
     usSpinnerService.spin('manage-dojo-users-spinner');
-    cdDojoService.generateUserInviteToken({email:invite.email, userType:invite.userType.name, dojoId:dojoId}, function (response) {
+    cdDojoService.generateUserInviteToken({email:invite.email, emailSubject: $translate.instant('New Dojo Invitation'), userType:invite.userType.name, dojoId:dojoId}, function (response) {
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showAlert($translate.instant('Invite Sent'));
       context.inviteMentorForm.reset();
@@ -278,7 +278,7 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     if($scope.canRemoveUsers) {
       usSpinnerService.spin('manage-dojo-users-spinner');
       var userId = user.id;
-      cdDojoService.removeUsersDojosLink(userId, dojoId, function (response) {
+      cdDojoService.removeUsersDojosLink({userId: userId, dojoId: dojoId, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
         if(response.error) {
           usSpinnerService.stop('manage-dojo-users-spinner');
           alertService.showError($translate.instant(response.error));
@@ -307,7 +307,8 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     usSpinnerService.spin('manage-dojo-users-spinner');
     var applicationData = {
       user: user,
-      badge: badge
+      badge: badge,
+      emailSubject: $translate.instant('CoderDojo Badge Nomination')
     };
 
     cdBadgesService.sendBadgeApplication(applicationData, function (response) {

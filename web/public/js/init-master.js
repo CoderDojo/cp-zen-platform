@@ -195,6 +195,9 @@
         .state("start-dojo-wizard", {
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+          params:{
+            referer: 'start-dojo-wizard'
+          },
           resolve: {
             gmap: gmap
           },
@@ -255,7 +258,8 @@
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitize')
-        .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .registerAvailableLanguageKeys(['en_US', 'it_IT'])
+        .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
       }

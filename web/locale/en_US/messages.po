@@ -38,11 +38,11 @@ msgstr "Forgot password?"
 msgid "Register"
 msgstr "Register"
 
-msgid "EMAIL"
-msgstr "EMAIL"
+msgid "Email"
+msgstr "Email"
 
-msgid "PASSWORD"
-msgstr "PASSWORD"
+msgid "Password"
+msgstr "Password"
 
 msgid "Other stuff"
 msgstr "Other stuff"
@@ -50,8 +50,8 @@ msgstr "Other stuff"
 msgid "Name is empty"
 msgstr "Name is empty"
 
-msgid "NAME"
-msgstr "NAME"
+msgid "Name"
+msgstr "Name"
 
 msgid "Email is empty"
 msgstr "Email is empty"
@@ -65,11 +65,14 @@ msgstr "Passwords do not match!"
 msgid "Confirm Password is empty"
 msgstr "Confirm Password is empty"
 
-msgid "CONFIRM PASSWORD"
-msgstr "CONFIRM PASSWORD"
+msgid "Confirm password"
+msgstr "Confirm password"
 
 msgid "Already have an account"
 msgstr "Already have an account?"
+
+msgid "Select user type"
+msgstr "Select user type"
 
 msgid "Login"
 msgstr "Login"
@@ -79,15 +82,6 @@ msgstr "Terms and Conditions"
 
 msgid "CoderDojo Champion Registration Form"
 msgstr "CoderDojo Champion Registration Form"
-
-msgid "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
-msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
-
-msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
-msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
-
-msgid "If you wish to learn more about starting a CoderDojo in your area please see:"
-msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
 
 msgid "General Information"
 msgstr "General Information"
@@ -665,8 +659,18 @@ msgstr "To get started, please fill in the following registration form."
 msgid "Champion Registration"
 msgstr "Champion Registration"
 
+msgid "Update Champion"
+msgstr "Update Champion"
+
 msgid "Setup your Dojo"
 msgstr "Setup your Dojo"
+
+msgid "Save Dojo Setup"
+msgstr "Save Dojo Setup"
+
+msgid "Update Dojo Setup"
+msgstr "Update Dojo Setup"
+
 
 msgid "Create Dojo Listing"
 msgstr "Create Dojo Listing"
@@ -1461,7 +1465,7 @@ msgid "Founder"
 msgstr "Founder"
 
 msgid "Error setting up event"
-msgstr "You cannot set up an event for an unverified or inactive Dojo"
+msgstr "Error setting up event"
 
 msgid "Event Date"
 msgstr "Event Date"
@@ -1641,6 +1645,65 @@ msgstr "Contributing to Kata, the community knowledge base at kata.coderdojo.com
 msgid "Connecting with local and international Dojos to share insights and supports"
 msgstr "Connecting with local and international Dojos to share insights and supports"
 
+msgid "This dojo has no coordinates."
+msgstr "This dojo has no coordinates."
 
+msgid "Register Champion"
+msgstr "Register Champion"
 
+msgid "Invitation to become a Parent/Guardian"
+msgstr "Invitation to become a Parent/Guardian"
 
+msgid "CoderDojo Password Reset"
+msgstr "CoderDojo Password Reset"
+
+msgid "Approve Parent Request"
+msgstr "Approve Parent Request"
+
+msgid "Welcome to CoderDojo!"
+msgstr "Welcome to CoderDojo!"
+
+msgid "New Dojo Invitation"
+msgstr "New Dojo Invitation"
+
+msgid "New Request to join your Dojo"
+msgstr "New Request to join your Dojo"
+
+msgid "A user has left your Dojo"
+msgstr "A user has left your Dojo"
+
+msgid "Event application approved"
+msgstr "Event application approved"
+
+msgid "Event application received"
+msgstr "Event application received"
+
+msgid "CoderDojo Badge Nomination"
+msgstr "CoderDojo Badge Nomination"
+
+msgid "New Mentor Request to join your Dojo"
+msgstr "New Mentor Request to join your Dojo"
+
+msgid "We created a new Google Email for your Dojo"
+msgstr "We created a new Google Email for your Dojo"
+
+msgid "Please click on the map to pinpoint your location"
+msgstr "Please click on the map to pinpoint your location"
+
+msgid "Welcome New CoderDojo Champion!"
+msgstr "Welcome New CoderDojo Champion!"
+
+msgid "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
+msgstr "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
+
+msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+
+msgid "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
+msgstr "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
+
+msgid "See Kata here:"
+msgstr "See Kata here:"
+
+msgid "You can also at any point contact info@coderdojo.com for support."
+msgstr "You can also at any point contact info@coderdojo.com for support."

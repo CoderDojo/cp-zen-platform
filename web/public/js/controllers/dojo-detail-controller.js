@@ -1,7 +1,7 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, cdCountriesService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
 
   $scope.setStage = function () {
     var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
@@ -16,6 +16,8 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
   $scope.userMemberCheckComplete = false;
   var currentUser;
   var approvalRequired = ['mentor', 'champion'];
+
+  var latitude, longitude;
 
   auth.get_loggedin_user(function (user) {
     if(!dojo || !dojo.id){
@@ -50,25 +52,41 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
   $scope.$watch('model.map', function(map){
     if(map) {
-      var marker = new google.maps.Marker({
-        map: $scope.model.map,
-        position: new google.maps.LatLng(latitude, longitude)
-      });
-      $scope.markers.push(marker);
+      if(latitude && longitude) {
+        var marker = new google.maps.Marker({
+          map: $scope.model.map,
+          position: new google.maps.LatLng(latitude, longitude)
+        });
+        $scope.markers.push(marker);
+      }
     }
   });
 
   if(gmap) {
-    $scope.mapLoaded = true;
     if($scope.dojo.coordinates) {
       var coordinates = $scope.dojo.coordinates.split(',');
-      var latitude  = coordinates[0];
-      var longitude = coordinates[1];
+      latitude  = coordinates[0];
+      longitude = coordinates[1];
       $scope.mapOptions = {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
+
+      $scope.mapLoaded = true;
+    } else {
+      var countryCoordinates;
+      cdCountriesService.loadCountriesLatLongData(function (response) {
+
+        countryCoordinates = response[$scope.dojo.alpha2];
+
+        $scope.mapOptions = {
+          center: new google.maps.LatLng(countryCoordinates[0], countryCoordinates[1]),
+          zoom: 5,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        $scope.mapLoaded = true;
+      });
     }
 
   }
@@ -87,7 +105,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
       auth.get_loggedin_user(function (user) {
         usSpinnerService.spin('dojo-detail-spinner');
-        var data = {user:user, dojoId:dojo.id, userType:userType};
+        var data = {user:user, dojoId:dojo.id, userType:userType, emailSubject: $translate.instant('New Request to join your Dojo')};
 
         if(_.contains(approvalRequired, userType)) {
           cdDojoService.requestInvite(data, function (response) {
@@ -132,7 +150,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
   $scope.leaveDojo = function () {
     usSpinnerService.spin('dojo-detail-spinner');
-    cdDojoService.removeUsersDojosLink(currentUser.id, dojo.id, function (response) {
+    cdDojoService.removeUsersDojosLink({userId: currentUser.id, dojoId: dojo.id, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
       usSpinnerService.stop('dojo-detail-spinner');
       $state.go($state.current, {}, {reload: true});
     }, function (err) {
@@ -143,5 +161,5 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 
