@@ -90,22 +90,36 @@ server.register({
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
-  server.register({ register: require('../chairo-cache') }, function (err) {
-    checkHapiPluginError('chairo-cache')(err);
+  // server.register({ register: require('../chairo-cache') }, function (err) {
+  //   checkHapiPluginError('chairo-cache')(err);
 
     var seneca = server.seneca;
 
     seneca
-      .use(require('../lib'), { webclient: options.webclient })
-      // Express-using seneca plugins: 
       // TODO // ng-web just serves a static file -- easy
       .use('ng-web')
+      .use(require('../lib/users/user.js'))  
       // TODO // would need to replace passport with hapi equivalent (hapi-auth-cookie?), translate express functionality to hapi, and modify seneca-web
       .use('auth')
       // TODO // translate 1 express middleware to hapi
       .use('user-roles')
       // TODO // translate 1 express middleware to hapi
-      .use('web-access');
+      .use('web-access')
+//
+//      .use(require('../lib'), { webclient: options.webclient });
+    .use(require('../lib/auth/cd-auth.js'))
+    .use(require('../lib/charter/cd-charter.js'))
+    .use(require('../lib/dojos/cd-dojos.js'))
+    .use(require('../lib/countries/cd-countries.js'))
+    .use(require('../lib/users/cd-users.js'))
+    .use(require('../lib/agreements/cd-agreements.js'))
+    .use(require('../lib/badges/cd-badges.js'))
+    .use(require('../lib/profiles/cd-profiles.js'))
+    .use(require('../lib/events/cd-events.js'))
+    .use(require('../lib/oauth2/cd-oauth2.js'))
+    .use(require('../lib/config/cd-config.js'), options.webclient)
+    .use(require('../lib/sys/cd-sys.js'));
+
 
     _.each(options.client, function(opts) {
       seneca.client(opts);
@@ -135,7 +149,7 @@ server.register({ register: Chairo, options: options }, function (err) {
       server.start(function() {
         console.log('[%s] Listening on http://localhost:%d', env, port);
       });
-    });
+//    });
   });  
 });
 

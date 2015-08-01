@@ -4,12 +4,12 @@ var _ = require('lodash');
 var pkg = require('./package');
 
 module.exports.register = function (server, options, next) {
-  var seneca = server.seneca;
-
   // Add using seneca.use so that the plugin name is registered with seneca.
-  seneca.use(function () {
+  server.seneca.use(function () {
     // Intercept role:web,use:... to add Hapi caching.
-    seneca.add({ role: 'web' }, function (args, done) {
+    this.add({ role: 'web' }, function (args, done) {
+      var seneca = this;
+
       // Adds a utility method to map seneca actions to Hapi routes, 
       // utilizing Hapi server methods + cache where applicable.
 
@@ -46,15 +46,16 @@ module.exports.register = function (server, options, next) {
         // Override the seneca command to call the server method.  
         // Allow skipping cache to avoid infinite recursion when 
         // called from the Hapi server method.
-        seneca.add({ role: role, cmd: cmd }, function (args, done) {
-          if (args.skipCache) return this.parent(args, done);
-          // TODO make sure etag header is present from hapi-etag
-          // TODO make sure cache-control info is compatible with etag
-          server.methods[name](args, done);
-        });
+        // server.seneca.add({ role: role, cmd: cmd }, function (args, done) {
+        //   // if (args.skipCache) return this.parent(args, done);          
+        //   this.parent(args, done);
+        //   // TODO make sure etag header is present from hapi-etag
+        //   // TODO make sure cache-control info is compatible with etag
+        //   // server.methods[name](args, done);
+        // });
       });
 
-      this.parent(args, done);
+      seneca.parent(args, done);
     });
 
     return { name: pkg.name };
