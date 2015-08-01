@@ -18,10 +18,10 @@ var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new Hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
 
-function hapiPluginErrorHandler (name) {
+function checkHapiPluginError (name) {
   return function (error) {
     if (error) {
-      console.error('Failed loading plugin "' + name + '":');
+      console.error('Failed loading a Hapi plugin: "' + name + '".');
       throw error;
     }
   };
@@ -71,8 +71,8 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/404', request.locals);
 });
 
-server.register({ register: require('hapi-etags') }, hapiPluginErrorHandler('hapi-etags'));
-server.register({ register: require('./controllers') }, hapiPluginErrorHandler('CoderDojo controllers'));
+server.register({ register: require('hapi-etags') }, checkHapiPluginError('hapi-etags'));
+server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
 // Serve CSS files.
 server.register({
@@ -84,55 +84,58 @@ server.register({
       compress: true
     }
   }
-}, hapiPluginErrorHandler('hapi-less'));
+}, checkHapiPluginError('hapi-less'));
 
 // Set up Chairo and seneca, then start the server.
 server.register({ register: Chairo, options: options }, function (err) {
-  hapiPluginErrorHandler('Chairo')(err);
+  checkHapiPluginError('Chairo')(err);
 
-  var seneca = server.seneca;
+  server.register({ register: require('../chairo-cache') }, function (err) {
+    checkHapiPluginError('chairo-cache')(err);
 
-  seneca
-    .use(require('../chairo-cache'))
-    .use(require('../lib'), { webclient: options.webclient })
-    // Express-using seneca plugins: 
-    // TODO // ng-web just serves a static file -- easy
-    .use('ng-web')
-    // TODO // would need to replace passport with hapi equivalent (hapi-auth-cookie?), translate express functionality to hapi, and modify seneca-web
-    .use('auth')
-    // TODO // translate 1 express middleware to hapi
-    .use('user-roles')
-    // TODO // translate 1 express middleware to hapi
-    .use('web-access');
+    var seneca = server.seneca;
 
-  _.each(options.client, function(opts) {
-    seneca.client(opts);
-  });
+    seneca
+      .use(require('../lib'), { webclient: options.webclient })
+      // Express-using seneca plugins: 
+      // TODO // ng-web just serves a static file -- easy
+      .use('ng-web')
+      // TODO // would need to replace passport with hapi equivalent (hapi-auth-cookie?), translate express functionality to hapi, and modify seneca-web
+      .use('auth')
+      // TODO // translate 1 express middleware to hapi
+      .use('user-roles')
+      // TODO // translate 1 express middleware to hapi
+      .use('web-access');
 
-  // // Potentially useful extra logging.
-
-  // seneca.logroute( {level:'all' });
-
-  // // capture seneca messages - leaving this here as we *may* do something with it
-  // // if the debug level json is not good enough logging.
-  // seneca.sub({}, captureAllMessages);
-  // function captureAllMessages(args) {
-  //   console.log('*** captured = ', JSON.stringify(args));
-  // }
-  
-  // Use seneca-web middleware with Hapi.
-  server.register({
-    register: require('hapi-seneca'),
-    options: {
-      seneca: seneca,
-      cors: true
-    }
-  }, function (err) {
-    hapiPluginErrorHandler('hapi-seneca')(err);
-
-    server.start(function() {
-      console.log('[%s] Listening on http://localhost:%d', env, port);
+    _.each(options.client, function(opts) {
+      seneca.client(opts);
     });
-  });
+
+    // // Potentially useful extra logging.
+
+    // seneca.logroute( {level:'all' });
+
+    // // capture seneca messages - leaving this here as we *may* do something with it
+    // // if the debug level json is not good enough logging.
+    // seneca.sub({}, captureAllMessages);
+    // function captureAllMessages(args) {
+    //   console.log('*** captured = ', JSON.stringify(args));
+    // }
+  
+    // Use seneca-web middleware with Hapi.
+    server.register({
+      register: require('hapi-seneca'),
+      options: {
+        seneca: seneca,
+        cors: true
+      }
+    }, function (err) {
+      checkHapiPluginError('hapi-seneca')(err);
+
+      server.start(function() {
+        console.log('[%s] Listening on http://localhost:%d', env, port);
+      });
+    });
+  });  
 });
 
