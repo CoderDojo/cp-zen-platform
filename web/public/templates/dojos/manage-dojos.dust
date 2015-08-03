@@ -11,11 +11,11 @@
               <ui-select-choices repeat="dojoState.value as dojoState in dojoStates | filter: { label: $select.search }">
                 <span ng-bind-html="dojoState.label | highlight: $select.search"></span>
               </ui-select-choices>
-            </ui-select> 
+            </ui-select>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group">          
+          <div class="form-group">
             <label for="dojoStageFilter">{@i18n key="Stage"/}</label>
             <ui-select name="dojoStageFilter" ng-model="filter.stage" ng-disabled="disabled" ng-change="filterDojos()" >
               <ui-select-match allow-clear="true" placeholder="Select stage...">{{ $select.selected.label }}</ui-select-match>
@@ -45,19 +45,19 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="form-group">          
+          <div class="form-group">
             <label for="">{@i18n key="Dojo Email"/}</label>
             <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.email" ng-enter="filterDojos()">
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="form-group">          
+          <div class="form-group">
             <label for="">{@i18n key="User Email"/}</label>
             <input type="text" placeholder="Search by dojo email" class="form-control" ng-model="filter.userEmail" ng-enter="filterDojos()">
           </div>
         </div>
-        
+
       </div>
     </div>
     <div class="col-md-2">
@@ -65,7 +65,7 @@
         <div class="pull-right">
           <button class="btn btn-primary" ng-click="filterDojos()">{@i18n key="Filter"/}</button>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
   <div class="row">
@@ -106,7 +106,7 @@
               </ul>
             </td>
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
-            <td><button class="btn btn-link" ng-if="dojo.deleted===0" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
+            <td><button class="btn btn-link" ng-if="!dojo.deleted || dojo.deleted===0" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
             <td>
             <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="pushChangedDojo(dojo)">

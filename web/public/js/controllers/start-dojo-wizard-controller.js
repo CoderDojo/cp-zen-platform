@@ -486,7 +486,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     };
 
     var sanitizeCdForms = {
-      createDojo: ["address1","email","googleGroups","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+      createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]
     };
 
     $scope.save = function(dojo) {
