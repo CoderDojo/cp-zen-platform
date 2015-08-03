@@ -106,7 +106,7 @@
               </ul>
             </td>
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
-            <td><button class="btn btn-link" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
+            <td><button class="btn btn-link" ng-if="dojo.deleted===0" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
             <td>
             <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="pushChangedDojo(dojo)">
