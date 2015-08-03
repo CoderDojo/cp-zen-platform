@@ -90,12 +90,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           }, fail);
         } else if(results.length > 0 && !uncompletedDojoLead) {
           //make a copy of dojoLead here then initStep 2
-          var dojoLead = _.cloneDeep(results[0]);
+          var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
           dojoLead.completed = false;
           dojoLead.currentStep= 2;
           dojoLead.application.dojoListing = {};
           dojoLead.application.setupYourDojo = {};
-          delete dojoLead.id;
 
           cdDojoService.saveDojoLead(dojoLead, function(response) {
               initStep(2);
