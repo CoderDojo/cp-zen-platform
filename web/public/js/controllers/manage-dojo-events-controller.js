@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService) {
+  function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.itemsPerPage = 10;
@@ -123,7 +123,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', '$location', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', '$location', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', manageDojoEventsCtrl]);
 
 })();
 
