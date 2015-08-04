@@ -30,20 +30,20 @@
 
         <div class="row cd-input-row">
           <div class="form-group has-feedback">
-            <label for="dateOfBirth" class="col-lg-4 cd-form-label1">Date of Birth*</label>
+            <label for="dateOfBirth" class="col-lg-4 cd-form-label1">{@i18n key="Date of Birth"/}*</label>
             <div class="input-group col-lg-8 dob-picker">
               <input type="text" required readonly="true"
                      class="form-control"
                      name="dateOfBirth"
-                     required-message="'Date of birth is empty'"
+                     required-message="'{@i18n key="Date of birth is empty"/}'"
                      datepicker-popup="fullDate"
                      ng-model="champion.dateOfBirth"
                      is-open="picker.opened"
                      min-date="'1900-01-01'"
                      max-date="today"
                      datepicker-options="dobDateOptions"
-                     ng-click="open($event)" 
-                     placeholder="{@i18n key="champion.dateOfBirth.placeholder"/}" 
+                     ng-click="open($event)"
+                     placeholder="{@i18n key="champion.dateOfBirth.placeholder"/}"
                      />
 
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
@@ -107,9 +107,9 @@
         </div>
 
         <div class="row cd-input-row" ng-if="stepTwoShowGmap">
-          <div class="form-group">      
+          <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-              <input class="col-lg-4 btn btn-primary" type="button" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="Get location from address">
+              <input class="col-lg-4 btn btn-primary" type="button" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
             </div>
             <div class="col-lg-8 col-lg-offset-4 google-map">
               <section ng-if="mapLoaded" id="map">
@@ -124,16 +124,16 @@
         <div class="row">
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
+              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation">
             </div>
           </div>
         </div>
 
-        <legend class="cd-section-header">Experience</legend>
+        <legend class="cd-section-header">{@i18n key="Experience"/}</legend>
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="projects" class="col-lg-4 cd-form-label1">Technical Experience</label>
+            <label for="projects" class="col-lg-4 cd-form-label1">{@i18n key="Technical Experience"/}</label>
             <div class="col-lg-8">
               <textarea name="projects" class="form-control" placeholder="{@i18n key="technicalexperience.placeholder"/}" rows="5" ng-model="champion.projects"></textarea>
             </div>

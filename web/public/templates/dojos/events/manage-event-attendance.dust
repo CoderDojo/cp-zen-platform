@@ -1,5 +1,5 @@
 <div ng-if="isTicketingAdmin">
-  <h3>Manage Attendance for: {{ event.name }}</h3>
+  <h3>{@i18n key="Manage Attendance for:"/} {{ event.name }}</h3>
 
   <div ng-if="event.type === 'recurring'" class="col-lg-3">
     <ui-select name="eventDateAttendance" onkeypress="return false;" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">

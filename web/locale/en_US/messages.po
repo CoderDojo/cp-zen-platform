@@ -443,7 +443,7 @@ msgstr "Times are empty"
 msgid "dojo.edit.times.description"
 msgstr "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 
-msgid "dojo.edit.country.placeholder"
+msgid "Select or search a country in the list..."
 msgstr "Select or search a country in the list..."
 
 msgid "Select a country"
@@ -470,7 +470,7 @@ msgstr "Address is empty"
 msgid "Get location from address"
 msgstr "Get location from address"
 
-msgid "dojo.edit.map.placeholder"
+msgid "Click on the map to select a location"
 msgstr "Click on the map to select a location"
 
 msgid "Other Information"
@@ -1558,3 +1558,33 @@ msgstr "Supported by the CoderDojo Foundation, CHY  20812. For more information 
 
 msgid "here"
 msgstr "here"
+
+msgid "Accepting badge..."
+msgstr "Accepting badge..."
+
+msgid "Manage Attendance for:"
+msgstr "Manage Attendance for:"
+
+msgid "Date of birth is empty"
+msgstr "Date of birth is empty"
+
+msgid "Search by user email"
+msgstr "Search by user email"
+
+msgid "List"
+msgstr "List"
+
+msgid "Select state..."
+msgstr "Select state..."
+
+msgid "Select stage..."
+msgstr "Select stage..."
+
+msgid "Search by dojo name"
+msgstr "Search by dojo name"
+
+msgid "Search by dojo email"
+msgstr "Search by dojo email"
+
+msgid "Go!"
+msgstr "Go!"

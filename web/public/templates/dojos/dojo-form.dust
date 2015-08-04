@@ -119,7 +119,7 @@
           <div class="col-lg-8">
             <input name="founder" class="form-control col-lg-6" disabled type="text" ng-model="founder.name"><span ng-click="toggleUserSelect($event)"><a>{@i18n key="Edit"/}</a></span>
             <ui-select ng-hide="hideUserSelect"  ng-model="founder" ng-disabled="false" on-select="setFounder($item)">
-              <ui-select-match allow-clear="true" placeholder="Search by user email">{{ $select.selected.email  }}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{@i18n key="Search by user email"/}">{{ $select.selected.email  }}</ui-select-match>
               <ui-select-choices repeat="user in users"
                   refresh="getUsersByEmails($select.search)"
                   refresh-delay="500">
@@ -146,7 +146,7 @@
       <div class="row cd-input-row">
         <div class="form-group">
           <div class="col-lg-offset-4 col-lg-8">
-            <input type="hidden" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
+            <input type="hidden" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation">
           </div>
         </div>
       </div>
