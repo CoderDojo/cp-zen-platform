@@ -1543,3 +1543,18 @@ msgstr "Has access to Technical Mentors:"
 
 msgid "Has access to a Venue"
 msgstr "Has access to a Venue:"
+
+msgid "General Enquiries:"
+msgstr "General Enquiries:"
+
+msgid "Partner Enquiries:"
+msgstr "Partner Enquiries:"
+
+msgid "About"
+msgstr "About"
+
+msgid "Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"
+msgstr "Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"
+
+msgid "here"
+msgstr "here"
