@@ -351,7 +351,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }
 
     var query = {limit$: 'NULL'};
-    query.user_id = item.id;
+    query.userId = item.id;
 
     cdDojoService.getUsersDojos(query, function(usersDojos){
       var dojoIds = _.pluck(usersDojos, 'dojoId');

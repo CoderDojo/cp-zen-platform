@@ -61,8 +61,8 @@
             query: {
               bool: {
                 must: [
-                  { match: { event_id: eventId }},
-                  { match: { event_date: $scope.attendance.eventDate.date }}
+                  { match: { eventId: eventId }},
+                  { match: { eventDate: $scope.attendance.eventDate.date }}
                 ]
               }
             }
@@ -72,7 +72,7 @@
 
       var meta = {
         sort: {
-          event_date: {
+          eventDate: {
             order: sortDirection,
             ignore_unmapped: true
           }
