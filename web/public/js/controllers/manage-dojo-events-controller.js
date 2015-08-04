@@ -74,6 +74,9 @@
             })
             event.applicants = numOfApplicants;
             event.attending = numAttending;
+          }, function (err) {
+            console.error(err);
+            alertService.showError($translate.instant('Error loading applications'));
           });
           events.push(event);
         });
@@ -82,6 +85,9 @@
           $scope.totalItems = result.length;
           return cb();
         });
+      }, function (err) {
+        console.error(err);
+        alertService.showError($translate.instant('Error loading events'));
       });
     }
 

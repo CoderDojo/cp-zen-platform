@@ -94,6 +94,9 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
         $scope.totalItems = result.length;
       });
+    }, function (err) {
+      console.error(err);
+      alertService.showError($translate.instant('Error loading events'));
     });
 
   }

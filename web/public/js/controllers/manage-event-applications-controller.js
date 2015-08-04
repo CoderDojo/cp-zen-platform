@@ -80,6 +80,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.waitlist++;
         }
       });
+    }, function (err) {
+      console.error(err);
+      alertService.showError($translate.instant('Error loading applications'));
     });
 
     cdEventsService.searchApplications({eventId: eventId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}, function (result) {
@@ -122,6 +125,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.dojoMembers = availableMembers;
         });
       });
+    }, function (err) {
+      console.error(err);
+      alertService.showError($translate.instant('Error loading applications'));
     });
   }
 
