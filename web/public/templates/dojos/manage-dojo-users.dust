@@ -69,11 +69,11 @@
                 </ui-select-choices>
               </ui-select>
               <span class="help-block"></span>
-              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">Award Badge</button>
+              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
             </div>
           </td>
 
-          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
+          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this user from your Dojo?" /}" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
         </tr>
       </tbody>
     </table>

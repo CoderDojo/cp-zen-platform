@@ -1528,3 +1528,6 @@ msgstr "captcha error"
 
 msgid "Enter Email"
 msgstr "Enter Email"
+
+msgid "Are you sure you want to remove this user from your Dojo?"
+msgstr "Are you sure you want to remove this user from your Dojo?"
