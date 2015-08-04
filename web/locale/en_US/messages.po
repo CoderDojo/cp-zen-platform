@@ -1538,10 +1538,10 @@ msgstr "Error loading events"
 msgid "Error loading applications"
 msgstr "Error loading applications"
 
-msgid "Has access to Technical Mentors"
+msgid "Has access to Technical Mentors:"
 msgstr "Has access to Technical Mentors:"
 
-msgid "Has access to a Venue"
+msgid "Has access to a Venue:"
 msgstr "Has access to a Venue:"
 
 msgid "General Enquiries:"
