@@ -9,13 +9,13 @@
         <div class="row cd-input-row">
           <div class="form-group">
             <label for="dojoName" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Dojo Name"/}*
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
-                popover-placement="left" 
+                popover-placement="left"
                 popover-title="{@i18n key="Dojo Name"/}"
                 popover="{@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}">
               </a>
-            </label>       
+            </label>
             <div class="col-lg-8">
               <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name..."/}">
             </div>
@@ -25,9 +25,9 @@
         <div class="row cd-input-row">
           <div class="form-group">
             <label for="dojoEmail" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Email"/}
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
-                popover-placement="left" 
+                popover-placement="left"
                 popover-title="{@i18n key="Email"/}"
                 popover="{@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}">
               </a>
@@ -43,7 +43,7 @@
             <label for="dojoTimes" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Times"/}*
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
-                popover-placement="left" 
+                popover-placement="left"
                 popover-title="{@i18n key="Times"/}"
                 popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
               </a>
@@ -59,7 +59,7 @@
             <label for="dojoCountry" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Country"/}*
               <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
                 popover-trigger="mouseenter"
-                popover-placement="left" 
+                popover-placement="left"
                 popover-title="{@i18n key="Country"/}"
                 popover="{@i18n key="Country"/}">
               </a>
@@ -81,7 +81,7 @@
           <label for="dojoPlace" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="City/Town"/}*
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="City/Town"/}"
               popover="{@i18n key="City/Town"/}">
             </a>
@@ -97,13 +97,13 @@
           </div>
         </div>
       </div>
-     
+
       <div class="row cd-input-row">
         <div class="form-group">
           <label for="dojoAddress1" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Address"/}*
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Address"/}"
               popover="{@i18n key="Address of the Dojo (e.g. LIT Downtown Centre)"/}">
             </a>
@@ -130,7 +130,7 @@
         </div>
       </div>
       <div class="row cd-input-row">
-        <div class="form-group with-info-btn">      
+        <div class="form-group with-info-btn">
           <div class="col-lg-offset-4 col-lg-8">
             <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
           </div>
@@ -201,7 +201,7 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>       
+          <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
               <input type="checkbox"
@@ -222,9 +222,9 @@
       <div class="row cd-input-row">
         <div class="form-group">
           <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Google Group URL"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Google Group URL"/}"
               popover="{@i18n key="We recommend setting up a discussion group so people can sign up for the latest news and happenings."/}">
             </a>
@@ -238,9 +238,9 @@
       <div class="row cd-input-row">
         <div class="form-group">
           <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Website"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Website"/}"
               popover="{@i18n key="Website"/}">
             </a>
@@ -254,9 +254,9 @@
       <div class="row cd-input-row">
         <div class="form-group">
           <label for="dojoTwitter" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Twitter"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn" 
+            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Twitter"/}"
               popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}">
             </a>
@@ -272,7 +272,7 @@
           <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Supporters Image URL"/}
             <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
               popover-trigger="mouseenter"
-              popover-placement="left" 
+              popover-placement="left"
               popover-title="{@i18n key="Supporters Image URL"/}"
               popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
             </a>
