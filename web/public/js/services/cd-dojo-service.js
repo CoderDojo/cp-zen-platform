@@ -137,6 +137,16 @@
       },
       updateFounder: function(founder, win, fail) {
         cdApi.post('update_founder', {founder: founder},  win, fail || topfail);
+      },
+      searchNearestDojos: function(query) {
+        var deferred = $q.defer();
+        cdApi.post('dojos/search_nearest_dojos', {query: query}, deferred.resolve, deferred.reject || topfail);
+        return deferred.promise;
+      },
+      searchBoundingBox: function(query) {
+        var deferred = $q.defer();
+        cdApi.post('dojos/search_bounding_box', {query: query}, deferred.resolve, deferred.reject || topfail);
+        return deferred.promise;
       }
     };
   }
