@@ -1522,3 +1522,18 @@ msgstr "Email address not found."
 
 msgid "has been successfully approved"
 msgstr "has been successfully approved"
+
+msgid "captcha error"
+msgstr "captcha error"
+
+msgid "Enter Email"
+msgstr "Enter Email"
+
+msgid "Are you sure you want to remove this user from your Dojo?"
+msgstr "Are you sure you want to remove this user from your Dojo?"
+
+msgid "Error loading events"
+msgstr "Error loading events"
+
+msgid "Error loading applications"
+msgstr "Error loading applications"

@@ -27,15 +27,6 @@
       }
     };
 
-    $scope.sort = {
-      direction: 'asc',
-      toggleDirection: function() {
-        $scope.sort.direction = ($scope.sort.direction === 'asc') ? 'desc' : 'asc';
-
-        loadPage($scope.pagination.currentPage);
-      }
-    };
-
     $scope.onAttendedClicked = function(attendanceRecord) {
       var attendanceName = attendanceRecord.name;
       attendanceRecord = _.omit(attendanceRecord, 'parents', 'age', 'name');
@@ -53,41 +44,9 @@
       });
     };
 
-    function getSearchAttendanceQuery(eventId, currentPage, sortDirection) {
+    function searchApprovedApplications(eventId, currentPage, callback) {
       var skip = ($scope.pagination.currentPage - 1) * $scope.pagination.itemsPerPage;
-      var query = {
-        query: {
-          filtered: {
-            query: {
-              bool: {
-                must: [
-                  { match: { event_id: eventId }},
-                  { match: { event_date: $scope.attendance.eventDate.date }}
-                ]
-              }
-            }
-          }
-        }
-      };
-
-      var meta = {
-        sort: {
-          event_date: {
-            order: sortDirection,
-            ignore_unmapped: true
-          }
-        },
-        from: skip,
-        size:$scope.pagination.itemsPerPage
-      };
-
-      query = _.extend(query, meta);
-      return query;
-    }
-
-    function searchApprovedApplications(eventId, currentPage, sortDirection, callback) {
-      var query = getSearchAttendanceQuery(eventId, currentPage, sortDirection);
-      cdEventsService.searchAttendance(query, callback);
+      cdEventsService.searchAttendance({eventId: eventId, eventDate: $scope.attendance.eventDate.date, limit$: $scope.pagination.itemsPerPage, skip$: skip}, callback);
     }
 
     function loadPage(currentPage) {
@@ -116,8 +75,8 @@
     }
 
     function retrieveAttendanceData(done) {
-      searchApprovedApplications(eventId, $scope.pagination.currentPage, $scope.sort.direction, function(results) {
-        async.each(results.records, function (attendanceRecord, cb) {
+      searchApprovedApplications(eventId, $scope.pagination.currentPage, function(results) {
+        async.each(results, function (attendanceRecord, cb) {
           cdUsersService.listProfiles({userId:attendanceRecord.userId}, function (response) {
             var userProfile = response;
             attendanceRecord.parents = [];
@@ -135,8 +94,10 @@
           });
         }, function (err) {
           if (err) return console.error(err);
-          $scope.attendanceRecords = results.records || [];
-          $scope.pagination.totalItems = results.total;
+          $scope.attendanceRecords = results || [];
+          cdEventsService.searchAttendance({eventId: eventId, eventDate: $scope.attendance.eventDate.date}, function (result) {
+            $scope.pagination.totalItems = result.length;
+          });
           done();
         });
       });
@@ -145,6 +106,7 @@
     $scope.eventDateSelected = function (item) {
       loadPage($scope.pagination.currentPage);
     }
+
   }
 
   angular.module('cpZenPlatform')

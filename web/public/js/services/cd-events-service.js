@@ -15,11 +15,6 @@ function cdEventsService(cdApi, $q){
     list: function(query, win, fail){
       cdApi.post('events', {query: query}, win, fail || topfail);
     },
-    search: function(search) {
-      return $q(function(resolve, reject) {
-        cdApi.post('events/search', {search: search}, resolve, reject);
-      });
-    },
     applyForEvent: function(applyData, win, fail) {
       cdApi.post('events/' + applyData.eventId + '/apply', {applyData: applyData}, win, fail || topfail);
     },
@@ -32,8 +27,8 @@ function cdEventsService(cdApi, $q){
     updateApplication: function(application, win, fail) {
       cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
     },
-    searchApplications: function(search, win, fail) {
-      cdApi.post('events/applications/search', {search: search}, win, fail || topfail);
+    searchApplications: function(query, win, fail) {
+      cdApi.post('events/applications/search', {query: query}, win, fail || topfail);
     },
     bulkUpdateApplications: function(applications, win, fail) {
       cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail || topfail);
@@ -41,14 +36,19 @@ function cdEventsService(cdApi, $q){
     removeApplicant: function(application, win, fail) {
       cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
     },
-    searchAttendance: function(search, win, fail) {
-      cdApi.post('events/attendance/search', {search: search}, win, fail || topfail);
+    searchAttendance: function(query, win, fail) {
+      cdApi.post('events/attendance/search', {query: query}, win, fail || topfail);
     },
     saveAttendance: function(attendance, win, fail) {
       cdApi.post('events/attendance/save', {attendance: attendance}, win, fail || topfail);
     },
     getUserDojosEvents: function(user, win, fail){
       cdApi.post('events/user-dojos-events', {id: user}, win, fail || topfail);
+    },
+    search: function(query) {
+      var deferred = $q.defer();
+      cdApi.post('events/search', {query: query}, deferred.resolve, deferred.reject || topfail);
+      return deferred.promise;
     }
   };
 }

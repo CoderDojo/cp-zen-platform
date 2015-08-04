@@ -5,19 +5,21 @@
 	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm">
   	<div class="form-group">
 	    <div class="col-lg-3">
-	      <input type="email" required required-message="'Email is empty'" placeholder="Enter Email" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
+	      <input type="email" required required-message="'{@i18n key="Email is empty"/}'" placeholder="{@i18n key="Enter Email"/}" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
 	    </div>
-      <div class="col-lg-3">
-        <ui-select name="inviteUserType" ng-model="invite.userType">
+      <div class="col-lg-3" ng-class="{'has-error': inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required}">
+        <ui-select name="inviteUserType" ng-model="invite.userType" required>
           <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected.title  }}</ui-select-match>
           <ui-select-choices repeat="userType in userTypes">
             <span ng-bind-html="userType.title"></span>
           </ui-select-choices>
         </ui-select>
+        <label class="control-label has-error validationMessage"
+               ng-show="inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required">{@i18n key="Select an option"/}</label>
       </div>
-	    <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
-	  </div>
-    
+      <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
+    </div>
+
   </form>
 	<div class="col-md-12 table-responsive">
     <table id="manageDojoUsers" class="table cd-grid-table">
@@ -67,11 +69,11 @@
                 </ui-select-choices>
               </ui-select>
               <span class="help-block"></span>
-              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">Award Badge</button>
+              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
             </div>
           </td>
 
-          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="Are you sure you want to remove this user from your Dojo?" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
+          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this user from your Dojo?" /}" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
         </tr>
       </tbody>
     </table>

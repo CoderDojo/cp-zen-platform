@@ -194,7 +194,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       if (_.isEmpty($scope.dojosToBeUpdated)) {
         return cb();
       }
-
       var dojosToBeUpdated = _.map($scope.dojosToBeUpdated, function (dojo) {
         return {
           id: dojo.id,
@@ -264,12 +263,11 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }));
 
     filterVerified = $scope.filter && $scope.filter.verified;
-
+    
     if ((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)) {
       if (!exists) {
         changedDojos.push(dojo);
       }
-
     } else if (dojo.verified.value === filterVerified && !dojo.toBeDeleted) {
       changedDojos = _.filter(changedDojos, function (filteredDojo) {
         return dojo.id !== filteredDojo.id;

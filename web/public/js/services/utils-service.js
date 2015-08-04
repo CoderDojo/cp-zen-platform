@@ -136,5 +136,12 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
     return deferred.promise;
   }
 
+  utils.getSortClass = function (sort) {
+    for(var key in sort) {
+      if(sort[key] > 0) return 'pointer sortable glyphicon glyphicon-chevron-up';
+      return 'pointer sortable glyphicon glyphicon-chevron-down';
+    }
+  }
+
   return utils;
 }]);

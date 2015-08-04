@@ -9,8 +9,8 @@
             <table id="dojoEventsTable" class="table cd-grid-table">
               <thead>
                 <tr>
-                  <th><span ng-click="toggleSort($event, 'name')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-                  <th><span ng-click="toggleSort($event, 'dates')" class="pointer sortable glyphicon glyphicon-chevron-up">&nbsp;</span>{@i18n key="Date"/}</th>
+                  <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Name"/}</th>
+                  <th><span ng-click="toggleSort($event, 'dates')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Date"/}</th>
                   <th>{@i18n key="Capacity"/}</th>
                   <th>{@i18n key="Applicants"/}</th>
                   <th>{@i18n key="Attending"/}</th>

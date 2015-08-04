@@ -90,12 +90,11 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
           }, fail);
         } else if(results.length > 0 && !uncompletedDojoLead) {
           //make a copy of dojoLead here then initStep 2
-          var dojoLead = _.cloneDeep(results[0]);
+          var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
           dojoLead.completed = false;
           dojoLead.currentStep= 2;
           dojoLead.application.dojoListing = {};
           dojoLead.application.setupYourDojo = {};
-          delete dojoLead.id;
 
           cdDojoService.saveDojoLead(dojoLead, function(response) {
               initStep(2);
@@ -434,7 +433,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     }, failAuth);
 
     $scope.dojo = {};
-    $scope.dojo.stage = "0";
+    $scope.dojo.stage = 0;
 
     auth.get_loggedin_user(function(user) {
       $scope.user = user;
@@ -486,7 +485,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     };
 
     var sanitizeCdForms = {
-      createDojo: ["address1","email","googleGroups","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+      createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]
     };
 
     $scope.save = function(dojo) {
@@ -508,7 +507,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
               //update intercom champion dojos
               intercomService.updateIntercom(response.dojo_id);
 
-              $state.go('home', {
+              $state.go('dojo-list', {
                 bannerType:'success',
                 bannerMessage: $translate.instant('dojo.create.success'),
                 bannerTimeCollapse: 150000

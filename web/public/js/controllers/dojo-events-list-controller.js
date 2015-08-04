@@ -1,6 +1,6 @@
  'use strict';
 
-function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdUsersService, cdDojoService, tableUtils, alertService, auth) {
+function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdUsersService, cdDojoService, tableUtils, alertService, auth, utilsService) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
@@ -48,56 +48,22 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     });
   });
 
-  function buildEventsQuery() {
-    //Only list published events for this Dojo
-    var todaysDate = moment().toDate();
-    todaysDate = moment(todaysDate).format('YYYY-MM-DD');
-    return {
-      query: {
-        bool: {
-          must:[
-            { match: { dojo_id: dojoId }},
-            { match: { status: 'published' }},
-            { match: { public: true}},
-            { 
-              range: {
-                dates: {
-                  gte: todaysDate
-                }
-              }
-            }
-          ]   
-        },
-      }
-    };
-  }
-
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
 
-    var dojoQuery = buildEventsQuery();
-    
-    $scope.sort = $scope.sort ? $scope.sort :[{ dates: {order:'asc', ignore_unmapped:true}}];
+    $scope.sort = $scope.sort ? $scope.sort: {dates: 1};
 
     var query = _.omit({
-      dojo_id: filter.dojo_id,
+      dojoId: filter.dojoId,
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.events = [];
 
-    var meta = {
-      sort: $scope.sort,
-      from: loadPageData.skip,
-      size: $scope.itemsPerPage
-    };
-
-    dojoQuery = _.extend(dojoQuery, meta);
-    
-    cdEventsService.search(dojoQuery).then(function (result) {
+    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, public: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
       var events = [];
-      _.each(result.records, function (event) {
+      _.each(result, function (event) {
         if(event.type === 'recurring') {
           var startDate = _.first(event.dates);
           var endDate = _.last(event.dates);
@@ -125,7 +91,15 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         events.push(event);
       });
       $scope.events = events;
-      $scope.totalItems = result.total;
+      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
+        $scope.totalItems = result.length;
+      }, function (err) {
+        console.error(err);
+        alertService.showError($translate.instant('Error loading events'));
+      });
+    }, function (err) {
+      console.error(err);
+      alertService.showError($translate.instant('Error loading events'));
     });
 
   }
@@ -156,54 +130,31 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   }
 
   $scope.toggleSort = function ($event, columnName) {
-    var className, descFlag, sortConfig = {},sort = [], currentTargetEl;
-    
+    var className, descFlag, sortConfig = {};
     var DOWN = 'glyphicon-chevron-down';
     var UP = 'glyphicon-chevron-up';
-    var ACTIVE_COL = 'green-text';
-    var ACTIVE_COL_CLASS = ".green-text";
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
       return result > -1 ? true : false;
     }
 
-    currentTargetEl = angular.element($event.currentTarget);
-
-    className = $event.currentTarget.className;
-
-    angular.element(ACTIVE_COL_CLASS).removeClass(ACTIVE_COL);
+    className = $($event.target).attr('class');
 
     descFlag = isDesc(className);
-
     if (descFlag) {
-      sortConfig[columnName] = {order: "asc", ignore_unmapped:true};
-      sort.push(sortConfig);
-
-      currentTargetEl
-        .removeClass(DOWN)
-        .addClass(UP);
+      sortConfig[columnName] = 1;
     } else {
-      sortConfig[columnName] = {order: "desc", ignore_unmapped:true};
-      sort.push(sortConfig);
-      currentTargetEl
-        .removeClass(UP)
-        .addClass(DOWN);
+      sortConfig[columnName] = -1;
     }
 
-    currentTargetEl.addClass(ACTIVE_COL);
-
-    angular.element("span.sortable")
-      .not(ACTIVE_COL_CLASS)
-      .removeClass(UP)
-      .addClass(DOWN);
-
-    $scope.sort = sort;
-
+    $scope.sort = sortConfig;
     $scope.loadPage($scope.filter, true);
   }
+
+  $scope.getSortClass = utilsService.getSortClass;
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', '$q', 'cdEventsService', 'cdUsersService', 'cdDojoService', 'tableUtils', 'alertService', 'auth', cdDojoEventsListCtrl]);
+    .controller('dojo-events-list-controller', ['$scope', '$state', '$location', '$translate', '$q', 'cdEventsService', 'cdUsersService', 'cdDojoService', 'tableUtils', 'alertService', 'auth', 'utilsService', cdDojoEventsListCtrl]);
