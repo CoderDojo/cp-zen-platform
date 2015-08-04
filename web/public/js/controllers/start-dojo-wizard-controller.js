@@ -289,9 +289,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
       cdCountriesService.listCountries(function (countries) {
-        $scope.countries = _.map(countries, function (country) {
-          return _.omit(country, 'entity$');
-        });
+        $scope.countries = countries;
       }, fail);
     }
 
@@ -445,9 +443,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
     $scope.createDojoUrl = $state.current.url;
 
     cdCountriesService.listCountries(function(countries) {
-      $scope.countries = _.map(countries, function(country) {
-        return _.omit(country, 'entity$');
-      });
+      $scope.countries = countries;
     }, fail);
 
 

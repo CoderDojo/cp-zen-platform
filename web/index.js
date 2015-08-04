@@ -13,7 +13,6 @@ var so = require('./options.' + env  + '.js');
 var seneca = module.exports = require('seneca')(so.main);
 var locale = require('locale');
 var languages = require('./config/languages.js');
-var _ = require('lodash');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new Hapi.Server(so.hapi)
@@ -185,7 +184,6 @@ seneca
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
   .use('../lib/countries/cd-countries.js')
-  .use('../lib/geonames/cd-geonames.js')
   .use('../lib/users/cd-users.js')
   .use('../lib/agreements/cd-agreements.js')
   .use('../lib/badges/cd-badges.js')

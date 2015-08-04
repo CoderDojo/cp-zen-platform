@@ -251,11 +251,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   cdCountriesService.listCountries(function (countries) {
-    $scope.countries = _.map(countries, function (country) {
-      return _.omit(country, 'entity$');
-    });
+    $scope.countries = countries;
   });
-
 
   $scope.pushChangedDojo = function (dojo) {
     var filterVerified, exists = !!(_.find(changedDojos, function (changedDojo) {

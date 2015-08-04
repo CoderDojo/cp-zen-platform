@@ -261,7 +261,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   $scope.save = function(profile){
     var profileCopy = angular.copy(profile);
 
-    profileCopy = _.omit(profileCopy, ['countryName', 'ownProfileFlag', 'widget', 'dojos',
+    profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
       'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin']);
 
@@ -322,9 +322,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   };
 
   cdCountriesService.listCountries(function(countries) {
-    $scope.countries = _.map(countries, function(country) {
-      return _.omit(country, 'entity$');
-    });
+    $scope.countries = countries;
   });
 
   var initialDate = new Date();
