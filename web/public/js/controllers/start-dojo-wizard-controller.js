@@ -43,29 +43,15 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.dojoStates = json.verificationStates;
       }, fail);
 
-      var query = { query : {
-        filtered : {
-          query : {
-            match_all : {}
-          },
-          filter : {
-            bool: {
-              must: [{
-                term: { userId: user.id }
-              }]
-            }
-          }
-        }
-      }
-      };
+      var query = {userId: user.id};
 
-      cdDojoService.searchDojoLeads(query).then(function(result) {
-        var results = _.map(result.records, function(dojoLead) {
+      cdDojoService.searchDojoLeads(query).then(function (result) {
+        var results = _.map(result, function(dojoLead) {
           return _.omit(dojoLead, 'entity$');
         });
 
         var uncompletedDojoLead = null;
-
+        
         _.each(results, function(dojoLead){
           if(!dojoLead.completed){
             uncompletedDojoLead = dojoLead;

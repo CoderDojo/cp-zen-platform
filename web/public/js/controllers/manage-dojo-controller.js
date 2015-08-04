@@ -1,6 +1,6 @@
 'use strict';
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, $translate) {
+function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, $translate, utilsService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -66,99 +66,33 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    var filteredQuery = { query: { filtered: {}}};
-    var filteredBoolQuery = {bool: {must: []}};
-
-    $scope.sort = $scope.sort ? $scope.sort :[{ created: 'desc' }];
-
-    if(filter.email){
-      var emailQuery = {
-        "regexp" : {
-          "email" : {
-            "value": ".*" + filter.email + ".*"
-          }
-        }
-      };
-      filteredBoolQuery.bool.must.push(emailQuery); 
-    }
-
-    if(filter.userEmail){
-      var userEmailQuery = {
-        "wildcard": { 
-          "email": "*"+filter.userEmail+"*"
-        }
-      }
-      filteredBoolQuery.bool.must.push(userEmailQuery);
-    }
-
-    if(filter.name){
-      var nameQuery = {
-        "multi_match": {
-          "query": filter.name,
-          "fields": ['address1', 'name'],
-          "type": "cross_fields",
-          "fuzziness": 2,
-          "operator": "and"
-        }
-      };
-      filteredBoolQuery.bool.must.push(nameQuery);
-    }
-    var query = _.omit({
-      verified: filter.verified,
-      stage: filter.stage,
-      alpha2: filter.country && filter.country.alpha2
-    }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
-
+    $scope.sort = $scope.sort ? $scope.sort : { created: -1 };
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
 
-    var meta = {
-      sort: $scope.sort,
-      from: loadPageData.skip,
-      size: $scope.itemsPerPage
-    };
+    var query = _.omit({
+      name: filter.name,
+      verified: filter.verified,
+      email: filter.email,
+      stage: filter.stage,
+      alpha2: filter.country && filter.country.alpha2,
+      limit$: $scope.itemsPerPage,
+      skip$: loadPageData.skip,
+      sort$: $scope.sort
+    }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-    filteredQuery = _.extend(filteredQuery, meta);
-    filteredQuery.query.filtered.filter = {bool: {must: []}};
-
-    if (!_.isEmpty(query)) {
-
-      var andFilter = {
-        and: _.map(query, function (value, key) {
-          var term = {};
-          term[key] = value.toLowerCase ? value.toLowerCase() : value;
-          return {term: term};
-        })
-      };
-
-      filteredQuery.query.filtered.filter.bool.must.push(andFilter);
-
-    }
-
-    if($scope.filter.usersDojos && $scope.filter.usersDojos.length > 0){
-      var idsFilter =  {ids : {'values': $scope.filter.usersDojos}};
-      filteredQuery.query.filtered.filter.bool.must.push(idsFilter);
-    } else if(typeof $scope.filter.usersDojos !== 'undefined'){
-      $scope.dojos = [];
-      $scope.totalItems = 0;
-      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
-      return;
-    }
-
-    filteredQuery.query.filtered.query = filteredBoolQuery;
-    cdDojoService.search(filteredQuery).then(function (result) {
-      $scope.dojos = _.map(result.records, function (dojo) {
+    cdDojoService.search(query).then(function (result) {
+      $scope.dojos = _.map(result, function (dojo) {
         dojo.origVerified = dojo.verified;
         return dojo;
       });
-
-      $scope.totalItems = result.total;
-
-      return cb();
+      cdDojoService.search(_.omit(query, ['limit$', 'skip$', 'sort$'])).then(function (result) {
+        $scope.totalItems = result.length;
+        return cb();
+      });
     }, function (err) {
       alertService.showError($translate.instant('An error has occurred while loading Dojos'));
-
       return cb(err);
     });
   };
@@ -273,53 +207,27 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   $scope.toggleSort = function ($event, columnName) {
-    var className, descFlag, sortConfig = {},sort = [], currentTargetEl;
-    
+    var className, descFlag, sortConfig = {};
     var DOWN = 'glyphicon-chevron-down';
     var UP = 'glyphicon-chevron-up';
-    var ACTIVE_COL = 'green-text';
-    var ACTIVE_COL_CLASS = ".green-text";
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-
       return result > -1 ? true : false;
     }
 
-    currentTargetEl = angular.element($event.currentTarget);
-
-    className = $event.currentTarget.className;
-
-    angular.element(ACTIVE_COL_CLASS).removeClass(ACTIVE_COL);
+    className = $($event.target).attr('class');
 
     descFlag = isDesc(className);
-
     if (descFlag) {
-      sortConfig[columnName] = {order: "asc"};
-      sort.push(sortConfig);
+      sortConfig[columnName] = 1;
+    } else {
+      sortConfig[columnName] = -1;
+    }
 
-      currentTargetEl
-        .removeClass(DOWN)
-        .addClass(UP);
-      }
-      else {
-        sortConfig[columnName] = {order: "desc"};
-        sort.push(sortConfig);
-        currentTargetEl
-          .removeClass(UP)
-          .addClass(DOWN);
-      }
-
-      currentTargetEl.addClass(ACTIVE_COL);
-
-    angular.element("span.sortable")
-      .not(ACTIVE_COL_CLASS)
-      .removeClass(UP)
-      .addClass(DOWN);
-
-    $scope.sort = sort;
+    $scope.sort = sortConfig;
     $scope.loadPage($scope.filter, true);
-  };
+  }
 
   $scope.getUsersByEmails = function(email){
     if(!email || !email.length || email.length < 3) {
@@ -361,15 +269,16 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   };
 
-
   auth.get_loggedin_user(function () {
     $scope.loadPage($scope.filter, true);
   });
+
+  $scope.getSortClass = utilsService.getSortClass;
 }
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', 'alertService', 'auth', 
   'tableUtils', 'cdDojoService', '$location', 
-  'cdCountriesService', 'cdUsersService', '$translate', manageDojosCtrl]);
+  'cdCountriesService', 'cdUsersService', '$translate', 'utilsService', manageDojosCtrl]);
 
