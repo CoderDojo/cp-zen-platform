@@ -43,7 +43,7 @@
               <div class="form-group has-feedback">
                 <label for="dateOfBirth" class="col-lg-4">{@i18n key="Date of Birth"/}*</label>
                 <div class="col-lg-6">
-                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'{@i18n key="Date of Birth"/}'" ng-click="open($event)" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'{@i18n key="Date of Birth"/}'" ng-click="open($event)" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="{@i18n key="Close" /}" />
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@
               <div class="form-group has-feedback">
                 <label for="technicalExperience" class="col-lg-10">{@i18n key="Please list any relevant technical experience"/} *</label><br />
                 <div class="col-lg-6 col-lg-offset-4">
-                  <textarea name="technicalExperience" required required-message="'{@i18n key="Technical Experience is empty"/}'" class="form-control" tooltip="champion.registration.experience.tooltip" rows="5" 
+                  <textarea name="technicalExperience" required required-message="'{@i18n key="Technical Experience is empty"/}'" class="form-control" tooltip="champion.registration.experience.tooltip" rows="5"
                   ng-model="champion.technicalExperience"></textarea>
                 </div>
               </div>
@@ -100,7 +100,7 @@
               <div class="form-group">
                 <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="champion.registration.social.linkedin.tooltip" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
+                    <input type="text" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip" /}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
                   </div>
               </div>
             </div>
@@ -114,7 +114,7 @@
               </div>
             </div>
 
-            <legend>Other</legend>
+            <legend>{@i18n key="Other"/}</legend>
             <div class="row">
               <div class="form-group">
                 <label for="technicalMentorsAccess" class="col-lg-4">{@i18n key="Do you have access to technical mentors"/} *</label>
@@ -136,7 +136,7 @@
                   <div class="col-lg-6">
                     <ui-select name="hasVenue" ng-model="champion.hasVenue" ng-disabled="disabled" required required-message="'Select an option'"
                     tooltip="{@i18n key="champion.registration.venue.tooltip"/}">
-                        <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                        <ui-select-match placeholder="{@i18n key="Select an option"/}">{{ $select.selected }}</ui-select-match>
                         <ui-select-choices repeat="answer in answers">
                           <span ng-bind-html="answer"></span>
                         </ui-select-choices>
