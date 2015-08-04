@@ -84,6 +84,9 @@
         cdEventsService.search({dojoId: $scope.dojoId, status: 'published'}, function (result) {
           $scope.totalItems = result.length;
           return cb();
+        }, function (err) {
+          console.error(err);
+          alertService.showError($translate.instant('Error loading events'));
         });
       }, function (err) {
         console.error(err);
