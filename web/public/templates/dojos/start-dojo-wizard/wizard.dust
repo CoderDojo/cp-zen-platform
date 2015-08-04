@@ -1,21 +1,21 @@
 <div class="cd-dojo-main">
 <div class="cd-dashboard cd-color-5-underline">
-    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
-        <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
+    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators">
+        <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="{@i18n key="Register Account"/}">
             <legend><h1 class="cd-page-header">{@i18n key="Register Account"/}</h1></legend>
             <p>{@i18n key="wizard.p1"/}</p>
             <cd-register-account ng-if="wizardCurrentStep === 'Register Account'"></cd-register-account>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" title="Champion Registration">
+        <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" title="{@i18n key="Champion Registration"/}">
             <legend><h1 class="cd-page-header">{@i18n key="Champion Registration"/}</h1></legend>
             <cd-champion-registration ng-if="wizardCurrentStep === 'Champion Registration'"></cd-champion-registration>
             <cd-charter></cd-charter>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canexit="dojoSetup" canenter="preventEnterSetupDojo" title="Setup your Dojo">
+        <wz-step class="start-dojo-wizard-step" canexit="dojoSetup" canenter="preventEnterSetupDojo" title="{@i18n key="Setup your Dojo"/}">
             <legend><h1 class="cd-page-header">{@i18n key="Setup your Dojo"/}</h1></legend>
             <cd-setup-your-dojo ng-if="wizardCurrentStep === 'Setup your Dojo'"></cd-setup-your-dojo>
         </wz-step>
-        <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" canenter="preventEnterDojoListing" title="Dojo Listing">
+        <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" canenter="preventEnterDojoListing" title="{@i18n key="Create Dojo Listing"/}">
             <h1 class="cd-page-header">{@i18n key="Create Dojo Listing"/}</h1>
             <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>

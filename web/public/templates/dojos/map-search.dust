@@ -17,7 +17,7 @@
     <div id="find-dojo-form" class="input-group">
       <input id="location" ng-model="search.dojo" placeholder="{@i18n key="dojo.list.search.placeholder"/}" type="text" class="form-control">
       <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit">Go!</button>
+        <button class="btn btn-primary" type="submit">{@i18n key="Go!"/}</button>
       </span>
     </div>
   </form>

@@ -1,4 +1,4 @@
 <div class="cd-container">
-  <legend>Accepting badge...</legend>
+  <legend>{@i18n key="Accepting badge..."/}</legend>
 </div>
 
