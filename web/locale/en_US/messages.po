@@ -1525,3 +1525,6 @@ msgstr "has been successfully approved"
 
 msgid "captcha error"
 msgstr "captcha error"
+
+msgid "Enter Email"
+msgstr "Enter Email"
