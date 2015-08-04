@@ -217,7 +217,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   };
 
   var sanitizeCdForms = {
-    editDojo: ["address1","email","googleGroup","name","needMentors","notes","private","stage","supporterImage","time","twitter","website"]
+    editDojo: ["address1","email","googleGroup","name","needMentors","notes","supporterImage","time","twitter","website"]
   }
 
   $scope.save = function(dojo) {
