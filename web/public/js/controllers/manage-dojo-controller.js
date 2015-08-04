@@ -20,7 +20,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   });
 
   $scope.getDojoStateLabel = function(stage) {
-    return (_.find($scope.dojoStages, function(item) { return item.value === stage })).label;
+    return (_.find($scope.dojoStages, function(item) { return item.value === parseInt(stage) })).label;
   }
 
   $scope.setStyle = function(dojo){
