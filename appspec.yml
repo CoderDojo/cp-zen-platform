@@ -1,0 +1,31 @@
+version: 0.0
+os: linux
+files:
+  - source: deploy/cp-zen-platform.conf
+    destination: /etc/init/
+  - source: deploy/cp-zen-platform.env
+    destination: /etc/zen
+  - source: /
+    destination: /opt/zen/cp-zen-platform
+
+permissions:
+  - object: /opt/zen/cp-zen-platform
+    owner: ubuntu
+    group: ubuntu
+  - object: /etc/zen/cp-zen-platform.env
+    owner: ubuntu
+    group: ubuntu
+  
+hooks:
+  ApplicationStop:
+    - location: deploy/stop-server.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: deploy/start-server.sh
+      timeout: 300
+      runas: root
+
+  
+
