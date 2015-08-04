@@ -19,9 +19,9 @@
           cdApi.post('dojos/my_dojos', {search: search, user:currentUser}, resolve, reject);
         });
       },
-      search: function(search) {
+      search: function(query) {
         return $q(function(resolve, reject) {
-          cdApi.post('dojos/search', {search: search}, resolve, reject);
+          cdApi.post('dojos/search', {query: query}, resolve, reject);
         });
       },
       save: function(dojo, win, fail) {
@@ -89,9 +89,9 @@
       getUsersDojos: function(query, win, fail) {
         cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
-      searchDojoLeads: function(search) {
+      searchDojoLeads: function(query) {
         return $q(function(resolve, reject) {
-          cdApi.post('dojos/search_dojo_leads', {search: search}, resolve, reject);
+          cdApi.post('dojos/search_dojo_leads', {query: query}, resolve, reject);
         });
       },
       getUsersDojosPromise: function(query){
