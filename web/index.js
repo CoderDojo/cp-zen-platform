@@ -90,8 +90,8 @@ server.register({
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
-  // server.register({ register: require('../chairo-cache') }, function (err) {
-  //   checkHapiPluginError('chairo-cache')(err);
+  server.register({ register: require('../chairo-cache') }, function (err) {
+    checkHapiPluginError('chairo-cache')(err);
 
     var seneca = server.seneca;
 
@@ -149,7 +149,7 @@ server.register({ register: Chairo, options: options }, function (err) {
       server.start(function() {
         console.log('[%s] Listening on http://localhost:%d', env, port);
       });
-//    });
+    });
   });  
 });
 

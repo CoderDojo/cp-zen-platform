@@ -67,7 +67,6 @@ module.exports.register = function (server, options, next) {
       }
     }
   });
-
 };
 
 module.exports.register.attributes = {
