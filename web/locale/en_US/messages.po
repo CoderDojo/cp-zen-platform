@@ -1588,3 +1588,6 @@ msgstr "Search by dojo email"
 
 msgid "Go!"
 msgstr "Go!"
+
+msgid "Alias"
+msgstr "Alias"
