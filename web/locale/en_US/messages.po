@@ -1592,6 +1592,8 @@ msgstr "Go!"
 msgid "Alias"
 msgstr "Alias"
 
-
 msgid "An error has occured while accepting invitation"
 msgstr "An error has occured while accepting invitation"
+
+msgid "Please resolve the captcha"
+msgstr "Please resolve the captcha"

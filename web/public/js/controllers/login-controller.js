@@ -55,10 +55,16 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
        });
   }
 
+  $scope.setRecaptchaResponse = function (response) {
+    $scope.recaptchaResponse = response;
+  }
+
+  $scope.recaptchaExpired = function () {
+    $scope.recaptchaResponse = null;
+  }
+
   $scope.doRegister = function(user) {
-    if(vcRecaptchaService.getResponse() === ""){
-      return alertService.showError("Please resolve the captcha");
-    }
+    if(!$scope.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
@@ -66,7 +72,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       user.isChampion = true;
     }
 
-    user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+    user['g-recaptcha-response'] = $scope.recaptchaResponse;
 
     auth.register(user, function(data) {
       if(data.ok) {
