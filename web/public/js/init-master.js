@@ -220,6 +220,10 @@
           resolve: profileHelpers,
           controller: 'user-profile-controller'
         })
+        .state('error-404-no-headers', {
+          url:'/404',
+          templateUrl: '/errors/template/404_no_headers'
+        })
         .state('error-404', {
           url:'/404',
           templateUrl: '/errors/template/404'

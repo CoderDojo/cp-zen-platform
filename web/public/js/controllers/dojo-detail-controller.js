@@ -8,9 +8,6 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     $scope.dojo.stage = stages[$scope.dojo.stage];
   }
 
-  if(!dojo || !dojo.id){
-    $state.go('error-404');
-  }
   $scope.dojo = dojo;
   $scope.setStage();
   $scope.model = {};
@@ -21,6 +18,13 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
   var approvalRequired = ['mentor', 'champion'];
 
   auth.get_loggedin_user(function (user) {
+    if(!dojo || !dojo.id){
+      $state.go('error-404-dash-no-headers');
+    }
+
+    if(!dojo.verified && dojo.creator !== user.id && !_.contains(user.roles, 'cdf-admin')){
+      $state.go('error-404-dash-no-headers');
+    }
     currentUser = user;
 
     //Check if user is a member of this Dojo
@@ -33,6 +37,9 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     });
   }, function () {
     //Not logged in
+    if(!dojo || !dojo.id || !dojo.verified){
+      $state.go('error-404-no-headers');
+    }
     $scope.userMemberCheckComplete = true;
   });
 
