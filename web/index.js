@@ -33,6 +33,8 @@ function checkHapiPluginError (name) {
 
 server.connection({ 
   port: port, 
+  // According to the HTTP spec and Chrome audit tool, Cache-Control headers should match what
+  // would be sent for 200 when a 304 (Not Modified) is sent.
   routes: { cache: { statuses: [200,304] } }
 });
 
