@@ -410,7 +410,8 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.viewDojo = function(dojo) {
-    var urlSlugArray = dojo.url_slug.split('/');
+    var urlSlug = dojo.url_slug || dojo.urlSlug;
+    var urlSlugArray = urlSlug.split('/');
     var country = urlSlugArray[0].toString();
     urlSlugArray.splice(0, 1);
     var path = urlSlugArray.join('/');

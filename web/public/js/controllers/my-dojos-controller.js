@@ -4,6 +4,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
+  var errorMsg = $translate.instant('error.general');
 
   $rootScope.$watch(function() {
       return $location.path();
@@ -83,7 +84,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
     getUsersDojos().then(function (result) {
       cb(result);
     }, function (err) {
-      alertService.showError(err);
+      alertService.showError(errorMsg);
     });
   }
 
@@ -145,7 +146,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
             var uncompletedDojo = response[0];
             AlertBanner.publish({
               type: 'info',
-              message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >Please click here to complete all of the recommended practices for ' + uncompletedDojo.name + '</a>',
+              message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >' + $translate.instant('Please click here to complete all of the recommended practices for') + ' ' + uncompletedDojo.name + '</a>',
               autoClose: false,
               onOpen: function() {
                 angular.element('.a-no-float').on('click', function(e){

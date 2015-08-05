@@ -1,4 +1,5 @@
 'use strict';
+/*global $*/
 
 function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
   var eventId = $stateParams.eventId;

@@ -315,7 +315,7 @@
           controller:'accept-badge-controller',
           templateUrl: '/dojos/template/badges/accept'
         })
-        .state('error-404', {
+        .state('error-404-dash-no-headers', {
           url:'/404',
           templateUrl: '/errors/template/404_no_headers'
         })

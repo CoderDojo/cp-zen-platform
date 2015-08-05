@@ -1,4 +1,5 @@
 'use strict';
+/*global $*/
 
 function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdCountriesService, cdUsersService, $translate, utilsService) {
   $scope.filter = {};
@@ -171,7 +172,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       });
     }
 
-    if($scope.dojosToBeUpdated.length > 0 || $scope.dojosToBeDeleted.length > 0) { 
+    if($scope.dojosToBeUpdated.length > 0 || $scope.dojosToBeDeleted.length > 0) {
       async.series([updateDojos, deleteDojos], function (err) {
         delete $scope.dojosToBeDeleted;
         delete $scope.dojosToBeUpdated;
@@ -194,7 +195,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }));
 
     filterVerified = $scope.filter && $scope.filter.verified;
-    
+
     if ((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)) {
       if (!exists) {
         changedDojos.push(dojo);
@@ -258,7 +259,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
     cdDojoService.getUsersDojos(query, function(usersDojos){
       var dojoIds = _.pluck(usersDojos, 'dojoId');
-      
+
       dojoIds = _.filter(dojoIds, function(dojoId){
         return dojoId !== null;
       });
@@ -278,7 +279,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
-  ['$scope', 'alertService', 'auth', 
-  'tableUtils', 'cdDojoService', '$location', 
+  ['$scope', 'alertService', 'auth',
+  'tableUtils', 'cdDojoService', '$location',
   'cdCountriesService', 'cdUsersService', '$translate', 'utilsService', manageDojosCtrl]);
 
