@@ -17,7 +17,7 @@
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="createdDojoListing" canenter="preventEnterDojoListing" title="Dojo Listing">
             <h1 class="cd-page-header">{@i18n key="Create Dojo Listing"/}</h1>
-            <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing/}'"></cd-dojo-listing>
+            <cd-dojo-listing ng-if="wizardCurrentStep === 'Dojo Listing'"></cd-dojo-listing>
         </wz-step>
     </wizard>
 </div>
