@@ -10,14 +10,13 @@ module.exports.register = function (server, options, next) {
   server.seneca.add({ role: 'web' }, function (args, done) {
     var seneca = this;
     var use = args.use;
+    var rewrittenMappingArgs = seneca.util.argprops(
+      { fatal$: false },
+      _.cloneDeep(args),
+      { role: args.role, cmd: args.cmd });
 
     function skipRewrite () {
-      var skipArgs = seneca.util.argprops(
-        { fatal$: false },
-        args,
-        { role: args.role, cmd: args.cmd });
-
-      seneca.parent(skipArgs, done);
+      seneca.parent(rewrittenMappingArgs, done);
     }
 
     // Only intercept patterns with the use arg.
@@ -28,7 +27,6 @@ module.exports.register = function (server, options, next) {
     // TODO // Maybe because it uses { POST: function () {...} } or some other option. 
     if (use.prefix === '/auth') return skipRewrite();
 
-    var rewrittenMappingArgs = seneca.util.argprops({}, _.cloneDeep(args), {});
     var role = use.pin.role;
     var namePrefix = role.replace(/[-]/g, '_') + '_';
  
@@ -53,7 +51,7 @@ module.exports.register = function (server, options, next) {
           }
         });
       }
-  
+
       // Create a proxy seneca action that checks the Hapi cache.
       seneca.add({ role: plugin, cmd: name }, function (args, done) {
         // TODO // make sure etag header is present from hapi-etag
@@ -63,11 +61,15 @@ module.exports.register = function (server, options, next) {
           args,
           { role: role, cmd: cmd });
 
-        if (cache) {
-          return cache.get(proxiedActionArgs, done);
+        if (!cache) {
+          return seneca.act(proxiedActionArgs, done);
         }
 
-        return seneca.act(proxiedActionArgs, done);
+        cache.get(proxiedActionArgs, function (error, result) {
+          if (error) return done(error);
+          // TODO set result.http$ cache-control headers based on expiresIn
+          done(null, result);
+        });
       });
     });
  

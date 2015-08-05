@@ -5,6 +5,8 @@ var path = require('path');
 var requireindex = require('requireindex');
 var controllers = requireindex(__dirname);
 
+var ASSET_LIFETIME =  31536000 * 1000
+
 // Remove package.json, it's not a controller.  All other non-index files/directories should be.
 delete controllers.package;
 
@@ -15,10 +17,10 @@ module.exports.register = function (server, options, next) {
   });
 
   // Serve public files
-  // These are separate to allow routes from seneca-web a chance to have their middleware triggered.
   server.route({
     method: 'GET',
     path: '/favicon.ico',
+    config: { cache: { privacy: 'public', expiresIn: ASSET_LIFETIME } },
     handler: {
       file: {
         path: path.join(__dirname, '../public/favicon.ico')
@@ -29,6 +31,7 @@ module.exports.register = function (server, options, next) {
   server.route({
     method: 'GET',
     path: '/components/{filename*}',
+    config: { cache: { privacy: 'public', expiresIn: ASSET_LIFETIME } },
     handler: {
       directory: {
         path: path.join(__dirname, '../public/components')
@@ -39,6 +42,7 @@ module.exports.register = function (server, options, next) {
   server.route({
     method: 'GET',
     path: '/img/{filename*}',
+    config: { cache: { privacy: 'public', expiresIn: ASSET_LIFETIME } },
     handler: {
       directory: {
         path: path.join(__dirname, '../public/img')
@@ -49,6 +53,7 @@ module.exports.register = function (server, options, next) {
   server.route({
     method: 'GET',
     path: '/js/{filename*}',
+    config: { cache: { privacy: 'public', expiresIn: ASSET_LIFETIME } },
     handler: {
       directory: {
         path: path.join(__dirname, '../public/js')

@@ -29,7 +29,10 @@ function checkHapiPluginError (name) {
 
 // Set up HAPI
 
-server.connection({ port: port })
+server.connection({ 
+  port: port, 
+  routes: { cache: { statuses: [200,304] } }
+});
 
 server.state('NG_TRANSLATE_LANG_KEY', {
   ttl: null,
@@ -80,9 +83,8 @@ server.register({
   options: {
     home: path.join(__dirname, './public/css'),
     route: '/css/{filename*}',
-    less: {
-      compress: true
-    }
+    config: { cache: { privacy: 'public', expiresIn: 31536000 * 1000 } }, // TODO move value to config
+    less: { compress: true }
   }
 }, checkHapiPluginError('hapi-less'));
 
