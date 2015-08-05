@@ -17,8 +17,8 @@ function cdCountriesService($q, cdApi){
           win(countries);
         }, fail || topfail);
       },
-      listPlaces: function(search, win, fail) {
-        cdApi.post('geo/places', {search: search}, win, fail || topfail);
+      listPlaces: function(query, win, fail) {
+        cdApi.post('geo/places', query, win, fail || topfail);
       },
       loadContinentsLatLongData: function(win, fail) {
         cdApi.get('geo/continents_lat_long', win, fail || topfail);
