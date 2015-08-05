@@ -1,10 +1,13 @@
 'use strict';
 
+var ONE_YEAR_MS = 1 * 364 * 24 * 60 * 60 * 1000; // TODO move to config
+
 var controller = module.exports = [
 
   {
     method: 'GET',
     path: '/',
+    config: { cache: { privacy: 'public', expiresIn: ONE_YEAR_MS } },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }

@@ -74,7 +74,11 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/404', request.locals);
 });
 
-server.register({ register: require('hapi-etags') }, checkHapiPluginError('hapi-etags'));
+// TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.  
+//      However, most of them aren't large sized responses, so the benefit of Etag may outway that penalty.
+//      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the 
+//      Trailer rather than Header...
+server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
 // Serve CSS files.
@@ -83,7 +87,7 @@ server.register({
   options: {
     home: path.join(__dirname, './public/css'),
     route: '/css/{filename*}',
-    config: { cache: { privacy: 'public', expiresIn: 31536000 * 1000 } }, // TODO move value to config
+    config: { cache: { privacy: 'public', expiresIn: 31536000 * 1000 } }, // 1 year // TODO move value to config
     less: { compress: true }
   }
 }, checkHapiPluginError('hapi-less'));
