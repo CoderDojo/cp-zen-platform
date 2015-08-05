@@ -15,10 +15,10 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   }
 
   var msgmap = {
-    'unknown': $translate.instant('login.msgmap.unknown'),
-    'user-not-found': $translate.instant('login.msgmap.user-not-found'),
-    'invalid-password': $translate.instant('login.msgmap.invalid-password'),
-    'reset-sent': $translate.instant('login.msgmap.reset-sent'),
+    'unknown': $translate.instant('Unable to perform your request at this time - please try again later.'),
+    'user-not-found': $translate.instant('Email address is not recognized.'),
+    'invalid-password': $translate.instant('That password is incorrect'),
+    'reset-sent': $translate.instant('An email with password reset instructions has been sent to you.'),
     'email-not-found': $translate.instant('Email address not found')
   }
 
@@ -101,7 +101,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           reason = $translate.instant('captcha error');
         }
 
-        alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason, function(){
+        alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
           $window.location.href = '/register';
         });
       }

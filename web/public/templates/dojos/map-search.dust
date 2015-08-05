@@ -15,7 +15,7 @@
   </ol>
   <form name="dojoSearch" ng-submit="search()">
     <div id="find-dojo-form" class="input-group">
-      <input id="location" ng-model="search.dojo" placeholder="{@i18n key="dojo.list.search.placeholder"/}" type="text" class="form-control">
+      <input id="location" ng-model="search.dojo" placeholder="{@i18n key="Where are you? Enter an address here and we'll find the closest dojo to you."/}" type="text" class="form-control">
       <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">{@i18n key="Go!"/}</button>
       </span>

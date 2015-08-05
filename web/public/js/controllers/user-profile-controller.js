@@ -6,7 +6,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
-    alertService.showError('An error has occurred');
+    alertService.showError($translate.instant('error.general'));
     return;
   }
 
@@ -76,7 +76,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
             $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
           })
         }).error(function (data, status, headers, config) {
-          alertService.showError('error status:' + status);
+          alertService.showError($translate.instant('There was an error uploading your profile picture.'));
         });
       }
     }
@@ -181,11 +181,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.inviteParent = function(data){
     var win = function(){
-      alertService.showAlert('Invitation was sent successfully');
+      alertService.showAlert($translate.instant('Invitation was sent successfully.'));
     };
 
     var fail = function(){
-      alertService.showError('An error has occurred while sending invitation');
+      alertService.showError($translate.instant('An error has occurred while sending invitation') );
     };
 
     cdUsersService.inviteParent(data, win, fail);
