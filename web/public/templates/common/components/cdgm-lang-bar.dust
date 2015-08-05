@@ -1,7 +1,7 @@
 <select ng-controller="languageController"
-    name="language" 
-    class="form-control" 
+    name="language"
+    class="form-control"
     ng-model="selectedLanguage"
-    ng-change="updateLocale()" 
-    ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages"></select>>
+    ng-change="updateLocale()"
+    ng-options="language.code  as language.name + (' ('+ language.country +') ') for language in languages">
 </select>

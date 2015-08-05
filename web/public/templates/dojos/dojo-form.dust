@@ -8,61 +8,57 @@
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="dojoName" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Dojo Name"/}*
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-                popover-trigger="mouseenter"
+            <label for="dojoName" class="col-lg-4 cd-form-label1">
+              <span popover-trigger="mouseenter"
                 popover-placement="left"
-                popover-title="{@i18n key="Dojo Name"/}"
                 popover="{@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}">
-              </a>
+                {@i18n key="Dojo Name"/}*
+              </span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name..."/}">
+              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name"/}">
             </div>
           </div>
         </div>
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="dojoEmail" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Email"/}
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-                popover-trigger="mouseenter"
+            <label for="dojoEmail" class="col-lg-4 cd-form-label1">
+              <span popover-trigger="mouseenter"
                 popover-placement="left"
-                popover-title="{@i18n key="Email"/}"
                 popover="{@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}">
-              </a>
+                {@i18n key="Dojo Email"/}
+              </span>
             </label>
             <div class="col-lg-8">
-              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address..."/}">
+              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address"/}">
             </div>
           </div>
         </div>
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="dojoTimes" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Times"/}*
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-                popover-trigger="mouseenter"
+            <label for="dojoTimes" class="col-lg-4 cd-form-label1">
+              <span popover-trigger="mouseenter"
                 popover-placement="left"
-                popover-title="{@i18n key="Times"/}"
                 popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
-              </a>
+                {@i18n key="Times"/}
+              </span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Times is Empty"/}'" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}">
+              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}">
             </div>
           </div>
         </div>
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="dojoCountry" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Country"/}*
-              <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-                popover-trigger="mouseenter"
+            <label for="dojoCountry" class="col-lg-4 cd-form-label1">
+              <span popover-trigger="mouseenter"
                 popover-placement="left"
-                popover-title="{@i18n key="Country"/}"
                 popover="{@i18n key="Country"/}">
-              </a>
+                {@i18n key="Country"/}*
+              </span>
             </label>
             <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
               <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required>
@@ -78,13 +74,12 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoPlace" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="City/Town"/}*
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoPlace" class="col-lg-4 cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="City/Town"/}"
               popover="{@i18n key="City/Town"/}">
-            </a>
+              {@i18n key="City/Town"/}*
+            </span>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
             <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)">
@@ -100,16 +95,15 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoAddress1" class="col-lg-4 cd-form-label1 with-info-btn">{@i18n key="Address"/}*
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoAddress1" class="col-lg-4 cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Address"/}"
               popover="{@i18n key="Address of the Dojo (e.g. LIT Downtown Centre)"/}">
-            </a>
+              {@i18n key="Address"/}*
+            </span>
           </label>
           <div class="col-lg-8">
-            <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address..."/}"></textarea>
+            <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address"/}"></textarea>
           </div>
         </div>
       </div>
@@ -132,7 +126,7 @@
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">
           <div class="col-lg-offset-4 col-lg-8">
-            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
+            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
           </div>
           <div class="col-lg-offset-4 col-lg-8 google-map">
             <p>{@i18n key="Please click on the map to pinpoint your location"/}</p>
@@ -166,13 +160,12 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Need Mentors"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label class="col-lg-4 cd-form-label1 with-checkbox">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Need Mentors"/}"
               popover="{@i18n key="Meed Mentors"/}">
-            </a>
+              {@i18n key="Need Mentors"/}
+            </span>
           </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">
@@ -222,77 +215,72 @@
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Google Group URL"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoGoogleGroup" class="col-lg-4 cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Google Group URL"/}"
               popover="{@i18n key="We recommend setting up a discussion group so people can sign up for the latest news and happenings."/}">
-            </a>
+              {@i18n key="Google Group URL"/}
+            </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL..."/}">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL"/}">
           </div>
         </div>
       </div>
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoGoogleGroup" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Website"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoGoogleGroup" class="col-lg-4 cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Website"/}"
               popover="{@i18n key="Website"/}">
-            </a>
+              {@i18n key="Website"/}
+            </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL..."/}">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL"/}">
           </div>
         </div>
       </div>
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoTwitter" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Twitter"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoTwitter" class="col-lg-4 cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Twitter"/}"
               popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}">
-            </a>
+              {@i18n key="Twitter"/}
+            </span>
           </label>
           <div class="col-lg-8">
-            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL..."/}">
+            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL"/}">
           </div>
         </div>
       </div>
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">{@i18n key="Supporters Image URL"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Supporters Image URL"/}"
               popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
-            </a>
+              {@i18n key="Supporters Image URL"/}
+            </span>
           </label>
           <div class="col-lg-8">
-            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL..."/}">
+            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}">
           </div>
         </div>
       </div>
 
       <div class="row cd-input-row">
         <div class="form-group">
-          <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">{@i18n key="Mailing List"/}
-            <a href="#" class="info-button fa fa-info-circle fa-lg cd-info-btn"
-              popover-trigger="mouseenter"
+          <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">
+            <span popover-trigger="mouseenter"
               popover-placement="left"
-              popover-title="{@i18n key="Mailing List"/}"
               popover="{@i18n key="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."/}">
-            </a>
+              {@i18n key="Mailing List"/}
+            </span>
           </label>
           <div class="col-lg-8">
             <div class="checkbox cd-checkbox checkbox-primary">

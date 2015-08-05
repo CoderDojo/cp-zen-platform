@@ -13,5 +13,6 @@
     <div class="text-center col-xs-12"></div>
   </div>
   <alert-banner></alert-banner>
+  <ng-atomic-notify></ng-atomic-notify>
 </header>
 

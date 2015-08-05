@@ -15,9 +15,12 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   var changedDojos = [];
 
   cdDojoService.getDojoConfig(function(json){
-    $scope.dojoConfig = json;
-    $scope.dojoStages = json.dojoStages;
-    $scope.dojoStates = json.verificationStates;
+    $scope.dojoStages = _.map(json.dojoStages, function(item){
+      return { value: item.value, label: $translate.instant(item.label) };
+    });
+    $scope.dojoStates = _.map(json.verificationStates, function(item){
+      return { value: item.value, label: $translate.instant(item.label) };
+    });
   });
 
   $scope.getDojoStateLabel = function(stage) {

@@ -5,7 +5,6 @@
     'pascalprecht.translate',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
-    'cdAuth',
     'ngCkeditor',
     'angularValidator',
     'ui.router',
@@ -27,6 +26,8 @@
     'vcRecaptcha',
     'ngFileUpload',
     'ng-slide-down',
-    'popoverToggle'
+    'popoverToggle',
+    'tmh.dynamicLocale',
+    'atomic-notify'
   ]);
 })();
