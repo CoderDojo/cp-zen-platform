@@ -1606,7 +1606,7 @@ msgid "If you need help completing your initial Dojo application, please contact
 msgstr "If you need help completing your initial Dojo application, please contact us at"
 
 msgid "There was an error uploading your profile picture."
-msgid "There was an error uploading your profile picture."
+msgstr "There was an error uploading your profile picture."
 
 msgid "Invitation was sent successfully."
 msgstr "Invitation was sent successfully."
