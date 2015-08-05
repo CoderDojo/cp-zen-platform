@@ -51,7 +51,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         });
 
         var uncompletedDojoLead = null;
-        
+
         _.each(results, function(dojoLead){
           if(!dojoLead.completed){
             uncompletedDojoLead = dojoLead;
@@ -65,8 +65,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             if (!_.isEmpty(response)) {
               $state.go('dojo-list',
                 { bannerType:'success',
-                  bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.<br> ' +
-                  'If you need help completing your initial Dojo application, please contact us at <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
+                  bannerMessage: $translate.instant('Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.') +'<br> ' +
+                  $translate.instant('If you need help completing your initial Dojo application, please contact us at')+ ' <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
                   bannerTimeCollapse: 150000
                 });
             } else {
@@ -392,7 +392,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         $scope.steps.map(function(step){
           step.open = true;
         });
-      } 
+      }
     };
 
     if(!wizardRedirect) {
@@ -405,12 +405,12 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   //--Step Four:
   function setupStep4(wizardRedirect) {
     $scope.hideIndicators = false;
-    $scope.buttonText = "Create Dojo"
-      
+    $scope.buttonText = $translate.instant("Create Dojo");
+
     $scope.stepFourShowGmap = true;
-      
+
     currentStepInt = 3;
-    
+
     var currentUser;
     auth.get_loggedin_user(function(user) {
       currentUser = user;
@@ -496,7 +496,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               });
             });
           },failSave);
-        }, fail); 
+        }, fail);
       };
 
       openConfirmation(win);
@@ -523,7 +523,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           setTimeout(function () {
             google.maps.event.trigger($scope.model.map, 'resize');
             var center = new google.maps.LatLng(53.344415, -6.260147);
-  
+
           }, 100);
         }
       });
@@ -564,7 +564,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     var modalInstance = $modal.open({
         animation: true,
         templateUrl: '/dojos/template/dojo-setup-confirm',
-        controller: 'dojoSetupConfirmationCtrl',
+        controller: 'dojoSetupConfirmationCtrl'
       });
 
     modalInstance.result.then(win, fail);

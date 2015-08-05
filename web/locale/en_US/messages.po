@@ -1597,3 +1597,22 @@ msgstr "An error has occured while accepting invitation"
 
 msgid "Please resolve the captcha"
 msgstr "Please resolve the captcha"
+
+
+msgid "Please click here to complete all of the recommended practices for"
+msgstr "Please click here to complete all of the recommended practices for"
+
+msgid "Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified."
+msgstr "Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified."
+
+msgid "If you need help completing your initial Dojo application, please contact us at"
+msgstr "If you need help completing your initial Dojo application, please contact us at"
+
+msgid "There was an error uploading your profile picture."
+msgid "There was an error uploading your profile picture."
+
+msgid "Invitation was sent successfully."
+msgstr "Invitation was sent successfully."
+
+msgid "An error has occurred while sending invitation"
+msgstr "An error has occurred while sending invitation"
