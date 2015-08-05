@@ -284,11 +284,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
     $scope.countrySelected = true;
     $scope.stateSelected = false;
     var countrySelected = marker.country;
-    var internalPosition = marker.internalPosition ? marker.internalPosition : null;
+    
+    $scope.model.map.setCenter(marker.getPosition());
 
-    if (internalPosition) {
-      $scope.model.map.setCenter({lat: internalPosition.A, lng: internalPosition.F});
-    }
     $scope.model.map.setZoom(4);
     $scope.currentZoom = $scope.model.map.getZoom();
 
