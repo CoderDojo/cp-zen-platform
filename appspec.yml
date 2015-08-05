@@ -3,8 +3,6 @@ os: linux
 files:
   - source: deploy/cp-zen-platform.conf
     destination: /etc/init/
-  - source: deploy/cp-zen-platform.env
-    destination: /etc/zen
   - source: /
     destination: /opt/zen/cp-zen-platform
 
