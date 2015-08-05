@@ -80,13 +80,13 @@ msgstr "Terms and Conditions"
 msgid "CoderDojo Champion Registration Form"
 msgstr "CoderDojo Champion Registration Form"
 
-msgid "pre-game-warning-p1"
+msgid "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
 msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
 
-msgid "pre-game-warning-p2"
+msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
 msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
 
-msgid "pre-game-warning-p3"
+msgid "If you wish to learn more about starting a CoderDojo in your area please see:"
 msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
 
 msgid "General Information"
@@ -95,19 +95,19 @@ msgstr "General Information"
 msgid "Email Address"
 msgstr "Email Address"
 
-msgid "champion.registration.email.tooltip"
+msgid "Please provide a personal email address."
 msgstr "Please provide a personal email address."
 
 msgid "Full Name"
 msgstr "Full Name"
 
-msgid "champion.registration.fullname.tooltip"
+msgid "Please provide your full name"
 msgstr "Please provide your full name"
 
 msgid "Planned Dojo Location"
 msgstr "Planned Dojo Location"
 
-msgid "champion.registration.planneddojo.tooltip"
+msgid "Please let us know where in the world you are planning to set up your Dojo. eg. Town, City, State, Country"
 msgstr "Please let us know where in the world you are planning to set up your Dojo. eg. Town, City, State, Country"
 
 msgid "Planned Dojo Location is empty"
@@ -131,10 +131,10 @@ msgstr "Do you have any relevant experience working with young people?"
 msgid "Experience is empty"
 msgstr "Experience is empty"
 
-msgid "champion.registration.telephone.tooltip"
+msgid "Please include country code."
 msgstr "Please include country code."
 
-msgid "champion.registration.experience.tooltop"
+msgid "Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A."
 msgstr "Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A."
 
 msgid "Please list any relevant technical experience"
@@ -152,25 +152,25 @@ msgstr "Social"
 msgid "Twitter"
 msgstr "Twitter"
 
-msgid "champion.registration.social.twitter.tooltip"
+msgid "If you wish please provide your username or a link to your Twitter page."
 msgstr "If you wish please provide your username or a link to your Twitter page."
 
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-msgid "champion.registration.social.linkedin.tooltip"
+msgid "If you wish please provide your username or a link to your LinkedIn page."
 msgstr "If you wish please provide your username or a link to your LinkedIn page."
 
 msgid "Google+"
 msgstr "Google+"
 
-msgid "champion.registration.social.google.tooltip"
+msgid "If you wish please provide your username or a link to your Google+"
 msgstr "If you wish please provide your username or a link to your Google+"
 
 msgid "Do you have access to technical mentors"
 msgstr "Do you have access to technical mentors?"
 
-msgid "champion.registration.technicalmentors.tooltip"
+msgid "It is recommended to find a team of interested local technical volunteers to mentor and to find non-technical volunteers, such as parents, who can help out and volunteer when they bring their children etc. You do not need to have a big team but it is always better to have support from a core team when organising a Dojo. You can then have planning meetings with your team in advance of setting up your Dojo"
 msgstr "It is recommended to find a team of interested local technical volunteers to mentor and to find non-technical volunteers, such as parents, who can help out and volunteer when they bring their children etc. You do not need to have a big team but it is always better to have support from a core team when organising a Dojo. You can then have planning meetings with your team in advance of setting up your Dojo"
 
 msgid "Select an option"
@@ -179,7 +179,7 @@ msgstr "Select an option"
 msgid "Do you have access to a venue"
 msgstr "Do you have access to a venue?"
 
-msgid "champion.registration.venue.tooltip"
+msgid "Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees."
 msgstr "Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees."
 
 msgid "Champion Application"
@@ -209,97 +209,97 @@ msgstr "Notes"
 msgid "Hello World Foundation charter for CoderDojo"
 msgstr "Hello World Foundation charter for CoderDojo"
 
-msgid "charter.p1"
+msgid "All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."
 msgstr "All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."
 
-msgid "charter.p2"
+msgid "For the purposes of this Charter, \"CoderDojo\" shall mean the open source, volunteer led movement orientated around running free not-for-profit coding clubs. \"Dojos\" shall mean the not-for profit coding clubs established to support communities and spread the philosophy of CoderDojo."
 msgstr "For the purposes of this Charter, \"CoderDojo\" shall mean the open source, volunteer led movement orientated around running free not-for-profit coding clubs. \"Dojos\" shall mean the not-for profit coding clubs established to support communities and spread the philosophy of CoderDojo."
 
-msgid "charter.p3"
+msgid "All Dojos are independent, autonomous, community groups set up to inspire young people to learn code. All Dojos have different styles of operating but they all hold the same ethos."
 msgstr "All Dojos are independent, autonomous, community groups set up to inspire young people to learn code. All Dojos have different styles of operating but they all hold the same ethos."
 
-msgid "charter.li1"
+msgid "We commit to inspiring and supporting young people to learn how to create technology"
 msgstr "We commit to inspiring and supporting young people to learn how to create technology"
 
-msgid "charter.li2"
+msgid "We commit to inspiring and supporting young people to learn how to create technology"
 msgstr "We commit to inspiring and supporting young people to learn how to create technology"
 
-msgid "charter.li3"
+msgid "We commit to the highest possible standards of child protection in our jurisdiction"
 msgstr "We commit to the highest possible standards of child protection in our jurisdiction"
 
-msgid "charter.li4"
+msgid "We commit to not charging children attending nor their parents"
 msgstr "We commit to not charging children attending nor their parents"
 
-msgid "charter.li5"
+msgid "We commit to encourage parent participation within our Dojo"
 msgstr "We commit to encourage parent participation within our Dojo"
 
-msgid "charter.li6"
+msgid "We commit to sharing our knowledge for free (libre and open)"
 msgstr "We commit to sharing our knowledge for free (libre and open)"
 
-msgid "charter.li7"
+msgid "We commit to share our knowledge within our Dojo and to other Dojos"
 msgstr "We commit to share our knowledge within our Dojo and to other Dojos"
 
-msgid "charter.li8"
+msgid "We commit to take care and uphold the good name of the global CoderDojo community"
 msgstr "We commit to take care and uphold the good name of the global CoderDojo community"
 
-msgid "charter.li9"
+msgid "We commit to encouraging collaboration, peer to peer mentoring and project work between the attendees"
 msgstr "We commit to encouraging collaboration, peer to peer mentoring and project work between the attendees"
 
-msgid "charter.li10"
+msgid "We commit to welcoming volunteers and children regardless of gender, race, sexual orientation, creed, religion or ability."
 msgstr "We commit to welcoming volunteers and children regardless of gender, race, sexual orientation, creed, religion or ability."
 
-msgid "charter.p4"
+msgid "Hello World Foundation (HWF) commitments to you:"
 msgstr "Hello World Foundation (HWF) commitments to you:"
 
-msgid "charter.li11"
+msgid "HWF commits to act in the interest of the global CoderDojo community"
 msgstr "HWF commits to act in the interest of the global CoderDojo community"
 
-msgid "charter.li12"
+msgid "HWF commits to facilitating the community to share its knowledge"
 msgstr "HWF commits to facilitating the community to share its knowledge"
 
-msgid "charter.li13"
+msgid "HWF commits to sharing our resources for free"
 msgstr "HWF commits to sharing our resources for free"
 
-msgid "charter.li14"
+msgid "HWF commits to encouraging active involvement in our organisation"
 msgstr "HWF commits to encouraging active involvement in our organisation"
 
 msgid "Agreement"
 msgstr "Agreement"
 
-msgid "charter.li15"
+msgid "On registration you are making an agreement with the Hello World Foundation and agreeing to follow the CoderDojo ethos."
 msgstr "On registration you are making an agreement with the Hello World Foundation and agreeing to follow the CoderDojo ethos."
 
-msgid "charter.li16"
+msgid "You are entitled to use the CoderDojo name, logo and website to promote your activity for non commercial use"
 msgstr "You are entitled to use the CoderDojo name, logo and website to promote your activity for non commercial use"
 
-msgid "charter.li17"
+msgid "You are entitled to fundraise on the condition that it is made explicit you do so for your Dojo or as a group of Dojos under a group name (EG Dojos of California) and inappropriate fundraising is a breach of this Charter."
 msgstr "You are entitled to fundraise on the condition that it is made explicit you do so for your Dojo or as a group of Dojos under a group name (EG Dojos of California) and inappropriate fundraising is a breach of this Charter."
 
-msgid "charter.li18"
+msgid "It is your responsibility to ensure you are compliant with legislation in your jurisdiction when undertaking any activities, including fundraising, for your Dojo or group of Dojos."
 msgstr "It is your responsibility to ensure you are compliant with legislation in your jurisdiction when undertaking any activities, including fundraising, for your Dojo or group of Dojos."
 
-msgid "charter.li19"
+msgid "If the terms of this Charter are breached, Hello World Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
 msgstr "If the terms of this Charter are breached, Hello World Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
 
-msgid "charter.li20"
+msgid "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of Hello World Foundation."
 msgstr "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of Hello World Foundation."
 
-msgid "charter.li21"
+msgid "Hello World Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
 msgstr "Hello World Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
 
-msgid "charter.li22"
+msgid "As Hello World Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
 msgstr "As Hello World Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
 
 msgid "Disclaimer of Liability"
 msgstr "Disclaimer of Liability"
 
-msgid "charter.li23"
+msgid "Hello World Foundation and CoderDojo accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
 msgstr "Hello World Foundation and CoderDojo accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
 
-msgid "charter.li24"
+msgid "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
 msgstr "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
 
-msgid "charter.fullname.label"
+msgid "Full Name:"
 msgstr "Full Name:"
 
 msgid "You must enter your full name"
@@ -374,7 +374,7 @@ msgstr "User Invitation"
 msgid "User Request"
 msgstr "User Request"
 
-msgid "user.request.p1"
+msgid "User Request is being validated..."
 msgstr "User Request is being validated..."
 
 msgid "Status"
@@ -407,10 +407,10 @@ msgstr "Location"
 msgid "Map"
 msgstr "Map"
 
-msgid "dojo.list.index.p1"
+msgid "To register a Dojo you first need an account. Sign up here:"
 msgstr "To register a Dojo you first need an account. Sign up here:"
 
-msgid "dojo.list.index.p2"
+msgid "The Dojos listed here are all verified by the CoderDojo team."
 msgstr "The Dojos listed here are all verified by the CoderDojo team."
 
 msgid "Learn more"
@@ -422,7 +422,7 @@ msgstr "Search Results"
 msgid "Your closest dojos"
 msgstr "Your closest dojos"
 
-msgid "dojo.list.search.placeholder"
+msgid "Where are you? Enter an address here and we'll find the closest dojo to you."
 msgstr "Where are you? Enter an address here and we'll find the closest dojo to you."
 
 msgid "Dojo Information"
@@ -431,16 +431,16 @@ msgstr "Dojo Information"
 msgid "Dojo Name"
 msgstr "Dojo Name"
 
-msgid "dojo.edit.information.description"
+msgid "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 msgstr "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 
-msgid "dojo.edit.email.description"
+msgid "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
 msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
 
 msgid "Times are empty"
 msgstr "Times are empty"
 
-msgid "dojo.edit.times.description"
+msgid "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 msgstr "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 
 msgid "Select or search a country in the list..."
@@ -449,7 +449,7 @@ msgstr "Select or search a country in the list..."
 msgid "Select a country"
 msgstr "Select a country"
 
-msgid "dojo.edit.place.citytown.placeholder"
+msgid "Search for or enter your area"
 msgstr "Search for or enter your area"
 
 msgid "Select a place"
@@ -458,7 +458,7 @@ msgstr "Select a place"
 msgid "Address"
 msgstr "Address"
 
-msgid "dojo.edit.address.description"
+msgid "Address of the Dojo (e.g. LIT Downtown Centre)"
 msgstr "Address of the Dojo (e.g. LIT Downtown Centre)"
 
 msgid "Coordinates"
@@ -479,16 +479,16 @@ msgstr "Other Information"
 msgid "Google Group URL"
 msgstr "Google Group URL"
 
-msgid "dojo.edit.googleurl.description"
+msgid "We recommend setting up a discussion group so people can sign up for the latest news and happenings."
 msgstr "We recommend setting up a discussion group so people can sign up for the latest news and happenings."
 
-msgid "dojo.edit.twitter.description"
+msgid "Again, a useful way for sharing information and being found. We can also help share messages to followers."
 msgstr "Again, a useful way for sharing information and being found. We can also help share messages to followers."
 
 msgid "Mailing List"
 msgstr "Mailing List"
 
-msgid "dojo.edit.mailinglist.description"
+msgid "Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."
 msgstr "Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."
 
 msgid "Status Messages"
@@ -515,7 +515,7 @@ msgstr "Full Up"
 msgid "Private"
 msgstr "Private"
 
-msgid "dojo.edit.private.description"
+msgid "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."
 msgstr "Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."
 
 msgid "Supporters Image URL"
@@ -614,52 +614,52 @@ msgstr "Terms and Conditions here"
 msgid "Click on each step to get started"
 msgstr "Click on each step to get started"
 
-msgid "champion.registration.p1"
+msgid "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
 msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
 
-msgid "champion.registration.p2"
+msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
 msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
 
-msgid "champion.registration.p3"
+msgid "If you wish to learn more about starting a CoderDojo in your area please see:"
 msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
 
-msgid "champion.dateOfBirth.placeholder"
+msgid "You must be over 18 years old..."
 msgstr "You must be over 18 years old..."
 
-msgid "champion.telephoneNumber.placeholder"
+msgid "Please include country code..."
 msgstr "Please include country code..."
 
-msgid "champion.address"
+msgid "Address"
 msgstr "Address"
 
-msgid "champion.address.placeholder"
+msgid "Enter your street level address..."
 msgstr "Enter your street level address..."
 
-msgid "champion.address.required"
+msgid "Address is empty"
 msgstr "Address is empty"
 
 msgid "Technical Experience"
 msgstr "Technical Experience"
 
-msgid "technicalexperience.placeholder"
+msgid "Please describe any websites, apps or open source work that you have done."
 msgstr "Please describe any websites, apps or open source work that you have done."
 
 msgid "Experience working with youth"
 msgstr "Experience working with youth"
 
-msgid "experienceyouth.placeholder"
+msgid "Please describe your experience working with youth."
 msgstr "Please describe your experience working with youth."
 
-msgid "notes.placeholder"
+msgid "Please add any other relevant information."
 msgstr "Please add any other relevant information."
 
-msgid "howdidyouhear.placeholder"
+msgid "Please specify where you heard about CoderDojo"
 msgstr "Please specify where you heard about CoderDojo"
 
 msgid "Register Account"
 msgstr "Register Account"
 
-msgid "wizard.p1"
+msgid "To get started, please fill in the following registration form."
 msgstr "To get started, please fill in the following registration form."
 
 msgid "Champion Registration"
@@ -671,13 +671,13 @@ msgstr "Setup your Dojo"
 msgid "Create Dojo Listing"
 msgstr "Create Dojo Listing"
 
-msgid "wizard.p2"
+msgid "Thank you for submitting your dojo listing."
 msgstr "Thank you for submitting your dojo listing."
 
-msgid "wizard.p3"
+msgid "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 msgstr "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 
-msgid "stats.p1"
+msgid "persons have signed the current version of the charter"
 msgstr "persons have signed the current version of the charter"
 
 msgid "Active"
@@ -776,13 +776,13 @@ msgstr "Your Dojo has been successfully saved"
 msgid "An error has occurred while saving"
 msgstr "An error has occurred while saving:"
 
-msgid "dojo.create.initcontent.li1"
-msgstr "A pack lunch"
+msgid "A pack lunch."
+msgstr "A pack lunch."
 
-msgid "dojo.create.initcontent.li2"
+msgid "A laptop. Borrow one from somebody if needs be."
 msgstr "A laptop. Borrow one from somebody if needs be."
 
-msgid "dojo.create.initcontent.li3"
+msgid "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
 msgid "Invite Request Sent"
@@ -800,19 +800,19 @@ msgstr "An error has occurred while loading Dojo"
 msgid "Failed to load Dojo"
 msgstr "Failed to load Dojo"
 
-msgid "login.msgmap.unknown"
+msgid "Unable to perform your request at this time - please try again later."
 msgstr "Unable to perform your request at this time - please try again later."
 
-msgid "login.msgmap.user-not-found"
+msgid "Email address is not recognized."
 msgstr "Email address is not recognized."
 
-msgid "login.msgmap.invalid-password"
+msgid "That password is incorrect"
 msgstr "That password is incorrect"
 
-msgid "login.msgmap.reset-sent"
+msgid "An email with password reset instructions has been sent to you."
 msgstr "An email with password reset instructions has been sent to you."
 
-msgid "login.register.success"
+msgid "Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo."
 msgstr "Thank you for registering. Your CoderDojo account has been successfully created. You can now register to become a Champion and create a Dojo."
 
 msgid "user name already exists"
@@ -821,7 +821,7 @@ msgstr "user name already exists"
 msgid "server error"
 msgstr "server error"
 
-msgid "login.register.failure"
+msgid "There was a problem registering your account:"
 msgstr "There was a problem registering your account:"
 
 msgid "Invalid email or password"
@@ -863,16 +863,16 @@ msgstr "Error removing user:"
 msgid "An error has occurred while deleting dojo"
 msgstr "An error has occurred while deleting dojo: "
 
-msgid "dojo.create.success"
+msgid "Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 msgstr "Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 
-msgid "NewspaperMagazine"
+msgid "Newspaper/Magazine"
 msgstr "Newspaper/Magazine"
 
 msgid "Radio"
 msgstr "Radio"
 
-msgid "FamilyFriends"
+msgid "Family/Friends"
 msgstr "Family/Friends"
 
 msgid "Error loading profile"
@@ -923,7 +923,7 @@ msgstr "You do not have permission to update user types"
 msgid "You do not have permission to remove users"
 msgstr "You do not have permission to remove users"
 
-msgid "ParentsGuardians"
+msgid "Parents/Guardians"
 msgstr "Parents/Guardians"
 
 msgid "Badges"
@@ -1055,9 +1055,6 @@ msgstr "Save"
 msgid "Publish"
 msgstr "Publish"
 
-msgid "Parents/Guardians"
-msgstr "Parents/Guardians"
-
 msgid "Approve"
 msgstr "Approve"
 
@@ -1121,7 +1118,7 @@ msgstr "Private Profile"
 msgid "None"
 msgstr "None"
 
-msgid "parent.guardian.email"
+msgid "Parent's/Guardian's email"
 msgstr "Parent's/Guardian's email"
 
 msgid "Invite"

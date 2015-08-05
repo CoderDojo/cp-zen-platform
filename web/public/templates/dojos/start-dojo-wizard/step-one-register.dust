@@ -10,15 +10,15 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">   
+    <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="email" class="form-control" name="emailAddress" required required-message="'{@i18n key="Email is empty"/}'" ng-model="registerUser.email" placeholder="{@i18n key="EMAIL"/}">
         </div>
       </div>
     </div>
- 
-    <div class="row cd-input-row">   
+
+    <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="password" class="form-control" name="password"  ng-model="registerUser.password" required required-message="'{@i18n key="Password is empty"/}'" validator="validatePassword(registerUser.password, registerUser.email)" invalid-message="invalidPasswordMessage" placeholder="{@i18n key="PASSWORD"/}">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">   
+    <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="password" class="form-control" name="passConfirmField" ng-model="passwordConfirm" required required-message="'{@i18n key="Confirm Password is empty"/}'" validator="matchesPassword(registerUser.password, passwordConfirm)" invalid-message="invalidConfirmPasswordMessage" placeholder="{@i18n key="CONFIRM PASSWORD"/}">
@@ -48,14 +48,14 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">    
+    <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <div class="checkbox cd-checkbox checkbox-primary">
-            <input type="checkbox" title="{@i18n key="dojo.edit.mailinglist.description"/}" ng-model="registerUser.mailingList" id="mailingListCheckbox">
+            <input type="checkbox" title="{@i18n key="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."/}" ng-model="registerUser.mailingList" id="mailingListCheckbox">
             <label for="mailingListCheckbox">{@i18n key="Join Mailing List"/}</label>
           </div>
-        
+
           <div class="checkbox cd-checkbox checkbox-primary">
             <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="registerUser.termsConditionsAccepted" required required-message="'{@i18n key="You must accept the Terms and Conditions"/}'" id="termsAndConditionsCheckbox">
             <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the"/} <a ui-sref="terms-and-conditions" target="_blank"><b>{@i18n key="Terms and Conditions here"/}</b></a>
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">    
+    <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <div vc-recaptcha key="recap.publicKey" on-success="setRecaptchaResponse(response)" on-expire="recaptchaExpired()"></div>

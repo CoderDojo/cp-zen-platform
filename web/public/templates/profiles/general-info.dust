@@ -61,7 +61,7 @@
           <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
             <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
-              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places"
                   refresh="getPlaces(profile.country.alpha2, $select)"
                   refresh-delay="500">

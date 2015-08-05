@@ -320,9 +320,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
     $scope.referredBy = [
       "Google",
-      $translate.instant('NewspaperMagazine'),
+      $translate.instant('Newspaper/Magazine'),
       $translate.instant('Radio'),
-      $translate.instant('FamilyFriends'),
+      $translate.instant('Family/Friends'),
       $translate.instant('Other')
     ];
 
@@ -442,9 +442,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     var initContent = "<p><ul>" +
-      "<li>" + $translate.instant('dojo.create.initcontent.li1') +"</li>" +
-      "<li>"+ $translate.instant('dojo.create.initcontent.li2') +"</li>" +
-      "<li><b>" + $translate.instant('dojo.create.initcontent.li3') +"</b></li>" +
+      "<li>" + $translate.instant('A pack lunch.') +"</li>" +
+      "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
+      "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";
 
     $scope.editorOptions = {
@@ -491,7 +491,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
               $state.go('dojo-list', {
                 bannerType:'success',
-                bannerMessage: $translate.instant('dojo.create.success'),
+                bannerMessage: $translate.instant('Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'),
                 bannerTimeCollapse: 150000
               });
             });
