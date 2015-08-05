@@ -10,9 +10,6 @@ permissions:
   - object: /opt/zen/cp-zen-platform
     owner: ubuntu
     group: ubuntu
-  - object: /etc/zen/cp-zen-platform.env
-    owner: ubuntu
-    group: ubuntu
   
 hooks:
   ApplicationStop:
