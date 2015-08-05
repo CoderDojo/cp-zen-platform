@@ -1,5 +1,5 @@
- 'use strict';
-
+'use strict';
+/*global $*/
 function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService, cdUsersService, cdDojoService, tableUtils, alertService, auth, utilsService) {
   var dojoId = $scope.dojoId;
   $scope.filter = {dojo_id:dojoId};
@@ -15,7 +15,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         var userDojo = response[0];
         var userTypes = userDojo.userTypes;
         $scope.isParent = _.contains(userTypes, 'parent-guardian');
-        
+
         if($scope.isParent) {
           //retrieve this parent's children
           var query = {userId:$scope.currentUser.id};
@@ -107,7 +107,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.loadPage($scope.filter, true);
 
   $scope.tableRowIndexExpandedCurr = '';
- 
+
   $scope.eventCollapsed = function (eventIndex) {
     $scope.events[eventIndex].isCollapsed = false;
   }
