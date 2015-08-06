@@ -73,7 +73,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     user['g-recaptcha-response'] = $scope.recaptchaResponse;
-
+    user.emailSubject = $translate.instant('Welcome to CoderDojo!');
+    
     auth.register(user, function(data) {
       if(data.ok) {
         auth.login(user, function(data) {
@@ -153,7 +154,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     auth.reset({
-      email:$scope.forgot.email
+      email:$scope.forgot.email,
+      emailSubject: $translate.instant('CoderDojo Password Reset')
     }, function(response) {
       usSpinnerService.stop('login-spinner');
 
