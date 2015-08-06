@@ -102,7 +102,11 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         }
 
         alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
-          $window.location.href = '/register';
+          if($scope.referer){
+            $state.reload($scope.referer);
+          } else {
+            $state.reload('register-account');
+          }
         });
       }
     }, function(err) {

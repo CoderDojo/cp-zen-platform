@@ -195,6 +195,9 @@
         .state("start-dojo-wizard", {
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+          params:{
+            referer: 'start-dojo-wizard'
+          },
           resolve: {
             gmap: gmap
           },
