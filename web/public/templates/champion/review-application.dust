@@ -100,15 +100,12 @@
         </div>
 
         <legend>{@i18n key="Other"/}</legend>
+
         <div class="row">
           <label class="col-lg-4">{@i18n key="Prerequisites"/}</label>
-          <div class="col-lg-6">
-            <span>{@i18n key="Has access to Technical Mentors:"/} {{ championApplication.hasTechnicalMentorsAccess }}</span>
-            <textarea class="form-control" readonly ng-show="championApplication.hasTechnicalMentorsAccess === 'Yes'" rows="5">{{ championApplication.technicalMentorsDescription }}</textarea>
-          </div>
-          <div class="col-lg-6 col-lg-offset-4">
-            <span>{@i18n key="Has access to a Venue:"/} {{ championApplication.hasVenueAccess }}</span>
-            <textarea class="form-control venueInfoTextArea" readonly ng-show="championApplication.hasVenueAccess === 'Yes'" rows="5">{{ championApplication.venueDescription }}</textarea>
+          <div ng-repeat="step in championApplication.prerequisites track by $index" is-open="step.open" 
+          ng-class="$index == 0 ? 'col-lg-6' : 'col-lg-offset-4 col-lg-6'">
+            <span>{@i18n key="{{ step.text }}"/}: <span class="viewPrereqVal">{@i18n key="{{ step.value }}"/}</span></span>
           </div>
         </div>
 
@@ -123,7 +120,7 @@
           <div class="form-group">
             <label for="coderDojoReference" class="col-lg-4">{@i18n key="How did you hear about CoderDojo"/}</label>
             <div class="col-lg-6">
-              <span>{{ championApplication.coderDojoReference }}</span>
+              <span ng-hide="championApplication.coderDojoReference === 'Other'">{{ championApplication.coderDojoReference }}</span>
               <span ng-show="championApplication.coderDojoReference === 'Other'">{{ championApplication.coderDojoReferenceOther }}</span>
             </div>
           </div>

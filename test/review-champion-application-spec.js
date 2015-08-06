@@ -39,14 +39,19 @@ describe('review-champion-application-controller', function() {
             cdDojo: {}
         };
         stubs.cdDojo.loadDojoLead = sandbox.stub(services.cdDojo, 'loadDojoLead');
-        stubs.cdDojo.loadDojoLead.yields({
+         stubs.cdDojo.loadDojoLead.yields({
             application: {
                 championDetails: {
-                    dateOfBirth: '01/01/2015',
-                    hasTechnicalMentorsAccess: true,
-                    hasVenueAccess: false
+                    dateOfBirth: '01/01/2015'
                 }
             }
+        });
+
+        stubs.cdDojo.loadSetupDojoSteps = sandbox.stub(services.cdDojo, 'loadSetupDojoSteps');
+        stubs.cdDojo.loadSetupDojoSteps.yields({
+            prerequisites:[{
+                name:'findTechnicalMentors'
+            }]
         });
 
         ctrl = $controller('review-champion-application-controller', {
@@ -75,9 +80,11 @@ describe('review-champion-application-controller', function() {
         scope.$apply();
 
         var ca = scope.championApplication;
+
+        console.log(ca);
+
         expect(stubs.cdDojo.loadDojoLead.callCount).to.equal(1);
         expect(ca.dateOfBirth).to.equal('01/01/2015');
-        expect(ca.hasTechnicalMentorsAccess).to.equal('Yes');
-        expect(ca.hasVenueAccess).to.equal('No');
+        //expect(ca.prerequisites[0].name).to.equal("testName");
     });
 });
