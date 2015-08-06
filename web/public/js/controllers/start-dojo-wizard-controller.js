@@ -211,7 +211,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   //--Step Two:
   function setupStep2(subStep, wizardRedirect) {
     var initialDate = new Date();
-    $scope.buttonText = "Register Champion"
+    $scope.buttonText = $translate.instant('Register Champion');
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
         formatYear: 'yyyy',
