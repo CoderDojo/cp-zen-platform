@@ -193,17 +193,12 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   });
 
   $scope.pushChangedDojo = function (dojo) {
-    var filterVerified, exists = !!(_.find(changedDojos, function (changedDojo) {
+    var exists = exists = !!(_.find(changedDojos, function (changedDojo) {
       return dojo.id === changedDojo.id;
     }));
-
-    filterVerified = $scope.filter && $scope.filter.verified;
-
-    if ((dojo.verified.value !== filterVerified) || (dojo.toBeDeleted)) {
-      if (!exists) {
-        changedDojos.push(dojo);
-      }
-    } else if (dojo.verified.value === filterVerified && !dojo.toBeDeleted) {
+    if((dojo.verified !== dojo.origVerified) || (dojo.toBeDeleted)) {
+      if(!exists) changedDojos.push(dojo);
+    } else if((dojo.verified === dojo.origVerified) && (!dojo.toBeDeleted)) {
       changedDojos = _.filter(changedDojos, function (filteredDojo) {
         return dojo.id !== filteredDojo.id;
       });
