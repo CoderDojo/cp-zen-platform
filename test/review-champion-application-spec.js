@@ -81,8 +81,6 @@ describe('review-champion-application-controller', function() {
 
         var ca = scope.championApplication;
 
-        console.log(ca);
-
         expect(stubs.cdDojo.loadDojoLead.callCount).to.equal(1);
         expect(ca.dateOfBirth).to.equal('01/01/2015');
         //expect(ca.prerequisites[0].name).to.equal("testName");
