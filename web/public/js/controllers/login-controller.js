@@ -124,6 +124,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
+        $localStorage.recommendedPracticesAlertShown = false;
+
         if ($scope.redirect) {
           $window.location.href = $scope.redirect;
         } else {
@@ -131,7 +133,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
-          $localStorage.recommendedPracticesAlertShown = false;
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
         }
       },
