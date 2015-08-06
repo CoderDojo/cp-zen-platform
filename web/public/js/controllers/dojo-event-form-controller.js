@@ -194,7 +194,7 @@
         }
       } else {
         eventInfo.dates = [eventInfo.date];
-      }
+      } 
 
       if(!$scope.dojoInfo) {
         loadDojo(function(err){
@@ -221,7 +221,7 @@
           cdEventsService.saveEvent(
             eventInfo,
             goToManageDojoEvents($state, usSpinnerService, dojoId),
-            function(err){
+            function (err){
               alertService.showError($translate.instant('Error setting up event') + ' ' + err);
               goToMyDojos($state, usSpinnerService, dojoId)
             }
