@@ -105,7 +105,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
       auth.get_loggedin_user(function (user) {
         usSpinnerService.spin('dojo-detail-spinner');
-        var data = {user:user, dojoId:dojo.id, userType:userType};
+        var data = {user:user, dojoId:dojo.id, userType:userType, emailSubject: $translate.instant('New Request to join your Dojo')};
 
         if(_.contains(approvalRequired, userType)) {
           cdDojoService.requestInvite(data, function (response) {
@@ -150,7 +150,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
   $scope.leaveDojo = function () {
     usSpinnerService.spin('dojo-detail-spinner');
-    cdDojoService.removeUsersDojosLink(currentUser.id, dojo.id, function (response) {
+    cdDojoService.removeUsersDojosLink({userId: currentUser.id, dojoId: dojo.id, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
       usSpinnerService.stop('dojo-detail-spinner');
       $state.go($state.current, {}, {reload: true});
     }, function (err) {

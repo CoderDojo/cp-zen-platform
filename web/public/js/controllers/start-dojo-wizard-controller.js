@@ -516,6 +516,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(dojoLead, function (response) {
             dojo.dojoLeadId = response.id;
+            dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
             cdDojoService.save(dojo, function (response) {
 
               //update intercom champion dojos

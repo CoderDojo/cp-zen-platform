@@ -120,8 +120,8 @@
       saveUsersDojos: function(userDojo, win, fail) {
         cdApi.post('dojos/save_usersdojos', {userDojo: userDojo}, win, fail || topfail);
       },
-      removeUsersDojosLink: function(userId, dojoId, win, fail) {
-        cdApi.delete('dojos/remove_usersdojos/' + userId + '/' + dojoId, win, fail || topfail);
+      removeUsersDojosLink: function(data, win, fail) {
+        cdApi.post('dojos/remove_usersdojos/' + data.userId + '/' + data.dojoId, {data: data}, win, fail || topfail);
       },
       getUserPermissions: function(win, fail) {
         cdApi.get('get_user_permissions', win, fail || topfail);
