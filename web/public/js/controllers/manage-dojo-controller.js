@@ -193,7 +193,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   });
 
   $scope.pushChangedDojo = function (dojo) {
-    var exists = exists = !!(_.find(changedDojos, function (changedDojo) {
+    var exists = !!(_.find(changedDojos, function (changedDojo) {
       return dojo.id === changedDojo.id;
     }));
     if((dojo.verified !== dojo.origVerified) || (dojo.toBeDeleted)) {
