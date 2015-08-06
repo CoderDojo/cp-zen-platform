@@ -14,8 +14,6 @@
     <span class="pull-right cdgm-right-inner">
 
       <ul class="cdgm-buttons-right">
-        {>"common/components/cdgm-buttons-right" /}
-        <li ng-if="user" class="separator">|</li>
         {>"common/components/cdgm-buttons-head" /}
         <li>
           <span class="language-selector language-selector-fullscreen">
@@ -47,7 +45,6 @@
     <span class="col-xs-6 cdgm-mobile-inner cdgm-mobile-right cdgm-text center-children">
       <span class="centered-child">
         <ul class="text-left">
-          {>"common/components/cdgm-buttons-right" /}
         <li>
           <span class="pull-left language-selector">
             {>"common/components/cdgm-lang-bar" /}
