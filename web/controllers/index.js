@@ -5,7 +5,7 @@ var path = require('path');
 var requireindex = require('requireindex');
 var controllers = requireindex(__dirname);
 
-var ASSET_LIFETIME =  31536000 * 1000
+var ASSET_LIFETIME =  60 * 60 * 1000; // 1 hr in ms // TODO move to config
 
 // Remove package.json, it's not a controller.  All other non-index files/directories should be.
 delete controllers.package;
