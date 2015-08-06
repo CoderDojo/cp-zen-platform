@@ -1461,7 +1461,7 @@ msgid "Founder"
 msgstr "Founder"
 
 msgid "Error setting up event"
-msgstr "You cannot set up an event for an unverified or inactive Dojo"
+msgstr "Error setting up event"
 
 msgid "Event Date"
 msgstr "Event Date"
@@ -1682,3 +1682,7 @@ msgstr "New Mentor Request to join your Dojo"
 
 msgid "We created a new Google Email for your Dojo"
 msgstr "We created a new Google Email for your Dojo"
+
+msgid "Please click on the map to pinpoint your location"
+msgstr "Please click on the map to pinpoint your location"
+

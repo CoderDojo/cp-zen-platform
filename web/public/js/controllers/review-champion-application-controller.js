@@ -9,16 +9,21 @@ function cdReviewChampionApplicationCtrl($scope, $state, cdDojoService, $transla
   	var championDOB = moment(championApplication.dateOfBirth).format('MM/DD/YYYY');
   	championApplication.dateOfBirth = championDOB;
 
-  	var yesNoVal = championApplication.hasTechnicalMentorsAccess;
-    yesNoVal = yesNoVal ? $translate.instant('Yes') : $translate.instant('No');
-  	championApplication.hasTechnicalMentorsAccess = yesNoVal;
-
-  	yesNoVal = championApplication.hasVenueAccess;
-    yesNoVal = yesNoVal ? $translate.instant('Yes') : $translate.instant('No');
-  	championApplication.hasVenueAccess = yesNoVal;
-
+    championApplication.prerequisites = [];
+    cdDojoService.loadSetupDojoSteps(function (steps) {
+      _.each(steps, function(item, i) {
+        _.each(item.checkboxes, function(item, i) {
+          if(item.required === true) {
+            var obj = {}
+            obj.name = item.name;
+            obj.text = item.title;
+            obj.value = (response.application.setupYourDojo[item.name]) ? 'Yes' : 'No' ;
+            championApplication.prerequisites.push(obj);
+          }
+        })
+      });
+    });
   	$scope.championApplication = championApplication;
-
   });
 }
 
