@@ -1658,3 +1658,27 @@ msgstr "Approve Parent Request"
 
 msgid "Welcome to CoderDojo!"
 msgstr "Welcome to CoderDojo!"
+
+msgid "New Dojo Invitation"
+msgstr "New Dojo Invitation"
+
+msgid "New Request to join your Dojo"
+msgstr "New Request to join your Dojo"
+
+msgid "A user has left your Dojo"
+msgstr "A user has left your Dojo"
+
+msgid "Event application approved"
+msgstr "Event application approved"
+
+msgid "Event application received"
+msgstr "Event application received"
+
+msgid "CoderDojo Badge Nomination"
+msgstr "CoderDojo Badge Nomination"
+
+msgid "New Mentor Request to join your Dojo"
+msgstr "New Mentor Request to join your Dojo"
+
+msgid "We created a new Google Email for your Dojo"
+msgstr "We created a new Google Email for your Dojo"
