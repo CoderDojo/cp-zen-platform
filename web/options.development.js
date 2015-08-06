@@ -88,7 +88,10 @@ module.exports = _.defaults({
         partition: 'cache'
       }
     ]
-  }
+  },
 
+  session: {
+    secret: 'seneca'
+  }
 
 }, base);
