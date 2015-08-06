@@ -1,6 +1,6 @@
 'use strict';
 
-function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $q) {
+function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $q, $translate) {
 
   function loadDojoLead() {
     return $q(function(resolve, reject) {
@@ -10,7 +10,7 @@ function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $
           $scope.dojoLead = response;
           resolve();
         } else {
-          reject('Failed to load Dojo');
+          reject($translate.instant('Failed to load Dojo'));
         }
       });
     });
@@ -26,7 +26,7 @@ function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $
       });
     },
     function (error) {
-    alertService.showError(error);
+    alertService.showError($translate.instant('error.general'));
   });
 
   $scope.submitSetupYourDojo = function (dojoLead) {
@@ -37,4 +37,4 @@ function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $
 }
 
 angular.module('cpZenPlatform')
-  .controller('setup-dojo-controller', ['$scope', '$window', '$state', 'cdDojoService', 'alertService', '$q', cdSetupDojoCtrl]);
+  .controller('setup-dojo-controller', ['$scope', '$window', '$state', 'cdDojoService', 'alertService', '$q', '$translate', cdSetupDojoCtrl]);

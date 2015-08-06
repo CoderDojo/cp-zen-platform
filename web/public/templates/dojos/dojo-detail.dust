@@ -46,6 +46,7 @@
           <cd-dojo-events-list dojo-id="{{ dojo.id }}"></cd-dojo-events-list>
 
           <legend>{@i18n key="Map"/}</legend>
+          <p ng-if="!dojo.coordinates"><strong>{@i18n key="This dojo has no coordinates."/}</strong></p>
           <section ng-if="mapLoaded" id="map">
             <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
             <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>

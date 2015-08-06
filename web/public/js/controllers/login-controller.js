@@ -15,10 +15,10 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   }
 
   var msgmap = {
-    'unknown': $translate.instant('login.msgmap.unknown'),
-    'user-not-found': $translate.instant('login.msgmap.user-not-found'),
-    'invalid-password': $translate.instant('login.msgmap.invalid-password'),
-    'reset-sent': $translate.instant('login.msgmap.reset-sent'),
+    'unknown': $translate.instant('Unable to perform your request at this time - please try again later.'),
+    'user-not-found': $translate.instant('Email address is not recognized.'),
+    'invalid-password': $translate.instant('That password is incorrect'),
+    'reset-sent': $translate.instant('An email with password reset instructions has been sent to you.'),
     'email-not-found': $translate.instant('Email address not found')
   }
 
@@ -55,10 +55,16 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
        });
   }
 
+  $scope.setRecaptchaResponse = function (response) {
+    $scope.recaptchaResponse = response;
+  }
+
+  $scope.recaptchaExpired = function () {
+    $scope.recaptchaResponse = null;
+  }
+
   $scope.doRegister = function(user) {
-    if(vcRecaptchaService.getResponse() === ""){
-      return alertService.showError("Please resolve the captcha");
-    }
+    if(!$scope.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
@@ -66,7 +72,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       user.isChampion = true;
     }
 
-    user['g-recaptcha-response'] = vcRecaptchaService.getResponse();
+    user['g-recaptcha-response'] = $scope.recaptchaResponse;
 
     auth.register(user, function(data) {
       if(data.ok) {
@@ -95,8 +101,12 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           reason = $translate.instant('captcha error');
         }
 
-        alertService.showAlert($translate.instant('login.register.failure')+ ' ' + reason, function(){
-          $window.location.href = '/register';
+        alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
+          if($scope.referer){
+            $state.reload($scope.referer);
+          } else {
+            $state.reload('register-account');
+          }
         });
       }
     }, function(err) {
@@ -114,6 +124,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
+        $localStorage.recommendedPracticesAlertShown = false;
+
         if ($scope.redirect) {
           $window.location.href = $scope.redirect;
         } else {
@@ -121,7 +133,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
-          $localStorage.recommendedPracticesAlertShown = false;
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
         }
       },

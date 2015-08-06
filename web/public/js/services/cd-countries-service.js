@@ -7,7 +7,15 @@ function cdCountriesService($q, cdApi){
 
     return {
       listCountries: function(win, fail){
-        cdApi.get('geo/countries', win, fail || topfail);
+        cdApi.get('geo/countries', function (countries) {
+          // Convert to array (and ensure array exists).
+          countries = _.map(countries);
+          // Sort based on browser/OS's locale.
+          countries.sort(function (a, b){
+            return a.countryName.localeCompare(b.countryName);
+          });
+          win(countries);
+        }, fail || topfail);
       },
       listPlaces: function(search, win, fail) {
         cdApi.post('geo/places', {search: search}, win, fail || topfail);
@@ -19,10 +27,7 @@ function cdCountriesService($q, cdApi){
         cdApi.get('geo/countries_lat_long', win, fail || topfail);
       },
       loadCountriesContinents: function(win, fail) {
-        cdApi.get('countries_continents', win, fail || topfail);
-      },
-      countyFromCoordinates: function(coordinates, win, fail) {
-        cdApi.get('county_from_coordinates/' + coordinates, win, fail || topfail);
+        cdApi.get('geo/countries_continents', win, fail || topfail);
       },
       getContinentCodes: function(win, fail){
         cdApi.get('geo/continent_codes', win, fail || topfail);

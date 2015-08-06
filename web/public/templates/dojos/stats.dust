@@ -1,7 +1,7 @@
 <div class="cd-dashboard cd-color-4-underline">
   <div class="row manage-dojo-wrapper">
     <legend>{@i18n key="Charter"/}</legend>
-    <div>{{ count.noOfAgreements }} {@i18n key="stats.p1"/}</div>
+    <div>{{ count.noOfAgreements }} {@i18n key="persons have signed the current version of the charter"/}</div>
   </div>
   <div class="row manage-dojo-wrapper">
     <legend>{@i18n key="Dojos"/}</legend>
@@ -28,7 +28,7 @@
           <td>{{ totals[continent].all }}</td>
         </tr>
       </tbody>
-      <tbody>        
+      <tbody>
         <tr class="total-row">
           <td>{@i18n key="Total"/}</td>
           <td>{{ totals.overallTotal.active }}</td>

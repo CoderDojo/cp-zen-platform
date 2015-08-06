@@ -1,16 +1,13 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, cdCountriesService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
 
   $scope.setStage = function () {
     var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
     $scope.dojo.stage = stages[$scope.dojo.stage];
   }
 
-  if(!dojo || !dojo.id){
-    $state.go('error-404');
-  }
   $scope.dojo = dojo;
   $scope.setStage();
   $scope.model = {};
@@ -20,7 +17,16 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
   var currentUser;
   var approvalRequired = ['mentor', 'champion'];
 
+  var latitude, longitude;
+
   auth.get_loggedin_user(function (user) {
+    if(!dojo || !dojo.id){
+      $state.go('error-404-dash-no-headers');
+    }
+
+    if(!dojo.verified && dojo.creator !== user.id && !_.contains(user.roles, 'cdf-admin')){
+      $state.go('error-404-dash-no-headers');
+    }
     currentUser = user;
 
     //Check if user is a member of this Dojo
@@ -33,6 +39,9 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     });
   }, function () {
     //Not logged in
+    if(!dojo || !dojo.id || !dojo.verified){
+      $state.go('error-404-no-headers');
+    }
     $scope.userMemberCheckComplete = true;
   });
 
@@ -43,25 +52,41 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
   $scope.$watch('model.map', function(map){
     if(map) {
-      var marker = new google.maps.Marker({
-        map: $scope.model.map,
-        position: new google.maps.LatLng(latitude, longitude)
-      });
-      $scope.markers.push(marker);
+      if(latitude && longitude) {
+        var marker = new google.maps.Marker({
+          map: $scope.model.map,
+          position: new google.maps.LatLng(latitude, longitude)
+        });
+        $scope.markers.push(marker);
+      }
     }
   });
 
   if(gmap) {
-    $scope.mapLoaded = true;
     if($scope.dojo.coordinates) {
       var coordinates = $scope.dojo.coordinates.split(',');
-      var latitude  = coordinates[0];
-      var longitude = coordinates[1];
+      latitude  = coordinates[0];
+      longitude = coordinates[1];
       $scope.mapOptions = {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
+
+      $scope.mapLoaded = true;
+    } else {
+      var countryCoordinates;
+      cdCountriesService.loadCountriesLatLongData(function (response) {
+
+        countryCoordinates = response[$scope.dojo.alpha2];
+
+        $scope.mapOptions = {
+          center: new google.maps.LatLng(countryCoordinates[0], countryCoordinates[1]),
+          zoom: 5,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        $scope.mapLoaded = true;
+      });
     }
 
   }
@@ -136,5 +161,5 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 

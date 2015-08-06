@@ -1,6 +1,6 @@
 'use strict';
 
-function acceptChildController($scope, $stateParams, auth, $window, $location, usSpinnerService, cdUsersService, alertService, $state){
+function acceptChildController($scope, $stateParams, auth, $window, $location, usSpinnerService, cdUsersService, alertService, $state, $translate){
   var parentProfileId, childProfileId, inviteToken, currentPath;
 
   parentProfileId = $stateParams.parentProfileId;
@@ -25,16 +25,16 @@ function acceptChildController($scope, $stateParams, auth, $window, $location, u
       var win = function(response, status){
         usSpinnerService.stop('parent-guardian-request-spinner');
 
-        
-        alertService.showAlert('Invitation Accepted', function(){
+
+        alertService.showAlert($translate.instant('Invitation Accepted'), function(){
           $state.go('home');
         });
-      
+
       };
 
       var fail = function(err){
         usSpinnerService.stop('parent-guardian-request-spinner');
-        alertService.showError('An error has occured while accepting invitation');
+        alertService.showError($translate.instant('An error has occured while accepting invitation'));
       };
 
 
@@ -46,6 +46,6 @@ function acceptChildController($scope, $stateParams, auth, $window, $location, u
 }
 
 angular.module('cpZenPlatform')
-  .controller('accept-child-controller', ['$scope', 
-  '$stateParams', 'auth', '$window', '$location', 
-  'usSpinnerService', 'cdUsersService', 'alertService', '$state',acceptChildController]);
+  .controller('accept-child-controller', ['$scope',
+  '$stateParams', 'auth', '$window', '$location',
+  'usSpinnerService', 'cdUsersService', 'alertService', '$state', '$translate',acceptChildController]);

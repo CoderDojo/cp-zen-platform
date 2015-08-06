@@ -4,7 +4,7 @@
 function listOfParents(){
   return {
     restrict: 'E',
-    templateUrl: '/profiles/template/parents-list',
+    templateUrl: '/profiles/template/parents-list'
   };
 }
 
@@ -67,5 +67,5 @@ angular
   .directive('generalInfo', generalInfo)
   .directive('parentsList', listOfParents)
   .directive('notes', notes);
- 
+
 }());

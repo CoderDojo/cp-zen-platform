@@ -3,38 +3,38 @@
   <div class="panel-body">
     <div>
       <div ng-if="!profile.ownProfileFlag && !profile.myChild">
-        <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">Name: {{ profile.name }}</p>
-        <p ng-if="profile.alias">Alias: {{ profile.alias }}</p>
+        <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">{@i18n key="Name"/}: {{ profile.name }}</p>
+        <p ng-if="profile.alias">{@i18n key="Alias"/}: {{ profile.alias }}</p>
         <p ng-if="profile.notes">{{ profile.notes }}</p>
       </div>
       <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
         <div class="form-group">
-          <label for="fullname" class="col-sm-4 control-label">Name* </label>
+          <label for="fullname" class="col-sm-4 control-label">{@i18n key="Name"/}* </label>
           <div class="col-sm-8">
-            <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="Name" ng-model="profile.name">
+            <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="{@i18n key="Name"/}" ng-model="profile.name">
           </div>
         </div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])">
-          <label for="alias" class="col-sm-4 control-label">Alias* </label>
+          <label for="alias" class="col-sm-4 control-label">{@i18n key="Alias"/}* </label>
           <div class="col-sm-8">
-            <input type="text" name="alias" class="form-control" placeholder="Alias" ng-model="profile.alias">
+            <input type="text" name="alias" class="form-control" placeholder="{@i18n key="Alias"/}" ng-model="profile.alias">
           </div>
         </div>
         <div class="form-group">
-          <label for="dateOfBirth" class="col-sm-4 text-right">Date of Birth*</label>
+          <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
             <input type="text" required readonly="true"
                   class="form-control"
                   name="dateOfBirth"
-                  required-message="'Date of birth is empty'"
+                  required-message="'{@i18n key="Date of birth is empty"/}'"
                   datepicker-popup="fullDate"
                   ng-model="profile.dob"
                   is-open="picker.opened"
                   min-date="'1900-01-01'"
                   max-date="today"
                   datepicker-options="dobDateOptions"
-                  ng-click="open($event)" 
-                  placeholder="{@i18n key="Enter your date of birth here..."/}" 
+                  ng-click="open($event)"
+                  placeholder="{@i18n key="Enter your date of birth here..."/}"
                   />
             <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
               <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -61,7 +61,7 @@
           <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
             <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
-              <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+              <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places"
                   refresh="getPlaces(profile.country.alpha2, $select)"
                   refresh-delay="500">
@@ -75,7 +75,7 @@
         <div class="form-group">
           <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}* </label>
           <div class="col-sm-8">
-            <input type="text" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address">
+            <textarea rows="5" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
           </div>
         </div>
         <div class="form-group">
@@ -105,7 +105,7 @@
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
           <label for="notes" class="col-sm-4 control-label">{@i18n key="Notes"/} </label>
           <div class="col-sm-8">
-            <textarea class="form-control"  ng-model="profile.notes" placeholder="Notes" rows="3"></textarea>
+            <textarea class="form-control"  ng-model="profile.notes" placeholder="{@i18n key="Notes"/}" rows="3"></textarea>
           </div>
         </div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
@@ -125,7 +125,7 @@
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
           <label for="languagesSpoken" class="col-sm-4 control-label">{@i18n key="Languages Spoken"/} </label>
           <div class="col-sm-8">
-            <tags-input ng-model="profile.languagesSpoken"  placeholder="Languages Spoken"></tags-input>
+            <tags-input ng-model="profile.languagesSpoken"  placeholder="{@i18n key="Languages Spoken"/}"></tags-input>
           </div>
         </div>
         <div class="form-group form-inline">

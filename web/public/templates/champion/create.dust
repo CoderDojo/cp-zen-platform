@@ -6,9 +6,9 @@
           <div id="main">
             <h3>{@i18n key="CoderDojo Champion Registration Form"/}</h3>
             <div class="pre-game-warning center-block">
-              <p>{@i18n key="pre-game-warning-p1"/}</p>
-              <p>{@i18n key="pre-game-warning-p2"/}</p>
-              <p>{@i18n key="pre-game-warning-p3"/} <a href="http://kata.coderdojo.com" target="_blank">http://kata.coderdojo.com/</a></p>
+              <p>{@i18n key="Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."/}</p>
+              <p>{@i18n key="The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"/}</p>
+              <p>{@i18n key="If you wish to learn more about starting a CoderDojo in your area please see:"/} <a href="http://kata.coderdojo.com" target="_blank">http://kata.coderdojo.com/</a></p>
             </div>
 
             <legend>{@i18n key="General Information"/}</legend>
@@ -16,7 +16,7 @@
               <div class="form-group">
                 <label for="emailAddress" class="col-lg-4">{@i18n key="Email Address"/}*</label>
                   <div class="col-lg-6">
-                    <input type="email" tooltip="{@i18n key="champion.registration.email.tooltip"/}" required required-message="'{@i18n key="Email is empty"/}'" ng-model="champion.email" class="form-control" name="emailAddress" id="emailAddress">
+                    <input type="email" tooltip="{@i18n key="Please provide a personal email address."/}" required required-message="'{@i18n key="Email is empty"/}'" ng-model="champion.email" class="form-control" name="emailAddress" id="emailAddress">
                   </div>
               </div>
             </div>
@@ -25,7 +25,7 @@
               <div class="form-group">
                 <label for="fullName" class="col-lg-4">{@i18n key="Full Name"/}*</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="{@i18n key="champion.registration.fullname.tooltip"/}" required required-message="'{@i18n key="Name is empty"/}'" ng-model="champion.name" class="form-control" name="fullName" id="fullName">
+                    <input type="text" tooltip="{@i18n key="Please provide your full name"/}" required required-message="'{@i18n key="Name is empty"/}'" ng-model="champion.name" class="form-control" name="fullName" id="fullName">
                   </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
               <div class="form-group">
                 <label for="plannedDojoLocation" class="col-lg-4">{@i18n key="Planned Dojo Location"/}*</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="{@i18n key="champion.registration.planneddojo.tooltip"/}" required required-message="'{@i18n key="Planned Dojo Location is empty"/}'" ng-model="champion.plannedDojoLocation" class="form-control" name="plannedDojoLocation" id="plannedDojoLocation">
+                    <input type="text" tooltip="{@i18n key="Please let us know where in the world you are planning to set up your Dojo. eg. Town, City, State, Country"/}" required required-message="'{@i18n key="Planned Dojo Location is empty"/}'" ng-model="champion.plannedDojoLocation" class="form-control" name="plannedDojoLocation" id="plannedDojoLocation">
                   </div>
               </div>
             </div>
@@ -43,7 +43,7 @@
               <div class="form-group has-feedback">
                 <label for="dateOfBirth" class="col-lg-4">{@i18n key="Date of Birth"/}*</label>
                 <div class="col-lg-6">
-                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'{@i18n key="Date of Birth"/}'" ng-click="open($event)" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'{@i18n key="Date of Birth"/}'" ng-click="open($event)" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="{@i18n key="Close" /}" />
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
               <div class="form-group has-feedback">
                 <label for="telephoneNumber" class="col-lg-4">{@i18n key="Telephone Number"/}*</label>
                 <div class="col-lg-6">
-                  <input type="text" tooltip="{@i18n key="champion.registration.telephone.tooltip"/}" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber">
+                  <input type="text" tooltip="{@i18n key="Please include country code."/}" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber">
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@
               <div class="form-group has-feedback">
                 <label for="technicalExperience" class="col-lg-10">{@i18n key="Please list any relevant technical experience"/} *</label><br />
                 <div class="col-lg-6 col-lg-offset-4">
-                  <textarea name="technicalExperience" required required-message="'{@i18n key="Technical Experience is empty"/}'" class="form-control" tooltip="champion.registration.experience.tooltip" rows="5" 
+                  <textarea name="technicalExperience" required required-message="'{@i18n key="Technical Experience is empty"/}'" class="form-control" tooltip="'{@i18n key="Please let us know of any technical experience you have that will help you run your Dojo. This is not required to organise a Dojo, as long you find a solid team of technical mentors. If none, please respond N/A." /}'" rows="5"
                   ng-model="champion.technicalExperience"></textarea>
                 </div>
               </div>
@@ -91,7 +91,7 @@
               <div class="form-group">
                 <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
+                    <input type="text" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
                   </div>
               </div>
             </div>
@@ -100,7 +100,7 @@
               <div class="form-group">
                 <label for="linkedIn" class="col-lg-4">{@i18n key="LinkedIn"/}</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="champion.registration.social.linkedin.tooltip" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
+                    <input type="text" tooltip="{@i18n key="If you wish please provide your username or a link to your LinkedIn page." /}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn">
                   </div>
               </div>
             </div>
@@ -109,18 +109,18 @@
               <div class="form-group">
                 <label for="googlePlus" class="col-lg-4">{@i18n key="Google+"/}</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="{@i18n key="champion.registration.social.google.tooltip"/}" ng-model="champion.googlePlus" class="form-control" name="googlePlus" id="googlePlus">
+                    <input type="text" tooltip="{@i18n key="If you wish please provide your username or a link to your Google+"/}" ng-model="champion.googlePlus" class="form-control" name="googlePlus" id="googlePlus">
                   </div>
               </div>
             </div>
 
-            <legend>Other</legend>
+            <legend>{@i18n key="Other"/}</legend>
             <div class="row">
               <div class="form-group">
                 <label for="technicalMentorsAccess" class="col-lg-4">{@i18n key="Do you have access to technical mentors"/} *</label>
                   <div class="col-lg-6">
                     <ui-select name="hasTechnicalMentors" ng-model="champion.hasTechnicalMentors" ng-disabled="disabled" required required-message="'{@i18n key="Select an option"/}'"
-                    tooltip="{@i18n key="champion.registration.technicalmentors.tooltip"/}">
+                    tooltip="{@i18n key="It is recommended to find a team of interested local technical volunteers to mentor and to find non-technical volunteers, such as parents, who can help out and volunteer when they bring their children etc. You do not need to have a big team but it is always better to have support from a core team when organising a Dojo. You can then have planning meetings with your team in advance of setting up your Dojo"/}">
                         <ui-select-match placeholder="{@i18n key="Select an option"/}">{{ $select.selected }}</ui-select-match>
                         <ui-select-choices repeat="answer in answers">
                           <span ng-bind-html="answer"></span>
@@ -135,8 +135,8 @@
                 <label for="venue" class="col-lg-4">{@i18n key="Do you have access to a venue"/} *</label>
                   <div class="col-lg-6">
                     <ui-select name="hasVenue" ng-model="champion.hasVenue" ng-disabled="disabled" required required-message="'Select an option'"
-                    tooltip="{@i18n key="champion.registration.venue.tooltip"/}">
-                        <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                    tooltip="{@i18n key="Dojos cannot be hosted in private residences, they must be in a public space such as a library, business, canteens, schools or community centres. We recommend that the young people attending bring their own laptops so the venue should have, at least, plug sockets for laptops, internet access and tables and chairs for the attendees."/}">
+                        <ui-select-match placeholder="{@i18n key="Select an option"/}">{{ $select.selected }}</ui-select-match>
                         <ui-select-choices repeat="answer in answers">
                           <span ng-bind-html="answer"></span>
                         </ui-select-choices>

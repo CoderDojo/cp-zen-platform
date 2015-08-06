@@ -195,6 +195,9 @@
         .state("start-dojo-wizard", {
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+          params:{
+            referer: 'start-dojo-wizard'
+          },
           resolve: {
             gmap: gmap
           },
@@ -219,6 +222,10 @@
           templateUrl: '/dojos/template/user-profile',
           resolve: profileHelpers,
           controller: 'user-profile-controller'
+        })
+        .state('error-404-no-headers', {
+          url:'/404',
+          templateUrl: '/errors/template/404_no_headers'
         })
         .state('error-404', {
           url:'/404',

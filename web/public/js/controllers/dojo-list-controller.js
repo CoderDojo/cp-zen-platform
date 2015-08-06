@@ -207,9 +207,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
             style: 'active'
           });
 
-          if (dojo.admin1Name) {
+          if (dojo.admin1_name) {
             $scope.currentLevels.push({
-              text: dojo.admin1Name,
+              text: dojo.admin1_name,
               type: 'state',
               style: 'active'
             });
@@ -284,11 +284,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
     $scope.countrySelected = true;
     $scope.stateSelected = false;
     var countrySelected = marker.country;
-    var internalPosition = marker.internalPosition ? marker.internalPosition : null;
+    
+    $scope.model.map.setCenter(marker.getPosition());
 
-    if (internalPosition) {
-      $scope.model.map.setCenter({lat: internalPosition.A, lng: internalPosition.F});
-    }
     $scope.model.map.setZoom(4);
     $scope.currentZoom = $scope.model.map.getZoom();
 
@@ -410,7 +408,8 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.viewDojo = function(dojo) {
-    var urlSlugArray = dojo.urlSlug.split('/');
+    var urlSlug = dojo.url_slug || dojo.urlSlug;
+    var urlSlugArray = urlSlug.split('/');
     var country = urlSlugArray[0].toString();
     urlSlugArray.splice(0, 1);
     var path = urlSlugArray.join('/');
@@ -482,7 +481,6 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
         var bounds = results[0].geometry.bounds;
         $scope.model.map.fitBounds(bounds);
         $scope.searchBounds(location, $scope.model.map.getBounds(), true);
-
       } else {
         $scope.searchNearest(location);
       }
@@ -492,103 +490,25 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   }
 
   $scope.searchNearest = function (location) {
-    var searchNearest = {
-      query: {
-        filtered: {
-          query: {
-            match_all: {}
-          },
-          filter: {
-            bool: {
-              must_not: [{
-                term: {stage: 4}
-              }, {
-                term: {deleted: 1}
-              }],
-              must: [{
-                term: {verified: 1}
-              }]
-            }
-          }
-        }
-      },
-      size: 10,
-      sort: [{
-        _geo_distance: {
-          geoPoint: {
-            lat: location.lat(),
-            lon: location.lng()
-          },
-          order: 'asc',
-          unit: 'km'
-        }
-      }]
-    };
-
-    cdDojoService.search(searchNearest).then(function (result) {
+    cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng()}).then(function (result) {
       clearMarkerArrays();
-      $scope.searchResult = result.records;
-      addMarkersToMap(result.records);
-
-      if (result.records.length) {
-        var closest = result.records[0];
-
-        // fit map to show the lccation and the closest dojo
-        var bounds = new google.maps.LatLngBounds(location, location);
-        bounds.extend(new google.maps.LatLng(closest.geoPoint.lat, closest.geoPoint.lon));
-        $scope.model.map.fitBounds(bounds);
-
+      $scope.searchResult = result;
+      addMarkersToMap(result);
+      if (result.length) {
+        var closest = result[0];
         $scope.searchBounds(location, $scope.model.map.getBounds());
       }
     });
   }
 
   $scope.searchBounds = function (location, bounds, fallbackToNearest) {
-    var searchInBounds = {
-      filter: {
-        and: [
-          {
-            bool: {
-              must_not: [{
-                term: {stage: 4}
-              }, {
-                term: {deleted: 1}
-              }],
-              must: [{
-                term: {verified: 1}
-              }]
-            }
-          },
-          {
-            geo_bounding_box: {
-              geoPoint: {
-                top_left: {lat: bounds.getNorthEast().lat(), lon: bounds.getSouthWest().lng()},
-                bottom_right: {lat: bounds.getSouthWest().lat(), lon: bounds.getNorthEast().lng()}
-              }
-            }
-          }
-        ]
-      },
-      from: 0,
-      size: 100,
-      sort: [{
-        _geo_distance: {
-          geoPoint: {
-            lat: location.lat(),
-            lon: location.lng()
-          },
-          order: 'asc',
-          unit: 'km'
-        }
-      }]
-    };
-
-    cdDojoService.search(searchInBounds).then(function (result) {
-      if (result.total > 0) {
+    var boundsRadius = getBoundsRadius(bounds);
+    cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius}).then(function (result) {
+      if (result.length > 0) {
         clearMarkerArrays();
-        $scope.searchResult = result.records;
-        addMarkersToMap(result.records);
-        fillBreadcrumbsSearchBased(result.records[0]);
+        $scope.searchResult = result;
+        addMarkersToMap(result);
+        fillBreadcrumbsSearchBased(result[0]);
       }
       else {
         if (fallbackToNearest) {
@@ -632,6 +552,18 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
         $scope.searchBounds($scope.model.map.getCenter(), $scope.model.map.getBounds());
       }
     }
+  }
+
+  function getBoundsRadius(bounds) {
+    var center = bounds.getCenter();
+    var northEast = bounds.getNorthEast();
+    var earthRadius = 3963.0;  
+    var lat1 = center.lat() / 57.2958; 
+    var lon1 = center.lng() / 57.2958;
+    var lat2 = northEast.lat() / 57.2958;
+    var lon2 = northEast.lng() / 57.2958;
+    var distanceInMiles = earthRadius * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+    return distanceInMiles * 1609.34 //convert to meters
   }
 
 }

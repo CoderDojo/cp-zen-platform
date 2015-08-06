@@ -37,7 +37,7 @@
                     <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
                   </div>
                 </td>
-                <td><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}" ng-bootbox-confirm-action="removeApplicant(application)">Delete</button>
+                <td><button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}" ng-bootbox-confirm-action="removeApplicant(application)">{@i18n key="Delete"/}</button>
               </tr>
               <tr ng-switch-when="true">
                 <td>

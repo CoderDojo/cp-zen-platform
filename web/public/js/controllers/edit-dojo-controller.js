@@ -147,45 +147,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.dojoPageReady = true;
   }
 
-  cdCountriesService.listCountries(function(response) {
-    var countries = [];
-    async.each(response, function(country, cb) {
-      countries.push({countryName:country.countryName, geonameId:country.geonameId});
-      cb();
-    }, function() {
-      $scope.countries = countries;
-    });
-
+  cdCountriesService.listCountries(function(countries) {
+    $scope.countries = countries;
   });
-
-  $scope.getGeonameData = function($item, type) {
-    var geonameId = $item.geonameId;
-    cdCountriesService.loadChildren(geonameId, function(response) {
-      var children = [];
-      async.each(response, function(child, cb) {
-        children.push({toponymName:child.toponymName, geonameId:child.geonameId});
-        cb();
-      }, function () {
-        switch(type) {
-          case 'states':
-            $scope.dojo.state = '';
-            $scope.dojo.county = '';
-            $scope.dojo.city = '';
-            $scope.states = children;
-            break;
-          case 'counties':
-            $scope.dojo.county = '';
-            $scope.dojo.city = '';
-            $scope.counties = children;
-            break;
-          case 'cities':
-            $scope.dojo.city = '';
-            $scope.cities = children;
-            break;
-        }
-      });
-    });
-  }
 
   $scope.getPlaces = function (countryCode, $select) {
     return utilsService.getPlaces(countryCode, $select).then(function (data) {
@@ -288,14 +252,19 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   function canUpdateDojo() {
     var deferred = $q.defer();
     var query = {userId: currentUser.data.id, dojoId: $state.params.id};
-    cdDojoService.getUsersDojos(query, function (userDojo) {
-      var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
-        return userPermission.name === 'dojo-admin';
-      });
-      deferred.resolve(isDojoAdmin);
-    }, function (err) {
-      deferred.reject(err);
-    });
+    var isCDFAdmin = _.contains(currentUser.data.roles, 'cdf-admin');
+    if(isCDFAdmin) {
+      deferred.resolve(isCDFAdmin);
+    } else {
+      cdDojoService.getUsersDojos(query, function (userDojo) {
+        var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
+          return userPermission.name === 'dojo-admin';
+        });
+        deferred.resolve(isDojoAdmin);
+      }, function (err) {
+        deferred.reject(err);
+      });  
+    }
     return deferred.promise;
   }
 

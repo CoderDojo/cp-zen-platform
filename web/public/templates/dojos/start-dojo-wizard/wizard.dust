@@ -1,9 +1,9 @@
 <div class="cd-dojo-main">
 <div class="cd-dashboard cd-color-5-underline">
-    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators"> 
+    <wizard ng-show="stepFinishedLoading" class="start-dojo-wizard cp-onboarding-wizard" current-step="wizardCurrentStep" hide-indicators="hideIndicators">
         <wz-step class="start-dojo-wizard-step" canexit="accountSuccessfullyRegistered" canenter="preventEnterRegisterAccount" title="Register Account">
             <legend><h1 class="cd-page-header">{@i18n key="Register Account"/}</h1></legend>
-            <p>{@i18n key="wizard.p1"/}</p>
+            <p>{@i18n key="To get started, please fill in the following registration form."/}</p>
             <cd-register-account ng-if="wizardCurrentStep === 'Register Account'"></cd-register-account>
         </wz-step>
         <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" title="Champion Registration">

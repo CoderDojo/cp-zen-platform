@@ -4,9 +4,9 @@
       <div id="main">
         <h3 class="cd-page-header">{@i18n key="CoderDojo Champion Registration Form"/}</h3>
         <div class="col-lg-12 center-block">
-          <p class="cd-page-intro">{@i18n key="champion.registration.p1"/}
-          {@i18n key="champion.registration.p2"/}
-          {@i18n key="champion.registration.p3"/}<a href="http://kata.coderdojo.com" target="_blank">http://kata.coderdojo.com/</a></p>
+          <p class="cd-page-intro">{@i18n key="Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."/}
+          {@i18n key="The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"/}
+          {@i18n key="If you wish to learn more about starting a CoderDojo in your area please see:"/}<a href="http://kata.coderdojo.com" target="_blank">http://kata.coderdojo.com/</a></p>
         </div>
 
         <legend class="cd-section-header">{@i18n key="General Information"/}</legend>
@@ -30,20 +30,20 @@
 
         <div class="row cd-input-row">
           <div class="form-group has-feedback">
-            <label for="dateOfBirth" class="col-lg-4 cd-form-label1">Date of Birth*</label>
+            <label for="dateOfBirth" class="col-lg-4 cd-form-label1">{@i18n key="Date of Birth"/}*</label>
             <div class="input-group col-lg-8 dob-picker">
               <input type="text" required readonly="true"
                      class="form-control"
                      name="dateOfBirth"
-                     required-message="'Date of birth is empty'"
+                     required-message="'{@i18n key="Date of birth is empty"/}'"
                      datepicker-popup="fullDate"
                      ng-model="champion.dateOfBirth"
                      is-open="picker.opened"
                      min-date="'1900-01-01'"
                      max-date="today"
                      datepicker-options="dobDateOptions"
-                     ng-click="open($event)" 
-                     placeholder="{@i18n key="champion.dateOfBirth.placeholder"/}" 
+                     ng-click="open($event)"
+                     placeholder="{@i18n key="You must be over 18 years old..."/}"
                      />
 
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
@@ -57,7 +57,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="champion.telephoneNumber.placeholder"/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
+              <input type="tel" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
 
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
               <ui-select name="place" ng-disabled="!champion.country" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
-                <ui-select-match placeholder="{@i18n key="dojo.edit.place.citytown.placeholder"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+                <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                 <ui-select-choices repeat="place in places"
                     refresh="getPlaces(champion.country.alpha2, $select)"
                     refresh-delay="500">
@@ -99,17 +99,17 @@
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="dojoAddress1" class="col-lg-4 cd-form-label1">{@i18n key="champion.address"/}*</label>
+            <label for="dojoAddress1" class="col-lg-4 cd-form-label1">{@i18n key="Address"/}*</label>
             <div class="col-lg-8">
-              <textarea id="dojoAddress1" name="dojoAddress1" class="form-control" placeholder="{@i18n key="champion.address.placeholder"/}" rows="5" ng-model="champion.address1" required required-message="'{@i18n key="champion.address.required"/}'"></textarea>
+              <textarea id="dojoAddress1" name="dojoAddress1" class="form-control" placeholder="{@i18n key="Enter your street level address..."/}" rows="5" ng-model="champion.address1" required required-message="'{@i18n key="Address is empty"/}'"></textarea>
             </div>
           </div>
         </div>
 
         <div class="row cd-input-row" ng-if="stepTwoShowGmap">
-          <div class="form-group">      
+          <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-              <input class="col-lg-4 btn btn-primary" type="button" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="Get location from address">
+              <input class="col-lg-4 btn btn-primary" type="button" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
             </div>
             <div class="col-lg-8 col-lg-offset-4 google-map">
               <section ng-if="mapLoaded" id="map">
@@ -124,18 +124,18 @@
         <div class="row">
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="Click on the map to select a location" name="dojoCoordinates" id="dojoLocation">
+              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation">
             </div>
           </div>
         </div>
 
-        <legend class="cd-section-header">Experience</legend>
+        <legend class="cd-section-header">{@i18n key="Experience"/}</legend>
 
         <div class="row cd-input-row">
           <div class="form-group">
-            <label for="projects" class="col-lg-4 cd-form-label1">Technical Experience</label>
+            <label for="projects" class="col-lg-4 cd-form-label1">{@i18n key="Technical Experience"/}</label>
             <div class="col-lg-8">
-              <textarea name="projects" class="form-control" placeholder="{@i18n key="technicalexperience.placeholder"/}" rows="5" ng-model="champion.projects"></textarea>
+              <textarea name="projects" class="form-control" placeholder="{@i18n key="Please describe any websites, apps or open source work that you have done."/}" rows="5" ng-model="champion.projects"></textarea>
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@
           <div class="form-group">
             <label for="youthExperience" class="col-lg-4 cd-form-label1">{@i18n key="Experience working with youth"/}</label>
             <div class="col-lg-8">
-              <textarea name="youthExperience" class="form-control" placeholder="{@i18n key="experienceyouth.placeholder"/}" rows="5" ng-model="champion.youthExperience"></textarea>
+              <textarea name="youthExperience" class="form-control" placeholder="{@i18n key="Please describe your experience working with youth."/}" rows="5" ng-model="champion.youthExperience"></textarea>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="champion.registration.social.twitter.tooltip"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}">
+                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}">
               </div>
           </div>
         </div>
@@ -164,7 +164,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4 cd-form-label1">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="champion.registration.social.linkedin.tooltip"/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}">
+                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}">
               </div>
           </div>
         </div>
@@ -173,7 +173,7 @@
         <div class="row cd-input-row">
           <label for="notes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
-            <textarea name="notes" class="form-control" placeholder="{@i18n key="notes.placeholder"/}" rows="5" ng-model="champion.notes"></textarea>
+            <textarea name="notes" class="form-control" placeholder="{@i18n key="Please add any other relevant information."/}" rows="5" ng-model="champion.notes"></textarea>
           </div>
         </div>
 
@@ -187,7 +187,7 @@
                     <span ng-bind-html="referer"></span>
                   </ui-select-choices>
               </ui-select>
-              <input type="text" class="form-control cdReferenceOther" placeholder="{@i18n key="howdidyouhear.placeholder"/}" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" />
+              <input type="text" class="form-control cdReferenceOther" placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" />
             </div>
           </div>
         </div>

@@ -1,9 +1,9 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $location, auth, $localStorage, alertService,
-  WizardHandler, cdDojoService, cdUsersService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
-  $sanitize, vcRecaptchaService, intercomService, $modal) {
+function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService,
+  WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
+  $sanitize, intercomService, $modal) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -43,24 +43,10 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
         $scope.dojoStates = json.verificationStates;
       }, fail);
 
-      var query = { query : {
-        filtered : {
-          query : {
-            match_all : {}
-          },
-          filter : {
-            bool: {
-              must: [{
-                term: { userId: user.id }
-              }]
-            }
-          }
-        }
-      }
-      };
+      var query = {userId: user.id};
 
-      cdDojoService.searchDojoLeads(query).then(function(result) {
-        var results = _.map(result.records, function(dojoLead) {
+      cdDojoService.searchDojoLeads(query).then(function (result) {
+        var results = _.map(result, function(dojoLead) {
           return _.omit(dojoLead, 'entity$');
         });
 
@@ -79,8 +65,8 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
             if (!_.isEmpty(response)) {
               $state.go('dojo-list',
                 { bannerType:'success',
-                  bannerMessage: 'Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.<br> ' +
-                  'If you need help completing your initial Dojo application, please contact us at <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
+                  bannerMessage: $translate.instant('Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.') +'<br> ' +
+                  $translate.instant('If you need help completing your initial Dojo application, please contact us at')+ ' <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
                   bannerTimeCollapse: 150000
                 });
             } else {
@@ -230,7 +216,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     $scope.champion = {};
     var initialDate = new Date();
-    $scope.buttonText = "Register Champion"
+    $scope.buttonText = $translate.instant('Register Champion');
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
         formatYear: 'yyyy',
@@ -314,9 +300,7 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
       };
 
       cdCountriesService.listCountries(function (countries) {
-        $scope.countries = _.map(countries, function (country) {
-          return _.omit(country, 'entity$');
-        });
+        $scope.countries = countries;
       }, fail);
     }
 
@@ -361,9 +345,9 @@ function startDojoWizardCtrl($scope, $http, $window, $state, $stateParams, $loca
 
     $scope.referredBy = [
       "Google",
-      $translate.instant('NewspaperMagazine'),
+      $translate.instant('Newspaper/Magazine'),
       $translate.instant('Radio'),
-      $translate.instant('FamilyFriends'),
+      $translate.instant('Family/Friends'),
       $translate.instant('Other')
     ];
 
@@ -453,7 +437,7 @@ console.log("FIVE");
         $scope.steps.map(function(step){
           step.open = true;
         });
-      } 
+      }
     };
 
     if(!wizardRedirect) {
@@ -466,12 +450,12 @@ console.log("FIVE");
   //--Step Four:
   function setupStep4(wizardRedirect) {
     $scope.hideIndicators = false;
-    $scope.buttonText = "Create Dojo"
-      
+    $scope.buttonText = $translate.instant("Create Dojo");
+
     $scope.stepFourShowGmap = true;
-      
+
     currentStepInt = 3;
-    
+
     var currentUser;
     auth.get_loggedin_user(function(user) {
       currentUser = user;
@@ -487,9 +471,7 @@ console.log("FIVE");
     $scope.createDojoUrl = $state.current.url;
 
     cdCountriesService.listCountries(function(countries) {
-      $scope.countries = _.map(countries, function(country) {
-        return _.omit(country, 'entity$');
-      });
+      $scope.countries = countries;
     }, fail);
 
     $scope.setCountry = function(dojo, country) {
@@ -501,9 +483,9 @@ console.log("FIVE");
     };
 
     var initContent = "<p><ul>" +
-      "<li>" + $translate.instant('dojo.create.initcontent.li1') +"</li>" +
-      "<li>"+ $translate.instant('dojo.create.initcontent.li2') +"</li>" +
-      "<li><b>" + $translate.instant('dojo.create.initcontent.li3') +"</b></li>" +
+      "<li>" + $translate.instant('A pack lunch.') +"</li>" +
+      "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
+      "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";
 
     $scope.editorOptions = {
@@ -550,12 +532,12 @@ console.log("FIVE");
 
               $state.go('dojo-list', {
                 bannerType:'success',
-                bannerMessage: $translate.instant('dojo.create.success'),
+                bannerMessage: $translate.instant('Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'),
                 bannerTimeCollapse: 150000
               });
             });
           },failSave);
-        }, fail); 
+        }, fail);
       };
 
       openConfirmation(win);
@@ -582,7 +564,7 @@ console.log("FIVE");
           setTimeout(function () {
             google.maps.event.trigger($scope.model.map, 'resize');
             var center = new google.maps.LatLng(53.344415, -6.260147);
-  
+
           }, 100);
         }
       });
@@ -623,7 +605,7 @@ console.log("FIVE");
     var modalInstance = $modal.open({
         animation: true,
         templateUrl: '/dojos/template/dojo-setup-confirm',
-        controller: 'dojoSetupConfirmationCtrl',
+        controller: 'dojoSetupConfirmationCtrl'
       });
 
     modalInstance.result.then(win, fail);
@@ -632,6 +614,6 @@ console.log("FIVE");
 }
 
 angular.module('cpZenPlatform')
-  .controller('start-dojo-wizard-controller', ['$scope', '$http', '$window', '$state', '$stateParams', '$location', 'auth', '$localStorage', 'alertService', 
-  'WizardHandler', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
-  '$sanitize', 'vcRecaptchaService', 'intercomService', '$modal', startDojoWizardCtrl]);
+  .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService',
+  'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
+  '$sanitize', 'intercomService', '$modal', startDojoWizardCtrl]);
