@@ -110,7 +110,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   });
 
   function initStep (step, subStep) {
-    //step=1;
     switch(step) {
       case 0:
         setupStep1();
@@ -213,7 +212,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   function setupStep2(subStep, wizardRedirect) {
     var step2UpdateFlag;
     var savedDojoLead;
-
     $scope.champion = {};
     var initialDate = new Date();
     $scope.buttonText = $translate.instant('Register Champion');
@@ -314,8 +312,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       cdAgreementsService.save(agreementObj, function (response) {
         setupStep3();
       },failSave);
-
-
     }
 
     $scope.otherLanguageSelected = function () {
