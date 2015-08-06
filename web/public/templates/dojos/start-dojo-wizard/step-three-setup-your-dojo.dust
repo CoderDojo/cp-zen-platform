@@ -16,7 +16,7 @@
             <div class="panel-group no-select">
               <div class="panel-group" id="accordion">
                 <div ng-repeat="step in steps track by $index" is-open="step.open" class="panel panel-default ng-isolate-scope" ng-init="step.id = $index">
-                  <div class="panel-heading cd-color-{{ step.id + 1 }} pointer" ng-click="step.open = !step.open">
+                  <div class="panel-heading cd-color-{{ $index + 1 }} pointer" ng-click="step.open = !step.open">
                     <h4 class="panel-title">{@i18n key="{{ step.title }}"/}</h4>
                     <i class="pull-right glyphicon panel-title" ng-class="{'glyphicon-chevron-down': step.open, 'glyphicon-chevron-right': !step.open}"></i>
                   </div>
@@ -33,8 +33,7 @@
                           <span>{@i18n key="{{ listItem }}"/}</span>
                         </li>
                       </ul>
-                      <input type="text" ng-if="checkboxInput.textField"
-                        ng-show="setupDojo[checkboxInput.name] === true"
+                      <input type="text" ng-if="checkboxInput.textField" ng-show="setupDojo[checkboxInput.name] === true"
                         class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
                         ng-model="setupDojo[checkboxInput.name + 'Text']">
                     </div>

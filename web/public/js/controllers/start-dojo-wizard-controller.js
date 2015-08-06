@@ -360,38 +360,29 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //--Step Three:
   function setupStep3(wizardRedirect) {
-    console.log("ONE");
     var step3UpdateFlag;
     var savedDojoLead;
-    console.log("TWO");
-    $scope.setupDojo = {};
+    if(!$scope.setupDojo) $scope.setupDojo = {};
     $scope.buttonText = "Save Dojo Setup";
     $scope.hideIndicators = false;
     currentStepInt = 2;
-    console.log("THREE");
     var currentUser;
     auth.get_loggedin_user(function (user) {
-      console.log("SIX");
       currentUser = user;
-      //if (currentUser) {
+      if (currentUser) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          console.log("SEVEN");
           if(response.application && response.application.setupYourDojo) {
-            console.log("EIGHT");
             savedDojoLead = response;
             step3UpdateFlag = true;
             $scope.buttonText = "Update Dojo Setup";
-            console.log("NINE");
             _.each(response.application.setupYourDojo, function(item, i) {
-              console.log(i, item);
-              console.log("TEN");
               $scope.setupDojo[i] = item;
             });
           }
         });
-      //}
+      }
     }, failAuth);
-console.log("FOUR");
+
     cdDojoService.loadSetupDojoSteps(function (steps) {
       $scope.steps = _.map(steps, function(step){
         step.title = $translate.instant(step.title);
@@ -418,7 +409,7 @@ console.log("FOUR");
       });
       $scope.steps = steps;
     }, fail);
-console.log("FIVE");
+
     $scope.submitSetupYourDojo = function (setupDojo) {
 
       var win = function () {
