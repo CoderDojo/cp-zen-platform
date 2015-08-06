@@ -138,7 +138,7 @@
 
     <div class="form-group">
       <label for="address">{@i18n key="Address"/}*:</label>
-      <input type="text" required name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}">
+      <textarea rows="5" required name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
     </div>
 
     <div class="form-group" ng-if="googleMaps">
@@ -175,12 +175,12 @@
          <span spinner-key="create-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
       </div>
     </div>
-    
+
     <div class="btn-toolbar">
       <button type="button" class="btn btn-default" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
       <button type="button" class="btn btn-primary" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo)">{@i18n key="Save"/}</button>
       <button type="button" class="btn btn-success" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo, true)">{@i18n key="Publish"/}</button>
-    </div> 
+    </div>
   </form>
 
 </div>

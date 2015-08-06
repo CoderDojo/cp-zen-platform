@@ -109,7 +109,7 @@
             </a>
           </label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address..."/}">
+            <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address..."/}"></textarea>
           </div>
         </div>
       </div>
