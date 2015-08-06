@@ -188,6 +188,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       alertService.showError($translate.instant('An error has occurred while sending invitation') );
     };
 
+    data.emailSubject = $translate.instant('Invitation to become a Parent/Guardian');
     cdUsersService.inviteParent(data, win, fail);
   };
 
@@ -496,7 +497,11 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
   $scope.inviteNinja = function (ninjaEmail) {
     usSpinnerService.spin('user-profile-spinner');
-    cdUsersService.inviteNinja(ninjaEmail, function (response) {
+    var ninjaData = {
+      ninjaEmail: ninjaEmail,
+      emailSubject: $translate.instant('Approve Parent Request')
+    };
+    cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showAlert($translate.instant('Invite Sent'));
       $scope.inviteNinjaPopover.show = false;
