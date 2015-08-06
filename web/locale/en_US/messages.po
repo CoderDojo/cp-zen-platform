@@ -1641,6 +1641,7 @@ msgstr "Contributing to Kata, the community knowledge base at kata.coderdojo.com
 msgid "Connecting with local and international Dojos to share insights and supports"
 msgstr "Connecting with local and international Dojos to share insights and supports"
 
-
+msgid "This dojo has no coordinates."
+msgstr "This dojo has no coordinates."
 
 
