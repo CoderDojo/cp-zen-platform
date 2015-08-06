@@ -135,6 +135,7 @@
             <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
           </div>
           <div class="col-lg-offset-4 col-lg-8 google-map">
+            <p>{@i18n key="Please click on the map to pinpoint your location"/}</p>
             <section ng-if="mapLoaded" id="map">
               <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
               <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, dojo)'}" ui-options="mapOptions" class="map-canvas"></div>

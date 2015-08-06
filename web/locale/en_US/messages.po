@@ -1646,3 +1646,6 @@ msgstr "This dojo has no coordinates."
 
 msgid "Register Champion"
 msgstr "Register Champion"
+
+msgid "Please click on the map to pinpoint your location"
+msgstr "Please click on the map to pinpoint your location"
