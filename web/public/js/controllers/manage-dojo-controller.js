@@ -67,15 +67,18 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   $scope.loadPage = function (filter, resetFlag, cb) {
     cb = cb || function () {};
-    $scope.sort = $scope.sort ? $scope.sort : { created: -1 };
+    //sort ascending = -1
+    //sort descending = 1
+    $scope.sort = $scope.sort ? $scope.sort : { created: 1 };
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
-
+    
     var query = _.omit({
       name: filter.name,
       verified: filter.verified,
       email: filter.email,
+      creatorEmail: filter.creatorEmail,
       stage: filter.stage,
       alpha2: filter.country && filter.country.alpha2,
       limit$: $scope.itemsPerPage,

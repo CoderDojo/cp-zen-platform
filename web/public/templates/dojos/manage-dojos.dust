@@ -50,6 +50,12 @@
             <input type="text" placeholder="{@i18n key="Search by dojo email"/}" class="form-control" ng-model="filter.email" ng-enter="filterDojos()">
           </div>
         </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">{@i18n key="User Email"/}</label>
+            <input type="text" placeholder="{@i18n key="Search by user email"/}" class="form-control" ng-model="filter.creatorEmail" ng-enter="filterDojos()">
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-2">
