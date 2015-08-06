@@ -1644,4 +1644,5 @@ msgstr "Connecting with local and international Dojos to share insights and supp
 msgid "This dojo has no coordinates."
 msgstr "This dojo has no coordinates."
 
-
+msgid "Register Champion"
+msgstr "Register Champion"
