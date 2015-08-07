@@ -47,7 +47,10 @@ module.exports = {
   log: log(),
 
   'main': {
-    'timeout': 120000
+    'timeout': 120000,
+    debug: {
+      undead: true
+    }
   },
 
   'bodyparser': {
