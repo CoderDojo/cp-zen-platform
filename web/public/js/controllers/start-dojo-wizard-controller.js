@@ -243,7 +243,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           if(response.application && response.application.championDetails) {
             savedDojoLead = response;
             step2UpdateFlag = true;
-            $scope.buttonText = "Update Champion"
+            $scope.buttonText = $translate.instant("Update Champion");
             _.each(response.application.championDetails, function(item, i) {
               $scope.champion[i] = item;
             });
@@ -356,10 +356,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //--Step Three:
   function setupStep3(wizardRedirect) {
-    var step3UpdateFlag;
     var savedDojoLead;
     if(!$scope.setupDojo) $scope.setupDojo = {};
-    $scope.buttonText = "Save Dojo Setup";
+    $scope.buttonText = $translate.instant("Save Dojo Setup");
     $scope.hideIndicators = false;
     currentStepInt = 2;
     var currentUser;
@@ -369,8 +368,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
           if(response.application && response.application.setupYourDojo) {
             savedDojoLead = response;
-            step3UpdateFlag = true;
-            $scope.buttonText = "Update Dojo Setup";
+            $scope.buttonText = $translate.instant("Update Dojo Setup");
             _.each(response.application.setupYourDojo, function(item, i) {
               $scope.setupDojo[i] = item;
             });
