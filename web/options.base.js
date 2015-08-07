@@ -97,7 +97,8 @@ module.exports = {
   },
 
   webclient: {
-    adultforum: process.env.ADULT_FORUM || 'http://localhost:4567'
+    adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
+    profileAvatarSizeLimit: 5242880
   }
 
 };
