@@ -665,8 +665,18 @@ msgstr "To get started, please fill in the following registration form."
 msgid "Champion Registration"
 msgstr "Champion Registration"
 
+msgid "Update Champion"
+msgstr "Update Champion"
+
 msgid "Setup your Dojo"
 msgstr "Setup your Dojo"
+
+msgid "Save Dojo Setup"
+msgstr "Save Dojo Setup"
+
+msgid "Update Dojo Setup"
+msgstr "Update Dojo Setup"
+
 
 msgid "Create Dojo Listing"
 msgstr "Create Dojo Listing"
