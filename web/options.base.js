@@ -47,7 +47,7 @@ module.exports = {
   log: log(),
 
   'main': {
-    'timeout': 66666
+    'timeout': 120000
   },
 
   'bodyparser': {
