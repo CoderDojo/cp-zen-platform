@@ -361,7 +361,7 @@
         .fallbackLanguage('en_US');
       }
     ])
-    .run(function($rootScope, $state, $cookieStore, $translate, verifyProfileComplete, verifyCharterSigned, alertService) {
+    .run(function($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete')) {
           verifyCharterSigned().then(function (verifyAgreementResult) {
@@ -387,6 +387,9 @@
             alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
           });
         }
+      });
+      $rootScope.$on('$stateChangeSuccess', function () {
+        $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
       });
     })
     .factory('verifyCharterSigned', function (auth, cdAgreementsService, $q) {
