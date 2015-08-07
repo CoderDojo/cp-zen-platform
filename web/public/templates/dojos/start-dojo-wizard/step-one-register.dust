@@ -5,7 +5,7 @@
     <div class="row cd-input-row">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
-          <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="NAME"/}">
+          <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="FULL NAME"/}">
         </div>
       </div>
     </div>

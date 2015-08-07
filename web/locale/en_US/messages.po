@@ -80,15 +80,6 @@ msgstr "Terms and Conditions"
 msgid "CoderDojo Champion Registration Form"
 msgstr "CoderDojo Champion Registration Form"
 
-msgid "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
-msgstr "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself."
-
-msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
-msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
-
-msgid "If you wish to learn more about starting a CoderDojo in your area please see:"
-msgstr "If you wish to learn more about starting a CoderDojo in your area please see:"
-
 msgid "General Information"
 msgstr "General Information"
 
@@ -1696,3 +1687,23 @@ msgstr "We created a new Google Email for your Dojo"
 msgid "Please click on the map to pinpoint your location"
 msgstr "Please click on the map to pinpoint your location"
 
+msgid "FULL NAME"
+msgstr "FULL NAME"
+
+msgid "Welcome New CoderDojo Champion!"
+msgstr "Welcome New CoderDojo Champion!"
+
+msgid "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
+msgstr "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
+
+msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+
+msgid "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
+msgstr "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
+
+msgid "SEE KATA HERE"
+msgstr "SEE KATA HERE"
+
+msgid "You can also at any point contact info@coderdojo.com for support."
+msgstr "You can also at any point contact info@coderdojo.com for support."
