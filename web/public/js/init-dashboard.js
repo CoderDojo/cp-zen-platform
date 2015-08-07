@@ -355,7 +355,8 @@
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitize')
-        .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .registerAvailableLanguageKeys(['en_US', 'it_IT'])
+        .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
       }
