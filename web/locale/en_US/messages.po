@@ -1686,3 +1686,5 @@ msgstr "We created a new Google Email for your Dojo"
 msgid "Please click on the map to pinpoint your location"
 msgstr "Please click on the map to pinpoint your location"
 
+msgid "FULL NAME"
+msgstr "FULL NAME"
