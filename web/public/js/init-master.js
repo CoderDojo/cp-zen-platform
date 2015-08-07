@@ -259,6 +259,7 @@
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitize')
         .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
       }
