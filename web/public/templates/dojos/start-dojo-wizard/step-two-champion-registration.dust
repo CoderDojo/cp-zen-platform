@@ -8,7 +8,7 @@
           <p class="cd-page-intro">{@i18n key="The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."/}</p>
           <p class="cd-page-intro">{@i18n key="The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!" /}</p>
           <p class="cd-page-intro">{@i18n key="If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base." /}</p>
-          <p class="cd-page-intro"><a href="http://kata.coderdojo.com" target="_blank">{@i18n key="SEE KATA HERE" /}</a></p>
+          <p class="cd-page-intro">{@i18n key="See Kata here:" /} <a href="http://kata.coderdojo.com" target="_blank">kata.coderdojo.com</a></p>
           <p class="cd-page-intro">{@i18n key="You can also at any point contact info@coderdojo.com for support." /}</p>
         </div>
 
