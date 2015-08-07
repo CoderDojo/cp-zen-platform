@@ -356,7 +356,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //--Step Three:
   function setupStep3(wizardRedirect) {
-    var savedDojoLead;
+    var savedDojoLead = {};
     if(!$scope.setupDojo) $scope.setupDojo = {};
     $scope.buttonText = $translate.instant("Save Dojo Setup");
     $scope.hideIndicators = false;
@@ -372,6 +372,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             _.each(response.application.setupYourDojo, function(item, i) {
               $scope.setupDojo[i] = item;
             });
+          } else {
+            savedDojoLead.application = {};
           }
         });
       }
@@ -407,6 +409,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.submitSetupYourDojo = function (setupDojo) {
 
       var win = function () {
+        if(!savedDojoLead.application) savedDojoLead.application = {};
         savedDojoLead.application.setupYourDojo = setupDojo;
         savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
         cdDojoService.saveDojoLead(savedDojoLead, function(response) {
