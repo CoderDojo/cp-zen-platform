@@ -491,17 +491,20 @@ msgstr "Need Mentors"
 msgid "Current Stage"
 msgstr "Current Stage"
 
-msgid "In Planning"
-msgstr "In Planning"
+msgid "in planning"
+msgstr "in planning"
 
-msgid "Open, come along"
-msgstr "Open, come along"
+msgid "open, come along"
+msgstr "open, come along"
 
-msgid "Register Ahead"
-msgstr "Register Ahead"
+msgid "register ahead"
+msgstr "register ahead"
 
-msgid "Full Up"
-msgstr "Full Up"
+msgid "inactive"
+msgstr "inactive"
+
+msgid "full up"
+msgstr "full up"
 
 msgid "Private"
 msgstr "Private"
@@ -544,6 +547,12 @@ msgstr "Verified"
 
 msgid "Unverified"
 msgstr "Unverified"
+
+msgid "verified"
+msgstr "verified"
+
+msgid "unverified"
+msgstr "unverified"
 
 msgid "Stage"
 msgstr "Stage"
@@ -668,9 +677,29 @@ msgstr "Save Dojo Setup"
 msgid "Update Dojo Setup"
 msgstr "Update Dojo Setup"
 
-
 msgid "Create Dojo Listing"
 msgstr "Create Dojo Listing"
+
+msgid "Enter Dojo name"
+msgstr "Enter Dojo name"
+
+msgid "Enter Dojo email address"
+msgstr "Enter Dojo email address"
+
+msgid "Enter street level address"
+msgstr "Enter street level address"
+
+msgid "Enter Google group URL"
+msgstr "Enter Google group URL"
+
+msgid "Enter website URL"
+msgstr "Enter website URL"
+
+msgid "Enter Twitter profile URL"
+msgstr "Enter Twitter profile URL"
+
+msgid "Enter supporters image URL"
+msgstr "Enter supporters image URL"
 
 msgid "Thank you for submitting your dojo listing."
 msgstr "Thank you for submitting your dojo listing."
@@ -1430,6 +1459,45 @@ msgstr "Please describe how you have ensured health and safety best practices."
 
 msgid "Please describe how you have ensured public liability is covered"
 msgstr "Please describe how you have ensured public liability is covered"
+
+msgid "Embodying the Ethos"
+msgstr "Embodying the Ethos"
+
+msgid "We will work to embody the CoderDojo ethos"
+msgstr "We will work to embody the CoderDojo ethos"
+
+msgid "All mentors and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
+msgstr "All mentors and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
+
+msgid "Our Dojo abides by data protection regulations in our jurisdiction"
+msgstr "Our Dojo abides by data protection regulations in our jurisdiction"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
+
+msgid "Diversity among our attendees is respected"
+msgstr "Diversity among our attendees is respected"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
+
+msgid "We will work to help engage with and improve the greater CoderDojo movement by"
+msgstr "We will work to help engage with and improve the greater CoderDojo movement by"
+
+msgid "Communicating with the CoderDojo Foundation"
+msgstr "Communicating with the CoderDojo Foundation"
+
+msgid "Contributing to Kata, the community knowledge base at kata.coderdojo.com"
+msgstr "Contributing to Kata, the community knowledge base at kata.coderdojo.com"
+
+msgid "Connecting with local and international Dojos to share insights and supports"
+msgstr "Connecting with local and international Dojos to share insights and supports"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
 
 msgid "Admin permissions cannot be removed from a Dojo owner."
 msgstr "Admin permissions cannot be removed from a Dojo owner."
