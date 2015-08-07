@@ -3,18 +3,12 @@
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService, cdConfigService) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError($translate.instant('error.general'));
     return;
   }
-
-  cdConfigService.get('profileAvatarSizeLimit', function(kv) {
-    $scope.profileAvatarSizeLimit = kv.profileAvatarSizeLimit;
-  }, function(err) {
-    console.error('Error getting config: ', err);
-  });
 
   $scope.currentStateName = $state.current.name;
 
@@ -530,5 +524,5 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', 'cdConfigService', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', cdUserProfileCtrl]);
 
