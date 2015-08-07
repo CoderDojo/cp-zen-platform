@@ -1651,7 +1651,7 @@ msgid "Invitation to become a Parent/Guardian"
 msgstr "Invitation to become a Parent/Guardian"
 
 msgid "CoderDojo Password Reset"
-msgstr "CoderDojo Password Reset test 1234"
+msgstr "CoderDojo Password Reset"
 
 msgid "Approve Parent Request"
 msgstr "Approve Parent Request"
