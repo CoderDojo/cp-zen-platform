@@ -366,14 +366,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       currentUser = user;
       if (currentUser) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          if(response.application && response.application.setupYourDojo) {
+          if(response.application) {
             savedDojoLead = response;
-            $scope.buttonText = $translate.instant("Update Dojo Setup");
-            _.each(response.application.setupYourDojo, function(item, i) {
+            if(response.application.setupYourDojo) {
+              $scope.buttonText = $translate.instant("Update Dojo Setup");
+              _.each(response.application.setupYourDojo, function(item, i) {
               $scope.setupDojo[i] = item;
             });
-          } else {
-            savedDojoLead.application = {};
+            }
           }
         });
       }
@@ -409,12 +409,15 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.submitSetupYourDojo = function (setupDojo) {
 
       var win = function () {
-        if(!savedDojoLead.application) savedDojoLead.application = {};
-        savedDojoLead.application.setupYourDojo = setupDojo;
-        savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        cdDojoService.saveDojoLead(savedDojoLead, function(response) {
-          setupStep4();
-        }, failSave);    
+        if(savedDojoLead.application) {
+          savedDojoLead.application.setupYourDojo = setupDojo;
+          savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          cdDojoService.saveDojoLead(savedDojoLead, function(response) {
+            setupStep4();
+          }, failSave);    
+        } else {
+          failSave();
+        }
       };
       openConfirmation(win);
     };
