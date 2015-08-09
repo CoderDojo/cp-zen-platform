@@ -73,7 +73,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     user['g-recaptcha-response'] = $scope.recaptchaResponse;
-
+    user.emailSubject = $translate.instant('Welcome to CoderDojo!');
+    
     auth.register(user, function(data) {
       if(data.ok) {
         auth.login(user, function(data) {
@@ -102,7 +103,11 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         }
 
         alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
-          $window.location.href = '/register';
+          if($scope.referer){
+            $state.reload($scope.referer);
+          } else {
+            $state.reload('register-account');
+          }
         });
       }
     }, function(err) {
@@ -120,6 +125,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
+        $localStorage.recommendedPracticesAlertShown = false;
+
         if ($scope.redirect) {
           $window.location.href = $scope.redirect;
         } else {
@@ -127,7 +134,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
             $scope.referer = '/dashboard/manage-dojos';
           }
-          $localStorage.recommendedPracticesAlertShown = false;
           $window.location.href = $scope.referer || '/dashboard/dojo-list';
         }
       },
@@ -148,7 +154,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     auth.reset({
-      email:$scope.forgot.email
+      email:$scope.forgot.email,
+      emailSubject: $translate.instant('CoderDojo Password Reset')
     }, function(response) {
       usSpinnerService.stop('login-spinner');
 

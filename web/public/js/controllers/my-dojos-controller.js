@@ -127,7 +127,7 @@ function cdMyDojosCtrl($q, $rootScope, $localStorage, $scope, $state, $statePara
             dojo.isChampion = isChampion;
             dojo.isTicketingAdmin = isTicketingAdmin;
             dojo.isDojoAdmin = isDojoAdmin;
-            dojo.country = dojo.country.alpha2.toLowerCase();
+            dojo.country = dojo.alpha2.toLowerCase();
             var path = dojo.urlSlug.split('/');
             path.splice(0, 1);
             path = path.join('/');

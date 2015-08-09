@@ -50,6 +50,16 @@ module.exports = _.defaults({
     }
   },
 
+  hapi: {
+    connections: {
+      routes: {
+        payload: {
+          maxBytes: 5242880
+        }
+      }
+    }
+  },
+
   client: [
     {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
     {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},

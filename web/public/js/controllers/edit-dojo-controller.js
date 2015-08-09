@@ -193,6 +193,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
           }
         });
 
+        dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
         cdDojoService.save(dojo, function(response) {
           if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
             cdDojoService.updateFounder($scope.founder, function(response){
@@ -252,14 +253,19 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   function canUpdateDojo() {
     var deferred = $q.defer();
     var query = {userId: currentUser.data.id, dojoId: $state.params.id};
-    cdDojoService.getUsersDojos(query, function (userDojo) {
-      var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
-        return userPermission.name === 'dojo-admin';
-      });
-      deferred.resolve(isDojoAdmin);
-    }, function (err) {
-      deferred.reject(err);
-    });
+    var isCDFAdmin = _.contains(currentUser.data.roles, 'cdf-admin');
+    if(isCDFAdmin) {
+      deferred.resolve(isCDFAdmin);
+    } else {
+      cdDojoService.getUsersDojos(query, function (userDojo) {
+        var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
+          return userPermission.name === 'dojo-admin';
+        });
+        deferred.resolve(isDojoAdmin);
+      }, function (err) {
+        deferred.reject(err);
+      });  
+    }
     return deferred.promise;
   }
 
