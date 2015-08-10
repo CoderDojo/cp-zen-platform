@@ -1,5 +1,5 @@
 module.exports = [
-  {'text': 'Scratch'},
+  {'text':'Scratch'},
   {'text':'Python'},
   {'text':'Ruby'},
   {'text':'Perl'},
@@ -16,7 +16,7 @@ module.exports = [
   {'text':'Objective C'},
   {'text':'SQL'},
   {'text':'MySQL'},
-  {'text':'Swift'}, 
+  {'text':'Swift'},
   {'text':'R'}
 ];
 
