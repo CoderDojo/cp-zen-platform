@@ -284,7 +284,7 @@
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{
-          url: '/dashboard/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          url: '/dashboard/accept_parent_guardian_request/:childProfileId/:inviteToken',
           controller: 'accept-child-controller',
           templateUrl: '/profiles/template/accept-child-invite'
         })

@@ -66,7 +66,8 @@
           <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
         </div>
       </div>
-      <div class="panel panel-default" ng-if="profile.myChild">
+
+      <div class="panel panel-default" ng-if="(loggedInUser && (loggedInUser.id === profile.userId) || profile.myChild) && hasAccess(profile.userTypes, ['attendee-o13'])">
         <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
         <div class="panel-body invite-parent-guardian-form">
           <form class="form-horizontal">
