@@ -202,12 +202,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   if(!_.isEmpty($scope.profile)){
     $scope.profile.programmingLanguages = utils.toTags($scope.profile.programmingLanguages);
     $scope.profile.languagesSpoken = utils.toTags($scope.profile.languagesSpoken);
-    $scope.profile.projects = utils.toTags($scope.profile.projects);
     $scope.profile.private =  $scope.profile.private ? "true" : "false";
 
     $scope.profile.widget = {};
-
-    $scope.profile.widget.projects = utils.frTags($scope.profile.projects);
     $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
     $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken);
   }
@@ -287,8 +284,6 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    profile.projects = profile.projects && utils.frTags(profile.projects);
-
 
     function win(profile){
       $scope.profile = profile;
