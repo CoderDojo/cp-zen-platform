@@ -473,8 +473,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = "<p><ul>" +
-      "<li>" + $translate.instant('A pack lunch.') +"</li>" +
+    var initContent = "<p>" + $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+      "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";

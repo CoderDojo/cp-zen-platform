@@ -27,7 +27,7 @@
               <span popover-trigger="mouseenter"
                 popover-placement="left"
                 popover="{@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}">
-                {@i18n key="Email"/}
+                {@i18n key="Dojo Email"/}
               </span>
             </label>
             <div class="col-lg-8">
