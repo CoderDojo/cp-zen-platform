@@ -42,11 +42,11 @@
               <span popover-trigger="mouseenter"
                 popover-placement="left"
                 popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}">
-                {@i18n key="Times"/}*
+                {@i18n key="Times"/}
               </span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Times is Empty"/}'" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}">
+              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}">
             </div>
           </div>
         </div>
