@@ -1,5 +1,5 @@
-<div ng-if="editMode" class="panel panel-default">
-  <div class="panel-heading">{@i18n key="General Info"/}</div>
+<div ng-if="editMode">
+  <legend class="legend-color-3-border">{@i18n key="General Info"/}</legend>
   <div class="panel-body">
     <div>
       <div ng-if="!profile.ownProfileFlag && !profile.myChild">
