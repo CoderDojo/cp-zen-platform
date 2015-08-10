@@ -60,7 +60,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
+              <input type="tel" tooltip='{@i18n key="Please include country code"/}' required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
             </div>
           </div>
         </div>
