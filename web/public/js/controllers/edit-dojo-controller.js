@@ -17,9 +17,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   });
 
   cdDojoService.getDojoConfig(function(json){
-    $scope.dojoConfig = json;
-    $scope.dojoStages = json.dojoStages;
-    $scope.dojoStates = json.verificationStates;
+    $scope.dojoStages = _.map(json.dojoStages, function(item){
+      return { value: item.value, label: $translate.instant(item.label) };
+    });
   });
 
   $scope.noop = angular.noop;
