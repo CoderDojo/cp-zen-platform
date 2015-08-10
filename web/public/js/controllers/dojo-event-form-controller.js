@@ -163,13 +163,16 @@
       $event.preventDefault();
       $event.stopPropagation();
 
-      var eventPosition = {
-        lat: $scope.googleMaps.marker.getPosition().lat(),
-        lng: $scope.googleMaps.marker.getPosition().lng()
-      };
+      if($scope.googleMaps && $scope.googleMaps.marker) {
+        var eventPosition = {
+          lat: $scope.googleMaps.marker.getPosition().lat(),
+          lng: $scope.googleMaps.marker.getPosition().lng()
+        };
 
-      // Extend eventInfo
-      eventInfo.position = eventPosition;
+        // Extend eventInfo
+        eventInfo.position = eventPosition;
+      }
+
       eventInfo.status = publish ? 'published' : 'saved';
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
