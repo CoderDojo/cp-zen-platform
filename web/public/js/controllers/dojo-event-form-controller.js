@@ -158,10 +158,8 @@
       goToManageDojoEvents($state, null, dojoId);
     };
 
-    $scope.submit = function($event, eventInfo, publish) {
+    $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
-      $event.preventDefault();
-      $event.stopPropagation();
 
       if($scope.googleMaps && $scope.googleMaps.marker) {
         var eventPosition = {
@@ -172,8 +170,8 @@
         // Extend eventInfo
         eventInfo.position = eventPosition;
       }
-
-      eventInfo.status = publish ? 'published' : 'saved';
+      
+      eventInfo.status = $scope.publish ? 'published' : 'saved';
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
@@ -197,7 +195,7 @@
         }
       } else {
         eventInfo.dates = [eventInfo.date];
-      } 
+      }
 
       if(!$scope.dojoInfo) {
         loadDojo(function(err){

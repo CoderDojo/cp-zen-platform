@@ -1799,3 +1799,15 @@ msgstr "Clear"
 
 msgid "Done"
 msgstr "Done"
+
+msgid "Event name is empty"
+msgstr "Event name is empty"
+
+msgid "Description is empty"
+msgstr "Description is empty"
+
+msgid "Recurrence is empty"
+msgstr "Recurrence is empty"
+
+msgid "Capacity is empty"
+msgstr "Capacity is empty"
