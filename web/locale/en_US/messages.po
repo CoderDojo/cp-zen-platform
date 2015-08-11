@@ -1811,3 +1811,6 @@ msgstr "Recurrence is empty"
 
 msgid "Capacity is empty"
 msgstr "Capacity is empty"
+
+msgid "None of your Dojo's have any Events planned currently"
+msgstr "None of your Dojo's have any Events planned currently"
