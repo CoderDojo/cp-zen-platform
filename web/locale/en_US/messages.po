@@ -1722,3 +1722,12 @@ msgstr "First"
 
 msgid "Last"
 msgstr "Last"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Done"
+msgstr "Done"

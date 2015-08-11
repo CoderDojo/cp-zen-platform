@@ -43,7 +43,16 @@
               <div class="form-group has-feedback">
                 <label for="dateOfBirth" class="col-lg-4">{@i18n key="Date of Birth"/}*</label>
                 <div class="col-lg-6">
-                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}" required required-message="'{@i18n key="Date of Birth"/}'" ng-click="open($event)" ng-model="champion.dateOfBirth" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" close-text="{@i18n key="Close" /}" />
+                  <input type="text" readonly name="dateOfBirth" class="form-control" datepicker-popup="{{ format }}"
+                         required required-message="'{@i18n key="Date of Birth"/}'"
+                         ng-click="open($event)" ng-model="champion.dateOfBirth"
+                         is-open="opened"
+                         max-date="today"
+                         datepicker-options="dateOptions"
+                         ng-required="true"
+                         current-text="{@i18n key="Today"/}"
+                         clear-text="{@i18n key="Clear"/}"
+                         close-text="{@i18n key="Done"/}"/>
                 </div>
               </div>
             </div>

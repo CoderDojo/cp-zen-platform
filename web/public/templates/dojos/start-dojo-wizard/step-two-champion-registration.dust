@@ -45,6 +45,9 @@
                      min-date="'1900-01-01'"
                      max-date="today"
                      datepicker-options="dobDateOptions"
+                     current-text="{@i18n key="Today"/}"
+                     clear-text="{@i18n key="Clear"/}"
+                     close-text="{@i18n key="Done"/}"
                      ng-click="open($event)"
                      placeholder="{@i18n key="You must be over 18 years old..."/}"
                      />

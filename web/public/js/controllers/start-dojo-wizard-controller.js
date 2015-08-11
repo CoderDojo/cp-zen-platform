@@ -414,7 +414,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(savedDojoLead, function(response) {
             setupStep4();
-          }, failSave);    
+          }, failSave);
         } else {
           failSave();
         }
