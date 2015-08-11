@@ -259,7 +259,12 @@
         .fallbackLanguage('en_US');
       }
     ])
-    .run(function ($window, $cookieStore) {
+    .config(['tmhDynamicLocaleProvider',
+      function (tmhDynamicLocaleProvider) {
+        tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
+      }
+    ])
+    .run(function ($window, $cookieStore, tmhDynamicLocale) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
       var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
@@ -270,6 +275,8 @@
       googleCaptchaScriptTag.setAttribute('src',
         'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
       doc.head.appendChild(googleCaptchaScriptTag);
+
+      tmhDynamicLocale.set(userLangCode);
     })
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'

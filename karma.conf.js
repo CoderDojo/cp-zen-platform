@@ -51,6 +51,7 @@ module.exports = function(config) {
             './web/public/components/ng-file-upload-shim/ng-file-upload-shim.min.js',
             './web/public/components/ng-slide-down/dist/ng-slide-down.min.js',
             './web/public/components/angular-popover-toggle/popover-toggle.js',
+            './web/public/components/angular-dynamic-locale/dist/tmhDynamicLocale.js',
             './lib/auth/public/auth-front.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
