@@ -51,7 +51,7 @@
       var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
       $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.events = [];
-      cdEventsService.search({dojoId: $scope.dojoId, status: 'published', limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+      cdEventsService.search({dojoId: $scope.dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
         var events = [];
         _.each(result, function (event) {
 
