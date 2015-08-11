@@ -27,6 +27,7 @@
     'ngFileUpload',
     'ng-slide-down',
     'popoverToggle',
-    'tmh.dynamicLocale'
+    'tmh.dynamicLocale',
+    'atomic-notify'
   ]);
 })();

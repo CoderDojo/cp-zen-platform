@@ -257,14 +257,14 @@
           templateUrl: '/charter/template/charter-info'
         })
         .state('charter-page', {
-          url: '/dashboard/charter?referer',
+          url: '/dashboard/charter',
           templateUrl: '/charter/template/index',
           controller: 'charter-controller',
           resolve: {
             currentUser: resolves.loggedInUser
           },
           params: {
-            referer: null
+            showBannerMessage: null
           }
         })
         .state("accept-dojo-user-invitation", {
@@ -299,9 +299,7 @@
           controller: 'user-profile-controller',
           resolve: resolves,
           params: {
-            bannerType: null,
-            bannerMessage: null,
-            bannerTimeCollapse: null
+            showBannerMessage: null
           },
           templateUrl: '/dojos/template/user-profile'
         })
@@ -368,17 +366,16 @@
     ])
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        if(!$cookieStore.get('verifyProfileComplete')) {
+        var publicStates = ['dojo-list'];
+        if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
           verifyCharterSigned().then(function (verifyAgreementResult) {
             if(!_.isEmpty(verifyAgreementResult)) {
               if(toState.name !== 'edit-user-profile') {
                 verifyProfileComplete().then(function (verifyProfileResult) {
                   if(!verifyProfileResult.complete) {
                     $state.go('edit-user-profile', {
-                      userId: verifyProfileResult.userId,
-                      bannerType:'info',
-                      bannerMessage: $translate.instant('Please complete your profile before continuing.'),
-                      bannerTimeCollapse: 5000
+                      showBannerMessage: true,
+                      userId: verifyProfileResult.userId
                     });
                   } else {
                     $cookieStore.put('verifyProfileComplete', true);

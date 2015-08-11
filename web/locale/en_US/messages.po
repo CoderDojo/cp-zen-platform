@@ -1707,3 +1707,6 @@ msgstr "See Kata here:"
 
 msgid "You can also at any point contact info@coderdojo.com for support."
 msgstr "You can also at any point contact info@coderdojo.com for support."
+
+msgid "Please sign the charter before continuing"
+msgstr "Please sign the charter before continuing"
