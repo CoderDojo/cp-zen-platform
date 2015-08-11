@@ -386,6 +386,9 @@ msgstr "Contact"
 msgid "Email"
 msgstr "Email"
 
+msgid "Dojo Email"
+msgstr "Dojo Email"
+
 msgid "Website"
 msgstr "Website"
 
@@ -779,6 +782,12 @@ msgstr "Your Dojo has been successfully saved"
 
 msgid "An error has occurred while saving"
 msgstr "An error has occurred while saving:"
+
+msgid "Suggested Notes:"
+msgstr "Suggested Notes:"
+
+msgid "Please bring:"
+msgstr "Please bring:"
 
 msgid "A pack lunch."
 msgstr "A pack lunch."
@@ -1707,3 +1716,18 @@ msgstr "See Kata here:"
 
 msgid "You can also at any point contact info@coderdojo.com for support."
 msgstr "You can also at any point contact info@coderdojo.com for support."
+
+msgid "First"
+msgstr "First"
+
+msgid "Last"
+msgstr "Last"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Done"
+msgstr "Done"
