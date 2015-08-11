@@ -44,7 +44,7 @@
     $state.go('my-dojos');
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
     $scope.today = new Date();
@@ -101,48 +101,13 @@
 
     $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
 
-    $scope.searchCity = function(str) {
-      if (!str.length || str.length < 3) {
-        return $scope.cities = [];
-      }
-
-      var query = {
-        query: {
-          filtered: {
-            query: {
-              multi_match: {
-                query: str,
-                type: "phrase_prefix",
-                fields: ['name', 'asciiname', 'alternatenames', 'admin1Name', 'admin2Name', 'admin3Name', 'admin4Name']
-              }
-            },
-            filter: {
-              bool: {
-                must: [{
-                  term: {
-                    countryCode: $scope.eventInfo.country.alpha2
-                  }
-                }, {
-                  term: {
-                    featureClass: "P"
-                  }
-                }]
-              }
-            }
-          }
-        },
-        from: 0,
-        size: 100,
-        sort: [{
-          asciiname: "asc"
-        }]
-      };
-
-      cdCountriesService.listPlaces(query, function(result) {
-        $scope.cities = _.map(result, function(city) {
-          return _.omit(city, 'entity$');
-        });
-      }, console.error.bind(console));
+    $scope.searchCity = function($select) {
+      return utilsService.getPlaces($scope.eventInfo.country.alpha2, $select).then(function (data) {
+        $scope.cities = data;
+      }, function (err) {
+        $scope.cities = [];
+        console.error(err);
+      });
     };
 
     $scope.eventInfo.invites = [];
@@ -370,6 +335,7 @@
       'cdLanguagesService',
       'usSpinnerService',
       'alertService',
+      'utilsService',
       dojoEventFormCtrl
     ]);
 })();

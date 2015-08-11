@@ -141,7 +141,7 @@
           {{ $select.selected.nameWithHierarchy }}
         </ui-select-match>
         <ui-select-choices repeat="city in cities"
-          refresh="searchCity($select.search)"
+          refresh="searchCity($select)"
           refresh-delay="500">
           <span ng-bind-html="city.nameWithHierarchy | highlight: $select.search"></span>
         </ui-select-choices>
