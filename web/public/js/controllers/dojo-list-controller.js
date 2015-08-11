@@ -311,9 +311,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
           $scope.stateMarkers.push(marker);
         }
       });
+      $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.stateMarkers);
     });
-
-
+    
     if ($scope.currentLevels.length < 3) {
       _.each($scope.currentLevels, function (currentLevel) {
         currentLevel.style = '';

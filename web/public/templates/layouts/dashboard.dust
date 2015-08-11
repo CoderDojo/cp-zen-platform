@@ -41,6 +41,9 @@
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.bootstrap.min.css">
 
+    <!-- Angular Atomic Notify -->
+    <link rel="stylesheet" type="text/css" href="/components/angular-atomic-notify/dist/angular-atomic-notify.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -83,13 +86,12 @@
     <script src="/components/ckeditor/ckeditor.js"></script>
     <script src="/components/ng-ckeditor/ng-ckeditor.js"></script>
     <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
-    <script src="/content/auth/auth-front.js"></script>
     <script src="/components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script src="/components/checklist-model/checklist-model.js"></script>
     <script src="/components/angular-sb-date-select/src/sb-date-select.js"></script>
     <script src="/components/jquery-cookie-disclaimer/dist/jquery-cookie/jquery.cookie.js"></script>
     <script src="/components/jquery-cookie-disclaimer/dist/jquery.cookieDisclaimer.js"></script>
-    <script src="/components/angular-alert-banner/dist/angular-alert-banner.min.js"></script>
+    <script src="/components/angular-alert-banner/dist/angular-alert-banner.js"></script>
     <script src="/components/spin.js/spin.js"></script>
     <script src="/components/angular-spinner/angular-spinner.min.js"></script>
     <!--<script src="/components/jed/jed.js"></script>-->
@@ -106,6 +108,7 @@
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
     <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
     <script src="/components/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
+    <script src="/components/angular-atomic-notify/src/angular-atomic-notify.js"></script>
 
     <script src="/seneca/init.js"></script>
 

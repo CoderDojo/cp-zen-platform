@@ -1785,6 +1785,9 @@ msgstr "See Kata here:"
 msgid "You can also at any point contact info@coderdojo.com for support."
 msgstr "You can also at any point contact info@coderdojo.com for support."
 
+msgid "Please sign the charter before continuing"
+msgstr "Please sign the charter before continuing"
+
 msgid "First"
 msgstr "First"
 
@@ -1799,3 +1802,18 @@ msgstr "Clear"
 
 msgid "Done"
 msgstr "Done"
+
+msgid "Event name is empty"
+msgstr "Event name is empty"
+
+msgid "Description is empty"
+msgstr "Description is empty"
+
+msgid "Recurrence is empty"
+msgstr "Recurrence is empty"
+
+msgid "Capacity is empty"
+msgstr "Capacity is empty"
+
+msgid "None of your Dojo's have any Events planned currently"
+msgstr "None of your Dojo's have any Events planned currently"
