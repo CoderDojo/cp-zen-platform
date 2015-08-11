@@ -123,19 +123,20 @@
       goToManageDojoEvents($state, null, dojoId);
     };
 
-    $scope.submit = function($event, eventInfo, publish) {
+    $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
-      $event.preventDefault();
-      $event.stopPropagation();
 
-      var eventPosition = {
-        lat: $scope.googleMaps.marker.getPosition().lat(),
-        lng: $scope.googleMaps.marker.getPosition().lng()
-      };
+      if($scope.googleMaps && $scope.googleMaps.marker) {
+        var eventPosition = {
+          lat: $scope.googleMaps.marker.getPosition().lat(),
+          lng: $scope.googleMaps.marker.getPosition().lng()
+        };
 
-      // Extend eventInfo
-      eventInfo.position = eventPosition;
-      eventInfo.status = publish ? 'published' : 'saved';
+        // Extend eventInfo
+        eventInfo.position = eventPosition;
+      }
+      
+      eventInfo.status = $scope.publish ? 'published' : 'saved';
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
@@ -159,7 +160,7 @@
         }
       } else {
         eventInfo.dates = [eventInfo.date];
-      } 
+      }
 
       if(!$scope.dojoInfo) {
         loadDojo(function(err){

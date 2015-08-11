@@ -1,11 +1,11 @@
 <div class="cd-dashboard cd-color-3-underline">
-  <form name="eventForm" novalidate>
+  <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
     <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
     <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
 
     <div class="form-group">
       <label for="eventName">{@i18n key="Event Name"/}*:</label>
-      <input type="text" required name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" required placeholder="{@i18n key="Add the event name"/}">
+      <input type="text" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}">
     </div>
 
     <div class="checkbox">
@@ -16,10 +16,8 @@
     </div>
 
     <div class="form-group">
-      <label for="description">
-        {@i18n key="Description"/}*:
-      </label>
-      <textarea name="description" id="description" class="form-control" rows="3" ng-model="eventInfo.description" required placeholder="{@i18n key="Add a description"/}">
+      <label for="description">{@i18n key="Description"/}*:</label>
+      <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}">
       </textarea>
     </div>
 
@@ -62,12 +60,12 @@
     </div>
 
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
-      <label for="weekday">{@i18n key="Every"/}:</label>
+      <label for="weekday">{@i18n key="Every"/}*:</label>
       <select class="form-control"
               ng-model="weekdayPicker.selection"
               ng-options="item as item.name for item in weekdayPicker.weekdays"
               id="weekday"
-              required>
+              required required-message="'{@i18n key="Recurrence is empty"/}'">
       </select>
     </div>
 
@@ -75,7 +73,14 @@
       <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
       <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
       <div class="input-group">
-        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" close-text="{@i18n key="Close"/}" class="form-control" id="date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.date"
+               is-open="datepicker.datePicker1"
+               ng-required="true"
+               current-text="{@i18n key="Today"/}"
+               clear-text="{@i18n key="Clear"/}"
+               close-text="{@i18n key="Done"/}"
+               class="form-control"
+               id="date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -89,7 +94,14 @@
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
       <label for="to-date">{@i18n key="To"/}:</label>
       <div class="input-group">
-        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" close-text="Close" class="form-control" id="to-date" />
+        <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.toDate"
+               is-open="datepicker.datePicker2"
+               ng-required="true"
+               current-text="{@i18n key="Today"/}"
+               clear-text="{@i18n key="Clear"/}"
+               close-text="{@i18n key="Done"/}"
+               class="form-control"
+               id="to-date" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -117,7 +129,7 @@
       </ui-select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
       <label for="city">{@i18n key="City"/}*:</label>
       <ui-select ng-model="eventInfo.city"
                  name="city"
@@ -134,11 +146,13 @@
           <span ng-bind-html="city.nameWithHierarchy | highlight: $select.search"></span>
         </ui-select-choices>
       </ui-select>
+      <label class="control-label has-error validationMessage"
+             ng-show="eventForm.$submitted && eventForm.city.$error.required">{@i18n key="Select a place"/}</label>
     </div>
 
     <div class="form-group">
       <label for="address">{@i18n key="Address"/}*:</label>
-      <textarea rows="5" required name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+      <textarea rows="5" required required-message="'{@i18n key="Address is empty"/}'" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
     </div>
 
     <div class="form-group" ng-if="googleMaps">
@@ -153,8 +167,8 @@
     </div>
 
     <div class="form-group">
-      <label for="capacity">{@i18n key="Capacity"/}:</label>
-      <input type="number" required min="1" name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity" placeholder="{@i18n key="Add the maximum amount of participants"/}">
+      <label for="capacity">{@i18n key="Capacity"/}*:</label>
+      <input type="number" required required-message="'{@i18n key="Capacity is empty"/}'" min="1" name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity" placeholder="{@i18n key="Add the maximum amount of participants"/}">
     </div>
 
     <div class="form-group">
@@ -178,8 +192,8 @@
 
     <div class="btn-toolbar">
       <button type="button" class="btn btn-default" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
-      <button type="button" class="btn btn-primary" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo)">{@i18n key="Save"/}</button>
-      <button type="button" class="btn btn-success" ng-disabled="eventForm.$invalid" ng-click="submit($event, eventInfo, true)">{@i18n key="Publish"/}</button>
+      <button type="submit" class="btn btn-primary" >{@i18n key="Save"/}</button>
+      <button type="submit" class="btn btn-success" ng-click="publish=true">{@i18n key="Publish"/}</button>
     </div>
   </form>
 

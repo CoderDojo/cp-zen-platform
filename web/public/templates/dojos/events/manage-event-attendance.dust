@@ -51,7 +51,11 @@
       <pagination total-items="pagination.totalItems"
                   ng-change="pagination.change()"
                   items-per-page="pagination.itemsPerPage"
-                  ng-model="pagination.currentPage">
+                  ng-model="pagination.currentPage"
+                  first-text="{@i18n key="First" /}"
+                  previous-text="{@i18n key="Previous" /}"
+                  next-text="{@i18n key="Next" /}"
+                  last-text="{@i18n key="Last" /}">
       </pagination>
     </div>
   </div>

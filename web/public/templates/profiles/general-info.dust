@@ -1,5 +1,5 @@
-<div ng-if="editMode" class="panel panel-default">
-  <div class="panel-heading">{@i18n key="General Info"/}</div>
+<div ng-if="editMode">
+  <legend class="legend-color-3-border">{@i18n key="General Info"/}</legend>
   <div class="panel-body">
     <div>
       <div ng-if="!profile.ownProfileFlag && !profile.myChild">
@@ -34,6 +34,9 @@
                   max-date="today"
                   datepicker-options="dobDateOptions"
                   ng-click="open($event)"
+                  current-text="{@i18n key="Today"/}"
+                  clear-text="{@i18n key="Clear"/}"
+                  close-text="{@i18n key="Done"/}"
                   placeholder="{@i18n key="Enter your date of birth here..."/}"
                   />
             <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
@@ -117,8 +120,8 @@
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
           <label for="programmingLanguages" class="col-sm-4 control-label">{@i18n key="Programming Languages"/} </label>
           <div class="col-sm-8">
-            <tags-input ng-model="profile.programmingLanguages" add-from-autocomplete-only="true" placeholder="{@i18n key="Programming Languages"/}">
-              <auto-complete source="loadProgrammmingLanguagesTags($query)"></auto-complete>
+            <tags-input ng-model="profile.programmingLanguages" add-from-autocomplete-only="true" add-on-enter="true" min-length=1 placeholder="{@i18n key="Programming Languages"/}">
+              <auto-complete source="loadProgrammmingLanguagesTags($query)" select-first-match="false" min-length=1 ></auto-complete>
             </tags-input>
           </div>
         </div>

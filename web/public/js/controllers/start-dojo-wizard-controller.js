@@ -39,8 +39,12 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     } else {
       cdDojoService.getDojoConfig(function(json){
         $scope.dojoConfig = json;
-        $scope.dojoStages = json.dojoStages;
-        $scope.dojoStates = json.verificationStates;
+        $scope.dojoStages = _.map(json.dojoStages, function(item){
+          return { value: item.value, label: $translate.instant(item.label) };
+        });
+        $scope.dojoStates = _.map(json.verificationStates, function(item){
+          return { value: item.value, label: $translate.instant(item.label) };
+        });
       }, fail);
 
       var query = {userId: user.id};
@@ -414,7 +418,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(savedDojoLead, function(response) {
             setupStep4();
-          }, failSave);    
+          }, failSave);
         } else {
           failSave();
         }
@@ -473,8 +477,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = "<p><ul>" +
-      "<li>" + $translate.instant('A pack lunch.') +"</li>" +
+    var initContent = "<p>" + $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+      "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";
