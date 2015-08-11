@@ -503,17 +503,17 @@ msgstr "Hai bisogno di mentori"
 msgid "Current Stage"
 msgstr "Fase attuale"
 
-msgid "In Planning"
-msgstr "In Planning"
+msgid "in planning"
+msgstr "in planning"
 
-msgid "Open, come along"
-msgstr "Aperto, vieni"
+msgid "open, come along"
+msgstr "aperto, vieni"
 
-msgid "Register Ahead"
-msgstr "Registrati Ahead"
+msgid "register ahead"
+msgstr "registrati ahead"
 
-msgid "Full Up"
-msgstr "Completo"
+msgid "full up"
+msgstr "completo"
 
 msgid "Private"
 msgstr "Privato"
@@ -556,6 +556,13 @@ msgstr "Verificato"
 
 msgid "Unverified"
 msgstr "Non verificato"
+
+msgid "verified"
+msgstr "verificato"
+
+msgid "unverified"
+msgstr "non verificato"
+
 
 msgid "Stage"
 msgstr "Palcoscenico"

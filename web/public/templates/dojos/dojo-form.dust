@@ -16,7 +16,7 @@
               </span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name..."/}">
+              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name"/}">
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
               </span>
             </label>
             <div class="col-lg-8">
-              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address..."/}">
+              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address"/}">
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address..."/}"></textarea>
+            <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address"/}"></textarea>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@
       <div class="row cd-input-row">
         <div class="form-group with-info-btn">
           <div class="col-lg-offset-4 col-lg-8">
-            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="Get location from address">
+            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
           </div>
           <div class="col-lg-offset-4 col-lg-8 google-map">
             <p>{@i18n key="Please click on the map to pinpoint your location"/}</p>
@@ -223,7 +223,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL..."/}">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL"/}">
           </div>
         </div>
       </div>
@@ -238,7 +238,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL..."/}">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL"/}">
           </div>
         </div>
       </div>
@@ -253,7 +253,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL..."/}">
+            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL"/}">
           </div>
         </div>
       </div>
@@ -268,7 +268,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL..."/}">
+            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}">
           </div>
         </div>
       </div>
