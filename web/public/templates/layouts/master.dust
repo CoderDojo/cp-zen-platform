@@ -49,6 +49,9 @@
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.min.css">
     <link rel="stylesheet" type="text/css" href="/components/ng-tags-input/ng-tags-input.bootstrap.min.css">
 
+    <!-- Angular Atomic Notify -->
+    <link rel="stylesheet" type="text/css" href="/components/angular-atomic-notify/dist/angular-atomic-notify.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -123,6 +126,7 @@
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
     <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
     <script src="/components/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
+    <script src="/components/angular-atomic-notify/src/angular-atomic-notify.js"></script>
     
     <script src="/seneca/init.js"></script>
 
