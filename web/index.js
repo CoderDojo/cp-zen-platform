@@ -180,7 +180,6 @@ seneca
   .use('auth')
   .use('user-roles')
   .use('web-access')
-  .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
   .use('../lib/countries/cd-countries.js')
