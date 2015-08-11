@@ -360,7 +360,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //--Step Three:
   function setupStep3(wizardRedirect) {
-    var savedDojoLead;
+    var savedDojoLead = {};
     if(!$scope.setupDojo) $scope.setupDojo = {};
     $scope.buttonText = $translate.instant("Save Dojo Setup");
     $scope.hideIndicators = false;
@@ -370,12 +370,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       currentUser = user;
       if (currentUser) {
         cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          if(response.application && response.application.setupYourDojo) {
+          if(response.application) {
             savedDojoLead = response;
-            $scope.buttonText = $translate.instant("Update Dojo Setup");
-            _.each(response.application.setupYourDojo, function(item, i) {
+            if(response.application.setupYourDojo) {
+              $scope.buttonText = $translate.instant("Update Dojo Setup");
+              _.each(response.application.setupYourDojo, function(item, i) {
               $scope.setupDojo[i] = item;
             });
+            }
           }
         });
       }
@@ -411,11 +413,15 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.submitSetupYourDojo = function (setupDojo) {
 
       var win = function () {
-        savedDojoLead.application.setupYourDojo = setupDojo;
-        savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-        cdDojoService.saveDojoLead(savedDojoLead, function(response) {
-          setupStep4();
-        }, failSave);    
+        if(savedDojoLead.application) {
+          savedDojoLead.application.setupYourDojo = setupDojo;
+          savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          cdDojoService.saveDojoLead(savedDojoLead, function(response) {
+            setupStep4();
+          }, failSave);
+        } else {
+          failSave();
+        }
       };
       openConfirmation(win);
     };
@@ -471,8 +477,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = "<p><ul>" +
-      "<li>" + $translate.instant('A pack lunch.') +"</li>" +
+    var initContent = "<p>" + $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+      "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";

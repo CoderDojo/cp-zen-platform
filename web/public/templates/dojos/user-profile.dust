@@ -9,7 +9,7 @@
       <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
       <h1 ng-bind="profile.name || profile.alias"></h1>
       <h4 ng-bind="profile.userTypeTitle"></h4>
-      <div ng-if="editMode" class="btn btn-default center-block" ngf-change="upload($files)" ngf-multiple="false" accept="image/*" ngf-select>{@i18n key="Upload new picture"/}</div>
+      <div ng-if="editMode" class="btn btn-default center-block" ngf-max-size='5242880' ngf-change="upload($files)" ngf-multiple="false" accept="image/*" ngf-select>{@i18n key="Upload new picture"/}</div>
 
       <span class="help-block"></span>
       <button ng-if="!editMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
@@ -66,7 +66,8 @@
           <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
         </div>
       </div>
-      <div class="panel panel-default" ng-if="profile.myChild">
+
+      <div class="panel panel-default" ng-if="(loggedInUser && (loggedInUser.id === profile.userId) || profile.myChild) && hasAccess(profile.userTypes, ['attendee-o13'])">
         <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
         <div class="panel-body invite-parent-guardian-form">
           <form class="form-horizontal">
@@ -91,8 +92,9 @@
       <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
       <notes ng-if="!hideChampionProfileBlock('notes') && hasAccess(profile.userTypes, ['champion'])"></notes>
 
-      <div ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-o13', 'parent-guardian', 'mentor', 'champion'])" class="panel panel-default target">
-        <div class="panel-heading" contenteditable="false">{@i18n key="Member of Dojos"/}</div>
+      <div ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-o13', 'parent-guardian', 'mentor', 'champion'])">
+        <legend contenteditable="false" class="legend-color-6-border">{@i18n key="Member of Dojos"/}</legend>
+        <div class="panel-heading" ></div>
         <div class="panel-body">
           <div class="row">
             <div class="dojo-container" ng-repeat="dojo in profile.dojos">

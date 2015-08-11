@@ -284,7 +284,7 @@
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{
-          url: '/dashboard/accept-parent-guardian-request/:parentProfileId/:childProfileId/:inviteToken',
+          url: '/dashboard/accept_parent_guardian_request/:childProfileId/:inviteToken',
           controller: 'accept-child-controller',
           templateUrl: '/profiles/template/accept-child-invite'
         })
@@ -355,12 +355,18 @@
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitize')
-        .registerAvailableLanguageKeys(['en_US', 'de_DE'])
+        .registerAvailableLanguageKeys(['en_US', 'it_IT'])
+        .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
       }
     ])
-    .run(function($rootScope, $state, $cookieStore, $translate, verifyProfileComplete, verifyCharterSigned, alertService) {
+    .config(['tmhDynamicLocaleProvider',
+      function (tmhDynamicLocaleProvider) {
+        tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
+      }
+    ])
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete')) {
           verifyCharterSigned().then(function (verifyAgreementResult) {
@@ -386,6 +392,9 @@
             alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
           });
         }
+      });
+      $rootScope.$on('$stateChangeSuccess', function () {
+        $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
       });
     })
     .factory('verifyCharterSigned', function (auth, cdAgreementsService, $q) {
@@ -417,6 +426,11 @@
         });
         return deferred.promise;
       }
+    })
+    .run(function ($window, $cookieStore, tmhDynamicLocale) { 
+      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
+      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      tmhDynamicLocale.set(userLangCode);
     })
     .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
     .service('cdApi', seneca.ng.web({
