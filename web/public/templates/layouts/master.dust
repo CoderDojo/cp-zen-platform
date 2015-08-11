@@ -101,7 +101,6 @@
     <script src="/components/ckeditor/ckeditor.js"></script>
     <script src="/components/ng-ckeditor/ng-ckeditor.js"></script>
     <script src="/components/googlemaps-js-marker-clusterer/src/markerclusterer_compiled.js"></script>
-    <script src="/content/auth/auth-front.js"></script>
     <script src="/components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script src="/components/checklist-model/checklist-model.js"></script>
     <script src="/components/angular-sb-date-select/src/sb-date-select.js"></script>

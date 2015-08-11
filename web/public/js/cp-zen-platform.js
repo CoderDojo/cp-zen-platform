@@ -5,7 +5,6 @@
     'pascalprecht.translate',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
-    'cdAuth',
     'ngCkeditor',
     'angularValidator',
     'ui.router',
