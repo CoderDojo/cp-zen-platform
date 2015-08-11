@@ -50,7 +50,8 @@ module.exports = {
     'timeout': 120000,
     debug: {
       undead: true
-    }
+    },
+    strict: {add:false,  result:false}
   },
 
   'bodyparser': {

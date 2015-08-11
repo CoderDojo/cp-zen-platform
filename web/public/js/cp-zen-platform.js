@@ -27,6 +27,7 @@
     'vcRecaptcha',
     'ngFileUpload',
     'ng-slide-down',
-    'popoverToggle'
+    'popoverToggle',
+    'tmh.dynamicLocale'
   ]);
 })();
