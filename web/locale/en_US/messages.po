@@ -293,6 +293,9 @@ msgstr "Hello World Foundation and CoderDojo accepts no responsibility or liabil
 msgid "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
 msgstr "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
 
+msgid "There are unsaved changes on this page"
+msgstr "There are unsaved changes on this page"
+
 msgid "Full Name:"
 msgstr "Full Name:"
 

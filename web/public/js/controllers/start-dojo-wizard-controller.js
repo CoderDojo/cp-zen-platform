@@ -1,9 +1,8 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService,
-  WizardHandler, cdDojoService, cdCountriesService, cdAgreementsService, gmap, $translate, utilsService,
-  $sanitize, intercomService, $modal) {
+function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, 
+  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -252,6 +251,31 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               $scope.champion[i] = item;
             });
           }
+          if($localStorage.championDetails) {
+            alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+            if($localStorage.championDetails.dateOfBirth) $scope.champion.dateOfBirth = $localStorage.championDetails.dateOfBirth;
+            if($localStorage.championDetails.phone) $scope.champion.phone = $localStorage.championDetails.phone;
+            if($localStorage.championDetails.country) {
+              $scope.champion.country = $localStorage.championDetails.country;
+              $scope.setCountry($scope.champion, $localStorage.championDetails.country);
+            }
+            if($localStorage.championDetails.place) {
+              $scope.champion.place = $localStorage.championDetails.place;
+              $scope.setPlace($scope.champion, $localStorage.championDetails.place);
+            }
+            if($localStorage.championDetails.country && $localStorage.championDetails.place) {
+              $scope.getLocationFromAddress($scope.champion);
+            }
+            if($localStorage.championDetails.address1) $scope.champion.address1 = $localStorage.championDetails.address1;
+            if($localStorage.championDetails.coordinates) $scope.champion.coordinates = $localStorage.championDetails.coordinates;
+            if($localStorage.championDetails.projects) $scope.champion.projects = $localStorage.championDetails.projects;
+            if($localStorage.championDetails.youthExperience) $scope.champion.youthExperience = $localStorage.championDetails.youthExperience;
+            if($localStorage.championDetails.twitter) $scope.champion.twitter = $localStorage.championDetails.twitter;
+            if($localStorage.championDetails.linkedIn) $scope.champion.linkedIn = $localStorage.championDetails.linkedIn;
+            if($localStorage.championDetails.notes) $scope.champion.notes = $localStorage.championDetails.notes;
+            if($localStorage.championDetails.coderDojoReference) $scope.champion.coderDojoReference = $localStorage.championDetails.coderDojoReference;
+            if($localStorage.championDetails.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = $localStorage.championDetails.coderDojoReferenceOther;
+          }
         });
       }
     }, failAuth);
@@ -285,6 +309,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             if(savedDojoLead && savedDojoLead.application) {
               savedDojoLead.application.championDetails = champion;
               cdDojoService.saveDojoLead(savedDojoLead, function(response) {
+                deleteLocalStorage('championDetails');
                 setupStep3();
               }, failSave);
             } else {
@@ -375,8 +400,19 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             if(response.application.setupYourDojo) {
               $scope.buttonText = $translate.instant("Update Dojo Setup");
               _.each(response.application.setupYourDojo, function(item, i) {
-              $scope.setupDojo[i] = item;
-            });
+                $scope.setupDojo[i] = item;
+              });
+            } 
+            if($localStorage.setupYourDojo) {
+              alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+              cdDojoService.loadSetupDojoSteps(function (steps) {
+                _.each(steps, function (item, i) {
+                  _.each(item.checkboxes, function (item, i) {
+                    $scope.setupDojo[item.name] = (typeof $localStorage.setupYourDojo[item.name] === 'undefined') ? $scope.setupDojo[item.name] : $localStorage.setupYourDojo[item.name];
+                    $scope.setupDojo[item.name + 'Text'] = (item.textField && $localStorage.setupYourDojo[item.name + 'Text']) ? $localStorage.setupYourDojo[item.name + 'Text'] : "";
+                  });
+                });
+              }, fail);
             }
           }
         });
@@ -417,6 +453,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           savedDojoLead.application.setupYourDojo = setupDojo;
           savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
           cdDojoService.saveDojoLead(savedDojoLead, function(response) {
+            deleteLocalStorage('setupYourDojo');
             setupStep4();
           }, failSave);
         } else {
@@ -441,6 +478,16 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.stepFinishedLoading = true;
   }
     //--
+
+    $scope.updateLocalStorage = function (localObj, item, value) {
+      if(!$localStorage[localObj]) $localStorage[localObj] = {};
+      if(typeof value === 'undefined') value = false;
+      $localStorage[localObj][item] = value;
+    }
+
+    var deleteLocalStorage = function (localObj) {
+      delete $localStorage[localObj];
+    }
 
   //--Step Four:
   function setupStep4(wizardRedirect) {
@@ -477,7 +524,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = "<p>" + $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+    var initContent = ($localStorage.dojoListing && $localStorage.dojoListing.notes) ? $localStorage.dojoListing.notes : "<p>" + 
+      $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
       "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
@@ -506,6 +554,34 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]
     };
 
+    if($localStorage.dojoListing) {
+      alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+      if($localStorage.dojoListing.name) $scope.dojo.name = $localStorage.dojoListing.name;
+      if($localStorage.dojoListing.email) $scope.dojo.email = $localStorage.dojoListing.email;
+      if($localStorage.dojoListing.time) $scope.dojo.time = $localStorage.dojoListing.time;
+      if($localStorage.dojoListing.country) {
+        $scope.dojo.country = $localStorage.dojoListing.country;
+        $scope.setCountry($scope.dojo, $localStorage.dojoListing.country);
+      }
+      if($localStorage.dojoListing.place) {
+        $scope.dojo.place = $localStorage.dojoListing.place;
+        $scope.setPlace($scope.dojo, $localStorage.dojoListing.place);
+      }
+      if($localStorage.dojoListing.country && $localStorage.dojoListing.place) {
+        $scope.getLocationFromAddress($scope.dojo);
+      }
+      if($localStorage.dojoListing.address1) $scope.dojo.address1 = $localStorage.dojoListing.address1;
+      if($localStorage.dojoListing.coordinates) $scope.dojo.coordinates = $localStorage.dojoListing.coordinates;
+      if($localStorage.dojoListing.needMentors) $scope.dojo.needMentors = $localStorage.dojoListing.needMentors;
+      if($localStorage.dojoListing.stage) $scope.dojo.stage = $localStorage.dojoListing.stage;
+      if($localStorage.dojoListing.private) $scope.dojo.private = $localStorage.dojoListing.private;
+      if($localStorage.dojoListing.googleGroup) $scope.dojo.googleGroup = $localStorage.dojoListing.googleGroup;
+      if($localStorage.dojoListing.website) $scope.dojo.website = $localStorage.dojoListing.website;
+      if($localStorage.dojoListing.twitter) $scope.dojo.twitter = $localStorage.dojoListing.twitter;
+      if($localStorage.dojoListing.supporterImage) $scope.dojo.supporterImage = $localStorage.dojoListing.supporterImage;
+      if($localStorage.dojoListing.mailingList) $scope.dojo.mailingList = $localStorage.dojoListing.mailingList;
+    }
+
     $scope.save = function(dojo) {
       var win = function(){
         _.each(sanitizeCdForms.editDojo, function(item, i) {
@@ -522,6 +598,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             dojo.dojoLeadId = response.id;
             dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
             cdDojoService.save(dojo, function (response) {
+              deleteLocalStorage('dojoListing');
 
               //update intercom champion dojos
               intercomService.updateIntercom(response.dojo_id);
@@ -610,6 +687,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 }
 
 angular.module('cpZenPlatform')
-  .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService',
-  'WizardHandler', 'cdDojoService', 'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService',
-  '$sanitize', 'intercomService', '$modal', startDojoWizardCtrl]);
+  .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 
+    'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
+    '$localStorage', startDojoWizardCtrl]);
