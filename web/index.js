@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.start = function () {
+exports.start = function () {
 
 if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
 
