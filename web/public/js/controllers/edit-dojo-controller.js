@@ -39,7 +39,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 
   async.waterfall([function(done){
     var dojoId = $state.params.id;
-    
+
     cdDojoService.load(dojoId, function(response) {
       if(!_.isEmpty(response)) {
         return done(null,response);
@@ -51,9 +51,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     var query = {};
 
     query.dojoId = dojo.id;
-    
+
     query.owner = 1;
-    
+
     cdDojoService.getUsersDojos(query, function(response){
 
       return done(null, dojo, response[0]);
@@ -63,7 +63,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 
 
   }, function(dojo, prevFounder , done){
-    
+
     if(_.isEmpty(prevFounder)){
       return done(null, dojo);
     }
@@ -87,7 +87,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.founder  = angular.copy(prevFounder);
     loadDojoMap();
   });
-  
+
   $scope.getUsersByEmails = function(email){
     if(!email || !email.length || email.length < 3) {
       $scope.users = [];
@@ -103,7 +103,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     };
 
     cdUsersService.getUsersByEmails(email, win, fail);
-  }; 
+  };
 
   $scope.setFounder = function(founder){
     if(founder){
@@ -235,19 +235,22 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   };
 
   $scope.getLocationFromAddress = function(dojo) {
-    if(dojo) {
-      if(!dojo.address1) dojo.address1 = '';
-      if(!dojo.address2) dojo.address2 = '';
-      if(!dojo.city) dojo.city = '';
-      if(!dojo.county) dojo.county = '';
-      if(!dojo.state) dojo.state = '';
-      if(!dojo.country)  dojo.country  = '';
-      var address = dojo.city.toponymName + ', ' + dojo.county.toponymName + ', ' + dojo.state.toponymName + ', ' + dojo.country.countryName;
-      Geocoder.latLngForAddress(address).then(function (data) {
-        $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-        $scope.model.map.panTo($scope.mapOptions.center);
+    utilsService.getLocationFromAddress(dojo).then(function (data) {
+      $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+      $scope.model.map.panTo($scope.mapOptions.center);
+      angular.forEach($scope.markers, function(marker) {
+        marker.setMap(null);
       });
-    }
+      $scope.markers.push(new google.maps.Marker({
+        map: $scope.model.map,
+        position: $scope.mapOptions.center
+      }));
+      dojo.coordinates = data.lat + ', ' + data.lng;
+    }, function () {
+      //Ask user to add location manually if google geocoding can't find location.
+      alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+    });
+
   }
 
   function canUpdateDojo() {
@@ -264,7 +267,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
         deferred.resolve(isDojoAdmin);
       }, function (err) {
         deferred.reject(err);
-      });  
+      });
     }
     return deferred.promise;
   }
