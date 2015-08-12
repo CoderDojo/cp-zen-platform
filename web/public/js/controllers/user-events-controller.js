@@ -17,8 +17,18 @@ function userEventsCtrl($scope, $translate, cdEventsService, alertService, curre
                 //Recurring event
                 var startDate = _.first(event.dates);
                 var endDate = _.last(event.dates);
-                event.formattedDate = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+                event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+                event.formattedDates = [];
+                _.each(event.dates, function (eventDate) {
+                  event.formattedDates.push(moment(eventDate).format('Do MMMM YY'));
+                });
                 event.day = moment(startDate, 'YYYY-MM-DD HH:mm:ss').format('dddd');
+                event.time = moment(_.first(event.dates)).format('HH:mm');
+                if(event.recurringType === 'weekly') {
+                  event.formattedRecurringType = $translate.instant('Weekly');
+                } else {
+                  event.formattedRecurringType = $translate.instant('Every two weeks');
+                }
               } else {
                 //One-off event
                 var eventDate = _.first(event.dates);
