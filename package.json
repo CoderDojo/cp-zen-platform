@@ -31,7 +31,7 @@
     "hapi": "git://github.com/wprl/hapi.git#03bae914f9361e3aaea1379f875be4316e128981",
     "hapi-dust": "2.0.0",
     "hapi-less": "0.2.0",
-    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#d4c0253777b7a06449c53a8aa48a5a59df4dd856",
+    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#7be71be7da1761492037772b48aacb203e897465",
     "jed": "1.0.2",
     "le_node": "1.0.11",
     "less": "1.7.3",
