@@ -17,7 +17,6 @@ module.exports.register = function (server, options, next) {
   });
 
   // Serve public files
-  // TODO cache this for a long time, it will rarely change
   server.route({
     method: 'GET',
     path: '/favicon.ico',
@@ -29,9 +28,6 @@ module.exports.register = function (server, options, next) {
     }
   });
 
-  // TODO Instead of serving these directly, bundle them and include all .js from versioned URLs.
-  //      This will allow using 1 year (maximum value) for expiresIn, while not having to worry
-  //      about old files stuck in the cache.
   server.route({
     method: 'GET',
     path: '/components/{filename*}',
@@ -43,8 +39,6 @@ module.exports.register = function (server, options, next) {
     }
   });
 
-  // TODO these can be cached for a year.  When the image content changes, it should be given
-  //      a new filename/url to avoid any cache expiry issues.
   server.route({
     method: 'GET',
     path: '/img/{filename*}',
@@ -56,7 +50,6 @@ module.exports.register = function (server, options, next) {
     }
   });
 
-  // TODO bundle + serve from a versioned URL
   server.route({
     method: 'GET',
     path: '/js/{filename*}',
@@ -64,6 +57,18 @@ module.exports.register = function (server, options, next) {
     handler: {
       directory: {
         path: path.join(__dirname, '../public/js')
+      }
+    }
+  });
+
+  // Serve the auth .js files, etc.
+  // TODO move this back to the root lib directory.
+  server.route({
+    method: 'GET',
+    path: '/content/auth/{filename*}',
+    handler: {
+      directory: {
+        path: path.join(__dirname, '../../lib/auth/public')
       }
     }
   });

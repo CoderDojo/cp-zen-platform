@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = [{
-  // TODO long cache
   method: 'GET',
   path: '/errors/template/{name*}',
   handler: function (request, reply) {

@@ -91,7 +91,6 @@ server.register({
   options: {
     home: path.join(__dirname, './public/css'),
     route: '/css/{filename*}',
-    // TODO may want to use a versioned URL here
     config: { cache: { privacy: 'public', expiresIn: 1 * 60 * 60 * 1000 } }, // 1 hr // TODO move value to config
     less: { compress: true }
   }

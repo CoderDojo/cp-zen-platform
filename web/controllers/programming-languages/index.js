@@ -3,7 +3,6 @@
 var programmingLanguages = require('../../config/programmingLanguages.js');
 
 module.exports = [{
-  // TODO cache with versioned URL?
   method: 'GET',
   path: '/programming-languages',
   handler: function (request, reply) {
