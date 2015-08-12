@@ -2,6 +2,9 @@
 var TITLE = 'cp-zen-platform';
 process.env.component = TITLE;
 
+process.setMaxListeners(0);
+require('events').EventEmitter.prototype._maxListeners = 100;
+
 var util = require('util');
 var cluster = require('cluster');
 var server;

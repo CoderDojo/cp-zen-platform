@@ -17,6 +17,10 @@ var log = function() {
 
       le.log('debug', arguments);
     }
+
+    if (process.env.SENECA_DEBUG === 'true') {
+      console.log(arguments);
+    }
   }
 
   function errorHandler() {
