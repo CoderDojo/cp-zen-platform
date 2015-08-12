@@ -28,9 +28,9 @@
     "connect-redis": "2.3.0",
     "dustjs-helpers": "1.6.1",
     "dustjs-linkedin": "2.6.1",
-    "hapi": "8.8.0",
+    "hapi": "git://github.com/wprl/hapi.git#03bae914f9361e3aaea1379f875be4316e128981",
     "hapi-dust": "2.0.0",
-    "hapi-less": "0.1.1",
+    "hapi-less": "0.2.0",
     "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#e552d33b48a897e902ce8e84fd769d5b47ac28ae",
     "jed": "1.0.2",
     "le_node": "1.0.11",
@@ -48,10 +48,14 @@
     "seneca-user-roles": "0.1.0",
     "seneca-web-access": "0.1.0",
     "serve-static": "1.4.0",
-    "slug": "0.9.1"
+    "slug": "0.9.1",
+    "chairo": "0.0.1",
+    "hapi-etags": "0.1.0",
+    "chairo-cache": "0.2.3"
   },
   "devDependencies": {
     "bower": "1.4.1",
+    "catbox-memory": "1.1.1",
     "fs-extra": "0.13.0",
     "glob": "4.3.1",
     "grunt": "0.4.5",
