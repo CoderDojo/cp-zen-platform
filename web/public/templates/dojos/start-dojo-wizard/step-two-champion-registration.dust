@@ -64,7 +64,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" tooltip='{@i18n key="Please include country code"/}' required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))" ng-change="updateLocalStorage('championDetails','phone',champion.phone)">
+              <input type="tel" national-mode="false" auto-format="true" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" required class="form-control" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-change="updateLocalStorage('championDetails','phone',champion.phone)" international-phone-number default-country="auto" ng-model="champion.phone">
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
+                <input type="url" http-prefix tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>
@@ -171,7 +171,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4 cd-form-label1">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
+                <input type="url" http-prefix tooltip="{@i18n key="If you wish please provide a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
               </div>
           </div>
         </div>

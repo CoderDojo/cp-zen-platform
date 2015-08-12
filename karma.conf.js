@@ -53,6 +53,8 @@ module.exports = function(config) {
             './web/public/components/angular-popover-toggle/popover-toggle.js',
             './web/public/components/angular-dynamic-locale/dist/tmhDynamicLocale.js',
             './web/public/components/angular-atomic-notify/src/angular-atomic-notify.js',
+            './web/public/components/intl-tel-input/build/js/intlTelInput.min.js',
+            './web/public/components/international-phone-number/releases/international-phone-number.min.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
             './web/public/js/directives/*.js',

@@ -1853,3 +1853,9 @@ msgstr "Capacity is empty"
 
 msgid "None of your Dojo's have any Events planned currently"
 msgstr "None of your Dojo's have any Events planned currently"
+
+msgid "If you wish please provide a link to your LinkedIn page."
+msgstr "If you wish please provide a link to your LinkedIn page."
+
+msgid "If you wish please provide a link to your Twitter page."
+msgstr "If you wish please provide a link to your Twitter page."

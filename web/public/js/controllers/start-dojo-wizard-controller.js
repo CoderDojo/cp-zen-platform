@@ -239,7 +239,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.stepTwoShowGmap = true;
 
     currentStepInt = 1;
-
+    
     $scope.showCharterAgreement = function () {
       $scope.showCharterAgreementFlag = false;
     }
