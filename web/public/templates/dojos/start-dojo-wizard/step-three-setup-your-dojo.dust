@@ -24,7 +24,8 @@
                     <div class="checkbox cd-checkbox checkbox-primary">
                       <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}"
                         ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
-                        ng-model="setupDojo[checkboxInput.name]">
+                        ng-model="setupDojo[checkboxInput.name]" 
+                        ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name, setupDojo[checkboxInput.name])">
                       <label class="cd-checkbox-label2" for="{{ checkboxInput.name }}"><span>
                         {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span></span>
                       </label>
@@ -35,7 +36,7 @@
                       </ul>
                       <input type="text" ng-if="checkboxInput.textField" ng-show="setupDojo[checkboxInput.name] === true"
                         class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
-                        ng-model="setupDojo[checkboxInput.name + 'Text']">
+                        ng-model="setupDojo[checkboxInput.name + 'Text']"  id="dojoNotes" ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name + 'Text', setupDojo[checkboxInput.name + 'Text'])">
                     </div>
                   </div>
                 </div>
