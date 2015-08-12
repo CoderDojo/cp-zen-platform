@@ -225,7 +225,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL"/}" ng-change="updateLocalStorage('dojoListing','googleGroup', dojo.googleGroup)">
+            <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.googleGroup" name="dojoGoogleGroup" id="dojoGoogleGroup" placeholder="{@i18n key="Enter Google group URL"/}" ng-change="updateLocalStorage('dojoListing','googleGroup', dojo.googleGroup)">
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL"/}" ng-change="updateLocalStorage('dojoListing','website', dojo.website)">
+            <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite" id="dojoWebsite" placeholder="{@i18n key="Enter website URL"/}" ng-change="updateLocalStorage('dojoListing','website', dojo.website)">
           </div>
         </div>
       </div>
@@ -255,7 +255,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url"  class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL"/}" ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)">
+            <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL"/}" ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)">
           </div>
         </div>
       </div>
@@ -270,7 +270,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="text"  class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}" ng-change="updateLocalStorage('dojoListing','supporterImage', dojo.supporterImage)">
+            <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}" ng-change="updateLocalStorage('dojoListing','supporterImage', dojo.supporterImage)">
           </div>
         </div>
       </div>

@@ -52,6 +52,9 @@
     <!-- Angular Atomic Notify -->
     <link rel="stylesheet" type="text/css" href="/components/angular-atomic-notify/dist/angular-atomic-notify.min.css">
 
+    <!-- International Tel Input -->
+    <link rel="stylesheet" type="text/css" href="/components/intl-tel-input/build/css/intlTelInput.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -127,6 +130,8 @@
     <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
     <script src="/components/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="/components/angular-atomic-notify/src/angular-atomic-notify.js"></script>
+    <script src="/components/intl-tel-input/build/js/intlTelInput.min.js"></script>
+    <script src="/components/international-phone-number/releases/international-phone-number.min.js"></script>
     
     <script src="/seneca/init.js"></script>
 
@@ -174,6 +179,7 @@
     <script src="/js/directives/cd-profiles.js"></script>
     <script src="/js/directives/cd-dojo-events-list.js"></script>
     <script src="/js/directives/cd-apply-for-event.js"></script>
+    <script src="/js/directives/cd-http-prefix.js"></script>
 
     <script src="/js/init-master.js"></script>
 </body>

@@ -28,6 +28,7 @@
     'ng-slide-down',
     'popoverToggle',
     'tmh.dynamicLocale',
-    'atomic-notify'
+    'atomic-notify',
+    'internationalPhoneNumber'
   ]);
 })();
