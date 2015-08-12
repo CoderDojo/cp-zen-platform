@@ -63,15 +63,15 @@ module.exports = _.defaults({
   },
 
   client: [
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10301, pin: 'role:cd-dojos,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10302, pin: 'role:cd-countries,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-users,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-agreements,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-profiles,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:cd-oauth2,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10303, pin: 'role:user,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10305, pin: 'role:cd-badges,cmd:*'},
-    {type: 'web', host: process.env.DOCKER_HOST_IP || process.env.TARGETIP || '127.0.0.1', port: 10306, pin: 'role:cd-events,cmd:*'}
+    {type: 'tcp',  port: 10301, pin: 'role:cd-dojos,cmd:*'},
+    {type: 'tcp',  port: 10302, pin: 'role:cd-countries,cmd:*'},
+    {type: 'tcp',  port: 10303, pin: 'role:cd-users,cmd:*'},
+    {type: 'tcp',  port: 10303, pin: 'role:cd-agreements,cmd:*'},
+    {type: 'tcp',  port: 10303, pin: 'role:cd-profiles,cmd:*'},
+    {type: 'tcp',  port: 10303, pin: 'role:cd-oauth2,cmd:*'},
+    {type: 'tcp',  port: 10303, pin: 'role:user,cmd:*'},
+    {type: 'tcp',  port: 10305, pin: 'role:cd-badges,cmd:*'},
+    {type: 'tcp',  port: 10306, pin: 'role:cd-events,cmd:*'}
   ],
 
   redis: {
