@@ -48,9 +48,6 @@ module.exports = {
 
   'main': {
     'timeout': 120000,
-    debug: {
-      undead: true
-    },
     strict: {add:false,  result:false}
   },
 
