@@ -61,7 +61,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     $scope.pageNo = loadPageData.pageNo;
     $scope.events = [];
 
-    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, public: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+    cdEventsService.search({dojoId: dojoId, filterPastEvents: true, public: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
       var events = [];
       _.each(result, function (event) {
         if(event.type === 'recurring') {
@@ -91,7 +91,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         events.push(event);
       });
       $scope.events = events;
-      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
+      cdEventsService.search({dojoId: dojoId, filterPastEvents: true}).then(function (result) {
         $scope.totalItems = result.length;
       }, function (err) {
         console.error(err);

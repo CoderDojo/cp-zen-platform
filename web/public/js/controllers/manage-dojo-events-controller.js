@@ -82,7 +82,7 @@
           events.push(event);
         });
         $scope.events = events;
-        cdEventsService.search({dojoId: $scope.dojoId, status: 'published'}, function (result) {
+        cdEventsService.search({dojoId: $scope.dojoId}, function (result) {
           $scope.totalItems = result.length;
           return cb();
         }, function (err) {
