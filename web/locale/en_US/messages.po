@@ -1788,12 +1788,11 @@ msgstr "See Kata here:"
 msgid "You can also at any point contact info@coderdojo.com for support."
 msgstr "You can also at any point contact info@coderdojo.com for support."
 
-<<<<<<< HEAD
 msgid "This is not required but will help you significantly with the running of your Dojo! It is encouraged to encourage parents to get involved in the running of your Dojo!"
 msgstr "This is not required but will help you significantly with the running of your Dojo! It is encouraged to encourage parents to get involved in the running of your Dojo!"
 
 msgid "This is specific to the legislation in your jurisdiction. Please comment below giving us more information or contact a CoderDojo Foundation staff member at info@coderdojo.com."
-msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href="http://kata.coderdojo.com/wiki/Recommended_Practice">here</a>."
+msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href="http://kata.coderdojo.com/wiki/Recommended_Practice" target="_blank">here</a>."
 
 msgid "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
 msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
@@ -1801,20 +1800,20 @@ msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To f
 msgid "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 msgstr "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 
-msgid "Please read CoderDojo ECHO, our guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
-msgstr "Please read CoderDojo ECHO, our guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
+msgid "Please read CoderDojo ECHO, our guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies" target="_blank">here</a>"
+msgstr "Please read CoderDojo ECHO, our guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies" target="_blank">here</a>"
 
-msgid "Please see Online Safety 101 for Mentors <a href="https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing">here</a> and Online Safety 101 for Ninjas <a href="https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing">here</a>"
-msgstr "Please see Online Safety 101 for Mentors <a href="https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing">here</a> and Online Safety 101 for Ninjas <a href="https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing">here</a>"
+msgid "Please see Online Safety 101 for Mentors <a href="https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing">here</a> and Online Safety 101 for Ninjas <a href="https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing" target="_blank">here</a>"
+msgstr "Please see Online Safety 101 for Mentors <a href="https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing">here</a> and Online Safety 101 for Ninjas <a href="https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing" target="_blank">here</a>"
 
-msgid "You can see more information on Data Protection <a href="https://docs.google.com/document/d/18XQNYEMQrBDJoR0Gt1ryC6CzxDEd_k41p4PEeKYtIxE/edit?usp=sharing"here</a>"
+msgid "You can see more information on Data Protection <a href="https://docs.google.com/document/d/18XQNYEMQrBDJoR0Gt1ryC6CzxDEd_k41p4PEeKYtIxE/edit?usp=sharing" target="_blank">here</a>"
 msgstr "You can see more information on Data Protection <a href="https://docs.google.com/document/d/18XQNYEMQrBDJoR0Gt1ryC6CzxDEd_k41p4PEeKYtIxE/edit?usp=sharing"here</a>"
 
-msgid "You can see more information on our inclusion policy <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Policy">here</a>"
-msgstr "You can see more information on our inclusion policy <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Policy">here</a>"
+msgid "You can see more information on our inclusion policy <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Policy" target="_blank">here</a>"
+msgstr "You can see more information on our inclusion policy <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Policy" target="_blank">here</a>"
 
-msgid "See more information on the supports available to you <a href="https://coderdojo.com/organise-a-dojo/community-support/">here</a>"
-msgstr "See more information on the supports available to you <a href="https://coderdojo.com/organise-a-dojo/community-support/">here</a>"
+msgid "See more information on the supports available to you <a href="https://coderdojo.com/organise-a-dojo/community-support/" target="_blank">here</a>"
+msgstr "See more information on the supports available to you <a href="https://coderdojo.com/organise-a-dojo/community-support/" target="_blank">here</a>"
 
 msgid "Please feel free to add comments or more information here"
 msgstr "Please feel free to add comments or more information here"
