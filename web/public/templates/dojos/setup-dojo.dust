@@ -21,6 +21,11 @@
                         ng-model="dojoLead.application.setupYourDojo[checkboxInput.name]">
                       <label for="{{ checkboxInput.name }}">
                         {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
+                        <div class="setup-dojo-icons">
+                          <span tooltip-html-unsafe="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-trigger="mouseover" tooltip-animation="true">
+                          </span>
+                          <span tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"/} <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank'>{@i18n key="here"/}</a>" tooltip-trigger="mouseover" href="#" ng-if="checkboxInput.taoIcon===true" class="setup-dojo-tao-btn"></span>
+                        </div>
                       </label>
                       <input type="text" ng-if="checkboxInput.textField"
                         ng-init="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']"
