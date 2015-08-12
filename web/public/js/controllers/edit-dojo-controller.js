@@ -1,7 +1,9 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService) {
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth,
+  $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage) {
+
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -86,6 +88,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     $scope.prevFounder = prevFounder;
     $scope.founder  = angular.copy(prevFounder);
     loadDojoMap();
+    updateFromLocalStorage();
   });
 
   $scope.getUsersByEmails = function(email){
@@ -137,14 +140,61 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var latitude  = coordinates[0];
       var longitude = coordinates[1];
 
-      $scope.mapOptions = {
-        center: new google.maps.LatLng(latitude, longitude),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
+      if(!isNaN(utilsService.filterFloat(latitude)) && !isNaN(utilsService.filterFloat(latitude))) {
+        $scope.mapOptions = {
+          center: new google.maps.LatLng(latitude, longitude),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else if($scope.dojo.geoPoint && $scope.dojo.geoPoint.lat && $scope.dojo.geoPoint.lon) {
+        //add map using coordinates from geopoint if possible
+        $scope.mapOptions = {
+          center: new google.maps.LatLng($scope.dojo.geoPoint.lat, $scope.dojo.geoPoint.lon),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else { //add empty map
+        cdCountriesService.loadCountriesLatLongData(function(countries){
+          var country = countries[$scope.dojo.alpha2];
+          $scope.mapOptions = {
+            center: new google.maps.LatLng(country[0], country[1]),
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+        })
+      }
     }
     $scope.dojoPageReady = true;
+  }
+
+  function updateFromLocalStorage() {
+    if($localStorage.editDojoListing) {
+      alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+      if($localStorage.editDojoListing.name) $scope.dojo.name = $localStorage.editDojoListing.name;
+      if($localStorage.editDojoListing.email) $scope.dojo.email = $localStorage.editDojoListing.email;
+      if($localStorage.editDojoListing.time) $scope.dojo.time = $localStorage.editDojoListing.time;
+      if($localStorage.editDojoListing.country) {
+        $scope.dojo.country = $localStorage.editDojoListing.country;
+        $scope.setCountry($scope.dojo, $localStorage.editDojoListing.country);
+      }
+      if($localStorage.editDojoListing.place) {
+        $scope.dojo.place = $localStorage.editDojoListing.place;
+        $scope.setPlace($scope.dojo, $localStorage.editDojoListing.place);
+      }
+      if($localStorage.dojoListing.country && $localStorage.editDojoListing.place) {
+        $scope.getLocationFromAddress($scope.dojo);
+      }
+      if($localStorage.editDojoListing.address1) $scope.dojo.address1 = $localStorage.editDojoListing.address1;
+      if($localStorage.editDojoListing.coordinates) $scope.dojo.coordinates = $localStorage.editDojoListing.coordinates;
+      if($localStorage.editDojoListing.needMentors) $scope.dojo.needMentors = $localStorage.editDojoListing.needMentors;
+      if($localStorage.editDojoListing.stage) $scope.dojo.stage = $localStorage.editDojoListing.stage;
+      if($localStorage.editDojoListing.private) $scope.dojo.private = $localStorage.editDojoListing.private;
+      if($localStorage.editDojoListing.googleGroup) $scope.dojo.googleGroup = $localStorage.editDojoListing.googleGroup;
+      if($localStorage.editDojoListing.website) $scope.dojo.website = $localStorage.editDojoListing.website;
+      if($localStorage.editDojoListing.twitter) $scope.dojo.twitter = $localStorage.editDojoListing.twitter;
+      if($localStorage.editDojoListing.supporterImage) $scope.dojo.supporterImage = $localStorage.editDojoListing.supporterImage;
+      if($localStorage.editDojoListing.mailingList) $scope.dojo.mailingList = $localStorage.editDojoListing.mailingList;
+    }
   }
 
   cdCountriesService.listCountries(function(countries) {
@@ -180,6 +230,19 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   };
 
+  $scope.updateLocalStorage = function (localObj, item, value) {
+    if($state.current.name === "edit-dojo") localObj = "editDojoListing";
+    if(!$localStorage[localObj]) $localStorage[localObj] = {};
+    if(typeof value === 'undefined') value = false;
+    $localStorage[localObj][item] = value;
+  }
+
+  var deleteLocalStorage = function (localObj) {
+    if($state.current.name === "edit-dojo") localObj = "editDojoListing";
+    delete $localStorage[localObj];
+    console.log($localStorage);
+  }
+
   var sanitizeCdForms = {
     editDojo: ["address1","email","googleGroup","name","needMentors","notes","supporterImage","time","twitter","website"]
   }
@@ -198,6 +261,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
           if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
             cdDojoService.updateFounder($scope.founder, function(response){
               alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+                deleteLocalStorage('editDojoListing');
                 $state.go('my-dojos');
                 $scope.$apply();
               });
@@ -206,6 +270,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
             });
           } else {
             alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+              deleteLocalStorage('editDojoListing');
               $state.go('my-dojos');
               $scope.$apply();
             });
@@ -281,5 +346,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth',
+    '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', cdEditDojoCtrl]);
 

@@ -4,11 +4,14 @@ var path = require('path');
 var dust = require('dustjs-linkedin');
 var po2json = require('po2json');
 var Jed = require('jed');
-
+var fs = require('fs');
 var translators = {};
 
 function getTranslator(locale) {
   if (!translators[locale]) {
+    if (!fs.existsSync(path.join(__dirname, '../locale/', locale, 'messages.po'))) {
+      locale = 'en_US';
+    }
     var podata = po2json.parseFileSync(path.join(__dirname, '../locale/', locale, 'messages.po'), {
       format: 'jed',
       domain: 'coder-dojo-platform'

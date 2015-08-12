@@ -135,7 +135,7 @@
         // Extend eventInfo
         eventInfo.position = eventPosition;
       }
-      
+
       eventInfo.status = $scope.publish ? 'published' : 'saved';
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
@@ -225,19 +225,41 @@
       }
     }
 
+
     function loadDojo(done) {
       cdDojoService.load(dojoId, function(dojoInfo) {
         $scope.eventInfo.country = dojoInfo.country;
         $scope.eventInfo.city = dojoInfo.place;
         $scope.eventInfo.address = dojoInfo.address1;
 
-        var position = dojoInfo.coordinates.split(',');
+        var position = [];
+        if(dojoInfo.coordinates) {
+          position = dojoInfo.coordinates.split(',');
+        }
 
-        addMap({
-          lat: parseFloat(position[0]),
-          lng: parseFloat(position[1])
-        });
         $scope.dojoInfo = dojoInfo;
+
+        if(position && position.length === 2 && !isNaN(utilsService.filterFloat(position[0])) && !isNaN(utilsService.filterFloat(position[1]))) {
+          addMap({
+            lat: parseFloat(position[0]),
+            lng: parseFloat(position[1])
+          });
+        } else if($scope.dojoInfo.geoPoint && $scope.dojoInfo.geoPoint.lat && $scope.dojoInfo.geoPoint.lon) {
+          //add map using coordinates from geopoint if possible
+          addMap({
+            lat: $scope.dojoInfo.geoPoint.lat,
+            lng: $scope.dojoInfo.geoPoint.lon
+          })
+        } else { //add empty map
+          cdCountriesService.loadCountriesLatLongData(function(countries){
+            var country = countries[dojoInfo.alpha2];
+            addMap({
+              lat: country[0],
+              lng: country[1]
+            })
+          }, done)
+        }
+
         done(null, dojoInfo);
 
       }, done);
