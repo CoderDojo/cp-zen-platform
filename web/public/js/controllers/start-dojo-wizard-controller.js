@@ -82,8 +82,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
           dojoLead.completed = false;
           dojoLead.currentStep= 2;
-          dojoLead.application.dojoListing = {};
+          if(!dojoLead.application.championDetails) {
+            dojoLead.application.championDetails = {
+              email: user.email,
+              name: user.name
+            };
+          }
           dojoLead.application.setupYourDojo = {};
+          dojoLead.application.dojoListing = {};
 
           cdDojoService.saveDojoLead(dojoLead, function(response) {
               initStep(2);
