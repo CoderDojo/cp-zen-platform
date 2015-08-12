@@ -3,7 +3,7 @@
 var ONE_HR_MS = 1 * 60 * 60 * 1000; // TODO move to config
 
 var controller = module.exports = [
-
+  // TODO these could all be cached for an hour possibly
   {
     method: 'GET',
     path: '/',
