@@ -2,7 +2,7 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, 
-  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage, $http, $q) {
+  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -715,4 +715,4 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 
     'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
-    '$localStorage', '$http', '$q', startDojoWizardCtrl]);
+    '$localStorage', startDojoWizardCtrl]);
