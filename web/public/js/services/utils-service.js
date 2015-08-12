@@ -34,14 +34,14 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
       var minPasswordLength = 8;
       var characterGroupCount = numberCount + characterCount;
 
-      var matchesEmail = (function() { 
-        if(password === email) { 
-          return true; 
-        } else { 
-          return false; 
+      var matchesEmail = (function() {
+        if(password === email) {
+          return true;
+        } else {
+          return false;
         }
       }());
-      
+
       if ((password.length >= minPasswordLength) && (characterGroupCount >= 1) && !matchesEmail) {
         //Password valid
         return {valid: true};
@@ -81,7 +81,7 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
     var userTypeNumbers = _.map(userTypes, function (userType) {
       return userTypesByPermissionLevel[userType];
     });
-    
+
     var sortedUserTypeNumbers = _.sortBy(userTypeNumbers);
     return utils.keyForValue(userTypesByPermissionLevel, sortedUserTypeNumbers[0]);
   }
@@ -89,7 +89,7 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
   utils.getPlaces = function (countryCode, $select) {
     var deferred = $q.defer();
     var search = $select.search;
-    
+
     if (!countryCode || !search.length || search.length < 3) {
       deferred.resolve([]);
     } else {
@@ -142,6 +142,13 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
       return 'pointer sortable glyphicon glyphicon-chevron-down';
     }
   }
+
+  utils.filterFloat = function (value) {
+    if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
+        .test(value))
+      return Number(value);
+    return NaN;
+  };
 
   return utils;
 }]);
