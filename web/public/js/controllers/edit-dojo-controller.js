@@ -1,9 +1,9 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth, 
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth,
   $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage) {
-  
+
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
@@ -140,12 +140,29 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       var latitude  = coordinates[0];
       var longitude = coordinates[1];
 
-      $scope.mapOptions = {
-        center: new google.maps.LatLng(latitude, longitude),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
+      if(!isNaN(utilsService.filterFloat(latitude)) && !isNaN(utilsService.filterFloat(latitude))) {
+        $scope.mapOptions = {
+          center: new google.maps.LatLng(latitude, longitude),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else if($scope.dojo.geoPoint && $scope.dojo.geoPoint.lat && $scope.dojo.geoPoint.lon) {
+        //add map using coordinates from geopoint if possible
+        $scope.mapOptions = {
+          center: new google.maps.LatLng($scope.dojo.geoPoint.lat, $scope.dojo.geoPoint.lon),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+      } else { //add empty map
+        cdCountriesService.loadCountriesLatLongData(function(countries){
+          var country = countries[$scope.dojo.alpha2];
+          $scope.mapOptions = {
+            center: new google.maps.LatLng(country[0], country[1]),
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+        })
+      }
     }
     $scope.dojoPageReady = true;
   }
@@ -329,6 +346,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth', 
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth',
     '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', cdEditDojoCtrl]);
 
