@@ -7,6 +7,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
   $scope.wizardCurrentStep = '';
+  var currentUser = null;
   var currentStepInt = 0;
   var stepNames = [
                     'Register Account',
@@ -32,6 +33,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //Check if user has already started the wizard.
   auth.get_loggedin_user(function(user) {
+    currentUser = user;
+
     var currentPath = $location.path();
     if(!_.isEmpty(user) && currentPath === '/start-dojo') {
       $window.location.href = '/dashboard/start-dojo';
@@ -98,7 +101,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           if(uncompletedDojoLead){
             cdAgreementsService.loadUserAgreement(user.id, function(response){
               if(response && response.id){
-
                 initStep(uncompletedDojoLead.currentStep);
               } else {
                 initStep(1, 'charter');
@@ -115,6 +117,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     }
   }, function () {
     //User not logged in
+    currentUser = null;
     initStep(0);
   });
 
@@ -241,7 +244,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $scope.showCharterAgreementFlag = false;
     }
 
-    var currentUser;
     auth.get_loggedin_user(function (user) {
       currentUser = user;
       if (currentUser) {
@@ -257,34 +259,39 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               $scope.champion[i] = item;
             });
           }
-          if($localStorage.championDetails) {
-            alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-            if($localStorage.championDetails.dateOfBirth) $scope.champion.dateOfBirth = $localStorage.championDetails.dateOfBirth;
-            if($localStorage.championDetails.phone) $scope.champion.phone = $localStorage.championDetails.phone;
-            if($localStorage.championDetails.country) {
-              $scope.champion.country = $localStorage.championDetails.country;
-              $scope.setCountry($scope.champion, $localStorage.championDetails.country);
+
+          if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
+            alertService.showAlert($translate.instant('There are unsaved changes on this page:CHAMPION'));
+            var lsc = $localStorage[user.id].dojoLead.championDetails;
+            if(lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
+            if(lsc.phone) $scope.champion.phone = lsc.phone;
+            if(lsc.country) {
+              $scope.champion.country = lsc.country;
+              $scope.setCountry($scope.champion, lsc.country);
             }
-            if($localStorage.championDetails.place) {
-              $scope.champion.place = $localStorage.championDetails.place;
-              $scope.setPlace($scope.champion, $localStorage.championDetails.place);
+            if(lsc.place) {
+              $scope.champion.place = lsc.place;
+              $scope.setPlace($scope.champion, lsc.place);
             }
-            if($localStorage.championDetails.country && $localStorage.championDetails.place) {
+            if(lsc.country && lsc.place) {
               $scope.getLocationFromAddress($scope.champion);
             }
-            if($localStorage.championDetails.address1) $scope.champion.address1 = $localStorage.championDetails.address1;
-            if($localStorage.championDetails.coordinates) $scope.champion.coordinates = $localStorage.championDetails.coordinates;
-            if($localStorage.championDetails.projects) $scope.champion.projects = $localStorage.championDetails.projects;
-            if($localStorage.championDetails.youthExperience) $scope.champion.youthExperience = $localStorage.championDetails.youthExperience;
-            if($localStorage.championDetails.twitter) $scope.champion.twitter = $localStorage.championDetails.twitter;
-            if($localStorage.championDetails.linkedIn) $scope.champion.linkedIn = $localStorage.championDetails.linkedIn;
-            if($localStorage.championDetails.notes) $scope.champion.notes = $localStorage.championDetails.notes;
-            if($localStorage.championDetails.coderDojoReference) $scope.champion.coderDojoReference = $localStorage.championDetails.coderDojoReference;
-            if($localStorage.championDetails.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = $localStorage.championDetails.coderDojoReferenceOther;
+            if(lsc.address1) $scope.champion.address1 = lsc.address1;
+            if(lsc.coordinates) $scope.champion.coordinates = lsc.coordinates;
+            if(lsc.projects) $scope.champion.projects = lsc.projects;
+            if(lsc.youthExperience) $scope.champion.youthExperience = lsc.youthExperience;
+            if(lsc.twitter) $scope.champion.twitter = lsc.twitter;
+            if(lsc.linkedIn) $scope.champion.linkedIn = lsc.linkedIn;
+            if(lsc.notes) $scope.champion.notes = lsc.notes;
+            if(lsc.coderDojoReference) $scope.champion.coderDojoReference = lsc.coderDojoReference;
+            if(lsc.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = lsc.coderDojoReferenceOther;
           }
         });
       }
-    }, failAuth);
+    }, function () {
+      currentUser = null;
+      failAuth();
+    });
 
     if(subStep && subStep === 'charter'){
       $scope.showCharterAgreement();
@@ -323,6 +330,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             }
           } else {
             cdDojoService.saveDojoLead(dojoLead, function (response) {
+              deleteLocalStorage('championDetails');
               $scope.showCharterAgreement();
               intercomService.InitIntercom();
             },failSave);
@@ -375,7 +383,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     $scope.referredBy = [
-      "Google",
+      $translate.instant('Google'),
       $translate.instant('Newspaper/Magazine'),
       $translate.instant('Radio'),
       $translate.instant('Family/Friends'),
@@ -396,7 +404,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.buttonText = $translate.instant("Save Dojo Setup");
     $scope.hideIndicators = false;
     currentStepInt = 2;
-    var currentUser;
     auth.get_loggedin_user(function (user) {
       currentUser = user;
       if (currentUser) {
@@ -409,13 +416,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
                 $scope.setupDojo[i] = item;
               });
             } 
-            if($localStorage.setupYourDojo) {
-              alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+            if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.setupYourDojo) {
+              alertService.showAlert($translate.instant('There are unsaved changes on this page:SETUP'));
+              var lssd = $localStorage[user.id].dojoLead.setupYourDojo;
               cdDojoService.loadSetupDojoSteps(function (steps) {
                 _.each(steps, function (item, i) {
                   _.each(item.checkboxes, function (item, i) {
-                    $scope.setupDojo[item.name] = (typeof $localStorage.setupYourDojo[item.name] === 'undefined') ? $scope.setupDojo[item.name] : $localStorage.setupYourDojo[item.name];
-                    $scope.setupDojo[item.name + 'Text'] = (item.textField && $localStorage.setupYourDojo[item.name + 'Text']) ? $localStorage.setupYourDojo[item.name + 'Text'] : "";
+                    $scope.setupDojo[item.name] = (typeof lssd[item.name] === 'undefined') ? $scope.setupDojo[item.name] : lssd[item.name];
+                    $scope.setupDojo[item.name + 'Text'] = (item.textField && lssd[item.name + 'Text']) ? lssd[item.name + 'Text'] : "";
                   });
                 });
               }, fail);
@@ -423,7 +431,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           }
         });
       }
-    }, failAuth);
+    }, function () {
+      currentUser = null;
+      failAuth();
+    });
 
     cdDojoService.loadSetupDojoSteps(function (steps) {
       $scope.steps = _.map(steps, function(step){
@@ -486,13 +497,21 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     //--
 
     $scope.updateLocalStorage = function (localObj, item, value) {
-      if(!$localStorage[localObj]) $localStorage[localObj] = {};
-      if(typeof value === 'undefined') value = false;
-      $localStorage[localObj][item] = value;
+      if(currentUser) {
+        if(!$localStorage[currentUser.id]) $localStorage[currentUser.id] = {};
+        if(!$localStorage[currentUser.id].dojoLead) $localStorage[currentUser.id].dojoLead = {};
+        if(!$localStorage[currentUser.id].dojoLead[localObj]) $localStorage[currentUser.id].dojoLead[localObj] = {};
+        if(typeof value === 'undefined') value = false;
+        $localStorage[currentUser.id].dojoLead[localObj][item] = value;
+      }      
     }
 
     var deleteLocalStorage = function (localObj) {
-      delete $localStorage[localObj];
+      if(currentUser) {
+        if($localStorage[currentUser.id] && $localStorage[currentUser.id].dojoLead && $localStorage[currentUser.id].dojoLead[localObj]) {
+          delete $localStorage[currentUser.id].dojoLead[localObj]
+        }
+      }
     }
 
   //--Step Four:
@@ -504,17 +523,16 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
     currentStepInt = 3;
 
-    var currentUser;
     auth.get_loggedin_user(function(user) {
       currentUser = user;
-    }, failAuth);
+      $scope.user = user;
+    }, function() {
+      currentUser = null;
+      failAuth();
+    });
 
     $scope.dojo = {};
     $scope.dojo.stage = 0;
-
-    auth.get_loggedin_user(function(user) {
-      $scope.user = user;
-    }, failAuth);
 
     $scope.createDojoUrl = $state.current.url;
 
@@ -530,7 +548,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = ($localStorage.dojoListing && $localStorage.dojoListing.notes) ? $localStorage.dojoListing.notes : "<p>" + 
+    var initContent = "<p>" + 
       $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
       "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
@@ -560,32 +578,34 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]
     };
 
-    if($localStorage.dojoListing) {
-      alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-      if($localStorage.dojoListing.name) $scope.dojo.name = $localStorage.dojoListing.name;
-      if($localStorage.dojoListing.email) $scope.dojo.email = $localStorage.dojoListing.email;
-      if($localStorage.dojoListing.time) $scope.dojo.time = $localStorage.dojoListing.time;
-      if($localStorage.dojoListing.country) {
-        $scope.dojo.country = $localStorage.dojoListing.country;
-        $scope.setCountry($scope.dojo, $localStorage.dojoListing.country);
+    if($localStorage[currentUser.id] && $localStorage[currentUser.id].dojoLead && $localStorage[currentUser.id].dojoLead.dojoListing) {
+      alertService.showAlert($translate.instant('There are unsaved changes on this page:LISTING'));
+      var lsdl = $localStorage[currentUser.id].dojoLead.dojoListing;
+
+      if(lsdl.name) $scope.dojo.name = lsdl.name;
+      if(lsdl.email) $scope.dojo.email = lsdl.email;
+      if(lsdl.time) $scope.dojo.time = lsdl.time;
+      if(lsdl.country) {
+        $scope.dojo.country = lsdl.country;
+        $scope.setCountry($scope.dojo, lsdl.country);
       }
-      if($localStorage.dojoListing.place) {
-        $scope.dojo.place = $localStorage.dojoListing.place;
-        $scope.setPlace($scope.dojo, $localStorage.dojoListing.place);
+      if(lsdl.place) {
+        $scope.dojo.place = lsdl.place;
+        $scope.setPlace($scope.dojo, lsdl.place);
       }
-      if($localStorage.dojoListing.country && $localStorage.dojoListing.place) {
+      if(lsdl.country && lsdl.place) {
         $scope.getLocationFromAddress($scope.dojo);
       }
-      if($localStorage.dojoListing.address1) $scope.dojo.address1 = $localStorage.dojoListing.address1;
-      if($localStorage.dojoListing.coordinates) $scope.dojo.coordinates = $localStorage.dojoListing.coordinates;
-      if($localStorage.dojoListing.needMentors) $scope.dojo.needMentors = $localStorage.dojoListing.needMentors;
-      if($localStorage.dojoListing.stage) $scope.dojo.stage = $localStorage.dojoListing.stage;
-      if($localStorage.dojoListing.private) $scope.dojo.private = $localStorage.dojoListing.private;
-      if($localStorage.dojoListing.googleGroup) $scope.dojo.googleGroup = $localStorage.dojoListing.googleGroup;
-      if($localStorage.dojoListing.website) $scope.dojo.website = $localStorage.dojoListing.website;
-      if($localStorage.dojoListing.twitter) $scope.dojo.twitter = $localStorage.dojoListing.twitter;
-      if($localStorage.dojoListing.supporterImage) $scope.dojo.supporterImage = $localStorage.dojoListing.supporterImage;
-      if($localStorage.dojoListing.mailingList) $scope.dojo.mailingList = $localStorage.dojoListing.mailingList;
+      if(lsdl.address1) $scope.dojo.address1 = lsdl.address1;
+      if(lsdl.coordinates) $scope.dojo.coordinates = lsdl.coordinates;
+      if(lsdl.needMentors) $scope.dojo.needMentors = lsdl.needMentors;
+      if(lsdl.stage) $scope.dojo.stage = lsdl.stage;
+      if(lsdl.private) $scope.dojo.private = lsdl.private;
+      if(lsdl.googleGroup) $scope.dojo.googleGroup = lsdl.googleGroup;
+      if(lsdl.website) $scope.dojo.website = lsdl.website;
+      if(lsdl.twitter) $scope.dojo.twitter = lsdl.twitter;
+      if(lsdl.supporterImage) $scope.dojo.supporterImage = lsdl.supporterImage;
+      if(lsdl.mailingList) $scope.dojo.mailingList = lsdl.mailingList;
     }
 
     $scope.save = function(dojo) {

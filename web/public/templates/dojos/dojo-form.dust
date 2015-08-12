@@ -150,7 +150,7 @@
         <div class="form-group">
           <label for="dojoNotes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
-            <textarea ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes" ng-change="updateLocalStorage('dojoListing','notes', dojo.notes)"></textarea>
+            <textarea ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes"></textarea>
           </div>
         </div>
       </div>
