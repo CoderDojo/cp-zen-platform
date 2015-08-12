@@ -158,6 +158,9 @@ msgstr "If you wish please provide your username or a link to your LinkedIn page
 msgid "Google+"
 msgstr "Google+"
 
+msgid "Google"
+msgstr "Google"
+
 msgid "If you wish please provide your username or a link to your Google+"
 msgstr "If you wish please provide your username or a link to your Google+"
 

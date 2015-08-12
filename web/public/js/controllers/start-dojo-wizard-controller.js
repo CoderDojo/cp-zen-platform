@@ -261,7 +261,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           }
 
           if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
-            alertService.showAlert($translate.instant('There are unsaved changes on this page:CHAMPION'));
+            alertService.showAlert($translate.instant('There are unsaved changes on this page'));
             var lsc = $localStorage[user.id].dojoLead.championDetails;
             if(lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
             if(lsc.phone) $scope.champion.phone = lsc.phone;
@@ -417,7 +417,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               });
             } 
             if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.setupYourDojo) {
-              alertService.showAlert($translate.instant('There are unsaved changes on this page:SETUP'));
+              alertService.showAlert($translate.instant('There are unsaved changes on this page'));
               var lssd = $localStorage[user.id].dojoLead.setupYourDojo;
               cdDojoService.loadSetupDojoSteps(function (steps) {
                 _.each(steps, function (item, i) {
@@ -579,7 +579,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     if($localStorage[currentUser.id] && $localStorage[currentUser.id].dojoLead && $localStorage[currentUser.id].dojoLead.dojoListing) {
-      alertService.showAlert($translate.instant('There are unsaved changes on this page:LISTING'));
+      alertService.showAlert($translate.instant('There are unsaved changes on this page'));
       var lsdl = $localStorage[currentUser.id].dojoLead.dojoListing;
 
       if(lsdl.name) $scope.dojo.name = lsdl.name;
