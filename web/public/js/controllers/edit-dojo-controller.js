@@ -168,32 +168,33 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
 
   function updateFromLocalStorage() {
-    if($localStorage.editDojoListing) {
+    if($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
       alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-      if($localStorage.editDojoListing.name) $scope.dojo.name = $localStorage.editDojoListing.name;
-      if($localStorage.editDojoListing.email) $scope.dojo.email = $localStorage.editDojoListing.email;
-      if($localStorage.editDojoListing.time) $scope.dojo.time = $localStorage.editDojoListing.time;
-      if($localStorage.editDojoListing.country) {
-        $scope.dojo.country = $localStorage.editDojoListing.country;
-        $scope.setCountry($scope.dojo, $localStorage.editDojoListing.country);
+      var lsed = $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
+      if(lsed.name) $scope.dojo.name = lsed.name;
+      if(lsed.email) $scope.dojo.email = lsed.email;
+      if(lsed.time) $scope.dojo.time = lsed.time;
+      if(lsed.country) {
+        $scope.dojo.country = lsed.country;
+        $scope.setCountry($scope.dojo, lsed.country);
       }
-      if($localStorage.editDojoListing.place) {
-        $scope.dojo.place = $localStorage.editDojoListing.place;
-        $scope.setPlace($scope.dojo, $localStorage.editDojoListing.place);
+      if(lsed.place) {
+        $scope.dojo.place = lsed.place;
+        $scope.setPlace($scope.dojo, lsed.place);
       }
-      if($localStorage.dojoListing.country && $localStorage.editDojoListing.place) {
+      if(lsed.country && lsed.place) {
         $scope.getLocationFromAddress($scope.dojo);
       }
-      if($localStorage.editDojoListing.address1) $scope.dojo.address1 = $localStorage.editDojoListing.address1;
-      if($localStorage.editDojoListing.coordinates) $scope.dojo.coordinates = $localStorage.editDojoListing.coordinates;
-      if($localStorage.editDojoListing.needMentors) $scope.dojo.needMentors = $localStorage.editDojoListing.needMentors;
-      if($localStorage.editDojoListing.stage) $scope.dojo.stage = $localStorage.editDojoListing.stage;
-      if($localStorage.editDojoListing.private) $scope.dojo.private = $localStorage.editDojoListing.private;
-      if($localStorage.editDojoListing.googleGroup) $scope.dojo.googleGroup = $localStorage.editDojoListing.googleGroup;
-      if($localStorage.editDojoListing.website) $scope.dojo.website = $localStorage.editDojoListing.website;
-      if($localStorage.editDojoListing.twitter) $scope.dojo.twitter = $localStorage.editDojoListing.twitter;
-      if($localStorage.editDojoListing.supporterImage) $scope.dojo.supporterImage = $localStorage.editDojoListing.supporterImage;
-      if($localStorage.editDojoListing.mailingList) $scope.dojo.mailingList = $localStorage.editDojoListing.mailingList;
+      if(lsed.address1) $scope.dojo.address1 = lsed.address1;
+      if(lsed.coordinates) $scope.dojo.coordinates = lsed.coordinates;
+      if(lsed.needMentors) $scope.dojo.needMentors = lsed.needMentors;
+      if(lsed.stage) $scope.dojo.stage = lsed.stage;
+      if(lsed.private) $scope.dojo.private = lsed.private;
+      if(lsed.googleGroup) $scope.dojo.googleGroup = lsed.googleGroup;
+      if(lsed.website) $scope.dojo.website = lsed.website;
+      if(lsed.twitter) $scope.dojo.twitter = lsed.twitter;
+      if(lsed.supporterImage) $scope.dojo.supporterImage = lsed.supporterImage;
+      if(lsed.mailingList) $scope.dojo.mailingList = lsed.mailingList;
     }
   }
 
@@ -231,16 +232,23 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   };
 
   $scope.updateLocalStorage = function (localObj, item, value) {
-    if($state.current.name === "edit-dojo") localObj = "editDojoListing";
-    if(!$localStorage[localObj]) $localStorage[localObj] = {};
-    if(typeof value === 'undefined') value = false;
-    $localStorage[localObj][item] = value;
+    if($scope.user && $state.current.name === "edit-dojo") {
+      localObj = $scope.dojo.id;
+      if(!$localStorage[$scope.user.id]) $localStorage[$scope.user.id] = {};
+      if(!$localStorage[$scope.user.id].editDojo) $localStorage[$scope.user.id].editDojo = {};
+      if(!$localStorage[$scope.user.id].editDojo[localObj]) $localStorage[$scope.user.id].editDojo[localObj] = {};
+      if(typeof value === 'undefined') value = false;
+      $localStorage[$scope.user.id].editDojo[localObj][item] = value;
+    }
   }
 
   var deleteLocalStorage = function (localObj) {
-    if($state.current.name === "edit-dojo") localObj = "editDojoListing";
-    delete $localStorage[localObj];
-    console.log($localStorage);
+    if($scope.user && $state.current.name === "edit-dojo") {
+      localObj = $scope.dojo.id;
+      if($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
+          delete $localStorage[$scope.user.id].editDojo[$scope.dojo.id]
+      }
+    }
   }
 
   var sanitizeCdForms = {
