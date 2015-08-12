@@ -45,8 +45,12 @@
                      min-date="'1900-01-01'"
                      max-date="today"
                      datepicker-options="dobDateOptions"
+                     current-text="{@i18n key="Today"/}"
+                     clear-text="{@i18n key="Clear"/}"
+                     close-text="{@i18n key="Done"/}"
                      ng-click="open($event)"
-                     placeholder="{@i18n key="You must be over 18 years old..."/}"
+                     placeholder="{@i18n key="You must be over 18 years old..."/}" 
+                     ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)"
                      />
 
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
@@ -60,7 +64,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" tooltip="Please include country code." required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))">
+              <input type="tel" tooltip='{@i18n key="Please include country code"/}' required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-model="champion.phone" class="form-control" name="telephoneNumber" id="telephoneNumber" placeholder="{@i18n key="Please include country code..."/}"  autocomplete="off" pattern="((\+|00)(\d{8,16}))" ng-change="updateLocalStorage('championDetails','phone',champion.phone)">
             </div>
           </div>
         </div>
@@ -69,7 +73,7 @@
           <div class="form-group">
             <label for="championCountry" class="col-lg-4 cd-form-label1">{@i18n key="Country"/}*</label>
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.country.$error.required}">
-              <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required>
+              <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required ng-change="updateLocalStorage('championDetails','country',champion.country)">
                 <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
@@ -86,7 +90,7 @@
             <label for="championPlace" class="col-lg-4 cd-form-label1">{@i18n key="CityTown"/}*</label>
 
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.place.$error.required}">
-              <ui-select name="place" ng-disabled="!champion.country" ng-model="champion.place" on-select="setPlace(champion, $item)" required>
+              <ui-select name="place" ng-disabled="!champion.country" ng-model="champion.place" on-select="setPlace(champion, $item)" required ng-change="updateLocalStorage('championDetails','place',champion.place)">
                 <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
                 <ui-select-choices repeat="place in places"
                     refresh="getPlaces(champion.country.alpha2, $select)"
@@ -104,7 +108,7 @@
           <div class="form-group">
             <label for="dojoAddress1" class="col-lg-4 cd-form-label1">{@i18n key="Address"/}*</label>
             <div class="col-lg-8">
-              <textarea id="dojoAddress1" name="dojoAddress1" class="form-control" placeholder="{@i18n key="Enter your street level address..."/}" rows="5" ng-model="champion.address1" required required-message="'{@i18n key="Address is empty"/}'"></textarea>
+              <textarea id="dojoAddress1" name="dojoAddress1" class="form-control" placeholder="{@i18n key="Enter your street level address..."/}" rows="5" ng-model="champion.address1" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('championDetails','address1',champion.address1)"></textarea>
             </div>
           </div>
         </div>
@@ -127,7 +131,7 @@
         <div class="row">
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation">
+              <input type="hidden" readonly="readonly" ng-model="champion.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation" ng-change="updateLocalStorage('championDetails','coordinates',champion.coordinates)">
             </div>
           </div>
         </div>
@@ -138,7 +142,7 @@
           <div class="form-group">
             <label for="projects" class="col-lg-4 cd-form-label1">{@i18n key="Technical Experience"/}</label>
             <div class="col-lg-8">
-              <textarea name="projects" class="form-control" placeholder="{@i18n key="Please describe any websites, apps or open source work that you have done."/}" rows="5" ng-model="champion.projects"></textarea>
+              <textarea name="projects" class="form-control" placeholder="{@i18n key="Please describe any websites, apps or open source work that you have done."/}" rows="5" ng-model="champion.projects" ng-change="updateLocalStorage('championDetails','projects',champion.projects)"></textarea>
             </div>
           </div>
         </div>
@@ -147,7 +151,7 @@
           <div class="form-group">
             <label for="youthExperience" class="col-lg-4 cd-form-label1">{@i18n key="Experience working with youth"/}</label>
             <div class="col-lg-8">
-              <textarea name="youthExperience" class="form-control" placeholder="{@i18n key="Please describe your experience working with youth."/}" rows="5" ng-model="champion.youthExperience"></textarea>
+              <textarea name="youthExperience" class="form-control" placeholder="{@i18n key="Please describe your experience working with youth."/}" rows="5" ng-model="champion.youthExperience"  ng-change="updateLocalStorage('championDetails','youthExperience',champion.youthExperience)"></textarea>
             </div>
           </div>
         </div>
@@ -158,7 +162,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}">
+                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>
@@ -167,7 +171,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4 cd-form-label1">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}">
+                <input type="url" tooltip="{@i18n key="If you wish please provide your username or a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
               </div>
           </div>
         </div>
@@ -176,7 +180,7 @@
         <div class="row cd-input-row">
           <label for="notes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
-            <textarea name="notes" class="form-control" placeholder="{@i18n key="Please add any other relevant information."/}" rows="5" ng-model="champion.notes"></textarea>
+            <textarea name="notes" class="form-control" placeholder="{@i18n key="Please add any other relevant information."/}" rows="5" ng-model="champion.notes" ng-change="updateLocalStorage('championDetails','notes',champion.notes)"></textarea>
           </div>
         </div>
 
@@ -184,13 +188,13 @@
           <div class="form-group">
             <label for="coderDojoReference" class="col-lg-4 cd-form-label1">{@i18n key="How did you hear about CoderDojo"/}</label>
             <div class="col-lg-8">
-              <ui-select name="coderDojoReference" ng-model="champion.coderDojoReference">
+              <ui-select name="coderDojoReference" ng-model="champion.coderDojoReference" ng-change="updateLocalStorage('championDetails','coderDojoReference',champion.coderDojoReference)">
                   <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
                   <ui-select-choices repeat="referer in referredBy">
                     <span ng-bind-html="referer"></span>
                   </ui-select-choices>
               </ui-select>
-              <input type="text" class="form-control cdReferenceOther" placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" />
+              <input type="text" class="form-control cdReferenceOther" placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}" ng-model="champion.coderDojoReferenceOther" ng-show="champion.coderDojoReference === 'Other'" ng-change="updateLocalStorage('championDetails','coderDojoReferenceOther',champion.coderDojoReferenceOther)" />
             </div>
           </div>
         </div>

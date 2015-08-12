@@ -1,5 +1,7 @@
 'use strict';
 
+exports.start = function () {
+
 if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
 
 var env = process.env.NODE_ENV || 'development';
@@ -15,8 +17,8 @@ var locale = require('locale');
 var languages = require('./config/languages.js');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
-var server = new Hapi.Server(so.hapi)
-var port = process.env.PORT || 8000
+var server = new Hapi.Server(so.hapi);
+var port = process.env.PORT || 8000;
 
 // Set up HAPI
 
@@ -180,7 +182,6 @@ seneca
   .use('auth')
   .use('user-roles')
   .use('web-access')
-  .use('../lib/auth/cd-auth.js')
   .use('../lib/charter/cd-charter.js')
   .use('../lib/dojos/cd-dojos.js')
   .use('../lib/countries/cd-countries.js')
@@ -208,3 +209,4 @@ function captureAllMessages(args) {
   console.log('*** captured = ', JSON.stringify(args));
 }
 */
+}

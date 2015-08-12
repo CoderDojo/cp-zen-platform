@@ -8,6 +8,7 @@ module.exports = _.defaults({
   auth: {
     restrict: function (req, res, next) {
       var profileUrl = '/dashboard/profile';
+      var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
       if(_.contains(req.url, profileUrl) && !req.seneca.user) {
         var userId = req.url.split('/')[3];
         return res.redirect('/profile/' + userId);
@@ -17,6 +18,7 @@ module.exports = _.defaults({
         var referer = encodeURIComponent(req.url);
         return res.redirect('/login?referer=' + req.url);
       }
+      if(_.contains(restrictedRoutesWhenLoggedIn, req.url) && req.seneca && req.seneca.user) return res.redirect(302, '/dashboard/dojo-list');
       return next();
     },
     sendemail: false,

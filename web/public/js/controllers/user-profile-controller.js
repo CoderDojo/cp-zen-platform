@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, AlertBanner, usSpinnerService) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, usSpinnerService, atomicNotifyService, $timeout) {
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError($translate.instant('error.general'));
@@ -15,19 +15,18 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   var isYouthProfile = $state.current.name === 'add-child';
 
   if(_.isEmpty(agreement.data) && !isYouthProfile && !_.isEmpty(loggedInUser.data)){
-    $window.location.href = '/dashboard/charter?referer=' + encodeURIComponent('/dashboard/profile/'+ loggedInUser.data.id);
-  }
-
-  if ($stateParams.bannerMessage) {
-    var type = $stateParams.bannerType;
-    var timeCollapse = $stateParams.bannerTimeCollapse;
-    var message = $stateParams.bannerMessage;
-    AlertBanner.publish({
-      type: type,
-      message: message,
-      timeCollapse: timeCollapse
+    $state.go('charter-page', {
+      showBannerMessage: true
     });
   }
+
+  if ($stateParams.showBannerMessage) {
+    atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
+  }
+
+  $scope.$on('$destroy', function(){
+    atomicNotifyService.dismissAll();
+  });
 
   $scope.editMode = false;
   var profileUserId = $state.params.userId;
@@ -519,5 +518,5 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'AlertBanner', 'usSpinnerService', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'usSpinnerService', 'atomicNotifyService', '$timeout', cdUserProfileCtrl]);
 

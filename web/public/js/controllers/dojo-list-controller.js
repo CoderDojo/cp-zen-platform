@@ -284,8 +284,10 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
     $scope.countrySelected = true;
     $scope.stateSelected = false;
     var countrySelected = marker.country;
-    
-    $scope.model.map.setCenter(marker.getPosition());
+
+    if(marker.getPosition()) {
+      $scope.model.map.setCenter(marker.getPosition());
+    }
 
     $scope.model.map.setZoom(4);
     $scope.currentZoom = $scope.model.map.getZoom();
@@ -309,9 +311,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
           $scope.stateMarkers.push(marker);
         }
       });
+      $scope.markerClusterer = new MarkerClusterer($scope.model.map, $scope.stateMarkers);
     });
-
-
+    
     if ($scope.currentLevels.length < 3) {
       _.each($scope.currentLevels, function (currentLevel) {
         currentLevel.style = '';
@@ -473,14 +475,12 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
         return;
       }
 
-      $scope.search.dojo = '';
-
       var location = results[0].geometry.location;
 
       if (results[0].geometry.bounds) {
         var bounds = results[0].geometry.bounds;
         $scope.model.map.fitBounds(bounds);
-        $scope.searchBounds(location, $scope.model.map.getBounds(), true);
+        $scope.searchBounds(location, $scope.model.map.getBounds(), true, $scope.search.dojo);
       } else {
         $scope.searchNearest(location);
       }
@@ -501,9 +501,9 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
     });
   }
 
-  $scope.searchBounds = function (location, bounds, fallbackToNearest) {
+  $scope.searchBounds = function (location, bounds, fallbackToNearest, search) {
     var boundsRadius = getBoundsRadius(bounds);
-    cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius}).then(function (result) {
+    cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
       if (result.length > 0) {
         clearMarkerArrays();
         $scope.searchResult = result;
@@ -557,8 +557,8 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   function getBoundsRadius(bounds) {
     var center = bounds.getCenter();
     var northEast = bounds.getNorthEast();
-    var earthRadius = 3963.0;  
-    var lat1 = center.lat() / 57.2958; 
+    var earthRadius = 3963.0;
+    var lat1 = center.lat() / 57.2958;
     var lon1 = center.lng() / 57.2958;
     var lat2 = northEast.lat() / 57.2958;
     var lon2 = northEast.lng() / 57.2958;
