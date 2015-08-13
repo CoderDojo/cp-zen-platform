@@ -47,12 +47,13 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
+    var defaultEventTime = moment(now).add(2, 'hours').toDate();
     $scope.today = new Date();
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
-    $scope.eventInfo.date = now;
+    $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.date.setMinutes(0);
     $scope.eventInfo.date.setSeconds(0);
     $scope.eventInfo.toDate = new Date(
@@ -139,6 +140,10 @@
       eventInfo.status = $scope.publish ? 'published' : 'saved';
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
+      if(!_.isEmpty(eventInfo.invites)) {
+        eventInfo.emailSubject = $translate.instant('Event Invitation');
+      }
+       
       var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -171,7 +176,12 @@
           if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
             cdEventsService.saveEvent(
               eventInfo,
-              goToManageDojoEvents($state, usSpinnerService, dojoId),
+              function (response) {
+                if(response.ok === false) {
+                  alertService.showError($translate.instant(response.why));
+                }
+                goToManageDojoEvents($state, usSpinnerService, dojoId)
+              },
               function(err){
                 alertService.showError($translate.instant('Error setting up event') + ' ' + err);
                 goToMyDojos($state, usSpinnerService, dojoId)
@@ -186,7 +196,12 @@
         if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
           cdEventsService.saveEvent(
             eventInfo,
-            goToManageDojoEvents($state, usSpinnerService, dojoId),
+            function (response) {
+              if(response.ok === false) {
+                alertService.showError($translate.instant(response.why));
+              }
+              goToManageDojoEvents($state, usSpinnerService, dojoId)
+            },
             function (err){
               alertService.showError($translate.instant('Error setting up event') + ' ' + err);
               goToMyDojos($state, usSpinnerService, dojoId)

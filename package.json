@@ -28,10 +28,10 @@
     "connect-redis": "2.3.0",
     "dustjs-helpers": "1.6.1",
     "dustjs-linkedin": "2.6.1",
-    "hapi": "git://github.com/wprl/hapi.git#03bae914f9361e3aaea1379f875be4316e128981",
+    "hapi": "8.8.1",
     "hapi-dust": "2.0.0",
     "hapi-less": "0.2.0",
-    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#e552d33b48a897e902ce8e84fd769d5b47ac28ae",
+    "hapi-seneca": "git://github.com/wprl/hapi-seneca.git#7be71be7da1761492037772b48aacb203e897465",
     "jed": "1.0.2",
     "le_node": "1.0.11",
     "less": "1.7.3",
@@ -51,7 +51,8 @@
     "slug": "0.9.1",
     "chairo": "0.0.1",
     "hapi-etags": "0.1.0",
-    "chairo-cache": "0.2.3"
+    "chairo-cache": "0.2.3",
+    "isemail": "1.1.1"
   },
   "devDependencies": {
     "bower": "1.4.1",

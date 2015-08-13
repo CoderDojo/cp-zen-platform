@@ -87,9 +87,8 @@ module.exports = _.defaults({
     "port": 6379 // this isn't optioned
   },
 
-  hapi: { 
-
+  session: {
+    secret: 'seneca'
   }
-
 
 }, base);

@@ -2,6 +2,7 @@
 
 function userEventsCtrl($scope, $translate, cdEventsService, alertService, currentUser) {
   $scope.applyData = {};
+  $scope.currentEvents = false;
 
   if(currentUser.data.id){
     cdEventsService.getUserDojosEvents(currentUser.data.id, function (response) {
@@ -11,6 +12,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, alertService, curre
       } else {
         _.each($scope.dojosEvents, function (dojoEvents) {
           if(dojoEvents && dojoEvents.events && dojoEvents.events.length > 0) {
+            $scope.currentEvents = true;
             var events = [];
             _.each(dojoEvents.events, function(event){
               if(event.type === 'recurring') {

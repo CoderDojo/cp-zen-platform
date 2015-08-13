@@ -112,7 +112,6 @@ server.register({ register: Chairo, options: options }, function (err) {
       .use('auth')
       .use('user-roles')
       .use('web-access')
-      .use(require('../lib/auth/cd-auth.js'))
       .use(require('../lib/charter/cd-charter.js'))
       .use(require('../lib/dojos/cd-dojos.js'))
       .use(require('../lib/countries/cd-countries.js'))
@@ -144,16 +143,22 @@ server.register({ register: Chairo, options: options }, function (err) {
     server.register({
       register: require('hapi-seneca'),
       options: {
-        seneca: seneca,
-        cors: true
+        cors: true,
+        session: {
+          /*store: sessionStore, */ // TODO remote session store
+          secret: options.session.secret, 
+          name: 'CD.ZENPLATFORM',
+          saveUninitialized: true,
+          resave: true 
+        }
       }
     }, function (err) {
       checkHapiPluginError('hapi-seneca')(err);
-      // TODO // make sure etag header is present from hapi-etag
-      // TODO // make sure cache-control info is compatible with etag
       server.start(function() {
         console.log('[%s] Listening on http://localhost:%d', env, port);
       });
     });
   });  
 });
+
+};
