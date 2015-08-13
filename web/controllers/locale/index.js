@@ -10,7 +10,7 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/locale/data',
-    // TODO add Cache-Control header // could be a year, expecially with a versioned URL
+    // TODO add route caching when the locale data is finalized.
     handler: function (request, reply) {
     	var locale = (request.locals && request.locals.context && request.locals.context.locality) || 'en_US';
       locale = formatLocaleCode(locale);
@@ -28,7 +28,7 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/locale/languages',
-    // TODO add Cache-Control header // could be a year, expecially with a versioned URL
+    // TODO add route caching when the locale data is finalized.
     handler: function (request, reply) {
       reply(null, languages);
     }

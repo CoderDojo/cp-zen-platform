@@ -1,9 +1,11 @@
 'use strict';
 
+var cacheTimes = require('../../config/cache-times');
+
 var controller = module.exports = [{
-  // TODO cache with versioned URL?
   method: 'GET',
   path: '/dashboard/{followin*}',
+  config: { cache: { expiresIn: cacheTimes.medium } },
   handler: function (request, reply) {
     reply.view('dashboard/index', request.locals);
   }

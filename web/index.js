@@ -13,6 +13,7 @@ var path = require('path');
 var options = require('./options.' + env + '.js');
 var locale = require('locale');
 var languages = require('./config/languages.js');
+var cacheTimes = require('./config/cache-times');
 
 require('./lib/dust-i18n.js');
 
@@ -91,8 +92,7 @@ server.register({
   options: {
     home: path.join(__dirname, './public/css'),
     route: '/css/{filename*}',
-    // TODO may want to use a versioned URL here
-    config: { cache: { privacy: 'public', expiresIn: 1 * 60 * 60 * 1000 } }, // 1 hr // TODO move value to config
+    config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
     less: { compress: true }
   }
 }, checkHapiPluginError('hapi-less'));
