@@ -111,7 +111,6 @@ server.register({ register: Chairo, options: options }, function (err) {
       .use('auth')
       .use('user-roles')
       .use('web-access')
-      .use(require('../lib/auth/cd-auth.js'))
       .use(require('../lib/charter/cd-charter.js'))
       .use(require('../lib/dojos/cd-dojos.js'))
       .use(require('../lib/countries/cd-countries.js'))
@@ -156,3 +155,5 @@ server.register({ register: Chairo, options: options }, function (err) {
     });
   });  
 });
+
+};
