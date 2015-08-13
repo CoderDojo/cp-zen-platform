@@ -49,7 +49,7 @@
                      clear-text="{@i18n key="Clear"/}"
                      close-text="{@i18n key="Done"/}"
                      ng-click="open($event)"
-                     placeholder="{@i18n key="You must be over 18 years old..."/}" 
+                     placeholder="{@i18n key="You must be over 18 years old..."/}"
                      ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)"
                      />
 
@@ -162,7 +162,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" http-prefix tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="Enter your full twitter url"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
+                <input type="url" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>

@@ -1865,3 +1865,6 @@ msgstr "Past events cannot be created"
 
 msgid "Event Invitation"
 msgstr "Event Invitation"
+
+msgid "e.g. @CoderDojo"
+msgstr "e.g. @CoderDojo"
