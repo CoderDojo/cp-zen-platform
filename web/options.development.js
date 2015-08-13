@@ -59,7 +59,15 @@ module.exports = _.defaults({
           maxBytes: 5242880
         }
       }
-    }
+    },
+    cache: [
+      {
+        name: 'cd-cache',
+        engine: require('catbox-memory'),
+        host: '127.0.0.1',
+        partition: 'cache'
+      }
+    ]
   },
 
   client: [
@@ -80,14 +88,7 @@ module.exports = _.defaults({
   },
 
   hapi: { 
-    cache: [
-      {
-        name: 'cd-cache',
-        engine: require('catbox-memory'),
-        host: '127.0.0.1',
-        partition: 'cache'
-      }
-    ]
+
   }
 
 
