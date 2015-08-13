@@ -173,7 +173,7 @@
                     ng-model="dojo.needMentors"
                     id="needMentorsCheckbox"
                     ng-true-value="1"
-                    ng-false-value="0" 
+                    ng-false-value="0"
                     ng-change="updateLocalStorage('dojoListing','needMentors', dojo.needMentors)"
                   >
               <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
@@ -203,8 +203,8 @@
                     ng-model="dojo.private"
                     id="privateCheckbox"
                     ng-true-value="1"
-                    ng-false-value="0" 
-                    ng-change="updateLocalStorage('dojoListing','private', dojo.private)" 
+                    ng-false-value="0"
+                    ng-change="updateLocalStorage('dojoListing','private', dojo.private)"
                   >
               <label class="cd-checkbox-label1" for="privateCheckbox"></label>
             </div>
@@ -255,7 +255,7 @@
             </span>
           </label>
           <div class="col-lg-8">
-            <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="Enter Twitter profile URL"/}" ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)">
+            <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)">
           </div>
         </div>
       </div>
@@ -290,7 +290,7 @@
                     ng-model="dojo.mailingList"
                     id="mailingListCheckbox"
                     ng-true-value="1"
-                    ng-false-value="0" 
+                    ng-false-value="0"
                     ng-change="updateLocalStorage('dojoListing','mailingList', dojo.mailingList)"
                   >
               <label class="cd-checkbox-label1" for="mailingListCheckbox"></label>

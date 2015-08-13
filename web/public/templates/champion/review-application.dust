@@ -85,7 +85,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
               <div class="col-lg-6">
-                <span>{{ championApplication.twitter }}</span>
+                <a target="_blank" href="http://twitter.com/{{ championApplication.twitter }}">{{ championApplication.twitter }}</a>
               </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
 
         <div class="row">
           <label class="col-lg-4">{@i18n key="Prerequisites"/}</label>
-          <div ng-repeat="step in championApplication.prerequisites track by $index" is-open="step.open" 
+          <div ng-repeat="step in championApplication.prerequisites track by $index" is-open="step.open"
           ng-class="$index == 0 ? 'col-lg-6' : 'col-lg-offset-4 col-lg-6'">
             <span>{@i18n key="{{ step.text }}"/}: <span class="viewPrereqVal">{@i18n key="{{ step.value }}"/}</span></span>
           </div>

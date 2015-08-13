@@ -1859,3 +1859,6 @@ msgstr "If you wish please provide a link to your LinkedIn page."
 
 msgid "If you wish please provide a link to your Twitter page."
 msgstr "If you wish please provide a link to your Twitter page."
+
+msgid "e.g. @CoderDojo"
+msgstr "e.g. @CoderDojo"
