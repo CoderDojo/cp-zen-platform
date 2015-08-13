@@ -100,7 +100,7 @@
               <div class="form-group">
                 <label for="twitter" class="col-lg-4">{@i18n key="Twitter"/}</label>
                   <div class="col-lg-6">
-                    <input type="text" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
+                    <input type="text" tooltip="{@i18n key="If you wish please provide your username or a link to your Twitter page."/}" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter">
                   </div>
               </div>
             </div>

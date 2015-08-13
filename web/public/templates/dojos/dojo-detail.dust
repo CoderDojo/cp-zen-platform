@@ -66,7 +66,7 @@
             <legend>{@i18n key="Leave"/}</legend>
             <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
           </div>
- 
+
           <div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Join"/}</legend>
             <div class="need-mentors-notice center-children">
@@ -107,7 +107,7 @@
                   </tr>
                   <tr ng-if="dojo.twitter">
                     <td><b>{@i18n key="Twitter"/}</b></td>
-                    <td><a target="_blank" href="http://twitter.com/{{ dojo.twitter }}">@{{ dojo.twitter }}</a></td>
+                    <td><a target="_blank" href="http://twitter.com/{{ dojo.twitter }}">{{ dojo.twitter }}</a></td>
                   </tr>
                   <tr ng-if="dojo.website">
                     <td><b>{@i18n key="Website"/}</b></td>
