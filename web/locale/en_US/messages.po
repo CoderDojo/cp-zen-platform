@@ -1859,3 +1859,9 @@ msgstr "If you wish please provide a link to your LinkedIn page."
 
 msgid "If you wish please provide a link to your Twitter page."
 msgstr "If you wish please provide a link to your Twitter page."
+
+msgid "Past events cannot be created"
+msgstr "Past events cannot be created"
+
+msgid "Event Invitation"
+msgstr "Event Invitation"
