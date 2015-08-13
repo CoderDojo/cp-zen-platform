@@ -51,7 +51,7 @@
     "slug": "0.9.1",
     "chairo": "0.0.1",
     "hapi-etags": "0.1.0",
-    "chairo-cache": "0.2.3",
+    "chairo-cache": "0.2.4",
     "isemail": "1.1.1"
   },
   "devDependencies": {
