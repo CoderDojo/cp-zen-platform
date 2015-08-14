@@ -1868,3 +1868,15 @@ msgstr "Event Invitation"
 
 msgid "e.g. @CoderDojo"
 msgstr "e.g. @CoderDojo"
+
+msgid "User is already a parent of this Ninja"
+msgstr "User is already a parent of this Ninja"
+
+msgid "You must be a parent to invite a Ninja"
+msgstr "You must be a parent to invite a Ninja"
+
+msgid "Invalid invite request. Ninja email does not exist."
+msgstr "Invalid invite request. Ninja email does not exist."
+
+msgid "Ninja must be an over 13 attendee"
+msgstr "Ninja must be an over 13 attendee"
