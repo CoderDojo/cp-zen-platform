@@ -9,7 +9,7 @@
       <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
       <h1 ng-bind="profile.name || profile.alias"></h1>
       <h4 ng-bind="profile.userTypeTitle"></h4>
-      <div ng-if="editMode" class="btn btn-default center-block" ngf-max-size='5242880' ngf-change="upload($files)" ngf-multiple="false" accept="image/*" ngf-select>{@i18n key="Upload new picture"/}</div>
+      <div ng-if="editMode && profile.id" class="btn btn-default center-block" ngf-max-size='5242880' ngf-change="upload($files)" ngf-multiple="false" accept="image/*" ngf-select>{@i18n key="Upload new picture"/}</div>
 
       <span class="help-block"></span>
       <button ng-if="!editMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>

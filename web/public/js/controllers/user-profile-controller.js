@@ -59,24 +59,26 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   }
 
   $scope.upload = function (files) {
-    if (files && files.length) {
-      for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        Upload.upload({
-          url: '/api/1.0/profiles/change-avatar',
-          headers : {
-            'Content-Type': 'multipart/form-data'
-          },
-          file: file,
-          fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
-        }).progress(function (evt) {
-        }).success(function (data, status, headers, config) {
-          cdUsersService.getAvatar($scope.profile.id, function(response){
-            $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-          })
-        }).error(function (data, status, headers, config) {
-          alertService.showError($translate.instant('There was an error uploading your profile picture.'));
-        });
+    if($scope.profile.id) {
+      if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          Upload.upload({
+            url: '/api/1.0/profiles/change-avatar',
+            headers : {
+              'Content-Type': 'multipart/form-data'
+            },
+            file: file,
+            fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
+          }).progress(function (evt) {
+          }).success(function (data, status, headers, config) {
+            cdUsersService.getAvatar($scope.profile.id, function(response){
+              $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+            })
+          }).error(function (data, status, headers, config) {
+            alertService.showError($translate.instant('There was an error uploading your profile picture.'));
+          });
+        }
       }
     }
   };
