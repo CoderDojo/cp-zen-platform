@@ -162,7 +162,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="url" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
+                <input type="text" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>
