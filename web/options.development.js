@@ -14,9 +14,13 @@ module.exports = _.defaults({
         return res.redirect('/profile/' + userId);
       }
       if(_.contains(req.url, '/dashboard') && !_.contains(req.url, '/login') && !req.seneca.user) {
-        //Not logged in, redirect to /login with referer parameter
-        var referer = encodeURIComponent(req.url);
-        return res.redirect('/login?referer=' + req.url);
+        //Not logged in, redirect to dojo-detail if trying to see dojo detail
+        if(/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(req.url)){
+          return res.redirect(req.url.replace('dashboard/',''))
+        } else {//Otherwise, redirect to /login with referer parameter
+          var referer = encodeURIComponent(req.url);
+          return res.redirect('/login?referer=' + req.url);
+        }
       }
       if(_.contains(restrictedRoutesWhenLoggedIn, req.url) && req.seneca && req.seneca.user) return res.redirect(302, '/dashboard/dojo-list');
       return next();
@@ -79,7 +83,7 @@ module.exports = _.defaults({
     "port": 6379 // this isn't optioned
   },
 
-  hapi: { 
+  hapi: {
     cache: [
       {
         name: 'cd-cache',
