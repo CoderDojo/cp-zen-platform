@@ -102,7 +102,8 @@ module.exports = {
   },
 
   webclient: {
-    adultforum: process.env.ADULT_FORUM || 'http://localhost:4567'
+    adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
+    youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567'
   }
 
 };

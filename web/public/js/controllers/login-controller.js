@@ -2,11 +2,11 @@
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService', '$localStorage',
-  'usSpinnerService', '$cookieStore', loginCtrl]);
+  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService, $localStorage,
-  usSpinnerService, $cookieStore) {
+  usSpinnerService, $cookieStore, cdDojoService, $q) {
 
   $scope.referer = $state.params.referer;
 
@@ -53,6 +53,53 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }, function(err) {
          console.error('Error getting config: ', err);
        });
+  }
+
+  $scope.youthForums = function () {
+    cdConfigService.get('youthforum', function (kv) {
+      var url = kv.youthforum;
+      $window.location.href = url;
+    }, function (err) {
+      console.error('Error getting config: ', err);
+    });
+  }
+
+  if(!$cookieStore.get('canViewYouthForums')) {
+    canViewYouthForums().then(function (hasPermission) {
+      $scope.canViewYouthForums = hasPermission;
+      $cookieStore.put('canViewYouthForums', hasPermission);
+    }, function (err) {
+      console.error(err);
+      $scope.canViewYouthForums = false;
+    });
+  } else {
+    $scope.canViewYouthForums = $cookieStore.get('canViewYouthForums');
+  }
+
+  function canViewYouthForums() {
+    var deferred = $q.defer();
+    auth.get_loggedin_user(function (user) {
+      cdUsersService.listProfiles({userId: user.id}, function (userProfile) {
+        if(userProfile.userType === 'attendee-o13' || userProfile.userType === 'champion') return deferred.resolve(true);
+        cdDojoService.getUsersDojos({userId: user.id}, function (usersDojos) {
+          var userTypesFound = _.find(usersDojos, function (userDojo) {
+            return _.contains(userDojo.userTypes, 'attendee-o13') || _.contains(userDojo.userTypes, 'champion');
+          });
+          if(userTypesFound) return deferred.resolve(true);
+          return deferred.resolve(false);
+        }, function (err) {
+          console.error(err);
+          deferred.reject(err);
+        })
+      }, function (err){
+        console.error(err);
+        deferred.reject(err);
+      });
+    }, function (err) {
+      console.error(err);
+      deferred.reject(err);
+    });
+    return deferred.promise;
   }
 
   $scope.setRecaptchaResponse = function (response) {
@@ -178,6 +225,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
   $scope.logout = function() {
     $cookieStore.remove('verifyProfileComplete');
+    $cookieStore.remove('canViewYouthForums');
     auth.logout(function(data){
       $window.location.href = '/'
     })
