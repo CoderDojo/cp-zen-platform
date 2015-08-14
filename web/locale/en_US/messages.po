@@ -1880,3 +1880,9 @@ msgstr "Invalid invite request. Ninja email does not exist."
 
 msgid "Ninja must be an over 13 attendee"
 msgstr "Ninja must be an over 13 attendee"
+
+msgid "User has already received this badge."
+msgstr "User has already received this badge."
+
+msgid "Invalid request. No badge received."
+msgstr "Invalid request. No badge received."

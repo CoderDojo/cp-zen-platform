@@ -75,7 +75,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   $scope.claimBadge = function () {
     cdBadgesService.claimBadge($scope.previewBadgeData, function (response) {
       $scope.hideBadgePreview();
-      if(response.error) return alertService.showError(errorMsg);
+      if(response.error) return alertService.showError($translate.instant(errorMsg));
       return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
     });
   }
