@@ -1886,3 +1886,6 @@ msgstr "User has already received this badge."
 
 msgid "Invalid request. No badge received."
 msgstr "Invalid request. No badge received."
+
+msgid "Parent profile does not exist."
+msgstr "Parent profile does not exist."
