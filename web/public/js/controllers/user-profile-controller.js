@@ -181,8 +181,9 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
   };
 
   $scope.inviteParent = function(data){
-    var win = function(){
-      alertService.showAlert($translate.instant('Invitation was sent successfully.'));
+    var win = function(response){
+      if(response.ok === false) return alertService.showError($translate.instant(response.why));
+      return alertService.showAlert($translate.instant('Invitation was sent successfully.'));
     };
 
     var fail = function(){
