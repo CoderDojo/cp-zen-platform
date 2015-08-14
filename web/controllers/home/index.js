@@ -1,13 +1,9 @@
 'use strict';
 
-var ONE_HR_MS = 1 * 60 * 60 * 1000; // TODO move to config
-
 var controller = module.exports = [
-
   {
     method: 'GET',
     path: '/',
-    config: { cache: { privacy: 'public', expiresIn: ONE_HR_MS } },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
