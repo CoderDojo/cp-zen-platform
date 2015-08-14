@@ -497,9 +497,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
     };
     cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
-      alertService.showAlert($translate.instant('Invite Sent'));
       $scope.inviteNinjaPopover.show = false;
       $scope.inviteNinjaPopover.email = '';
+      if(response.ok === false) return alertService.showError($translate.instant(response.why));
+      return alertService.showAlert($translate.instant('Invite Sent'));
     }, function (err) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showError($translate.instant('Error inviting Ninja'));
