@@ -42,7 +42,7 @@
     "newrelic": "1.19.2",
     "po2json": "0.4.1",
     "requireindex": "1.1.0",
-    "seneca": "git://github.com/thekemkid/seneca.git",
+    "seneca": "git://github.com/wprl/seneca.git#b2ccc8b0088468b050beab81287f9ef4dd56df2e",
     "seneca-auth": "0.2.10",
     "seneca-ng-web": "git://github.com/iantocristian/seneca-ng-web.git",
     "seneca-user-roles": "0.1.0",
