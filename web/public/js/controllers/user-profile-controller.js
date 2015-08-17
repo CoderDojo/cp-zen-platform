@@ -1,6 +1,6 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, alertService,
+function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdDojoService, alertService,
   $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
   agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, usSpinnerService, atomicNotifyService, $timeout) {
@@ -291,7 +291,10 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
       $scope.profile = profile;
       $scope.profile.private =  $scope.profile.private ? "true" : "false";
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
-      $state.go('user-profile', {userId: $stateParams.userId});
+      auth.instance(function(data){
+        if( data.user ) $rootScope.user = data.user;
+        $state.go('user-profile', {userId: $stateParams.userId});
+      });
     }
 
     function fail(){
@@ -519,7 +522,7 @@ function cdUserProfileCtrl($scope, $state, auth, cdUsersService, cdDojoService, 
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
+  .controller('user-profile-controller', ['$scope', '$rootScope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
     'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'usSpinnerService', 'atomicNotifyService', '$timeout', cdUserProfileCtrl]);
