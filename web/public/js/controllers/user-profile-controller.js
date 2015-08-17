@@ -292,7 +292,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
       $scope.profile.private =  $scope.profile.private ? "true" : "false";
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
       auth.instance(function(data){
-        if( data.user ) $rootScope.user = data.user;
+        if( data.user ) $rootScope.$broadcast('user-updated', data.user);
         $state.go('user-profile', {userId: $stateParams.userId});
       });
     }
