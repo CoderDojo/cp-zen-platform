@@ -103,7 +103,18 @@ module.exports = {
 
   webclient: {
     adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
-    youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567'
+    youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567',
+    forumModerators: [
+      'eugene@coderdojo.com',
+      'ursula@coderdojo.org',
+      'giustina@coderdojo.org',
+      'pete@coderdojo.org',
+      'rosa@coderdojo.org',
+      'laura@coderdojo.org',
+      'mary@coderdojo.org',
+      'damian.beresford@nearform.com',
+      'david.cahill@nearform.com'
+    ]
   }
 
 };
