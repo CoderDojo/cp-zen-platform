@@ -134,7 +134,7 @@
         <div class="form-group form-inline">
           <label class="col-sm-4 control-label" for="gender-selection">{@i18n key="Gender"/}:</label>
           <div class="radio">
-            <input type="radio" name="gender" id="female" value="Female">
+            <input type="radio" ng-model="profile.gender" name="gender" id="female" value="Female">
             <label for="female">
               {@i18n key="Female"/}
             </label>
