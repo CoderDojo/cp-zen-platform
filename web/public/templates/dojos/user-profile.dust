@@ -62,7 +62,7 @@
         <div class="panel-heading">{@i18n key="Social Media"/}</div>
         <div class="panel-body">
           <a ng-if="profile.twitter && !hideProfileBlock('twitter')" href="http://twitter.com/{{ profile.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i></a>
-          <a ng-if="profile.linkedin && !hideProfileBlock('linkedin')" href="{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
+          <a ng-if="profile.linkedin && !hideProfileBlock('linkedin')" href="http://linkedin.com/{{ profile.linkedin }}"><i class="fa fa-linkedin fa-2x"></i></a>
           <p ng-if="!profile.twitter && !profile.linkedin">{@i18n key="None"/}</p>
         </div>
       </div>

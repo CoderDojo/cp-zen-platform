@@ -266,6 +266,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     if( data.user ) {
       $scope.user = data.user;
       $rootScope.user = data.user;
+      $scope.$on('user-updated', function ($event, updatedUser) {
+        $scope.user = updatedUser;
+     });
       if (path==='/') {
         $window.location.href = 'dashboard'
       }
