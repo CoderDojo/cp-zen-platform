@@ -3,9 +3,11 @@
 function userEventsCtrl($scope, $translate, cdEventsService, alertService, currentUser) {
   $scope.applyData = {};
   $scope.currentEvents = false;
+  currentUser = currentUser.data;
+  $scope.currentUser = currentUser;
 
-  if(currentUser.data.id){
-    cdEventsService.getUserDojosEvents(currentUser.data.id, function (response) {
+  if(currentUser.id){
+    cdEventsService.getUserDojosEvents(currentUser.id, function (response) {
       $scope.dojosEvents = response;
       if(_.isEmpty($scope.dojosEvents)) {
         //This user has no Events.
