@@ -59,6 +59,16 @@ module.exports = _.defaults({
   hapi: {
     connections: {
       routes: {
+        security: {
+          // Don't allow this site to be displayed in frames.
+          xframe: true, // TODO X-Frame-Options
+          // Don't allow HTTP requests at all on this subdomain (only HTTPS).
+          hsts: false // TODO true for prod // TODO Strict-Transport-Security
+          // Add a header that helps protect agains XSS.
+          xss: true, // TODO verify X-XSS-Protection header
+          // Strictly enforce the response MIME-type.
+          noSniff: true // TODO verify X-Content-Type header is in place.
+        },
         payload: {
           maxBytes: 5242880
         }
