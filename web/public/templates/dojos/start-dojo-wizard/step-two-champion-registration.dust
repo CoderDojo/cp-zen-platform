@@ -64,7 +64,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" autocomplete="off" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" required class="form-control" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-change="updateLocalStorage('championDetails','phone',champion.phone)" international-phone-number ng-model="champion.phone">
+              <input type="tel" autocomplete="off" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" required class="form-control" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-change="updateLocalStorage('championDetails','phone',champion.phone)" name="telephoneNumber" id="telephoneNumber" international-phone-number ng-model="champion.phone">
             </div>
           </div>
         </div>
