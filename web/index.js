@@ -8,6 +8,8 @@ var env = process.env.NODE_ENV || 'development';
 
 var _ = require('lodash');
 var Hapi = require('hapi');
+var Blankie = require('blankie');
+var Scooter = require('scooter');
 var Chairo = require('chairo');
 var path = require('path');
 var options = require('./options.' + env + '.js');
@@ -109,7 +111,30 @@ server.ext('onPreResponse', function (request, reply) {
 //      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the 
 //      Trailer rather than Header... - wprl
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
+
+server.register(Scooter, function (err) {
+  checkHapiPluginError('scooter')(err);
+
+  server.register({ register: Blankie, options: {
+    childSrc: "'none'",
+    connectSrc: "'self'",
+    defaultSrc: "'none'",
+    fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
+    frameSrc: "https://www.google.com",
+    frameAncestors: "'none'",
+    imgSrc: "'self' http://www.google-analytics.com https://csi.gstatic.com https://*.googleapis.com http://chart.apis.google.com https://maps.gstatic.com http://google-maps-utility-library-v3.googlecode.com",
+    manifestSrc: "'none'",
+    mediaSrc: "'none'",
+    objectSrc: "'none'",
+    reflectedXss: 'block',
+    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com",
+    styleSrc: "'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com"
+  }}, checkHapiPluginError('blankie'));
+});
+
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
+
+
 
 // Serve CSS files.
 server.register({
