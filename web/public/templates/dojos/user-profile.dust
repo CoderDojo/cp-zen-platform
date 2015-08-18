@@ -92,7 +92,7 @@
       <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
       <notes ng-if="!hideChampionProfileBlock('notes') && hasAccess(profile.userTypes, ['champion'])"></notes>
 
-      <div ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-o13', 'parent-guardian', 'mentor', 'champion'])">
+      <div ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13', 'parent-guardian', 'mentor', 'champion'])">
         <legend contenteditable="false" class="legend-color-6-border">{@i18n key="Member of Dojos"/}</legend>
         <div class="panel-heading" ></div>
         <div class="panel-body">
