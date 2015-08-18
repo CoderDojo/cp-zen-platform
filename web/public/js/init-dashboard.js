@@ -244,7 +244,8 @@
             label: '{{manageDojoUsersPageTitle}}'
           },
           resolve: {
-            initUserTypes: resolves.initUserTypes
+            initUserTypes: resolves.initUserTypes,
+            currentUser: resolves.loggedInUser
           }
         })
 		    .state("setup-dojo", {

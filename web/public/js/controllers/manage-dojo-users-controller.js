@@ -1,6 +1,8 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertService, tableUtils, usSpinnerService, cdBadgesService, $translate, cdUsersService, initUserTypes) {
+function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService, 
+  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser) {
+
   var dojoId = $state.params.id;
   var usersDojosLink = [];
   $scope.itemsPerPage = 10;
@@ -16,16 +18,15 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
   $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
   $scope.invite = {};
 
-  auth.get_loggedin_user(function (user) {
-    $scope.currentUser = user;
-    //Updating user permissions and user types require the same permissions.
-    //Remove users also requires the same permissions,
-    //therefore we can check if the user can update user permissions & delete users by checking the result from the
-    //canUpdateUser method.
-    canUpdateUser(function (result) {
-      $scope.canUpdateUserPermissions = result;
-      $scope.canRemoveUsers = result;
-    });
+  var user = currentUser.data;
+  $scope.currentUser = user;
+  //Updating user permissions and user types require the same permissions.
+  //Remove users also requires the same permissions,
+  //therefore we can check if the user can update user permissions & delete users by checking the result from the
+  //canUpdateUser method.
+  canUpdateUser(function (result) {
+    $scope.canUpdateUserPermissions = result;
+    $scope.canRemoveUsers = result;
   });
 
   cdBadgesService.listBadges(function (response) {
@@ -42,73 +43,67 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, $scope.filterQuery, $scope.sort);
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
-    var query = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
-    
-    auth.get_loggedin_user(function (user) {
-      var query = {userId: user.id, dojoId: dojoId};
-      cdDojoService.getUsersDojos(query, function (usersDojos) {
-        var userDojo = usersDojos[0]
-        user.userTypes = userDojo.userTypes;
-        var inviteUserTypes = angular.copy(initUserTypes.data);
-        if(_.contains(user.userTypes, 'mentor')) {
-          inviteUserTypes = _.without(inviteUserTypes, _.findWhere(inviteUserTypes, {name: 'champion'}));
-        } else if(_.contains(user.userTypes, 'parent-guardian')) {
-          inviteUserTypes = _.chain(inviteUserTypes)
-            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
-            .value();
-        } else if(_.contains(user.userTypes, 'attendee-o13')) {
-          $scope.userTypes = _.chain(inviteUserTypes)
-            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'parent-guardian'}))
-            .value();
-        } else if(_.contains(user.userTypes, 'attendee-u13')) {
-          inviteUserTypes = [];
-        }
-        $scope.userTypes = inviteUserTypes;
+
+    cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId}, function (usersDojos) {
+      var userDojo = usersDojos[0]
+      user.userTypes = userDojo.userTypes;
+      var inviteUserTypes = angular.copy(initUserTypes.data);
+      if(_.contains(user.userTypes, 'mentor')) {
+        inviteUserTypes = _.without(inviteUserTypes, _.findWhere(inviteUserTypes, {name: 'champion'}));
+      } else if(_.contains(user.userTypes, 'parent-guardian')) {
+        inviteUserTypes = _.chain(inviteUserTypes)
+          .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
+          .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
+          .value();
+      } else if(_.contains(user.userTypes, 'attendee-o13')) {
+        $scope.userTypes = _.chain(inviteUserTypes)
+          .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
+          .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
+          .without(_.findWhere(inviteUserTypes, {name: 'parent-guardian'}))
+          .value();
+      } else if(_.contains(user.userTypes, 'attendee-u13')) {
+        inviteUserTypes = [];
+      }
+      $scope.userTypes = inviteUserTypes;
+
+      cdDojoService.getUserPermissions(function (response) {
+        $scope.userPermissions = response;
       });
-    });
 
-    cdDojoService.getUserPermissions(function (response) {
-      $scope.userPermissions = response;
-    });
+      cdDojoService.getUsersDojos({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip}, function (response) {
+        usersDojosLink = response;
+        var dojoUsersQuery = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
+        cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip}, function (response) {
+          _.each(response, function (user) {
+            var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+            user.types = thisUsersDojoLink.userTypes;
+            user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
+              var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
+                return userType === initUserType.name;
+              });
+              return $translate.instant(userTypeFound.title);
+            });
+            user.permissions = thisUsersDojoLink.userPermissions;
+            user.isMentor = _.contains(user.types, 'mentor');
+            user.isDojoOwner = (thisUsersDojoLink.owner === 1) ? true : false;
+            user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
+            user.userDojoId = thisUsersDojoLink.id;
+            $scope.selectedUserPermissions[user.id] = user.permissions;
+            $scope.userPermissionsModel[user.id] = {};
 
-    cdDojoService.getUsersDojos(query, function (response) {
-      usersDojosLink = response;
-    });
-
-    cdDojoService.loadDojoUsers(query, function (response) {
-      _.each(response, function (user) {
-        var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
-        user.types = thisUsersDojoLink.userTypes;
-        user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
-          var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
-            return userType === initUserType.name;
+            _.each(user.permissions, function (permission) {
+              $scope.userPermissionsModel[user.id][permission.name] = true;
+            });
           });
-          return $translate.instant(userTypeFound.title);
+          $scope.users = response;
+          //Query the loadDojoUsers service without the limit to get the total number of users.
+          cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
+            $scope.totalItems = response.length;
+          });
+          return cb();
         });
-        user.permissions = thisUsersDojoLink.userPermissions;
-        user.isMentor = _.contains(user.types, 'mentor');
-        user.isDojoOwner = (thisUsersDojoLink.owner === 1) ? true : false;
-        user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
-        user.userDojoId = thisUsersDojoLink.id;
-        $scope.selectedUserPermissions[user.id] = user.permissions;
-        $scope.userPermissionsModel[user.id] = {};
-
-        _.each(user.permissions, function (permission) {
-          $scope.userPermissionsModel[user.id][permission.name] = true;
-        });
-
       });
-      $scope.users = response;
-      //Query the loadDojoUsers service without the limit to get the total number of users.
-      cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
-        $scope.totalItems = response.length;
-      });
-      return cb();
     });
-
   };
 
   $scope.updateMentorBackgroundCheck = function (user) {
@@ -323,5 +318,6 @@ function cdManageDojoUsersCtrl($scope, $state, auth, $q, cdDojoService, alertSer
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', 'auth', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', cdManageDojoUsersCtrl]);
+    .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 
+    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', cdManageDojoUsersCtrl]);
 
