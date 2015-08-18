@@ -61,13 +61,13 @@ module.exports = _.defaults({
       routes: {
         security: {
           // Don't allow this site to be displayed in frames.
-          xframe: true, // TODO X-Frame-Options
+          xframe: true,
           // Don't allow HTTP requests at all on this subdomain (only HTTPS).
-          hsts: false // TODO true for prod // TODO Strict-Transport-Security
+          hsts: false,
           // Add a header that helps protect agains XSS.
-          xss: true, // TODO verify X-XSS-Protection header
+          xss: true,
           // Strictly enforce the response MIME-type.
-          noSniff: true // TODO verify X-Content-Type header is in place.
+          noSniff: true
         },
         payload: {
           maxBytes: 5242880

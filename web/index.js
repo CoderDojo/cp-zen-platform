@@ -47,8 +47,8 @@ server.connection({
 
 server.state('NG_TRANSLATE_LANG_KEY', {
   ttl: null,
-  isSecure: false,
-  isHttpOnly: false,
+  isSecure: true,
+  isHttpOnly: true,
   encoding: 'none',
   clearInvalid: false, // remove invalid cookies
   strictHeader: false // don't allow violations of RFC 6265
@@ -75,6 +75,7 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
+// Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
 
@@ -85,10 +86,28 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/404', request.locals);
 });
 
+// Handler for 500
+server.ext('onPreResponse', function (request, reply) {
+  var headerStatus = _.get(request, 'response.statusCode', 500);
+  var bodyStatus = _.get(request, 'response.output.payload.statusCode', undefined);
+
+  if (headerStatus !== 500 && bodyStatus !== 500) {
+    return reply.continue();
+  }
+
+  // Display full error message if not in production environment.
+  if (env !== 'production') {
+    return reply.continue();
+  }
+
+  // Otherwise, give a generic error reply to hide errors in production.
+  return reply.view('errors/500', request.locals);
+});
+
 // TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.  
-//      However, most of them aren't large sized responses, so the benefit of Etag may outway that penalty.
+//      However, most of them aren't large sized responses, so the benefit of Etag outweighs that penalty.
 //      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the 
-//      Trailer rather than Header...
+//      Trailer rather than Header... - wprl
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
