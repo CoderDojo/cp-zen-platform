@@ -273,6 +273,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   };
 
   function saveYouthViaParent(profile){
+    profile = _.omit(profile, ['userTypes', 'dojos']);
+    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
+    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    
     cdUsersService.saveYouthProfile(profile, function (response) {
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
       $state.go('user-profile', {userId: response.userId});
