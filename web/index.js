@@ -20,6 +20,9 @@ require('./lib/dust-i18n.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new Hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
+var host = process.env.HOSTNAME || 'localhost';
+var protocol = process.env.PROTOCOL || 'http';
+var hostWithPort = protocol + '://' + host + ':' + port;
 
 function checkHapiPluginError (name) {
   return function (error) {
@@ -36,7 +39,10 @@ server.connection({
   port: port, 
   // According to the HTTP spec and Chrome audit tool, Cache-Control headers should match what
   // would be sent for 200 when a 304 (Not Modified) is sent.
-  routes: { cache: { statuses: [200,304] } }
+  routes: {
+    cache: { statuses: [200,304] },
+    cors: { origin: [ hostWithPort, 'https://changex.org' ] }
+  }
 });
 
 server.state('NG_TRANSLATE_LANG_KEY', {
