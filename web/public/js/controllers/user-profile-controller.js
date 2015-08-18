@@ -273,9 +273,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   };
 
   function saveYouthViaParent(profile){
-    cdUsersService.saveYouthProfile(profile, function(){
+    cdUsersService.saveYouthProfile(profile, function (response) {
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
-      $state.go('user-profile', {userId: $stateParams.userId});
+      $state.go('user-profile', {userId: response.userId});
     }, function(){
       alertService.showError($translate.instant('An error has occurred while saving profile'));
     });
