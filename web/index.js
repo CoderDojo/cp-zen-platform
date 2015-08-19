@@ -8,6 +8,8 @@ var env = process.env.NODE_ENV || 'development';
 
 var _ = require('lodash');
 var Hapi = require('hapi');
+var Blankie = require('blankie');
+var Scooter = require('scooter');
 var Chairo = require('chairo');
 var path = require('path');
 var options = require('./options.' + env + '.js');
@@ -45,15 +47,6 @@ server.connection({
   }
 });
 
-server.state('NG_TRANSLATE_LANG_KEY', {
-  ttl: null,
-  isSecure: false,
-  isHttpOnly: false,
-  encoding: 'none',
-  clearInvalid: false, // remove invalid cookies
-  strictHeader: false // don't allow violations of RFC 6265
-});
-
 server.views({
   engines: { dust: require('hapi-dust') },
   path: path.join(__dirname, './public/templates'),
@@ -75,6 +68,7 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
+// Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
 
@@ -85,12 +79,53 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/404', request.locals);
 });
 
+// Handler for 500
+server.ext('onPreResponse', function (request, reply) {
+  var headerStatus = _.get(request, 'response.statusCode', 500);
+  var bodyStatus = _.get(request, 'response.output.payload.statusCode', undefined);
+
+  if (headerStatus !== 500 && bodyStatus !== 500) {
+    return reply.continue();
+  }
+
+  // Display full error message if not in production environment.
+  if (env !== 'production') {
+    return reply.continue();
+  }
+
+  // Otherwise, give a generic error reply to hide errors in production.
+  return reply.view('errors/500', request.locals);
+});
+
 // TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.  
-//      However, most of them aren't large sized responses, so the benefit of Etag may outway that penalty.
+//      However, most of them aren't large sized responses, so the benefit of Etag outweighs that penalty.
 //      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the 
-//      Trailer rather than Header...
+//      Trailer rather than Header... - wprl
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
+
+server.register(Scooter, function (err) {
+  checkHapiPluginError('scooter')(err);
+
+  server.register({ register: Blankie, options: {
+    childSrc: "'none'",
+    connectSrc: "'self'",
+    defaultSrc: "'none'",
+    fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
+    frameSrc: "https://www.google.com",
+    frameAncestors: "'none'",
+    imgSrc: "'self' data: http://www.google-analytics.com https://csi.gstatic.com https://*.googleapis.com http://chart.apis.google.com https://maps.gstatic.com http://google-maps-utility-library-v3.googlecode.com",
+    manifestSrc: "'none'",
+    mediaSrc: "'none'",
+    objectSrc: "'none'",
+    reflectedXss: 'block',
+    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com",
+    styleSrc: "'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com"
+  }}, checkHapiPluginError('blankie'));
+});
+
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
+
+
 
 // Serve CSS files.
 server.register({
