@@ -113,7 +113,7 @@ server.register(Scooter, function (err) {
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' http://www.google-analytics.com https://csi.gstatic.com https://*.googleapis.com http://chart.apis.google.com https://maps.gstatic.com http://google-maps-utility-library-v3.googlecode.com",
+    imgSrc: "'self' data: http://www.google-analytics.com https://csi.gstatic.com https://*.googleapis.com http://chart.apis.google.com https://maps.gstatic.com http://google-maps-utility-library-v3.googlecode.com",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",
