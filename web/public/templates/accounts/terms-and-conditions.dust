@@ -1,4 +1,18 @@
 <div class="cd-container cd-color-2-underline">
-  <legend>{@i18n key="Terms and Conditions"/}</legend>
+  <legend>{@i18n key="Zen Terms and Conditions"/}</legend>
+  <p><strong>{@i18n key="INTRODUCTION"/}</strong></p>
+  <p>{@i18n key="Welcome to 'Zen' the CoderDojo community platform."/} </p>
+  <p>{@i18n key="PLEASE READ THE FOLLOWING CAREFULLY BEFORE USING ZEN."/}</p>
+  <p>{@i18n key="Zen is a platform for CoderDojo community members (Champions, Mentors, Parents and Youth Attendees) to search for local Dojos, create listings for their Dojos on the publicly viewable Dojo database, issue and book tickets for their Dojos, participate in the CoderDojo web forums and manage their Dojo volunteers. "/}</p>
+  <p>{@i18n key="Throughout the site, the terms /"we/", /"us/" and /"our/" refer to the CoderDojo Foundation. The CoderDojo Foundation offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. The following Terms and Conditions are a legal contract between you (/"You/") and the CoderDojo Foundation regarding your use of Zen. Visitors and users of Zen are referred to individually as /"User/" and collectively as “Users”.
+"/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
+  <p>{@i18n key=""/}</p>
 </div>
 

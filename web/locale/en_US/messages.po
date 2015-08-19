@@ -77,8 +77,8 @@ msgstr "Select user type"
 msgid "Login"
 msgstr "Login"
 
-msgid "Terms and Conditions"
-msgstr "Terms and Conditions"
+msgid "Zen Terms and Conditions"
+msgstr "Zen Terms and Conditions"
 
 msgid "CoderDojo Champion Registration Form"
 msgstr "CoderDojo Champion Registration Form"
