@@ -112,10 +112,11 @@
             </div>
             </td>
             <td>
-            <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
+            <div ng-if="dojo.deleted === 0" class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="pushChangedDojo(dojo)">
               <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
             </div>
+            <span ng-if="dojo.deleted === 1" class="green-text glyphicon glyphicon-ok-sign"></span>
             </td>
           </tr>
         </tbody>

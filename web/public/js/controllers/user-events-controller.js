@@ -1,10 +1,37 @@
  'use strict';
 
-function userEventsCtrl($scope, $translate, cdEventsService, alertService, currentUser) {
+function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser) {
   $scope.applyData = {};
   $scope.currentEvents = false;
   currentUser = currentUser.data;
   $scope.currentUser = currentUser;
+
+  //retrieve children
+  var query = {userId:$scope.currentUser.id};
+  cdUsersService.listProfiles(query, function (response) {
+    var parentProfile = response;
+    var children = parentProfile.children;
+    var childProfiles = [];
+    async.each(children, function (child, cb) {
+      cdUsersService.listProfiles({userId:child}, function (response) {
+        if(response.userType === 'attendee-u13') {
+          childProfiles.push(response);
+        }
+        cb();
+      });
+    }, function (err) {
+      var childUsers = [];
+      async.each(childProfiles, function (childProfile, cb) {
+        //Load sys_user objects
+        cdUsersService.load(childProfile.userId, function (response) {
+          childUsers.push(response);
+          cb();
+        });
+      }, function (err) {
+        $scope.childUsers = childUsers;
+      });
+    });
+  });
 
   if(currentUser.id){
     cdEventsService.getUserDojosEvents(currentUser.id, function (response) {
@@ -82,4 +109,4 @@ function userEventsCtrl($scope, $translate, cdEventsService, alertService, curre
 }
 
 angular.module('cpZenPlatform')
-    .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'alertService', 'currentUser', userEventsCtrl]);
+    .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', userEventsCtrl]);
