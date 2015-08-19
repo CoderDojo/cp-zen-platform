@@ -1889,3 +1889,6 @@ msgstr "Invalid request. No badge received."
 
 msgid "Parent profile does not exist."
 msgstr "Parent profile does not exist."
+
+msgid "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."
+msgstr "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."

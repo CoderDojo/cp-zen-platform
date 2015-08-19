@@ -1,7 +1,7 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
-function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, AlertBanner, Geocoder, $translate, gmap) {
+function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojoService, cdCountriesService, Geocoder, $translate, gmap, atomicNotifyService) {
   $scope.model = {};
   $scope.markers = [];
   $scope.continentMarkers = [];
@@ -47,12 +47,20 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
   if ($stateParams.bannerMessage) {
     var type = $stateParams.bannerType || 'info';
     var timeCollapse = $stateParams.bannerTimeCollapse || 5000;
-    AlertBanner.publish({
-      type: type,
-      message: $stateParams.bannerMessage,
-      timeCollapse: timeCollapse
-    });
+    switch(type) {
+      case 'success':
+        atomicNotifyService.success($stateParams.bannerMessage, timeCollapse);
+        break;
+      default: 
+        atomicNotifyService.info($stateParams.bannerMessage, timeCollapse);
+        break;
+    }
+    
   }
+
+  $scope.$on('$destroy', function(){
+    atomicNotifyService.dismissAll();
+  });
 
   $scope.$on('$viewContentLoaded', function() {
     jQuery('body').cookieDisclaimer({
@@ -569,4 +577,4 @@ function cdDojoListCtrl($window, $state, $stateParams, $scope, $location, cdDojo
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-list-controller', ['$window', '$state', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'AlertBanner', 'Geocoder', '$translate', 'gmap', cdDojoListCtrl]);
+  .controller('dojo-list-controller', ['$window', '$state', '$stateParams', '$scope', '$location', 'cdDojoService', 'cdCountriesService', 'Geocoder', '$translate', 'gmap', 'atomicNotifyService', cdDojoListCtrl]);
