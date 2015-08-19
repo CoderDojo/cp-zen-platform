@@ -18,6 +18,20 @@
       });
     });
 
+    $scope.isNotPast = function(dates) {
+      return !$scope.isPast(dates)
+    }
+
+    $scope.isPast = function(dates) {
+      var now = new Date();
+      var res = _.find(dates, function(date){
+      date = new Date(date);
+        return date > now;
+      });
+      return !res;
+    }
+
+
     cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
     });
