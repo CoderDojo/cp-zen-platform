@@ -56,12 +56,12 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           return _.omit(dojoLead, 'entity$');
         });
 
-        var uncompletedDojoLead = null;
+        var uncompletedDojoLead = _.find(results, function(dojoLead){
+          return dojoLead.completed === false;
+        });
 
-        _.each(results, function(dojoLead){
-          if(!dojoLead.completed){
-            uncompletedDojoLead = dojoLead;
-          }
+        var hasVerifiedDojo = _.find(results, function (dojoLead) {
+          return dojoLead.completed === true;
         });
 
         currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
@@ -71,8 +71,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             if (!_.isEmpty(response)) {
               $state.go('dojo-list',
                 { bannerType:'success',
-                  bannerMessage: $translate.instant('Your first Dojo application is awaiting verification. You can create a second Dojo after it has been verified.') +'<br> ' +
-                  $translate.instant('If you need help completing your initial Dojo application, please contact us at')+ ' <a class="a-no-float" href="mailto:info@coderdojo.org">info@coderdojo.org</a>',
+                  bannerMessage: $translate.instant('You have a Dojo application awaiting verification. You can create another Dojo after it has been verified.') +
+                  $translate.instant('If you need help completing your initial Dojo application, please contact us at info@coderdojo.org'),
                   bannerTimeCollapse: 150000
                 });
             } else {
