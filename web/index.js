@@ -47,15 +47,6 @@ server.connection({
   }
 });
 
-server.state('NG_TRANSLATE_LANG_KEY', {
-  ttl: null,
-  isSecure: true,
-  isHttpOnly: true,
-  encoding: 'none',
-  clearInvalid: false, // remove invalid cookies
-  strictHeader: false // don't allow violations of RFC 6265
-});
-
 server.views({
   engines: { dust: require('hapi-dust') },
   path: path.join(__dirname, './public/templates'),
