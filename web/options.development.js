@@ -63,8 +63,8 @@ module.exports = _.defaults({
           // Don't allow this site to be displayed in frames.
           xframe: true,
           // Don't allow HTTP requests at all on this subdomain (only HTTPS).
-          hsts: false,
-          // Add a header that helps protect agains XSS.
+          hsts: false, // TODO only enable in production
+          // Add a header that helps protect against XSS.
           xss: true,
           // Strictly enforce the response MIME-type.
           noSniff: true
