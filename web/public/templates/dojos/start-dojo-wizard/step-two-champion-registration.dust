@@ -1,6 +1,6 @@
 <div ng-show="showCharterAgreementFlag">
   <div class="cd-create-dojo-container">
-    <form id="createChampionForm" ng-enter="noop()" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
+    <form id="createChampionForm" novalidate angular-validator angular-validator-submit="save(champion)" name="createChampionForm">
       <div id="main">
         <h3 class="cd-page-header">{@i18n key="CoderDojo Champion Registration Form"/}</h3>
         <div class="col-lg-12 center-block">
@@ -64,7 +64,7 @@
           <div class="form-group">
             <label for="telephoneNumber" class="col-lg-4 cd-form-label1">{@i18n key="Telephone Number"/}*</label>
             <div class="col-lg-8">
-              <input type="tel" autocomplete="off" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" required class="form-control" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-change="updateLocalStorage('championDetails','phone',champion.phone)" name="telephoneNumber" id="telephoneNumber" international-phone-number ng-model="champion.phone">
+              <input type="tel" ng-enter="noop()" autocomplete="off" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" required class="form-control" required required-message="'{@i18n key="Telephone Number is empty"/}'" ng-change="updateLocalStorage('championDetails','phone',champion.phone)" name="telephoneNumber" id="telephoneNumber" international-phone-number ng-model="champion.phone">
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="text" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
+                <input type="text" ng-enter="noop()" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>
@@ -171,7 +171,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4 cd-form-label1">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" http-prefix tooltip="{@i18n key="If you wish please provide a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
+                <input type="url" ng-enter="noop()" http-prefix tooltip="{@i18n key="If you wish please provide a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
               </div>
           </div>
         </div>
