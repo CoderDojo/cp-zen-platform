@@ -719,6 +719,9 @@ msgstr "Thank you for submitting your dojo listing."
 msgid "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 msgstr "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 
+msgid "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
+msgstr "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
+
 msgid "persons have signed the current version of the charter"
 msgstr "persons have signed the current version of the charter"
 
