@@ -102,7 +102,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
   $scope.search = function () {
     if (!$scope.search.dojo) return;
-    clearMarkers();
+    //clearMarkers();
     $scope.searchResult = null;
     $scope.noResultsFound = null;
 
@@ -111,13 +111,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       if (!results.length) return;
       var location = results[0].geometry.location;
 
-      if (results[0].geometry.bounds) {
-        var bounds = results[0].geometry.bounds;
-        $scope.model.map.fitBounds(bounds);
-        searchBounds(location, $scope.model.map.getBounds(), true, $scope.search.dojo);
-      } else {
-        searchNearest(location);
-      }
+      searchNearest(location);
     }, function (reason) {
       console.error(reason);
       $scope.searchResult = true;
@@ -132,32 +126,15 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     $scope.markers = [];
   }
 
-  function searchBounds(location, bounds, fallbackToNearest, search) {
-    var boundsRadius = getBoundsRadius(bounds);
-    cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
-      if (result.length > 0) {
-        clearMarkers();
-        $scope.searchResult = result;
-        addMarkersToMap(result);
-      }
-      else {
-        if (fallbackToNearest) {
-          searchNearest(location);
-        }
-      }
-    });
-  }
-
   function searchNearest(location) {
     cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng()}).then(function (result) {
       if(result.length > 0) {
-        clearMarkers();
         $scope.searchResult = result;
-        addMarkersToMap(result);
       }
       var bounds = new google.maps.LatLngBounds();
-      _.each($scope.markers, function (marker) {
-        bounds.extend(marker.getPosition());
+      _.each(result, function (dojo) {
+        var position = new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
+        bounds.extend(position);
       });
       $scope.model.map.fitBounds(bounds);
     });
