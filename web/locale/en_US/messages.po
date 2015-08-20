@@ -1895,3 +1895,9 @@ msgstr "You have a Dojo application awaiting verification. You can create anothe
 
 msgid "No Dojos match your search query."
 msgstr "No Dojos match your search query."
+
+msgid "Please let us know how you heard about CoderDojo"
+msgstr "Please let us know how you heard about CoderDojo"
+
+msgid "Please specify how you heard about CoderDojo"
+msgstr "Please specify how you heard about CoderDojo"
