@@ -100,6 +100,9 @@ function cdUsersService(cdApi, $q){
     },
     approveInviteNinja: function (data, win, fail) {
       cdApi.post('profiles/approve_invite_ninja', {data: data}, win, fail || topfail);
+    },
+    recordLogin: function(data, win, fail) {
+      cdApi.post('users/record_login', {data: data}, win, fail || topfail);
     }
   };
 }
