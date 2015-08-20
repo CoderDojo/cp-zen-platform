@@ -500,6 +500,10 @@ msgstr "Status Messages"
 msgid "Need Mentors"
 msgstr "Need Mentors"
 
+msgid "Mentors needed!"
+msgstr "Mentors needed!"
+
+
 msgid "Current Stage"
 msgstr "Current Stage"
 
