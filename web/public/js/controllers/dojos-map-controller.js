@@ -1,7 +1,7 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
-function cdDojosMapCtrl($scope, $window, $state, $translate, cdDojoService, gmap, Geocoder) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService) {
   $scope.model = {};
   $scope.markers = [];
   var markerClusterer;
@@ -40,6 +40,39 @@ function cdDojosMapCtrl($scope, $window, $state, $translate, cdDojoService, gmap
 
   $scope.loadMap();
 
+  if ($stateParams.bannerMessage) {
+    var type = $stateParams.bannerType || 'info';
+    var timeCollapse = $stateParams.bannerTimeCollapse || 5000;
+    switch(type) {
+      case 'success':
+        atomicNotifyService.success($stateParams.bannerMessage, timeCollapse);
+        break;
+      default: 
+        atomicNotifyService.info($stateParams.bannerMessage, timeCollapse);
+        break;
+    }
+  }
+
+  $scope.$on('$destroy', function(){
+    atomicNotifyService.dismissAll();
+  });
+
+  $scope.$on('$viewContentLoaded', function() {
+    jQuery('body').cookieDisclaimer({
+      text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm#section_2'>here</a>."),
+      style: "light", // dark,light
+      cssPosition: "relative", //fixed,absolute,relative
+      acceptBtn: { text: 'x' },
+      policyBtn: { active: false },
+      cookie: {
+        name: "cookieDisclaimer",
+        val: "confirmed",
+        path: "/",
+        expire: 365
+      }
+    });
+  });
+
   cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
     $scope.dojoList = dojos;
   });
@@ -72,7 +105,7 @@ function cdDojosMapCtrl($scope, $window, $state, $translate, cdDojoService, gmap
     clearMarkers();
     $scope.searchResult = null;
     $scope.noResultsFound = null;
-    
+
     var address = $scope.search.dojo;
     Geocoder.geocode(address).then(function (results) {
       if (!results.length) return;
@@ -163,4 +196,4 @@ function cdDojosMapCtrl($scope, $window, $state, $translate, cdDojoService, gmap
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$translate', 'cdDojoService', 'gmap', 'Geocoder', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', cdDojosMapCtrl]);
