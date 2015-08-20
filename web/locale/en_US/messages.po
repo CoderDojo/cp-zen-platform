@@ -1895,3 +1895,13 @@ msgstr "You have a Dojo application awaiting verification. You can create anothe
 
 msgid "No Dojos match your search query."
 msgstr "No Dojos match your search query."
+
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
+
+msgid "Private Dojo"
+msgstr "Private Dojo"
+
+msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
+msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
