@@ -96,13 +96,13 @@
         <div class="form-group">
           <label for="linkedin" class="col-sm-4 control-label">{@i18n key="Linkedin"/} </label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="linkedin" placeholder="{@i18n key="Linkedin"/}" ng-model="profile.linkedin">
+            <input type="text" class="form-control" id="linkedin" placeholder="{@i18n key="e.g. linkedin.com/company/coderdojo"/}" ng-model="profile.linkedin">
           </div>
         </div>
         <div class="form-group">
           <label for="twitter" class="col-sm-4 control-label">{@i18n key="Twitter"/} </label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-model="profile.twitter">
+            <input type="text" class="form-control" id="twitter" placeholder="{@i18n key="e.g. twitter.com/@CoderDojo"/}" ng-model="profile.twitter">
           </div>
         </div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
