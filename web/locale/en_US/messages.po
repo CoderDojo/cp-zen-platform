@@ -425,8 +425,8 @@ msgstr "Search Results"
 msgid "Your closest dojos"
 msgstr "Your closest dojos"
 
-msgid "Where are you? Enter an address here and we'll find the closest dojo to you."
-msgstr "Where are you? Enter an address here and we'll find the closest dojo to you."
+msgid "Where are you?"
+msgstr "Where are you?"
 
 msgid "Dojo Information"
 msgstr "Dojo Information"
