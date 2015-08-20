@@ -5,13 +5,11 @@
       <div class="dojo-detail">
         <div class="col-xs-12 col-lg-7">
           <legend><b>{{ dojo.name }}</b></legend>
+          <div class="alert alert-danger" ng-if="dojo.private">
+            <strong>Private Dojo:</strong> This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo.
+          </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Private"/}</b></td>
-                <td ng-if="dojo.private">{@i18n key="Yes"/}</td>
-                <td ng-if="!dojo.private">{@i18n key="No"/}</td>
-              </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Stage"/}</b></td>
                 <td>{@i18n key="{{ dojo.stage }}"/}</td>
