@@ -106,7 +106,7 @@
       $stateProvider
         .state("home", {
           url: "/",
-          templateUrl: '/dojos/template/dojo-list',
+          templateUrl: '/dojos/template/dojos-map',
           resolve: {
             gmap: gmap
           },
@@ -115,11 +115,11 @@
             bannerMessage: null,
             bannerTimeCollapse: null
           },
-          controller: 'dojo-list-controller'
+          controller: 'dojos-map-controller'
         })
         .state("dojo-list", {
           url: "/dashboard/dojo-list",
-          templateUrl: '/dojos/template/dojo-list',
+          templateUrl: '/dojos/template/dojos-map',
           resolve: {
             gmap: gmap
           },
@@ -128,7 +128,7 @@
             bannerMessage: null,
             bannerTimeCollapse: null
           },
-          controller: 'dojo-list-controller'
+          controller: 'dojos-map-controller'
         })
         .state("my-dojos", {
           url: "/dashboard/my-dojos",

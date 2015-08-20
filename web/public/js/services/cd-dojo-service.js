@@ -48,8 +48,8 @@
       dojoCount: function(win, fail) {
         cdApi.get('dojos_count', win, fail || topfail);
       },
-      dojosByCountry: function(countries, win, fail) {
-        cdApi.post('dojos_by_country', {countries:countries}, win, fail || topfail);
+      dojosByCountry: function(query, win, fail) {
+        cdApi.post('dojos_by_country', {query: query}, win, fail || topfail);
       },
       dojosStateCount: function(country, win, fail) {
         cdApi.get('dojos_state_count/' + country, win, fail || topfail);

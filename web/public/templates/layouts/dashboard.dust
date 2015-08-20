@@ -131,7 +131,6 @@
 
     <script src="/js/controllers/login-controller.js"></script>
     <script src="/js/controllers/header-controller.js"></script>
-    <script src="/js/controllers/dojo-list-controller.js"></script>
     <script src="/js/controllers/my-dojos-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/dojo-list-index-controller.js"></script>
@@ -159,6 +158,7 @@
     <script src="/js/controllers/charter-controller.js"></script>
     <script src="/js/controllers/approve-invite-ninja-controller.js"></script>
     <script src="/js/controllers/dojo-setup-confirmation-controller.js"></script>
+    <script src="/js/controllers/dojos-map-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

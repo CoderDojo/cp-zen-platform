@@ -1892,3 +1892,6 @@ msgstr "Parent profile does not exist."
 
 msgid "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."
 msgstr "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
