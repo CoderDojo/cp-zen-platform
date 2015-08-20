@@ -102,7 +102,6 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
   $scope.search = function () {
     if (!$scope.search.dojo) return;
-    //clearMarkers();
     $scope.searchResult = null;
     $scope.noResultsFound = null;
 
@@ -111,7 +110,13 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       if (!results.length) return;
       var location = results[0].geometry.location;
 
-      searchNearest(location);
+      if (results[0].geometry.bounds) {
+        var bounds = results[0].geometry.bounds;
+        $scope.model.map.fitBounds(bounds);
+        searchBounds(location, $scope.model.map.getBounds(), true, $scope.search.dojo);
+      } else {
+        searchNearest(location);
+      }
     }, function (reason) {
       console.error(reason);
       $scope.searchResult = true;
@@ -124,6 +129,20 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       marker.setMap(null);
     });
     $scope.markers = [];
+  }
+
+  function searchBounds(location, bounds, fallbackToNearest, search) {
+    var boundsRadius = getBoundsRadius(bounds);
+    cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
+      if (result.length > 0) {
+        $scope.searchResult = result;
+      }
+      else {
+        if (fallbackToNearest) {
+          searchNearest(location);
+        }
+      }
+    });
   }
 
   function searchNearest(location) {
