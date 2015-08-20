@@ -1,18 +1,16 @@
 
   <section ng-if="mapLoaded" id="map">
     <div ui-map-info-window="model.markerInfoWindow">
-      <h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojo }}</a></h3>
+      <h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojoName }}</a></h3>
     </div>
-    <div ng-repeat="continentMarker in continentMarkers" ui-map-marker="continentMarkers[$index]" ui-event="{'map-click': 'showContinentDojos(continentMarker)'}"></div>
-    <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'showCountryDojos(marker)'}"></div>
-    <div ng-repeat="countryMarker in countryMarkers" ui-map-marker="countryMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(countryMarker)'}"></div>
-    <div ng-repeat="stateMarker in stateMarkers" ui-map-marker="stateMarkers[$index]" ui-event="{'map-click': 'showStateMarkers(stateMarker)'}"></div>
+    <div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{'map-click': 'openMarkerInfo(marker)'}"></div>
     <div id="googleMap" ui-map="model.map" ui-event="{'map-dragend':'mapDragEnd()', 'map-zoom_changed':'mapZoomChanged()'}" ui-options="mapOptions" class="map-canvas"></div>
   </section>
 
-  <ol id="map-breadcrumbs" class="breadcrumb">
-    <li class="{{ currentLevel.style }}" ng-repeat="currentLevel in currentLevels"><a class="pointer" ng-click="resetMap(currentLevel.type, currentLevel.text)">{{ currentLevel.text }}</a></li>
+  <ol ng-if="searchResult" class="breadcrumb">
+    <li><button class="btn btn-info btn-xs" ng-click="loadMap()">Back</button></li>
   </ol>
+
   <form name="dojoSearch" ng-submit="search()">
     <div id="find-dojo-form" class="input-group">
       <input id="location" ng-model="search.dojo" placeholder="{@i18n key="Where are you? Enter an address here and we'll find the closest dojo to you."/}" type="text" class="form-control">
@@ -22,51 +20,14 @@
     </div>
   </form>
 
-  <div ng-if="countrySelected && !searchResult" class="row">
-    <div class="col-xs-12">
-      <legend ng-if="countryName"><h2>{{ countryName }}</h2></legend>
-      <legend ng-if="!countryName && dojos"><h2>{@i18n key="Search Results"/}</h2></legend>
-      <div ng-repeat="(state, dojos) in dojosByCountry">
-        <legend>{{ state }}</legend>
-        <ul ng-repeat="dojo in dojos">
-          <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div ng-if="stateSelected && !searchResult" class="row">
-    <div class="col-lg-12">
-      <legend><h1>{{ continentName }}</h1></legend>
-      <legend ng-if="stateName"><h2>{{ stateName }}, {{ countryName }}</h2></legend>
-      <ul ng-repeat="dojo in dojos">
-        <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div ng-if="!countrySelected && !stateSelected && !searchResult" class="row">
-    <div class="col-lg-12">
-      <legend ng-if="continentName"><h2>{{ continentName }}</h2></legend>
-        <div ng-repeat="data in dojoData">
-          <div ng-repeat="(country, statesData) in data">
-            <legend>{{ country }}</legend>
-            <div ng-repeat="(state, dojos) in statesData.states">
-              <h5 class="state-heading">{{ state }}</h5>
-              <ul ng-repeat="dojo in dojos">
-                <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-
   <div ng-if="searchResult" class="row">
     <div class="col-lg-12">
-      <h5 class="state-heading">{@i18n key="Your closest dojos"/}</h5>
+      <h5 ng-if="!noResultsFound" class="state-heading">{@i18n key="Your closest dojos"/}</h5>
       <ul ng-repeat="dojo in searchResult">
         <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
       </ul>
+      <div ng-if="noResultsFound">
+        <p>{{ noResultsFound }}</p>
+      </div>
     </div>
   </div>

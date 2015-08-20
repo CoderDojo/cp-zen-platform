@@ -17,13 +17,11 @@
     </div>
     <div dw-loading="main" class="col-xs-12 col-lg-7">
       <div id="main">
-        <div ng-repeat="(country, statesData) in dojoList">
+        <div ng-repeat="(country, dojos) in dojoList">
           <legend>{{ country }}</legend>
-          <div ng-repeat="(state, dojos) in statesData.states">
-            <ul ng-repeat="dojo in dojos">
-              <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
-            </ul>
-          </div>
+          <ul ng-repeat="dojo in dojos">
+            <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+          </ul>
         </div>
       </div>
     </div>
