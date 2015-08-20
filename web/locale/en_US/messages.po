@@ -1433,8 +1433,8 @@ msgstr "Background check"
 msgid "Locate suitable venue within your community"
 msgstr "Locate suitable venue within your community"
 
-msgid "Ensure health and saftey best practices are met"
-msgstr "Ensure health and saftey best practices are met"
+msgid "Ensure health and safety best practices are met"
+msgstr "Ensure health and safety best practices are met"
 
 msgid "Ensure public liability insurance is covered"
 msgstr "Ensure public liability insurance is covered"
