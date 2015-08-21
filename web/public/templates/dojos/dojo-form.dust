@@ -12,7 +12,7 @@
               <span>{@i18n key="Dojo Name"/}*</span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="Enter Dojo name"/}" ng-change="updateLocalStorage('dojoListing','name', dojo.name)">
+              <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="e.g. Docklands, Dublin 1 @ CHQ Building"/}" ng-change="updateLocalStorage('dojoListing','name', dojo.name)">
               <div class="cd-tooltip">
                 {@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}
               </div>
@@ -26,7 +26,7 @@
               <span>{@i18n key="Dojo Email"/}</span>
             </label>
             <div class="col-lg-8">
-              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="Enter Dojo email address"/}" ng-change="updateLocalStorage('dojoListing','email', dojo.email)">
+              <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail" placeholder="{@i18n key="e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"/}" ng-change="updateLocalStorage('dojoListing','email', dojo.email)">
               <div class="cd-tooltip">
                 {@i18n key="This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."/}
               </div>
@@ -40,7 +40,7 @@
               <span>{@i18n key="Times"/}</span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="Enter Dojo times..."/}" ng-change="updateLocalStorage('dojoListing','time', dojo.time)">
+              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="e.g. Saturdays, monthly, 9-11am"/}" ng-change="updateLocalStorage('dojoListing','time', dojo.time)">
               <div class="cd-tooltip">
                 {@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}
               </div>
