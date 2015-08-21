@@ -102,7 +102,6 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
   $scope.search = function () {
     if (!$scope.search.dojo) return;
-    clearMarkers();
     $scope.searchResult = null;
     $scope.noResultsFound = null;
 
@@ -136,9 +135,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     var boundsRadius = getBoundsRadius(bounds);
     cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
       if (result.length > 0) {
-        clearMarkers();
         $scope.searchResult = result;
-        addMarkersToMap(result);
       }
       else {
         if (fallbackToNearest) {
@@ -151,13 +148,12 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
   function searchNearest(location) {
     cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng()}).then(function (result) {
       if(result.length > 0) {
-        clearMarkers();
         $scope.searchResult = result;
-        addMarkersToMap(result);
       }
       var bounds = new google.maps.LatLngBounds();
-      _.each($scope.markers, function (marker) {
-        bounds.extend(marker.getPosition());
+      _.each(result, function (dojo) {
+        var position = new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
+        bounds.extend(position);
       });
       $scope.model.map.fitBounds(bounds);
     });

@@ -6,7 +6,8 @@
         <div class="col-xs-12 col-lg-7">
           <legend><b>{{ dojo.name }}</b></legend>
           <div class="alert alert-danger" ng-if="dojo.private">
-            <strong>Private Dojo:</strong> This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo.
+            {@i18n key="{{ dojo.stage }}"/}
+            <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
           </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>

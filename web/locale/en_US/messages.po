@@ -425,8 +425,8 @@ msgstr "Search Results"
 msgid "Your closest dojos"
 msgstr "Your closest dojos"
 
-msgid "Where are you? Enter an address here and we'll find the closest dojo to you."
-msgstr "Where are you? Enter an address here and we'll find the closest dojo to you."
+msgid "Where are you?"
+msgstr "Where are you?"
 
 msgid "Dojo Information"
 msgstr "Dojo Information"
@@ -1901,3 +1901,12 @@ msgstr "Please let us know how you heard about CoderDojo"
 
 msgid "Please specify how you heard about CoderDojo"
 msgstr "Please specify how you heard about CoderDojo"
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
+
+msgid "Private Dojo"
+msgstr "Private Dojo"
+
+msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
+msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
