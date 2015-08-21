@@ -3,13 +3,15 @@
 
 function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, cdCountriesService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
 
-  $scope.setStage = function () {
-    var stages = ["In Planning", "Open, come along", "Register Ahead", "Full Up"]
-    $scope.dojo.stage = stages[$scope.dojo.stage];
-  }
+  cdDojoService.getDojoConfig(function(json){
+    $scope.dojoStages = _.map(json.dojoStages, function(item){
+      return { value: item.value, label: $translate.instant(item.label) };
+    });
+  $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
+  });
+
 
   $scope.dojo = dojo;
-  $scope.setStage();
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
