@@ -190,7 +190,7 @@
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.coderDojoReference.$error.required}">
               <div>
                 <ui-select required name="coderDojoReference" ng-model="champion.coderDojoReference" ng-change="updateLocalStorage('championDetails','coderDojoReference',champion.coderDojoReference)">
-                    <ui-select-match placeholder="Select an option">{{ $select.selected }}</ui-select-match>
+                    <ui-select-match placeholder="{@i18n key="Select an option"/}">{{ $select.selected }}</ui-select-match>
                     <ui-select-choices repeat="referer in referredBy">
                       <span ng-bind-html="referer"></span>
                     </ui-select-choices>
