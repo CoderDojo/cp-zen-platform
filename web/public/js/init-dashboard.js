@@ -157,7 +157,7 @@
           controller: 'dojo-detail-controller'
         })
         .state("dojo-detail-alt", {
-          url: "/dojo/:id",
+          url: "/dojo/:legacyId",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
