@@ -113,7 +113,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       if (results[0].geometry.bounds) {
         var bounds = results[0].geometry.bounds;
         $scope.model.map.fitBounds(bounds);
-        searchBounds(location, $scope.model.map.getBounds(), true, $scope.search.dojo);
+        searchBounds(location, results[0].geometry.bounds, true, $scope.search.dojo);
       } else {
         searchNearest(location);
       }
@@ -171,6 +171,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
           icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
           position: new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
         });
+        marker.dojo = dojo;
         $scope.markers.push(marker);
       }
     });
