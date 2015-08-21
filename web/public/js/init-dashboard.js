@@ -307,7 +307,7 @@
         .state('badges-dashboard', {
           url:'/dashboard/badges',
           controller:'badges-dashboard-controller',
-          templateUrl: '/dojos/template/badges/dashboard'
+          templateUrl: '/dojos/template/badges/index'
         })
         .state('accept-badge', {
           url:'/dashboard/badges/accept/:userId/:badgeSlug',

@@ -6,7 +6,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   $scope.badgeInfoIsCollapsed = {};
   var lastClicked = {};
   var errorMsg = $translate.instant('error.general');
-
+  
   cdBadgesService.listBadges(function (response) {
     var badges = response.badges;
 

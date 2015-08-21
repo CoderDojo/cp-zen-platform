@@ -218,6 +218,11 @@
           resolve: profileHelpers,
           controller: 'user-profile-controller'
         })
+        .state('badges-dashboard', {
+          url:'/badges',
+          controller:'badges-dashboard-controller',
+          templateUrl: '/dojos/template/badges/index'
+        })
         .state('error-404-no-headers', {
           url:'/404',
           templateUrl: '/errors/template/404_no_headers'

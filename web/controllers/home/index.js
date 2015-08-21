@@ -116,7 +116,15 @@ var controller = module.exports = [
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
-  }, 
+  },
+
+  {
+    method: 'GET',
+    path: '/badges',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
 
   {
     method: 'GET',
