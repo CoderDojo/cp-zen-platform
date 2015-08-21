@@ -2,6 +2,6 @@
 <li ng-if="canViewYouthForums" class="separator">|</li>
 <li ng-if="user"><a ui-sref="user-profile({userId: user.id})">{{ user.name }}</a></li>
 <li ng-if="user" class="separator">|</li>
-<li ng-if="user"><a ng-click="goTo('start-dojo-wizard')">Start a Dojo</a></li>
+<li><a ng-click="goTo('start-dojo-wizard')">Start a Dojo</a></li>
 <li ng-if="user" class="separator">|</li>
 <li ng-if="user" ng-click="logout()"><a>{@i18n key="Logout"/}</a></li>
