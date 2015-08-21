@@ -52,7 +52,9 @@
     "chairo": "0.0.1",
     "hapi-etags": "0.1.0",
     "chairo-cache": "0.5.2",
-    "isemail": "1.1.1"
+    "isemail": "1.1.1",
+    "blankie": "1.1.1",
+    "scooter": "2.0.1"
   },
   "devDependencies": {
     "bower": "1.4.1",

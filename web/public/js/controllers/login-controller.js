@@ -175,8 +175,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
-        $localStorage.recommendedPracticesAlertShown = false;
-
+        $cookieStore.remove('recommendedPracticesAlertShown');
         if ($scope.redirect) {
           $window.location.href = $scope.redirect;
         } else {

@@ -138,7 +138,7 @@
       $stateProvider
         .state("home", {
           url: "/",
-          templateUrl: '/dojos/template/dojo-list',
+          templateUrl: '/dojos/template/dojos-map',
           resolve: {
             gmap: gmap
           },
@@ -146,7 +146,7 @@
             bannerType: null,
             bannerMessage: null
           },
-          controller: 'dojo-list-controller'
+          controller: 'dojos-map-controller'
         })
         .state("login", {
           url: "/login?referer",
@@ -196,7 +196,7 @@
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
           params:{
-            referer: 'start-dojo-wizard'
+            referer: 'start-dojo'
           },
           resolve: {
             gmap: gmap

@@ -139,7 +139,6 @@
     <script src="/js/controllers/login-controller.js"></script>
 
     <script src="/js/controllers/header-controller.js"></script>
-    <script src="/js/controllers/dojo-list-controller.js"></script>
     <script src="/js/controllers/dojo-list-index-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
@@ -151,7 +150,8 @@
     <script src="/js/controllers/dojo-events-list-controller.js"></script>
     <script src="/js/controllers/apply-for-event-controller.js"></script>
     <script src="/js/controllers/accept-child-controller.js"></script>
-
+    <script src="/js/controllers/dojos-map-controller.js"></script>
+    
     <script src="/js/services/cd-dojo-service.js"></script>
     <script src="/js/services/cd-countries-service.js"></script>
     <script src="/js/services/geocoder-service.js"></script>

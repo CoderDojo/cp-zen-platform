@@ -222,9 +222,9 @@ label {
     }
   }
   .setup-dojo-icons {
-    position:absolute;
-    display:inline-block;
-    width:100%;
+    position: relative;
+    display: inline-block;
+    transform: translateY(25%);
     .setup-dojo-info-btn {
       font-size:2em;
       margin-left:10px;
@@ -484,6 +484,7 @@ label {
       margin-top: 0px;
       label.validationMessage {
         margin-left: -25px;
+        margin-bottom: 10px;
         font-weight: 700;
       }
     }
@@ -557,6 +558,18 @@ label {
     .cd-wizard-submit {
       margin-top: 0px;
       float:left;
+    }
+  }
+}
+
+.cd-dojo-main {
+  .cd-input-row {
+    margin: 20px 0px 35px;
+  }
+  .cd-checkbox {
+    margin-bottom: 0;
+    .cd-checkbox-input {
+      margin-top: 15px;
     }
   }
 }
@@ -978,4 +991,10 @@ img.dojo-thumbnail {
 
 .intl-tel-input {
   display: inherit;
+}
+
+.cd-tooltip {
+  padding: 0;
+  margin: 10px 0 0 0;
+  color: @cd-gray;
 }

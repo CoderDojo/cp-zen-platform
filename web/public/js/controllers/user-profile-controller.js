@@ -273,7 +273,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   };
 
   function saveYouthViaParent(profile){
-    profile = _.omit(profile, ['userTypes', 'dojos']);
+    profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
     

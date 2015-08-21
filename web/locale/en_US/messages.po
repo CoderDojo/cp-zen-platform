@@ -425,8 +425,8 @@ msgstr "Search Results"
 msgid "Your closest dojos"
 msgstr "Your closest dojos"
 
-msgid "Where are you? Enter an address here and we'll find the closest dojo to you."
-msgstr "Where are you? Enter an address here and we'll find the closest dojo to you."
+msgid "Where are you?"
+msgstr "Where are you?"
 
 msgid "Dojo Information"
 msgstr "Dojo Information"
@@ -499,6 +499,10 @@ msgstr "Status Messages"
 
 msgid "Need Mentors"
 msgstr "Need Mentors"
+
+msgid "Mentors needed!"
+msgstr "Mentors needed!"
+
 
 msgid "Current Stage"
 msgstr "Current Stage"
@@ -718,6 +722,9 @@ msgstr "Thank you for submitting your dojo listing."
 
 msgid "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 msgstr "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
+
+msgid "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
+msgstr "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
 
 msgid "persons have signed the current version of the charter"
 msgstr "persons have signed the current version of the charter"
@@ -1433,8 +1440,8 @@ msgstr "Background check"
 msgid "Locate suitable venue within your community"
 msgstr "Locate suitable venue within your community"
 
-msgid "Ensure health and saftey best practices are met"
-msgstr "Ensure health and saftey best practices are met"
+msgid "Ensure health and safety best practices are met"
+msgstr "Ensure health and safety best practices are met"
 
 msgid "Ensure public liability insurance is covered"
 msgstr "Ensure public liability insurance is covered"
@@ -1800,6 +1807,9 @@ msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To f
 msgid "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
 msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
 
+msgid "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"
+msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"
+
 msgid "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 msgstr "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 
@@ -1889,3 +1899,19 @@ msgstr "Invalid request. No badge received."
 
 msgid "Parent profile does not exist."
 msgstr "Parent profile does not exist."
+
+msgid "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."
+msgstr "You have a Dojo application awaiting verification. You can create another Dojo after it has been verified."
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
+
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
+
+msgid "Private Dojo"
+msgstr "Private Dojo"
+
+msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
+msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."

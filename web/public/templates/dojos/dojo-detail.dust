@@ -5,17 +5,12 @@
       <div class="dojo-detail">
         <div class="col-xs-12 col-lg-7">
           <legend><b>{{ dojo.name }}</b></legend>
+          <div class="alert alert-danger" ng-if="dojo.private">
+            {@i18n key="{{ dojo.stage }}"/}
+            <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
+          </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Private"/}</b></td>
-                <td ng-if="dojo.private">{@i18n key="Yes"/}</td>
-                <td ng-if="!dojo.private">{@i18n key="No"/}</td>
-              </tr>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Stage"/}</b></td>
-                <td>{@i18n key="{{ dojo.stage }}"/}</td>
-              </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Time"/}</b></td>
                 <td>{{ dojo.time }}</td>
@@ -59,6 +54,8 @@
             <div class="status-wrapper">
               <div class="alert alert-success text-center" ng-if="dojo.verified === 1" role="alert">{@i18n key="Verified"/}</div>
               <div class="alert alert-warning text-center" ng-if="dojo.verified !== 1"role="alert">{@i18n key="Unverified"/}</div>
+              <div class="alert alert-info text-center" ng-show="dojo.stage" role="alert">{@i18n key="{{ dojo.stage }}"/}</div>
+              <div class="alert alert-warning text-center" ng-show="!dojo.needMentors" role="alert">{@i18n key="Mentors needed!"/}</div>
             </div>
           </div>
 
