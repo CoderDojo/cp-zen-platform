@@ -77,8 +77,257 @@ msgstr "Select user type"
 msgid "Login"
 msgstr "Login"
 
-msgid "Zen Terms and Conditions"
-msgstr "Zen Terms and Conditions"
+msgid "Zen Terms of Service"
+msgstr "Zen Terms of Service"
+
+msgid "INTRODUCTION"
+msgstr "INTRODUCTION"
+
+msgid "Welcome to 'Zen' the CoderDojo community platform hosted at zen.coderdojo.com."
+msgstr "Welcome to 'Zen' the CoderDojo community platform hosted at zen.coderdojo.com."
+
+msgid "PLEASE READ THE FOLLOWING CAREFULLY BEFORE USING ZEN."
+msgstr "PLEASE READ THE FOLLOWING CAREFULLY BEFORE USING ZEN."
+
+msgid "Zen is a platform for CoderDojo community members (Champions, Mentors, Parents and Youth Attendees) to search for local Dojos, create listings for their Dojos on the publicly viewable Dojo database, issue and book tickets for their Dojos, participate in the CoderDojo web forums and manage their Dojo volunteers."
+msgstr "Zen is a platform for CoderDojo community members (Champions, Mentors, Parents and Youth Attendees) to search for local Dojos, create listings for their Dojos on the publicly viewable Dojo database, issue and book tickets for their Dojos, participate in the CoderDojo web forums and manage their Dojo volunteers."
+
+msgid "Throughout the site, the terms \"we\", \"us\" and \"our\" refer to the CoderDojo Foundation. The CoderDojo Foundation offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. The following Terms and Conditions are a legal contract between you (\"You\") and the CoderDojo Foundation regarding your use of Zen. Visitors and users of Zen are referred to individually as \"User\" and collectively as \"Users\"."
+msgstr "Throughout the site, the terms \"we\", \"us\" and \"our\" refer to the CoderDojo Foundation. The CoderDojo Foundation offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. The following Terms and Conditions are a legal contract between you (\"You\") and the CoderDojo Foundation regarding your use of Zen. Visitors and users of Zen are referred to individually as \"User\" and collectively as \"Users\"."
+
+msgid "Information about us"
+msgstr "Information about us"
+
+msgid "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. Hello World Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
+msgstr "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. Hello World Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
+
+msgid "SECTION 1 - USER AGREEMENT"
+msgstr "SECTION 1 - USER AGREEMENT"
+
+msgid "Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service."
+msgstr "Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service."
+
+msgid "By visiting our site and you engage in our \"Service\" and agree to be bound by the following terms and conditions (\"Terms of Service\", \"Terms\"), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms apply to all users of the site, including without limitation users who are viewers, CoderDojo organisers, CoderDojo mentors, CoderDojo youth attendees and parents."
+msgstr "By visiting our site and you engage in our \"Service\" and agree to be bound by the following terms and conditions (\"Terms of Service\", \"Terms\"), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms apply to all users of the site, including without limitation users who are viewers, CoderDojo organisers, CoderDojo mentors, CoderDojo youth attendees and parents."
+
+msgid "By setting up an account on Zen, all CoderDojo Community Members (Champions, Volunteers and Mentors) are agreeing to the terms laid out in the CoderDojo Charter (permanent link to Charter). The CoderDojo Charter lays out a series of commitments that Community members must make to become part of the Global CoderDojo Community. These commitments cover key aspects of the CoderDojo Ethos and Culture, such as always being free, open, inclusive, and safeguarding children."
+msgstr "By setting up an account on Zen, all CoderDojo Community Members (Champions, Volunteers and Mentors) are agreeing to the terms laid out in the CoderDojo Charter (permanent link to Charter). The CoderDojo Charter lays out a series of commitments that Community members must make to become part of the Global CoderDojo Community. These commitments cover key aspects of the CoderDojo Ethos and Culture, such as always being free, open, inclusive, and safeguarding children."
+
+msgid "IF YOU ARE A PARENT OR GUARDIAN AND YOU PROVIDE YOUR CONSENT TO YOUR CHILD'S REGISTRATION WITH THE SITE, YOU AGREE TO BE BOUND BY THESE TERMS OF USE IN RESPECT OF THEIR USE OF THE SITE."
+msgstr "IF YOU ARE A PARENT OR GUARDIAN AND YOU PROVIDE YOUR CONSENT TO YOUR CHILD'S REGISTRATION WITH THE SITE, YOU AGREE TO BE BOUND BY THESE TERMS OF USE IN RESPECT OF THEIR USE OF THE SITE."
+
+msgid "Any new features or tools which are added to the current store shall also be subject to the Terms."
+msgstr "Any new features or tools which are added to the current store shall also be subject to the Terms."
+
+msgid "You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes."
+msgstr "You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes."
+
+msgid "Your privacy is important to us. Please read our Privacy Statement, which identifies how the CoderDojo Foundation Team uses, collects, and stores information it collects through the Services. By using Zen, you additionally agree that you are comfortable with CoderDojo Foundation's Privacy Statement."
+msgstr "Your privacy is important to us. Please read our Privacy Statement, which identifies how the CoderDojo Foundation Team uses, collects, and stores information it collects through the Services. By using Zen, you additionally agree that you are comfortable with CoderDojo Foundation's Privacy Statement."
+
+msgid "Zen is open to users of all ages, and we ask that you keep this in mind when using these services."
+msgstr "Zen is open to users of all ages, and we ask that you keep this in mind when using these services."
+
+msgid "SECTION 2 - ACCOUNT ELIGIBILITY CREATION AND MAINTENANCE"
+msg str "SECTION 2 - ACCOUNT ELIGIBILITY CREATION AND MAINTENANCE"
+
+msgid "THE WEBSITE IS NOT AVAILABLE TO (A) ANY USERS PREVIOUSLY SUSPENDED OR REMOVED FROM THE WEBSITE BY CODERDOJO FOUNDATION OR (B) ANY PERSONS UNDER THE AGE OF 13 WHOSE REGISTRATION HAS NOT BEEN APPROVED BY A LEGAL PARENT OR GUARDIAN. By clicking the \"I Agree\" button or by otherwise using or registering an account for the Website, You represent (a) that You have not been previously suspended or removed from the Website by the CoderDojo Foundation; (b) that You are either (i) at least 13 years of age or (ii) Your parent and/or guardian has consented to Your use of the Website; and (c) that your registration and your use of the Website is in compliance with any and all applicable laws and regulations."
+msg str "THE WEBSITE IS NOT AVAILABLE TO (A) ANY USERS PREVIOUSLY SUSPENDED OR REMOVED FROM THE WEBSITE BY CODERDOJO FOUNDATION OR (B) ANY PERSONS UNDER THE AGE OF 13 WHOSE REGISTRATION HAS NOT BEEN APPROVED BY A LEGAL PARENT OR GUARDIAN. By clicking the \"I Agree\" button or by otherwise using or registering an account for the Website, You represent (a) that You have not been previously suspended or removed from the Website by the CoderDojo Foundation; (b) that You are either (i) at least 13 years of age or (ii) Your parent and/or guardian has consented to Your use of the Website; and (c) that your registration and your use of the Website is in compliance with any and all applicable laws and regulations."
+
+msgid "In order to use most features of the Services, you will need to register on Zen and create an account. When registering for a personal account, you will be asked to provide certain personal information, such as your email address, gender, birth month and year, and country. Please see Zen's Privacy Statement [Link to Privacy Policy] for the CoderDojo Foundation data retention and usage policies."
+msg str "In order to use most features of the Services, you will need to register on Zen and create an account. When registering for a personal account, you will be asked to provide certain personal information, such as your email address, gender, birth month and year, and country. Please see Zen's Privacy Statement [Link to Privacy Policy] for the CoderDojo Foundation data retention and usage policies."
+
+msgid "If you are under 13, your parent/guardian will be required to create an account on Zen and then they can issue you a subaccount. When youth users reach 13 their accounts will automatically transfer to a \"Youth Over 13\" account and they will be required to create their own password."
+msg str "If you are under 13, your parent/guardian will be required to create an account on Zen and then they can issue you a subaccount. When youth users reach 13 their accounts will automatically transfer to a \"Youth Over 13\" account and they will be required to create their own password."
+
+msgid "You are responsible for keeping your password secret and your account secure. You are solely responsible for any use of your account, even if your account is used by another person. If any use of your account violates the Terms of Service, your account may be suspended or deleted."
+msg str "You are responsible for keeping your password secret and your account secure. You are solely responsible for any use of your account, even if your account is used by another person. If any use of your account violates the Terms of Service, your account may be suspended or deleted."
+
+msgid "You may not use another person's Zen account without permission."
+msg str "You may not use another person's Zen account without permission."
+
+msgid "Account names cannot be changed."
+msg str "Account names cannot be changed."
+
+msgid "If you have reason to believe that your account is no longer secure (for example, in the event of a loss, theft, or unauthorized disclosure of your password), promptly change your password. If you cannot access your account to change your password, notify us at info@coderdojo.com."
+msg str "If you have reason to believe that your account is no longer secure (for example, in the event of a loss, theft, or unauthorized disclosure of your password), promptly change your password. If you cannot access your account to change your password, notify us at info@coderdojo.com."
+
+msgid "Youth Under 13 User. If You are a User of the Website and are under the age of 13 (\"Youth Under 13 User\"), You may not register an account for the Website without consent and approval from your legal parent or guardian. A Youth Under 13 User that begins the registration process for himself or herself without a Parent User may have the registration process restricted until a Parent User approves or assumes responsibility for the Youth Under 13 User account."
+msg str "Youth Under 13 User. If You are a User of the Website and are under the age of 13 (\"Youth Under 13 User\"), You may not register an account for the Website without consent and approval from your legal parent or guardian. A Youth Under 13 User that begins the registration process for himself or herself without a Parent User may have the registration process restricted until a Parent User approves or assumes responsibility for the Youth Under 13 User account."
+
+msgid "Youth Under 13 User."
+msgstr "Youth Under 13 User."
+
+msgid "If You are a User of the Website and are under the age of 13 (\"Youth Under 13 User\"), You may not register an account for the Website without consent and approval from your legal parent or guardian. A Youth Under 13 User that begins the registration process for himself or herself without a Parent User may have the registration process restricted until a Parent User approves or assumes responsibility for the Youth Under 13 User account."
+msgstr "If You are a User of the Website and are under the age of 13 (\"Youth Under 13 User\"), You may not register an account for the Website without consent and approval from your legal parent or guardian. A Youth Under 13 User that begins the registration process for himself or herself without a Parent User may have the registration process restricted until a Parent User approves or assumes responsibility for the Youth Under 13 User account."
+
+msgid "Parent User"
+msgstr "Parent User"
+
+msgid "You acknowledge that the CoderDojo Foundation may choose, but is not obligated, to make any inquiries, either directly or through third parties, that the CoderDojo Foundation deems necessary to validate Your registration information, including without limitation engaging third parties to provide verification services. The CoderDojo Foundation reserves all rights to take legal actions against anyone who misrepresents personal information or is otherwise untruthful about their identity"
+msgstr "You acknowledge that the CoderDojo Foundation may choose, but is not obligated, to make any inquiries, either directly or through third parties, that the CoderDojo Foundation deems necessary to validate Your registration information, including without limitation engaging third parties to provide verification services. The CoderDojo Foundation reserves all rights to take legal actions against anyone who misrepresents personal information or is otherwise untruthful about their identity"
+
+msgid "NOTWITHSTANDING THE FOREGOING, YOU ACKNOWLEDGE THAT THE CODERDOJO FOUNDATION CANNOT GUARANTEE THE ACCURACY OF ANY INFORMATION SUBMITTED BY ANY USER AND THE CODERDOJO FOUNDATION IS NOT OBLIGATED TO VERIFY THE IDENTITY OF ANY USER, INCLUDING ANY USER’S CLAIM TO BE A PARENT USER, OR TO VERIFY THAT A PARENT IDENTIFIED BY A CHILD USER OR A COACH DURING REGISTRATION IS SUCH CHILD USER’S ACTUAL PARENT OR GUARDIAN."
+msgstr "NOTWITHSTANDING THE FOREGOING, YOU ACKNOWLEDGE THAT THE CODERDOJO FOUNDATION CANNOT GUARANTEE THE ACCURACY OF ANY INFORMATION SUBMITTED BY ANY USER AND THE CODERDOJO FOUNDATION IS NOT OBLIGATED TO VERIFY THE IDENTITY OF ANY USER, INCLUDING ANY USER’S CLAIM TO BE A PARENT USER, OR TO VERIFY THAT A PARENT IDENTIFIED BY A CHILD USER OR A COACH DURING REGISTRATION IS SUCH CHILD USER’S ACTUAL PARENT OR GUARDIAN."
+
+msgid "A Parent User account, along with all associated Child User accounts, may be terminated by the CoderDojo Foundation at any time and without warning for any failure to abide by these Terms."
+msgstr "A Parent User account, along with all associated Child User accounts, may be terminated by the CoderDojo Foundation at any time and without warning for any failure to abide by these Terms."
+
+msgid "SECTION 3 - RULES OF USAGE"
+msgstr "SECTION 3 - RULES OF USAGE"
+
+msgid "The CoderDojo Foundation Team supports freedom of expression. However, Zen is intended for a wide audience, and some content is inappropriate for the CoderDojo community. You may not use the Zen service in any way, that:"
+msgstr "The CoderDojo Foundation Team supports freedom of expression. However, Zen is intended for a wide audience, and some content is inappropriate for the CoderDojo community. You may not use the Zen service in any way, that:"
+
+msgid "Promotes bigotry, discrimination, hatred, or violence against any individual or group;"
+msgstr "Promotes bigotry, discrimination, hatred, or violence against any individual or group;"
+
+msgid "Threatens, harasses, or intimidates any other person, whether that person is a CoderDojo community member or not;"
+msgstr "Threatens, harasses, or intimidates any other person, whether that person is a CoderDojo community member or not;"
+
+msgid "Could be considered cyber bullying;"
+msgstr "Could be considered cyber bullying;"
+
+msgid "Contains foul language or personal attacks;"
+msgstr "Contains foul language or personal attacks;"
+
+msgid "Contains sexually explicit or graphically violent material;"
+msgstr "Contains sexually explicit or graphically violent material;"
+
+msgid "Provides instructions on how to commit illegal activities or obtain illegal products;"
+msgstr "Provides instructions on how to commit illegal activities or obtain illegal products;"
+
+msgid "Except in connection with organizing CoderDojo events, asks any other user for personally identifying information, contact information, or passwords; or"
+msgstr "Except in connection with organizing CoderDojo events, asks any other user for personally identifying information, contact information, or passwords; or"
+
+msgid "Exposes any others person's personally identifying information, contact information, or passwords without that person's permission."
+msgstr "Exposes any others person's personally identifying information, contact information, or passwords without that person's permission."
+
+msgid "You agree to comply with all applicable laws and regulations when you use Zen. You may not use Zen in any unlawful way, including to harass, stalk, or defame any other person."
+msgstr "You agree to comply with all applicable laws and regulations when you use Zen. You may not use Zen in any unlawful way, including to harass, stalk, or defame any other person."
+
+msgid "You may not impersonate, imitate or pretend to be somebody else when using the Services."
+msgstr "You may not impersonate, imitate or pretend to be somebody else when using the Services."
+
+msgid "You agree not to use Zen in any way intended to disrupt the service, gain unauthorized access to the service, or interfere with any other user's ability to use the service. Prohibited activities include, but are not limited to:"
+msgstr "You agree not to use Zen in any way intended to disrupt the service, gain unauthorized access to the service, or interfere with any other user's ability to use the service. Prohibited activities include, but are not limited to:"
+
+msgid "Posting content deliberately designed to crash the Zen platform;"
+msgstr "Posting content deliberately designed to crash the Zen platform;"
+
+msgid "Linking to pages containing viruses or malware;"
+msgstr "Linking to pages containing viruses or malware;"
+
+msgid "Using administrator passwords or pretending to be an administrator;"
+msgstr "Using administrator passwords or pretending to be an administrator;"
+
+msgid "Repeatedly posting the same material, or \"spamming.\""
+msgstr "Repeatedly posting the same material, or \"spamming.\""
+
+msgid "Commercial use of Zen, user-generated content, and support materials is permitted under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 license</a>. However, the CoderDojo Foundation Team reserves the right to block any commercial use of Zen that, in the CoderDojo Foundation Team's sole discretion, is harmful to the community. Harmful commercial use includes spamming or repeated advertisement through projects, comments, or forum posts."
+msgstr "Commercial use of Zen, user-generated content, and support materials is permitted under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 license</a>. However, the CoderDojo Foundation Team reserves the right to block any commercial use of Zen that, in the CoderDojo Foundation Team's sole discretion, is harmful to the community. Harmful commercial use includes spamming or repeated advertisement through projects, comments, or forum posts."
+
+msgid "SECTION 4 - MODIFICATION OF THE TERMS"
+msgstr "SECTION 4 - MODIFICATION OF THE TERMS"
+
+msgid "CoderDojo Foundation reserves the right, at our discretion, to change, modify, add, or remove portions of the Terms at any time. Please check the Terms and any Guidelines periodically for changes. Your continued use of Zen after the posting of changes constitutes your binding acceptance of such changes. For any material changes to the Terms, CoderDojo Foundation will make reasonable effort to provide notice to you of such amended Terms, such as by an email notification to the address associated with your account or by posting a notice on the Website, and such amended terms will be effective against You on the earlier of (i) your actual notice of such changes and (ii) thirty days after CoderDojo Foundation makes reasonable attempt to provide you such notice. Disputes arising under these Terms will be resolved in accordance with the version of the Terms in place at the time the dispute arose."
+msgstr "CoderDojo Foundation reserves the right, at our discretion, to change, modify, add, or remove portions of the Terms at any time. Please check the Terms and any Guidelines periodically for changes. Your continued use of Zen after the posting of changes constitutes your binding acceptance of such changes. For any material changes to the Terms, CoderDojo Foundation will make reasonable effort to provide notice to you of such amended Terms, such as by an email notification to the address associated with your account or by posting a notice on the Website, and such amended terms will be effective against You on the earlier of (i) your actual notice of such changes and (ii) thirty days after CoderDojo Foundation makes reasonable attempt to provide you such notice. Disputes arising under these Terms will be resolved in accordance with the version of the Terms in place at the time the dispute arose."
+
+msgid "SECTION 5 - USER CONTENT LICENSE GRANT; REPRESENTATIONS AND WARRANTIES"
+msgstr "SECTION 5 - USER CONTENT LICENSE GRANT; REPRESENTATIONS AND WARRANTIES"
+
+msgid "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\|) (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
+msgstr "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\|) (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
+
+msgid "License Grant to CoderDojo Foundation."
+msgstr "License Grant to CoderDojo Foundation."
+
+msgid "Whenever you make use of a feature that allows you to upload material to our Website, or to make contact with other users of our Website, you must comply with all applicable laws and our User Content Representations and Warranties and User Content Disclaimer.  Any material you upload to our Website will be considered non-confidential and nonproprietary, and we have the right to use, copy, distribute and disclose to third parties any such material for any purpose (except where specifically identified as third party content). We also have the right to disclose your identity to any third party who is claiming that any material posted or uploaded by you to our website constitutes a violation of their intellectual property rights, or of their right to privacy. We will not be responsible, or liable to any third party, for the content or accuracy of any materials posted by you or any other user. We have the right to remove any material or posting you make on our Website if, in our opinion, such material does not comply with applicable laws or our User Content Representations and Warranties and User Content Disclaimer."
+msgstr "Whenever you make use of a feature that allows you to upload material to our Website, or to make contact with other users of our Website, you must comply with all applicable laws and our User Content Representations and Warranties and User Content Disclaimer.  Any material you upload to our Website will be considered non-confidential and nonproprietary, and we have the right to use, copy, distribute and disclose to third parties any such material for any purpose (except where specifically identified as third party content). We also have the right to disclose your identity to any third party who is claiming that any material posted or uploaded by you to our website constitutes a violation of their intellectual property rights, or of their right to privacy. We will not be responsible, or liable to any third party, for the content or accuracy of any materials posted by you or any other user. We have the right to remove any material or posting you make on our Website if, in our opinion, such material does not comply with applicable laws or our User Content Representations and Warranties and User Content Disclaimer."
+
+msgid "License Grant to Users."
+msgstr "License Grant to Users."
+
+msgid "(a) User Postings. By posting, submitting or distributing User Postings through the Website, You hereby grant to each User of the Website a non-exclusive license to access and use your User Postings in any manner permitted or made available by CoderDojo Foundation on or through the Website."
+msgstr "(a) User Postings. By posting, submitting or distributing User Postings through the Website, You hereby grant to each User of the Website a non-exclusive license to access and use your User Postings in any manner permitted or made available by CoderDojo Foundation on or through the Website."
+
+msgid "(b) User Code. By posting, submitting or distributing User Code through the Website, You hereby grant to each User of the Website a non-exclusive license to access, use, reproduce, and distribute your User Code as fully permitted under, and in accordance with the terms of, the MIT license (currently available at: http://opensource.org/licenses/mit-license.php) (the \"MIT License\")."
+msgstr "(b) User Code. By posting, submitting or distributing User Code through the Website, You hereby grant to each User of the Website a non-exclusive license to access, use, reproduce, and distribute your User Code as fully permitted under, and in accordance with the terms of, the MIT license (currently available at: http://opensource.org/licenses/mit-license.php) (the \"MIT License\")."
+
+msgid "User Content Representations and Warranties."
+msgstr "User Content Representations and Warranties."
+
+msgid "You are solely responsible for your User Content and the consequences of posting, creating, or publishing them. You represent and warrant that: (1) You are the creator and owner of or have the necessary licenses, rights, consents, and permissions to use and to authorize CoderDojo Foundation and Zen's Users to use and distribute your User Content as necessary to exercise the licenses granted by You in these Terms and in the manner contemplated by CoderDojo Foundation and these Terms; (2) your User Content does not and will not: (a) infringe, violate, or misappropriate any third-party right, including any copyright, trademark, patent, trade secret, moral right, privacy right, right of publicity, or any other intellectual property or proprietary right or (b) slander, defame, libel, or invade the right of privacy, publicity or other property rights of any other person; and (3) your User Content does not contain any viruses, adware, spyware, worms, or other malicious code."
+msgstr "You are solely responsible for your User Content and the consequences of posting, creating, or publishing them. You represent and warrant that: (1) You are the creator and owner of or have the necessary licenses, rights, consents, and permissions to use and to authorize CoderDojo Foundation and Zen's Users to use and distribute your User Content as necessary to exercise the licenses granted by You in these Terms and in the manner contemplated by CoderDojo Foundation and these Terms; (2) your User Content does not and will not: (a) infringe, violate, or misappropriate any third-party right, including any copyright, trademark, patent, trade secret, moral right, privacy right, right of publicity, or any other intellectual property or proprietary right or (b) slander, defame, libel, or invade the right of privacy, publicity or other property rights of any other person; and (3) your User Content does not contain any viruses, adware, spyware, worms, or other malicious code."
+
+msgid "Access to Your User Content."
+msgstr "Access to Your User Content."
+
+msgid "The CoderDojo Foundation may permit Users to share their User Content with a select group of other Users, or make their User Content public for all (even non-Website users) to view. You acknowledge and agree that, although Zen may provide certain features intended to allow you to restrict some User Content you create from others, The CoderDojo Foundation does not guarantee that such User Content will never be accessible by others. In the event of unauthorized access, The CoderDojo Foundation will use reasonable efforts to notify you pursuant to Section 14.1 below. THE CODERDOJO FOUNDATION HEREBY DISCLAIMS ANY AND ALL LIABILITY WITH RESPECT TO ANY UNAUTHORIZED ACCESS TO ANY RESTRICTED USER CONTENT."
+msgstr "The CoderDojo Foundation may permit Users to share their User Content with a select group of other Users, or make their User Content public for all (even non-Website users) to view. You acknowledge and agree that, although Zen may provide certain features intended to allow you to restrict some User Content you create from others, The CoderDojo Foundation does not guarantee that such User Content will never be accessible by others. In the event of unauthorized access, The CoderDojo Foundation will use reasonable efforts to notify you pursuant to Section 14.1 below. THE CODERDOJO FOUNDATION HEREBY DISCLAIMS ANY AND ALL LIABILITY WITH RESPECT TO ANY UNAUTHORIZED ACCESS TO ANY RESTRICTED USER CONTENT."
+
+msgid "User Content Disclaimer."
+msgstr "User Content Disclaimer."
+
+msgid "You understand that when using the Website You will be exposed to User Content from a variety of sources, and that The CoderDojo Foundation is not responsible for the accuracy, usefulness, or intellectual property rights of or relating to such User Content. You further understand and acknowledge that You may be exposed to User Content that is inaccurate, offensive, indecent or objectionable, and You agree to waive, and hereby do waive, any legal or equitable rights or remedies You have or may have against The CoderDojo Foundation with respect thereto. The CoderDojo Foundation does not endorse any User Content or any opinion, recommendation or advice expressed therein, and The CoderDojo Foundation expressly disclaims any and all liability in connection with User Content."
+msgstr "You understand that when using the Website You will be exposed to User Content from a variety of sources, and that The CoderDojo Foundation is not responsible for the accuracy, usefulness, or intellectual property rights of or relating to such User Content. You further understand and acknowledge that You may be exposed to User Content that is inaccurate, offensive, indecent or objectionable, and You agree to waive, and hereby do waive, any legal or equitable rights or remedies You have or may have against The CoderDojo Foundation with respect thereto. The CoderDojo Foundation does not endorse any User Content or any opinion, recommendation or advice expressed therein, and The CoderDojo Foundation expressly disclaims any and all liability in connection with User Content."
+
+msgid "SECTION 6 - SUSPENSION AND TERMINATION OF ACCOUNTS"
+msgstr "SECTION 6 - SUSPENSION AND TERMINATION OF ACCOUNTS"
+
+msgid "The CoderDojo Foundation has the right to suspend your account for violations of the Terms of Use. Repeat violators may have their account deleted. The CoderDojo Foundation reserves the sole right to determine what constitutes a violation of the Terms of Use. The CoderDojo Foundation also reserves the right to terminate any account used to circumvent prior enforcement of the Terms of Use."
+msgstr "The CoderDojo Foundation has the right to suspend your account for violations of the Terms of Use. Repeat violators may have their account deleted. The CoderDojo Foundation reserves the sole right to determine what constitutes a violation of the Terms of Use. The CoderDojo Foundation also reserves the right to terminate any account used to circumvent prior enforcement of the Terms of Use."
+
+msgid "If you want to delete or temporarily disable your account, please email info@coderdojo.com."
+msgstr "If you want to delete or temporarily disable your account, please email info@coderdojo.com."
+
+msgid "SECTION 7 - THIRD PARTY WEBSITES"
+msgstr "SECTION 7 - THIRD PARTY WEBSITES"
+
+msgid "Content on Zen, including user-generated content, may include links to third party websites. The CoderDojo Foundation is not capable of reviewing or managing third party websites, and assumes no responsibility for the privacy practices, content, or functionality of third party websites. You agree to relieve the CoderDojo Foundation of any and all liability arising from third party websites."
+msgstr "Content on Zen, including user-generated content, may include links to third party websites. The CoderDojo Foundation is not capable of reviewing or managing third party websites, and assumes no responsibility for the privacy practices, content, or functionality of third party websites. You agree to relieve the CoderDojo Foundation of any and all liability arising from third party websites."
+
+msgid "SECTION 8 - INDEMNIFICATION"
+msgstr "SECTION 8 - INDEMNIFICATION"
+
+msgid "You agree to indemnify The CoderDojo Foundation, and all their affiliates, employees, faculty members, fellows, students, agents, representatives, third party service providers, and members of their governing boards (all of which are "CoderDojo Entities"), and to defend and hold each of them harmless, from any and all claims and liabilities (including attorneys' fees) arising out of or related to your breach of the Terms of Service or your use of Zen."
+msgstr "You agree to indemnify The CoderDojo Foundation, and all their affiliates, employees, faculty members, fellows, students, agents, representatives, third party service providers, and members of their governing boards (all of which are "CoderDojo Entities"), and to defend and hold each of them harmless, from any and all claims and liabilities (including attorneys' fees) arising out of or related to your breach of the Terms of Service or your use of Zen."
+
+msgid "SECTION 9 - DISCLAIMER OF WARRANTY"
+msgstr "SECTION 9 - DISCLAIMER OF WARRANTY"
+
+msgid "You acknowledge that you are using Zen at your own risk. Zen is provided "as is," and the CoderDojo Foundation hereby expressly disclaim any and all warranties, express and implied, including but not limited to any warranties of accuracy, reliability, title, merchantability, non-infringement, fitness for a particular purpose or any other warranty, condition, guarantee or representation, whether oral, in writing or in electronic form, including but not limited to the accuracy or completeness of any information contained therein or provided by Zen. Without limiting the foregoing, the CoderDojo Foundation disclaim any and all warranties, express and implied, regarding user-generated content and CoderDojo events. The CoderDojo Foundation and their third party service providers do not represent or warrant that access to Zen will be uninterrupted or that there will be no failures, errors or omissions or loss of transmitted information, or that no viruses will be transmitted through Zen services."
+msgstr "You acknowledge that you are using Zen at your own risk. Zen is provided "as is," and the CoderDojo Foundation hereby expressly disclaim any and all warranties, express and implied, including but not limited to any warranties of accuracy, reliability, title, merchantability, non-infringement, fitness for a particular purpose or any other warranty, condition, guarantee or representation, whether oral, in writing or in electronic form, including but not limited to the accuracy or completeness of any information contained therein or provided by Zen. Without limiting the foregoing, the CoderDojo Foundation disclaim any and all warranties, express and implied, regarding user-generated content and CoderDojo events. The CoderDojo Foundation and their third party service providers do not represent or warrant that access to Zen will be uninterrupted or that there will be no failures, errors or omissions or loss of transmitted information, or that no viruses will be transmitted through Zen services."
+
+msgid "SECTION 10 - LIMITATION OF LIABILITY"
+msgstr "SECTION 10 - LIMITATION OF LIABILITY"
+
+msgid "The CoderDojo Foundation shall not be liable to you or any third parties for any direct, indirect, special, consequential or punitive damages of any kind, regardless of the type of claim or the nature of the cause of action, even if the CoderDojo has been advised of the possibility of such damages. Without limiting the foregoing, the CoderDojo Foundation shall have no liability to you or any third parties for damages or harms arising out of user-generated content or CoderDojo events."
+msgstr "The CoderDojo Foundation shall not be liable to you or any third parties for any direct, indirect, special, consequential or punitive damages of any kind, regardless of the type of claim or the nature of the cause of action, even if the CoderDojo has been advised of the possibility of such damages. Without limiting the foregoing, the CoderDojo Foundation shall have no liability to you or any third parties for damages or harms arising out of user-generated content or CoderDojo events."
+
+msgid "Zen is offered by the CoderDojo Foundation from its facilities in the Republic of Ireland. The CoderDojo Foundation makes no representations that Zen is appropriate or available for use in other locations. Those who access or use Zen are responsible for compliance with local law."
+msgstr "Zen is offered by the CoderDojo Foundation from its facilities in the Republic of Ireland. The CoderDojo Foundation makes no representations that Zen is appropriate or available for use in other locations. Those who access or use Zen are responsible for compliance with local law."
+
+msgid "SECTION 12 - CHOICE OF LANGUAGE"
+msgstr "SECTION 12 - CHOICE OF LANGUAGE"
+
+msgid "If the CoderDojo Foundation provides you with a translation of the English language version of these Terms of Use, the Privacy Policy, or any other policy, then you agree that the translation is provided for informational purposes only and does not modify the English language version. In the event of a conflict between a translation and the English version, the English version will govern."
+msgstr "If the CoderDojo Foundation provides you with a translation of the English language version of these Terms of Use, the Privacy Policy, or any other policy, then you agree that the translation is provided for informational purposes only and does not modify the English language version. In the event of a conflict between a translation and the English version, the English version will govern."
+
+msgid "SECTION 13 - NO WAIVER"
+msgstr "SECTION 13 - NO WAIVER"
+
+msgid "No waiver of any term of these Terms of Use shall be deemed a further or continuing waiver of such term or any other term, and the CoderDojo Foundation's failure to assert any right or provision under these Terms of Use shall not constitute a waiver of such right or provision."
+msgstr "No waiver of any term of these Terms of Use shall be deemed a further or continuing waiver of such term or any other term, and the CoderDojo Foundation's failure to assert any right or provision under these Terms of Use shall not constitute a waiver of such right or provision."
+
+msgid "SECTION 16 - ENTIRE AGREEMENT"
+msgstr "SECTION 16 - ENTIRE AGREEMENT"
+
+msgid "This document, together with all appendices, constitutes the entire Terms of Use and supersedes all previous agreements with the CoderDojo Foundation relating to the use of Zen."
+msgstr "This document, together with all appendices, constitutes the entire Terms of Use and supersedes all previous agreements with the CoderDojo Foundation relating to the use of Zen."
+
+msgid "Revision date:  29th July 2015"
+msgstr "Revision date:  29th July 2015"
 
 msgid "CoderDojo Champion Registration Form"
 msgstr "CoderDojo Champion Registration Form"
@@ -624,8 +873,8 @@ msgstr "Join Mailing List"
 msgid "I have read and accept the"
 msgstr "I have read and accept the"
 
-msgid "Terms and Conditions here"
-msgstr "Terms and Conditions here"
+msgid "Terms of Service here"
+msgstr "Terms of Service here"
 
 msgid "Click on each step to get started"
 msgstr "Click on each step to get started"
