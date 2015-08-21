@@ -30,9 +30,11 @@
                         {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
                       </label>
                       <span class="setup-dojo-icons">
-                        <span tooltip-html-unsafe="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-trigger="mouseover" tooltip-animation="true">
-                        </span>
-                        <span tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"/} <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank'>{@i18n key="here"/}</a>" tooltip-trigger="mouseover" href="#" ng-if="checkboxInput.taoIcon===true" class="setup-dojo-tao-btn"></span>
+                        
+                        <span tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-animation="true"></span>
+                        <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank' style="text-decoration: none"> 
+                          <span tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"/}" ng-show="checkboxInput.taoIcon" class="setup-dojo-tao-btn" tooltip-animation="true"></span>
+                        </a>
                       </span>                      
                       <ul class="subItemsList" ng-if="checkboxInput.subList === true">
                         <li ng-repeat="listItem in checkboxInput.subListItems">

@@ -1807,6 +1807,9 @@ msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To f
 msgid "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
 msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"
 
+msgid "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"
+msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"
+
 msgid "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 msgstr "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 
