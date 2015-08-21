@@ -34,6 +34,12 @@
         }, function(err) {
           dfd.reject(err);
         });
+    } else if($stateParams.legacyId) {
+      cdDojoService.list({mysqlDojoId: $stateParams.legacyId}, function (data) {
+        dfd.resolve(data[0]);
+      }, function (err) {
+        dfd.reject(err);
+      });
     } else {
       cdDojoService.find({
         urlSlug: $stateParams.country + '/' + $stateParams.path
@@ -184,7 +190,7 @@
           controller: 'dojo-detail-controller'
         })
         .state("dojo-detail-alt", {
-          url: "/dojo/:id",
+          url: "/dojo/:legacyId",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
@@ -217,6 +223,11 @@
           templateUrl: '/dojos/template/user-profile',
           resolve: profileHelpers,
           controller: 'user-profile-controller'
+        })
+        .state('badges-dashboard', {
+          url:'/badges',
+          controller:'badges-dashboard-controller',
+          templateUrl: '/dojos/template/badges/index'
         })
         .state('error-404-no-headers', {
           url:'/404',

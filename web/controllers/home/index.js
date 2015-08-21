@@ -78,6 +78,14 @@ var controller = module.exports = [
     }
   },
 
+  {     
+    method: 'GET',
+    path: '/dojo/{legacyId}',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
   {
     method: 'GET',
     path: '/accept_dojo_user_invitation/{dojoId}/{userInviteToken}',
@@ -116,7 +124,15 @@ var controller = module.exports = [
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
-  }, 
+  },
+
+  {
+    method: 'GET',
+    path: '/badges',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
 
   {
     method: 'GET',
