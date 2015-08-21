@@ -23,7 +23,7 @@
       </tab>
     </tabset>
 
-    <div ng-if="user" class="input-group claim-badge-input-container">
+    <div ng-show="user" class="input-group claim-badge-input-container">
       <div class="col-lg-6 col-lg-offset-3">
         <form id="previewBadgeForm" novalidate angular-validator angular-validator-submit="previewBadge(badgeClaimNumber)" name="previewBadgeForm">
           <span class="input-group-btn">

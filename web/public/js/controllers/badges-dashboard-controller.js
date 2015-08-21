@@ -1,12 +1,16 @@
  'use strict';
 
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
   var lastClicked = {};
   var errorMsg = $translate.instant('error.general');
   
+  auth.instance(function (data) {
+    $scope.user = data.user;
+  });
+
   cdBadgesService.listBadges(function (response) {
     var badges = response.badges;
 
@@ -83,4 +87,4 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', cdBadgesDashboardCtrl]);
