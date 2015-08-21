@@ -1910,3 +1910,12 @@ msgstr "Private Dojo"
 
 msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
 msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
+
+msgid "e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"
+msgstr "e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"
+
+msgid "e.g. Docklands, Dublin 1 @ CHQ Building"
+msgstr "e.g. Docklands, Dublin 1 @ CHQ Building"
+
+msgid "e.g. Saturdays, monthly, 9-11am"
+msgstr "e.g. Saturdays, monthly, 9-11am"
