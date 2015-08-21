@@ -1,6 +1,6 @@
-<div class="panel panel-default">
-  <div class="panel-heading">{@i18n key="Notes"/}</div>
-  <div class="panel-body">
+<div class="profile-section">
+  <legend class="legend-color-5-border">{@i18n key="Notes"/}</legend>
+  <div>
     <p>{{ profile.notes }}</p>
   </div>
 </div>

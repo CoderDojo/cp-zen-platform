@@ -1,5 +1,5 @@
-<div>
-  <legend class="legend-color-2-border">{@i18n key="Badges"/}</legend>
+<div class="profile-section cd-color-4-underline">
+  <legend>{@i18n key="Badges"/}</legend>
   <button ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>
   <div class="panel-body">
     <tabset justified="true">
