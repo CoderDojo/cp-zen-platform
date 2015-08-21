@@ -38,6 +38,12 @@
         }, function(err) {
           dfd.reject(err);
         });
+    } else if($stateParams.legacyId) {
+      cdDojoService.list({mysqlDojoId: $stateParams.legacyId}, function (data) {
+        dfd.resolve(data[0]);
+      }, function (err) {
+        dfd.reject(err);
+      });
     } else {
       cdDojoService.find({
         urlSlug: $stateParams.country + '/' + $stateParams.path
@@ -157,7 +163,7 @@
           controller: 'dojo-detail-controller'
         })
         .state("dojo-detail-alt", {
-          url: "/dojo/:id",
+          url: "/dashboard/dojo/:legacyId",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
