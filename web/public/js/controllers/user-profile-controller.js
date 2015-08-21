@@ -259,6 +259,14 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   $scope.parentProfile = _.contains(profile.data.userTypes, 'parent-guardian');
 
   $scope.save = function(profile){
+    _.each(['http://', 'https://', 'www.'], function(prefix){
+      _.each(['linkedin', 'twitter'], function(field){
+        // if prefixed, remove prefix
+        var str = profile[field].toString();
+        if (str.substring(0, prefix.length).indexOf(prefix) > -1) profile[field] = str.substring(prefix.length);
+      });
+    });
+
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',

@@ -84,6 +84,20 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
       return;
     }
 
+    var initContent = "<p>" + 
+      $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+      "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
+      "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
+      "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
+      "</ul></p>";
+      
+    $scope.editorOptions = {
+      language: 'en',
+      uiColor: '#000000',
+      height:'200px'
+    };
+    if (dojo.notes === '') $scope.editorOptions.initContent = initContent;
+
     $scope.dojo = dojo;
     $scope.prevFounder = prevFounder;
     $scope.founder  = angular.copy(prevFounder);
@@ -344,13 +358,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
     return deferred.promise;
   }
-
-  $scope.editorOptions = {
-    language: 'en',
-    uiColor: '#000000',
-    height:'200px'
-  };
-
 }
 
 angular.module('cpZenPlatform')

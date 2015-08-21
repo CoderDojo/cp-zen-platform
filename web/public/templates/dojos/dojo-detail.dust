@@ -6,7 +6,6 @@
         <div class="col-xs-12 col-lg-7">
           <legend><b>{{ dojo.name }}</b></legend>
           <div class="alert alert-danger" ng-if="dojo.private">
-            {@i18n key="{{ dojo.stage }}"/}
             <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
           </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
@@ -107,11 +106,11 @@
                   </tr>
                   <tr ng-if="dojo.website">
                     <td><b>{@i18n key="Website"/}</b></td>
-                    <td><a href="{{ dojo.website }}">{{ dojo.website }}</a></td>
+                    <td><a target="_blank" href="{{ dojo.website }}">{{ dojo.website }}</a></td>
                   </tr>
                   <tr ng-if="dojo.google_group">
                     <td><b>{@i18n key="Google Group"/}</b></td>
-                    <td><a href="{{ dojo.google_group }}">{{ dojo.google_group }}</a></td>
+                    <td><a target="_blank" href="{{ dojo.google_group }}">{{ dojo.google_group }}</a></td>
                   </tr>
                 </tbody>
               </table>

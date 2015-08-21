@@ -1906,6 +1906,11 @@ msgstr "You have a Dojo application awaiting verification. You can create anothe
 msgid "No Dojos match your search query."
 msgstr "No Dojos match your search query."
 
+msgid "Please let us know how you heard about CoderDojo"
+msgstr "Please let us know how you heard about CoderDojo"
+
+msgid "Please specify how you heard about CoderDojo"
+msgstr "Please specify how you heard about CoderDojo"
 
 msgid "No Dojos match your search query."
 msgstr "No Dojos match your search query."
@@ -1915,3 +1920,12 @@ msgstr "Private Dojo"
 
 msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
 msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
+
+msgid "e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"
+msgstr "e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"
+
+msgid "e.g. Docklands, Dublin 1 @ CHQ Building"
+msgstr "e.g. Docklands, Dublin 1 @ CHQ Building"
+
+msgid "e.g. Saturdays, monthly, 9-11am"
+msgstr "e.g. Saturdays, monthly, 9-11am"

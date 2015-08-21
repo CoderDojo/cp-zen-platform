@@ -25,6 +25,7 @@
 
     <div ng-show="user" class="input-group claim-badge-input-container">
       <div class="col-lg-6 col-lg-offset-3">
+        {@i18n key="If you have already received a badge, please enter your Claim Code below!"/}
         <form id="previewBadgeForm" novalidate angular-validator angular-validator-submit="previewBadge(badgeClaimNumber)" name="previewBadgeForm">
           <span class="input-group-btn">
             <input type="text" required class="claim-badge-input form-control" ng-model="badgeClaimNumber" placeholder="{@i18n key="Enter Badge Claim Number"/}" name="badgeClaimNumber" id="badgeClaimNumber">

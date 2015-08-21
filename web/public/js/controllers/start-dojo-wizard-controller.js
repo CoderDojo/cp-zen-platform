@@ -383,10 +383,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     $scope.referredBy = [
-      $translate.instant('Google'),
-      $translate.instant('Newspaper/Magazine'),
-      $translate.instant('Radio'),
+      $translate.instant('Search Engine'),
+      $translate.instant('Other CoderDojo Volunteers'),
+      $translate.instant('Other Coding Organisations'),
+      $translate.instant('Development Community'),
+      $translate.instant('Events'),
+      $translate.instant('Word of Mouth'),
       $translate.instant('Family/Friends'),
+      $translate.instant('Media (newspaper/radio)'),
       $translate.instant('Other')
     ];
 

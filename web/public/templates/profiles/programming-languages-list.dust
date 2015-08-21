@@ -1,6 +1,6 @@
-<div class="panel panel-default">
-  <div class="panel-heading">{@i18n key="Programming Languages"/}</div>
-  <div class="panel-body">
+<div class="profile-section">
+  <legend class="legend-color-2-border">{@i18n key="Programming Languages"/}</legend>
+  <div>
     <ul ng-repeat="language in profile.widget.programmingLanguages">
       <li>{{ language }}</li>
     </ul>
