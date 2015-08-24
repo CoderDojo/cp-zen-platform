@@ -443,14 +443,38 @@ msgstr "Languages Spoken"
 msgid "Projects"
 msgstr "Projects"
 
-msgid "Other"
-msgstr "Other"
-
 msgid "Prerequisites"
 msgstr "Prerequisites"
 
 msgid "Notes"
 msgstr "Notes"
+
+msgid "Search Engine"
+msgstr "Search Engine"
+
+msgid "Other CoderDojo Volunteers"
+msgstr "Other CoderDojo Volunteers"
+
+msgid "Other Coding Organisations"
+msgstr "Other Coding Organisations"
+
+msgid "Development Community"
+msgstr "Development Community"
+
+msgid "Events"
+msgstr "Events"
+
+msgid "Word of Mouth"
+msgstr "Word of Mouth"
+
+msgid "Family/Friends"
+msgstr "Family/Friends"
+
+msgid "Media (newspaper/radio)"
+msgstr "Media (newspaper/radio)"
+
+msgid "Other"
+msgstr "Other"
 
 msgid "Hello World Foundation charter for CoderDojo"
 msgstr "Hello World Foundation charter for CoderDojo"
