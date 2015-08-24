@@ -46,6 +46,13 @@
             <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
           </section>
           <br><br>
+
+          <div ng-if="dojo.supporterImage">
+            <legend>{@i18n key="Dojo Supported By"/}</legend>
+            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
+          </div>
+
+
         </div>
         <div class="dojo-detail-sidebar col-xs-12 col-lg-4">
           <div class="widget">
