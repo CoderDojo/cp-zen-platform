@@ -321,6 +321,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           if(step2UpdateFlag) {
             if(savedDojoLead && savedDojoLead.application) {
               savedDojoLead.application.championDetails = champion;
+              savedDojoLead.currentStep = 2;
               cdDojoService.saveDojoLead(savedDojoLead, function(response) {
                 deleteLocalStorage('championDetails');
                 setupStep3();
