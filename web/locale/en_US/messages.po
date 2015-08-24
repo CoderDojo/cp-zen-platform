@@ -1434,8 +1434,11 @@ msgstr "Find technical mentors in your community to volunteer at your Dojo."
 msgid "This is required for you to create a Dojo listing!"
 msgstr "This is required for you to create a Dojo listing!"
 
-msgid "Find non-technical mentors. Eg. parents etc."
-msgstr "Find non-technical mentors. Eg. parents etc."
+msgid "We recommend a ratio of 1:8 mentors to youths, e.g. for an average Dojo of 24 youth, 3 technical mentors would be suggested. Recruit as many mentors as not all volunteers will be able to make all sessions. If you are having difficulty finding mentors get in touch with local businesses, universities and parent groups."
+msgstr "We recommend a ratio of 1:8 mentors to youths, e.g. for an average Dojo of 24 youth, 3 technical mentors would be suggested. Recruit as many mentors as not all volunteers will be able to make all sessions. If you are having difficulty finding mentors get in touch with local businesses, universities and parent groups."
+
+msgid "Find non-technical mentors. E.g. parents etc."
+msgstr "Find non-technical mentors. E.g. parents etc."
 
 msgid "Background check"
 msgstr "Background check"
@@ -1445,6 +1448,9 @@ msgstr "Locate a suitable free venue in your community."
 
 msgid "Ensure your venue is aware of local health and safety best practices."
 msgstr "Ensure your venue is aware of local health and safety best practices."
+
+msgid "Please add a comment on how you’ve met local health and safety best practices in your region"
+msgstr "Please add a comment on how you’ve met local health and safety best practices in your region"
 
 msgid "The main points to be aware of in a Dojo setting is extension cables! Make sure these are strapped to the floor and don’t cover pathways."
 msgstr "The main points to be aware of in a Dojo setting is extension cables! Make sure these are strapped to the floor and don’t cover pathways."
@@ -1493,6 +1499,9 @@ msgstr "You must set an email address for your Dojo."
 
 msgid "Please describe how you have background checked your team."
 msgstr "Please describe how you have background checked your team."
+
+msgid "Set up background checking for all volunteers."
+msgstr "Set up background checking for all volunteers."
 
 msgid "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on Kata <a href="http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking">http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
 msgstr "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on Kata <a href="http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking">http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
@@ -1840,8 +1849,8 @@ msgstr "This is a part of CoderDojo Tao and CoderDojo recommended practice! To f
 msgid "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 msgstr "This is not required but will help you significantly with the running of your Dojo and will help in connecting you to the global CoderDojo community!"
 
-msgid "Please read CoderDojo ECHO and share it with your mentors. This is the guide to  the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
-msgstr "Please read CoderDojo ECHO and share it with your mentors. This is the guide to  the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
+msgid "Please read CoderDojo ECHO and share it with your mentors. This is the guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
+msgstr "Please read CoderDojo ECHO and share it with your mentors. This is the guide to the Ethos, Culture, Happiness and Outcomes of CoderDojo <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies">here</a>"
 
 msgid "Online Safety: Ensure all mentors have read the Online Safety 101 document. and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
 msgstr "Online Safety: Ensure all mentors have read the Online Safety 101 document. and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
