@@ -53,8 +53,10 @@
             <div class="status-wrapper">
               <div class="alert alert-success text-center" ng-if="dojo.verified === 1" role="alert">{@i18n key="Verified"/}</div>
               <div class="alert alert-warning text-center" ng-if="dojo.verified !== 1"role="alert">{@i18n key="Unverified"/}</div>
-              <div class="alert alert-info text-center" ng-show="dojo.stage" role="alert">{@i18n key="{{ dojo.stage }}"/}</div>
-              <div class="alert alert-warning text-center" ng-show="!dojo.needMentors" role="alert">{@i18n key="Mentors needed!"/}</div>
+              <div class="alert alert-info text-center" ng-if="[0,2].indexOf(dojo.stage.value) > -1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+              <div class="alert alert-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+              <div class="alert alert-danger text-center" ng-if="dojo.stage.value === 3" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+              <div class="alert alert-warning text-center" ng-show="dojo.needMentors" role="alert">{@i18n key="Mentors needed!"/}</div>
             </div>
           </div>
 
