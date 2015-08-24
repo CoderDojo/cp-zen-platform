@@ -2181,6 +2181,3 @@ msgstr "e.g. Saturdays, monthly, 9-11am"
 
 msgid "Badge Accepted!"
 msgstr "Badge Accepted!"
-
-msgid "Please click on the map to pinpoint your location"
-msgstr "Please click on the map to pinpoint your location"
