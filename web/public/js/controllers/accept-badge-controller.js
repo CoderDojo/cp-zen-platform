@@ -27,7 +27,7 @@ function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, aler
           goToProfile();
         });
       }
-      return alertService.showAlert($translate.instant('Badge Accepted! It is now visible on your profile page.'), function () {
+      return alertService.showAlert($translate.instant('Badge Accepted!'), function () {
         goToProfile();
       });
     });
