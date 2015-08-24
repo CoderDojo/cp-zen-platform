@@ -2181,3 +2181,7 @@ msgstr "e.g. Saturdays, monthly, 9-11am"
 
 msgid "Badge Accepted!"
 msgstr "Badge Accepted!"
+
+msgid "Dojo Supported By"
+msgstr "Dojo Supported By"
+
