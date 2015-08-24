@@ -2178,3 +2178,6 @@ msgstr "e.g. Docklands, Dublin 1 @ CHQ Building"
 
 msgid "e.g. Saturdays, monthly, 9-11am"
 msgstr "e.g. Saturdays, monthly, 9-11am"
+
+msgid "Badge Accepted!"
+msgstr "Badge Accepted!"
