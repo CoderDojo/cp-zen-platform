@@ -371,6 +371,9 @@
         tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
       }
     ])
+    .config(function (tagsInputConfigProvider) {
+      tagsInputConfigProvider.setTextAutosizeThreshold(40);
+    })
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list'];
