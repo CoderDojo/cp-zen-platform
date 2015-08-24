@@ -37,8 +37,8 @@ function checkHapiPluginError (name) {
 
 // Set up HAPI
 
-server.connection({ 
-  port: port, 
+server.connection({
+  port: port,
   // According to the HTTP spec and Chrome audit tool, Cache-Control headers should match what
   // would be sent for 200 when a 304 (Not Modified) is sent.
   routes: {
@@ -97,9 +97,9 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/500', request.locals);
 });
 
-// TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.  
+// TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.
 //      However, most of them aren't large sized responses, so the benefit of Etag outweighs that penalty.
-//      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the 
+//      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the
 //      Trailer rather than Header... - wprl
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 
@@ -113,7 +113,7 @@ server.register(Scooter, function (err) {
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' data: http://52.17.20.218 http://*.coderdojo.com http://www.google-analytics.com https://csi.gstatic.com https://*.googleapis.com http://chart.apis.google.com https://maps.gstatic.com http://google-maps-utility-library-v3.googlecode.com",
+    imgSrc: "'self' data: http://52.17.20.218 http://*.coderdojo.com https://*.coderdojo.com https://www.google-analytics.com http://www.google-analytics.com https://*.gstatic.com https://*.googleapis.com https://*.apis.google.com http://*.apis.google.com https://*.googlecode.com http://*.googlecode.com",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",
@@ -149,7 +149,7 @@ server.register({ register: Chairo, options: options }, function (err) {
 
     seneca
       .use('ng-web')
-      .use(require('../lib/users/user.js'))  
+      .use(require('../lib/users/user.js'))
       .use('auth')
       .use('user-roles')
       .use('web-access')
@@ -179,7 +179,7 @@ server.register({ register: Chairo, options: options }, function (err) {
     // function captureAllMessages(args) {
     //   console.log('*** captured = ', JSON.stringify(args));
     // }
-  
+
     // Use seneca-web middleware with Hapi.
     server.register({
       register: require('hapi-seneca'),
@@ -187,10 +187,10 @@ server.register({ register: Chairo, options: options }, function (err) {
         cors: true,
         session: {
           /*store: sessionStore, */ // TODO remote session store
-          secret: options.session.secret, 
+          secret: options.session.secret,
           name: 'CD.ZENPLATFORM',
           saveUninitialized: true,
-          resave: true 
+          resave: true
         }
       }
     }, function (err) {
@@ -199,7 +199,7 @@ server.register({ register: Chairo, options: options }, function (err) {
         console.log('[%s] Listening on http://localhost:%d', env, port);
       });
     });
-  });  
+  });
 });
 
 };

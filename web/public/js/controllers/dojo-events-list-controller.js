@@ -26,8 +26,10 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
               cb();
             });
           }, function (err) {
-            console.error(err);
-            alertService.showError($translate.instant('Error loading events'));
+            if(err) {
+              console.error(err);
+              alertService.showError($translate.instant('Error loading events'));
+            }
             var childUsers = [];
             async.each(childProfiles, function (childProfile, cb) {
               //Load sys_user objects
@@ -36,8 +38,10 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
                 cb();
               });
             }, function (err) {
-              console.error(err);
-              alertService.showError($translate.instant('Error loading events'));
+              if(err) {
+                console.error(err);
+                alertService.showError($translate.instant('Error loading events'));
+              }
               $scope.childUsers = childUsers;
             });
           });

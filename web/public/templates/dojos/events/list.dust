@@ -39,14 +39,16 @@
         </table>
       </div>
     </div>
-    <div class="row col-lg-7 col-lg-offset-2">
-      <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
-                  class="pagination-sm"
-                  first-text="{@i18n key="First" /}"
-                  previous-text="{@i18n key="Previous" /}"
-                  next-text="{@i18n key="Next" /}"
-                  last-text="{@i18n key="Last" /}"
-                  boundary-links="true"></pagination>
+    <div class="row center-children">
+      <span class="row col-lg-7 centered-child">
+        <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
+                    class="pagination-sm"
+                    first-text="{@i18n key="First" /}"
+                    previous-text="{@i18n key="Previous" /}"
+                    next-text="{@i18n key="Next" /}"
+                    last-text="{@i18n key="Last" /}"
+                    boundary-links="true"></pagination>
+      </span>
     </div>
   </div>
 </div>
