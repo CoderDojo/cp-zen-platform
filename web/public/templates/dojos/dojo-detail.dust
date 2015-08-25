@@ -46,6 +46,13 @@
             <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
           </section>
           <br><br>
+
+          <div ng-if="dojo.supporterImage">
+            <legend>{@i18n key="Dojo Supported By"/}</legend>
+            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
+          </div>
+
+
         </div>
         <div class="dojo-detail-sidebar col-xs-12 col-lg-4">
           <div class="widget">
@@ -67,10 +74,7 @@
 
           <div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
             <legend>{@i18n key="Join"/}</legend>
-            <div class="need-mentors-notice center-children">
-              <div ng-if="dojo.needMentors">
-                {@i18n key="We need mentors!"/}
-              </div>
+            <div class="center-children">
             </div>
             <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
               <div class="col-lg-12">
