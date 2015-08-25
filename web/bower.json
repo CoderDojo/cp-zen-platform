@@ -54,7 +54,8 @@
     "angular-i18n": "1.2.5",
     "angular-dynamic-locale": "0.1.27",
     "angular-atomic-notify": "https://github.com/david-cahill/angular-atomic-notify.git#master",
-    "international-phone-number": "0.0.8"
+    "international-phone-number": "0.0.8",
+    "ng-idle": "1.1.0"
   },
   "devDependencies": {
     "angular-mocks": "1.3.0",

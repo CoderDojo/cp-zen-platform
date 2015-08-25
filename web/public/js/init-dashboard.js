@@ -1,9 +1,6 @@
 (function() {
   'use strict';
 
-  function cdDashboardCtrl($scope, auth) {
-  }
-
   var gmap = function($q, $window) {
     var dfd = $q.defer();
     var doc = $window.document;
@@ -27,7 +24,6 @@
 
     return dfd.promise;
   }
-
 
   var resolveDojo = function($q, $stateParams, cdDojoService) {
     var dfd = $q.defer();
@@ -374,6 +370,10 @@
     .config(function (tagsInputConfigProvider) {
       tagsInputConfigProvider.setTextAutosizeThreshold(40);
     })
+    .config(function(IdleProvider, KeepaliveProvider) {
+      IdleProvider.idle(172800); // 2 days
+      IdleProvider.timeout(10);
+    })
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list'];
@@ -439,7 +439,19 @@
       var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
       tmhDynamicLocale.set(userLangCode);
     })
-    .controller('dashboard', ['$scope', 'auth', 'alertService', 'spinnerService', cdDashboardCtrl])
+    .run(function (Idle){
+      Idle.watch();
+    })
+    .controller('cdDashboardCtrl', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
+      $scope.$on('IdleTimeout', function() {
+        //session timeout
+        $cookieStore.remove('verifyProfileComplete');
+        $cookieStore.remove('canViewYouthForums');
+        auth.logout(function(data){
+          $window.location.href = '/'
+        })
+      });
+    })
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'
     }));
