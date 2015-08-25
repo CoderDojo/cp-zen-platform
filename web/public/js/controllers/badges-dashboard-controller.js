@@ -39,7 +39,10 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
     });
   });
 
-  $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
+  $scope.prepareHeading = function(heading){
+    heading = heading.replace(/-/g, ' '); // replace dashes with spaces
+    return heading.replace(/\w\S*/g, function(str){return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();}); // capitalize first letter of each word
+  };
 
   $scope.showBadgeInfo = function (tag, badge) {
     if(lastClicked[tag] !== badge.id && $scope.badgeInfoIsCollapsed[tag]) {
