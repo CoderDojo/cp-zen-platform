@@ -12,6 +12,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
 
   $scope.dojo = dojo;
+  if (!$scope.dojo.place.toponymName) $scope.dojo.place.toponymName = $scope.dojo.place.name;
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
