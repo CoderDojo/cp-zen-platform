@@ -12,12 +12,6 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
 
   $scope.dojo = dojo;
-  if ($scope.dojo.place) {
-    $scope.dojo.place.name = _.find([$scope.dojo.place.name,
-                                     $scope.dojo.place.toponymName,
-                                     $scope.dojo.place.nameWithHierarchy],
-      function(obj) { return !!obj });
-  }
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
