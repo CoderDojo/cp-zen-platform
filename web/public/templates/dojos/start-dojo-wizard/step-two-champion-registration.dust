@@ -114,6 +114,9 @@
         </div>
 
         <div class="row cd-input-row" ng-if="stepTwoShowGmap">
+          <div class="col-lg-8 col-lg-offset-4">
+            <div class="alert alert-info text-center" role="alert">{@i18n key="Please click on the map to pinpoint your location"/}</div>
+          </div>
           <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
               <input class="col-lg-4 btn btn-primary" type="button" ng-click="getLocationFromAddress(champion)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">

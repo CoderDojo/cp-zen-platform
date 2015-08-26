@@ -29,6 +29,7 @@
     'popoverToggle',
     'tmh.dynamicLocale',
     'atomic-notify',
-    'internationalPhoneNumber'
+    'internationalPhoneNumber',
+    'ngIdle'
   ]);
 })();

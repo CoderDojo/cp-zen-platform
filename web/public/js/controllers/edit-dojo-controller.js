@@ -7,8 +7,10 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   $scope.dojo = {};
   $scope.model = {};
   $scope.markers = [];
+  $scope.markerPlaced = false;
   $scope.buttonText = $translate.instant('Update Dojo');
   $scope.hideUserSelect = true;
+  $scope.changedLocation = false;
 
   $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
 
@@ -31,9 +33,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   };
 
   $scope.scrollToInvalid = function(form){
-    $scope.getLocationFromAddress($scope.dojo);
-    $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
-
     if(form.$invalid){
       angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
     }
@@ -197,7 +196,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
         $scope.setPlace($scope.dojo, lsed.place);
       }
       if(lsed.country && lsed.place) {
-        $scope.getLocationFromAddress($scope.dojo);
+        $scope.getLocationFromAddress();
       }
       if(lsed.address1) $scope.dojo.address1 = lsed.address1;
       if(lsed.coordinates) $scope.dojo.coordinates = lsed.coordinates;
@@ -246,6 +245,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   };
 
   $scope.updateLocalStorage = function (localObj, item, value) {
+    if (['address1', 'place'].indexOf(item) > -1) $scope.changedLocation = true;
+      $scope.setPlace($scope.dojo, $scope.dojo.place);
+
     if($scope.user && $state.current.name === "edit-dojo") {
       localObj = $scope.dojo.id;
       if(!$localStorage[$scope.user.id]) $localStorage[$scope.user.id] = {};
@@ -270,47 +272,57 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
   }
 
   $scope.save = function(dojo) {
-    canUpdateDojo().then(function (isDojoAdmin) {
-      if(isDojoAdmin) {
-        _.each(sanitizeCdForms.editDojo, function(item, i) {
-          if(_.has(dojo, item)) {
-            dojo[item] = $sanitize(dojo[item]);
-          }
-        });
 
-        dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
-        cdDojoService.save(dojo, function(response) {
-          if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
-            cdDojoService.updateFounder($scope.founder, function(response){
+    if ($scope.changedLocation && !$scope.markerPlaced) {
+      $scope.getLocationFromAddress(finish);
+    } else {
+      finish();
+    }
+
+    function finish(){
+      canUpdateDojo().then(function (isDojoAdmin) {
+        if(isDojoAdmin) {
+          _.each(sanitizeCdForms.editDojo, function(item, i) {
+            if(_.has(dojo, item)) {
+              dojo[item] = $sanitize(dojo[item]);
+            }
+          });
+
+          dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
+          cdDojoService.save(dojo, function(response) {
+            if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
+              cdDojoService.updateFounder($scope.founder, function(response){
+                alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
+                  deleteLocalStorage('editDojoListing');
+                  $state.go('my-dojos');
+                  $scope.$apply();
+                });
+              }, function(err){
+                alertService.showError($translate.instant('An error has occurred while saving'));
+              });
+            } else {
               alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
                 deleteLocalStorage('editDojoListing');
                 $state.go('my-dojos');
                 $scope.$apply();
               });
-            }, function(err){
-              alertService.showError($translate.instant('An error has occurred while saving'));
-            });
-          } else {
-            alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
-              deleteLocalStorage('editDojoListing');
-              $state.go('my-dojos');
-              $scope.$apply();
-            });
-          }
+            }
 
-        }, function(err) {
-          alertService.showError(
-            $translate.instant('An error has occurred while saving') + ': <br /> '+
-            (err.error || JSON.stringify(err))
-          );
-        });
-      } else {
-        alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
-      }
-    });
+          }, function(err) {
+            alertService.showError(
+              $translate.instant('An error has occurred while saving') + ': <br /> '+
+              (err.error || JSON.stringify(err))
+            );
+          });
+        } else {
+          alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
+        }
+      });
+    }
   }
 
   $scope.addMarker = function($event, $params, dojo) {
+    $scope.markerPlaced = true;
     angular.forEach($scope.markers, function(marker) {
       marker.setMap(null);
     });
@@ -321,7 +333,8 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
   };
 
-  $scope.getLocationFromAddress = function(dojo) {
+  $scope.getLocationFromAddress = function(cb) {
+    var dojo = $scope.dojo;
     utilsService.getLocationFromAddress(dojo).then(function (data) {
       $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
       $scope.model.map.panTo($scope.mapOptions.center);
@@ -333,9 +346,11 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
         position: $scope.mapOptions.center
       }));
       dojo.coordinates = data.lat + ', ' + data.lng;
+      if(cb) cb();
     }, function () {
       //Ask user to add location manually if google geocoding can't find location.
       alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+      if(cb) cb();
     });
 
   }

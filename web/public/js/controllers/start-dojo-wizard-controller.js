@@ -139,14 +139,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   }
 
   $scope.scrollToInvalid = function(form){
-    // temp fix
-    if(currentStepInt === 3) {
-      $scope.getLocationFromAddress($scope.dojo);
-      if($scope.dojo.place) {
-        $scope.dojo.coordinates = $scope.dojo.place.latitude + ', ' + $scope.dojo.place.longitude;
-      }
-    }
-
     if(form.$invalid){
       angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
     }
@@ -607,37 +599,40 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     }
 
     $scope.save = function(dojo) {
-      var win = function(){
-        _.each(sanitizeCdForms.editDojo, function(item, i) {
-          if(_.has(dojo, item)) {
-            dojo[item] = $sanitize(dojo[item]);
-          }
-        });
+      $scope.getLocationFromAddress($scope.dojo, function(){
 
-        cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          var dojoLead = response;
-          dojoLead.application.dojoListing = dojo;
-          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
-          cdDojoService.saveDojoLead(dojoLead, function (response) {
-            dojo.dojoLeadId = response.id;
-            dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
-            cdDojoService.save(dojo, function (response) {
-              deleteLocalStorage('dojoListing');
+        var win = function(){
+          _.each(sanitizeCdForms.editDojo, function(item, i) {
+            if(_.has(dojo, item)) {
+              dojo[item] = $sanitize(dojo[item]);
+            }
+          });
 
-              //update intercom champion dojos
-              intercomService.updateIntercom(response.dojo_id);
+          cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
+            var dojoLead = response;
+            dojoLead.application.dojoListing = dojo;
+            dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+            cdDojoService.saveDojoLead(dojoLead, function (response) {
+              dojo.dojoLeadId = response.id;
+              dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
+              cdDojoService.save(dojo, function (response) {
+                deleteLocalStorage('dojoListing');
 
-              $state.go('dojo-list', {
-                bannerType:'success',
-                bannerMessage: $translate.instant('Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'),
-                bannerTimeCollapse: 150000
+                //update intercom champion dojos
+                intercomService.updateIntercom(response.dojo_id);
+
+                $state.go('dojo-list', {
+                  bannerType:'success',
+                  bannerMessage: $translate.instant('Thank you for submitting your dojo listing. A member from the CoderDojo Foundation team will review your listing and be in touch shortly.'),
+                  bannerTimeCollapse: 150000
+                });
               });
-            });
-          },failSave);
-        }, fail);
-      };
+            },failSave);
+          }, fail);
+        };
 
-      openConfirmation(win);
+        openConfirmation(win);
+      });
     };
 
     if(!wizardRedirect) {
@@ -678,7 +673,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       obj.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
     };
 
-    $scope.getLocationFromAddress = function(obj) {
+    $scope.getLocationFromAddress = function(obj, cb) {
       utilsService.getLocationFromAddress(obj).then(function (data) {
         $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
         $scope.model.map.panTo($scope.mapOptions.center);
@@ -690,9 +685,11 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           position: $scope.mapOptions.center
         }));
         obj.coordinates = data.lat + ', ' + data.lng;
+        if(cb) cb();
       }, function (err) {
         //Ask user to add location manually if google geocoding can't find location.
         alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+        if(cb) cb();
       });
     }
 

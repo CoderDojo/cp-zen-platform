@@ -1,12 +1,12 @@
 
 <div class="dojo-list-dashboard cd-color-3-underline">
   <div class="cd-create-dojo-container">
-    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm"  ng-enter="noop()">
+    <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm">
       <div id="main">
 
         <legend class="cd-section-header">{@i18n key="Dojo Information"/}</legend>
 
-        <div class="row cd-input-row">
+        <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
             <label for="dojoName" class="col-lg-4 cd-form-label1">
               <span>{@i18n key="Dojo Name"/}*</span>
@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="row cd-input-row">
+        <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
             <label for="dojoEmail" class="col-lg-4 cd-form-label1">
               <span>{@i18n key="Dojo Email"/}</span>
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div class="row cd-input-row">
+        <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
             <label for="dojoTimes" class="col-lg-4 cd-form-label1">
               <span>{@i18n key="Times"/}</span>
@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <div class="row cd-input-row">
+        <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
             <label for="dojoCountry" class="col-lg-4 cd-form-label1">
               <span>{@i18n key="Country"/}*</span>
@@ -65,13 +65,13 @@
           </div>
         </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoPlace" class="col-lg-4 cd-form-label1">
             <span>{@i18n key="City/Town"/}*</span>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
-            <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
+            <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
               <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
@@ -111,13 +111,15 @@
           </div>
         </div>
       </div>
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
+        <div class="col-lg-8 col-lg-offset-4">
+          <div class="alert alert-info text-center" role="alert">{@i18n key="Please click on the map to pinpoint your location"/}</div>
+        </div>
         <div class="form-group with-info-btn">
           <div class="col-lg-offset-4 col-lg-8">
-            <input type="button" ng-click="getLocationFromAddress(dojo)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
+            <input type="button" ng-click="getLocationFromAddress()" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
           </div>
           <div class="col-lg-offset-4 col-lg-8 google-map">
-            <p>{@i18n key="Please click on the map to pinpoint your location"/}</p>
             <section ng-if="mapLoaded" id="map">
               <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
               <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, dojo)'}" ui-options="mapOptions" class="map-canvas"></div>
@@ -126,7 +128,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <div class="col-lg-offset-4 col-lg-8">
             <input type="hidden" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation"  ng-change="updateLocalStorage('dojoListing','coordinates', dojo.coordinates)">
@@ -134,7 +136,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoNotes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
           <div class="col-lg-8">
@@ -146,7 +148,7 @@
       <legend class="cd-section-header">{@i18n key="Status Messages"/}</legend>
 
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label class="col-lg-4 cd-form-label1 with-checkbox">
             <span>{@i18n key="Need Mentors"/}</span>
@@ -166,7 +168,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label class="col-lg-4 cd-form-label1">{@i18n key="Current Stage"/}</label>
           <div class="col-lg-8">
@@ -178,7 +180,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>
           <div class="col-lg-8">
@@ -201,7 +203,7 @@
 
       <legend class="cd-section-header">{@i18n key="Other Information"/}</legend>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoGoogleGroup" class="col-lg-4 cd-form-label1">
             <span>{@i18n key="Google Group URL"/}</span>
@@ -215,7 +217,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoGoogleGroup" class="col-lg-4 cd-form-label1">
             <span>
@@ -228,7 +230,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoTwitter" class="col-lg-4 cd-form-label1">
             <span>{@i18n key="Twitter"/}</span>
@@ -242,7 +244,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">
             <span>{@i18n key="Supporters Image URL"/}</span>
@@ -256,7 +258,7 @@
         </div>
       </div>
 
-      <div class="row cd-input-row">
+      <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label class="col-lg-4 cd-form-label1 with-info-btn with-checkbox">
             <span>{@i18n key="Mailing List"/}</span>
