@@ -76,11 +76,11 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Dojo"/}</th>
+            <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort.name)">&nbsp;</span>{@i18n key="Dojo"/}</th>
             <th></th>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Stage"/}</th>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Country"/}</th>
-            <th><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(sort)">&nbsp;</span>{@i18n key="Dojo Email"/}</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'stage')" ng-class="getSortClass(sort.stage)">&nbsp;</span>{@i18n key="Stage"/}</th>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'alpha2')" ng-class="getSortClass(sort.alpha2)">&nbsp;</span>{@i18n key="Country"/}</th>
+            <th><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(sort.email)">&nbsp;</span>{@i18n key="Dojo Email"/}</th>
             <th>{@i18n key="User"/}</th>
             <th>{@i18n key="Application"/}</th>
             <th>{@i18n key="Edit"/}</th>

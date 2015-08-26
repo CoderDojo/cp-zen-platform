@@ -42,8 +42,8 @@ function cdEventsService(cdApi, $q){
     saveAttendance: function(attendance, win, fail) {
       cdApi.post('events/attendance/save', {attendance: attendance}, win, fail || topfail);
     },
-    getUserDojosEvents: function(user, win, fail){
-      cdApi.post('events/user-dojos-events', {id: user}, win, fail || topfail);
+    getUserDojosEvents: function(query, win, fail){
+      cdApi.post('events/user-dojos-events', {query: query}, win, fail || topfail);
     },
     search: function(query) {
       var deferred = $q.defer();

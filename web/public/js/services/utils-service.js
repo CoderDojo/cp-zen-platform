@@ -137,8 +137,9 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
   }
 
   utils.getSortClass = function (sort) {
-    for(var key in sort) {
-      if(sort[key] > 0) return 'pointer sortable glyphicon glyphicon-chevron-up';
+    if(sort < 0) {
+      return 'pointer sortable glyphicon glyphicon-chevron-up';
+    } else {
       return 'pointer sortable glyphicon glyphicon-chevron-down';
     }
   }
