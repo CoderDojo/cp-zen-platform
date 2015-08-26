@@ -116,7 +116,7 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
   utils.getLocationFromAddress = function(obj) {
     var deferred = $q.defer();
     if(obj && obj.place) {
-      if(!obj.placeName) obj.placeName = obj.place.nameWithHierarchy;
+      if(!obj.placeName) obj.placeName = obj.place.name || obj.place.toponymName || obj.place.nameWithHierarchy;
       var address = obj.placeName;
       for (var adminidx=4; adminidx >= 1; adminidx--) {
         if (obj['admin'+adminidx+'Name']) {

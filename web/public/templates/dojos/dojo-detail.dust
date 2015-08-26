@@ -20,7 +20,7 @@
               </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="City/Town"/}</b></td>
-                <td ng-if="dojo.place.name">{{ dojo.place.name }}</td>
+                <td ng-if="dojo.place" ng-init="dojo.place.name = dojo.place.name || dojo.place.toponymName || dojo.place.nameWithHierarchy">{{ dojo.place.name }}</td>
               </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Country"/}</b></td>
