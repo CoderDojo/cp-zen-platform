@@ -2245,3 +2245,5 @@ msgstr "Badge Accepted!"
 msgid "Dojo Supported By"
 msgstr "Dojo Supported By"
 
+msgid "Email is required"
+msgstr "Email is required"
