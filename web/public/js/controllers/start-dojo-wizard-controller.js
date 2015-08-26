@@ -2,7 +2,7 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, 
-  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage) {
+  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage, $sce) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -447,17 +447,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
         if(step.checkboxes){
           step.checkboxes = _.map(step.checkboxes, function(checkbox){
-            if(checkbox.title){
-              checkbox.title = $translate.instant(checkbox.title);
-            }
-
-            if(checkbox.placeholder){
-              checkbox.placeholder = $translate.instant(checkbox.placeholder);
-            }
-
-            if(checkbox.requiredMessage){
-              checkbox.requiredMessage = $translate.instant(checkbox.requiredMessage);
-            }
+            if(checkbox.title) checkbox.title = $sce.trustAsHtml($translate.instant(checkbox.title));
+            if(checkbox.placeholder) checkbox.placeholder = $translate.instant(checkbox.placeholder);
+            if(checkbox.requiredMessage) checkbox.requiredMessage = $translate.instant(checkbox.requiredMessage);
+            if(checkbox.infoText) checkbox.infoText = $sce.trustAsHtml($translate.instant(checkbox.infoText));
 
             return checkbox;
           });
@@ -720,4 +713,4 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 
     'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
-    '$localStorage', startDojoWizardCtrl]);
+    '$localStorage','$sce', startDojoWizardCtrl]);
