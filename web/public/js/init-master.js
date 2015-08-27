@@ -27,20 +27,13 @@
 
   var resolveDojo = function($q, $stateParams, cdDojoService) {
     var dfd = $q.defer();
-    if ($stateParams.id) {
-      cdDojoService.load($stateParams.id,
-        function(data) {
-          dfd.resolve(data);
-        }, function(err) {
-          dfd.reject(err);
-        });
-    } else if($stateParams.legacyId) {
-      cdDojoService.list({mysqlDojoId: $stateParams.legacyId}, function (data) {
+    if($stateParams.legacyId && _.isNumber(parseInt($stateParams.legacyId))) {
+      cdDojoService.list({mysqlDojoId: parseInt($stateParams.legacyId)}, function (data) {
         dfd.resolve(data[0]);
       }, function (err) {
         dfd.reject(err);
       });
-    } else {
+    } else if(_.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
         urlSlug: $stateParams.country + '/' + $stateParams.path
       }, function(data) {
@@ -48,6 +41,8 @@
       }, function(err) {
         dfd.reject(err);
       });
+    } else {
+      dfd.reject(new Error('No Dojo found.'));
     }
     return dfd.promise;
   };
