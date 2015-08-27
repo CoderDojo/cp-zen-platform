@@ -44,7 +44,7 @@
     $state.go('my-dojos');
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, cdCountriesService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
     var defaultEventTime = moment(now).add(2, 'hours').toDate();
@@ -266,7 +266,7 @@
             lng: $scope.dojoInfo.geoPoint.lon
           })
         } else { //add empty map
-          cdCountriesService.loadCountriesLatLongData(function(countries){
+          cdDojoService.loadCountriesLatLongData(function(countries){
             var country = countries[dojoInfo.alpha2];
             addMap({
               lat: country[0],
@@ -366,7 +366,6 @@
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',
-      'cdCountriesService',
       'auth',
       '$translate',
       'cdLanguagesService',

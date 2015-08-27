@@ -17,7 +17,6 @@ It will add manager@example.com/test and admin@example.com/test users to the dat
 
 Requires the following micro-services to be running:
 
-cp-core-services/countries
 cp-core-services/dojos
 
 See https://github.com/CoderDojo/cp-core-services

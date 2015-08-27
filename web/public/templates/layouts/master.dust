@@ -155,7 +155,6 @@
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
     
     <script src="/js/services/cd-dojo-service.js"></script>
-    <script src="/js/services/cd-countries-service.js"></script>
     <script src="/js/services/geocoder-service.js"></script>
     <script src="/js/services/auth-service.js"></script>
     <script src="/js/services/alert-service.js"></script>

@@ -86,7 +86,6 @@ module.exports = _.defaults({
 
   client: [
     {type: 'tcp',  port: 10301, pin: 'role:cd-dojos,cmd:*'},
-    {type: 'tcp',  port: 10302, pin: 'role:cd-countries,cmd:*'},
     {type: 'tcp',  port: 10303, pin: 'role:cd-users,cmd:*'},
     {type: 'tcp',  port: 10303, pin: 'role:cd-agreements,cmd:*'},
     {type: 'tcp',  port: 10303, pin: 'role:cd-profiles,cmd:*'},

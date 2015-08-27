@@ -1,7 +1,7 @@
 'use strict';
 
 function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdDojoService, alertService,
-  $translate, cdCountriesService, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
+  $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
   agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, usSpinnerService, atomicNotifyService, $timeout) {
 
@@ -336,7 +336,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     $scope.picker.opened = true;
   };
 
-  cdCountriesService.listCountries(function(countries) {
+  cdDojoService.listCountries(function(countries) {
     $scope.countries = countries;
   });
 
@@ -537,7 +537,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
-    '$translate' , 'cdCountriesService', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
+    '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
     'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'usSpinnerService', 'atomicNotifyService', '$timeout', cdUserProfileCtrl]);
 

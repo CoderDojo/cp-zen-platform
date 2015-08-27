@@ -1,7 +1,7 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, cdCountriesService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
+function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
 
   cdDojoService.getDojoConfig(function(json){
     $scope.dojoStages = _.map(json.dojoStages, function(item){
@@ -78,7 +78,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
       $scope.mapLoaded = true;
     } else {
       var countryCoordinates;
-      cdCountriesService.loadCountriesLatLongData(function (response) {
+      cdDojoService.loadCountriesLatLongData(function (response) {
 
         countryCoordinates = response[$scope.dojo.alpha2];
 
@@ -163,5 +163,5 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'cdCountriesService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
 

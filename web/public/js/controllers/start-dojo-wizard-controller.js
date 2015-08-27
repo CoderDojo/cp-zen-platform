@@ -1,7 +1,7 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, cdCountriesService, 
+function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, 
   cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage, $sce) {
 
   $scope.noop = angular.noop;
@@ -333,7 +333,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         openConfirmation(win);
       };
 
-      cdCountriesService.listCountries(function (countries) {
+      cdDojoService.listCountries(function (countries) {
         $scope.countries = countries;
       }, fail);
     }
@@ -526,7 +526,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
     $scope.createDojoUrl = $state.current.url;
 
-    cdCountriesService.listCountries(function(countries) {
+    cdDojoService.listCountries(function(countries) {
       $scope.countries = countries;
     }, fail);
 
@@ -709,5 +709,5 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 
-    'cdCountriesService', 'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
+    'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
     '$localStorage','$sce', startDojoWizardCtrl]);
