@@ -26,23 +26,23 @@
                         ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
                         ng-model="setupDojo[checkboxInput.name]" 
                         ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name, setupDojo[checkboxInput.name])">
-                      <label class="cd-checkbox-label2" for="{{ checkboxInput.name }}"><span>
-                        {@i18n key="{{ checkboxInput.title }}"/}<span ng-show="checkboxInput.required===true">*</span>
-                      </label>
-                      <span class="setup-dojo-icons">
-                        <span tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-if="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-animation="true"></span>
-                        <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank' style="text-decoration: none" ng-if="checkboxInput.taoIcon"> 
-                          <span tooltip-trigger="mouseenter" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please click icon below"/}" ng-show="checkboxInput.taoIcon" class="setup-dojo-tao-btn" tooltip-animation="true"></span>
-                        </a>
-                      </span>                      
-                      <ul class="subItemsList" ng-if="checkboxInput.subList === true">
-                        <li ng-repeat="listItem in checkboxInput.subListItems">
-                          <span>{@i18n key="{{ listItem }}"/}</span>
-                        </li>
-                      </ul>
-                      <input type="text" ng-if="checkboxInput.textField" ng-show="setupDojo[checkboxInput.name] === true"
+                      <label for="{{ checkboxInput.name }}">&nbsp;</label>
+                      <span>
+                        <span ng-bind-html="checkboxInput.title"></span>
+                        <span ng-show="checkboxInput.required===true">*</span>
+                        <span class="setup-dojo-icons">
+                          <span tooltip-trigger="focus" tooltip-placement="top" tooltip-html-unsafe="{{ checkboxInput.infoText }}" ng-if="checkboxInput.infoIcon===true" class="tooltipfocus info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-animation="true" tabindex="1"></span>
+                          <span tooltip-trigger="focus" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank'>here</a>"/}" ng-show="checkboxInput.taoIcon" class="tooltipfocus setup-dojo-tao-btn" tooltip-animation="true" tabindex="0"></span>
+                        </span>
+                        <ul class="subItemsList" ng-if="checkboxInput.subList === true">
+                          <li ng-repeat="listItem in checkboxInput.subListItems">
+                            <span>{@i18n key="{{ listItem }}"/}</span>
+                          </li>
+                        </ul>
+                        <input type="text" ng-if="checkboxInput.textField" ng-show="setupDojo[checkboxInput.name] === true"
                         class="cd-checkbox-input form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
                         ng-model="setupDojo[checkboxInput.name + 'Text']"  id="dojoNotes" ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name + 'Text', setupDojo[checkboxInput.name + 'Text'])">
+                      </span>
                     </div>
                   </div>
                 </div>

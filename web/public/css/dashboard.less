@@ -493,6 +493,17 @@ label {
       /* font-size:14 - needed to keep label text correctly aligned with checkbox */
       font-size: 14px;
     }
+    div.cd-checkbox-title{
+      font-size: 15px;
+    }
+    a:link, a:visited {
+      color: @cd-green;
+      text-decoration: none;
+    }
+    a:hover, a:focus, a:active {
+      color: @cd-orange;
+      text-decoration: none;
+    }
   }
   .cd-wizard-submit {
     margin-top: 30px;
@@ -1015,4 +1026,8 @@ img.dojo-thumbnail {
 img.dojoSupporterImage {
   width: 570px;
   height: 200px;
+}
+
+span.tooltipfocus {
+  outline: none;
 }
