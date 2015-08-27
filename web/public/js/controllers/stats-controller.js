@@ -1,6 +1,6 @@
 'use strict';
 
-function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoService, cdCountriesService, $translate){
+function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoService, $translate){
   $scope.load = function(){
     async.series([getContinentCodes, getCharters, getStats]);
   };
@@ -73,7 +73,7 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
   }
 
   function getContinentCodes(cb){
-    cdCountriesService.getContinentCodes(
+    cdDojoService.getContinentCodes(
       function(continentMap){
         $scope.continentMap = _.invert(continentMap);
         cb();
@@ -95,4 +95,4 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
 }
 
 angular.module('cpZenPlatform')
-  .controller('stats-controller',['$scope', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', 'cdCountriesService', '$translate', statsCtrl]);
+  .controller('stats-controller',['$scope', 'alertService', 'auth', 'cdAgreementsService', 'cdDojoService', '$translate', statsCtrl]);

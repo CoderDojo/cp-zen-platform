@@ -147,6 +147,34 @@
         var deferred = $q.defer();
         cdApi.post('dojos/search_bounding_box', {query: query}, deferred.resolve, deferred.reject || topfail);
         return deferred.promise;
+      },
+      // from countries service
+      listCountries: function(win, fail){
+        cdApi.get('countries', function (countries) {
+          // Convert to array (and ensure array exists).
+          countries = _.map(countries);
+          // Sort based on browser/OS's locale.
+          countries.sort(function (a, b){
+            var c = a.countryName.localeCompare(b.countryName);
+            return c;
+          });
+          win(countries);
+        }, fail || topfail);
+      },
+      listPlaces: function(search, win, fail) {
+        cdApi.post('places', {search: search}, win, fail || topfail);
+      },
+      loadContinentsLatLongData: function(win, fail) {
+        cdApi.get('continents_lat_long', win, fail || topfail);
+      },
+      loadCountriesLatLongData: function(win, fail) {
+        cdApi.get('countries_lat_long', win, fail || topfail);
+      },
+      loadCountriesContinents: function(win, fail) {
+        cdApi.get('countries_continents', win, fail || topfail);
+      },
+      getContinentCodes: function(win, fail){
+        cdApi.get('continent_codes', win, fail || topfail);
       }
     };
   }

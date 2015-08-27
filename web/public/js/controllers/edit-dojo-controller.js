@@ -1,7 +1,7 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesService, alertService, Geocoder, gmap, auth,
+function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService, Geocoder, gmap, auth,
   $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage) {
 
   $scope.dojo = {};
@@ -167,7 +167,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
       } else { //add empty map
-        cdCountriesService.loadCountriesLatLongData(function(countries){
+        cdDojoService.loadCountriesLatLongData(function(countries){
           var country = countries[$scope.dojo.alpha2];
           $scope.mapOptions = {
             center: new google.maps.LatLng(country[0], country[1]),
@@ -211,7 +211,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
     }
   }
 
-  cdCountriesService.listCountries(function(countries) {
+  cdDojoService.listCountries(function(countries) {
     $scope.countries = countries;
   });
 
@@ -376,6 +376,6 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, cdCountriesSe
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'cdCountriesService', 'alertService', 'Geocoder', 'gmap', 'auth',
+  .controller('edit-dojo-controller', ['$scope', '$window', '$location', 'cdDojoService', 'alertService', 'Geocoder', 'gmap', 'auth',
     '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', cdEditDojoCtrl]);
 

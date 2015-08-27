@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '$q', 'Geocoder', function(cdCountriesService, $q, Geocoder) {
+angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 'Geocoder', function(cdDojoService, $q, Geocoder) {
   var utils = {};
 
   utils.toTags = function(values){
@@ -98,7 +98,7 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdCountriesService', '
         search: search
       };
 
-      cdCountriesService.listPlaces(query, function (places) {
+      cdDojoService.listPlaces(query, function (places) {
         if(_.isEmpty(places) && $select.search && !$select.clickTriggeredSelect) {
           places.push($select.search);
         }

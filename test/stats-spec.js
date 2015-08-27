@@ -31,8 +31,7 @@ describe('stats-controller', function() {
         _alertService_,
         _auth_,
         _cdAgreementsService_,
-        _cdDojoService_,
-        _cdCountriesService_
+        _cdDojoService_
     ) {
         $httpBackend = _$httpBackend_;
 
@@ -48,8 +47,7 @@ describe('stats-controller', function() {
             alert: _alertService_,
             auth : _auth_,
             cdAgreements: _cdAgreementsService_,
-            cdDojo: _cdDojoService_,
-            cdCountries: _cdCountriesService_
+            cdDojo: _cdDojoService_
         };
         var res = stubAll({map: map, sandbox: sandbox}); // stubAll() defined in util/globals.js
         services = res.services;
@@ -57,15 +55,14 @@ describe('stats-controller', function() {
         // specific:
         stubs.cdAgreements.count.yields(7);
         stubs.cdDojo.getStats.yields(expected.stats);
-        stubs.cdCountries.getContinentCodes.yields(expected.continent_codes);
+        stubs.cdDojo.getContinentCodes.yields(expected.continent_codes);
 
         ctrl = $controller('stats-controller', {
             $scope: scope,
             alertService: services.alert,
             auth: services.auth,
             cdAgreementsService: services.cdAgreements,
-            cdDojoService: services.cdDojo,
-            cdCountriesService: services.cdCountries
+            cdDojoService: services.cdDojo
         });
     }));
 
@@ -88,7 +85,7 @@ describe('stats-controller', function() {
         expect(stubs.auth.get_loggedin_user.callCount).to.equal(1);
         expect(stubs.cdAgreements.count.callCount).to.equal(1);
         expect(stubs.cdDojo.getStats.callCount).to.equal(1);
-        expect(stubs.cdCountries.getContinentCodes.callCount).to.equal(1);
+        expect(stubs.cdDojo.getContinentCodes.callCount).to.equal(1);
 
         // verify scope changes
         expect(scope.count).to.be.equal(7);
