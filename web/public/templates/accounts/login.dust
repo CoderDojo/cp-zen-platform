@@ -4,6 +4,9 @@
     <div id="main">
       <form class="login-form" role="form" name="loginForm" ng-show="isVisible('login')">
         <legend>{@i18n key="Login"/}</legend>
+        <div class="row center-children">
+          <div class="row alert alert-info text-center col-lg-6 col-sm-12 col-xs-9 centered-child" role="alert">{@i18n key="We have just relaunched Zen, you'll need to reset your password to log in"/}</div>
+        </div>
         <div class="row cd-input-row">
           <div class="form-group">
             <div class="col-lg-offset-3 col-lg-6">
