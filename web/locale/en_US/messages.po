@@ -2256,3 +2256,6 @@ msgstr "Dojo Supported By"
 
 msgid "Email is required"
 msgstr "Email is required"
+
+msgid "We have just relaunched Zen, you'll need to reset your password to log in"
+msgstr "We have just relaunched Zen, you'll need to reset your password to log in"
