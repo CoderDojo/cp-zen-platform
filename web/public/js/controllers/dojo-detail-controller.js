@@ -1,55 +1,49 @@
 'use strict';
 /* global google */
 
-function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate) {
-
-  cdDojoService.getDojoConfig(function(json){
-    $scope.dojoStages = _.map(json.dojoStages, function(item){
-      return { value: item.value, label: $translate.instant(item.label) };
-    });
-  $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
-  });
-
-
+function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate, currentUser) {
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
   $scope.requestInvite = {};
   $scope.userMemberCheckComplete = false;
-  var currentUser;
+  currentUser = currentUser.data;
   var approvalRequired = ['mentor', 'champion'];
 
   var latitude, longitude;
 
-  auth.get_loggedin_user(function (user) {
+  if(!_.isEmpty(currentUser)) {
     if(!dojo || !dojo.id){
-      $state.go('error-404-dash-no-headers');
+      return $state.go('error-404-no-headers');
     }
 
-    if(!dojo.verified && dojo.creator !== user.id && !_.contains(user.roles, 'cdf-admin')){
-      $state.go('error-404-dash-no-headers');
+    if(!dojo.verified && dojo.creator !== currentUser.id && !_.contains(currentUser.roles, 'cdf-admin')){
+      return $state.go('error-404-no-headers');
     }
-    currentUser = user;
 
     //Check if user is a member of this Dojo
-    var query = {dojoId:dojo.id, userId:user.id};
+    var query = {dojoId:dojo.id, userId: currentUser.id};
     cdDojoService.getUsersDojos(query, function (response) {
       $scope.dojoMember = !_.isEmpty(response);
       $scope.dojoOwner = false;
       if($scope.dojoMember) $scope.dojoOwner = (response[0].owner === 1) ? true : false;
       $scope.userMemberCheckComplete = true;
     });
-  }, function () {
-    //Not logged in
-    if(!dojo || !dojo.id || !dojo.verified){
-      $state.go('error-404-no-headers');
-    }
+  } else {
+    if(!dojo || !dojo.id || !dojo.verified) return $state.go('error-404-no-headers');
     $scope.userMemberCheckComplete = true;
-  });
+  }
 
   cdUsersService.getInitUserTypes(function (response) {
     var userTypes = _.filter(response, function(type) { return type.name.indexOf('u13') === -1; });
     $scope.initUserTypes = userTypes;
+  });
+
+  cdDojoService.getDojoConfig(function(json){
+    $scope.dojoStages = _.map(json.dojoStages, function(item){
+      return { value: item.value, label: $translate.instant(item.label) };
+    });
+    $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
   });
 
   $scope.$watch('model.map', function(map){
@@ -163,5 +157,5 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', cdDojoDetailCtrl]);
+  .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', 'currentUser', cdDojoDetailCtrl]);
 
