@@ -5,8 +5,7 @@
   function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
-    $scope.itemsPerPage = 10;
-    $scope.pagination = {};
+    $scope.pagination = {itemsPerPage: 10};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
 
     auth.get_loggedin_user(function (user) {
@@ -31,7 +30,6 @@
       return !res;
     }
 
-
     cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
     });
@@ -52,8 +50,7 @@
       });
     }
 
-    $scope.loadPage = function (filter, resetFlag, cb) {
-      cb = cb || function () {};
+    $scope.loadPage = function (filter, resetFlag) {
       //Only list events for this Dojo
       //sorting: -1 = descending, +1 = ascending
       $scope.sort = $scope.sort ? $scope.sort: {dates: 1};
@@ -62,13 +59,12 @@
         dojoId: filter.dojoId,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, query);
+      var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, query);
       $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.events = [];
-      cdEventsService.search({dojoId: $scope.dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+      cdEventsService.search({dojoId: $scope.dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
         var events = [];
         _.each(result, function (event) {
-
           if(event.type === 'recurring') {
             var startDate = event.dates[0];
             var lastIndex = event.dates.length - 1;
@@ -81,7 +77,7 @@
           }
 
           //Retrieve number of applicants & attendees
-          cdEventsService.searchApplications({event_id: event.id}, function (result) {
+          cdEventsService.searchApplications({eventId: event.id}, function (result) {
             var numOfApplicants = result.length;
             var numAttending = 0;
             _.each(result, function (application) {
@@ -96,9 +92,8 @@
           events.push(event);
         });
         $scope.events = events;
-        cdEventsService.search({dojoId: $scope.dojoId}, function (result) {
-          $scope.totalItems = result.length;
-          return cb();
+        cdEventsService.search({dojoId: $scope.dojoId}).then(function (result) {
+          $scope.pagination.totalItems = result.length;
         }, function (err) {
           console.error(err);
           alertService.showError($translate.instant('Error loading events'));

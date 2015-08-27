@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="row col-lg-6 col-lg-offset-4" ng-if="events.length > 0">
-          <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"
+          <pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage"
                       ng-model="pagination.pageNo"
                       class="pagination-sm"
                       first-text="{@i18n key="First" /}"
