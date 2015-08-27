@@ -114,17 +114,6 @@ module.exports = {
       'annabel@coderdojo.org',
       'damian.beresford@nearform.com',
       'david.cahill@nearform.com'
-    ],
-    cdfAdmins: [
-      'ursula@coderdojo.org',
-      'giustina@coderdojo.org',
-      'pete@coderdojo.org',
-      'rosa@coderdojo.org',
-      'laura@coderdojo.org',
-      'mary@coderdojo.org',
-      'annabel@coderdojo.org',
-      'damian.beresford@nearform.com',
-      'david.cahill@nearform.com'
     ]
   }
 
