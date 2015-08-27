@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService, 
-  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser) {
+  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser, utilsService) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -17,6 +17,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.awardBadgeButtonModel = {};
   $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
   $scope.invite = {};
+  $scope.queryModel = {};
 
   var user = currentUser.data;
   $scope.currentUser = user;
@@ -37,12 +38,11 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.loadPage(false);
   };
 
-  $scope.loadPage = function(resetFlag, cb) {
-    cb = cb || function(){};
-
+  $scope.loadPage = function(resetFlag) {
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, $scope.filterQuery, $scope.sort);
     $scope.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
+    $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: -1};
 
     cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId}, function (usersDojos) {
       var userDojo = usersDojos[0]
@@ -72,8 +72,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
       cdDojoService.getUsersDojos({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip}, function (response) {
         usersDojosLink = response;
-        var dojoUsersQuery = {dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip};
-        cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip}, function (response) {
+        cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort}, function (response) {
           _.each(response, function (user) {
             var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
             user.types = thisUsersDojoLink.userTypes;
@@ -100,7 +99,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
             $scope.totalItems = response.length;
           });
-          return cb();
         });
       });
     });
@@ -313,11 +311,36 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     });
   }
 
+  $scope.toggleSort = function ($event, columnName) {
+    var className, descFlag, sortConfig = {};
+    var DOWN = 'glyphicon-chevron-down';
+    var UP = 'glyphicon-chevron-up';
+
+    function isDesc(className) {
+      var result = className.indexOf(DOWN);
+      return result > -1 ? true : false;
+    }
+
+    className = $($event.target).attr('class');
+
+    descFlag = isDesc(className);
+    if (descFlag) {
+      sortConfig[columnName] = -1;
+    } else {
+      sortConfig[columnName] = 1;
+    }
+
+    $scope.queryModel.sort = sortConfig;
+    $scope.loadPage($scope.filter, true);
+  }
+
+  $scope.getSortClass = utilsService.getSortClass;
+
   $scope.loadPage(true);
 
 }
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 
-    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', 'utilsService', cdManageDojoUsersCtrl]);
 
