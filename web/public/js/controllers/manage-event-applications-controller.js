@@ -146,9 +146,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
     descFlag = isDesc(className);
     if (descFlag) {
-      sortConfig[columnName] = 1;
-    } else {
       sortConfig[columnName] = -1;
+    } else {
+      sortConfig[columnName] = 1;
     }
 
     $scope.sort = sortConfig;
