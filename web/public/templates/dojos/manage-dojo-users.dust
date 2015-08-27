@@ -25,8 +25,8 @@
     <table id="manageDojoUsers" class="table cd-grid-table">
       <thead>
         <tr>
-          <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name.raw')" class="pointer glyphicon sortable glyphicon-chevron-down">&nbsp;</span>{@i18n key="Name"/}</th>
-          <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" class="pointer sortable glyphicon glyphicon-chevron-down">&nbsp;</span>{@i18n key="Email"/}</th>
+          <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(queryModel.sort.name)">&nbsp;</span>{@i18n key="Name"/}</th>
+          <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(queryModel.sort.email)">&nbsp;</span>{@i18n key="Email"/}</th>
           <th class="five-percent-width">{@i18n key="Profile"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
