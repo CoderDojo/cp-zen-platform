@@ -33,7 +33,7 @@
       }, function (err) {
         dfd.reject(err);
       });
-    } else if(_.isString($stateParams.country) && _.isString($stateParams.path)) {
+    } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
         urlSlug: $stateParams.country + '/' + $stateParams.path
       }, function(data) {
