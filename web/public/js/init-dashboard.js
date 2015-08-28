@@ -149,7 +149,8 @@
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-detail-controller'
         })
@@ -158,7 +159,8 @@
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-detail-controller'
         })
@@ -311,8 +313,8 @@
           controller:'accept-badge-controller',
           templateUrl: '/dojos/template/badges/accept'
         })
-        .state('error-404-dash-no-headers', {
-          url:'/404',
+        .state('error-404-no-headers', {
+          url:'/dashboard/404',
           templateUrl: '/errors/template/404_no_headers'
         })
         .state('approve-invite-ninja', {

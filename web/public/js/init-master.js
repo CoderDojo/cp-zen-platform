@@ -180,7 +180,8 @@
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
-            gmap: gmap
+            gmap: gmap,
+            currentUser: profileHelpers.loggedInUser
           },
           controller: 'dojo-detail-controller'
         })
@@ -189,7 +190,8 @@
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
-            gmap: gmap
+            gmap: gmap,
+            currentUser: profileHelpers.loggedInUser
           },
           controller: 'dojo-detail-controller'
         })

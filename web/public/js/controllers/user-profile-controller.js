@@ -45,7 +45,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
       };
     } else {
       //No permission
-      $state.go('error-404-dash-no-headers');
+      $state.go('error-404-no-headers');
     }
   }
 
@@ -54,7 +54,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
       $scope.editMode = true;
     } else {
       //No permission
-      $state.go('error-404-dash-no-headers');
+      $state.go('error-404-no-headers');
     }
   }
 
