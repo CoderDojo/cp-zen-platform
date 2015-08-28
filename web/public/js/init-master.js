@@ -49,7 +49,7 @@
 
   var profileHelpers = {
     profile: function($stateParams, cdUsersService){
-      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(
+      return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(
         function(data){
           return {data: data};
         }, function(err){

@@ -79,7 +79,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   function canViewYouthForums() {
     var deferred = $q.defer();
     auth.get_loggedin_user(function (user) {
-      cdUsersService.listProfiles({userId: user.id}, function (userProfile) {
+      cdUsersService.userProfileData({userId: user.id}, function (userProfile) {
         if(userProfile.userType === 'attendee-o13') return deferred.resolve(true);
         cdDojoService.getUsersDojos({userId: user.id}, function (usersDojos) {
           var userTypesFound = _.find(usersDojos, function (userDojo) {

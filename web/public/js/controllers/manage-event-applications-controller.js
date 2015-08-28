@@ -19,7 +19,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     var dojoMember = item;
     $scope.newApplicantClicked = false;
 
-    cdUsersService.listProfiles({userId: dojoMember.id}, function (response) {
+    cdUsersService.userProfileData({userId: dojoMember.id}, function (response) {
       var userProfile = response;
 
       var newApplicant = {
@@ -99,7 +99,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         cdUsersService.load(application.userId, function (response) {
           application.user = response;
           application.parents = [];
-          cdUsersService.listProfiles({userId: application.user.id}, function (response) {
+          cdUsersService.userProfileData({userId: application.user.id}, function (response) {
             async.each(response.parents, function (parentUserId, cb) {
               cdUsersService.load(parentUserId, function (response) {
                 application.parents.push(response);

@@ -77,7 +77,7 @@
     function retrieveAttendanceData(done) {
       searchApprovedApplications(eventId, $scope.pagination.currentPage, function(results) {
         async.each(results, function (attendanceRecord, cb) {
-          cdUsersService.listProfiles({userId:attendanceRecord.userId}, function (response) {
+          cdUsersService.userProfileData({userId:attendanceRecord.userId}, function (response) {
             var userProfile = response;
             attendanceRecord.parents = [];
             async.each(userProfile.parents, function (parentUserId, cb) {

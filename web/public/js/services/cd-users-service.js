@@ -33,15 +33,13 @@ function cdUsersService(cdApi, $q){
 
       return promise;
     },
-    listProfiles: function(query, win, fail) {
-      cdApi.post('profiles', {query:query}, win, fail || topfail);
+    userProfileData: function(query, win, fail) {
+      cdApi.post('profiles/user_profile_data', {query: query}, win, fail || topfail);
     },
-    listProfilesPromise: function(query){
+    userProfileDataPromise: function (query) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-
-      cdApi.post('profiles', {query:query}, deferred.resolve, deferred.reject || topfail);
-
+      cdApi.post('profiles/user_profile_data', {query:query}, deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     saveProfile: function(profile, win, fail) {
