@@ -27,7 +27,11 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
   $scope.loadMap = function () {
     clearMarkers();
     cdDojoService.list({verified: 1, deleted: 0}, function (dojos) {
-      addMarkersToMap(dojos);
+      var filteredDojos = [];
+      _.each(dojos, function (dojo) {
+        if(dojo.stage !== 4) filteredDojos.push(dojo);
+      });
+      addMarkersToMap(filteredDojos);
     });
 
     if($scope.model.map) {
