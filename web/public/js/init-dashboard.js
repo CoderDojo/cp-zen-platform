@@ -371,50 +371,29 @@
       IdleProvider.idle(172800); // 2 days
       IdleProvider.timeout(10);
     })
-    .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, verifyCharterSigned, alertService) {
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        var publicStates = ['dojo-list'];
+        var publicStates = ['dojo-list', 'badges-dashboard'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
-          verifyCharterSigned().then(function (verifyAgreementResult) {
-            if(!_.isEmpty(verifyAgreementResult)) {
-              if(toState.name !== 'edit-user-profile') {
-                verifyProfileComplete().then(function (verifyProfileResult) {
-                  if(!verifyProfileResult.complete) {
-                    $state.go('edit-user-profile', {
-                      showBannerMessage: true,
-                      userId: verifyProfileResult.userId
-                    });
-                  } else {
-                    $cookieStore.put('verifyProfileComplete', true);
-                  }
-                }, function (err) {
-                  alertService.showError($translate.instant('An error has occured verifying your profile.'));
+          if(toState.name !== 'edit-user-profile') {
+            verifyProfileComplete().then(function (verifyProfileResult) {
+              if(!verifyProfileResult.complete) {
+                $state.go('edit-user-profile', {
+                  showBannerMessage: true,
+                  userId: verifyProfileResult.userId
                 });
+              } else {
+                $cookieStore.put('verifyProfileComplete', true);
               }
-            }
-          }, function (err) {
-            alertService.showError($translate.instant('An error has occured verifying the charter agreement.'))
-          });
+            }, function (err) {
+              alertService.showError($translate.instant('An error has occured verifying your profile.'));
+            });
+          }
         }
       });
       $rootScope.$on('$stateChangeSuccess', function () {
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
       });
-    })
-    .factory('verifyCharterSigned', function (auth, cdAgreementsService, $q) {
-      return function () {
-        var deferred = $q.defer();
-        auth.get_loggedin_user_promise().then(function (user) {
-          cdAgreementsService.loadUserAgreementPromise(user.id).then(function (agreement) {
-            deferred.resolve(agreement);
-          }, function (err) {
-            deferred.reject(err);
-          });
-        }, function (err) {
-          deferred.reject(err);
-        });
-        return deferred.promise;
-      }
     })
     .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
       return function () {

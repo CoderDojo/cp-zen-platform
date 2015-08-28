@@ -12,14 +12,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
 
   $scope.currentStateName = $state.current.name;
 
-  var isYouthProfile = $state.current.name === 'add-child';
-
-  if(_.isEmpty(agreement.data) && !isYouthProfile && !_.isEmpty(loggedInUser.data)){
-    $state.go('charter-page', {
-      showBannerMessage: true
-    });
-  }
-
   if ($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
   }

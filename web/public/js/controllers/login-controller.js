@@ -69,7 +69,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       $scope.canViewYouthForums = hasPermission;
       $cookieStore.put('canViewYouthForums', hasPermission);
     }, function (err) {
-      console.error(err);
       $scope.canViewYouthForums = false;
     });
   } else {
@@ -99,7 +98,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         deferred.reject(err);
       });
     }, function (err) {
-      console.error(err);
       deferred.reject(err);
     });
     return deferred.promise;
@@ -130,16 +128,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
-
-
-          var isChampion = (initUserType.name === 'champion');
-
-          if(isChampion){
-            $window.location.href = $scope.referer || '/dashboard/start-dojo';
-          } else {
-            $window.location.href = '/dashboard/charter';
-          }
-
+          $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
         });
       } else {
         var reason;
