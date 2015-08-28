@@ -6,7 +6,7 @@ function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, aler
 
   var parent = false;
   if ($scope.user){
-    cdUsersService.listProfiles({userId: $scope.user.id}, function(profile){
+    cdUsersService.userProfileData({userId: $scope.user.id}, function(profile){
       _.each(profile.children, function(child){
         if (child === userId) parent = true;
       })

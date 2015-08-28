@@ -56,7 +56,7 @@
   }
   var resolves = {
     profile: function($stateParams, cdUsersService){
-      return cdUsersService.listProfilesPromise({userId: $stateParams.userId}).then(winCb, failCb);
+      return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
     },
     initUserTypes: function(cdUsersService) {
       return cdUsersService.getInitUserTypesPromise().then(winCb, failCb);
@@ -420,7 +420,7 @@
       return function () {
         var deferred = $q.defer();
         auth.get_loggedin_user_promise().then(function (user) {
-          cdUsersService.listProfilesPromise({userId: user.id}).then(function (profile) {
+          cdUsersService.userProfileDataPromise({userId: user.id}).then(function (profile) {
             deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
           }, function (err) {
             deferred.reject(err);

@@ -14,12 +14,12 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       if(!_.isEmpty(response)) {
         //retrieve this parent's children
         var query = {userId:$scope.currentUser.id};
-        cdUsersService.listProfiles(query, function (response) {
+        cdUsersService.userProfileData(query, function (response) {
           var parentProfile = response;
           var children = parentProfile.children;
           var childProfiles = [];
           async.each(children, function (child, cb) {
-            cdUsersService.listProfiles({userId:child}, function (response) {
+            cdUsersService.userProfileData({userId:child}, function (response) {
               if(response.userType === 'attendee-u13') {
                 childProfiles.push(response);
               }
