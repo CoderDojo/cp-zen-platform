@@ -2259,3 +2259,12 @@ msgstr "Email is required"
 
 msgid "We have just relaunched Zen, click here to reset your password"
 msgstr "We have just relaunched Zen, click here to reset your password"
+
+msgid "You must have the parent/guardian user type to accept this invite"
+msgstr "You must have the parent/guardian user type to accept this invite"
+
+msgid "Invite token not found"
+msgstr "Invite token not found"
+
+msgid "Only the invited parent can approve this request."
+msgstr "Only the invited parent can approve this request."

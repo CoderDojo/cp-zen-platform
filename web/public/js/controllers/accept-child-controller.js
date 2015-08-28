@@ -13,8 +13,9 @@ function acceptChildController($scope, $stateParams, auth, $window, $location, u
     inviteToken: inviteToken
   };
 
-  var win = function(response, status){
+  var win = function(response, status) { 
     usSpinnerService.stop('parent-guardian-request-spinner');
+    if(response.ok === false) return alertService.showError($translate.instant(response.why));
     alertService.showAlert($translate.instant('Invitation Accepted'), function(){
       $state.go('dojo-list');
     });
