@@ -12,20 +12,18 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
       usSpinnerService.spin('user-request-spinner');
       $scope.user = user;
       var tokenData = {
-        requestedByUser:userId,
-        inviteToken:inviteToken, 
-        currentUserEmail: $scope.user.email,
-        currentUserId: $scope.user.id
+        requestedByUser: userId,
+        inviteToken: inviteToken
       };
 
       cdDojoService.acceptUserRequest(tokenData, function (response) {
         usSpinnerService.stop('user-request-spinner');
-        if(response.status === 1) {
+        if(!response.error) {
           alertService.showAlert($translate.instant('User Successfully Validated'), function () {
             $state.go('my-dojos');
           });
         } else {
-          alertService.showError($translate.instant('Invalid Invite Request'), function () {
+          alertService.showError($translate.instant(response.error), function () {
             $state.go('my-dojos');
           });
         }

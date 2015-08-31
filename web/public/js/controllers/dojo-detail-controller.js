@@ -106,7 +106,11 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
         if(_.contains(approvalRequired, userType)) {
           cdDojoService.requestInvite(data, function (response) {
             usSpinnerService.stop('dojo-detail-spinner');
-            alertService.showAlert($translate.instant('Invite Request Sent!'));
+            if(!response.error) {
+              alertService.showAlert($translate.instant('Invite Request Sent!'));
+            } else {
+              alertService.showError($translate.instant(response.error));
+            }
           });
         } else {
           //Check if user is already a member of this Dojo

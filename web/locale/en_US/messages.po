@@ -2259,3 +2259,9 @@ msgstr "Email is required"
 
 msgid "We have just relaunched Zen, click here to reset your password"
 msgstr "We have just relaunched Zen, click here to reset your password"
+
+msgid "Join request not found"
+msgstr "Join request not found"
+
+msgid "You must have the Dojo Admin permission to accept user join requests."
+msgstr "You must have the Dojo Admin permission to accept user join requests."
