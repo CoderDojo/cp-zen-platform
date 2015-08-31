@@ -1,25 +1,29 @@
 var LogEntries = require('le_node');
 var assert = require('assert');
 
-var log = function() {
-
+var log = function () {
   // seneca custom log handlers
-  function debugHandler() {
-    //    console.log(JSON.stringify(arguments));
 
+  if (process.env.LOGENTRIES_ENABLED === 'true') {
+    assert.ok(process.env.LOGENTRIES_DEBUG_TOKEN, 'No LOGENTRIES_DEBUG_TOKEN set');
+    var led = new LogEntries({
+      token: process.env.LOGENTRIES_DEBUG_TOKEN,
+      flatten: true,
+      flattenArrays: true
+    });
+    
+    assert.ok(process.env.LOGENTRIES_ERRORS_TOKEN, 'No LOGENTRIES_ERROR_TOKEN set');
+    var lee = new LogEntries({
+      token: process.env.LOGENTRIES_ERRORS_TOKEN,
+      flatten: true,
+      flattenArrays: true
+    });
+  }
+
+  function debugHandler() {
     if (process.env.LOGENTRIES_ENABLED === 'true') {
       assert.ok(process.env.LOGENTRIES_DEBUG_TOKEN, 'No LOGENTRIES_DEBUG_TOKEN set');
-      var le = new LogEntries({
-        token: process.env.LOGENTRIES_DEBUG_TOKEN,
-        flatten: true,
-        flattenArrays: true
-      });
-
-      le.log('debug', arguments);
-    }
-
-    if (process.env.SENECA_DEBUG === 'true') {
-      console.log(arguments);
+      led.log('debug', arguments);
     }
   }
 
@@ -28,13 +32,7 @@ var log = function() {
 
     if (process.env.LOGENTRIES_ENABLED === 'true') {
       assert.ok(process.env.LOGENTRIES_ERRORS_TOKEN, 'No LOGENTRIES_ERROR_TOKEN set');
-      var le = new LogEntries({
-        token: process.env.LOGENTRIES_ERRORS_TOKEN,
-        flatten: true,
-        flattenArrays: true
-      });
-
-      le.log('err', arguments);
+      lee.log('err', arguments);
     }
   }
 
@@ -45,7 +43,7 @@ var log = function() {
       level:'error', handler: errorHandler
     }]
   };
-}
+};
 
 module.exports = {
   log: log(),
