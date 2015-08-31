@@ -5,6 +5,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.filter = {dojo_id:dojoId};
   $scope.itemsPerPage = 10;
   $scope.applyData = {};
+  $scope.isMember = false;
 
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
@@ -12,7 +13,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     //Get users current user types in this Dojo.
     cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId:dojoId}, function (response) {
       if(!_.isEmpty(response)) {
-        //retrieve this parent's children
+        $scope.isMember = true;
+
+        $scope.loadPage($scope.filter, true);
+
+        //retrieve user's children
         var query = {userId:$scope.currentUser.id};
         cdUsersService.userProfileData(query, function (response) {
           var parentProfile = response;
@@ -46,11 +51,18 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
             });
           });
         });
+      } else {
+        $scope.loadPage($scope.filter, true);
       }
     });
+  }, function(err){
+    $scope.loadPage($scope.filter, true);
   });
 
   $scope.loadPage = function (filter, resetFlag, cb) {
+    $scope.tableRowIndexExpandedCurr = '';
+    $scope.getSortClass = utilsService.getSortClass;
+
     cb = cb || function () {};
 
     $scope.sort = $scope.sort ? $scope.sort: {dates: 1};
@@ -63,7 +75,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     $scope.pageNo = loadPageData.pageNo;
     $scope.events = [];
 
-    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, public: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+      if (!$scope.isMember) result = _.filter(result, function(event){
+        return event.public;
+      });
+
       var events = [];
       _.each(result, function (event) {
         if(event.type === 'recurring') {
@@ -105,10 +121,6 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     });
 
   }
-
-  $scope.loadPage($scope.filter, true);
-
-  $scope.tableRowIndexExpandedCurr = '';
 
   $scope.eventCollapsed = function (eventIndex) {
     $scope.events[eventIndex].isCollapsed = false;
@@ -153,8 +165,6 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     $scope.sort = sortConfig;
     $scope.loadPage($scope.filter, true);
   }
-
-  $scope.getSortClass = utilsService.getSortClass;
 
 }
 

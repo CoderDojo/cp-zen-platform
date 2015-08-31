@@ -2265,3 +2265,12 @@ msgstr "Join request not found"
 
 msgid "You must have the Dojo Admin permission to accept user join requests."
 msgstr "You must have the Dojo Admin permission to accept user join requests."
+
+msgid "You must have the parent/guardian user type to accept this invite"
+msgstr "You must have the parent/guardian user type to accept this invite"
+
+msgid "Invite token not found"
+msgstr "Invite token not found"
+
+msgid "Only the invited parent can approve this request."
+msgstr "Only the invited parent can approve this request."

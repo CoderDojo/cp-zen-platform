@@ -36,7 +36,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
   if(currentUser.id){
     $scope.loadPage = function () {
       $scope.sort = $scope.sort ? $scope.sort: {dates: -1};
-      var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, public: true, sort$: $scope.sort};
+      var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
       cdEventsService.getUserDojosEvents(query, function (response) {
         $scope.dojosEvents = response;
         if(_.isEmpty($scope.dojosEvents)) {
@@ -140,7 +140,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
   $scope.loadDataForDojo = function (dojoId) {
     var events = [];
 
-    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, public: true, sort$: $scope.sort[dojoId]}).then(function (result) {
+    cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, sort$: $scope.sort[dojoId]}).then(function (result) {
       var events = [];
       _.each(result, function (event) {
         if(event.type === 'recurring') {
