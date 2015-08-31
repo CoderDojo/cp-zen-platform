@@ -27,7 +27,6 @@
     'ngFileUpload',
     'ng-slide-down',
     'popoverToggle',
-    'tmh.dynamicLocale',
     'atomic-notify',
     'internationalPhoneNumber',
     'ngIdle'
