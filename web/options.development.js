@@ -102,6 +102,8 @@ module.exports = _.defaults({
 
   session: {
     secret: 'seneca'
-  }
+  },
+
+  timeout: 120000
 
 }, base);
