@@ -142,8 +142,8 @@ server.register({
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
-  server.register({ register: require('chairo-cache'), options: { cacheName: 'cd-cache' } }, function (err) {
-    checkHapiPluginError('chairo-cache')(err);
+  //server.register({ register: require('chairo-cache'), options: { cacheName: 'cd-cache' } }, function (err) {
+    //checkHapiPluginError('chairo-cache')(err);
 
     var seneca = server.seneca;
 
@@ -198,7 +198,7 @@ server.register({ register: Chairo, options: options }, function (err) {
         console.log('[%s] Listening on http://localhost:%d', env, port);
       });
     });
-  });
+  //});
 });
 
 };
