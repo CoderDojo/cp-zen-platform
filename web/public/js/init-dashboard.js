@@ -359,11 +359,6 @@
         .fallbackLanguage('en_US');
       }
     ])
-    .config(['tmhDynamicLocaleProvider',
-      function (tmhDynamicLocaleProvider) {
-        tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
-      }
-    ])
     .config(function (tagsInputConfigProvider) {
       tagsInputConfigProvider.setTextAutosizeThreshold(40);
     })
@@ -409,11 +404,6 @@
         });
         return deferred.promise;
       }
-    })
-    .run(function ($window, $cookieStore, tmhDynamicLocale) { 
-      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
-      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
-      tmhDynamicLocale.set(userLangCode);
     })
     .run(function (Idle){
       Idle.watch();

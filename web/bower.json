@@ -52,7 +52,6 @@
     "ng-slide-down": "0.4.2",
     "angular-popover-toggle": "0.0.10",
     "angular-i18n": "1.2.5",
-    "angular-dynamic-locale": "0.1.27",
     "angular-atomic-notify": "https://github.com/david-cahill/angular-atomic-notify.git#master",
     "international-phone-number": "0.0.8",
     "ng-idle": "1.1.0"

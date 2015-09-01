@@ -20,7 +20,7 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
 
       cdDojoService.acceptUserInvite(tokenData, function (response) {
         usSpinnerService.stop('user-invitation-spinner');
-        if(response.status === 1) {
+        if(!response.error) {
           alertService.showAlert($translate.instant('Invitation Accepted'), function () {
             $state.go('my-dojos');
           });

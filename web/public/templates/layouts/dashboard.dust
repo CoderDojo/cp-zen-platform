@@ -110,7 +110,6 @@
     <script src="/components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/components/ng-slide-down/dist/ng-slide-down.min.js"></script>
     <script src="/components/angular-popover-toggle/popover-toggle.js"></script>
-    <script src="/components/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
     <script src="/components/angular-atomic-notify/src/angular-atomic-notify.js"></script>
     <script src="/components/intl-tel-input/build/js/intlTelInput.min.js"></script>
     <script src="/components/international-phone-number/releases/international-phone-number.min.js"></script>
