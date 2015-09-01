@@ -94,9 +94,8 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
         dojo.origVerified = dojo.verified;
         return dojo;
       });
-      cdDojoService.search(_.omit(query, ['limit$', 'skip$', 'sort$'])).then(function (result) {
+      cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
         $scope.totalItems = result.length;
-        return cb();
       });
     }, function (err) {
       alertService.showError($translate.instant('An error has occurred while loading Dojos'));
