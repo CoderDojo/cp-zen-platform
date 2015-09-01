@@ -289,8 +289,9 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService,
           });
 
           dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
-          cdDojoService.save(dojo, function(response) {
-            if(($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
+          dojo.editDojoFlag = true;
+          cdDojoService.save(dojo, function(response) { 
+            if($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))){
               cdDojoService.updateFounder($scope.founder, function(response){
                 alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function() {
                   deleteLocalStorage('editDojoListing');
