@@ -76,10 +76,12 @@
         <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.date"
                is-open="datepicker.datePicker1"
                ng-required="true"
+               ng-readonly="true"
                current-text="{@i18n key="Today"/}"
                clear-text="{@i18n key="Clear"/}"
                close-text="{@i18n key="Done"/}"
                class="form-control"
+               ng-click="toggleDatepicker($event, 'datePicker1')"
                id="date" />
         <span class="input-group-btn">
           <button type="button"
@@ -97,10 +99,12 @@
         <input type="date" min-date="today" datepicker-popup ng-model="eventInfo.toDate"
                is-open="datepicker.datePicker2"
                ng-required="true"
+               ng-readonly="true"
                current-text="{@i18n key="Today"/}"
                clear-text="{@i18n key="Clear"/}"
                close-text="{@i18n key="Done"/}"
                class="form-control"
+               ng-click="toggleDatepicker($event, 'datePicker2')"
                id="to-date" />
         <span class="input-group-btn">
           <button type="button"
