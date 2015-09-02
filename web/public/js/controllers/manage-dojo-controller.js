@@ -92,6 +92,11 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     cdDojoService.search(query).then(function (result) {
       $scope.dojos = _.map(result, function (dojo) {
         dojo.origVerified = dojo.verified;
+        dojo.country = dojo.alpha2.toLowerCase();
+        var path = dojo.urlSlug.split('/');
+        path.splice(0, 1);
+        path = path.join('/');
+        dojo.path = path;
         return dojo;
       });
       cdDojoService.search(_.omit(query, ['limit$', 'skip$', 'sort$'])).then(function (result) {
