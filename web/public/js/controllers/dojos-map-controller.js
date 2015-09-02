@@ -1,7 +1,7 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
   $scope.model = {};
   $scope.markers = [];
   var markerClusterer;
@@ -79,8 +79,10 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
   $scope.loadDojosList = function(){
     if(!$scope.dojoList || $scope.dojoList.length <= 0) {
+      usSpinnerService.spin('dojos-list-spinner');
       cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
         $scope.dojoList = dojos;
+        usSpinnerService.stop('dojos-list-spinner');
       });
     }
   }
@@ -201,4 +203,4 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);

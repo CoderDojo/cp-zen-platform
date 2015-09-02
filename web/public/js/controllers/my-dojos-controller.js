@@ -141,27 +141,29 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         $scope.myDojos = result.records;
         $scope.totalItems = result.total;
 
-        cdDojoService.uncompletedDojos(function(response){
-          if(response.length > 0 && !$cookieStore.get('recommendedPracticesAlertShown')) {
-            var uncompletedDojo = response[0];
-            AlertBanner.publish({
-              type: 'info',
-              message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >' + $translate.instant('Please click here to complete all of the recommended practices for') + ' ' + uncompletedDojo.name + '</a>',
-              autoClose: false,
-              onOpen: function() {
-                angular.element('.a-no-float').on('click', function(e){
-                  if(angular.element('.alert-message').hasClass('active')){
-                    angular.element('.alert-message').removeClass('active');
-                  }
-                });
-              },
-              onClose: function() {
-                $cookieStore.put('recommendedPracticesAlertShown', true);
-              }
-            });
-          }
-          return cb();
-        });
+        if($scope.myDojos && $scope.myDojos.length > 0 && !$cookieStore.get('recommendedPracticesAlertShown')) {
+          cdDojoService.uncompletedDojos(function (response) {
+            if(response.length > 0) {
+              var uncompletedDojo = response[0];
+              AlertBanner.publish({
+                type: 'info',
+                message: '<a class="a-no-float" href="/dashboard/setup-dojo/' + uncompletedDojo.dojoLeadId + '" >' + $translate.instant('Please click here to complete all of the recommended practices for') + ' ' + uncompletedDojo.name + '</a>',
+                autoClose: false,
+                onOpen: function () {
+                  angular.element('.a-no-float').on('click', function (e) {
+                    if (angular.element('.alert-message').hasClass('active')) {
+                      angular.element('.alert-message').removeClass('active');
+                    }
+                  });
+                },
+                onClose: function () {
+                  $cookieStore.put('recommendedPracticesAlertShown', true);
+                }
+              });
+            }
+            return cb();
+          });
+        }
       });
     }, function(err) {
       alertService.showError(
