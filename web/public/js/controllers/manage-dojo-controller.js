@@ -76,7 +76,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
     $scope.pageNo = loadPageData.pageNo;
     $scope.dojos = [];
-    
+
     var query = _.omit({
       name: filter.name,
       verified: filter.verified,
@@ -99,10 +99,13 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
         dojo.path = path;
         return dojo;
       });
-      cdDojoService.search(_.omit(query, ['limit$', 'skip$', 'sort$'])).then(function (result) {
-        $scope.totalItems = result.length;
-        return cb();
-      });
+      if($scope.dojos.length > 0) {
+        cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
+          $scope.totalItems = result.length;
+        });
+      } else {
+        $scope.totalItems = 0;
+      }
     }, function (err) {
       alertService.showError($translate.instant('An error has occurred while loading Dojos'));
       return cb(err);

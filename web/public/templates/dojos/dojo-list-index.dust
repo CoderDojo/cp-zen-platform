@@ -1,4 +1,5 @@
 <div class="cd-dashboard cd-color-2-underline">
+  <span spinner-key="dojos-list-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <div class="dojo-list-dashboard">
     <div class="col-xs-12 col-lg-4 pull-right">
       <div class="widget">
