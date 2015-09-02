@@ -221,11 +221,13 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.buttonText = $translate.instant('Register Champion');
     initialDate.setFullYear(initialDate.getFullYear()-18);
     $scope.dobDateOptions = {
-        formatYear: 'yyyy',
-        startingDay: 1,
-        'datepicker-mode': "'year'",
-        initDate: initialDate
-      };
+      formatYear: 'yyyy',
+      startingDay: 1,
+      'datepicker-mode': "'year'",
+      initDate: initialDate
+    };
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.fullDateFormat = $scope.formats[0];
 
     $scope.hideIndicators = false;
     $scope.stepTwoShowGmap = true;

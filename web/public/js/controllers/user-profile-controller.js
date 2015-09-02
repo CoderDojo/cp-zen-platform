@@ -324,7 +324,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   $scope.open = function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
-
     $scope.picker.opened = true;
   };
 
@@ -371,7 +370,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   };
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-  $scope.format = $scope.formats[0];
+  $scope.fullDateFormat = $scope.formats[0];
+  $scope.today = new Date();
 
   $scope.validatePassword = function (password, email) {
     var validationResult = utilsService.validatePassword(password, email);

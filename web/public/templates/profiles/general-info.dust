@@ -23,22 +23,7 @@
         <div class="form-group">
           <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-            <input type="text" required readonly="true"
-                  class="form-control"
-                  name="dateOfBirth"
-                  required-message="'{@i18n key="Date of birth is empty"/}'"
-                  datepicker-popup="fullDate"
-                  ng-model="profile.dob"
-                  is-open="picker.opened"
-                  min-date="'1900-01-01'"
-                  max-date="today"
-                  datepicker-options="dobDateOptions"
-                  ng-click="open($event)"
-                  current-text="{@i18n key="Today"/}"
-                  clear-text="{@i18n key="Clear"/}"
-                  close-text="{@i18n key="Done"/}"
-                  placeholder="{@i18n key="Enter your date of birth here..."/}"
-                  />
+            <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="picker.opened" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event)" />
             <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
               <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>

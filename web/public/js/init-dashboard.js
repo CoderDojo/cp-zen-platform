@@ -366,6 +366,9 @@
       IdleProvider.idle(172800); // 2 days
       IdleProvider.timeout(10);
     })
+    .config(function (tmhDynamicLocaleProvider) {
+      tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
+    })
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list', 'badges-dashboard'];
@@ -389,6 +392,11 @@
       $rootScope.$on('$stateChangeSuccess', function () {
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
       });
+    })
+    .run(function ($window, $cookieStore, tmhDynamicLocale) { 
+      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
+      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      tmhDynamicLocale.set(userLangCode);
     })
     .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
       return function () {
