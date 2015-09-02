@@ -17,8 +17,8 @@
             </thead>
             <tbody>
               <tr ng-repeat="myDojo in myDojos">
-                <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})">{{ myDojo.name }}</a></td>
-                <td ng-if="myDojo.place" ng-init="myDojo.place.name = myDojo.place.name || myDojo.place.toponymName || myDojo.place.nameWithHierarchy">{{ myDojo.place.name }}</td>
+                <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})" ng-bind-html="myDojo.name"></a></td>
+                <td ng-if="myDojo.place" ng-init="myDojo.place.name = myDojo.place.name || myDojo.place.toponymName || myDojo.place.nameWithHierarchy" ng-bind-html="myDojo.place.name"></td>
                 <td class="pointer">
                   <a ng-if="myDojo.isChampion && myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="Manage"/}</a>
                   <a ng-if="!myDojo.isChampion || !myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="View"/}</a>
