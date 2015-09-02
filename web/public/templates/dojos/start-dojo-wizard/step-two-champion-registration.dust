@@ -35,24 +35,7 @@
           <div class="form-group has-feedback">
             <label for="dateOfBirth" class="col-lg-4 cd-form-label1">{@i18n key="Date of Birth"/}*</label>
             <div class="input-group col-lg-8 dob-picker">
-              <input type="text" required readonly="true"
-                     class="form-control"
-                     name="dateOfBirth"
-                     required-message="'{@i18n key="Date of birth is empty"/}'"
-                     datepicker-popup="fullDate"
-                     ng-model="champion.dateOfBirth"
-                     is-open="picker.opened"
-                     min-date="'1900-01-01'"
-                     max-date="today"
-                     datepicker-options="dobDateOptions"
-                     current-text="{@i18n key="Today"/}"
-                     clear-text="{@i18n key="Clear"/}"
-                     close-text="{@i18n key="Done"/}"
-                     ng-click="open($event)"
-                     placeholder="{@i18n key="You must be over 18 years old..."/}"
-                     ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)"
-                     />
-
+              <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="champion.dateOfBirth" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="picker.opened" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}" ng-click="open($event)" ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)" />
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

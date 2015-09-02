@@ -114,6 +114,7 @@
     <script src="/components/intl-tel-input/build/js/intlTelInput.min.js"></script>
     <script src="/components/international-phone-number/releases/international-phone-number.min.js"></script>
     <script src="/components/ng-idle/angular-idle.min.js"></script>
+    <script src="/components/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 
