@@ -4,7 +4,7 @@
     <div class="row">
       <div class="dojo-detail">
         <div class="col-xs-12 col-lg-7">
-          <legend><b>{{ dojo.name }}</b></legend>
+          <legend><b ng-bind-html="dojo.name"></b></legend>
           <div class="alert alert-danger" ng-if="dojo.private">
             <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
           </div>
@@ -16,15 +16,15 @@
               </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Location"/}</b></td>
-                <td ng-if="dojo.address1">{{ dojo.address1 }}<span ng-if="dojo.address2">, {{ dojo.address2 }}</span></td>
+                <td ng-if="dojo.address1" ng-bind-html="dojo.address1">, <span ng-if="dojo.address2" ng-bind-html="dojo.address2"></span></td>
               </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="City/Town"/}</b></td>
-                <td ng-if="dojo.place" ng-init="dojo.place.name = dojo.place.name || dojo.place.toponymName || dojo.place.nameWithHierarchy">{{ dojo.place.name }}</td>
+                <td ng-if="dojo.place" ng-init="dojo.place.name = dojo.place.name || dojo.place.toponymName || dojo.place.nameWithHierarchy" ng-bind-html="dojo.place.name"></td>
               </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Country"/}</b></td>
-                <td>{{ dojo.countryName }}</td>
+                <td ng-bind-html="dojo.countryName"></td>
               </tr>
               <tr class="fullscreen-only">
                 <td class="col-xs-2"><b>{@i18n key="Notes"/}</b></td>
