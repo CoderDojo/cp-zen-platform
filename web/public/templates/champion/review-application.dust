@@ -44,7 +44,7 @@
           <div class="form-group">
             <label for="championCountry" class="col-lg-4">{@i18n key="Country"/}</label>
             <div class="col-lg-6">
-             <span>{{ championApplication.country.name }}</span>
+             <span>{{ championApplication.country.countryName }}</span>
             </div>
           </div>
         </div>
@@ -126,6 +126,14 @@
           </div>
         </div>
 
+        <legend>{@i18n key="Setup your Dojo"/}</legend>
+        <div class="row" ng-repeat="step in setupDojoSteps">
+          <div class="col-lg-6 margin-top-point-5-em">
+            <span>{@i18n key="{{ step.title }}"/}: <span class="viewPrereqVal">{@i18n key="{{ step.value }}"/}</span></span>
+
+            <textarea class="form-control" readonly rows="5" ng-if="step.textArea">{{ step.text }}</textarea>
+          </div>
+        </div>
     </div>
   </div>
 </div>
