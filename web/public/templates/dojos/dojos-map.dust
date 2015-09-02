@@ -4,7 +4,7 @@
     <tab class="dojofind-tab-heading" heading="{@i18n key="Map"/}">
       {>"dojos/map-search" /}
     </tab>
-    <tab class="dojofind-tab-heading" heading="{@i18n key="List"/}">
+    <tab select="loadDojosList()" class="dojofind-tab-heading" heading="{@i18n key="List"/}">
       {>"dojos/dojo-list-index" /}
     </tab>
   </tabset>

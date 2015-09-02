@@ -77,9 +77,13 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     });
   });
 
-  cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
-    $scope.dojoList = dojos;
-  });
+  $scope.loadDojosList = function(){
+    if(!$scope.dojoList || $scope.dojoList.length <= 0) {
+      cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
+        $scope.dojoList = dojos;
+      });
+    }
+  }
 
   $scope.viewDojo = function(dojo) {
     var urlSlug = dojo.url_slug || dojo.urlSlug;
