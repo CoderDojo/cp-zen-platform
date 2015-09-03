@@ -294,13 +294,18 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
 
     function win(profile){
-      $scope.profile = profile;
-      $scope.profile.private =  $scope.profile.private ? "true" : "false";
-      alertService.showAlert($translate.instant('Profile has been saved successfully'));
-      auth.instance(function(data){
-        if( data.user ) $rootScope.$broadcast('user-updated', data.user);
+      if(profile.ok === false) {
+        alertService.showError($translate.instant(profile.why));
         $state.go('user-profile', {userId: $stateParams.userId});
-      });
+      } else {
+        $scope.profile = profile;
+        $scope.profile.private =  $scope.profile.private ? "true" : "false";
+        alertService.showAlert($translate.instant('Profile has been saved successfully'));
+        auth.instance(function(data){
+          if( data.user ) $rootScope.$broadcast('user-updated', data.user);
+          $state.go('user-profile', {userId: $stateParams.userId});
+        });
+      }      
     }
 
     function fail(){
