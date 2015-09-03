@@ -128,7 +128,6 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
         searchNearest(location);
       }
     }, function (reason) {
-      console.error(reason);
       $scope.searchResult = true;
       $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
     });
