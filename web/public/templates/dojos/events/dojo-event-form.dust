@@ -122,17 +122,6 @@
       </timepicker>
     </div>
 
-    <div class="form-group form-inline">
-      <label for="group-type-1">{@i18n key="For"/}:</label>
-
-      <ui-select name="dojoMembersList" ng-model="eventInfo.userType">
-      <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type"/}">{{ $select.selected.title }}</ui-select-match>
-        <ui-select-choices repeat="userType in eventInfo.userTypes">
-          <span ng-bind-html="userType.title"></span>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-
     <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
       <label for="city">{@i18n key="City"/}*:</label>
       <ui-select ng-model="eventInfo.city"
@@ -169,7 +158,53 @@
            class="map-canvas">
       </div>
     </div>
-
+    <hr />
+    <div class="form-group">
+      <div class="margin-top-point-5-em">
+        <div class="margin-top-point-5-em clearfix" ng-repeat="session in eventInfo.sessions">
+          <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
+          <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+          <table id="dojoEventsTable" class="table cd-grid-table">
+            <thead>
+              <tr>
+                <th>{@i18n key="Ticket Type"/}</th>
+                <th>{@i18n key="Attendee Type"/}</th>
+                <th>{@i18n key="Quantity"/}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ticket in session.tickets">
+                <td><input placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="ticketName" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required></td>
+                <td>
+                  <ui-select name="ticketUserType" ng-model="ticket.userType" required>
+                    <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type"/}">{{ $select.selected.title  }}</ui-select-match>
+                    <ui-select-choices repeat="userType in eventInfo.userTypes">
+                      <span ng-bind-html="userType.title"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                </td>
+                <td><input type="number" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="ticketQuantity" required></td>
+                <td><span ng-click="removeTicket(ticket, session)" class="glyphicon glyphicon-remove-sign pointer color-red custom-remove-icon"></span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right">
+            <button type="button" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <label style="padding-left: 0.2em;">{@i18n key="Add ticket type"/}</label>
+          </div>
+        </div>
+      </div>
+      <div class="margin-top-point-5-em">
+        <button type="button" ng-click="addSession()" class="btn btn-success">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <label style="padding-left: 0.2em;">{@i18n key="Add session/room"/}</label>
+      </div>
+    </div>
+    <hr />
     <div class="form-group">
       <label for="capacity">{@i18n key="Capacity"/}*:</label>
       <input type="number" required required-message="'{@i18n key="Capacity is empty"/}'" min="1" name="capacity" id="capacity" class="form-control" ng-model="eventInfo.capacity" placeholder="{@i18n key="Add the maximum amount of participants"/}">

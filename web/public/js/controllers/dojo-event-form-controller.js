@@ -60,6 +60,7 @@
       $scope.eventInfo.date.getTime()
     );
     $scope.eventInfo.recurringType = 'weekly';
+    $scope.eventInfo.sessions = [];
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
@@ -124,6 +125,27 @@
       goToManageDojoEvents($state, null, dojoId);
     };
 
+    $scope.addSession = function () {
+      var session = {
+        name: null,
+        tickets: []
+      };
+      $scope.eventInfo.sessions.push(session);
+    };
+
+    $scope.addTicket = function (session) {
+      var ticket = {
+        name: null,
+        userType: null,
+        quantity: 0
+      };
+      session.tickets.push(ticket);
+    };
+
+    $scope.removeTicket = function (ticketToRemove, session) {
+      session.tickets = _.without(session.tickets, _.findWhere(session.tickets, {name: ticketToRemove.name, userType: ticketToRemove.userType, quantity: ticketToRemove.quantity}));
+    };
+ 
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
 
