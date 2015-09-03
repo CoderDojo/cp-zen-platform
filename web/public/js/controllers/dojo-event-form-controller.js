@@ -142,8 +142,28 @@
       session.tickets.push(ticket);
     };
 
-    $scope.removeTicket = function (ticketToRemove, session) {
-      session.tickets = _.without(session.tickets, _.findWhere(session.tickets, {name: ticketToRemove.name, userType: ticketToRemove.userType, quantity: ticketToRemove.quantity}));
+    $scope.removeTicket = function ($index, session) {
+      return session.tickets.splice($index, 1);
+    };
+
+    $scope.hideSessionInfo = function ($index, session) {
+      return $scope.eventInfo.sessions.splice($index, 1);
+    };
+
+    $scope.totalSessionCapacity = function (session) {
+      var total = 0;
+      _.each(session.tickets, function (ticket) {
+        total += ticket.quantity;
+      });
+      return total;
+    };
+
+    $scope.totalEventCapacity = function () {
+      var total = 0;
+      _.each($scope.eventInfo.sessions, function (session) {
+        total += $scope.totalSessionCapacity(session);
+      });
+      return total;
     };
  
     $scope.submit = function(eventInfo) {
