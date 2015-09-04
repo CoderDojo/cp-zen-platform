@@ -44,12 +44,17 @@
     $state.go('my-dojos');
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
     var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     $scope.today = new Date();
+    $scope.ticketTypes = ticketTypes.data || [];
+
+    _.each($scope.ticketTypes, function (ticketType) {
+      ticketType.title = $translate.instant(ticketType.title);
+    });
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
@@ -137,7 +142,7 @@
     $scope.addTicket = function (session) {
       var ticket = {
         name: null,
-        userType: null,
+        type: null,
         quantity: 0
       };
       session.tickets.push(ticket);
@@ -154,7 +159,7 @@
     $scope.totalSessionCapacity = function (session) {
       var total = 0;
       _.each(session.tickets, function (ticket) {
-        total += ticket.quantity;
+        if(ticket.type !== 'other') total += ticket.quantity;
       });
       return total;
     };
@@ -418,6 +423,7 @@
       'usSpinnerService',
       'alertService',
       'utilsService',
+      'ticketTypes',
       dojoEventFormCtrl
     ]);
 })();

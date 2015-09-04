@@ -49,6 +49,11 @@ function cdEventsService(cdApi, $q){
       var deferred = $q.defer();
       cdApi.post('events/search', {query: query}, deferred.resolve, deferred.reject || topfail);
       return deferred.promise;
+    },
+    ticketTypesPromise: function () {
+      var deferred = $q.defer();
+      cdApi.get('events/tickets/types', deferred.resolve, deferred.reject || topfail);
+      return deferred.promise;
     }
   };
 }

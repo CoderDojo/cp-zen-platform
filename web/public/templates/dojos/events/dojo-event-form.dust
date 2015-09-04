@@ -170,9 +170,9 @@
           <table id="dojoEventsTable" class="table cd-grid-table">
             <thead>
               <tr>
+                <th>{@i18n key="Ticket Name"/}</th>
                 <th>{@i18n key="Ticket Type"/}</th>
-                <th>{@i18n key="Attendee Type"/}</th>
-                <th>{@i18n key="Quantity"/}</th>
+                <th>{@i18n key="Ticket Quantity"/}</th>
                 <th></th>
               </tr>
             </thead>
@@ -180,10 +180,10 @@
               <tr ng-repeat="ticket in session.tickets">
                 <td><input placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="ticketName" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required></td>
                 <td>
-                  <ui-select name="ticketUserType" ng-model="ticket.userType" required>
-                    <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type"/}">{{ $select.selected.title  }}</ui-select-match>
-                    <ui-select-choices repeat="userType in eventInfo.userTypes">
-                      <span ng-bind-html="userType.title"></span>
+                  <ui-select name="ticketUserType" ng-model="ticket.type" required>
+                    <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a ticket type"/}">{{ $select.selected.title }}</ui-select-match>
+                    <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
+                      <span ng-bind-html="ticketType.title"></span>
                     </ui-select-choices>
                   </ui-select>
                 </td>

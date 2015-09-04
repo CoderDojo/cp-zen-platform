@@ -86,6 +86,9 @@
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    ticketTypes: function (cdEventsService) {
+      return cdEventsService.ticketTypesPromise().then(winCb, failCb);
     }
   };
 
@@ -205,7 +208,8 @@
           url: "/dashboard/dojo/:dojoId/event-form",
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            ticketTypes: resolves.ticketTypes
           },
           controller: 'dojo-event-form-controller'
         })
@@ -213,7 +217,8 @@
           url: "/dashboard/dojo/:dojoId/event-form/:eventId",
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            ticketTypes: resolves.ticketTypes
           },
           controller: 'dojo-event-form-controller'
         })
