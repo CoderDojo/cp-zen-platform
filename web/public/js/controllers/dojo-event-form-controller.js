@@ -2,20 +2,21 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday, eventType) {
+  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday, eventType, utcOffset) {
     var currentDate = dateStart;
     var dates = [];
     var biWeeklyEventSwitch = false;
 
     while (currentDate <= dateEnd) {
-      currentDate = new Date(currentDate);
+      currentDate = moment.utc(new Date(currentDate)).toDate();
 
       if (currentDate.getDay() === targetWeekday) {
         if(eventType === 'weekly') {
-          dates.push(currentDate);
+          var dateToAdd = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
+          dates.push(dateToAdd);
         } else {
           if(!biWeeklyEventSwitch) {
-            dates.push(currentDate);
+            dates.push(currentDate.toISOString());
             biWeeklyEventSwitch = true;
           } else {
             biWeeklyEventSwitch = false;
@@ -23,8 +24,7 @@
         }
       }
 
-      var d = new Date(currentDate.valueOf());
-      currentDate = d.setDate(d.getDate() + 1);
+      currentDate= moment.utc(currentDate).add(1, 'days');
     }
 
     return dates;
@@ -47,7 +47,8 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
     var now = new Date();
-    var defaultEventTime = moment(now).add(2, 'hours').toDate();
+    var utcOffset = moment().utcOffset();
+    var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     $scope.today = new Date();
 
     $scope.eventInfo = {};
@@ -185,8 +186,8 @@
       if(!_.isEmpty(eventInfo.invites)) {
         eventInfo.emailSubject = $translate.instant('Event Invitation');
       }
-       
-      var isDateRange = !moment(eventInfo.toDate).isSame(eventInfo.date, 'day');
+
+      var isDateRange = !moment.utc(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
         // Extend eventInfo
@@ -195,18 +196,21 @@
             eventInfo.date,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
-            'weekly'
+            'weekly',
+            utcOffset
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
             eventInfo.date,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
-            'biweekly'
+            'biweekly',
+            utcOffset
           );
         }
       } else {
-        eventInfo.dates = [eventInfo.date];
+        var eventDate = moment.utc(eventInfo.date).add(utcOffset, 'minutes').toISOString();
+        eventInfo.dates = [eventDate];
       }
 
       if(!$scope.dojoInfo) {
@@ -355,11 +359,11 @@
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
 
-        event.date = new Date(_.first(event.dates));
+        event.date = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.toDate = new Date(_.last(event.dates));
 
-        var eventDay =  moment(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
+        var eventDay =  moment.utc(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
         var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
