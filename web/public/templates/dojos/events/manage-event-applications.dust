@@ -41,7 +41,7 @@
               </tr>
               <tr ng-switch-when="true">
                 <td>
-                  <ui-select name="dojoMembersList" ng-model="newApplicant.member">
+                  <ui-select class="dojos-members-list" name="dojoMembersList" ng-model="newApplicant.member">
                     <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a Dojo member..."/}">{{ $select.selected.name  }}</ui-select-match>
                     <ui-select-choices repeat="dojoMember in dojoMembers">
                       <span ng-bind-html="dojoMember.name"></span>
