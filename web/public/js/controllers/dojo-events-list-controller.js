@@ -6,6 +6,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.itemsPerPage = 10;
   $scope.applyData = {};
   $scope.isMember = false;
+  var utcOffset = moment().utcOffset();
 
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
@@ -83,23 +84,30 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       var events = [];
       _.each(result, function (event) {
         if(event.type === 'recurring') {
-          var startDate = _.first(event.dates);
-          var endDate = _.last(event.dates);
+          var startDate = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
+          var endDate = moment.utc(_.last(event.dates)).subtract(utcOffset, 'minutes').toDate();
           event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
           event.formattedDates = [];
           _.each(event.dates, function (eventDate) {
-            event.formattedDates.push(moment(eventDate).format('Do MMMM YY'));
+            var formattedDate = moment.utc(eventDate).subtract(utcOffset, 'minutes').toDate();
+            event.formattedDates.push(moment(formattedDate).format('Do MMMM YY'));
           });
-          event.day = moment(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
-          event.time = moment(_.first(event.dates)).format('HH:mm');
+          event.day = moment(startDate).format('dddd');
+          event.time = moment(startDate).format('HH:mm');
           if(event.recurringType === 'weekly') {
             event.formattedRecurringType = $translate.instant('Weekly');
+            event.formattedDate = $translate.instant('Weekly') + " " +
+              $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+              $translate.instant('at') + " " + event.time;
           } else {
             event.formattedRecurringType = $translate.instant('Every two weeks');
+            event.formattedDate = $translate.instant('Every two weeks') + " " +
+              $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+              $translate.instant('at') + " " + event.time;
           }
         } else {
           //One-off event
-          var eventDate = _.first(event.dates);
+          var eventDate = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
           event.formattedDate = moment(eventDate).format('Do MMMM YY, HH:mm');
         }
 
