@@ -30,6 +30,7 @@
     'atomic-notify',
     'internationalPhoneNumber',
     'ngIdle',
-    'tmh.dynamicLocale'
+    'tmh.dynamicLocale',
+    'angularjs-dropdown-multiselect'
   ]);
 })();

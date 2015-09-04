@@ -105,7 +105,6 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
         var userType = event.userType;
         //TODO: translate event.type
-        event.for = $translate.instant(userType);
         events.push(event);
       });
       $scope.events = events;

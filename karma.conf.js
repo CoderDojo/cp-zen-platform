@@ -56,6 +56,7 @@ module.exports = function(config) {
             './web/public/components/intl-tel-input/build/js/intlTelInput.min.js',
             './web/public/components/international-phone-number/releases/international-phone-number.min.js',
             './web/public/components/ng-idle/angular-idle.min.js',
+            './web/public/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
             './web/public/js/directives/*.js',

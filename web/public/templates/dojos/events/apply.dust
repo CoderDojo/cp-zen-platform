@@ -24,19 +24,21 @@
 
   <p><b>{@i18n key="Address"/}:</b> {{ event.address }}</p>
 
-  <p><b>{@i18n key="For"/}:</b> {@i18n key="{{ event.for }}"/}</p>
-
-  <div ng-if="childUsers.length > 0" class="well">
-    <h4>{@i18n key="Children Attending"/}</h4>
-    <div class="control-group" ng-repeat="childUser in childUsers">
-      <div class="checkbox">
-        <input checklist-model="applyData.childrenSelected" checklist-value="childUser.id" type="checkbox" name="{{ childUser.id }}" id="{{ childUser.id }}">
-        <label for="{{ childUser.id }}">
-          {{ childUser.name }}
-        </label>
-      </div>
-    </div>
-  </div>
+  <legend>Sessions/rooms:</legend>
+  <table id="dojoEventsTable" class="table cd-grid-table">
+    <thead>
+      <th>Session/room</th>
+      <th>Apply for</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="session in event.sessions">
+        <td>{{ session.name }}</td>
+        <td>
+          <div ng-dropdown-multiselect="" options="childUsers" selected-model="event.selectedAccounts[session.id]" extra-settings="applyForSettings"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div class="modal-footer">
   <button class="btn btn-success" ng-click="apply()">{@i18n key="Apply"/}</button>
