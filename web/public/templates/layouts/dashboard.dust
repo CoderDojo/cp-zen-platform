@@ -161,6 +161,7 @@
     <script src="/js/controllers/approve-invite-ninja-controller.js"></script>
     <script src="/js/controllers/dojo-setup-confirmation-controller.js"></script>
     <script src="/js/controllers/dojos-map-controller.js"></script>
+    <script src="/js/controllers/session-modal-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

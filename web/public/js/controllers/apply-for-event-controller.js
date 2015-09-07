@@ -1,13 +1,26 @@
 'use strict';
 
-function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
+function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
   var dojoEvents = $scope.dojoRowIndexExpandedCurr;
   var eventIndex = $scope.tableRowIndexExpandedCurr;
   $scope.applyForSettings = {displayProp: 'name', buttonClasses: 'btn btn-primary btn-block'};
   $scope.event.selectedAccounts = {};
+  $scope.isParent = false;
+  $scope.ninjas = [];
 
   _.each($scope.event.sessions, function (session) {
     $scope.event.selectedAccounts[session.id] = [];
+  });
+
+  cdDojoService.getUsersDojos({userId: $scope.currentUser.id, dojoId: $scope.dojoId}, function (response) {
+    if(_.contains(response[0].userTypes, 'parent-guardian')) $scope.isParent = true;
+    if($scope.isParent) {
+      cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
+        $scope.ninjas = ninjas;
+      });
+    } 
+  }, function (err) { 
+    console.error(err);
   });
 
   $scope.cancel = function () {
@@ -18,62 +31,36 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
     }
   }
 
-  $scope.apply = function () {
-    usSpinnerService.spin('apply-for-event-spinner');
-    if(!_.isEmpty($scope.currentUser)) {
-
-      if(!dojoEvents) {
-        //Make sure that this user is a member of this Dojo.
-        cdDojoService.dojosForUser($scope.currentUser.id, function (response) {
-          var dojos = response;
-          var isMember = _.find(dojos, function (dojo) {
-            return dojo.id === $scope.dojoId;
-          });
-
-          if (isMember) {
-
-            var applyData = {
-              eventId: $scope.event.id,
-              children: $scope.applyData.childrenSelected,
-              user: $scope.currentUser,
-              emailSubject: $translate.instant('Event application received')
-            };
-
-            $scope.applyForEvent(applyData, $scope.event.id, eventIndex);
-
-          } else {
-            usSpinnerService.stop('apply-for-event-spinner');
-            alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
-          }
-        });
-      } else {
-        var applyData = {
-          eventId: dojoEvents.events[eventIndex].id,
-          children: $scope.applyData.childrenSelected,
-          user: $scope.currentUser,
-          emailSubject: $translate.instant('Event application received')
-        };
-
-        $scope.applyForEvent(applyData, null, eventIndex, dojoEvents);
-      }
-    } else {
-      $state.go('register-account', {referer:$location.url()});
-    }
-  }
-
-  $scope.applyForEvent = function(applyData, eventId, eventIndex, dojoEvents){
-    cdEventsService.applyForEvent(applyData, function (response) {
-      usSpinnerService.stop('apply-for-event-spinner');
-      alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
-      if(dojoEvents){
-        $scope.showEventInfo(dojoEvents, eventIndex);
-      } else {
-        $scope.showEventInfo(eventIndex, eventId);
+  $scope.showSessionDetails = function (session) {
+    var sessionModalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: '/dojos/template/events/session-details',
+      controller: 'session-modal-controller',
+      size: 'lg',
+      resolve: {
+        session: function () {
+          return session;
+        },
+        event: function () {
+          return $scope.event;
+        },
+        ninjas: function () {
+          return $scope.ninjas;
+        }
       }
     });
-  }
+
+    sessionModalInstance.result.then(function (result) {
+      if(result.ok === false) return alertService.showError($translate.instant(result.why));
+      alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+    }, null);
+  };
+
+  $scope.goToGoogleMaps = function (position) {
+    $window.open('http://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
+  };
 
 }
 
 angular.module('cpZenPlatform')
-    .controller('apply-for-event-controller', ['$scope', '$state', '$stateParams', '$translate', '$location', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);
+    .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);

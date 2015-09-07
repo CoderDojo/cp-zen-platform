@@ -98,6 +98,9 @@ function cdUsersService(cdApi, $q){
     },
     approveInviteNinja: function (data, win, fail) {
       cdApi.post('profiles/approve_invite_ninja', {data: data}, win, fail || topfail);
+    },
+    loadNinjasForUser: function (userId, win, fail) {
+      cdApi.get('profiles/ninjas_for_user/' + userId, win, fail || topfail);
     }
   };
 }

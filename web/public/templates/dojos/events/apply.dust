@@ -22,26 +22,26 @@
 
   <p><b>{@i18n key="CityTown"/}:</b> {{ event.city.nameWithHierarchy }}</p>
 
-  <p><b>{@i18n key="Address"/}:</b> {{ event.address }}</p>
+  <p><b>{@i18n key="Address"/}:</b> {{ event.address }} <span ng-click="goToGoogleMaps(event.position)" class="pointer glyphicon glyphicon-map-marker"></span></p>
 
   <legend>Sessions/rooms:</legend>
   <table id="dojoEventsTable" class="table cd-grid-table">
     <thead>
-      <th>Session/room</th>
-      <th>Apply for</th>
+      <th>{@i18n key="Session/room"/}</th>
+      <th></th>
     </thead>
     <tbody>
       <tr ng-repeat="session in event.sessions">
         <td>{{ session.name }}</td>
         <td>
-          <div ng-dropdown-multiselect="" options="childUsers" selected-model="event.selectedAccounts[session.id]" extra-settings="applyForSettings"></div>
+          <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">Book</button>
+          <!-- <div ng-dropdown-multiselect="" options="childUsers" selected-model="event.selectedAccounts[session.id]" extra-settings="applyForSettings"></div> -->
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-success" ng-click="apply()">{@i18n key="Apply"/}</button>
-  <button class="btn btn-warning" ng-click="cancel()">{@i18n key="Cancel"/}</button>
+
 </div>
 

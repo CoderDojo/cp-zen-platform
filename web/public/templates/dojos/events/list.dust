@@ -13,7 +13,6 @@
             <th><span ng-click="toggleSort($event, 'dates')" ng-class="getSortClass(sort.dates)">&nbsp;</span>{@i18n key="Date"/}
             </th>
             <th>{@i18n key="Type"/}</th>
-            <th>{@i18n key="For"/}</th>
             <th></th>
           </tr>
           </thead>
@@ -22,7 +21,6 @@
             <td>{{ event.name }}</td>
             <td>{{ event.dateRange || event.formattedDate }}</td>
             <td>{{ event.type }}</td>
-            <td>{{ event.for }}</td>
             <td class="pointer">
               <button ng-click="showEventInfo($index, event.id)" class="btn btn-primary"
                       type="button">{@i18n key="Info"/}</button>

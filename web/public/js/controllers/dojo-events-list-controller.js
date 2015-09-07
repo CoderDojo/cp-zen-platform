@@ -86,7 +86,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         if(event.type === 'recurring') {
           var startDate = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
           var endDate = moment.utc(_.last(event.dates)).subtract(utcOffset, 'minutes').toDate();
-          event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+          event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY');
           event.formattedDates = [];
           _.each(event.dates, function (eventDate) {
             var formattedDate = moment.utc(eventDate).subtract(utcOffset, 'minutes').toDate();

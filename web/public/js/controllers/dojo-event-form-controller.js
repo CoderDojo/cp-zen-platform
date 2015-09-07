@@ -132,6 +132,7 @@
     };
 
     $scope.addSession = function () {
+      if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
         tickets: []
@@ -140,6 +141,7 @@
     };
 
     $scope.addTicket = function (session) {
+      if(session.tickets.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 ticket types'));
       var ticket = {
         name: null,
         type: null,
@@ -152,7 +154,7 @@
       return session.tickets.splice($index, 1);
     };
 
-    $scope.hideSessionInfo = function ($index, session) {
+    $scope.removeSession = function ($index) {
       return $scope.eventInfo.sessions.splice($index, 1);
     };
 
@@ -171,7 +173,7 @@
       });
       return total;
     };
- 
+
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
 

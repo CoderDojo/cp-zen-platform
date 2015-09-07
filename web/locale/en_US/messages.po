@@ -2325,3 +2325,21 @@ msgstr "at"
 
 msgid "Mentor"
 msgstr "Mentor"
+
+msgid "Ticket Name"
+msgstr "Ticket Name"
+
+msgid "Ticket Quantity"
+msgstr "Ticket Quantity"
+
+msgid "Session/room"
+msgstr "Session/room"
+
+msgid "Book tickets for"
+msgstr "Book tickets for"
+
+msgid "Apply now"
+msgstr "Apply now"
+
+msgid "You have already applied for this session"
+msgstr "You have already applied for this session"

@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h3 class="modal-title">{@i18n key="Book tickets for"/} {{ session.name }}</h3>
+    <div ng-if="event.type === 'recurring'">
+      <h5>{{ event.dateRange }}</h5>
+    </div>
+    <div ng-if="event.type === 'one-off'">
+      <h5>{{ event.formattedDate }}</h5>
+    </div>
+</div>
+<div class="modal-body">
+  <table class="table cd-grid-table">
+    <thead>
+      <th>{@i18n key="Ticket Name"/}</th>
+      <th>{@i18n key="Ticket Quantity"/}</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ticket in session.tickets">
+        <td>{{ ticket.name }}</td>
+        <td ng-if="ticket.type !== 'other'">
+          <ui-select name="sessionTicketQuantity" ng-model="tempSession[ticket.name].quantity" on-select="updateTickets($item, ticket)">
+            <ui-select-match>{{ $select.selected }}</ui-select-match>
+            <ui-select-choices repeat="quantity in sessionQuantities">
+              <span ng-bind-html="quantity"></span>
+            </ui-select-choices>
+          </ui-select>
+        </td>
+        <td ng-if="ticket.type === 'other'">
+          <ui-select name="sessionTicketQuantity" ng-model="tempSession[ticket.name].quantity" on-select="updateTickets($item, ticket)">
+            <ui-select-match>{{ $select.selected }}</ui-select-match>
+            <ui-select-choices repeat="quantity in maxQuantities">
+              <span ng-bind-html="quantity"></span>
+            </ui-select-choices>
+          </ui-select>
+        </td>   
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">{@i18n key="Apply now"/}</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{@i18n key="Cancel"/}</button>
+</div>
