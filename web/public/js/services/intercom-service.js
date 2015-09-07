@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('intercomService', function ($rootScope, $localStorage, $window, cdUsersService, alertService) {
+angular.module('cpZenPlatform').factory('intercomService', function ($localStorage, $window, cdUsersService, alertService, auth) {
 
   var intercomService = {};
 
-  function userIsCDFAdmin() {
-    return _.contains($rootScope.user.roles, 'cdf-admin');
+  function userIsCDFAdmin(user) {
+    return _.contains(user.roles, 'cdf-admin');
   }
 
-  function userIsChampion(cb) {
-    cdUsersService.isChampion($rootScope.user.id, cb,
+  function userIsChampion(user, cb) {
+    cdUsersService.isChampion(user.id, cb,
       function (err) {
         alertService.showError(
           'An error has occurred while checking user: <br /> ' +
@@ -20,7 +20,7 @@ angular.module('cpZenPlatform').factory('intercomService', function ($rootScope,
       })
   }
 
-  function bootIntercom(dojos) {
+  function bootIntercom(dojos, user) {
     var dojoIds = null;
     $localStorage.dojoIds = null;
 
@@ -30,11 +30,11 @@ angular.module('cpZenPlatform').factory('intercomService', function ($rootScope,
     }
 
     var userData = {
-      name: $rootScope.user.name,
-      email: $rootScope.user.email,
+      name: user.name,
+      email: user.email,
       created_at: moment().unix(),
       app_id: "x7bz1cqn",
-      user_id: $rootScope.user.id,
+      user_id: user.id,
       widget: {
         activator: "#IntercomDefaultWidget"
       },
@@ -58,17 +58,19 @@ angular.module('cpZenPlatform').factory('intercomService', function ($rootScope,
   }
 
   intercomService.InitIntercom = function () {
-    if ($rootScope.user) {
-      if (userIsCDFAdmin()) {
-        bootIntercom();
-      } else {
-        userIsChampion(function (res) {
-          if (res.isChampion) {
-            bootIntercom(res.dojos);
-          }
-        })
+    auth.get_loggedin_user(function (user) {
+      if (user) {
+        if (userIsCDFAdmin(user)) {
+          bootIntercom(null, user);
+        } else {
+          userIsChampion(user, function (res) {
+            if (res.isChampion) {
+              bootIntercom(res.dojos, user);
+            }
+          })
+        }
       }
-    }
+    });
   };
 
   return intercomService;
