@@ -4,7 +4,7 @@ angular.module('cpZenPlatform').service('auth', function($http, $q) {
 
   var loggedin_user = null;
   function topfail( data ) {
-    console.error(data)
+    console.log(data)
   }
 
   return {
@@ -31,8 +31,8 @@ angular.module('cpZenPlatform').service('auth', function($http, $q) {
     reset: function (creds, win, fail) {
       $http({method: 'POST', url: '/api/1.0/users/reset_password', data: creds, cache: false}).
         success(win).error(fail||topfail);
-    },  
-    
+    },
+
     execute_reset: function(creds,win,fail){
       $http({method:'POST', url: '/api/1.0/users/execute_reset', data:creds, cache:false}).
         success(win).error(fail||topfail)

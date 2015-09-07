@@ -108,7 +108,7 @@ server.register(Scooter, function (err) {
 
   server.register({ register: Blankie, options: {
     childSrc: "'none'",
-    connectSrc: "'self'",
+    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
