@@ -111,7 +111,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
       size: $scope.itemsPerPage
     };
 
-    cdDojoService.myDojos(search, currentUser).then(function(result) {
+    cdDojoService.myDojos(search).then(function(result) {
       async.each(result.records, function (dojo, cb) {
           var query = {userId: currentUser.id, dojoId: dojo.id};
           getUsersDojos(query, function (err, response) {

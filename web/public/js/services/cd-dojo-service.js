@@ -14,9 +14,9 @@
       list: function(query, win, fail){
         cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
-      myDojos: function (search, currentUser, win, fail) {
+      myDojos: function (search, win, fail) {
         return $q(function(resolve, reject) {
-          cdApi.post('dojos/my_dojos', {search: search, user:currentUser}, resolve, reject);
+          cdApi.post('dojos/my_dojos', {search: search}, resolve, reject);
         });
       },
       search: function(query) {
