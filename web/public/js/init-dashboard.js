@@ -222,7 +222,7 @@
           templateUrl: '/dojos/template/stats',
           controller: 'stats-controller'
         })
-        .state("start-dojo-wizard", {
+        .state("start-dojo", {
           url: "/dashboard/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
           resolve: {
@@ -371,7 +371,7 @@
     })
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo-wizard'];
+        var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
           if(toState.name !== 'edit-user-profile') {
             verifyProfileComplete().then(function (verifyProfileResult) {

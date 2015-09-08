@@ -128,7 +128,11 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
-          $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
+          if(initUserType.name === 'champion'){
+            $window.location.href = '/dashboard/start-dojo';
+          } else {
+            $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
+          }
         });
       } else {
         var reason;

@@ -195,11 +195,11 @@
           },
           controller: 'dojo-detail-controller'
         })
-        .state("start-dojo-wizard", {
+        .state("start-dojo", {
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
           params:{
-            referer: 'start-dojo-wizard'
+            referer: 'start-dojo'
           },
           resolve: {
             gmap: gmap
