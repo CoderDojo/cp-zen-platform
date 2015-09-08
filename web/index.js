@@ -16,6 +16,8 @@ var options = require('./options.' + env + '.js');
 var locale = require('locale');
 var languages = require('./config/languages.js');
 var cacheTimes = require('./config/cache-times');
+var cuid = require('cuid');
+var util = require('util');
 
 require('./lib/dust-i18n.js');
 
@@ -65,6 +67,21 @@ server.ext('onPreAuth', function (request, reply) {
     }
   };
 
+  return reply.continue();
+});
+
+server.ext('onRequest', function (request, reply) {
+  request.headers['X-REQ-ID'] = cuid();
+  if (process.env.HAPI_DEBUG === 'true') {
+    console.log('onRequest: ' + request.headers['X-REQ-ID'] + ' - ' + util.inspect(request.url.path));
+  }
+  return reply.continue();
+});
+
+server.ext('onPreResponse', function (request, reply) {
+  if (process.env.HAPI_DEBUG === 'true') {
+    console.log('onResponse: ', request.headers['X-REQ-ID'] = cuid());
+  }
   return reply.continue();
 });
 
