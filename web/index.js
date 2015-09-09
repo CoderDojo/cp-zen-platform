@@ -18,6 +18,7 @@ var languages = require('./config/languages.js');
 var cacheTimes = require('./config/cache-times');
 var cuid = require('cuid');
 var util = require('util');
+var fs = require('fs');
 
 require('./lib/dust-i18n.js');
 
@@ -143,7 +144,6 @@ server.register(Scooter, function (err) {
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
 
-
 // Serve CSS files.
 server.register({
   register: require('hapi-less'),
@@ -155,11 +155,30 @@ server.register({
   }
 }, checkHapiPluginError('hapi-less'));
 
+if (process.env.HAPI_DEBUG === 'true') {
+  var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+  var goodOptions = {
+    opsInterval: 1000,
+    requestPayload:true,
+    responsePayload:true,
+    reporters: [{
+      reporter: require('good-file'),
+      events: { log: '*', response: '*' },
+      config: goodLogFile
+    }]
+  };
+
+  server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
+}
+
 // Set up Chairo and seneca, then start the server.
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
-  server.register({ register: require('chairo-cache'), options: { cacheName: 'cd-cache' } }, function (err) {
+  server.register({
+    register: require('chairo-cache'),
+    options: { cacheName: 'cd-cache' }
+  }, function (err) {
     checkHapiPluginError('chairo-cache')(err);
 
     var seneca = server.seneca;
