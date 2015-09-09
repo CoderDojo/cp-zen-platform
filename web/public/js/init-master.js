@@ -195,7 +195,7 @@
           },
           controller: 'dojo-detail-controller'
         })
-        .state("start-dojo-wizard", {
+        .state("start-dojo", {
           url: "/start-dojo",
           templateUrl: '/dojos/template/start-dojo-wizard/wizard',
           params:{
@@ -234,6 +234,7 @@
           url:'/404',
           templateUrl: '/errors/template/404'
         });
+      $urlRouterProvider.when('', '/');
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;

@@ -6,7 +6,7 @@
         <legend>{@i18n key="Register a Dojo"/}</legend>
         <p>{@i18n key="To register a Dojo you first need an account. Sign up here:"/}</p>
         <span class="col-xs-1"></span>
-        <a ui-sref="start-dojo-wizard">
+        <a ui-sref="start-dojo">
           <input type="button" class="col-xs-5 btn btn-primary pull-right" value="{@i18n key="Register"/}">
         </a>
       </div>

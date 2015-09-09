@@ -122,13 +122,17 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     user['g-recaptcha-response'] = $scope.recaptchaResponse;
     user.emailSubject = $translate.instant('Welcome to CoderDojo!');
-    
+
     auth.register(user, function(data) {
       if(data.ok) {
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
-          $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
+          if(initUserType.name === 'champion'){
+            $window.location.href = '/dashboard/start-dojo';
+          } else {
+            $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
+          }
         });
       } else {
         var reason;
@@ -256,7 +260,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth.instance(function(data){
     if( data.user ) {
       $scope.user = data.user;
-      $rootScope.user = data.user;
       $scope.$on('user-updated', function ($event, updatedUser) {
         $scope.user = updatedUser;
      });

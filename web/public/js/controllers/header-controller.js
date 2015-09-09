@@ -21,7 +21,7 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
     'home': '/',
     'login': '/login',
     'register-account':'/register',
-    'start-dojo-wizard': '/start-dojo'
+    'start-dojo': '/start-dojo'
   };
 
   $scope.navigateTo = function (page) {

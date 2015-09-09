@@ -16,6 +16,9 @@ var options = require('./options.' + env + '.js');
 var locale = require('locale');
 var languages = require('./config/languages.js');
 var cacheTimes = require('./config/cache-times');
+var cuid = require('cuid');
+var util = require('util');
+var fs = require('fs');
 
 require('./lib/dust-i18n.js');
 
@@ -68,6 +71,21 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
+server.ext('onRequest', function (request, reply) {
+  request.headers['X-REQ-ID'] = cuid();
+  if (process.env.HAPI_DEBUG === 'true') {
+    console.log('onRequest: ' + request.headers['X-REQ-ID'] + ' - ' + util.inspect(request.url.path));
+  }
+  return reply.continue();
+});
+
+server.ext('onPreResponse', function (request, reply) {
+  if (process.env.HAPI_DEBUG === 'true') {
+    console.log('onResponse: ', request.headers['X-REQ-ID'] = cuid());
+  }
+  return reply.continue();
+});
+
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
@@ -108,7 +126,7 @@ server.register(Scooter, function (err) {
 
   server.register({ register: Blankie, options: {
     childSrc: "'none'",
-    connectSrc: "'self'",
+    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://s3.amazonaws.com/",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
@@ -126,7 +144,6 @@ server.register(Scooter, function (err) {
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
 
-
 // Serve CSS files.
 server.register({
   register: require('hapi-less'),
@@ -138,11 +155,30 @@ server.register({
   }
 }, checkHapiPluginError('hapi-less'));
 
+if (process.env.HAPI_DEBUG === 'true') {
+  var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+  var goodOptions = {
+    opsInterval: 1000,
+    requestPayload:true,
+    responsePayload:true,
+    reporters: [{
+      reporter: require('good-file'),
+      events: { log: '*', response: '*' },
+      config: goodLogFile
+    }]
+  };
+
+  server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
+}
+
 // Set up Chairo and seneca, then start the server.
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
-  server.register({ register: require('chairo-cache'), options: { cacheName: 'cd-cache' } }, function (err) {
+  server.register({
+    register: require('chairo-cache'),
+    options: { cacheName: 'cd-cache' }
+  }, function (err) {
     checkHapiPluginError('chairo-cache')(err);
 
     var seneca = server.seneca;
