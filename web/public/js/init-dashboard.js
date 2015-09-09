@@ -325,6 +325,7 @@
             currentUser: resolves.loggedInUser
           }
         });
+      $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise('/404');
     })
     .config(function(paginationConfig) {
