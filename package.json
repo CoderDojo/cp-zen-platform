@@ -33,6 +33,7 @@
     "dustjs-helpers": "1.6.1",
     "dustjs-linkedin": "2.6.1",
     "good": "6.3.0",
+    "good-file": "5.0.1",
     "hapi": "8.8.1",
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
