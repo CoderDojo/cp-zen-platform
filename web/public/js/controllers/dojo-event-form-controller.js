@@ -66,7 +66,7 @@
       $scope.eventInfo.date.getTime()
     );
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [];
+    $scope.eventInfo.sessions = [{name: null, tickets:[]}];
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;

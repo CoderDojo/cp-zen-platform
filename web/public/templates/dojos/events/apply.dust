@@ -35,7 +35,6 @@
         <td>{{ session.name }}</td>
         <td>
           <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">Book</button>
-          <!-- <div ng-dropdown-multiselect="" options="childUsers" selected-model="event.selectedAccounts[session.id]" extra-settings="applyForSettings"></div> -->
         </td>
       </tr>
     </tbody>

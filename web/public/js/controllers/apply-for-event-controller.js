@@ -3,24 +3,10 @@
 function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
   var dojoEvents = $scope.dojoRowIndexExpandedCurr;
   var eventIndex = $scope.tableRowIndexExpandedCurr;
-  $scope.applyForSettings = {displayProp: 'name', buttonClasses: 'btn btn-primary btn-block'};
   $scope.event.selectedAccounts = {};
-  $scope.isParent = false;
-  $scope.ninjas = [];
 
   _.each($scope.event.sessions, function (session) {
     $scope.event.selectedAccounts[session.id] = [];
-  });
-
-  cdDojoService.getUsersDojos({userId: $scope.currentUser.id, dojoId: $scope.dojoId}, function (response) {
-    if(_.contains(response[0].userTypes, 'parent-guardian')) $scope.isParent = true;
-    if($scope.isParent) {
-      cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
-        $scope.ninjas = ninjas;
-      });
-    } 
-  }, function (err) { 
-    console.error(err);
   });
 
   $scope.cancel = function () {
@@ -44,8 +30,8 @@ function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, 
         event: function () {
           return $scope.event;
         },
-        ninjas: function () {
-          return $scope.ninjas;
+        eventUserSelection: function () {
+          return $scope.eventUserSelection;
         }
       }
     });

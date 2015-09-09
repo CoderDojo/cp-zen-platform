@@ -6,15 +6,27 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.itemsPerPage = 10;
   $scope.applyData = {};
   $scope.isMember = false;
+  $scope.eventUserSelection = [];
+  $scope.isParent = false;
+  $scope.ninjas = [];
   var utcOffset = moment().utcOffset();
 
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
 
-    //Get users current user types in this Dojo.
     cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId:dojoId}, function (response) {
       if(!_.isEmpty(response)) {
         $scope.isMember = true;
+
+        if(_.contains(response[0].userTypes, 'parent-guardian')) $scope.isParent = true;
+        $scope.eventUserSelection.push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
+        if($scope.isParent) {
+          cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
+            _.each(ninjas, function (ninja) {
+              $scope.eventUserSelection.push({userId: ninja.id, title: ninja.name});
+            });
+          });
+        } 
 
         $scope.loadPage($scope.filter, true);
 

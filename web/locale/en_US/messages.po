@@ -2343,3 +2343,9 @@ msgstr "Apply now"
 
 msgid "You have already applied for this session"
 msgstr "You have already applied for this session"
+
+msgid "Myself"
+msgstr "Myself"
+
+msgid "Apply for"
+msgstr "Apply for"
