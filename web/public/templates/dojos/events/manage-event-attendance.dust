@@ -14,6 +14,10 @@
     <span class="col-md-10"><b>{@i18n key="Event Date"/}</b>: {{ event.dates[0].text }}</span>
   </div>
 
+  <div class="col-lg-4">
+    <a ng-href="{{ eventGuestListDownloadLink }}" target="_blank" class="btn btn-primary white-text">{@i18n key="Export Guest List"/}</button>
+  </div>
+
   <div class="row table-responsive">
     <table id="eventApplicationsTable" class="table cd-grid-table">
       <thead>

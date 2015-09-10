@@ -17,6 +17,7 @@
     $scope.waitlist = 0;
     $scope.attended = 0;
     $scope.attendance = {eventDate:{}};
+    $scope.eventGuestListDownloadLink = '/api/1.0/events/export-guest-list/' + eventId;
 
     $scope.pagination = {
       totalItems: 0,
