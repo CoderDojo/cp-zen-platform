@@ -1,4 +1,4 @@
-var LogEntries = require('le_node');
+if (process.env.LOGENTRIES_ENABLED === 'true') var LogEntries = require('le_node');
 var assert = require('assert');
 
 var log = function () {
@@ -11,7 +11,7 @@ var log = function () {
       flatten: true,
       flattenArrays: true
     });
-    
+
     assert.ok(process.env.LOGENTRIES_ERRORS_TOKEN, 'No LOGENTRIES_ERROR_TOKEN set');
     var lee = new LogEntries({
       token: process.env.LOGENTRIES_ERRORS_TOKEN,
@@ -46,8 +46,8 @@ var log = function () {
 };
 
 module.exports = {
-  log: log(),
-
+  // purposely commented log: log(),
+  actcache: {active:false},
   'main': {
     'timeout': 120000,
     strict: {add:false,  result:false}
