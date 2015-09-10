@@ -39,6 +39,7 @@
     "hapi-etags": "0.1.0",
     "hapi-less": "0.2.0",
     "hapi-seneca": "1.4.2",
+    "heapdump": "0.3.7",
     "isemail": "1.1.1",
     "jed": "1.0.2",
     "le_node": "1.1.0",
