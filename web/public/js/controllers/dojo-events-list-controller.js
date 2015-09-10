@@ -7,7 +7,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.applyData = {};
   $scope.isMember = false;
   var utcOffset = moment().utcOffset();
-
+  
   auth.get_loggedin_user(function (user) {
     $scope.currentUser = user;
 
