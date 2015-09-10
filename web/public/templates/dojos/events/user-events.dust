@@ -2,7 +2,7 @@
   <div class="row">
     <p ng-if="!dojosEvents || dojosEvents.length === 0 || !currentEvents">{@i18n key="None of your Dojo's have any Events planned currently" /}</p>
     <div class="my-dojos" ng-repeat="dojoEvents in dojosEvents | filter:hasEvents">
-      <legend>{@i18n key="Events for Dojo"/}: {{ dojoEvents.dojo.name }}</legend>
+      <legend ng-bind-html="dojoEvents.title"></legend>
       <div class="row">
         <div class="col-md-12 table-responsive">
           <table id="dojoEventsTable" class="table cd-grid-table">

@@ -49,6 +49,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
               $scope.currentEvents = true;
               $scope.sort[dojoEvents.dojo.id] = {dates: -1};
               var events = [];
+              dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
               _.each(dojoEvents.events, function(event){
                 if(event.type === 'recurring') {
                   //Recurring event
