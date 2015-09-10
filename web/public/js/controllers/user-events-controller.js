@@ -1,10 +1,11 @@
  'use strict';
 
-function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService) {
+function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService) {
   $scope.applyData = {};
   $scope.currentEvents = false;
   currentUser = currentUser.data;
   $scope.currentUser = currentUser;
+  $scope.eventUserSelection = {};
 
   var utcOffset = moment().utcOffset();
 
@@ -46,6 +47,24 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
         } else {
           _.each($scope.dojosEvents, function (dojoEvents) {
             if(dojoEvents && dojoEvents.events && dojoEvents.events.length > 0) {
+              cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId: dojoEvents.dojo.id}, function (response) {
+                if(!_.isEmpty(response)) {
+                  var isParent = false;
+                  if(_.contains(response[0].userTypes, 'parent-guardian')) isParent = true;
+                  if(!$scope.eventUserSelection[dojoEvents.dojo.id]) $scope.eventUserSelection[dojoEvents.dojo.id] = [];
+                  $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
+                  $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
+                  if(isParent) {
+                    cdUsersService.loadNinjasForUser(currentUser.id, function (ninjas) {
+                      _.each(ninjas, function (ninja) {
+                        $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: ninja.id, title: ninja.name});
+                        $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
+                      });
+                    });
+                  } 
+                }
+              });
+
               $scope.currentEvents = true;
               $scope.sort[dojoEvents.dojo.id] = {dates: -1};
               var events = [];
@@ -193,4 +212,4 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
 }
 
 angular.module('cpZenPlatform')
-    .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', userEventsCtrl]);
+    .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', userEventsCtrl]);

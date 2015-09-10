@@ -6,7 +6,7 @@
     $scope.sessionQuantities = _.range(2);
     $scope.maxQuantities = _.range(11);
     $scope.event = event;
-    $scope.eventUserSelection = eventUserSelection;
+    $scope.eventUserSelection = eventUserSelection[$scope.event.dojoId];
 
     $scope.applyForSettings = {displayProp: 'title', buttonClasses: 'btn btn-primary btn-block', showCheckAll: false, showUncheckAll: false, idProp: 'userId', externalIdProp: 'userId'};
 
@@ -16,7 +16,7 @@
       tickets: {other:[]},
       emailSubject: $translate.instant('Event application received')
     };
-
+    
     _.each($scope.session.tickets, function (ticket) {
       if(ticket.type !== 'other') $scope.sessionApplication.tickets[ticket.name] = [];
     });

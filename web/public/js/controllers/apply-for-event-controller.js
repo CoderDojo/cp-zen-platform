@@ -3,12 +3,7 @@
 function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
   var dojoEvents = $scope.dojoRowIndexExpandedCurr;
   var eventIndex = $scope.tableRowIndexExpandedCurr;
-  $scope.event.selectedAccounts = {};
-
-  _.each($scope.event.sessions, function (session) {
-    $scope.event.selectedAccounts[session.id] = [];
-  });
-
+  
   $scope.cancel = function () {
     if(dojoEvents){
       $scope.showEventInfo(dojoEvents, eventIndex);

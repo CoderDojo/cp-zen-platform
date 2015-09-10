@@ -6,9 +6,8 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
   $scope.itemsPerPage = 10;
   $scope.applyData = {};
   $scope.isMember = false;
-  $scope.eventUserSelection = [];
-  $scope.isParent = false;
-  $scope.ninjas = [];
+  $scope.eventUserSelection = {};
+  var isParent = false;
   var utcOffset = moment().utcOffset();
 
   auth.get_loggedin_user(function (user) {
@@ -18,12 +17,15 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       if(!_.isEmpty(response)) {
         $scope.isMember = true;
 
-        if(_.contains(response[0].userTypes, 'parent-guardian')) $scope.isParent = true;
-        $scope.eventUserSelection.push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
-        if($scope.isParent) {
+        if(_.contains(response[0].userTypes, 'parent-guardian')) isParent = true;
+        if(!$scope.eventUserSelection[dojoId]) $scope.eventUserSelection[dojoId] = [];
+        $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
+        $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
+        if(isParent) {
           cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
             _.each(ninjas, function (ninja) {
-              $scope.eventUserSelection.push({userId: ninja.id, title: ninja.name});
+              $scope.eventUserSelection[dojoId].push({userId: ninja.id, title: ninja.name});
+              $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
             });
           });
         } 
