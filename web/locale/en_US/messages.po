@@ -2349,3 +2349,6 @@ msgstr "Myself"
 
 msgid "Apply for"
 msgstr "Apply for"
+
+msgid "Export Guest List"
+msgstr "Export Guest List"
