@@ -1,5 +1,6 @@
 module.exports = [
   {'text':'Scratch'},
+  {'text':'Java'},
   {'text':'Python'},
   {'text':'Ruby'},
   {'text':'Perl'},
@@ -10,13 +11,19 @@ module.exports = [
   {'text':'AngularJS'},
   {'text':'C#'},
   {'text':'C++'},
+  {'text':'Processing'},
   {'text':'C'},
   {'text':'Go'},
   {'text':'CSS'},
+  {'text':'Lua'},
+  {'text':'Bash'},
+  {'text':'Haskell'},
+  {'text':'Scala'},
   {'text':'Objective C'},
   {'text':'SQL'},
   {'text':'MySQL'},
   {'text':'Swift'},
-  {'text':'R'}
+  {'text':'R'},
+  {'text':'Clojure'},
 ];
 
