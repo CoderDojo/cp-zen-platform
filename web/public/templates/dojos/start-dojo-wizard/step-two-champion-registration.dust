@@ -56,7 +56,7 @@
           <div class="form-group">
             <label for="championCountry" class="col-lg-4 cd-form-label1">{@i18n key="Country"/}*</label>
             <div class="col-lg-8" ng-class="{'has-error': createChampionForm.$submitted && createChampionForm.country.$error.required}">
-              <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required ng-change="updateLocalStorage('championDetails','country',champion.country)">
+              <ui-select name="country" ng-model="champion.country" on-select="setCountry(champion, $item)" required ng-change="updateLocalStorage('championDetails','country',champion.country); clearPlace(champion)">
                 <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>

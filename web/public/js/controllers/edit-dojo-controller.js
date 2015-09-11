@@ -244,6 +244,19 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService,
     }
   };
 
+  $scope.clearPlace = function(dojo) {
+    dojo.placeName = "";
+    dojo.placeGeonameId = "";
+    dojo.county = {};
+    dojo.state = {};
+    dojo.city = {};
+    for (var adminidx=1; adminidx<=4; adminidx++) {
+      dojo['admin'+ adminidx + 'Code'] = "";
+      dojo['admin'+ adminidx + 'Name'] = "";
+    }
+    $scope.dojo.place = "";
+  };
+
   $scope.updateLocalStorage = function (localObj, item, value) {
     if (['address1', 'place'].indexOf(item) > -1) $scope.changedLocation = true;
       $scope.setPlace($scope.dojo, $scope.dojo.place);
