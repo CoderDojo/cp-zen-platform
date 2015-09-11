@@ -1,13 +1,15 @@
 ;(function() {
   'use strict';
 
+var subStrings = ["http://","https://"];
+
 function httpPrefix() {
   return {
     restrict: 'A',
     require: 'ngModel',
     link: function(scope, element, attrs, controller) {
       function ensureHttpPrefix(value) {
-        if(value && !/^(http):\/\//i.test(value) && 'http://'.indexOf(value) === -1) {
+        if(value && !/^(https?):\/\//i.test(value) && containsAny(value, subStrings)) {
           controller.$setViewValue('http://' + value);
           controller.$render();
           return 'http://' + value;
@@ -19,6 +21,16 @@ function httpPrefix() {
       controller.$parsers.push(ensureHttpPrefix);
     }
   };
+}
+
+function containsAny(str, substrings) {
+  for (var i=0; i < substrings.length; i++) {
+    var substring = substrings[i];
+    if (substring.indexOf(str) !== -1) {
+      return false;
+    }
+  }
+  return true; 
 }
 
 angular
