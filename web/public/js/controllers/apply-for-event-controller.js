@@ -56,10 +56,16 @@ function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location
   }
 
   $scope.applyForEvent = function(applyData, eventId, eventIndex, dojoEvents){
-      usSpinnerService.stop('apply-for-event-spinner');
-      alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+    cdEventsService.applyForEvent(applyData, function (response) {
+        usSpinnerService.stop('apply-for-event-spinner');
+        alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+        if(dojoEvents){
+          $scope.showEventInfo(dojoEvents, eventIndex);
+        } else {
+          $scope.showEventInfo(eventIndex, eventId);
+        }
+    });
   }
-
 }
 
 angular.module('cpZenPlatform')
