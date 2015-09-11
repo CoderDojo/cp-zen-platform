@@ -116,10 +116,15 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="time">{@i18n key="Time"/}:</label>
-      <timepicker id="time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker">
-      </timepicker>
+    <div class="form-group row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label for="start-time">{@i18n key="Start time"/}:</label>
+        <timepicker id="start-time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label for="endTime">{@i18n key="End time"/}:</label>
+        <timepicker min="{{ eventInfo.date }}" name="endTime" ng-model="eventInfo.endTime" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" required></timepicker>
+      </div>
     </div>
 
     <div class="form-group form-inline">

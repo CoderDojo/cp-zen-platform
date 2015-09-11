@@ -2289,3 +2289,9 @@ msgstr "at"
 
 msgid "Export Guest List"
 msgstr "Export Guest List"
+
+msgid "Start time"
+msgstr "Start time"
+
+msgid "End time"
+msgstr "End time"
