@@ -1380,6 +1380,9 @@ msgstr "Invite dojo users"
 msgid "Save"
 msgstr "Save"
 
+msgid "Save Draft"
+msgstr "Save Draft"
+
 msgid "Publish"
 msgstr "Publish"
 
