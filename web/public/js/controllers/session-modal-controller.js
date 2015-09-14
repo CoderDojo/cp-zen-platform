@@ -13,12 +13,12 @@
     $scope.sessionApplication = {
       eventId: $scope.event.id,
       sessionId: session.id,
-      tickets: {other:[]},
+      tickets: {},
       emailSubject: $translate.instant('Event application received')
     };
     
     _.each($scope.session.tickets, function (ticket) {
-      if(ticket.type !== 'other') $scope.sessionApplication.tickets[ticket.name] = [];
+      $scope.sessionApplication.tickets[ticket.name] = [];
     });
     
     $scope.cancel = function () {
@@ -31,9 +31,25 @@
     };
 
     $scope.applyForEvent = function (sessionApplication) {
-      cdEventsService.applyForEvent(sessionApplication, function (response) {
+      var applications = []
+      _.each(_.keys(sessionApplication.tickets), function (ticket) {
+        _.each(sessionApplication.tickets[ticket], function (userIds) {
+          var ticketFound = _.find($scope.session.tickets, function (ticketObj) {
+            return ticketObj.name  === ticket;
+          });
+          var application = {
+            sessionId: sessionApplication.sessionId,
+            ticketName: ticket,
+            ticketType: ticketFound.type,
+            userId: userIds.userId
+          };
+          applications.push(application);
+        });
+      });
+      cdEventsService.bulkApplyApplications(applications, function (response) {
         $modalInstance.close(response);
       }, function (err) {
+        $modalInstance.close(err);
         console.error(err);
       });
     };

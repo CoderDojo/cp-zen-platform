@@ -2352,3 +2352,6 @@ msgstr "Apply for"
 
 msgid "Export Guest List"
 msgstr "Export Guest List"
+
+msgid "View attendee list"
+msgstr "View attendee list"

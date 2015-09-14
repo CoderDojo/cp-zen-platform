@@ -16,17 +16,9 @@
     <tbody>
       <tr ng-repeat="ticket in session.tickets">
         <td>{{ ticket.name }}</td>
-        <td ng-if="ticket.type !== 'other'">
+        <td>
           <div ng-dropdown-multiselect="" options="eventUserSelection" selected-model="sessionApplication.tickets[ticket.name]" extra-settings="applyForSettings"></div>
         </td>
-        <td ng-if="ticket.type === 'other'">
-          <ui-select name="sessionTicketQuantity" ng-model="tempOtherTicket" on-select="updateTickets($item, ticket)">
-            <ui-select-match>{{ $select.selected }}</ui-select-match>
-            <ui-select-choices repeat="quantity in maxQuantities">
-              <span ng-bind-html="quantity"></span>
-            </ui-select-choices>
-          </ui-select>
-        </td>   
       </tr>
     </tbody>
   </table>

@@ -24,7 +24,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
         if(isParent) {
           cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
             _.each(ninjas, function (ninja) {
-              $scope.eventUserSelection[dojoId].push({userId: ninja.id, title: ninja.name});
+              $scope.eventUserSelection[dojoId].push({userId: ninja.userId, title: ninja.name});
               $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
             });
           });

@@ -382,12 +382,22 @@
       }, done);
     }
 
+    function loadSessions(done) {
+      var eventId = $stateParams.eventId;
+      cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
+        $scope.eventInfo.sessions = sessions;
+      }, function (err) {
+        console.error(err);
+      });
+    }
+
     if ($stateParams.eventId) {
 
       return async.series([
         loadDojoUsers,
         loadUserTypes,
-        loadEvent
+        loadEvent,
+        loadSessions
       ], function(err, results) {
         if (err) {
           console.error(err);

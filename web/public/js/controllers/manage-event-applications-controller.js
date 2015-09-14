@@ -12,8 +12,17 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
   cdEventsService.getEvent(eventId, function (response) {
     $scope.event = response;
-    $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
+    cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
+      $scope.event.sessions = sessions;
+      $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
+    });
   });
+
+  $scope.loadAttendeeList = function(sessionId, sessionOpen) {
+    if(sessionOpen) {
+      //search applications where sessionId === sessionId
+    }
+  };
 
   $scope.saveNewApplicant = function (item) {
     var dojoMember = item;
