@@ -66,7 +66,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
     cb = cb || function () {};
 
-    $scope.sort = $scope.sort ? $scope.sort: {dates: 1};
+    //$scope.sort = $scope.sort ? $scope.sort: {dates: 1};
 
     var query = _.omit({
       dojoId: filter.dojoId,
