@@ -6,6 +6,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
+  $scope.disableDojoCountryChange = false;
   $scope.wizardCurrentStep = '';
   var currentUser = null;
   var currentStepInt = 0;
