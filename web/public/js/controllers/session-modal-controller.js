@@ -38,6 +38,7 @@
             return ticketObj.name  === ticket;
           });
           var application = {
+            eventId: sessionApplication.eventId,
             sessionId: sessionApplication.sessionId,
             ticketName: ticket,
             ticketType: ticketFound.type,

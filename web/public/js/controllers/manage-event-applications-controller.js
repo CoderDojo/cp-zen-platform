@@ -4,7 +4,6 @@
 function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
   var eventId = $stateParams.eventId;
   var dojoId = $stateParams.dojoId;
-  $scope.filter = {event_id: eventId};
   $scope.sort = undefined;
   $scope.itemsPerPage = 10;
   $scope.pagination = {};
@@ -12,16 +11,27 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
   cdEventsService.getEvent(eventId, function (response) {
     $scope.event = response;
+    $scope.event.capacity = 0;
+
     cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
       $scope.event.sessions = sessions;
+
+      _.each($scope.event.sessions, function (session, index) {
+        _.each(session.tickets, function (ticket) {
+          if(ticket.type !== 'other') {
+            $scope.event.capacity += ticket.quantity;
+          }
+        });
+        $scope.$watch('event.sessions['+index+'].isOpen', function(isOpen){
+          if (isOpen) loadAttendeeList(session.id);
+        });
+      });
       $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
     });
   });
 
-  $scope.loadAttendeeList = function(sessionId, sessionOpen) {
-    if(sessionOpen) {
-      //search applications where sessionId === sessionId
-    }
+  var loadAttendeeList = function(sessionId) {
+    $scope.loadPage(sessionId);
   };
 
   $scope.saveNewApplicant = function (item) {
@@ -40,7 +50,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       };
 
       cdEventsService.saveApplication(newApplicant, function (response) {
-        $scope.loadPage($scope.filter, true);
+        //$scope.loadPage($scope.filter, true);
       }, function (err) {
         alertService.showError($translate.instant('Error saving new applicant'));
       });
@@ -60,19 +70,16 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   }
 
   $scope.pageChanged = function () {
-    $scope.loadPage($scope.filter, false);
+    //$scope.loadPage($scope.filter, false);
   }
 
-  $scope.loadPage = function (filter, resetFlag, cb) {
-    cb = cb || function () {
-      };
+  $scope.loadPage = function (sessionId, resetFlag) {
     $scope.approved = {};
-    $scope.attending = 0;
-    $scope.waitlist = 0;
-    $scope.sort = $scope.sort ? $scope.sort: {name: 1};
+    $scope.checkedIn = {};
+    $scope.sort = $scope.sort ? $scope.sort: {created: 1};
 
     var query = _.omit({
-      eventId: filter.eventId,
+      sessionId: sessionId,
     }, function (value) {
       return value === '' || _.isNull(value) || _.isUndefined(value)
     });
@@ -81,13 +88,13 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.applications = [];
 
-    cdEventsService.searchApplications({eventId: eventId}, function (result) {
+    cdEventsService.searchApplications({sessionId: sessionId, deleted: false}, function (result) {
       $scope.totalItems = result.length;
       _.each(result, function (application) {
         if (application.status === 'approved') {
-          $scope.attending++;
+          $scope.event.totalAttending++;
         } else {
-          $scope.waitlist++;
+          $scope.event.totalWaitlist++;
         }
       });
     }, function (err) {
@@ -95,7 +102,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       alertService.showError($translate.instant('Error loading applications'));
     });
 
-    cdEventsService.searchApplications({eventId: eventId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}, function (result) {
+    cdEventsService.searchApplications({sessionId: sessionId, deleted: false, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}, function (result) {
       async.each(result, function (application, cb) {
         if (application.status === 'approved') {
           $scope.approved[application.id] = true;
@@ -103,7 +110,14 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.approved[application.id] = false;
         }
 
+        if(application.attended) {
+          $scope.checkedIn[application.id] = true;
+        } else {
+          $scope.checkedIn[application.id] = false;
+        } 
+
         application.age = moment().diff(application.dateOfBirth, 'years');
+        application.dateApplied = moment(application.created).format('Do MMMM YY');
 
         cdUsersService.load(application.userId, function (response) {
           application.user = response;
@@ -116,8 +130,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
               });
             }, cb);
           });
-
-
         });
 
       }, function (err) {
@@ -141,47 +153,50 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     });
   }
 
-  $scope.toggleSort = function ($event, columnName) {
-    var className, descFlag, sortConfig = {};
-    var DOWN = 'glyphicon-chevron-down';
-    var UP = 'glyphicon-chevron-up';
-
-    function isDesc(className) {
-      var result = className.indexOf(DOWN);
-      return result > -1 ? true : false;
+  $scope.updateApplication = function (application, updateType) {
+    switch(updateType) {
+      case 'status':
+        updateStatus();
+        break;
+      case 'attended':
+        updateAttended();
+        break;
+      case 'deleted':
+        updateDeleted();
+        break;
     }
 
-    className = $($event.target).attr('class');
+    function updateStatus() {
+      if (!$scope.userIsApproved(application)) {
+        //Approve user
+        application.status = 'approved';
+        $scope.approved[application.id] = true;
+        $scope.event.totalAttending++;
+        $scope.event.totalWaitlist--;
+      } else {
+        //Disapprove user
+        application.status = 'pending';
+        $scope.approved[application.id] = false;
+        $scope.event.totalAttending--;
+        $scope.event.totalWaitlist++;
+      }
+    } 
 
-    descFlag = isDesc(className);
-    if (descFlag) {
-      sortConfig[columnName] = -1;
-    } else {
-      sortConfig[columnName] = 1;
+    function updateAttended() {
+      if(!$scope.userIsCheckedIn(application)) {
+        application.attended = true;
+        $scope.checkedIn[application.id] = true;
+      } else {
+        application.attended = false;
+        $scope.checkedIn[application.id] = false;
+      }
     }
 
-    $scope.sort = sortConfig;
-    $scope.loadPage($scope.filter, true);
-  }
-
-  $scope.loadPage($scope.filter, true);
-
-  $scope.updateApplicationStatus = function (application) {
-    if (!$scope.userIsApproved(application)) {
-      //Approve user
-      application.status = 'approved';
-      $scope.approved[application.id] = true;
-      $scope.attending++;
-      $scope.waitlist--;
-    } else {
-      //Disapprove user
-      application.status = 'pending';
-      $scope.approved[application.id] = false;
-      $scope.attending--;
-      $scope.waitlist++;
+    function updateDeleted() {
+      application.deleted = true;
     }
 
-    application = _.omit(application, ['user', 'age', 'parents']);
+    application = _.omit(application, ['user', 'age', 'parents', 'dateApplied']);
     application.emailSubject = $translate.instant('Event application approved');
     cdEventsService.updateApplication(application, function (response) {
       if (response.status === 'approved') {
@@ -191,6 +206,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           timeCollapse: 5000
         });
       }
+      $scope.loadPage(response.sessionId);
     }, function (err) {
       alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
     });
@@ -199,6 +215,12 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.userIsApproved = function (application) {
     var isApproved = $scope.approved[application.id];
     if (isApproved) return true;
+    return false;
+  }
+
+  $scope.userIsCheckedIn = function (application) {
+    var isCheckedIn = $scope.checkedIn[application.id];
+    if (isCheckedIn) return true;
     return false;
   }
 
@@ -211,7 +233,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.newApplicantClicked = false;
   }
 
-  $scope.getSortClass = utilsService.getSortClass;
 }
 
 angular.module('cpZenPlatform')

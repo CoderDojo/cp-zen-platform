@@ -117,7 +117,6 @@
     <script src="/components/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
     <script src="/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
 
-
     <script src="/seneca/init.js"></script>
 
     <script src="/js/cp-zen-platform.js"></script>
