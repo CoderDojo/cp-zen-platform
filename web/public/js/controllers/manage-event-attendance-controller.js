@@ -68,7 +68,6 @@
           response.dates[index] = {text: moment(date).format('Do MMMM YY'), date: date};
         });
         $scope.event = response;
-        //TODO: Set eventDate to most recent date.
         $scope.attendance.eventDate = _.first($scope.event.dates);
         $scope.manageDojoEventAttendancePageTitle = $scope.event.name;
         done();
@@ -121,4 +120,3 @@
       manageEventAttendanceCtrl
     ]);
 })();
-

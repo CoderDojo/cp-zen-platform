@@ -221,7 +221,7 @@ server.register({ register: Chairo, options: options }, function (err) {
       options: {
         cors: true,
         session: {
-          /*store: sessionStore, */ // TODO remote session store
+          /*store: sessionStore, */ 
           secret: options.session.secret,
           name: 'CD.ZENPLATFORM',
           saveUninitialized: true,

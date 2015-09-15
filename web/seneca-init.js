@@ -1,6 +1,6 @@
 'use strict';
 
-var seneca = require('./index'); // TODO better way to share seneca instance?
+var seneca = require('./index'); 
 
 seneca.ready(function(){
   console.log('seneca ready');

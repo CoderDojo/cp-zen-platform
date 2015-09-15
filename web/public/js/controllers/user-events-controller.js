@@ -174,7 +174,6 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
         }
 
         var userType = event.userType;
-        //TODO: translate event.type
         event.for = $translate.instant(userType);
         events.push(event);
       });
