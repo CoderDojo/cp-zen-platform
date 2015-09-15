@@ -335,6 +335,7 @@
         event.startTime = moment.utc(startTime).subtract(utcOffset, 'minutes').toDate();
         event.endTime = moment.utc(endTime).subtract(utcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
+        event.date = new Date(startTime);
         event.toDate = new Date(_.last(event.dates).startTime);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
