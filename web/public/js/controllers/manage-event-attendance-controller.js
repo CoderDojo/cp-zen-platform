@@ -68,7 +68,7 @@
       cdEventsService.getEvent(eventId, function (response) {
         if(response.type === 'one-off'){
           response.eventDateText = moment.utc(response.dates[0].startTime).format('Do MMMM YYYY');
-          response.eventDateTime = moment.utc(response.dates[0].startTime).format('HH:mm') +
+          response.eventTime = moment.utc(response.dates[0].startTime).format('HH:mm') +
                                    ' - ' +
                                    moment.utc(response.dates[0].endTime).format('HH:mm');
         } else {
