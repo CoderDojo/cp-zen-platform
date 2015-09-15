@@ -7,6 +7,7 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 
 var util = require('util');
 var cluster = require('cluster');
+var heapdump = require('heapdump');
 var server;
 
 // Show 'starting' message
@@ -24,6 +25,15 @@ process.on('uncaughtException', function (err) {
   }
   console.trace();
   cleanShutdown();  // exit on uncaught exception
+});
+
+process.on('SIGUSR2', function() {
+  var snapshot = '/tmp/cp-zen-platform-' + Date.now() + '.heapsnapshot'
+  console.log('Got SIGUSR2, creating heap snapshot: ', snapshot);
+  heapdump.writeSnapshot(snapshot, function(err, filename) {
+    if (err) console.error('Error creating snapshot:', err);
+    console.log('dump written to', filename);
+  });
 });
 
 // Array of Worker processes

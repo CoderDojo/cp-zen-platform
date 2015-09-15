@@ -377,6 +377,20 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       }
     };
 
+    $scope.clearPlace = function(champion) {
+      console.log($scope);
+      champion.placeName = "";
+      champion.placeGeonameId = "";
+      champion.county = {};
+      champion.state = {};
+      champion.city = {};
+      for (var adminidx=1; adminidx<=4; adminidx++) {
+        champion['admin'+ adminidx + 'Code'] = "";
+        champion['admin'+ adminidx + 'Name'] = "";
+      }
+      $scope.champion.place = "";
+    };
+
     $scope.referredBy = [
       $translate.instant('Search Engine'),
       $translate.instant('Other CoderDojo Volunteers'),
@@ -565,6 +579,20 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         dojo['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
       }
     };
+
+    $scope.clearPlace = function(dojo) {
+      dojo.placeName = "";
+      dojo.placeGeonameId = "";
+      dojo.county = {};
+      dojo.state = {};
+      dojo.city = {};
+      for (var adminidx=1; adminidx<=4; adminidx++) {
+        dojo['admin'+ adminidx + 'Code'] = "";
+        dojo['admin'+ adminidx + 'Name'] = "";
+      }
+      $scope.dojo.place = "";
+    };
+
 
     var sanitizeCdForms = {
       createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]

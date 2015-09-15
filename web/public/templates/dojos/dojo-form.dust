@@ -54,7 +54,7 @@
               <span>{@i18n key="Country"/}*</span>
             </label>
             <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
-              <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required ng-change="updateLocalStorage('dojoListing','country', dojo.country)">
+              <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required ng-change="updateLocalStorage('dojoListing','country', dojo.country); clearPlace(dojo)">
                 <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
