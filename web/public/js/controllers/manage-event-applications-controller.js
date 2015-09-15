@@ -4,7 +4,7 @@
 function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
   var eventId = $stateParams.eventId;
   var dojoId = $stateParams.dojoId;
-  $scope.filter = {event_id: eventId};
+  $scope.filter = {eventId: eventId};
   $scope.sort = undefined;
   $scope.itemsPerPage = 10;
   $scope.pagination = {};
@@ -25,9 +25,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       var newApplicant = {
         name: dojoMember.name,
         dateOfBirth: userProfile.dob,
-        event_id: eventId,
+        eventId: eventId,
         status: 'pending',
-        user_id: dojoMember.id
+        userId: dojoMember.id
       };
 
       cdEventsService.saveApplication(newApplicant, function (response) {
@@ -63,7 +63,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.sort = $scope.sort ? $scope.sort: {name: 1};
 
     var query = _.omit({
-      eventId: filter.eventId,
+      eventId: filter.eventId
     }, function (value) {
       return value === '' || _.isNull(value) || _.isUndefined(value)
     });
@@ -181,6 +181,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           message: response.name + ' ' + $translate.instant('has been successfully approved'),
           timeCollapse: 5000
         });
+      } else if (response.error){
+        alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(response.error));
       }
     }, function (err) {
       alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
