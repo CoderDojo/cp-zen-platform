@@ -51,19 +51,19 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
               var events = [];
               dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
               _.each(dojoEvents.events, function(event){
-                if(event.type === 'recurring') {
-                  //Recurring event
-                  var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-                  var endDate = moment.utc(_.last(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
 
-                  event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+                var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+                var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+
+                if(event.type === 'recurring') {
                   event.formattedDates = [];
                   _.each(event.dates, function (eventDate) {
                     event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
                   });
+
                   event.day = moment(startDate).format('dddd');
-                  var endTime = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-                  event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endTime).format('HH:mm');
+                  event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+
                   if(event.recurringType === 'weekly') {
                     event.formattedRecurringType = $translate.instant('Weekly');
                     event.formattedDate = $translate.instant('Weekly') + " " +
@@ -77,11 +77,9 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
                   }
                 } else {
                   //One-off event
-                  var startTime = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-                  var endTime = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-                  event.formattedDate = moment(startTime).format('Do MMMM YY') + ', ' +
-                                        moment(startTime).format('HH:mm') +  ' - ' +
-                                        moment(endTime).format('HH:mm');
+                  event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+                    moment(startDate).format('HH:mm') +  ' - ' +
+                    moment(endDate).format('HH:mm');
                 }
 
                 var userType = event.userType;
@@ -157,30 +155,35 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
     cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, sort$: $scope.sort[dojoId]}).then(function (result) {
       var events = [];
       _.each(result, function (event) {
-        if(event.type === 'recurring') {
-          var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.last(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
 
-          event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
+        var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+        var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+
+        if(event.type === 'recurring') {
           event.formattedDates = [];
           _.each(event.dates, function (eventDate) {
             event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
           });
-          event.day = moment(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
-          var endTime = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-          event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endTime).format('HH:mm');
+
+          event.day = moment(startDate).format('dddd');
+          event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+
           if(event.recurringType === 'weekly') {
             event.formattedRecurringType = $translate.instant('Weekly');
+            event.formattedDate = $translate.instant('Weekly') + " " +
+              $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+              $translate.instant('at') + " " + event.time;
           } else {
             event.formattedRecurringType = $translate.instant('Every two weeks');
+            event.formattedDate = $translate.instant('Every two weeks') + " " +
+              $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+              $translate.instant('at') + " " + event.time;
           }
         } else {
           //One-off event
-          var startTime = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-          var endTime = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-          event.formattedDate = moment(startTime).format('Do MMMM YY') + ', ' +
-                                moment(startTime).format('HH:mm') +  ' - ' +
-                                moment(endTime).format('HH:mm');
+          event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+            moment(startDate).format('HH:mm') +  ' - ' +
+            moment(endDate).format('HH:mm');
         }
 
         var userType = event.userType;

@@ -83,17 +83,18 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
       var events = [];
       _.each(result, function (event) {
+        var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+        var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+
         if(event.type === 'recurring') {
-          var startDate = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.last(event.dates)).subtract(utcOffset, 'minutes').toDate();
-          event.dateRange = moment(startDate).format('Do MMMM YY') + ' - ' + moment(endDate).format('Do MMMM YY, HH:mm');
           event.formattedDates = [];
           _.each(event.dates, function (eventDate) {
-            var formattedDate = moment.utc(eventDate).subtract(utcOffset, 'minutes').toDate();
-            event.formattedDates.push(moment(formattedDate).format('Do MMMM YY'));
+            event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
           });
+
           event.day = moment(startDate).format('dddd');
-          event.time = moment(startDate).format('HH:mm');
+          event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+
           if(event.recurringType === 'weekly') {
             event.formattedRecurringType = $translate.instant('Weekly');
             event.formattedDate = $translate.instant('Weekly') + " " +
@@ -107,8 +108,9 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
           }
         } else {
           //One-off event
-          var eventDate = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
-          event.formattedDate = moment(eventDate).format('Do MMMM YY, HH:mm');
+          event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+            moment(startDate).format('HH:mm') +  ' - ' +
+            moment(endDate).format('HH:mm');
         }
 
         var userType = event.userType;
