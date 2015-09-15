@@ -184,7 +184,7 @@
                   ng-model="eventInfo.invites"
                   name="invites"
                   id="invites">
-        <auto-complete source="loadUsers($query)" display-property="name"></auto-complete>
+        <auto-complete source="loadUsers($query)" display-property="name" max-results-to-show="9999" min-length="1"></auto-complete>
       </tags-input>
     </div>
 
