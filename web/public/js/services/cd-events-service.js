@@ -60,6 +60,9 @@ function cdEventsService(cdApi, $q){
     },
     bulkApplyApplications: function (applications, win, fail) {
       cdApi.post('events/bulk_apply_applications', {applications: applications}, win, fail || topfail);
+    },
+    updateApplicationAttendance: function (data, win, fail) {
+      cdApi.post('events/update_application_attendance', {data: data}, win, fail || topfail);
     }
   };
 }

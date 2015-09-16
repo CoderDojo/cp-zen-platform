@@ -26,11 +26,21 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.attendanceDropdownEvents = {
     onItemSelect: function (item) {
       item.attended = true;
-      console.log('*** item = ' + JSON.stringify(item));
+      item.dojoId = dojoId;
+      cdEventsService.updateApplicationAttendance(item, function (response) {
+
+      }, function (err) {
+        if(err) console.error(err);
+      });
     },
     onItemDeselect: function (item) {
       item.attended = false;
-      console.log('*** item = ' + JSON.stringify(item));
+      item.dojoId = dojoId;
+      cdEventsService.updateApplicationAttendance(item, function (response) {
+        
+      }, function (err) {
+        if(err) console.error(err);
+      });
     }
   }
 
@@ -206,6 +216,10 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         });
 
         application.attendanceModel = [];
+        _.each(application.attendance, function (attendanceDate) {
+          var checkInDate = moment(attendanceDate).format('Do MMMM YY');
+          application.attendanceModel.push({applicationId: application.id, date: checkInDate})
+        });
 
         cdUsersService.load(application.userId, function (response) {
           application.user = response;
@@ -295,7 +309,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       application.deleted = true;
     }
 
-    application = _.omit(application, ['user', 'age', 'parents', 'dateApplied']);
+    application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
     application.emailSubject = $translate.instant('Event application approved');
     cdEventsService.updateApplication(application, function (response) {
       if (response.status === 'approved' || response.attended) {
