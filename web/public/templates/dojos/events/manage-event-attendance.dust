@@ -5,7 +5,7 @@
   <div class="row col-lg-12">
 
     <div ng-if="event.type === 'recurring'">
-      <ui-select class="col-lg-4"  name="eventDateAttendance" onkeypress="return false;" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
+      <ui-select class="col-lg-4" name="eventDateAttendance" onkeypress="return false;" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
         <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
         <ui-select-choices repeat="eventDate in event.dates">
           <span ng-bind-html="eventDate.text"></span>
