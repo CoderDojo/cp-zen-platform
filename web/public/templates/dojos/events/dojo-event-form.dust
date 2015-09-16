@@ -178,7 +178,7 @@
     <div class="form-group">
       <label for="invites">{@i18n key="Invites"/}:</label>
       <tags-input add-from-autocomplete-only="true"
-                  key-property="name"
+                  key-property="id"
                   display-property="name"
                   placeholder="{@i18n key="Invite dojo users"/}"
                   ng-model="eventInfo.invites"

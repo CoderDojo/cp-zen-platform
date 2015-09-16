@@ -293,7 +293,8 @@
 
     function loadDojoUsers(done) {
       cdDojoService.loadDojoUsers({
-        dojoId: dojoId
+        dojoId: dojoId,
+        limit$: 'NULL'
       }, function(users) {
         $scope.dojoUsers = users;
         done(null, users);
