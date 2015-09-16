@@ -96,7 +96,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           });
           $scope.users = response;
           //Query the loadDojoUsers service without the limit to get the total number of users.
-          cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
+          cdDojoService.loadDojoUsers({dojoId: dojoId, limit$: 'NULL'}, function (response) {
             $scope.totalItems = response.length;
           });
         });
