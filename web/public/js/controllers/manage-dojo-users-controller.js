@@ -21,6 +21,17 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   var user = currentUser.data;
   $scope.currentUser = user;
+  //Show 404 if current user has no permission to view this page
+  cdDojoService.getUsersDojos({userId: $scope.currentUser.id}, function (usersDojos) {
+    var userDojo = usersDojos[0];
+    var isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
+      return userPermission.name === 'dojo-admin';
+    });
+
+    if(!isDojoAdmin) return $state.go('error-404-no-headers');
+    $scope.loadPage(true);
+  });
+
   //Updating user permissions and user types require the same permissions.
   //Remove users also requires the same permissions,
   //therefore we can check if the user can update user permissions & delete users by checking the result from the
@@ -335,8 +346,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   }
 
   $scope.getSortClass = utilsService.getSortClass;
-
-  $scope.loadPage(true);
 
 }
 
