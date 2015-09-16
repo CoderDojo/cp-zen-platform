@@ -36,11 +36,11 @@
 
     $scope.pageChanged = function () {
       $scope.loadPage($scope.filter, false);
-    }
+    };
 
     $scope.createEvent = function() {
       $state.go('create-dojo-event', {dojoId: $scope.dojoId});
-    }
+    };
 
     $scope.updateEventStatus = function(event, status) {
       delete event.formattedDate;
@@ -48,11 +48,12 @@
       cdEventsService.saveEvent(event, function (response) {
         $scope.loadPage($scope.filter, true);
       });
-    }
+    };
 
     $scope.loadPage = function (filter, resetFlag) {
       //Only list events for this Dojo
       //sorting: -1 = descending, +1 = ascending
+      $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
 
       var query = _.omit({
         dojoId: filter.dojoId,

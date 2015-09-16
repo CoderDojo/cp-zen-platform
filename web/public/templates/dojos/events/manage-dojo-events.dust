@@ -10,7 +10,7 @@
               <thead>
                 <tr>
                   <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort.name)">&nbsp;</span>{@i18n key="Name"/}</th>
-                  <th><span ng-click="toggleSort($event, 'dates')" ng-class="getSortClass(sort.dates)">&nbsp;</span>{@i18n key="Date"/}</th>
+                  <th><span ng-click="toggleSort($event, 'createdAt')" ng-class="getSortClass(sort.createdAt)">&nbsp;</span>{@i18n key="Date"/}</th>
                   <th>{@i18n key="Capacity"/}</th>
                   <th>{@i18n key="Applicants"/}</th>
                   <th>{@i18n key="Attending"/}</th>
