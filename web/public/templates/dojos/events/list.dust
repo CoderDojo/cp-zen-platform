@@ -19,7 +19,7 @@
           <tbody ng-repeat="event in events" ng-switch on="events[$index].isCollapsed">
           <tr>
             <td>{{ event.name }}</td>
-            <td>{{ event.dateRange || event.formattedDate }}</td>
+            <td>{{ event.formattedDate }}</td>
             <td>{{ event.type }}</td>
             <td class="pointer">
               <button ng-click="showEventInfo($index, event.id)" class="btn btn-primary"

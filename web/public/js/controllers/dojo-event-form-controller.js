@@ -2,21 +2,26 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(dateStart, dateEnd, targetWeekday, eventType, utcOffset) {
-    var currentDate = dateStart;
+  function getEveryTargetWeekdayInDateRange(startTime, endTime, toDate, targetWeekday, eventType, utcOffset) {
+    var currentDate = startTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
+    var hoursDifference = Math.abs(endTime - startTime) / 36e5;
 
-    while (currentDate <= dateEnd) {
+    while (currentDate <= toDate) {
       currentDate = moment.utc(new Date(currentDate)).toDate();
 
       if (currentDate.getDay() === targetWeekday) {
+        var date = {};
         if(eventType === 'weekly') {
-          var dateToAdd = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
-          dates.push(dateToAdd);
+          date.startTime = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
+          date.endTime = moment.utc(currentDate).add(hoursDifference, 'hours').add(utcOffset, 'minutes').toISOString();
+          dates.push(date);
         } else {
           if(!biWeeklyEventSwitch) {
-            dates.push(currentDate.toISOString());
+            date.startTime = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
+            date.endTime = moment.utc(currentDate).add(hoursDifference, 'hours').add(utcOffset, 'minutes').toISOString();
+            dates.push(date);
             biWeeklyEventSwitch = true;
           } else {
             biWeeklyEventSwitch = false;
@@ -49,6 +54,7 @@
     var now = new Date();
     var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
+    var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = new Date();
     $scope.ticketTypes = ticketTypes.data || [];
 
@@ -59,12 +65,14 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
+    $scope.eventInfo.startTime = defaultEventTime;
+    $scope.eventInfo.startTime.setMinutes(0);
+    $scope.eventInfo.startTime.setSeconds(0);
+    $scope.eventInfo.endTime = defaultEventEndTime;
+    $scope.eventInfo.endTime.setMinutes(0);
+    $scope.eventInfo.endTime.setSeconds(0);
     $scope.eventInfo.date = defaultEventTime;
-    $scope.eventInfo.date.setMinutes(0);
-    $scope.eventInfo.date.setSeconds(0);
-    $scope.eventInfo.toDate = new Date(
-      $scope.eventInfo.date.getTime()
-    );
+    $scope.eventInfo.toDate = defaultEventEndTime;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[]}];
 
@@ -200,7 +208,8 @@
         // Extend eventInfo
         if(eventInfo.recurringType === 'weekly') {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.date,
+            eventInfo.startTime,
+            eventInfo.endTime,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
             'weekly',
@@ -208,7 +217,8 @@
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.date,
+            eventInfo.startTime,
+            eventInfo.endTime,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
             'biweekly',
@@ -216,7 +226,10 @@
           );
         }
       } else {
-        var eventDate = moment.utc(eventInfo.date).add(utcOffset, 'minutes').toISOString();
+        var eventDate = {
+          startTime: moment.utc(eventInfo.startTime).add(utcOffset, 'minutes').toISOString(),
+          endTime : moment.utc(eventInfo.endTime).add(utcOffset, 'minutes').toISOString()
+        };
         eventInfo.dates = [eventDate];
       }
 
@@ -342,7 +355,8 @@
 
     function loadDojoUsers(done) {
       cdDojoService.loadDojoUsers({
-        dojoId: dojoId
+        dojoId: dojoId,
+        limit$: 'NULL'
       }, function(users) {
         $scope.dojoUsers = users;
         done(null, users);
@@ -366,11 +380,15 @@
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
 
-        event.date = moment.utc(_.first(event.dates)).subtract(utcOffset, 'minutes').toDate();
+        var startTime = _.first(event.dates).startTime;
+        var endTime = _.first(event.dates).endTime;
+        event.startTime = moment.utc(startTime).subtract(utcOffset, 'minutes').toDate();
+        event.endTime = moment.utc(endTime).subtract(utcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
-        event.toDate = new Date(_.last(event.dates));
+        event.date = new Date(startTime);
+        event.toDate = new Date(_.last(event.dates).startTime);
 
-        var eventDay =  moment.utc(_.first(event.dates), 'YYYY-MM-DD HH:mm:ss').format('dddd');
+        var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });

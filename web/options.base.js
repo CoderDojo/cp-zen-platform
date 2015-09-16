@@ -58,8 +58,6 @@ module.exports = {
       'limit': '10mb'
     }
   },
-
-  // TODO does this still work?
   'user-roles': {
     roles: {
       'basic-user': {

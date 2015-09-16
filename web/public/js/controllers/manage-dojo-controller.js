@@ -32,7 +32,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   };
 
   function allSigned(dojo){
-    // TODO: single origin point for current agreement version
     var currentAgreementVersion = 2;
     var creators = dojo.creators;
     var agreements = _.flatten(_.pluck(creators, 'agreements'));
@@ -264,7 +263,7 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
     }
 
     var query = {limit$: 'NULL'};
-    query.user_id = item.id;
+    query.userId = item.id;
 
     cdDojoService.getUsersDojos(query, function(usersDojos){
       var dojoIds = _.pluck(usersDojos, 'dojoId');
@@ -291,4 +290,3 @@ angular.module('cpZenPlatform')
   ['$scope', 'alertService', 'auth',
   'tableUtils', 'cdDojoService', '$location',
   'cdUsersService', '$translate', 'utilsService', manageDojosCtrl]);
-

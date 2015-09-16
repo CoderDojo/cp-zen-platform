@@ -11,6 +11,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService,
   $scope.buttonText = $translate.instant('Update Dojo');
   $scope.hideUserSelect = true;
   $scope.changedLocation = false;
+  $scope.disableDojoCountryChange = false;
 
   $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
 
@@ -98,6 +99,7 @@ function cdEditDojoCtrl($scope, $window, $location, cdDojoService, alertService,
     if (dojo.notes === '') $scope.editorOptions.initContent = initContent;
 
     $scope.dojo = dojo;
+    $scope.disableDojoCountryChange = (1 === parseInt(dojo.verified)) ? true : false;
     $scope.prevFounder = prevFounder;
     $scope.founder  = angular.copy(prevFounder);
     loadDojoMap();

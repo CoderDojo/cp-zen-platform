@@ -2358,3 +2358,9 @@ msgstr "Export Guest List"
 
 msgid "View attendee list"
 msgstr "View attendee list"
+
+msgid "Start time"
+msgstr "Start time"
+
+msgid "End time"
+msgstr "End time"

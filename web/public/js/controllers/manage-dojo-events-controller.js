@@ -53,7 +53,6 @@
     $scope.loadPage = function (filter, resetFlag) {
       //Only list events for this Dojo
       //sorting: -1 = descending, +1 = ascending
-      $scope.sort = $scope.sort ? $scope.sort: {dates: 1};
 
       var query = _.omit({
         dojoId: filter.dojoId,
@@ -66,13 +65,12 @@
         var events = [];
         _.each(result, function (event) {
           if(event.type === 'recurring') {
-            var startDate = event.dates[0];
-            var lastIndex = event.dates.length - 1;
-            var endDate = event.dates[lastIndex];
+            var startDate = _.first(event.dates).startTime;
+            var endDate = _.last(event.dates).startTime;
             event.formattedDate = moment(startDate).format('MMMM Do YYYY') + ' - ' + moment(endDate).format('MMMM Do YYYY');
           } else {
             //One-off event
-            var eventDate = event.dates[0];
+            var eventDate = _.first(event.dates).startTime;
             event.formattedDate = moment(eventDate).format('MMMM Do YYYY');
           }
 
