@@ -7,6 +7,7 @@
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
+    var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {
       cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
@@ -17,18 +18,16 @@
       });
     });
 
-    $scope.isNotPast = function(dates) {
-      return !$scope.isPast(dates)
-    }
-
-    $scope.isPast = function(dates) {
-      var now = new Date();
-      var res = _.find(dates, function(date){
-      date = new Date(date);
-        return date > now;
-      });
-      return !res;
-    }
+    $scope.isNotPast = function(event) {
+      console.log('dates length: ' + event.dates.length);
+      if(event.type === 'recurring'){
+        var dateOfLastEventRecurrence = _.last(event.dates).startTime;
+        return moment.utc(dateOfLastEventRecurrence).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > 0;
+      } else {
+        var oneOffEventDate = _.first(event.dates).startTime;
+        return moment.utc(oneOffEventDate).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > 0;
+      }
+    };
 
     cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
