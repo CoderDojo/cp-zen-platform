@@ -7,6 +7,7 @@
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
     $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
+    var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {
       cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
@@ -17,18 +18,16 @@
       });
     });
 
-    $scope.isNotPast = function(dates) {
-      return !$scope.isPast(dates)
-    }
-
-    $scope.isPast = function(dates) {
-      var now = new Date();
-      var res = _.find(dates, function(date){
-      date = new Date(date);
-        return date > now;
-      });
-      return !res;
-    }
+    $scope.isNotPast = function(event) {
+      console.log('dates length: ' + event.dates.length);
+      if(event.type === 'recurring'){
+        var dateOfLastEventRecurrence = _.last(event.dates).startTime;
+        return moment.utc(dateOfLastEventRecurrence).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > 0;
+      } else {
+        var oneOffEventDate = _.first(event.dates).startTime;
+        return moment.utc(oneOffEventDate).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > 0;
+      }
+    };
 
     cdDojoService.load($scope.dojoId, function (response) {
       $scope.dojo = response;
@@ -36,11 +35,11 @@
 
     $scope.pageChanged = function () {
       $scope.loadPage($scope.filter, false);
-    }
+    };
 
     $scope.createEvent = function() {
       $state.go('create-dojo-event', {dojoId: $scope.dojoId});
-    }
+    };
 
     $scope.updateEventStatus = function(event, status) {
       delete event.formattedDate;
@@ -48,11 +47,12 @@
       cdEventsService.saveEvent(event, function (response) {
         $scope.loadPage($scope.filter, true);
       });
-    }
+    };
 
     $scope.loadPage = function (filter, resetFlag) {
       //Only list events for this Dojo
       //sorting: -1 = descending, +1 = ascending
+      $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
 
       var query = _.omit({
         dojoId: filter.dojoId,
