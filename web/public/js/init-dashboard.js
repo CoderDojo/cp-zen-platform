@@ -23,7 +23,7 @@
     }(dfd));
 
     return dfd.promise;
-  }
+  };
 
   var resolveDojo = function($q, $stateParams, cdDojoService) {
     var dfd = $q.defer();
@@ -53,7 +53,7 @@
 
   var winCb = function(data){
     return {data: data};
-  }
+  };
   var resolves = {
     profile: function($stateParams, cdUsersService){
       return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
