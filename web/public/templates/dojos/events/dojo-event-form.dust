@@ -201,8 +201,8 @@
 
     <div class="btn-toolbar">
       <button type="button" class="btn btn-default" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
-      <button type="submit" class="btn btn-primary" >{@i18n key="Save Draft"/}</button>
-      <button type="submit" class="btn btn-success" ng-click="publish=true">{@i18n key="Publish"/}</button>
+      <button ng-hide="pastEvent" type="submit" class="btn btn-primary" >{@i18n key="Save Draft"/}</button>
+      <button ng-hide="pastEvent" type="submit" class="btn btn-success" ng-click="publish=true">{@i18n key="Publish"/}</button>
     </div>
   </form>
 
