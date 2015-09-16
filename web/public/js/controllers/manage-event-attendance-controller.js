@@ -49,7 +49,7 @@
 
     function searchApprovedApplications(eventId, currentPage, callback) {
       var skip = ($scope.pagination.currentPage - 1) * $scope.pagination.itemsPerPage;
-      cdEventsService.searchAttendance({eventId: eventId, eventDate: $scope.attendance.eventDate.date, limit$: $scope.pagination.itemsPerPage, skip$: skip}, callback);
+      cdEventsService.searchAttendance({eventId: eventId, limit$: $scope.pagination.itemsPerPage, skip$: skip}, callback);
     }
 
     function loadPage(currentPage) {
