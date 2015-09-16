@@ -780,20 +780,20 @@ msgstr "Mentors needed!"
 msgid "Current Stage"
 msgstr "Current Stage"
 
-msgid "In planning"
-msgstr "In planning"
+msgid "in planning"
+msgstr "in planning"
 
-msgid "Open, come along"
-msgstr "Open, come along"
+msgid "open, come along"
+msgstr "open, come along"
 
-msgid "Register ahead"
-msgstr "Register ahead"
+msgid "register ahead"
+msgstr "register ahead"
 
-msgid "Inactive"
-msgstr "Inactive"
+msgid "inactive"
+msgstr "inactive"
 
-msgid "Full up"
-msgstr "Full up"
+msgid "full up"
+msgstr "full up"
 
 msgid "Private"
 msgstr "Private"
