@@ -11,7 +11,7 @@
   </div>
 
   <div ng-if="event.type === 'one-off'" class="col-lg-4">
-    <span class="col-md-10"><b>{@i18n key="Event Date"/}</b>: {{ event.dates[0].text }}</span>
+    <span class="col-md-10"><b>{@i18n key="Event Date"/}</b>: {{ event.eventDateText }} {{ event.eventTime }}</span>
   </div>
 
   <div class="col-lg-4">

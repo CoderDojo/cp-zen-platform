@@ -54,7 +54,7 @@
               <span>{@i18n key="Country"/}*</span>
             </label>
             <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
-              <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disabled" required ng-change="updateLocalStorage('dojoListing','country', dojo.country); clearPlace(dojo)">
+              <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disableDojoCountryChange" required ng-change="updateLocalStorage('dojoListing','country', dojo.country); clearPlace(dojo)">
                 <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
                 <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                   <span ng-bind-html="country.countryName | highlight: $select.search"></span>
@@ -71,7 +71,7 @@
             <span>{@i18n key="City/Town"/}*</span>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
-            <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" ng-disabled="disabled" on-select="setPlace(dojo, $item)" required ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
+            <ui-select name="place" ng-disabled="!dojo.country || disableDojoCountryChange" ng-model="dojo.place" required on-select="setPlace(dojo, $item)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
               <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
