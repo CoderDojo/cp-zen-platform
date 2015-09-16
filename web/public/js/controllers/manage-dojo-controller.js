@@ -28,8 +28,12 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
   }
 
   $scope.setStyle = function(dojo){
-    return !allSigned(dojo) ? {'background-color' :'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
+    return !allSigned(dojo) || isDeleted(dojo) ? {'background-color' :'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
   };
+
+  function isDeleted (dojo) {
+    return dojo.deleted === 1;
+  }
 
   function allSigned(dojo){
     var currentAgreementVersion = 2;
