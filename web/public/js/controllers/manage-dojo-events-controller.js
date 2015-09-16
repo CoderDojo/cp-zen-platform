@@ -19,7 +19,6 @@
     });
 
     $scope.isNotPast = function(event) {
-      console.log('dates length: ' + event.dates.length);
       if(event.type === 'recurring'){
         var dateOfLastEventRecurrence = _.last(event.dates).startTime;
         return moment.utc(dateOfLastEventRecurrence).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > 0;
