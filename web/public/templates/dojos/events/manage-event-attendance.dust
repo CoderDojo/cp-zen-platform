@@ -1,24 +1,29 @@
-<div ng-if="isTicketingAdmin">
+<div ng-if="isTicketingAdmin" class="col-lg-12">
+
   <h3>{@i18n key="Manage Attendance for:"/} {{ event.name }}</h3>
 
-  <div ng-if="event.type === 'recurring'" class="col-lg-3">
-    <ui-select name="eventDateAttendance" onkeypress="return false;" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
-      <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
-      <ui-select-choices repeat="eventDate in event.dates">
-        <span ng-bind-html="eventDate.text"></span>
-      </ui-select-choices>
-    </ui-select>
+  <div class="row col-lg-12">
+
+    <div ng-if="event.type === 'recurring'">
+      <ui-select class="col-lg-4" name="eventDateAttendance" onkeypress="return false;" ng-model="attendance.eventDate" on-select="eventDateSelected($item)">
+        <ui-select-match allow-clear="false" placeholder="{@i18n key="Select event date..."/}">{{ $select.selected.text  }}</ui-select-match>
+        <ui-select-choices repeat="eventDate in event.dates">
+          <span ng-bind-html="eventDate.text"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
+    <div ng-if="event.type === 'one-off'">
+      <span class="col-lg-4 single-event-date" >{{ event.eventDateText }} {{ event.eventTime }}</span>
+    </div>
+
+    <div>
+      <a ng-href="{{ eventGuestListDownloadLink }}" target="_blank" class="col-lg-3 btn btn-primary white-text export-event-btn">{@i18n key="Export Guest List"/}</a>
+    <div>
+
   </div>
 
-  <div ng-if="event.type === 'one-off'" class="col-lg-4">
-    <span class="col-md-10"><b>{@i18n key="Event Date"/}</b>: {{ event.eventDateText }} {{ event.eventTime }}</span>
-  </div>
-
-  <div class="col-lg-4">
-    <a ng-href="{{ eventGuestListDownloadLink }}" target="_blank" class="btn btn-primary white-text">{@i18n key="Export Guest List"/}</button>
-  </div>
-
-  <div class="row table-responsive">
+  <div class="row col-lg-12 table-responsive">
     <table id="eventApplicationsTable" class="table cd-grid-table">
       <thead>
         <tr>

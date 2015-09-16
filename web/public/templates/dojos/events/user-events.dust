@@ -10,7 +10,7 @@
             <tr>
               <th><span ng-click="toggleSort($event, 'name', dojoEvents.dojo.id)" ng-class="getSortClass(sort[dojoEvents.dojo.id]['name'])">&nbsp;</span>{@i18n key="Event"/}
               </th>
-              <th><span ng-click="toggleSort($event, 'dates', dojoEvents.dojo.id)" ng-class="getSortClass(sort[dojoEvents.dojo.id]['dates'])">&nbsp;</span>{@i18n key="Date"/}
+              <th><span ng-click="toggleSort($event, 'createdAt', dojoEvents.dojo.id)" ng-class="getSortClass(sort[dojoEvents.dojo.id]['createdAt'])">&nbsp;</span>{@i18n key="Date"/}
               </th>
               <th>{@i18n key="Type"/}</th>
               <th>{@i18n key="For"/}</th>
