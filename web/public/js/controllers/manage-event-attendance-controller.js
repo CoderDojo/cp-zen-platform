@@ -12,6 +12,8 @@
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
 
+    var utcOffset = moment().utcOffset();
+
     $scope.capacity = 0;
     $scope.attending = 0;
     $scope.waitlist = 0;
@@ -64,9 +66,19 @@
 
     function loadEventData(done) {
       cdEventsService.getEvent(eventId, function (response) {
-        _.each(response.dates, function (date, index) {
-          response.dates[index] = {text: moment(date).format('Do MMMM YY'), date: date};
-        });
+        if(response.type === 'one-off'){
+          response.eventDateText = moment.utc(response.dates[0].startTime).format('Do MMMM YYYY');
+          response.eventTime = moment.utc(response.dates[0].startTime).format('HH:mm') +
+                                   ' - ' +
+                                   moment.utc(response.dates[0].endTime).format('HH:mm');
+        } else {
+          _.each(response.dates, function (date, index) {
+            var eventTime = moment.utc(date.startTime).format('HH:mm') +
+                            ' - ' +
+                            moment.utc(date.endTime).format('HH:mm');
+            response.dates[index] = {text: moment(date.startTime).format('Do MMMM YYYY') + ' ' + eventTime, startTime: date.startTime, endTime: date.endTime};
+          });
+        }
         $scope.event = response;
         $scope.attendance.eventDate = _.first($scope.event.dates);
         $scope.manageDojoEventAttendancePageTitle = $scope.event.name;
