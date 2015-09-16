@@ -53,7 +53,7 @@
             </div> 
           </td>
           <td>
-            <div ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" selected-model="application.attendanceModel" checkboxes="true"></div>
+            <div ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
             <!-- <div ng-if="application.status === 'approved'" class="checkbox">
               <input type="checkbox"
                 ng-checked="userIsCheckedIn(application)"

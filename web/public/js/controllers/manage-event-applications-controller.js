@@ -4,6 +4,7 @@
 function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
   var eventId = $stateParams.eventId;
   var dojoId = $stateParams.dojoId;
+  var applicationCheckInDates = [];
 
   $scope.sort = undefined;
   $scope.pagination = {itemsPerPage: 10};
@@ -12,7 +13,26 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.sessionStats = {};
   $scope.filter = {};
 
-  $scope.attendanceDropdownSettings = {};
+  $scope.attendanceDropdownSettings = {
+    idProp: 'date', 
+    externalIdProp: '',
+    displayProp: 'date',
+    showUncheckAll: false,
+    showCheckAll: false,
+    scrollableHeight: '200px',
+    scrollable: true
+  };
+
+  $scope.attendanceDropdownEvents = {
+    onItemSelect: function (item) {
+      item.attended = true;
+      console.log('*** item = ' + JSON.stringify(item));
+    },
+    onItemDeselect: function (item) {
+      item.attended = false;
+      console.log('*** item = ' + JSON.stringify(item));
+    }
+  }
 
   $scope.ticketTypes = [
     {name: 'ninja', title: 'Ninja' },
@@ -24,6 +44,10 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   cdEventsService.getEvent(eventId, function (response) {
     $scope.event = response;
     $scope.event.capacity = 0;
+    _.each(response.dates, function (eventDateObj) {
+      var date = moment(eventDateObj.startTime).format('Do MMMM YY');
+      applicationCheckInDates.push(date);
+    });
 
     cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
       $scope.event.sessions = sessions;
@@ -145,8 +169,10 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         }
       });
     }, function (err) {
-      console.error(err);
-      alertService.showError($translate.instant('Error loading applications'));
+      if(err) {
+        console.error(err);
+        alertService.showError($translate.instant('Error loading applications'));
+      }
     });
 
     var meta = {
@@ -174,9 +200,10 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         application.age = moment().diff(application.dateOfBirth, 'years');
         application.dateApplied = moment(application.created).format('Do MMMM YY');
 
-        application.applicationDates = [
-          {id: 1, label: 'test'}
-        ];
+        application.applicationDates = [];
+        _.each(applicationCheckInDates, function (checkInDate) {
+          application.applicationDates.push({applicationId: application.id, date: checkInDate});
+        });
 
         application.attendanceModel = [];
 
