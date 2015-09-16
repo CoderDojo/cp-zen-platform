@@ -37,7 +37,6 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
 
   if(currentUser.id){
     $scope.loadPage = function () {
-      //$scope.sort = $scope.sort ? $scope.sort: {dates: -1};
       var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
       cdEventsService.getUserDojosEvents(query, function (response) {
         $scope.dojosEvents = response;
@@ -47,7 +46,6 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
           _.each($scope.dojosEvents, function (dojoEvents) {
             if(dojoEvents && dojoEvents.events && dojoEvents.events.length > 0) {
               $scope.currentEvents = true;
-              //$scope.sort[dojoEvents.dojo.id] = {dates: -1};
               var events = [];
               dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
               _.each(dojoEvents.events, function(event){

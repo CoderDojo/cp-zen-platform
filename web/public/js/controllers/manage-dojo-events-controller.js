@@ -53,7 +53,6 @@
     $scope.loadPage = function (filter, resetFlag) {
       //Only list events for this Dojo
       //sorting: -1 = descending, +1 = ascending
-      //$scope.sort = $scope.sort ? $scope.sort: {dates: 1};
 
       var query = _.omit({
         dojoId: filter.dojoId,
