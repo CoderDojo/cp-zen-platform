@@ -95,7 +95,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
             });
             user.permissions = thisUsersDojoLink.userPermissions;
             user.isMentor = _.contains(user.types, 'mentor');
-            user.isDojoOwner = (thisUsersDojoLink.owner === 1) ? true : false;
+            user.isDojoOwner = thisUsersDojoLink.owner === 1;
             user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
             user.userDojoId = thisUsersDojoLink.id;
             $scope.selectedUserPermissions[user.id] = user.permissions;
