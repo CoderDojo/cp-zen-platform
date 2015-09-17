@@ -15,9 +15,6 @@ function cdEventsService(cdApi, $q){
     list: function(query, win, fail){
       cdApi.post('events', {query: query}, win, fail || topfail);
     },
-    applyForEvent: function(applyData, win, fail) {
-      cdApi.post('events/' + applyData.eventId + '/apply', {applyData: applyData}, win, fail || topfail);
-    },
     loadEventApplications: function(eventId, win, fail) {
       cdApi.get('events/applications/' + eventId, win, fail || topfail);
     },
