@@ -57,7 +57,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
                   if(isParent) {
                     cdUsersService.loadNinjasForUser(currentUser.id, function (ninjas) {
                       _.each(ninjas, function (ninja) {
-                        $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: ninja.id, title: ninja.name});
+                        $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: ninja.userId, title: ninja.name});
                         $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
                       });
                     });
