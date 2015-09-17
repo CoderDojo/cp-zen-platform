@@ -60,9 +60,6 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
-    $scope.eventInfo.startTime = defaultEventTime;
-    $scope.eventInfo.startTime.setMinutes(0);
-    $scope.eventInfo.startTime.setSeconds(0);
     $scope.eventInfo.endTime = defaultEventEndTime;
     $scope.eventInfo.endTime.setMinutes(0);
     $scope.eventInfo.endTime.setSeconds(0);
@@ -72,6 +69,12 @@
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
+
+    $scope.$watch('eventInfo.date', function (startDate) {
+      var newStartDate = angular.copy(startDate);
+      var endTime = moment.utc(newStartDate).add(2, 'hours').toDate();
+      $scope.eventInfo.endTime = endTime;
+    });
 
     $scope.toggleDatepicker = function($event, isOpen) {
       $event.preventDefault();
@@ -159,7 +162,7 @@
         // Extend eventInfo
         if(eventInfo.recurringType === 'weekly') {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.startTime,
+            eventInfo.date,
             eventInfo.endTime,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
@@ -168,7 +171,7 @@
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.startTime,
+            eventInfo.date,
             eventInfo.endTime,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
@@ -178,7 +181,7 @@
         }
       } else {
         var eventDate = {
-          startTime: moment.utc(eventInfo.startTime).add(utcOffset, 'minutes').toISOString(),
+          startTime: moment.utc(eventInfo.date).add(utcOffset, 'minutes').toISOString(),
           endTime : moment.utc(eventInfo.endTime).add(utcOffset, 'minutes').toISOString()
         };
         eventInfo.dates = [eventDate];
