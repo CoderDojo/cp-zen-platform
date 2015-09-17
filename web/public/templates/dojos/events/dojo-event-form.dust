@@ -119,7 +119,7 @@
     <div class="form-group row">
       <div class="col-sm-4 col-md-4 col-lg-4">
         <label for="start-time">{@i18n key="Start time"/}:</label>
-        <timepicker id="start-time" ng-model="eventInfo.date" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
+        <timepicker id="start-time" ng-model="eventInfo.startTime" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <label for="endTime">{@i18n key="End time"/}:</label>

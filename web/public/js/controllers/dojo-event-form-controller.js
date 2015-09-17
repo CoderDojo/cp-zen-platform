@@ -2,34 +2,44 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(startTime, endTime, toDate, targetWeekday, eventType, utcOffset) {
-    var currentDate = startTime;
+  function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType, utcOffset) {
+    var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
-    var hoursDifference = Math.abs(endTime - startTime) / 36e5;
 
-    while (currentDate <= toDate) {
-      currentDate = moment.utc(new Date(currentDate)).toDate();
+    // this function calculates the start time and end time for each recurring event occurrence.
+    // the result of this function will be finally saved in the DB
+    function calculateDatesObj(startDateTime, endDateTime, utcOffset){
+      var date = {};
+      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toISOString();
+      var mEventDate = moment.utc(startDateTime);
+      var mEventLastDate = moment.utc(endDateTime);
+      date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
+        mEventLastDate.get('hour'), mEventLastDate.get('minute'), mEventLastDate.get('second'), mEventLastDate.get('millisecond') ]).add(utcOffset, 'minutes').toISOString();
+      return date;
+    }
 
-      if (currentDate.getDay() === targetWeekday) {
-        var date = {};
-        if(eventType === 'weekly') {
-          date.startTime = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
-          date.endTime = moment.utc(currentDate).add(hoursDifference, 'hours').add(utcOffset, 'minutes').toISOString();
-          dates.push(date);
-        } else {
-          if(!biWeeklyEventSwitch) {
-            date.startTime = moment.utc(currentDate).add(utcOffset, 'minutes').toISOString();
-            date.endTime = moment.utc(currentDate).add(hoursDifference, 'hours').add(utcOffset, 'minutes').toISOString();
-            dates.push(date);
-            biWeeklyEventSwitch = true;
+    if(eventType === 'one-off') {
+      dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+    } else {
+      while (currentDate <= endDateTime) {
+        currentDate = moment.utc(new Date(currentDate)).toDate();
+
+        if (currentDate.getDay() === targetWeekday) {
+          if (eventType === 'weekly') {
+            dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
           } else {
-            biWeeklyEventSwitch = false;
+            if (!biWeeklyEventSwitch) {
+              dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+              biWeeklyEventSwitch = true;
+            } else {
+              biWeeklyEventSwitch = false;
+            }
           }
         }
-      }
 
-      currentDate= moment.utc(currentDate).add(1, 'days');
+        currentDate = moment.utc(currentDate).add(1, 'days');
+      }
     }
 
     return dates;
@@ -49,31 +59,64 @@
     $state.go('my-dojos');
   }
 
+  function fixEventDates(newDate, oldDate){
+    newDate = moment.utc(newDate);
+    oldDate = moment.utc(oldDate);
+    return moment.utc([ newDate.get('year'),newDate.get('month'), newDate.date(),
+                        oldDate.get('hour'), oldDate.get('minute'), oldDate.get('second'), oldDate.get('millisecond') ]);
+  }
+
+  function fixEventTime(newTime, date){
+    newTime = moment.utc(newTime);
+    date = moment.utc(date);
+    return moment.utc([ date.get('year'), date.get('month'), date.date(),
+      newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
+  }
+
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
-    var now = new Date();
+    var now = moment.utc().toDate();
     var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
-    $scope.today = new Date();
+    $scope.today = moment.utc().toDate();
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
-    $scope.eventInfo.endTime = defaultEventEndTime;
-    $scope.eventInfo.endTime.setMinutes(0);
-    $scope.eventInfo.endTime.setSeconds(0);
-    $scope.eventInfo.date = defaultEventTime;
-    $scope.eventInfo.toDate = defaultEventEndTime;
     $scope.eventInfo.recurringType = 'weekly';
+
+    $scope.eventInfo.date = defaultEventTime;
+    $scope.eventInfo.toDate = defaultEventTime;
+
+    $scope.eventInfo.startTime = defaultEventTime;
+    $scope.eventInfo.startTime.setMinutes(1);
+    $scope.eventInfo.startTime.setSeconds(0);
+
+    $scope.eventInfo.endTime = defaultEventEndTime;
+    $scope.eventInfo.endTime.setMinutes(2);
+    $scope.eventInfo.endTime.setSeconds(0);
+
+    $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
+    $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
-    $scope.$watch('eventInfo.toDate', function (endDate) {
-      var newEndDate = angular.copy(endDate);
-      var endTime = moment.utc(newEndDate).toDate();
-      $scope.eventInfo.endTime = endTime;
+    $scope.$watch('eventInfo.date', function (date) {
+      $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
+    });
+
+    $scope.$watch('eventInfo.toDate', function (toDate) {
+      $scope.eventInfo.fixedEndDateTime = fixEventDates(toDate, $scope.eventInfo.fixedEndDateTime);
+    });
+
+    $scope.$watch('eventInfo.startTime', function (startTime) {
+      $scope.eventInfo.fixedStartDateTime = fixEventTime(startTime, $scope.eventInfo.fixedStartDateTime);
+    });
+
+    $scope.$watch('eventInfo.endTime', function (endTime) {
+      $scope.eventInfo.fixedEndDateTime = fixEventTime(endTime, $scope.eventInfo.fixedEndDateTime);
     });
 
     $scope.toggleDatepicker = function($event, isOpen) {
@@ -162,29 +205,29 @@
         // Extend eventInfo
         if(eventInfo.recurringType === 'weekly') {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.date,
-            eventInfo.endTime,
-            eventInfo.toDate,
+            eventInfo.fixedStartDateTime,
+            eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
             'weekly',
             utcOffset
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.date,
-            eventInfo.endTime,
-            eventInfo.toDate,
+            eventInfo.fixedStartDateTime,
+            eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
             'biweekly',
             utcOffset
           );
         }
       } else {
-        var eventDate = {
-          startTime: moment.utc(eventInfo.date).add(utcOffset, 'minutes').toISOString(),
-          endTime : moment.utc(eventInfo.endTime).add(utcOffset, 'minutes').toISOString()
-        };
-        eventInfo.dates = [eventDate];
+        eventInfo.dates = getEveryTargetWeekdayInDateRange(
+          eventInfo.fixedStartDateTime,
+          eventInfo.fixedEndDateTime,
+          $scope.weekdayPicker.selection.id,
+          'one-off',
+          utcOffset
+        );
       }
 
       if(!$scope.dojoInfo) {
@@ -343,11 +386,9 @@
         event.toDate = new Date(_.last(event.dates).startTime);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
-        var dayObject = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
+        $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
-
-        $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         done(null, event);
