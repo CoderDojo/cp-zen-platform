@@ -34,7 +34,7 @@
       <tr ng-repeat="session in event.sessions">
         <td>{{ session.name }}</td>
         <td>
-          <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">Book</button>
+          <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">{@i18n key="Book"/}</button>
         </td>
       </tr>
     </tbody>

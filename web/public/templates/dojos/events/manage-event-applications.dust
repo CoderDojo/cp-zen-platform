@@ -23,8 +23,8 @@
       <span class="col-md-2"><b>{@i18n key="Session capacity"/}:</b> {{ sessionStats[session.id].capacity }}</span>
       <span class="col-md-2"><b>{@i18n key="Attending"/}:</b> {{ sessionStats[session.id].attending }}</span>
       <span class="col-md-2"><b>{@i18n key="Waitlist"/}:</b> {{ sessionStats[session.id].waitlist }}</span>
-      <span class="col-md-2"><button type="button" class="btn btn-primary">New Applicant</button></span>
-      <span class="col-md-2"><button type="button" class="btn btn-danger">Cancel Session</button></span>
+      <!--<span class="col-md-2"><button type="button" class="btn btn-primary">New Applicant</button></span>
+      <span class="col-md-2"><button type="button" class="btn btn-danger">Cancel Session</button></span>-->
     </div>
     <table class="table cd-grid-table">
       <thead>

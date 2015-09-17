@@ -2364,3 +2364,36 @@ msgstr "Start time"
 
 msgid "End time"
 msgstr "End time"
+
+msgid "Total event capacity"
+msgstr "Total event capacity"
+
+msgid "Total attending"
+msgstr "Total attending"
+
+msgid "Total waitlist"
+msgstr "Total waitlist"
+
+msgid "Select ticket type..."
+msgstr "Select ticket type..."
+
+msgid "Session capacity"
+msgstr "Session capacity"
+
+msgid "Attendee name"
+msgstr "Attendee name"
+
+msgid "Ticket type"
+msgstr "Ticket type"
+
+msgid "Application Date"
+msgstr "Application Date"
+
+msgid "Parents/guardians"
+msgstr "Parents/guardians"
+
+msgid "Check in"
+msgstr "Check in"
+
+msgid "Book"
+msgstr "Book"
