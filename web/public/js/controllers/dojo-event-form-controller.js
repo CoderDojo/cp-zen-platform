@@ -70,9 +70,9 @@
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
-    $scope.$watch('eventInfo.date', function (startDate) {
-      var newStartDate = angular.copy(startDate);
-      var endTime = moment.utc(newStartDate).add(2, 'hours').toDate();
+    $scope.$watch('eventInfo.toDate', function (endDate) {
+      var newEndDate = angular.copy(endDate);
+      var endTime = moment.utc(newEndDate).toDate();
       $scope.eventInfo.endTime = endTime;
     });
 
