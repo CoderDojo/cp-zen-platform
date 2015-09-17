@@ -347,9 +347,18 @@
         $scope.weekdayPicker.selection = dayObject;
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
+        $scope.pastEvent = isEventInPast(_.last(event.dates));
+
         done(null, event);
       }, done);
     }
+
+    function isEventInPast(dateObj) {
+      var now = moment.utc();
+      var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
+
+      return now.isAfter(start);
+    } 
 
     if ($stateParams.eventId) {
 
