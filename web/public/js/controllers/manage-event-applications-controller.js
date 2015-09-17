@@ -311,7 +311,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
     application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
     application.emailSubject = $translate.instant('Event application approved');
-    cdEventsService.updateApplication(application, function (response) {
+    cdEventsService.saveApplication(application, function (response) {
       if (response.status === 'approved' || response.attended) {
         AlertBanner.publish({
           type: 'info',

@@ -21,9 +21,6 @@ function cdEventsService(cdApi, $q){
     saveApplication: function(application, win, fail) {
       cdApi.post('events/applications', {application: application}, win, fail || topfail);
     },
-    updateApplication: function(application, win, fail) {
-      cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
-    },
     searchApplications: function(query, win, fail) {
       cdApi.post('events/applications/search', {query: query}, win, fail || topfail);
     },
