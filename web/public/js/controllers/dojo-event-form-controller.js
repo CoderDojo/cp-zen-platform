@@ -354,10 +354,10 @@
     }
 
     function isEventInPast(dateObj) {
-      var now = moment.utc().valueOf();
-      var end = moment.utc(dateObj.endTime).valueOf() - (moment().utcOffset() * 60000);
+      var now = moment.utc();
+      var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
 
-      return (now > end) ? true : false;
+      return now.isAfter(start);
     } 
 
     if ($stateParams.eventId) {
