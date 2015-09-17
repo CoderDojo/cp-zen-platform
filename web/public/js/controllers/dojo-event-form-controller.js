@@ -79,12 +79,6 @@
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
-    $scope.$watch('eventInfo.date', function (startDate) {
-      var newStartDate = angular.copy(startDate);
-      var endTime = moment.utc(newStartDate).add(2, 'hours').toDate();
-      $scope.eventInfo.endTime = endTime;
-    });
-
     $scope.toggleDatepicker = function($event, isOpen) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -214,7 +208,7 @@
         // Extend eventInfo
         if(eventInfo.recurringType === 'weekly') {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.date,
+            eventInfo.startTime,
             eventInfo.endTime,
             eventInfo.toDate,
             $scope.weekdayPicker.selection.id,
