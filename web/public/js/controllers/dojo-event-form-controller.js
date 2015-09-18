@@ -88,8 +88,8 @@
     $scope.eventInfo.recurringType = 'weekly';
 
     $scope.eventInfo.date = defaultEventTime;
-    $scope.eventInfo.toDate = defaultEventTime;
-
+    $scope.eventInfo.toDate = defaultEventEndTime;
+    
     $scope.eventInfo.startTime = defaultEventTime;
     $scope.eventInfo.startTime.setMinutes(0);
     $scope.eventInfo.startTime.setSeconds(0);
