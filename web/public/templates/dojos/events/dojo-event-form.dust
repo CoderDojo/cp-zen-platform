@@ -171,8 +171,17 @@
             <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Session/room?"/}" ng-bootbox-confirm-action="removeSession($index)" class="btn btn-danger margin-point-5-em">
               <span class="glyphicon glyphicon-minus"></span>
             </button>
-            <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
-            <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+           
+            <div class="form-group">
+              <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
+              <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+            </div>
+
+            <div class="form-group">
+              <label for="sessionDescription">{@i18n key="Session description"/}</label>
+              <textarea class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
+            </div>
+
             <table id="dojoEventsTable" class="table cd-grid-table">
               <thead>
                 <tr>

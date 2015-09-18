@@ -2400,3 +2400,9 @@ msgstr "Check in"
 
 msgid "Book"
 msgstr "Book"
+
+msgid "Session description"
+msgstr "Session description"
+
+msgid "e.g. Beginners to attend only please."
+msgstr "e.g. Beginners to attend only please."

@@ -81,7 +81,7 @@
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
-	 $scope.ticketTypes = ticketTypes.data || [];
+	  $scope.ticketTypes = ticketTypes.data || [];
 
     _.each($scope.ticketTypes, function (ticketType) {
       ticketType.title = $translate.instant(ticketType.title);
@@ -91,6 +91,7 @@
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
     $scope.eventInfo.recurringType = 'weekly';
+    $scope.eventInfo.sessions = [{name: null, tickets:[]}];
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
