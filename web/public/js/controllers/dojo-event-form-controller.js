@@ -11,11 +11,12 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime, utcOffset){
       var date = {};
-      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toISOString();
+      var endDateTimeOffset = moment(endDateTime.toISOString()).utcOffset();
+      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
-      var mEventLastDate = moment.utc(endDateTime);
+      var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
       date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
-        mEventLastDate.get('hour'), mEventLastDate.get('minute'), mEventLastDate.get('second'), mEventLastDate.get('millisecond') ]).add(utcOffset, 'minutes').toISOString();
+        mEventLastDate.get('hour'), mEventLastDate.get('minute'), mEventLastDate.get('second'), mEventLastDate.get('millisecond') ]).toDate();
       return date;
     }
 
@@ -90,11 +91,11 @@
     $scope.eventInfo.toDate = defaultEventTime;
 
     $scope.eventInfo.startTime = defaultEventTime;
-    $scope.eventInfo.startTime.setMinutes(1);
+    $scope.eventInfo.startTime.setMinutes(0);
     $scope.eventInfo.startTime.setSeconds(0);
 
     $scope.eventInfo.endTime = defaultEventEndTime;
-    $scope.eventInfo.endTime.setMinutes(2);
+    $scope.eventInfo.endTime.setMinutes(0);
     $scope.eventInfo.endTime.setSeconds(0);
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
@@ -105,10 +106,13 @@
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
+      $scope.eventInfo.startTime = $scope.eventInfo.fixedStartDateTime;
+      $scope.eventInfo.endTime = fixEventDates($scope.eventInfo.fixedStartDateTime, $scope.eventInfo.fixedEndDateTime);
     });
 
     $scope.$watch('eventInfo.toDate', function (toDate) {
       $scope.eventInfo.fixedEndDateTime = fixEventDates(toDate, $scope.eventInfo.fixedEndDateTime);
+      $scope.eventInfo.endTime = $scope.eventInfo.fixedEndDateTime;
     });
 
     $scope.$watch('eventInfo.startTime', function (startTime) {
@@ -378,9 +382,13 @@
         $scope.isEditMode = true;
 
         var startTime = _.first(event.dates).startTime;
-        var endTime = _.first(event.dates).endTime;
-        event.startTime = moment.utc(startTime).subtract(utcOffset, 'minutes').toDate();
-        event.endTime = moment.utc(endTime).subtract(utcOffset, 'minutes').toDate();
+        var endTime = _.last(event.dates).endTime;
+
+        var startDateUtcOffset = moment(startTime).utcOffset();
+        var endDateUtcOffset = moment(endTime).utcOffset();
+
+        event.startTime = moment(startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+        event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = new Date(startTime);
         event.toDate = new Date(_.last(event.dates).startTime);
@@ -389,6 +397,10 @@
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
+
+        $scope.eventInfo.fixedStartDateTime = event.startTime;
+        $scope.eventInfo.fixedEndDateTime = event.endTime;
+
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         done(null, event);

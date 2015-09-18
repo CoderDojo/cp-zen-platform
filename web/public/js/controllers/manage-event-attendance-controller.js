@@ -67,17 +67,25 @@
       cdEventsService.getEvent(eventId, function (response) {
         var startTime = '';
         var endTime = '';
+        var startDateUtcOffset;
+        var endDateUtcOffset;
         if(response.type === 'one-off'){
-          startTime = moment.utc(_.first(response.dates).startTime).subtract(utcOffset,'minutes').toDate();
-          endTime = moment.utc(_.first(response.dates).endTime).subtract(utcOffset,'minutes').toDate();
+          startDateUtcOffset = moment(_.first(response.dates).startTime).utcOffset();
+          endDateUtcOffset = moment(_.first(response.dates).endTime).utcOffset();
+
+          startTime = moment.utc(_.first(response.dates).startTime).subtract(startDateUtcOffset,'minutes').toDate();
+          endTime = moment.utc(_.first(response.dates).endTime).subtract(endDateUtcOffset,'minutes').toDate();
           response.eventDateText = moment.utc(startTime).format('Do MMMM YYYY');
           response.eventTime = moment(startTime).format('HH:mm') +
                                    ' - ' +
                                    moment(endTime).format('HH:mm');
         } else {
           _.each(response.dates, function (date, index) {
-            startTime = moment.utc(date.startTime).subtract(utcOffset,'minutes').toDate();
-            endTime = moment.utc(date.endTime).subtract(utcOffset,'minutes').toDate();
+            startDateUtcOffset = moment(date.startTime).utcOffset();
+            endDateUtcOffset = moment(date.endTime).utcOffset();
+
+            startTime = moment.utc(date.startTime).subtract(startDateUtcOffset,'minutes').toDate();
+            endTime = moment.utc(date.endTime).subtract(endDateUtcOffset,'minutes').toDate();
             var eventTime = moment(startTime).format('HH:mm') +
                             ' - ' +
                             moment(endTime).format('HH:mm');
