@@ -15,13 +15,13 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
     'dojo-list': '/dashboard/dojo-list',
     'manage-dojos': '/dashboard/manage-dojos',
     'stats':'/dashboard/stats',
-    'charter': '/charter',
 
     //master states
     'home': '/',
     'login': '/login',
     'register-account':'/register',
-    'start-dojo': '/start-dojo'
+    'start-dojo': '/start-dojo',
+    'charter': '/charter'
   };
 
   $scope.navigateTo = function (page) {
@@ -38,11 +38,18 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
     if (tab === 'my-dojos' && path.indexOf('edit-dojo') > -1) return true;
     if (tab === 'events' && path.indexOf('my-dojos') > -1) return false;
     if (tab === 'dojo-list' && path === '/') return true;
-    if (path.indexOf(tab) > -1) return true
-    else return false;
-  }
+    return path.indexOf(tab) > -1;
+  };
 
-  $scope.goTo = function (state, param) {
+  $scope.goToCharter = function () {
+    if (!currentUser) {
+      $scope.goTo('charter');
+    } else {
+      $scope.goTo('charter-page');
+    }
+  };
+
+  $scope.goTo = function (state) {
     if($state.current.url === '^'){
       $window.location.href = stateUrls[state];
     } else {
@@ -52,7 +59,7 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
         $state.go(state);
       }
     }
-  }
+  };
 
   intercomService.InitIntercom();
 }
