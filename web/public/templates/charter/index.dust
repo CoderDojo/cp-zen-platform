@@ -1,6 +1,6 @@
-<div ng-show="!showCharterAgreementFlag"class="cd-dashboard">
+<div ng-show="!showCharterAgreementFlag" class="cd-dashboard">
   <div class="row">
-    <div class="col-lg-12 cd-text-heading1">
+    <div class="col-lg-12 cd-text-heading1 cd-charter">
       {>"charter/charter-info" /}
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
         <div class="row cd-input-row">

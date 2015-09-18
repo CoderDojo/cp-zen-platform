@@ -1,7 +1,7 @@
 'use strict';
 
-function charterCtrl($scope, $http, $state, $stateParams, cdAgreementsService, currentUser, $window, $translate, atomicNotifyService){
-  
+function charterCtrl($scope, $state, $stateParams, cdAgreementsService, currentUser, $translate, atomicNotifyService, alertService){
+
   if($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please sign the charter before continuing.'), 5000);
   }
@@ -17,10 +17,13 @@ function charterCtrl($scope, $http, $state, $stateParams, cdAgreementsService, c
     agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
     cdAgreementsService.save(agreementObj, function (response) {
+      if(response.msg){
+        alertService.showError($translate.instant(response.msg));
+      }
       $state.go('user-profile', {userId: currentUser.data.id});
     });
   }
 }
 
 angular.module('cpZenPlatform')
-  .controller('charter-controller', ['$scope', '$http', '$state', '$stateParams', 'cdAgreementsService', 'currentUser', '$window', '$translate', 'atomicNotifyService', charterCtrl]);
+  .controller('charter-controller', ['$scope', '$state', '$stateParams', 'cdAgreementsService', 'currentUser', '$translate', 'atomicNotifyService', 'alertService', charterCtrl]);

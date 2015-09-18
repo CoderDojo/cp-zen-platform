@@ -10,9 +10,6 @@ function cdAgreementsService(cdApi, $q){
       agreement = angular.copy(agreement);
       cdApi.post('agreements', { agreement: agreement }, win, fail || topfail);
     },
-    getAgreementsByIds: function(ids, win, fail){
-      cdApi.post('agreements/list-by-ids', {usersIds: ids}, win, fail || topfail);
-    },
     count: function(query, win, fail){
       cdApi.post('agreements/count', {query: query}, win, fail || topfail);
     },
