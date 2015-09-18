@@ -1,7 +1,9 @@
 'use strict';
 /*global $*/
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, cdDojoService, cdUsersService, AlertBanner, utilsService) {
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, 
+  cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService) {
+
   var eventId = $stateParams.eventId;
   var dojoId = $stateParams.dojoId;
   var applicationCheckInDates = [];
@@ -27,18 +29,14 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     onItemSelect: function (item) {
       item.attended = true;
       item.dojoId = dojoId;
-      cdEventsService.updateApplicationAttendance(item, function (response) {
-
-      }, function (err) {
+      cdEventsService.updateApplicationAttendance(item, null, function (err) {
         if(err) console.error(err);
       });
     },
     onItemDeselect: function (item) {
       item.attended = false;
       item.dojoId = dojoId;
-      cdEventsService.updateApplicationAttendance(item, function (response) {
-        
-      }, function (err) {
+      cdEventsService.updateApplicationAttendance(item, null, function (err) {
         if(err) console.error(err);
       });
     }
@@ -148,6 +146,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   }
 
   $scope.loadPage = function (sessionId, resetFlag) {
+    usSpinnerService.spin('session-applications-spinner');
     $scope.approved = {};
     $scope.checkedIn = {};
     $scope.sort = $scope.sort ? $scope.sort: {created: 1};
@@ -235,6 +234,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         });
 
       }, function (err) {
+        usSpinnerService.stop('session-applications-spinner');
         $scope.applications = result;
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
           var dojoMembers = response;
@@ -277,6 +277,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       if (!$scope.userIsApproved(application)) {
         //Approve user
         application.status = 'approved';
+        application.updateAction = 'approve';
         $scope.approved[application.id] = true;
         $scope.sessionStats[application.sessionId].attending++;
         $scope.eventStats.totalAttending++;
@@ -286,6 +287,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       } else {
         //Disapprove user
         application.status = 'pending';
+        application.updateAction = 'disapprove';
         $scope.approved[application.id] = false;
         $scope.sessionStats[application.sessionId].attending--;
         $scope.eventStats.totalAttending--;
@@ -311,17 +313,18 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
     application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
     application.emailSubject = $translate.instant('Event application approved');
-    cdEventsService.saveApplication(application, function (response) {
-      if (response.status === 'approved' || response.attended) {
+    cdEventsService.bulkApplyApplications([application], function (applications) {
+      if(_.isEmpty(applications)) return;
+      if (applications[0].status === 'approved' || applications[0].attended) {
         AlertBanner.publish({
           type: 'info',
           message: successMessage,
           timeCollapse: 5000
         });
-      } else if (response.error){
-        alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(response.error));
+      } else if (applications.ok === false){
+        alertService.showError($translate.instant('Error updating application') + '<br>' + applications.why);
       }
-      if(resetFlag) $scope.loadPage(response.sessionId);
+      if(resetFlag) $scope.loadPage(applications[0].sessionId);
     }, function (err) {
       if(err) alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
     });
@@ -351,4 +354,5 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', manageEventApplicationsControllerCtrl]);
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 
+    'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', manageEventApplicationsControllerCtrl]);

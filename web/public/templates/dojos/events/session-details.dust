@@ -8,6 +8,7 @@
     </div>
 </div>
 <div class="modal-body">
+  <span spinner-key="dojo-session-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <table class="table cd-grid-table">
     <thead>
       <th>{@i18n key="Ticket Name"/}</th>

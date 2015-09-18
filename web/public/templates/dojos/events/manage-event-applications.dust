@@ -40,7 +40,8 @@
           <th>{@i18n key="Delete"/}</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody> 
+        <span spinner-key="session-applications-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
         <tr ng-repeat="application in applications">
           <td><a ui-sref="user-profile({userId: application.userId})">{{ application.name }}</a></td>
           <td> {{ application.ticketName }}</td>
