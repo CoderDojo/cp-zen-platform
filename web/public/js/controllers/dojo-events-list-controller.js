@@ -128,12 +128,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       console.error(err);
       alertService.showError($translate.instant('Error loading events'));
     });
-
-  }
+  };
 
   $scope.eventCollapsed = function (eventIndex) {
     $scope.events[eventIndex].isCollapsed = false;
-  }
+  };
 
   $scope.pageChanged = function () {
     $scope.loadPage($scope.filter, false);
@@ -150,7 +149,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     } else if ($scope.events[index].isCollapsed === true) {
       $scope.events[index].isCollapsed = false;
     }
-  }
+  };
 
   $scope.toggleSort = function ($event, columnName) {
     var className, descFlag, sortConfig = {};
@@ -159,7 +158,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-      return result > -1 ? true : false;
+      return result > -1;
     }
 
     className = $($event.target).attr('class');
