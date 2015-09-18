@@ -2295,3 +2295,6 @@ msgstr "Start time"
 
 msgid "End time"
 msgstr "End time"
+
+msgid "Charter already signed."
+msgstr "Charter already signed."

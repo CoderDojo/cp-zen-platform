@@ -84,13 +84,12 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
         $scope.mapLoaded = true;
       });
     }
-
   }
 
   $scope.userTypeSelected = function ($item) {
     if(_.contains(approvalRequired, $item)) return $scope.approvalRequired = true;
     return $scope.approvalRequired = false;
-  }
+  };
 
   $scope.requestToJoin = function (requestInvite) {
     if(!$scope.requestInvite.userType) {
@@ -146,7 +145,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
         $state.go('register-account', {referer:$location.url()});
       });
     }
-  }
+  };
 
   $scope.leaveDojo = function () {
     usSpinnerService.spin('dojo-detail-spinner');

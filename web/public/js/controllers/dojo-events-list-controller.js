@@ -83,8 +83,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
       var events = [];
       _.each(result, function (event) {
-        var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-        var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+        var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
+        var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+
+        var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+        var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
 
         if(event.type === 'recurring') {
           event.formattedDates = [];
@@ -128,12 +131,11 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       console.error(err);
       alertService.showError($translate.instant('Error loading events'));
     });
-
-  }
+  };
 
   $scope.eventCollapsed = function (eventIndex) {
     $scope.events[eventIndex].isCollapsed = false;
-  }
+  };
 
   $scope.pageChanged = function () {
     $scope.loadPage($scope.filter, false);
@@ -150,7 +152,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
     } else if ($scope.events[index].isCollapsed === true) {
       $scope.events[index].isCollapsed = false;
     }
-  }
+  };
 
   $scope.toggleSort = function ($event, columnName) {
     var className, descFlag, sortConfig = {};
@@ -159,7 +161,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-      return result > -1 ? true : false;
+      return result > -1;
     }
 
     className = $($event.target).attr('class');

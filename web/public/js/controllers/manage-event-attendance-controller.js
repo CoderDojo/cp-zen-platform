@@ -10,7 +10,6 @@
     cdUsersService
   ) {
     var eventId = $stateParams.eventId;
-    var dojoId = $stateParams.dojoId;
 
     var utcOffset = moment().utcOffset();
 
@@ -66,16 +65,30 @@
 
     function loadEventData(done) {
       cdEventsService.getEvent(eventId, function (response) {
+        var startTime = '';
+        var endTime = '';
+        var startDateUtcOffset;
+        var endDateUtcOffset;
         if(response.type === 'one-off'){
-          response.eventDateText = moment.utc(response.dates[0].startTime).format('Do MMMM YYYY');
-          response.eventTime = moment.utc(response.dates[0].startTime).format('HH:mm') +
+          startDateUtcOffset = moment(_.first(response.dates).startTime).utcOffset();
+          endDateUtcOffset = moment(_.first(response.dates).endTime).utcOffset();
+
+          startTime = moment.utc(_.first(response.dates).startTime).subtract(startDateUtcOffset,'minutes').toDate();
+          endTime = moment.utc(_.first(response.dates).endTime).subtract(endDateUtcOffset,'minutes').toDate();
+          response.eventDateText = moment.utc(startTime).format('Do MMMM YYYY');
+          response.eventTime = moment(startTime).format('HH:mm') +
                                    ' - ' +
-                                   moment.utc(response.dates[0].endTime).format('HH:mm');
+                                   moment(endTime).format('HH:mm');
         } else {
           _.each(response.dates, function (date, index) {
-            var eventTime = moment.utc(date.startTime).format('HH:mm') +
+            startDateUtcOffset = moment(date.startTime).utcOffset();
+            endDateUtcOffset = moment(date.endTime).utcOffset();
+
+            startTime = moment.utc(date.startTime).subtract(startDateUtcOffset,'minutes').toDate();
+            endTime = moment.utc(date.endTime).subtract(endDateUtcOffset,'minutes').toDate();
+            var eventTime = moment(startTime).format('HH:mm') +
                             ' - ' +
-                            moment.utc(date.endTime).format('HH:mm');
+                            moment(endTime).format('HH:mm');
             response.dates[index] = {text: moment(date.startTime).format('Do MMMM YYYY') + ' ' + eventTime, startTime: date.startTime, endTime: date.endTime};
           });
         }

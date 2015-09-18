@@ -11,8 +11,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
   //retrieve children
   var query = {userId:$scope.currentUser.id};
   cdUsersService.userProfileData(query, function (response) {
-    var parentProfile = response;
-    var children = parentProfile.children;
+    var children = response.children;
     var childProfiles = [];
     async.each(children, function (child, cb) {
       cdUsersService.userProfileData({userId:child}, function (response) {
@@ -52,8 +51,11 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
               dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
               _.each(dojoEvents.events, function(event){
 
-                var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-                var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+                var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
+                var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+
+                var startDate = moment(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+                var endDate = moment(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
 
                 if(event.type === 'recurring') {
                   event.formattedDates = [];
@@ -77,6 +79,7 @@ function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, ale
                   }
                 } else {
                   //One-off event
+
                   event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
                     moment(startDate).format('HH:mm') +  ' - ' +
                     moment(endDate).format('HH:mm');
