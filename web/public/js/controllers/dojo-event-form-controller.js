@@ -91,7 +91,7 @@
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, tickets:[]}];
+    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: null}]}];
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
@@ -209,6 +209,7 @@
     };
 
     $scope.removeTicket = function ($index, session) {
+      if(session.tickets.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one ticket.'));
       return session.tickets.splice($index, 1);
     };
 

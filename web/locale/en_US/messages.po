@@ -2406,3 +2406,6 @@ msgstr "Session description"
 
 msgid "e.g. Beginners to attend only please."
 msgstr "e.g. Beginners to attend only please."
+
+msgid "Your event must contain at least one ticket."
+msgstr "Your event must contain at least one ticket."

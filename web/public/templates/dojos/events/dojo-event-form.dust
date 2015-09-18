@@ -167,54 +167,56 @@
     <div class="form-group">
       <div class="margin-top-point-5-em">
         <div class="margin-top-point-5-em clearfix" ng-repeat="session in eventInfo.sessions">
-          <ng-form name="sessionForm">
-            <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Session/room?"/}" ng-bootbox-confirm-action="removeSession($index)" class="btn btn-danger margin-point-5-em">
-              <span class="glyphicon glyphicon-minus"></span>
-            </button>
-           
-            <div class="form-group">
-              <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
-              <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
-            </div>
+          <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Session/room?"/}" ng-bootbox-confirm-action="removeSession($index)" class="btn btn-danger margin-point-5-em">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+         
+          <div class="form-group">
+            <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
+            <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+          </div>
 
-            <div class="form-group">
-              <label for="sessionDescription">{@i18n key="Session description"/}</label>
-              <textarea class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
-            </div>
+          <div class="form-group">
+            <label for="sessionDescription">{@i18n key="Session description"/}</label>
+            <textarea class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
+          </div>
 
-            <table id="dojoEventsTable" class="table cd-grid-table">
-              <thead>
-                <tr>
-                  <th>{@i18n key="Ticket Name"/}</th>
-                  <th>{@i18n key="Ticket Type"/}</th>
-                  <th>{@i18n key="Ticket Quantity"/}</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="ticket in session.tickets">
-                  <td><input placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="ticketName" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required></td>
-                  <td>
-                    <ui-select name="ticketUserType" ng-model="ticket.type" required>
+          <table id="dojoEventsTable" class="table cd-grid-table">
+            <thead>
+              <tr>
+                <th>{@i18n key="Ticket Name"/}</th>
+                <th>{@i18n key="Ticket Type"/}</th>
+                <th>{@i18n key="Ticket Quantity"/}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ticket in session.tickets track by $index">
+                <td><input placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="ticketName-{{ $index }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'"></td>
+                <td>
+                  <div ng-class="{'has-error': eventForm.$submitted && eventForm['ticketUserType-{{ $index }}'].$error.required}">
+                    <ui-select name="ticketUserType-{{ $index }}" ng-model="ticket.type" required>
                       <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a ticket type"/}">{{ $select.selected.title }}</ui-select-match>
                       <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
                         <span ng-bind-html="ticketType.title"></span>
                       </ui-select-choices>
                     </ui-select>
-                  </td>
-                  <td><input type="number" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="ticketQuantity" required></td>
-                  <td><span ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="glyphicon glyphicon-remove-sign pointer color-red custom-remove-icon"></span></td>
-                </tr>
-              </tbody>
-            </table>
-            <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
-            <div class="pull-right">
-              <button type="button" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
-                <span class="glyphicon glyphicon-plus"></span>
-              </button>
-              <label style="padding-left: 0.2em;">{@i18n key="Add ticket type"/}</label>
-            </div>
-          </ng-form>
+                    <label class="control-label has-error validationMessage"
+                      ng-show="eventForm.$submitted && eventForm['ticketUserType-{{ $index }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
+                  </div>
+                </td>
+                <td><input type="number" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="ticketQuantity-{{ $index }}" required required-message="'{@i18n key="Quantity is empty"/}'"></td>
+                <td><span ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="glyphicon glyphicon-remove-sign pointer color-red custom-remove-icon"></span></td>
+              </tr>
+            </tbody>
+          </table>
+          <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
+          <div class="pull-right">
+            <button type="button" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <label style="padding-left: 0.2em;">{@i18n key="Add ticket type"/}</label>
+          </div>
         </div>
         <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Event capacity"/}</strong>: {{ totalEventCapacity() }} </h5>
       </div>
