@@ -59,7 +59,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
 
     cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
       $scope.event.sessions = sessions;
-
       _.each($scope.event.sessions, function (session, index) {
         if(!$scope.sessionStats[session.id]) $scope.sessionStats[session.id] = {};
         $scope.sessionStats[session.id].capacity = 0;
@@ -93,6 +92,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         });
       }, function (err) {
         if(err) console.error(err);
+        $scope.loadPage($scope.event.sessions[0].id);
+        $scope.event.sessions[0].isOpen = true;
       });
 
     });
