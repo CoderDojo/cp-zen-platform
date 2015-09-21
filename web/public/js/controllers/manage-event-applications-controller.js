@@ -1,7 +1,7 @@
 'use strict';
 /*global $*/
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, $modal, alertService, cdEventsService, tableUtils, 
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils, 
   cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService) {
 
   var eventId = $stateParams.eventId;
@@ -57,7 +57,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       applicationCheckInDates.push(date);
     });
 
-    cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
+    cdEventsService.searchSessions({eventId: eventId, status: 'active'}, function (sessions) {
       $scope.event.sessions = sessions;
       _.each($scope.event.sessions, function (session, index) {
         if(!$scope.sessionStats[session.id]) $scope.sessionStats[session.id] = {};
@@ -204,18 +204,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       }, function (err) {
         usSpinnerService.stop('session-applications-spinner');
         $scope.applications = result;
-        cdDojoService.loadDojoUsers({dojoId: dojoId}, function (response) {
-          var dojoMembers = response;
-          var availableMembers = [];
-
-          //Only show users that are not already in $scope.applications
-          for (var i = dojoMembers.length - 1; i >= 0; i--) {
-            var application = _.findWhere($scope.applications, {userId: dojoMembers[i].id});
-            if (!application) { availableMembers.push(dojoMembers[i]) }
-          }
-
-          $scope.dojoMembers = availableMembers;
-        });
       });
     }, function (err) {
       if(err) {
@@ -374,8 +362,19 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     }
   };
 
+  $scope.cancelSession = function (session) {
+    session.status = 'cancelled';
+    cdEventsService.cancelSession(session.id, function (response) {
+      console.log('*** response = ' + JSON.stringify(response));
+      $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
+      alertService.showAlert($translate.instant('Session successfully cancelled.'));
+    }, function (err) {
+      if(err) console.error(err);
+    });
+  };
+
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', '$modal', 'alertService', 'cdEventsService', 
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService', 
     'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', manageEventApplicationsControllerCtrl]);

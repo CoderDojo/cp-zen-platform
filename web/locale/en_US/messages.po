@@ -2424,3 +2424,6 @@ msgstr "Select Other to create tickets for unlisted types e.g. laptops."
 
 msgid "Cancel Session"
 msgstr "Cancel Session"
+
+msgid "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
+msgstr "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"

@@ -51,6 +51,12 @@ function cdEventsService(cdApi, $q){
     },
     updateApplicationAttendance: function (data, win, fail) {
       cdApi.post('events/update_application_attendance', {data: data}, win, fail || topfail);
+    },
+    saveSession: function(session, win, fail) {
+      cdApi.post('events/save_session', {session: session}, win, fail || topfail);
+    },
+    cancelSession: function(sessionId, win, fail) {
+      cdApi.get('events/cancel_session/' + sessionId, win, fail || topfail);
     }
   };
 }

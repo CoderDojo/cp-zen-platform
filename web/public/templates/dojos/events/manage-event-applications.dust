@@ -27,7 +27,7 @@
         <button type="button" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
       </span>
       <span class="col-md-2">
-        <button type="button" class="btn btn-danger">{@i18n key="Cancel Session"/}</button>
+        <button type="button" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}</button>
       </span>
     </div>
     <table class="table cd-grid-table">
