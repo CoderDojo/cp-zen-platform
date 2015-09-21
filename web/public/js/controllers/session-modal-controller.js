@@ -8,7 +8,17 @@
     $scope.event = event;
     $scope.eventUserSelection = eventUserSelection[$scope.event.dojoId];
 
-    $scope.applyForSettings = {displayProp: 'title', buttonClasses: 'btn btn-primary btn-block', showCheckAll: false, showUncheckAll: false, idProp: 'userId', externalIdProp: 'userId'};
+    $scope.applyForSettings = {
+      displayProp: 'title', 
+      buttonClasses: 'btn btn-primary btn-block', 
+      showCheckAll: false, 
+      showUncheckAll: false,
+      idProp: 'userId',
+      externalIdProp: 'userId',
+      enableSearch: true,
+      scrollableHeight: '250px',
+      scrollable: true
+    };
 
     $scope.sessionApplication = {
       eventId: $scope.event.id,

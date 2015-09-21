@@ -2421,3 +2421,6 @@ msgstr "Select Mentor to create tickets for Mentors."
 
 msgid "Select Other to create tickets for unlisted types e.g. laptops."
 msgstr "Select Other to create tickets for unlisted types e.g. laptops."
+
+msgid "Cancel Session"
+msgstr "Cancel Session"

@@ -1,7 +1,7 @@
 'use strict';
 /*global $*/
 
-function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, alertService, cdEventsService, tableUtils, 
+function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate, $modal, alertService, cdEventsService, tableUtils, 
   cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService) {
 
   var eventId = $stateParams.eventId;
@@ -106,42 +106,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
   $scope.filterApplications = function (sessionId) {
     $scope.loadPage(sessionId);
   };
-
-  // $scope.saveNewApplicant = function (item) {
-  //   var dojoMember = item;
-  //   $scope.newApplicantClicked = false;
-
-  //   cdUsersService.userProfileData({userId: dojoMember.id}, function (response) {
-  //     var userProfile = response;
-
-  //     var newApplicant = {
-  //       name: dojoMember.name,
-  //       dateOfBirth: userProfile.dob,
-  //       event_id: eventId,
-  //       status: 'pending',
-  //       user_id: dojoMember.id
-  //     };
-
-  //     cdEventsService.saveApplication(newApplicant, function (response) {
-  //       //$scope.loadPage($scope.filter, true);
-  //     }, function (err) {
-  //       alertService.showError($translate.instant('Error saving new applicant'));
-  //     });
-  //   }, function (err) {
-  //     alertService.showError($translate.instant('Error loading profile') + '<br>' + JSON.stringify(err));
-  //   });
-
-
-  // }
-
-  // $scope.removeApplicant = function (applicant) {
-  //   cdEventsService.removeApplicant(applicant, function (response) {
-  //     $scope.loadPage($scope.filter, true);
-  //   }, function (err) {
-  //     alertService.showError($translate.instant('Error removing applicant') + '<br>' + JSON.stringify(err));
-  //   });
-  // }
-
+  
   $scope.pageChanged = function (sessionId) {
     $scope.loadPage(sessionId, false);
   }
@@ -202,7 +167,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
         }
 
         if($scope.event.type === 'one-off') {
-          if(application.attendance.length > 0) {
+          if(application.attendance && application.attendance.length > 0) {
             $scope.checkedIn[application.id] = true;
           } else {
             $scope.checkedIn[application.id] = false;
@@ -357,8 +322,60 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
     $scope.newApplicantClicked = false;
   }
 
+  $scope.showNewApplicantForm = function (session) {
+    async.waterfall([
+      retrieveDojoUsers,
+      showNewApplicantModal
+    ], function (err) {
+      if(err) return console.error(err);
+    });
+
+    function retrieveDojoUsers(done) {
+      cdDojoService.loadDojoUsers({dojoId: dojoId}, function (dojoUsers) {
+        var eventUserSelection = {};
+        eventUserSelection[dojoId] = [];
+        _.each(dojoUsers, function (dojoUser) {
+          eventUserSelection[dojoId].push({userId: dojoUser.id, title: dojoUser.name});
+        });
+        return done(null, eventUserSelection);
+      }, function (err) {
+        if(err) {
+          console.error(err);
+          return done(err);
+        }
+      });
+    }
+
+    function showNewApplicantModal(eventUserSelection, done) {
+      var newApplicantModalInstance = $modal.open({
+        animation: true,
+        templateUrl: '/dojos/template/events/session-details',
+        controller: 'session-modal-controller',
+        size: 'lg',
+        resolve: {
+          session: function () {
+            return session;
+          },
+          event: function () {
+            return $scope.event;
+          },
+          eventUserSelection: function () {
+            return eventUserSelection;
+          }
+        }
+      });
+
+      newApplicantModalInstance.result.then(function (result) {
+        if(result.ok === false) return alertService.showError($translate.instant(result.why));
+        alertService.showAlert($translate.instant('New applicants successfully added.'));
+        $scope.loadPage(session.id, true);
+      }, null);
+      return done();
+    }
+  };
+
 }
 
 angular.module('cpZenPlatform')
-  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', 'alertService', 'cdEventsService', 
+  .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$translate', '$modal', 'alertService', 'cdEventsService', 
     'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', manageEventApplicationsControllerCtrl]);
