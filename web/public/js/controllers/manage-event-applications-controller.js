@@ -201,11 +201,13 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
           $scope.approved[application.id] = false;
         }
 
-        if(application.attended) {
-          $scope.checkedIn[application.id] = true;
-        } else {
-          $scope.checkedIn[application.id] = false;
-        } 
+        if($scope.event.type === 'one-off') {
+          if(application.attendance.length > 0) {
+            $scope.checkedIn[application.id] = true;
+          } else {
+            $scope.checkedIn[application.id] = false;
+          } 
+        }
 
         application.age = moment().diff(application.dateOfBirth, 'years');
         application.dateApplied = moment(application.created).format('Do MMMM YY');
@@ -265,8 +267,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       case 'status':
         updateStatus();
         break;
-      case 'attended':
-        updateAttended();
+      case 'attendance':
+        updateAttendance();
         break;
       case 'deleted':
         updateDeleted();
@@ -297,13 +299,16 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $translate,
       }
     } 
 
-    function updateAttended() {
+    function updateAttendance() {
+      var date = moment.utc(application.applicationDates[0].date, 'Do MMMM YY').toISOString();
+      application.updateAction = 'checkin';
       if(!$scope.userIsCheckedIn(application)) {
-        application.attended = true;
+        if(!application.attendance) application.attendance = [];
+        application.attendance.push(date);
         $scope.checkedIn[application.id] = true;
         successMessage = application.name + ' ' + $translate.instant('has been checked in');
       } else {
-        application.attended = false;
+        application.attendance = _.without(application.attendance, date);
         $scope.checkedIn[application.id] = false;
       }
     }

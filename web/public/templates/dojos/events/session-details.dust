@@ -1,11 +1,6 @@
 <div class="modal-header">
-  <h3 class="modal-title">{@i18n key="Book tickets for"/} {{ session.name }}</h3>
-    <div ng-if="event.type === 'recurring'">
-      <h5>{{ event.dateRange }}</h5>
-    </div>
-    <div ng-if="event.type === 'one-off'">
-      <h5>{{ event.formattedDate }}</h5>
-    </div>
+  <h3 class="modal-title">{@i18n key="Book tickets for"/} {{ session.name }} {@i18n key="at"/} {{ event.address }}</h3>
+  <h5>{{ event.formattedDate }}</h5>
 </div>
 <div class="modal-body">
   <span spinner-key="dojo-session-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>

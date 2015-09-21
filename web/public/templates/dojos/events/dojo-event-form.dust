@@ -198,7 +198,7 @@
                     <ui-select name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
                       <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a ticket type"/}">{{ $select.selected.title }}</ui-select-match>
                       <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
-                        <div tooltips tooltip-title="{{ ticketType.tooltip }}">
+                        <div tooltips tooltip-title="{{ {@i18n key="ticketType.tooltip"/} }}">
                           <span ng-bind-html="ticketType.title"></span>
                         </div>
                       </ui-select-choices>

@@ -56,7 +56,11 @@
             </div> 
           </td>
           <td>
-            <div ng-if="application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
+            <div ng-if="event.type === 'recurring' && application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
+            <div ng-if="event.type === 'one-off' && application.status === 'approved'" class="checkbox">
+              <input type="checkbox" id="checkInCheckbox-{{ application.id }}" ng-checked="userIsCheckedIn(application)" ng-click="updateApplication(application, 'attendance')">
+              <label for="checkInCheckbox-{{ application.id }}"></label>
+            </div>
           </td>
           <td><button ng-disabled="application.attendanceModel.length" type="button" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}" ng-bootbox-confirm-action="updateApplication(application, 'deleted')">{@i18n key="Delete"/}</button></td>
         </tr>
