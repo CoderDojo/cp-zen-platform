@@ -71,21 +71,6 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
-server.ext('onRequest', function (request, reply) {
-  request.headers['X-REQ-ID'] = cuid();
-  if (process.env.HAPI_DEBUG === 'true') {
-    console.log('onRequest: ' + request.headers['X-REQ-ID'] + ' - ' + util.inspect(request.url.path));
-  }
-  return reply.continue();
-});
-
-server.ext('onPreResponse', function (request, reply) {
-  if (process.env.HAPI_DEBUG === 'true') {
-    console.log('onResponse: ', request.headers['X-REQ-ID'] = cuid());
-  }
-  return reply.continue();
-});
-
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
@@ -221,7 +206,7 @@ server.register({ register: Chairo, options: options }, function (err) {
       options: {
         cors: true,
         session: {
-          /*store: sessionStore, */ 
+          /*store: sessionStore, */
           secret: options.session.secret,
           name: 'CD.ZENPLATFORM',
           saveUninitialized: true,
