@@ -2409,3 +2409,15 @@ msgstr "e.g. Beginners to attend only please."
 
 msgid "Your event must contain at least one ticket."
 msgstr "Your event must contain at least one ticket."
+
+msgid "Select Ninja to create tickets for attendees under 13 or over 13."
+msgstr "Select Ninja to create tickets for attendees under 13 or over 13."
+
+msgid "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
+msgstr "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
+
+msgid "Select Mentor to create tickets for Mentors."
+msgstr "Select Mentor to create tickets for Mentors."
+
+msgid "Select Other to create tickets for unlisted types e.g. laptops."
+msgstr "Select Other to create tickets for unlisted types e.g. laptops."

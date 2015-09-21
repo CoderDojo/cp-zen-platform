@@ -47,6 +47,9 @@
     <!-- International Tel Input -->
     <link rel="stylesheet" type="text/css" href="/components/intl-tel-input/build/css/intlTelInput.css">
 
+    <!-- Angular Tooltips -->
+    <link rel="stylesheet" type="text/css" href="/components/angular-tooltips/dist/angular-tooltips.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -116,6 +119,7 @@
     <script src="/components/ng-idle/angular-idle.min.js"></script>
     <script src="/components/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
     <script src="/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+    <script src="/components/angular-tooltips/dist/angular-tooltips.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 

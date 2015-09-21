@@ -31,6 +31,7 @@
     'internationalPhoneNumber',
     'ngIdle',
     'tmh.dynamicLocale',
-    'angularjs-dropdown-multiselect'
+    'angularjs-dropdown-multiselect',
+    '720kb.tooltips'
   ]);
 })();
