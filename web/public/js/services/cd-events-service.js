@@ -30,12 +30,6 @@ function cdEventsService(cdApi, $q){
     removeApplicant: function(application, win, fail) {
       cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
     },
-    searchAttendance: function(query, win, fail) {
-      cdApi.post('events/attendance/search', {query: query}, win, fail || topfail);
-    },
-    saveAttendance: function(attendance, win, fail) {
-      cdApi.post('events/attendance/save', {attendance: attendance}, win, fail || topfail);
-    },
     getUserDojosEvents: function(query, win, fail){
       cdApi.post('events/user-dojos-events', {query: query}, win, fail || topfail);
     },
