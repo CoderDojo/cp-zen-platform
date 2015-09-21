@@ -195,8 +195,9 @@
         // Extend eventInfo
         eventInfo.position = eventPosition;
       }
-
-      eventInfo.status = $scope.publish ? 'published' : 'saved';
+      
+      eventInfo.status = eventInfo.publish ? 'published' : 'saved';
+      delete eventInfo.publish;
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       if(!_.isEmpty(eventInfo.invites)) {
