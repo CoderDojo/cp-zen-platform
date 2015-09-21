@@ -394,7 +394,7 @@
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
       });
     })
-    .run(function ($window, $cookieStore, tmhDynamicLocale) { 
+    .run(function ($window, $cookieStore, tmhDynamicLocale) {
       var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
       var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
       tmhDynamicLocale.set(userLangCode);
@@ -403,11 +403,15 @@
       return function () {
         var deferred = $q.defer();
         auth.get_loggedin_user_promise().then(function (user) {
-          cdUsersService.userProfileDataPromise({userId: user.id}).then(function (profile) {
-            deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
-          }, function (err) {
-            deferred.reject(err);
-          });
+          if(user && user.id) {
+            cdUsersService.userProfileDataPromise({userId: user.id}).then(function (profile) {
+              deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
+            }, function (err) {
+              deferred.reject(err);
+            });
+          } else {
+            deferred.reject(new Error('User not found.'));
+          }
         }, function (err) {
           deferred.reject(err);
         });
