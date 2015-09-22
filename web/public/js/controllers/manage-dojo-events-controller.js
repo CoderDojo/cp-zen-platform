@@ -74,14 +74,23 @@
           }
 
           //Retrieve number of applicants & attendees
-          cdEventsService.searchApplications({eventId: event.id}, function (result) {
-            var numOfApplicants = result.length;
-            var numAttending = 0;
+          cdEventsService.searchApplications({eventId: event.id}, function (result) { 
+            event.eventStats = {capacity: 0, totalApplicants:0, totalAttending: 0};
+    
             _.each(result, function (application) {
-              if(application.status === 'approved') numAttending++;
+              if(application.status === 'pending' || application.status === 'approved' ) event.eventStats.totalApplicants++;
+              if(application.status === 'approved') event.eventStats.totalAttending++;
             })
-            event.applicants = numOfApplicants;
-            event.attending = numAttending;
+
+            cdEventsService.searchSessions({eventId: event.id, status: 'active'}, function (sessions) {
+              _.each(sessions, function (session) {
+                _.each(session.tickets, function (ticket) {
+                  if(ticket.type !== 'other') {
+                    event.eventStats.capacity += ticket.quantity;
+                  }
+                });
+              });
+            });
           }, function (err) {
             console.error(err);
             alertService.showError($translate.instant('Error loading applications'));
