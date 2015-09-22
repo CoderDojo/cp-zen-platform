@@ -11,8 +11,9 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime, utcOffset){
       var date = {};
+      var startDateTimeOffset = moment(startDateTime.toISOString()).utcOffset();
       var endDateTimeOffset = moment(endDateTime.toISOString()).utcOffset();
-      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
+      date.startTime = moment.utc(startDateTime).add(startDateTimeOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
       var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
       date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
