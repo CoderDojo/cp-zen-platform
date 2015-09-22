@@ -6,10 +6,28 @@
   <div class="row" ng-if="profileVisible()">
     <div class="col-sm-3">
       <!--left col-->
-      <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
-      <h1 ng-bind="profile.name || profile.alias"></h1>
-      <h4 ng-bind="profile.userTypeTitle"></h4>
-      <div ng-if="editMode && profile.id" class="btn btn-default center-block" ngf-max-size='5242880' ngf-change="upload($files)" ngf-multiple="false" accept="image/*" ngf-select>{@i18n key="Upload new picture"/}</div>
+      <form name="uploadAvatarForm">
+        <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
+
+        <h1 ng-bind="profile.name || profile.alias"></h1>
+        <h4 ng-bind="profile.userTypeTitle"></h4>
+
+        <input type="file" ngf-select ng-model="avatar" name="avatar" class="center-block"
+               ng-show="editMode && profile.id" accept="image/*"
+               ngf-multiple="false"
+               ngf-max-height="1200"
+               ngf-max-width="1200"
+               ngf-max-size="5242880" >
+
+        <br>
+        <label class="validationMessage" style="color:red; width:100%;" ng-show="uploadAvatarForm.avatar.$error.maxHeight || uploadAvatarForm.avatar.$error.maxWidth">
+          {@i18n key="Your profile image is too large. Please resize to a maximum of 640/640 pixels."/}
+        </label>
+
+        <div ng-if="editMode && profile.id" ng-disabled="!avatar || !uploadAvatarForm.$valid" class="btn btn-default center-block" ng-click="upload(avatar)">
+          {@i18n key="Upload new picture"/}
+        </div>
+      </form>
 
       <span class="help-block"></span>
       <button ng-if="!editMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
