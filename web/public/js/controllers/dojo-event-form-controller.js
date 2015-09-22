@@ -2,17 +2,18 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType, utcOffset) {
+  function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
     var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
 
     // this function calculates the start time and end time for each recurring event occurrence.
     // the result of this function will be finally saved in the DB
-    function calculateDatesObj(startDateTime, endDateTime, utcOffset){
+    function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
+      var startDateTimeOffset = moment(startDateTime.toISOString()).utcOffset();
       var endDateTimeOffset = moment(endDateTime.toISOString()).utcOffset();
-      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
+      date.startTime = moment.utc(startDateTime).add(startDateTimeOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
       var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
       date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
@@ -21,17 +22,17 @@
     }
 
     if(eventType === 'one-off') {
-      dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+      dates.push(calculateDatesObj(currentDate, endDateTime));
     } else {
       while (currentDate <= endDateTime) {
         currentDate = moment.utc(new Date(currentDate)).toDate();
 
         if (currentDate.getDay() === targetWeekday) {
           if (eventType === 'weekly') {
-            dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+            dates.push(calculateDatesObj(currentDate, endDateTime));
           } else {
             if (!biWeeklyEventSwitch) {
-              dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+              dates.push(calculateDatesObj(currentDate, endDateTime));
               biWeeklyEventSwitch = true;
             } else {
               biWeeklyEventSwitch = false;
@@ -195,7 +196,7 @@
         // Extend eventInfo
         eventInfo.position = eventPosition;
       }
-      
+
       eventInfo.status = eventInfo.publish ? 'published' : 'saved';
       delete eventInfo.publish;
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
@@ -213,16 +214,14 @@
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
-            'weekly',
-            utcOffset
+            'weekly'
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
-            'biweekly',
-            utcOffset
+            'biweekly'
           );
         }
       } else {
@@ -230,8 +229,7 @@
           eventInfo.fixedStartDateTime,
           eventInfo.fixedEndDateTime,
           $scope.weekdayPicker.selection.id,
-          'one-off',
-          utcOffset
+          'one-off'
         );
       }
 
@@ -415,7 +413,7 @@
       var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
 
       return now.isAfter(start);
-    } 
+    }
 
     if ($stateParams.eventId) {
 
