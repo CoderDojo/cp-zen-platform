@@ -423,11 +423,11 @@
     .run(function (Idle){
       Idle.watch();
     })
-    .run(function($rootScope){
+    .run(function($rootScope, $filter){
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         var pageTitle = "";
         if(toParams.pageTitle) {
-          pageTitle += toParams.pageTitle + " - ";
+          pageTitle += $filter('translate')(toParams.pageTitle) + " - ";
         }
         pageTitle += "CoderDojo Zen";
         $rootScope.pageTitle = pageTitle;

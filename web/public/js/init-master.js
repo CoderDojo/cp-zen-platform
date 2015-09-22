@@ -155,7 +155,8 @@
           templateUrl: '/templates/login',
           controller: 'login',
           params: {
-            referer: null
+            referer: null,
+            pageTitle: 'Login'
           }
         })
         .state("reset-password", {
@@ -285,11 +286,11 @@
       doc.head.appendChild(googleCaptchaScriptTag);
       tmhDynamicLocale.set(userLangCode);
     })
-    .run(function($rootScope){
+    .run(function($rootScope, $filter){
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         var pageTitle = "";
         if(toParams.pageTitle) {
-          pageTitle += toParams.pageTitle + " - ";
+          pageTitle += $filter('translate')(toParams.pageTitle) + " - ";
         }
         pageTitle += "CoderDojo Zen";
         $rootScope.pageTitle = pageTitle;
