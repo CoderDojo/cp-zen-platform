@@ -236,7 +236,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.setPlace = function (dojo, place) {
-    dojo.placeName = place.name;
+    dojo.placeName = place.name || place.nameWithHierarchy;
     dojo.placeGeonameId = place.geonameId;
     dojo.county = {};
     dojo.state = {};
@@ -261,8 +261,10 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.updateLocalStorage = function (localObj, item, value) {
-    if (['address1', 'place'].indexOf(item) > -1) $scope.changedLocation = true;
-    $scope.setPlace($scope.dojo, $scope.dojo.place);
+    if (['address1', 'place'].indexOf(item) > -1) {
+      $scope.changedLocation = true;
+      $scope.setPlace($scope.dojo, $scope.dojo.place);
+    }
 
     if ($scope.user && $state.current.name === "edit-dojo") {
       localObj = $scope.dojo.id;
