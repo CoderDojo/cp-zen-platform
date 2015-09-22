@@ -224,8 +224,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
         updateAttendance();
         break;
       case 'deleted':
-        updateDeleted();
         resetFlag = true;
+        updateDeleted();
         break;
     }
 
@@ -267,6 +267,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
     }
 
     function updateDeleted() {
+      application.updateAction = 'delete';
       application.deleted = true;
     }
 
@@ -365,7 +366,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
   $scope.cancelSession = function (session) {
     session.status = 'cancelled';
     cdEventsService.cancelSession(session.id, function (response) {
-      console.log('*** response = ' + JSON.stringify(response));
       $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
       alertService.showAlert($translate.instant('Session successfully cancelled.'));
     }, function (err) {
