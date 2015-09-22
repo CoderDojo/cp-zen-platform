@@ -2,7 +2,7 @@
 /* global google */
 
 function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
-                        $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage) {
+                        $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox) {
 
   $scope.dojo = {};
   $scope.model = {};
@@ -98,6 +98,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     };
     if (dojo.notes === '') $scope.editorOptions.initContent = initContent;
 
+    $scope.originalDojoListing = angular.copy(dojo);
     $scope.dojo = dojo;
     $scope.disableDojoCountryChange = dojo.verified === 1;
     $scope.prevFounder = prevFounder;
@@ -275,7 +276,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 
   var deleteLocalStorage = function (localObj) {
     if ($scope.user && $state.current.name === "edit-dojo") {
-      localObj = $scope.dojo.id;
       if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
         delete $localStorage[$scope.user.id].editDojo[$scope.dojo.id]
       }
@@ -294,48 +294,82 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       finish();
     }
 
+    function saveDojo() {
+      _.each(sanitizeCdForms.editDojo, function (item, i) {
+        if (_.has(dojo, item)) {
+          dojo[item] = $sanitize(dojo[item]);
+        }
+      });
+
+      dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
+      dojo.editDojoFlag = true;
+      cdDojoService.save(dojo, function (response) {
+        if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
+          cdDojoService.updateFounder($scope.founder, function (response) {
+            alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
+              deleteLocalStorage('editDojoListing');
+              $state.go('my-dojos');
+              $scope.$apply();
+            });
+          }, function (err) {
+            alertService.showError($translate.instant('An error has occurred while saving'));
+          });
+        } else {
+          alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
+            deleteLocalStorage('editDojoListing');
+            $state.go('my-dojos');
+            $scope.$apply();
+          });
+        }
+
+      }, function (err) {
+        alertService.showError(
+          $translate.instant('An error has occurred while saving') + ': <br /> ' +
+          (err.error || JSON.stringify(err))
+        );
+      });
+    }
+
     function finish() {
       canUpdateDojo().then(function (isDojoAdmin) {
         if (isDojoAdmin) {
-          _.each(sanitizeCdForms.editDojo, function (item, i) {
-            if (_.has(dojo, item)) {
-              dojo[item] = $sanitize(dojo[item]);
-            }
-          });
+          if($scope.originalDojoListing.alpha2 !== $scope.dojo.alpha2 ||
+            $scope.originalDojoListing.admin1Name !== $scope.dojo.admin1Name ||
+            $scope.originalDojoListing.placeName !== $scope.dojo.placeName ||
+            $scope.originalDojoListing.name !== $scope.dojo.name){
 
-          dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
-          dojo.editDojoFlag = true;
-          cdDojoService.save(dojo, function (response) {
-            if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
-              cdDojoService.updateFounder($scope.founder, function (response) {
-                alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
-                  deleteLocalStorage('editDojoListing');
-                  $state.go('my-dojos');
-                  $scope.$apply();
-                });
-              }, function (err) {
-                alertService.showError($translate.instant('An error has occurred while saving'));
-              });
-            } else {
-              alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
-                deleteLocalStorage('editDojoListing');
-                $state.go('my-dojos');
-                $scope.$apply();
-              });
-            }
 
-          }, function (err) {
-            alertService.showError(
-              $translate.instant('An error has occurred while saving') + ': <br /> ' +
-              (err.error || JSON.stringify(err))
-            );
-          });
+            var options = {
+              message: $translate.instant('By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?'),
+              title: $translate.instant('Confirmation'),
+              buttons: {
+                success: {
+                  label: $translate.instant('Yes'),
+                  className: "btn-primary",
+                  callback: function() {
+                    saveDojo();
+                  }
+                },
+                warning: {
+                  label: $translate.instant('No'),
+                  className: "btn-warning",
+                  callback: function() {
+                  }
+                }
+              }
+            };
+
+            $ngBootbox.customDialog(options);
+          } else{
+            saveDojo();
+          }
+
         } else {
           alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
         }
       });
     }
-  }
+  };
 
   $scope.addMarker = function ($event, $params, dojo) {
     $scope.markerPlaced = true;
@@ -392,5 +426,5 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', cdEditDojoCtrl]);
+    '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
 

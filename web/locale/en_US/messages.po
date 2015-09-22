@@ -2301,3 +2301,6 @@ msgstr "Charter already signed."
 
 msgid "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
 msgstr "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
+
+msgid "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
+msgstr "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
