@@ -110,7 +110,8 @@
           params: {
             bannerType: null,
             bannerMessage: null,
-            bannerTimeCollapse: null
+            bannerTimeCollapse: null,
+            pageTitle: "Home"
           },
           controller: 'dojos-map-controller'
         })
@@ -123,7 +124,8 @@
           params: {
             bannerType: null,
             bannerMessage: null,
-            bannerTimeCollapse: null
+            bannerTimeCollapse: null,
+            pageTitle: "Home"
           },
           controller: 'dojos-map-controller'
         })
@@ -420,6 +422,16 @@
     })
     .run(function (Idle){
       Idle.watch();
+    })
+    .run(function($rootScope){
+      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        var pageTitle = "";
+        if(toParams.pageTitle) {
+          pageTitle += toParams.pageTitle + " - ";
+        }
+        pageTitle += "CoderDojo Zen";
+        $rootScope.pageTitle = pageTitle;
+      });
     })
     .controller('cdDashboardCtrl', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
       $scope.$on('IdleTimeout', function() {

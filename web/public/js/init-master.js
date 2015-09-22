@@ -145,7 +145,8 @@
           },
           params: {
             bannerType: null,
-            bannerMessage: null
+            bannerMessage: null,
+            pageTitle: "Home"
           },
           controller: 'dojos-map-controller'
         })
@@ -283,6 +284,16 @@
         'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
       doc.head.appendChild(googleCaptchaScriptTag);
       tmhDynamicLocale.set(userLangCode);
+    })
+    .run(function($rootScope){
+      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        var pageTitle = "";
+        if(toParams.pageTitle) {
+          pageTitle += toParams.pageTitle + " - ";
+        }
+        pageTitle += "CoderDojo Zen";
+        $rootScope.pageTitle = pageTitle;
+      });
     })
     .service('cdApi', seneca.ng.web({
       prefix: '/api/1.0/'
