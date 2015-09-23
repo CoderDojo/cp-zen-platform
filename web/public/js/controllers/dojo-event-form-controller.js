@@ -179,10 +179,6 @@
 
     $scope.eventInfo.invites = [];
 
-    $scope.loadUsers = function(query) {
-      return $scope.dojoUsers;
-    };
-
     $scope.cancel = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -194,7 +190,7 @@
       if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
-        tickets: []
+        tickets: [{name: null, type: null, quantity: null}]
       };
       $scope.eventInfo.sessions.push(session);
     };

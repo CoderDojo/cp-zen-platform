@@ -172,8 +172,8 @@
           </button>
          
           <div class="form-group">
-            <label for="sessionName">{@i18n key="Session/room name"/}*:</label>
-            <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+            <label for="session-{{ sessionIndex }}-sessionName">{@i18n key="Session/room name"/}*:</label>
+            <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="session-{{ sessionIndex }}-sessionName" class="form-control" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
           </div>
 
           <div class="form-group">
@@ -231,19 +231,6 @@
     </div>
 
     <hr />
-
-    <div class="form-group">
-      <label for="invites">{@i18n key="Invites"/}:</label>
-      <tags-input add-from-autocomplete-only="true"
-                  key-property="id"
-                  display-property="name"
-                  placeholder="{@i18n key="Invite dojo users"/}"
-                  ng-model="eventInfo.invites"
-                  name="invites"
-                  id="invites">
-        <auto-complete source="loadUsers($query)" display-property="name" max-results-to-show="9999" min-length="1"></auto-complete>
-      </tags-input>
-    </div>
 
     <div class="row">
       <div class="col-lg-12">

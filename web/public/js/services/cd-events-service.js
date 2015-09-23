@@ -24,9 +24,6 @@ function cdEventsService(cdApi, $q){
     searchApplications: function(query, win, fail) {
       cdApi.post('events/applications/search', {query: query}, win, fail || topfail);
     },
-    bulkUpdateApplications: function(applications, win, fail) {
-      cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail || topfail);
-    },
     removeApplicant: function(application, win, fail) {
       cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
     },
