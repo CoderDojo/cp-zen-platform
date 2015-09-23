@@ -290,7 +290,7 @@
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         var pageTitle = "";
         if(toParams.pageTitle) {
-          pageTitle += $filter('translate')(toParams.pageTitle) + " - ";
+          pageTitle += $filter('translate')(toParams.pageTitle) + " | ";
         }
         pageTitle += "CoderDojo Zen";
         $rootScope.pageTitle = pageTitle;
