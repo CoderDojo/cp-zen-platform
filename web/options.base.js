@@ -46,7 +46,7 @@ var log = function () {
 };
 
 function cdfAdmins() {
-  var admins = process.env.CDF_ADMINS || '';
+  var admins = process.env.FORUM_MODS || '';
   return admins.split(',');
 }
 
