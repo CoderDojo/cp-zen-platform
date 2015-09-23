@@ -372,7 +372,7 @@
     .config(function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     })
-    .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, alertService) {
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
@@ -392,8 +392,15 @@
           }
         }
       });
-      $rootScope.$on('$stateChangeSuccess', function () {
+      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
+        
+        var pageTitle = "";
+        if(toParams.pageTitle) {
+          pageTitle += $filter('translate')(toParams.pageTitle) + " - ";
+        }
+        pageTitle += "CoderDojo Zen";
+        $rootScope.pageTitle = pageTitle;
       });
     })
     .run(function ($window, $cookieStore, tmhDynamicLocale) {
@@ -422,16 +429,6 @@
     })
     .run(function (Idle){
       Idle.watch();
-    })
-    .run(function($rootScope, $filter){
-      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        var pageTitle = "";
-        if(toParams.pageTitle) {
-          pageTitle += $filter('translate')(toParams.pageTitle) + " - ";
-        }
-        pageTitle += "CoderDojo Zen";
-        $rootScope.pageTitle = pageTitle;
-      });
     })
     .controller('cdDashboardCtrl', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
       $scope.$on('IdleTimeout', function() {
