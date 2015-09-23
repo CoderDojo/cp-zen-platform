@@ -61,6 +61,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
         fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
       }).progress(function (evt) {
       }).success(function (data, status, headers, config) {
+        if(data.ok === false) return alertService.showError($translate.instant(data.why));
         cdUsersService.getAvatar($scope.profile.id, function (response) {
           $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
         })

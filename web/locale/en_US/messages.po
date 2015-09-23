@@ -2304,3 +2304,9 @@ msgstr "Your profile image is too large. Please resize to a maximum of 640/640 p
 
 msgid "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
 msgstr "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
+
+msgid "Avatar upload: file must be an image."
+msgstr "Avatar upload: file must be an image."
+
+msgid "Avatar upload: max file size of 5MB exceeded."
+msgstr "Avatar upload: max file size of 5MB exceeded."
