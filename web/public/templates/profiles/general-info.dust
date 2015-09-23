@@ -8,19 +8,19 @@
         <p ng-if="profile.notes">{{ profile.notes }}</p>
       </div>
       <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="fullname" class="col-sm-4 control-label">{@i18n key="Name"/}* </label>
           <div class="col-sm-8">
             <input name="fullname" type="text" required required-message="'Name is required'" class="form-control" id="fullname" placeholder="{@i18n key="Name"/}" ng-model="profile.name">
           </div>
         </div>
-        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])">
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])" ng-enter="noop()">
           <label for="alias" class="col-sm-4 control-label">{@i18n key="Alias"/}* </label>
           <div class="col-sm-8">
             <input type="text" name="alias" class="form-control" placeholder="{@i18n key="Alias"/}" ng-model="profile.alias">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
             <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="picker.opened" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event)" />
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
             <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)" required>
@@ -45,7 +45,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
             <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
@@ -66,25 +66,25 @@
             <textarea rows="5" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="email" class="col-sm-4 control-label">{@i18n key="Email"/}<span ng-if="profile.userTypes.indexOf('attendee-u13') === -1">*</span></label>
           <div class="col-sm-8">
             <input type="email" ng-required="profile.userTypes.indexOf('attendee-u13') === -1" required-message="'{@i18n key="Email is required"/}'" class="form-control" id="email" name="email" ng-required="true" placeholder="{@i18n key="Email"/}" ng-model="profile.email">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="phone" class="col-sm-4 control-label">{@i18n key="Phone"/} </label>
           <div class="col-sm-8">
             <input type="tel" autocomplete="off" utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js" name="phone" international-phone-number class="form-control" id="phone" ng-model="profile.phone">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="linkedin" class="col-sm-4 control-label">{@i18n key="Linkedin"/} </label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="linkedin" placeholder="{@i18n key="e.g. linkedin.com/company/coderdojo"/}" ng-model="profile.linkedin">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-enter="noop()">
           <label for="twitter" class="col-sm-4 control-label">{@i18n key="Twitter"/} </label>
           <div class="col-sm-8">
             <input type="text" class="form-control" id="twitter" placeholder="{@i18n key="e.g. twitter.com/@CoderDojo"/}" ng-model="profile.twitter">
@@ -102,7 +102,7 @@
             <textarea class="form-control" ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></textarea>
           </div>
         </div>
-        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])" ng-enter="noop()">
           <label for="programmingLanguages" class="col-sm-4 control-label">{@i18n key="Programming Languages"/} </label>
           <div class="col-sm-8">
             <tags-input ng-model="profile.programmingLanguages" add-from-autocomplete-only="true" add-on-enter="true" min-length=1 placeholder="{@i18n key="Programming Languages"/}">
@@ -110,7 +110,7 @@
             </tags-input>
           </div>
         </div>
-        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])" ng-enter="noop()">
           <label for="languagesSpoken" class="col-sm-4 control-label">{@i18n key="Languages Spoken"/} </label>
           <div class="col-sm-8">
             <tags-input ng-model="profile.languagesSpoken"  placeholder="{@i18n key="Languages Spoken"/}"></tags-input>
@@ -153,13 +153,13 @@
           </div>
         </div>
         <div ng-if="hasAccess(profile.userTypes, ['attendee-o13']) && !profile.id">
-          <div class="form-group">
+          <div class="form-group" ng-enter="noop()">
             <label for="password" class="col-sm-4 control-label">{@i18n key="Password"/} </label>
             <div class="col-sm-8">
               <input type="password" class="form-control" name="password" validator="validatePassword(profile.password, profile.email)" required required-message="'{@i18n key="Password is empty"/}'" invalid-message="invalidPasswordMessage" ng-model="profile.password" autocomplete="off" placeholder="{@i18n key="PASSWORD"/}"/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-enter="noop()">
             <label for="password" class="col-sm-4 control-label">{@i18n key="Confirm Password"/} </label>
             <div class="col-sm-8">
               <input type="password" class="form-control" ng-model="profile.passwordConfirm" autocomplete="off" invalid-message="'{@i18n key="Passwords do not match"/}'" validator="matchesPassword(profile.password, profile.passwordConfirm)" required required-message="'{@i18n key="Confirm Password is empty"/}'" invalid-message="invalidConfirmPasswordMessage" validate-on="dirty" name="passConfirmField" placeholder="{@i18n key="CONFIRM PASSWORD"/}"/>

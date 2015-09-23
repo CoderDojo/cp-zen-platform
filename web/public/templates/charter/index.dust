@@ -3,7 +3,7 @@
     <div class="col-lg-12 cd-text-heading1 cd-charter">
       {>"charter/charter-info" /}
       <form id="charterForm" novalidate angular-validator angular-validator-submit="acceptCharterAgreement(agreement)" name="charterForm">
-        <div class="row cd-input-row">
+        <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
             <label for="agreedToBy" class="col-lg-4 text-right">{@i18n key="Full Name:"/}</label>
             <div class="col-lg-6">
