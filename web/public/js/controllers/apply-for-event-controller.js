@@ -38,7 +38,7 @@ function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, 
   };
 
   $scope.goToGoogleMaps = function (position) {
-    $window.open('http://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
+    $window.open('https://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
   };
 
 }

@@ -476,8 +476,8 @@ msgstr "Media (newspaper/radio)"
 msgid "Other"
 msgstr "Other"
 
-msgid "Hello World Foundation charter for CoderDojo"
-msgstr "Hello World Foundation charter for CoderDojo"
+msgid "CoderDojo Foundation charter for CoderDojo"
+msgstr "CoderDojo Foundation charter for CoderDojo"
 
 msgid "All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."
 msgstr "All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."
@@ -518,26 +518,26 @@ msgstr "We commit to encouraging collaboration, peer to peer mentoring and proje
 msgid "We commit to welcoming volunteers and children regardless of gender, race, sexual orientation, creed, religion or ability."
 msgstr "We commit to welcoming volunteers and children regardless of gender, race, sexual orientation, creed, religion or ability."
 
-msgid "Hello World Foundation (HWF) commitments to you:"
-msgstr "Hello World Foundation (HWF) commitments to you:"
+msgid "CoderDojo Foundation (CDF) commitments to you:"
+msgstr "CoderDojo Foundation (CDF) commitments to you:"
 
-msgid "HWF commits to act in the interest of the global CoderDojo community"
-msgstr "HWF commits to act in the interest of the global CoderDojo community"
+msgid "CDF commits to act in the interest of the global CoderDojo community"
+msgstr "CDF commits to act in the interest of the global CoderDojo community"
 
-msgid "HWF commits to facilitating the community to share its knowledge"
-msgstr "HWF commits to facilitating the community to share its knowledge"
+msgid "CDF commits to facilitating the community to share its knowledge"
+msgstr "CDF commits to facilitating the community to share its knowledge"
 
-msgid "HWF commits to sharing our resources for free"
-msgstr "HWF commits to sharing our resources for free"
+msgid "CDF commits to sharing our resources for free"
+msgstr "CDF commits to sharing our resources for free"
 
-msgid "HWF commits to encouraging active involvement in our organisation"
-msgstr "HWF commits to encouraging active involvement in our organisation"
+msgid "CDF commits to encouraging active involvement in our organisation"
+msgstr "CDF commits to encouraging active involvement in our organisation"
 
 msgid "Agreement"
 msgstr "Agreement"
 
-msgid "On registration you are making an agreement with the Hello World Foundation and agreeing to follow the CoderDojo ethos."
-msgstr "On registration you are making an agreement with the Hello World Foundation and agreeing to follow the CoderDojo ethos."
+msgid "On registration you are making an agreement with the CoderDojo Foundation and agreeing to follow the CoderDojo ethos."
+msgstr "On registration you are making an agreement with the CoderDojo Foundation and agreeing to follow the CoderDojo ethos."
 
 msgid "You are entitled to use the CoderDojo name, logo and website to promote your activity for non commercial use"
 msgstr "You are entitled to use the CoderDojo name, logo and website to promote your activity for non commercial use"
@@ -548,26 +548,26 @@ msgstr "You are entitled to fundraise on the condition that it is made explicit 
 msgid "It is your responsibility to ensure you are compliant with legislation in your jurisdiction when undertaking any activities, including fundraising, for your Dojo or group of Dojos."
 msgstr "It is your responsibility to ensure you are compliant with legislation in your jurisdiction when undertaking any activities, including fundraising, for your Dojo or group of Dojos."
 
-msgid "If the terms of this Charter are breached, Hello World Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
-msgstr "If the terms of this Charter are breached, Hello World Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
+msgid "If the terms of this Charter are breached, CoderDojo Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
+msgstr "If the terms of this Charter are breached, CoderDojo Foundation retains the right to remove the group from the website. In this case your coding club shall cease using the CoderDojo name, brand and logo in the promotion of your coding club and on third party websites."
 
-msgid "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of Hello World Foundation."
-msgstr "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of Hello World Foundation."
+msgid "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of CoderDojo Foundation."
+msgstr "Opinions expressed by any individual Dojo or people in the registered Dojo do not represent the views of CoderDojo Foundation."
 
-msgid "Hello World Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
-msgstr "Hello World Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
+msgid "CoderDojo Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
+msgstr "CoderDojo Foundation may terminate this Charter with any Dojo without cause on thirty days' notice."
 
-msgid "As Hello World Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
-msgstr "As Hello World Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
+msgid "As CoderDojo Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
+msgstr "As CoderDojo Foundation is an Irish entity, this Charter is subject to Irish law and you agree to that."
 
 msgid "Disclaimer of Liability"
 msgstr "Disclaimer of Liability"
 
-msgid "Hello World Foundation and CoderDojo accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
-msgstr "Hello World Foundation and CoderDojo accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
+msgid "CoderDojo Foundation accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
+msgstr "CoderDojo Foundation accepts no responsibility or liability whatsoever where a party is injured while engaging in the activities of a registered group. It is the responsibility of each club to ensure they maintain valid and appropriate insurance."
 
-msgid "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
-msgstr "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the Hello World Foundation."
+msgid "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the CoderDojo Foundation."
+msgstr "You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the CoderDojo Foundation."
 
 msgid "There are unsaved changes on this page"
 msgstr "There are unsaved changes on this page"
@@ -780,20 +780,20 @@ msgstr "Mentors needed!"
 msgid "Current Stage"
 msgstr "Current Stage"
 
-msgid "in planning"
-msgstr "in planning"
+msgid "In planning"
+msgstr "In planning"
 
-msgid "open, come along"
-msgstr "open, come along"
+msgid "Open, come along"
+msgstr "Open, come along"
 
-msgid "register ahead"
-msgstr "register ahead"
+msgid "Register ahead"
+msgstr "Register ahead"
 
-msgid "inactive"
-msgstr "inactive"
+msgid "Inactive"
+msgstr "Inactive"
 
-msgid "full up"
-msgstr "full up"
+msgid "Full up"
+msgstr "Full up"
 
 msgid "Private"
 msgstr "Private"
@@ -996,8 +996,8 @@ msgstr "Thank you for submitting your dojo listing."
 msgid "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 msgstr "A member from the CoderDojo Foundation team will review your listing and be in touch shortly."
 
-msgid "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
-msgstr "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"
+msgid "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure it's 570px in width"
+msgstr "If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure it's 570px in width"
 
 msgid "persons have signed the current version of the charter"
 msgstr "persons have signed the current version of the charter"
@@ -1113,8 +1113,8 @@ msgstr "A laptop. Borrow one from somebody if needs be."
 msgid "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
-msgid "Invite Request Sent"
-msgstr "Invite Request Sent!"
+msgid "Join Request Sent"
+msgstr "Join Request Sent!"
 
 msgid "Successfully Joined Dojo"
 msgstr "Successfully Joined Dojo!"
@@ -2427,3 +2427,15 @@ msgstr "Cancel Session"
 
 msgid "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
 msgstr "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
+
+msgid "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
+msgstr "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
+
+msgid "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
+msgstr "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?"
+
+msgid "Avatar upload: file must be an image."
+msgstr "Avatar upload: file must be an image."
+
+msgid "Avatar upload: max file size of 5MB exceeded."
+msgstr "Avatar upload: max file size of 5MB exceeded."
