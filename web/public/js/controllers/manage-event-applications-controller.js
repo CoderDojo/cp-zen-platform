@@ -49,13 +49,47 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
     {name: 'other', title: 'Other'}
   ];
 
-  cdEventsService.getEvent(eventId, function (response) {
-    $scope.event = response;
-    $scope.event.capacity = 0;
-    _.each(response.dates, function (eventDateObj) {
+  cdEventsService.getEvent(eventId, function (event) {
+    var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
+    var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+
+    var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+    var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+
+    if(event.type === 'recurring') {
+      event.formattedDates = [];
+      _.each(event.dates, function (eventDate) {
+        event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
+      });
+
+      event.day = moment(startDate).format('dddd');
+      event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+
+      if(event.recurringType === 'weekly') {
+        event.formattedRecurringType = $translate.instant('Weekly');
+        event.formattedDate = $translate.instant('Weekly') + " " +
+          $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+          $translate.instant('at') + " " + event.time;
+      } else {
+        event.formattedRecurringType = $translate.instant('Every two weeks');
+        event.formattedDate = $translate.instant('Every two weeks') + " " +
+          $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+          $translate.instant('at') + " " + event.time;
+      }
+    } else {
+      //One-off event
+      event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+        moment(startDate).format('HH:mm') +  ' - ' +
+        moment(endDate).format('HH:mm');
+    }
+
+    _.each(event.dates, function (eventDateObj) {
       var date = moment(eventDateObj.startTime).format('Do MMMM YY');
       applicationCheckInDates.push(date);
     });
+
+    $scope.event = event;
+    $scope.event.capacity = 0;
 
     cdEventsService.searchSessions({eventId: eventId, status: 'active'}, function (sessions) {
       $scope.event.sessions = sessions;
@@ -116,8 +150,6 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
     $scope.approved = {};
     $scope.checkedIn = {};
     $scope.sort = $scope.sort ? $scope.sort: {created: 1};
-    $scope.sessionStats[sessionId].attending = 0;
-    $scope.sessionStats[sessionId].waitlist = 0;
 
     var query = _.omit({
       sessionId: sessionId,
@@ -136,6 +168,9 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
 
     cdEventsService.searchApplications(_.extend({sessionId: sessionId, deleted: false}, $scope.filter), function (result) {
       $scope.pagination.totalItems = result.length;
+      $scope.sessionStats[sessionId].attending = 0;
+      $scope.sessionStats[sessionId].waitlist = 0;
+      
       _.each(result, function (application) {
         if (application.status === 'approved') {
           $scope.sessionStats[sessionId].attending++;
@@ -272,7 +307,11 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
     }
 
     application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
-    application.emailSubject = $translate.instant('Event application approved');
+    application.emailSubject = {
+      'request':  $translate.instant('Your ticket request for'),
+      'received': $translate.instant('has been received'), 
+      'approved': $translate.instant('has been approved') 
+    };
     cdEventsService.bulkApplyApplications([application], function (applications) {
       if(_.isEmpty(applications)) return;
       if (applications[0].status === 'approved' || applications[0].attended) {
@@ -365,7 +404,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
 
   $scope.cancelSession = function (session) {
     session.status = 'cancelled';
-    cdEventsService.cancelSession(session.id, function (response) {
+    session.emailSubject = $translate.instant('has been cancelled');
+    cdEventsService.cancelSession(session, function (response) {
       $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
       alertService.showAlert($translate.instant('Session successfully cancelled.'));
     }, function (err) {

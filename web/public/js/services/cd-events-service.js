@@ -52,8 +52,8 @@ function cdEventsService(cdApi, $q){
     saveSession: function(session, win, fail) {
       cdApi.post('events/save_session', {session: session}, win, fail || topfail);
     },
-    cancelSession: function(sessionId, win, fail) {
-      cdApi.get('events/cancel_session/' + sessionId, win, fail || topfail);
+    cancelSession: function(session, win, fail) {
+      cdApi.post('events/cancel_session', {session: session}, win, fail || topfail);
     }
   };
 }

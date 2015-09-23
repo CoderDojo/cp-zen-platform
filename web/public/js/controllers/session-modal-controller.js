@@ -23,8 +23,7 @@
     $scope.sessionApplication = {
       eventId: $scope.event.id,
       sessionId: session.id,
-      tickets: {},
-      emailSubject: $translate.instant('Event application received')
+      tickets: {}
     };
     
     _.each($scope.session.tickets, function (ticket) {
@@ -43,7 +42,7 @@
     $scope.applyForEvent = function (sessionApplication) {
       usSpinnerService.spin('dojo-session-spinner');
       var applications = []
-      _.each(_.keys(sessionApplication.tickets), function (ticket) {
+      _.each(_.keys(sessionApplication.tickets), function (ticket, index) {
         _.each(sessionApplication.tickets[ticket], function (userIds) {
           var ticketFound = _.find($scope.session.tickets, function (ticketObj) {
             return ticketObj.name  === ticket;
@@ -55,6 +54,13 @@
             ticketType: ticketFound.type,
             userId: userIds.userId
           };
+          if(index === 0) {
+            application.emailSubject = {
+              'request':  $translate.instant('Your ticket request for'),
+              'received': $translate.instant('has been received'), 
+              'approved': $translate.instant('has been approved') 
+            };
+          }
           applications.push(application);
         });
       });

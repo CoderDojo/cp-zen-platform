@@ -2439,3 +2439,15 @@ msgstr "Avatar upload: file must be an image."
 
 msgid "Avatar upload: max file size of 5MB exceeded."
 msgstr "Avatar upload: max file size of 5MB exceeded."
+
+msgid "has been cancelled"
+msgstr "has been cancelled"
+
+msgid "Your ticket request for"
+msgstr "Your ticket request for"
+
+msgid "has been received"
+msgstr "has been received"
+
+msgid "has been approved"
+msgstr "has been approved"
