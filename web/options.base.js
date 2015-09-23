@@ -45,9 +45,9 @@ var log = function () {
   };
 };
 
-function cdfAdmins() {
-  var admins = process.env.FORUM_MODS || '';
-  return admins.split(',');
+function forumModerators() {
+  var moderators = process.env.FORUM_MODS || '';
+  return moderators.split(',');
 }
 
 module.exports = {
@@ -105,7 +105,7 @@ module.exports = {
   webclient: {
     adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
     youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567',
-    forumModerators: cdfAdmins()
+    forumModerators: forumModerators()
   }
 
 };
