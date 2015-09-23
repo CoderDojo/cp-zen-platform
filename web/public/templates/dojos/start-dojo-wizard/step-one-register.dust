@@ -1,8 +1,8 @@
 <div id="main" class="user-registration cd-color-4-underline">
-  <form id="user-registration-form" ng-enter="noop()" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
+  <form id="user-registration-form" name="registerForm" novalidate angular-validator angular-validator-submit="doRegister(registerUser)" role="form" class="form-horizonal">
     <legend>{@i18n key="Register"/}</legend>
     <div class="row"></div>
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="text" class="form-control" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="registerUser.name" placeholder="{@i18n key="Full name"/}">
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="email" class="form-control" name="emailAddress" required required-message="'{@i18n key="Email is empty"/}'" ng-model="registerUser.email" placeholder="{@i18n key="Email"/}">
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="password" class="form-control" name="password" ng-model="registerUser.password" autocomplete="off" required required-message="'{@i18n key="Password is empty"/}'" validator="validatePassword(registerUser.password, registerUser.email)" invalid-message="invalidPasswordMessage" placeholder="{@i18n key="Password"/}">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <input type="password" class="form-control" name="passConfirmField" ng-model="passwordConfirm" autocomplete="off" required required-message="'{@i18n key="Confirm Password is empty"/}'" validator="matchesPassword(registerUser.password, passwordConfirm)" invalid-message="invalidConfirmPasswordMessage" placeholder="{@i18n key="Confirm password"/}">
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
           <ui-select name="initUserType" ng-disabled="onStartDojoWizard" ng-model="registerUser.initUserType" required>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <div class="checkbox cd-checkbox checkbox-primary">
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="row cd-input-row">
+    <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <div class="col-lg-offset-3 col-lg-6">
           <div vc-recaptcha key="recap.publicKey" on-success="setRecaptchaResponse(response)" on-expire="recaptchaExpired()"></div>
