@@ -2311,6 +2311,7 @@ msgstr "Avatar upload: file must be an image."
 msgid "Avatar upload: max file size of 5MB exceeded."
 msgstr "Avatar upload: max file size of 5MB exceeded."
 
+<<<<<<< HEAD
 msgid "Home"
 msgstr "Home"
 
@@ -2343,3 +2344,37 @@ msgstr "Terms & Conditions"
 
 msgid "Edit Event"
 msgstr "Edit Event"
+
+msgid "Please explain how your team was background checked"
+msgstr "Please explain how your team was background checked"
+
+msgid "Please explain how your Dojo has met health and safety best practices"
+msgstr "Please explain how your Dojo has met health and safety best practices"
+
+msgid "Please explain the situation with public liability in your Dojo"
+msgstr "Please explain the situation with public liability in your Dojo"
+
+msgid "Please describe how many technical mentors you have and any other relevant information."
+msgstr "Please describe how many technical mentors you have and any other relevant information."
+
+msgid "Please describe how many non-technical mentors you have and any other relevant information."
+msgstr "Please describe how many non-technical mentors you have and any other relevant information."
+
+msgid "Please let us know how many technical mentors you have"
+msgstr "Please let us know how many technical mentors you have"
+
+msgid "Please let us know how many non-technical mentors you have"
+msgstr "Please let us know how many non-technical mentors you have"
+
+msgid "Please describe your venue and any other relevant info - you can even add a link to google maps!"
+msgstr "Please describe your venue and any other relevant info - you can even add a link to google maps!"
+
+msgid "Please describe your venue"
+msgstr "Please describe your venue"
+
+msgid "Please let us know when you plan to start and how regularly you plan to run"
+msgstr "Please let us know when you plan to start and how regularly you plan to run"
+
+msgid "Please let us know your launch date and time"
+msgstr "Please let us know your launch date and time"
+
