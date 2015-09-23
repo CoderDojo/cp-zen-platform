@@ -51,7 +51,7 @@
           <td> {{ application.ticketName }}</td>
           <td> {{ application.ticketType }}</td>
           <td> {{ application.dateApplied }}</td>
-          <td> {{ application.age }}</td>
+          <td><span ng-if="application.age">{{ application.age }}</span></td>
           <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
           <td> 
             <div class="checkbox">
