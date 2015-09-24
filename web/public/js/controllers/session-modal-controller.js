@@ -54,16 +54,14 @@
             ticketType: ticketFound.type,
             userId: userIds.userId
           };
-          if(index === 0) {
-            application.emailSubject = {
-              'request':  $translate.instant('Your ticket request for'),
-              'received': $translate.instant('has been received'), 
-              'approved': $translate.instant('has been approved') 
-            };
-          }
           applications.push(application);
         });
       });
+      applications[0].emailSubject = {
+        'request':  $translate.instant('Your ticket request for'),
+        'received': $translate.instant('has been received'), 
+        'approved': $translate.instant('has been approved') 
+      };
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
         $modalInstance.close(response);
