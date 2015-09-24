@@ -2311,7 +2311,6 @@ msgstr "Avatar upload: file must be an image."
 msgid "Avatar upload: max file size of 5MB exceeded."
 msgstr "Avatar upload: max file size of 5MB exceeded."
 
-<<<<<<< HEAD
 msgid "Home"
 msgstr "Home"
 

@@ -40,8 +40,8 @@
                           </li>
                         </ul>
                         <input type="text" ng-if="checkboxInput.textField === true" ng-show="setupDojo[checkboxInput.name] === true"
-                        class="cd-checkbox-input form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}" name="setupDojo[checkboxInput.name + 'Text']" id="setupDojo[checkboxInput.name + 'Text']"
-                        ng-required="checkboxInput.textFieldRequired === true" required-message="'{@i18n key="{{ checkboxInput.requiredTextFieldMessage }}"/}'"
+                        class="cd-checkbox-input form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}" name="{{ checkboxInput.name }}-text" id="setupDojo[checkboxInput.name + 'Text']"
+                        ng-required="checkboxInput.textFieldRequired &&checkboxInput.required" required-message="'{@i18n key="{{ checkboxInput.requiredTextFieldMessage }}"/}'"
                         ng-model="setupDojo[checkboxInput.name + 'Text']" ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name + 'Text', setupDojo[checkboxInput.name + 'Text'])">
                       </span>
                     </div>
