@@ -337,7 +337,7 @@
           })
         } else { //add empty map
           cdDojoService.loadCountriesLatLongData(function(countries){
-            var country = countries[dojoInfo.alpha2];
+            var country = countries[dojo.alpha2];
             addMap({
               lat: country[0],
               lng: country[1]
