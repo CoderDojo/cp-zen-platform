@@ -394,9 +394,9 @@
 
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
-
-        var startTime = _.first(event.dates).startTime;
-        var endTime = _.last(event.dates).endTime;
+        
+        var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
+        var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var startDateUtcOffset = moment(startTime).utcOffset();
         var endDateUtcOffset = moment(endTime).utcOffset();
@@ -405,7 +405,8 @@
         event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = new Date(startTime);
-        event.toDate = new Date(_.last(event.dates).startTime);
+        var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
+        event.toDate = new Date(lastEventOcurrance);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
