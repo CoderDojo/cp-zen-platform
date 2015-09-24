@@ -211,6 +211,7 @@
     };
 
     $scope.removeSession = function ($index) {
+      if($scope.eventInfo.sessions.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one session.'));
       return $scope.eventInfo.sessions.splice($index, 1);
     };
 

@@ -2451,3 +2451,6 @@ msgstr "has been received"
 
 msgid "has been approved"
 msgstr "has been approved"
+
+msgid "Your event must contain at least one session."
+msgstr "Your event must contain at least one session."
