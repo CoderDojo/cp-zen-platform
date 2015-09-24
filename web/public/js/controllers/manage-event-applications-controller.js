@@ -93,7 +93,7 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
     $scope.event = event;
     $scope.event.capacity = 0;
 
-    cdEventsService.searchSessions({eventId: eventId, status: 'active'}, function (sessions) {
+    cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
       $scope.event.sessions = sessions;
       _.each($scope.event.sessions, function (session, index) {
         if(!$scope.sessionStats[session.id]) $scope.sessionStats[session.id] = {};

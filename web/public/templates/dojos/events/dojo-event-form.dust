@@ -207,7 +207,7 @@
                       ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
                   </div>
                 </td>
-                <td><input type="number" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'"></td>
+                <td><input type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'"></td>
                 <td><span ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="glyphicon glyphicon-remove-sign pointer color-red custom-remove-icon"></span></td>
               </tr>
             </tbody>
