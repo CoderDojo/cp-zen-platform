@@ -78,7 +78,6 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
-    var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
@@ -410,7 +409,8 @@
 
     function isEventInPast(dateObj) {
       var now = moment.utc();
-      var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
+      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
+      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
 
       return now.isAfter(start);
     }
