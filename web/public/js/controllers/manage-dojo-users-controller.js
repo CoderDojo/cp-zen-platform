@@ -19,6 +19,11 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.invite = {};
   $scope.queryModel = {};
 
+  initUserTypes.data = _.map(initUserTypes.data, function(userType){
+    userType.title = $translate.instant(userType.title);
+    return userType;
+  });
+
   var user = currentUser.data;
   $scope.currentUser = user;
   //Show 404 if current user has no permission to view this page
@@ -192,6 +197,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         return userType.title;
       })
       .value();
+
     return filteredUserTypes;
   }
 

@@ -113,7 +113,8 @@
           params: {
             bannerType: null,
             bannerMessage: null,
-            bannerTimeCollapse: null
+            bannerTimeCollapse: null,
+            pageTitle: 'Home'
           },
           controller: 'dojos-map-controller'
         })
@@ -126,7 +127,8 @@
           params: {
             bannerType: null,
             bannerMessage: null,
-            bannerTimeCollapse: null
+            bannerTimeCollapse: null,
+            pageTitle: 'Home'
           },
           controller: 'dojos-map-controller'
         })
@@ -134,6 +136,9 @@
           url: "/dashboard/my-dojos",
           templateUrl: '/dojos/template/my-dojos',
           controller: 'my-dojos-controller',
+          params: {
+            pageTitle: 'My Dojos'
+          },
           ncyBreadcrumb: {
             label: '{{myDojosPageTitle}}'
           }
@@ -145,6 +150,9 @@
             gmap: gmap,
             currentUser: resolves.loggedInUser
           },
+          params: {
+            pageTitle: 'Edit Dojo'
+          },
           controller: 'edit-dojo-controller'
         })
         .state("dojo-detail", {
@@ -154,6 +162,9 @@
             dojo: resolveDojo,
             gmap: gmap,
             currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Dojo'
           },
           controller: 'dojo-detail-controller'
         })
@@ -165,17 +176,26 @@
             gmap: gmap,
             currentUser: resolves.loggedInUser
           },
+          params: {
+            pageTitle: 'My Dojos'
+          },
           controller: 'dojo-detail-controller'
         })
         .state("manage-dojos", {
           url: "/dashboard/manage-dojos",
           templateUrl: '/dojos/template/manage-dojos',
+          params: {
+            pageTitle: 'Manage Dojos'
+          },
           controller: 'manage-dojo-controller'
         })
         .state("user-events", {
           url: "/dashboard/dojos/events/user-events",
           templateUrl: '/dojos/template/events/user-events',
           controller: 'user-events-controller',
+          params: {
+            pageTitle: 'My Events'
+          },
           resolve: {
             currentUser: resolves.loggedInUser
           }
@@ -184,6 +204,9 @@
           url: "/:dojoId/events",
           templateUrl: '/dojos/template/events/manage-dojo-events',
           controller: 'manage-dojo-events-controller',
+          params: {
+            pageTitle: 'Manage Dojo Events'
+          },
           ncyBreadcrumb: {
             label: '{{manageDojoEventsPageTitle}}'
           }
@@ -192,6 +215,9 @@
           url: "/:eventId/applications",
           templateUrl: '/dojos/template/events/manage-event-applications',
           controller: 'manage-event-applications-controller',
+          params: {
+            pageTitle: 'Applicants'
+          },
           ncyBreadcrumb: {
             label: '{{manageDojoEventApplicationsPageTitle}}'
           }
@@ -204,6 +230,9 @@
             ticketTypes: resolves.ticketTypes,
             currentUser: resolves.loggedInUser
           },
+          params: {
+            pageTitle: 'Create Event'
+          },
           controller: 'dojo-event-form-controller'
         })
         .state("edit-dojo-event", {
@@ -214,11 +243,17 @@
             ticketTypes: resolves.ticketTypes,
             currentUser: resolves.loggedInUser
           },
+          params: {
+            pageTitle: 'Edit Event'
+          },
           controller: 'dojo-event-form-controller'
         })
         .state("stats", {
           url: "/dashboard/stats",
           templateUrl: '/dojos/template/stats',
+          params: {
+            pageTitle: 'Stats'
+          },
           controller: 'stats-controller'
         })
         .state("start-dojo", {
@@ -227,17 +262,26 @@
           resolve: {
             gmap: gmap
           },
+          params: {
+            pageTitle: 'Start a Dojo'
+          },
           controller: 'start-dojo-wizard-controller'
         })
         .state("review-champion-application", {
           url: "/dashboard/champion-applications/:id",
           templateUrl: '/champion/template/review-application',
+          params: {
+            pageTitle: 'Review Champion Application'
+          },
           controller: 'review-champion-application-controller'
         })
         .state("my-dojos.manage-dojo-users", {
           url: "/dojo/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
+          params: {
+            pageTitle: 'Manage Dojo Users'
+          },
           ncyBreadcrumb: {
             label: '{{manageDojoUsersPageTitle}}'
           },
@@ -249,10 +293,16 @@
 		    .state("setup-dojo", {
           url: "/dashboard/setup-dojo/:id",
           templateUrl: '/dojos/template/setup-dojo',
+          params: {
+            pageTitle: 'Setup Dojo'
+          },
           controller: 'setup-dojo-controller'
         })
         .state('charter',{
           url: '/charter',
+          params: {
+            pageTitle: 'Charter'
+          },
           templateUrl: '/charter/template/charter-info'
         })
         .state('charter-page', {
@@ -263,6 +313,7 @@
             currentUser: resolves.loggedInUser
           },
           params: {
+            pageTitle: 'Charter',
             showBannerMessage: null
           }
         })
@@ -305,21 +356,33 @@
         .state('badges-dashboard', {
           url:'/dashboard/badges',
           controller:'badges-dashboard-controller',
+          params: {
+            pageTitle: 'Badges'
+          },
           templateUrl: '/dojos/template/badges/index'
         })
         .state('accept-badge', {
           url:'/dashboard/badges/accept/:userId/:badgeSlug',
           controller:'accept-badge-controller',
+          params: {
+            pageTitle: 'Accept Badge'
+          },
           templateUrl: '/dojos/template/badges/accept'
         })
         .state('error-404-no-headers', {
           url:'/dashboard/404',
+          params: {
+            pageTitle: 'Page not found'
+          },
           templateUrl: '/errors/template/404_no_headers'
         })
         .state('approve-invite-ninja', {
           url:'/dashboard/approve_invite_ninja/:parentProfileId/:inviteTokenId',
           controller:'approve-invite-ninja-controller',
           templateUrl: '/profiles/template/approve-invite-ninja',
+          params: {
+            pageTitle: 'Approve Ninja'
+          },
           resolve: {
             currentUser: resolves.loggedInUser
           }
@@ -369,7 +432,7 @@
     .config(function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     })
-    .run(function ($rootScope, $state, $cookieStore, $translate, $document, verifyProfileComplete, alertService) {
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
@@ -389,8 +452,15 @@
           }
         }
       });
-      $rootScope.$on('$stateChangeSuccess', function () {
+      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
+
+        var pageTitle = [];
+        if(toParams.pageTitle) {
+          pageTitle.push($filter('translate')(toParams.pageTitle));
+        }
+        pageTitle.push("CoderDojo Zen");
+        $rootScope.pageTitle = pageTitle.join(" | ");
       });
     })
     .run(function ($window, $cookieStore, tmhDynamicLocale) {

@@ -78,7 +78,6 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
-    var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
@@ -275,7 +274,7 @@
         eventInfo.dates = getEveryTargetWeekdayInDateRange(
           eventInfo.fixedStartDateTime,
           eventInfo.fixedEndDateTime,
-          $scope.weekdayPicker.selection.id,
+          null,
           'one-off'
         );
       }
@@ -355,17 +354,22 @@
 
 
     function loadDojo(done) {
-      cdDojoService.load(dojoId, function(dojoInfo) {
-        $scope.eventInfo.country = dojoInfo.country;
-        $scope.eventInfo.city = dojoInfo.place;
-        $scope.eventInfo.address = dojoInfo.address1;
+      cdDojoService.load(dojoId, function(dojo) {
+
+        if(dojo.place && dojo.place.toponymName){
+          dojo.place.nameWithHierarchy = dojo.place.toponymName;
+          delete dojo.place.toponymName;
+        }
+        $scope.eventInfo.country = dojo.country;
+        $scope.eventInfo.city = dojo.place;
+        $scope.eventInfo.address = dojo.address1;
 
         var position = [];
-        if(dojoInfo.coordinates) {
-          position = dojoInfo.coordinates.split(',');
+        if(dojo.coordinates) {
+          position = dojo.coordinates.split(',');
         }
 
-        $scope.dojoInfo = dojoInfo;
+        $scope.dojoInfo = dojo;
 
         if(position && position.length === 2 && !isNaN(utilsService.filterFloat(position[0])) && !isNaN(utilsService.filterFloat(position[1]))) {
           addMap({
@@ -380,7 +384,7 @@
           })
         } else { //add empty map
           cdDojoService.loadCountriesLatLongData(function(countries){
-            var country = countries[dojoInfo.alpha2];
+            var country = countries[dojo.alpha2];
             addMap({
               lat: country[0],
               lng: country[1]
@@ -388,7 +392,7 @@
           }, done)
         }
 
-        done(null, dojoInfo);
+        done(null, dojo);
 
       }, done);
     }
@@ -437,9 +441,9 @@
 
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
-
-        var startTime = _.first(event.dates).startTime;
-        var endTime = _.last(event.dates).endTime;
+        
+        var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
+        var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var startDateUtcOffset = moment(startTime).utcOffset();
         var endDateUtcOffset = moment(endTime).utcOffset();
@@ -448,7 +452,8 @@
         event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = new Date(startTime);
-        event.toDate = new Date(_.last(event.dates).startTime);
+        var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
+        event.toDate = new Date(lastEventOcurrance);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
@@ -478,7 +483,8 @@
 
     function isEventInPast(dateObj) {
       var now = moment.utc();
-      var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
+      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
+      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
 
       return now.isAfter(start);
     }

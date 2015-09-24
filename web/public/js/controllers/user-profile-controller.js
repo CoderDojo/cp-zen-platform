@@ -464,6 +464,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     });
   }
 
+  $scope.loggedInUserIsCDFAdmin = function () {
+    if(!loggedInUser.data) return false;
+    return _.contains(loggedInUser.data.roles, 'cdf-admin');
+  }
+
   $scope.hideProfileBlock = function (block) {
     if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
       if(loggedInUserIsChampion()) return false;
