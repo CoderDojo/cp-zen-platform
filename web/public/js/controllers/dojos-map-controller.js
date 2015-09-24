@@ -101,14 +101,14 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     cdDojoService.load(dojoId, function (response) {
       $scope.viewDojo(response);
     });
-  }
+  };
 
   $scope.openMarkerInfo = function(marker) {
     if (marker.dojoId) {
       $scope.currentMarker = marker;
       $scope.model.markerInfoWindow.open($scope.model.map, marker);
     }
-  }
+  };
 
   $scope.search = function () {
     if (!$scope.search.dojo) return;
@@ -122,8 +122,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
       if (results[0].geometry.bounds) {
         var bounds = results[0].geometry.bounds;
-        $scope.model.map.fitBounds(bounds);
-        searchBounds(location, results[0].geometry.bounds, true, $scope.search.dojo);
+        searchBounds(location, bounds, $scope.search.dojo);
       } else {
         searchNearest(location);
       }
@@ -131,7 +130,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       $scope.searchResult = true;
       $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
     });
-  }
+  };
 
   function clearMarkers() {
     _.each($scope.markers, function (marker) {
@@ -140,16 +139,15 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     $scope.markers = [];
   }
 
-  function searchBounds(location, bounds, fallbackToNearest, search) {
+  function searchBounds(location, bounds, search) {
     var boundsRadius = getBoundsRadius(bounds);
     cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
       if (result.length > 0) {
         $scope.searchResult = result;
-      }
-      else {
-        if (fallbackToNearest) {
-          searchNearest(location);
-        }
+        $scope.model.map.fitBounds(bounds);
+      } else {
+        $scope.searchResult = true;
+        $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
       }
     });
   }
