@@ -205,7 +205,8 @@
           url: "/dashboard/dojo/:dojoId/event-form",
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-event-form-controller'
         })
@@ -213,7 +214,8 @@
           url: "/dashboard/dojo/:dojoId/event-form/:eventId",
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
-            gmap: gmap
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-event-form-controller'
         })
