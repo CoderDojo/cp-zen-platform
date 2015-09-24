@@ -307,17 +307,22 @@
 
 
     function loadDojo(done) {
-      cdDojoService.load(dojoId, function(dojoInfo) {
-        $scope.eventInfo.country = dojoInfo.country;
-        $scope.eventInfo.city = dojoInfo.place;
-        $scope.eventInfo.address = dojoInfo.address1;
+      cdDojoService.load(dojoId, function(dojo) {
+
+        if(dojo.place && dojo.place.toponymName){
+          dojo.place.nameWithHierarchy = dojo.place.toponymName;
+          delete dojo.place.toponymName;
+        }
+        $scope.eventInfo.country = dojo.country;
+        $scope.eventInfo.city = dojo.place;
+        $scope.eventInfo.address = dojo.address1;
 
         var position = [];
-        if(dojoInfo.coordinates) {
-          position = dojoInfo.coordinates.split(',');
+        if(dojo.coordinates) {
+          position = dojo.coordinates.split(',');
         }
 
-        $scope.dojoInfo = dojoInfo;
+        $scope.dojoInfo = dojo;
 
         if(position && position.length === 2 && !isNaN(utilsService.filterFloat(position[0])) && !isNaN(utilsService.filterFloat(position[1]))) {
           addMap({
@@ -340,7 +345,7 @@
           }, done)
         }
 
-        done(null, dojoInfo);
+        done(null, dojo);
 
       }, done);
     }
