@@ -201,7 +201,8 @@
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
             gmap: gmap,
-            ticketTypes: resolves.ticketTypes
+            ticketTypes: resolves.ticketTypes,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-event-form-controller'
         })
@@ -210,7 +211,8 @@
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
             gmap: gmap,
-            ticketTypes: resolves.ticketTypes
+            ticketTypes: resolves.ticketTypes,
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-event-form-controller'
         })

@@ -2,7 +2,7 @@
 /* global google */
 
 function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
-                        $state, $q, $translate, $sanitize, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox) {
+                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox, $sce) {
 
   $scope.dojo = {};
   $scope.model = {};
@@ -284,10 +284,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     }
   };
 
-  var sanitizeCdForms = {
-    editDojo: ["address1", "email", "googleGroup", "name", "needMentors", "notes", "supporterImage", "time", "twitter", "website"]
-  };
-
   $scope.save = function (dojo) {
 
     if ($scope.changedLocation && !$scope.markerPlaced) {
@@ -297,11 +293,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     }
 
     function saveDojo() {
-      _.each(sanitizeCdForms.editDojo, function (item, i) {
-        if (_.has(dojo, item)) {
-          dojo[item] = $sanitize(dojo[item]);
-        }
-      });
 
       dojo.emailSubject = $translate.instant('We created a new Google Email for your Dojo');
       dojo.editDojoFlag = true;
@@ -428,5 +419,5 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', '$sanitize', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', '$sce', cdEditDojoCtrl]);
 

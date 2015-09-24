@@ -75,7 +75,7 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var utcOffset = moment().utcOffset();
@@ -400,6 +400,17 @@
       }, done);
     }
 
+    function validateEventRequest(done) {
+      cdDojoService.getUsersDojos({userId: currentUser.data.id, dojoId: dojoId}, function (usersDojos) {
+        if(_.isEmpty(usersDojos)) return done(new Error('No permissions found'));
+        var ticketingPermissionFound = _.find(usersDojos[0].userPermissions, function (permission) {
+          return permission.name === 'ticketing-admin';
+        });
+        if(!ticketingPermissionFound) return done(new Error('You must have the ticketing admin permission to edit a Dojo event'));
+        return done();
+      });
+    }
+
     function loadDojoUsers(done) {
       cdDojoService.loadDojoUsers({
         dojoId: dojoId,
@@ -473,8 +484,10 @@
     }
 
     if ($stateParams.eventId) {
+      if(_.isEmpty(currentUser.data)) return $state.go('error-404-no-headers');
 
       return async.series([
+        validateEventRequest,
         loadDojoUsers,
         loadUserTypes,
         loadEvent,
@@ -482,15 +495,16 @@
       ], function(err, results) {
         if (err) {
           console.error(err);
+          return $state.go('error-404-no-headers');
+        } else {
+          var eventPosition = results[3].position;
+          addMap(eventPosition);
         }
-
-        var eventPosition = results[2].position;
-
-        addMap(eventPosition);
       });
     }
 
     async.parallel([
+      validateEventRequest,
       loadDojo,
       loadCurrentUser,
       loadDojoUsers,
@@ -498,6 +512,7 @@
     ], function(err, results) {
       if (err) {
         console.error(err);
+        return $state.go('error-404-no-headers');
       }
     });
   }
@@ -517,6 +532,7 @@
       'alertService',
       'utilsService',
       'ticketTypes',
+      'currentUser',
       dojoEventFormCtrl
     ]);
 })();

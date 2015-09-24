@@ -50,6 +50,8 @@ function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $tr
   ];
 
   cdEventsService.getEvent(eventId, function (event) {
+    event.guestListDownloadLink = '/api/1.0/events/export-guest-list/' + event.id;
+
     var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
     var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
 
