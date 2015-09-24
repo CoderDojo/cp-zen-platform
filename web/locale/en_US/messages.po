@@ -2313,3 +2313,33 @@ msgstr "Avatar upload: max file size of 5MB exceeded."
 
 msgid "Home"
 msgstr "Home"
+
+msgid "Edit Dojo"
+msgstr "Edit Dojo"
+
+msgid "My Events"
+msgstr "My Events"
+
+msgid "Review Champion Application"
+msgstr "Review Champion Application"
+
+msgid "Manage Dojo Users"
+msgstr "Manage Dojo Users"
+
+msgid "Setup Dojo"
+msgstr "Setup Dojo"
+
+msgid "Accept Badge"
+msgstr "Accept Badge"
+
+msgid "Approve Ninja"
+msgstr "Approve Ninja"
+
+msgid "Reset Password"
+msgstr "Reset Password"
+
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+msgid "Edit Event"
+msgstr "Edit Event"

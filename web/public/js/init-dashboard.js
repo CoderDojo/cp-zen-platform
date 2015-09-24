@@ -111,7 +111,7 @@
             bannerType: null,
             bannerMessage: null,
             bannerTimeCollapse: null,
-            pageTitle: "Home"
+            pageTitle: 'Home'
           },
           controller: 'dojos-map-controller'
         })
@@ -125,7 +125,7 @@
             bannerType: null,
             bannerMessage: null,
             bannerTimeCollapse: null,
-            pageTitle: "Home"
+            pageTitle: 'Home'
           },
           controller: 'dojos-map-controller'
         })
@@ -202,7 +202,7 @@
           templateUrl: '/dojos/template/events/manage-dojo-events',
           controller: 'manage-dojo-events-controller',
           params: {
-            pageTitle: 'Dojo Events'
+            pageTitle: 'Manage Dojo Events'
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventsPageTitle}}'
@@ -213,7 +213,7 @@
           templateUrl: '/dojos/template/events/manage-event-applications',
           controller: 'manage-event-applications-controller',
           params: {
-            pageTitle: 'Dojo Event Applications'
+            pageTitle: 'Applicants'
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventApplicationsPageTitle}}'
@@ -224,7 +224,7 @@
           templateUrl: '/dojos/template/events/manage-event-attendance',
           controller: 'manage-event-attendance-controller',
           params: {
-            pageTitle: 'Dojo Event Attendance'
+            pageTitle: 'Attendance'
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventAttendancePageTitle}}'
@@ -237,7 +237,7 @@
             gmap: gmap
           },
           params: {
-            pageTitle: 'Create Dojo Event'
+            pageTitle: 'Create Event'
           },
           controller: 'dojo-event-form-controller'
         })
@@ -248,7 +248,7 @@
             gmap: gmap
           },
           params: {
-            pageTitle: 'Edit Dojo Event'
+            pageTitle: 'Edit Event'
           },
           controller: 'dojo-event-form-controller'
         })
@@ -376,7 +376,7 @@
         .state('error-404-no-headers', {
           url:'/dashboard/404',
           params: {
-            pageTitle: 'Not Found'
+            pageTitle: 'Page not found'
           },
           templateUrl: '/errors/template/404_no_headers'
         })
@@ -385,7 +385,7 @@
           controller:'approve-invite-ninja-controller',
           templateUrl: '/profiles/template/approve-invite-ninja',
           params: {
-            pageTitle: 'Approve Invite Ninja'
+            pageTitle: 'Approve Ninja'
           },
           resolve: {
             currentUser: resolves.loggedInUser
@@ -458,7 +458,7 @@
       });
       $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
-        
+
         var pageTitle = [];
         if(toParams.pageTitle) {
           pageTitle.push($filter('translate')(toParams.pageTitle));

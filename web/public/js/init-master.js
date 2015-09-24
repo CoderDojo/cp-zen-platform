@@ -146,7 +146,7 @@
           params: {
             bannerType: null,
             bannerMessage: null,
-            pageTitle: "Home"
+            pageTitle: 'Home'
           },
           controller: 'dojos-map-controller'
         })
@@ -193,7 +193,7 @@
             currentUser: profileHelpers.loggedInUser
           },
           params: {
-            pageTitle: "Dojo"
+            pageTitle: 'Dojo'
           },
           controller: 'dojo-detail-controller'
         })
@@ -255,14 +255,14 @@
           url:'/404',
           templateUrl: '/errors/template/404_no_headers',
           params: {
-            pageTitle: 'Not Found',
+            pageTitle: 'Page not found',
           }
         })
         .state('error-404', {
           url:'/404',
           templateUrl: '/errors/template/404',
           params: {
-            pageTitle: 'Not Found',
+            pageTitle: 'Page not found',
           }
         });
       $urlRouterProvider.when('', '/');
