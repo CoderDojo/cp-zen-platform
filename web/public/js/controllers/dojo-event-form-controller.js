@@ -228,7 +228,7 @@
         eventInfo.dates = getEveryTargetWeekdayInDateRange(
           eventInfo.fixedStartDateTime,
           eventInfo.fixedEndDateTime,
-          $scope.weekdayPicker.selection.id,
+          null,
           'one-off'
         );
       }
