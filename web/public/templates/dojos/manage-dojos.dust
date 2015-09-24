@@ -90,7 +90,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="dojo in dojos" ng-style="setStyle(dojo)">
-            <td><a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})">{{ dojo.name }}</a></td>
+            <td><a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})" ng-bind-html="dojo.name"></a></td>
             <td><span ng-show="allSigned(dojo) && (dojo.origVerified === 1)" class="green-text glyphicon glyphicon-ok-sign"></span></td>
             <td>{{ getDojoStateLabel(dojo.stage) }}</td>
             <td>{{ dojo.alpha2 }}</td>
