@@ -9,7 +9,7 @@
       <form name="uploadAvatarForm">
         <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
 
-        <h1 ng-bind="profile.name || profile.alias"></h1>
+        <h1 ng-bind="profile.name || profile.alias" class="text-truncate"></h1>
         <h4 ng-bind="profile.userTypeTitle"></h4>
 
         <input type="file" ngf-select ng-model="avatar" name="avatar" class="center-block"
