@@ -43,6 +43,9 @@
     $scope.updateEventStatus = function(event, status) {
       delete event.formattedDate;
       event.status = status;
+      if(event.status === 'cancelled') {
+        event.emailSubject = $translate.instant('has been cancelled');
+      }
       cdEventsService.saveEvent(event, function (response) {
         $scope.loadPage($scope.filter, true);
       });
