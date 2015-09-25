@@ -143,8 +143,14 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     var boundsRadius = getBoundsRadius(bounds);
     cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
       if (result.length > 0) {
+        if(result.length === 1){
+          $scope.model.map.setCenter({lat: result[0].geo_point.lat, lng: result[0].geo_point.lon});
+          $scope.model.map.setZoom(14);
+        } else {
+          $scope.model.map.fitBounds(bounds);
+        }
         $scope.searchResult = result;
-        $scope.model.map.fitBounds(bounds);
+
       } else {
         $scope.searchResult = true;
         $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
