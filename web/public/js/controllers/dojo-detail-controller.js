@@ -106,7 +106,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
           cdDojoService.requestInvite(data, function (response) {
             usSpinnerService.stop('dojo-detail-spinner');
             if(!response.error) {
-              alertService.showAlert($translate.instant('Invite Request Sent!'));
+              alertService.showAlert($translate.instant('Join Request Sent!'));
             } else {
               alertService.showError($translate.instant(response.error));
             }

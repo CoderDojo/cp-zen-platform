@@ -252,7 +252,7 @@
           <div class="col-lg-8">
             <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}" ng-change="updateLocalStorage('dojoListing','supporterImage', dojo.supporterImage)">
             <div class="cd-tooltip">
-              {@i18n key="If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure its 570x200 pixels, otherwise leave blank"/}  
+              {@i18n key="If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure it's 570px in width"/}
             </div>
           </div>
         </div>

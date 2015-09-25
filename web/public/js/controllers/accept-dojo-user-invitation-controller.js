@@ -4,7 +4,7 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
   var dojoId = $stateParams.dojoId;
   var inviteToken = $stateParams.userInviteToken;
   var currentPath = $location.path();
-  
+
   auth.get_loggedin_user(function(user) {
     if($state.current.url === '/accept_dojo_user_invitation/:dojoId/:userInviteToken') {
       $window.location.href = '/dashboard' + currentPath;
@@ -12,8 +12,8 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
 
       usSpinnerService.spin('user-invitation-spinner');
       $scope.user = user;
-      var tokenData = {dojoId:dojoId, 
-        inviteToken:inviteToken, 
+      var tokenData = {dojoId:dojoId,
+        inviteToken:inviteToken,
         currentUserEmail: $scope.user.email,
         currentUserId: $scope.user.id
       };
@@ -37,11 +37,15 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
 
   }, function () {
     //Not logged in
-    $state.go('register-account', {referer:$location.url()});
+    if(!$state.get('login')){
+      $window.location.href = '/login?referer=' + $location.url();
+    } else {
+      $state.go('login', {referer: $location.url()});
+    }
   });
 }
 
 angular.module('cpZenPlatform')
-    .controller('accept-dojo-user-invitation-controller', ['$scope', '$window', '$state', 
-      '$stateParams', '$location', 'auth', 'cdDojoService', 
+    .controller('accept-dojo-user-invitation-controller', ['$scope', '$window', '$state',
+      '$stateParams', '$location', 'auth', 'cdDojoService',
       'usSpinnerService', 'alertService', '$translate', cdAcceptDojoUserInvitationCtrl]);

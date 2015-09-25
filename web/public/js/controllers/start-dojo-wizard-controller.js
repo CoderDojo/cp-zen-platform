@@ -1,8 +1,8 @@
  'use strict';
  /*global google*/
 
-function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService, 
-  cdAgreementsService, gmap, $translate, utilsService, $sanitize, intercomService, $modal, $localStorage, $sce) {
+function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService,
+  cdAgreementsService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -234,7 +234,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.stepTwoShowGmap = true;
 
     currentStepInt = 1;
-    
+
     $scope.showCharterAgreement = function () {
       $scope.showCharterAgreementFlag = false;
     }
@@ -429,7 +429,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               _.each(response.application.setupYourDojo, function(item, i) {
                 $scope.setupDojo[i] = item;
               });
-            } 
+            }
             if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.setupYourDojo) {
               alertService.showAlert($translate.instant('There are unsaved changes on this page'));
               var lssd = $localStorage[user.id].dojoLead.setupYourDojo;
@@ -510,7 +510,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         if(!$localStorage[currentUser.id].dojoLead[localObj]) $localStorage[currentUser.id].dojoLead[localObj] = {};
         if(typeof value === 'undefined') value = false;
         $localStorage[currentUser.id].dojoLead[localObj][item] = value;
-      }      
+      }
     }
 
     var deleteLocalStorage = function (localObj) {
@@ -555,7 +555,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       dojo.alpha3 = country.alpha3;
     };
 
-    var initContent = "<p>" + 
+    var initContent = "<p>" +
       $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
       "<ul><li>" + $translate.instant('A pack lunch.') +"</li>" +
       "<li>"+ $translate.instant('A laptop. Borrow one from somebody if needs be.') +"</li>" +
@@ -594,11 +594,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $scope.dojo.place = "";
     };
 
-
-    var sanitizeCdForms = {
-      createDojo: ["address1","email","googleGroups","name","needMentors","notes","supporterImage","time","twitter","website"]
-    };
-
     if($localStorage[currentUser.id] && $localStorage[currentUser.id].dojoLead && $localStorage[currentUser.id].dojoLead.dojoListing) {
       alertService.showAlert($translate.instant('There are unsaved changes on this page'));
       var lsdl = $localStorage[currentUser.id].dojoLead.dojoListing;
@@ -633,11 +628,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $scope.getLocationFromAddress($scope.dojo, function(){
 
         var win = function(){
-          _.each(sanitizeCdForms.editDojo, function(item, i) {
-            if(_.has(dojo, item)) {
-              dojo[item] = $sanitize(dojo[item]);
-            }
-          });
 
           cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
             var dojoLead = response;
@@ -739,6 +729,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 }
 
 angular.module('cpZenPlatform')
-  .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService', 
-    'cdAgreementsService', 'gmap', '$translate', 'utilsService', '$sanitize', 'intercomService', '$modal', 
+  .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService',
+    'cdAgreementsService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
     '$localStorage','$sce', startDojoWizardCtrl]);

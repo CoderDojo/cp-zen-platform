@@ -2,17 +2,18 @@
 (function() {
   'use strict';
 
-  function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType, utcOffset) {
+  function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
     var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
 
     // this function calculates the start time and end time for each recurring event occurrence.
     // the result of this function will be finally saved in the DB
-    function calculateDatesObj(startDateTime, endDateTime, utcOffset){
+    function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
+      var startDateTimeOffset = moment(startDateTime.toISOString()).utcOffset();
       var endDateTimeOffset = moment(endDateTime.toISOString()).utcOffset();
-      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
+      date.startTime = moment.utc(startDateTime).add(startDateTimeOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
       var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
       date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
@@ -21,17 +22,17 @@
     }
 
     if(eventType === 'one-off') {
-      dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+      dates.push(calculateDatesObj(currentDate, endDateTime));
     } else {
       while (currentDate <= endDateTime) {
         currentDate = moment.utc(new Date(currentDate)).toDate();
 
         if (currentDate.getDay() === targetWeekday) {
           if (eventType === 'weekly') {
-            dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+            dates.push(calculateDatesObj(currentDate, endDateTime));
           } else {
             if (!biWeeklyEventSwitch) {
-              dates.push(calculateDatesObj(currentDate, endDateTime, utcOffset));
+              dates.push(calculateDatesObj(currentDate, endDateTime));
               biWeeklyEventSwitch = true;
             } else {
               biWeeklyEventSwitch = false;
@@ -74,10 +75,9 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
-    var utcOffset = moment().utcOffset();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
@@ -196,7 +196,8 @@
         eventInfo.position = eventPosition;
       }
 
-      eventInfo.status = $scope.publish ? 'published' : 'saved';
+      eventInfo.status = eventInfo.publish ? 'published' : 'saved';
+      delete eventInfo.publish;
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       if(!_.isEmpty(eventInfo.invites)) {
@@ -212,25 +213,22 @@
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
-            'weekly',
-            utcOffset
+            'weekly'
           );
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
             $scope.weekdayPicker.selection.id,
-            'biweekly',
-            utcOffset
+            'biweekly'
           );
         }
       } else {
         eventInfo.dates = getEveryTargetWeekdayInDateRange(
           eventInfo.fixedStartDateTime,
           eventInfo.fixedEndDateTime,
-          $scope.weekdayPicker.selection.id,
-          'one-off',
-          utcOffset
+          null,
+          'one-off'
         );
       }
 
@@ -309,17 +307,22 @@
 
 
     function loadDojo(done) {
-      cdDojoService.load(dojoId, function(dojoInfo) {
-        $scope.eventInfo.country = dojoInfo.country;
-        $scope.eventInfo.city = dojoInfo.place;
-        $scope.eventInfo.address = dojoInfo.address1;
+      cdDojoService.load(dojoId, function(dojo) {
+
+        if(dojo.place && dojo.place.toponymName){
+          dojo.place.nameWithHierarchy = dojo.place.toponymName;
+          delete dojo.place.toponymName;
+        }
+        $scope.eventInfo.country = dojo.country;
+        $scope.eventInfo.city = dojo.place;
+        $scope.eventInfo.address = dojo.address1;
 
         var position = [];
-        if(dojoInfo.coordinates) {
-          position = dojoInfo.coordinates.split(',');
+        if(dojo.coordinates) {
+          position = dojo.coordinates.split(',');
         }
 
-        $scope.dojoInfo = dojoInfo;
+        $scope.dojoInfo = dojo;
 
         if(position && position.length === 2 && !isNaN(utilsService.filterFloat(position[0])) && !isNaN(utilsService.filterFloat(position[1]))) {
           addMap({
@@ -334,7 +337,7 @@
           })
         } else { //add empty map
           cdDojoService.loadCountriesLatLongData(function(countries){
-            var country = countries[dojoInfo.alpha2];
+            var country = countries[dojo.alpha2];
             addMap({
               lat: country[0],
               lng: country[1]
@@ -342,7 +345,7 @@
           }, done)
         }
 
-        done(null, dojoInfo);
+        done(null, dojo);
 
       }, done);
     }
@@ -352,6 +355,17 @@
         $scope.eventInfo.userId = user.id;
         done(null, user);
       }, done);
+    }
+
+    function validateEventRequest(done) {
+      cdDojoService.getUsersDojos({userId: currentUser.data.id, dojoId: dojoId}, function (usersDojos) {
+        if(_.isEmpty(usersDojos)) return done(new Error('No permissions found'));
+        var ticketingPermissionFound = _.find(usersDojos[0].userPermissions, function (permission) {
+          return permission.name === 'ticketing-admin';
+        });
+        if(!ticketingPermissionFound) return done(new Error('You must have the ticketing admin permission to edit a Dojo event'));
+        return done();
+      });
     }
 
     function loadDojoUsers(done) {
@@ -380,9 +394,9 @@
 
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
-
-        var startTime = _.first(event.dates).startTime;
-        var endTime = _.last(event.dates).endTime;
+        
+        var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
+        var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var startDateUtcOffset = moment(startTime).utcOffset();
         var endDateUtcOffset = moment(endTime).utcOffset();
@@ -391,7 +405,8 @@
         event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = new Date(startTime);
-        event.toDate = new Date(_.last(event.dates).startTime);
+        var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
+        event.toDate = new Date(lastEventOcurrance);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
@@ -411,29 +426,33 @@
 
     function isEventInPast(dateObj) {
       var now = moment.utc();
-      var start = moment.utc(dateObj.startTime).subtract(utcOffset, 'minutes');
+      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
+      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
 
       return now.isAfter(start);
-    } 
+    }
 
     if ($stateParams.eventId) {
+      if(_.isEmpty(currentUser.data)) return $state.go('error-404-no-headers');
 
       return async.series([
+        validateEventRequest,
         loadDojoUsers,
         loadUserTypes,
         loadEvent
       ], function(err, results) {
         if (err) {
           console.error(err);
+          return $state.go('error-404-no-headers');
+        } else {
+          var eventPosition = results[3].position;
+          addMap(eventPosition);
         }
-
-        var eventPosition = results[2].position;
-
-        addMap(eventPosition);
       });
     }
 
     async.parallel([
+      validateEventRequest,
       loadDojo,
       loadCurrentUser,
       loadDojoUsers,
@@ -441,6 +460,7 @@
     ], function(err, results) {
       if (err) {
         console.error(err);
+        return $state.go('error-404-no-headers');
       }
     });
   }
@@ -459,6 +479,7 @@
       'usSpinnerService',
       'alertService',
       'utilsService',
+      'currentUser',
       dojoEventFormCtrl
     ]);
 })();

@@ -50,28 +50,24 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     }
   }
 
-  $scope.upload = function (files) {
-    if($scope.profile.id) {
-      if (files && files.length) {
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          Upload.upload({
-            url: '/api/1.0/profiles/change-avatar',
-            headers : {
-              'Content-Type': 'multipart/form-data'
-            },
-            file: file,
-            fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
-          }).progress(function (evt) {
-          }).success(function (data, status, headers, config) {
-            cdUsersService.getAvatar($scope.profile.id, function(response){
-              $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-            })
-          }).error(function (data, status, headers, config) {
-            alertService.showError($translate.instant('There was an error uploading your profile picture.'));
-          });
-        }
-      }
+  $scope.upload = function (file) {
+    if ($scope.profile.id && file) {
+      Upload.upload({
+        url: '/api/1.0/profiles/change-avatar',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        file: file,
+        fields: {profileId: profile.data.id, fileName: file.name, fileType: file.type}
+      }).progress(function (evt) {
+      }).success(function (data, status, headers, config) {
+        if(data.ok === false) return alertService.showError($translate.instant(data.why));
+        cdUsersService.getAvatar($scope.profile.id, function (response) {
+          $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
+        })
+      }).error(function (data, status, headers, config) {
+        alertService.showError($translate.instant('There was an error uploading your profile picture.'));
+      });
     }
   };
 
@@ -278,7 +274,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    
+
     cdUsersService.saveYouthProfile(profile, function (response) {
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
       $state.go('user-profile', {userId: response.userId});
@@ -305,7 +301,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
           if( data.user ) $rootScope.$broadcast('user-updated', data.user);
           $state.go('user-profile', {userId: $stateParams.userId});
         });
-      }      
+      }
     }
 
     function fail(){
@@ -466,6 +462,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     return _.find(dojoAdminsForUser.data, function (dojoAdminForUser) {
       return dojoAdminForUser.id === loggedInUser.data.id;
     });
+  }
+
+  $scope.loggedInUserIsCDFAdmin = function () {
+    if(!loggedInUser.data) return false;
+    return _.contains(loggedInUser.data.roles, 'cdf-admin');
   }
 
   $scope.hideProfileBlock = function (block) {

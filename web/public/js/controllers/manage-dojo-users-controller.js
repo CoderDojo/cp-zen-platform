@@ -1,6 +1,6 @@
 'use strict';
 
-function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService, 
+function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
   cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser, utilsService) {
 
   var dojoId = $state.params.id;
@@ -18,6 +18,11 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
   $scope.invite = {};
   $scope.queryModel = {};
+
+  initUserTypes.data = _.map(initUserTypes.data, function(userType){
+    userType.title = $translate.instant(userType.title);
+    return userType;
+  });
 
   var user = currentUser.data;
   $scope.currentUser = user;
@@ -150,7 +155,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
             }
           }, function (err) {
             alertService.showError($translate.instant('Error saving permission') + ' ' + err);
-            //Revert checkbox 
+            //Revert checkbox
             $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
           });
         } else {
@@ -171,13 +176,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
             }
           }, function (err) {
             alertService.showError($translate.instant('Error removing permission') + ' ' +err);
-            //Revert checkbox 
+            //Revert checkbox
             $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
           });
         }
       } else {
         alertService.showAlert($translate.instant('You do not have permission to update user permissions'));
-        //Revert checkbox 
+        //Revert checkbox
         $scope.userPermissionsModel[user.id][permission.name] = !$scope.userPermissionsModel[user.id][permission.name];
       }
     });
@@ -186,12 +191,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.loadUserTypes = function(query) {
     var filteredUserTypes = _.chain(initUserTypes.data)
       .filter(function (userType) {
-       return userType.title.toLowerCase().indexOf(query.toLowerCase()) > -1; 
+       return userType.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
       })
       .map(function (userType) {
         return userType.title;
       })
       .value();
+
     return filteredUserTypes;
   }
 
@@ -217,7 +223,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
         userDojoLink.userTypes = updatedUserTypes;
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
-          if(response.error) { 
+          if(response.error) {
             alertService.showError($translate.instant(response.error));
             //Revert user types
             if(method === 'add') user.frontEndTypes.pop();
@@ -329,7 +335,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
     function isDesc(className) {
       var result = className.indexOf(DOWN);
-      return result > -1 ? true : false;
+      return result > -1;
     }
 
     className = $($event.target).attr('class');
@@ -350,6 +356,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 }
 
 angular.module('cpZenPlatform')
-    .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService', 
+    .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
     'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', 'utilsService', cdManageDojoUsersCtrl]);
 
