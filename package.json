@@ -7,7 +7,7 @@
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
     "postinstall": "cd web && bower install",
-    "test": "node_modules/.bin/karma start --single-run",
+    "test": "./node_modules/.bin/semistandard ./lib/*/*.js && node_modules/.bin/karma start --single-run",
     "jshint-check": "grunt build",
     "lint-lib": "./node_modules/.bin/semistandard ./lib/*/*.js"
   },
