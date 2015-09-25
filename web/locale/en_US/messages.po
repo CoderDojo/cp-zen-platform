@@ -2487,3 +2487,9 @@ msgstr "Terms & Conditions"
 
 msgid "Edit Event"
 msgstr "Edit Event"
+
+msgid "Turn on ticket approval"
+msgstr "Turn on ticket approval"
+
+msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
