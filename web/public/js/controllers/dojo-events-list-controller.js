@@ -17,7 +17,7 @@ function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEvent
       if(!_.isEmpty(response)) {
         $scope.isMember = true;
 
-        if(_.contains(response[0].userTypes, 'parent-guardian')) isParent = true;
+        if(_.contains(response[0].userTypes, 'parent-guardian') || _.contains($scope.currentUser.roles, 'cdf-admin')) isParent = true;
         if(!$scope.eventUserSelection[dojoId]) $scope.eventUserSelection[dojoId] = [];
         $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
         $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
