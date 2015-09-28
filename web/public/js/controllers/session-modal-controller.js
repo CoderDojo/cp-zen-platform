@@ -1,7 +1,8 @@
 (function() {
   'use strict';
 
-  function cdSessionModalCtrl($scope, $modalInstance, $translate, cdEventsService, session, event, eventUserSelection, usSpinnerService) {
+  function cdSessionModalCtrl($scope, $modalInstance, $translate, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService) {
+    $scope.dojoId = dojoId;
     $scope.session = session;  
     $scope.sessionQuantities = _.range(2);
     $scope.maxQuantities = _.range(11);
@@ -21,6 +22,7 @@
     };
 
     $scope.sessionApplication = {
+      dojoId: $scope.dojoId,
       eventId: $scope.event.id,
       sessionId: session.id,
       tickets: {}
@@ -48,6 +50,7 @@
             return ticketObj.name  === ticket;
           });
           var application = {
+            dojoId: sessionApplication.dojoId,
             eventId: sessionApplication.eventId,
             sessionId: sessionApplication.sessionId,
             ticketName: ticket,
@@ -74,6 +77,6 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', 'cdEventsService', 'session', 'event', 'eventUserSelection', 'usSpinnerService', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', cdSessionModalCtrl]);
 
 })();
