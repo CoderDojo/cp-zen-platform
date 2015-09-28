@@ -20,6 +20,9 @@
         controller: 'session-modal-controller',
         size: 'lg',
         resolve: {
+          dojoId: function () {
+            return $scope.dojoId;
+          },
           session: function () {
             return session;
           },

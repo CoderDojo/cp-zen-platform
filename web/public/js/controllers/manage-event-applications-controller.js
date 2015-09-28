@@ -315,6 +315,7 @@
         'received': $translate.instant('has been received'), 
         'approved': $translate.instant('has been approved') 
       };
+      application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
         if(_.isEmpty(applications)) return;
         if (applications[0].status === 'approved' || applications[0].attended) {

@@ -30,6 +30,7 @@
           <th class="five-percent-width">{@i18n key="Profile"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
+          <th ng-if="isDojoAdmin" class="five-percent-width">{@i18n key="Events Attended"/}</th>
           <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
           <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
         </tr>
@@ -59,6 +60,8 @@
               </label>
             </div>
           </td>
+
+          <td ng-if="isDojoAdmin">{{ user.eventsAttended || 0 }}</td>
 
           <td ng-if="isDojoAdmin">
             <div ng-if="currentUser.id !== user.id">

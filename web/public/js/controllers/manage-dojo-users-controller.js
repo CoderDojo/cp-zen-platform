@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser, utilsService) {
+  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser, utilsService, cdEventsService) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -88,34 +88,60 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
       cdDojoService.getUsersDojos({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip}, function (response) {
         usersDojosLink = response;
-        cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort}, function (response) {
-          _.each(response, function (user) {
-            var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
-            user.types = thisUsersDojoLink.userTypes;
-            user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
-              var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
-                return userType === initUserType.name;
-              });
-              return $translate.instant(userTypeFound.title);
-            });
-            user.permissions = thisUsersDojoLink.userPermissions;
-            user.isMentor = _.contains(user.types, 'mentor');
-            user.isDojoOwner = thisUsersDojoLink.owner === 1;
-            user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
-            user.userDojoId = thisUsersDojoLink.id;
-            $scope.selectedUserPermissions[user.id] = user.permissions;
-            $scope.userPermissionsModel[user.id] = {};
 
-            _.each(user.permissions, function (permission) {
-              $scope.userPermissionsModel[user.id][permission.name] = true;
-            });
-          });
-          $scope.users = response;
+        async.waterfall([
+          loadDojoUsers,
+          retrieveEventsAttended
+        ], function (err, users) {
+          if(err) console.error(err);
+          users = _.compact(users);
           //Query the loadDojoUsers service without the limit to get the total number of users.
           cdDojoService.loadDojoUsers({dojoId: dojoId, limit$: 'NULL'}, function (response) {
             $scope.totalItems = response.length;
+            $scope.users = users;
           });
         });
+
+        function loadDojoUsers(done) {
+          cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort}, function (response) {
+            _.each(response, function (user) {
+              var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+              user.types = thisUsersDojoLink.userTypes;
+              user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
+                var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
+                  return userType === initUserType.name;
+                });
+                return $translate.instant(userTypeFound.title);
+              });
+              user.permissions = thisUsersDojoLink.userPermissions;
+              user.isMentor = _.contains(user.types, 'mentor');
+              user.isDojoOwner = thisUsersDojoLink.owner === 1;
+              user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
+              user.userDojoId = thisUsersDojoLink.id;
+              $scope.selectedUserPermissions[user.id] = user.permissions;
+              $scope.userPermissionsModel[user.id] = {};
+
+              _.each(user.permissions, function (permission) {
+                $scope.userPermissionsModel[user.id][permission.name] = true;
+              });
+            });
+            return done(null, response);
+          });
+        }
+
+        function retrieveEventsAttended(users, done) {
+          async.map(users, function (user, cb) {
+            cdEventsService.searchApplications({dojoId:dojoId, userId: user.id}, function (applications) {
+              _.each(applications, function (application) {
+                if(application.attendance && application.attendance.length > 0) {
+                  if(!user.eventsAttended) user.eventsAttended = 0;
+                  if(application.ticketType !== 'other') user.eventsAttended += application.attendance.length;
+                }
+              });
+              return cb(null, user);
+            });
+          }, done);
+        }
       });
     });
   };
@@ -357,5 +383,5 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', 'utilsService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', cdManageDojoUsersCtrl]);
 
