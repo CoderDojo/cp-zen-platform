@@ -45,6 +45,11 @@ var log = function () {
   };
 };
 
+function forumModerators() {
+  var moderators = process.env.FORUM_MODS || '';
+  return moderators.split(',');
+}
+
 module.exports = {
   // purposely commented log: log(),
   actcache: {active:false},
@@ -100,17 +105,7 @@ module.exports = {
   webclient: {
     adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
     youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567',
-    forumModerators: [
-      'ursula@coderdojo.org',
-      'giustina@coderdojo.org',
-      'pete@coderdojo.org',
-      'rosa@coderdojo.org',
-      'laura@coderdojo.org',
-      'mary@coderdojo.org',
-      'annabel@coderdojo.org',
-      'damian.beresford@nearform.com',
-      'david.cahill@nearform.com'
-    ]
+    forumModerators: forumModerators()
   }
 
 };
