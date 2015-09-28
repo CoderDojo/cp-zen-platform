@@ -2493,3 +2493,9 @@ msgstr "Turn on ticket approval"
 
 msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
 msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+
+msgid "Book now"
+msgstr "Book now"
+
+msgid "Thank You. You will receive an email containing your booking confirmation."
+msgstr "Thank You. You will receive an email containing your booking confirmation."
