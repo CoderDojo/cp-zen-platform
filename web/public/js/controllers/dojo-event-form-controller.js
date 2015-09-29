@@ -75,23 +75,31 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
 	  $scope.ticketTypes = ticketTypes.data || [];
+    $scope.ticketTypesTooltip = '';
 
-    _.each($scope.ticketTypes, function (ticketType) {
+    _.each($scope.ticketTypes, function (ticketType, index) {
       ticketType.title = $translate.instant(ticketType.title);
+      if(index !== 0) {
+        $scope.ticketTypesTooltip += '<br>' + $translate.instant(ticketType.tooltip);
+      } else { 
+        $scope.ticketTypesTooltip += $translate.instant(ticketType.tooltip);
+      }
     });
+
+    $scope.ticketTypesTooltip = $sce.trustAsHtml($scope.ticketTypesTooltip);
 
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: null}]}];
+    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
@@ -189,7 +197,7 @@
       if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
-        tickets: [{name: null, type: null, quantity: null}]
+        tickets: [{name: null, type: null, quantity: 0}]
       };
       $scope.eventInfo.sessions.push(session);
     };
@@ -217,7 +225,7 @@
     $scope.totalSessionCapacity = function (session) {
       var total = 0;
       _.each(session.tickets, function (ticket) {
-        if(ticket.type !== 'other') total += ticket.quantity;
+        if(ticket.type !== 'other') total += ticket.quantity || 0;
       });
       return total;
     };
@@ -528,6 +536,7 @@
       '$scope',
       '$stateParams',
       '$state',
+      '$sce',
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',
