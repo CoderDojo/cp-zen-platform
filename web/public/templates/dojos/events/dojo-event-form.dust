@@ -194,7 +194,7 @@
               <tr ng-repeat="ticket in session.tickets" ng-init="ticketIndex = $index" >
                 <td><input placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'"></td>
                 <td> 
-                  <div ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
+                  <div class="min-width-170" ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
                     <ui-select name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
                       <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a ticket type"/}">{{ $select.selected.title }}</ui-select-match>
                       <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
