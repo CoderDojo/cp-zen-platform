@@ -64,8 +64,10 @@
     loggedInUser: function(auth){
       return auth.get_loggedin_user_promise().then(winCb, failCb);
     },
-    usersDojos: function($stateParams, cdDojoService){
-      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId}).then(winCb, failCb);
+    usersDojos: function(auth, cdDojoService){
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+      }, failCb);
     },
     hiddenFields: function(cdUsersService){
       return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
@@ -197,7 +199,8 @@
             pageTitle: 'My Events'
           },
           resolve: {
-            currentUser: resolves.loggedInUser
+            currentUser: resolves.loggedInUser,
+            usersDojos: resolves.usersDojos
           }
         })
         .state("my-dojos.manage-dojo-events", {

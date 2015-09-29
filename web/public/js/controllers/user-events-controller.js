@@ -1,10 +1,11 @@
 (function () {
   'use strict';
 
-  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService) {
+  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService, usersDojos) {
     $scope.applyData = {};
     $scope.currentEvents = false;
     currentUser = currentUser.data;
+    usersDojos = usersDojos.data;
     $scope.currentUser = currentUser;
     $scope.eventUserSelection = {};
 
@@ -119,6 +120,12 @@
         })
       }
 
+      $scope.isTicketingAdmin = _.find(usersDojos, function (userDojo) {
+        return _.find(userDojo.userPermissions, function (userPermission) {
+          return userPermission.name === 'ticketing-admin';
+        });
+      });
+      
       $scope.loadPage();
     }
 
@@ -128,7 +135,6 @@
     $scope.eventCollapsed = function (dojosEventsIndex, eventIdx) {
       $scope.dojosEvents[dojosEventsIndex].events[eventIdx].isCollapsed = false;
     }
-
 
     $scope.showEventInfo = function (dojoEvents, eventIdx) {
       $scope.dojosEventsIndex = _.indexOf($scope.dojosEvents, dojoEvents);
@@ -229,6 +235,6 @@
   }
 
   angular.module('cpZenPlatform')
-      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', userEventsCtrl]);
+      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', 'usersDojos', userEventsCtrl]);
 
 })();

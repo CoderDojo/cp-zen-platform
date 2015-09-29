@@ -84,7 +84,7 @@
 </div>
 <div class="row">
   <div class="col-md-12 text-center">
-    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
+    <pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
                 class="pagination-sm"
                 first-text="{@i18n key="First" /}"
                 previous-text="{@i18n key="Previous" /}"

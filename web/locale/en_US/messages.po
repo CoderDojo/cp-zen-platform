@@ -2521,3 +2521,9 @@ msgstr "Please let us know when you plan to start and how regularly you plan to 
 msgid "Please let us know your launch date and time"
 msgstr "Please let us know your launch date and time"
 
+msgid "See"
+msgstr "See"
+
+msgid "to create an event"
+msgstr "to create an event"
+

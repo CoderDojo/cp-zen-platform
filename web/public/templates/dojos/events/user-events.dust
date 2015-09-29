@@ -1,4 +1,7 @@
 <div class="cd-dashboard cd-color-4-underline">
+  <div ng-if="isTicketingAdmin" class="alert bg-warning">
+    <h5>{@i18n key="See"/} <a ui-sref="my-dojos"><b>{@i18n key="My Dojos"/}</b></a> {@i18n key="to create an event"/}</h5>
+  </div>
   <div class="row">
     <p ng-if="!dojosEvents || dojosEvents.length === 0 || !currentEvents">{@i18n key="None of your Dojo's have any Events planned currently" /}</p>
     <div class="my-dojos" ng-repeat="dojoEvents in dojosEvents | filter:hasEvents">
