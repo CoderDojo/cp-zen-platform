@@ -385,6 +385,9 @@
           controller: 'session-modal-controller',
           size: 'lg',
           resolve: {
+            dojoId: function () {
+              return dojoId;
+            },
             session: function () {
               return session;
             },
