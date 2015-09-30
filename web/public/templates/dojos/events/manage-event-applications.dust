@@ -36,56 +36,72 @@
         </button>
       </span>
     </div>
-    <table class="table cd-grid-table">
-      <thead>
-        <tr>
-          <th>{@i18n key="Attendee name"/}</th>
-          <th>{@i18n key="Ticket name"/}</th>
-          <th>{@i18n key="Ticket type"/}</th>
-          <th>{@i18n key="Application Date"/}</th>
-          <th>{@i18n key="Age"/}</th>
-          <th>{@i18n key="Parents/guardians"/}</th>
-          <th>{@i18n key="Approve"/}</th>
-          <th>{@i18n key="Check in"/}</th>
-          <th>{@i18n key="Delete"/}</th>
-        </tr>
-      </thead>
-      <tbody> 
-        <span spinner-key="session-applications-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-        <tr ng-repeat="application in applications">
-          <td><a ui-sref="user-profile({userId: application.userId})">{{ application.name }}</a></td>
-          <td> {{ application.ticketName }}</td>
-          <td> {{ application.ticketType }}</td>
-          <td> {{ application.dateApplied }}</td>
-          <td><span ng-if="application.age">{{ application.age }}</span></td>
-          <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
-          <td> 
-            <div class="checkbox">
-              <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-disabled="session.status === 'cancelled'" ng-checked="userIsApproved(application)" ng-click="updateApplication(application, 'status')">
-              <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
-            </div> 
-          </td>
-          <td>
-            <div ng-if="event.type === 'recurring' && application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
-            <div ng-if="event.type === 'one-off' && application.status === 'approved'" class="checkbox">
-              <input type="checkbox" id="checkInCheckbox-{{ application.id }}" ng-checked="userIsCheckedIn(application)" ng-click="updateApplication(application, 'attendance')">
-              <label for="checkInCheckbox-{{ application.id }}"></label>
-            </div>
-          </td>
-          <td><button ng-disabled="application.attendanceModel.length > 0 || application.attendance.length > 0" type="button" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}" ng-bootbox-confirm-action="updateApplication(application, 'deleted')">{@i18n key="Delete"/}</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="row center-children">
-      <span class="row col-lg-7 centered-child">
-        <pagination total-items="pagination.totalItems" ng-change="pageChanged(session.id)" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
-          class="pagination-sm"
-          first-text="{@i18n key="First" /}"
-          previous-text="{@i18n key="Previous" /}"
-          next-text="{@i18n key="Next" /}"
-          last-text="{@i18n key="Last" /}"
-          boundary-links="true"></pagination>
-      </span>
+    <div ng-if="applications.length === 0">
+      <span class="col-md-12 applications-banner">{@i18n key="There are no outstanding applications for this Session"/}</span>
+    </div>
+    <div ng-if="applications.length > 0">
+      <table class="table cd-grid-table">
+        <thead>
+          <tr>
+            <th>{@i18n key="Attendee name"/}</th>
+            <th>{@i18n key="Ticket name"/}</th>
+            <th>{@i18n key="Ticket type"/}</th>
+            <th>{@i18n key="Application Date"/}</th>
+            <th>{@i18n key="Age"/}</th>
+            <th>{@i18n key="Parents/guardians"/}</th>
+            <th>{@i18n key="Approve"/}</th>
+            <th>{@i18n key="Check in"/}</th>
+            <th>{@i18n key="Delete"/}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <span spinner-key="session-applications-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+          <tr ng-repeat="application in applications">
+            <td><a ui-sref="user-profile({userId: application.userId})">{{ application.name }}</a></td>
+            <td> {{ application.ticketName }}</td>
+            <td> {{ application.ticketType }}</td>
+            <td> {{ application.dateApplied }}</td>
+            <td><span ng-if="application.age">{{ application.age }}</span></td>
+            <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
+            <td>
+              <div class="checkbox">
+                <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-disabled="session.status === 'cancelled'" ng-checked="userIsApproved(application)" ng-click="updateApplication(application, 'status')">
+                <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
+              </div>
+            </td>
+            <td>
+              <div ng-if="event.type === 'recurring' && application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
+              <div ng-if="event.type === 'one-off' && application.status === 'approved'" class="checkbox">
+                <input type="checkbox" id="checkInCheckbox-{{ application.id }}" ng-checked="userIsCheckedIn(application)" ng-click="updateApplication(application, 'attendance')">
+                <label for="checkInCheckbox-{{ application.id }}"></label>
+              </div>
+            </td>
+            <td>
+              <span tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[application.attendanceModel.length > 0]}}" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="User must not be checked in to be deleted"/}">
+                &nbsp;
+                <button
+                  type="button" class="btn btn-danger"
+                  ng-disabled="application.attendanceModel.length > 0 || application.attendance.length > 0"
+                  ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}"
+                  ng-bootbox-confirm-action="updateApplication(application, 'deleted')">
+                  {@i18n key="Delete"/}
+                </button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row center-children">
+        <span class="row col-lg-7 centered-child">
+          <pagination total-items="pagination.totalItems" ng-change="pageChanged(session.id)" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
+            class="pagination-sm"
+            first-text="{@i18n key="First" /}"
+            previous-text="{@i18n key="Previous" /}"
+            next-text="{@i18n key="Next" /}"
+            last-text="{@i18n key="Last" /}"
+            boundary-links="true"></pagination>
+        </span>
+      </div>
     </div>
   </accordion-group>
 </accordion>
