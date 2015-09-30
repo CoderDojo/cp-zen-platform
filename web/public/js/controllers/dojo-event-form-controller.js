@@ -75,7 +75,7 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -144,6 +144,14 @@
       $scope.datepicker[isOpen] = !$scope.datepicker[isOpen];
     };
 
+    $scope.updateLocalStorage = function (item, value) {
+      if(!_.isEmpty(currentUser.data)) {
+        if(!$localStorage[currentUser.data.id]) $localStorage[currentUser.data.id] = {};
+        if(!$localStorage[currentUser.data.id].eventForm) $localStorage[currentUser.data.id].eventForm = {};
+        if(value) $localStorage[currentUser.data.id].eventForm[item] = value;
+      }
+    };
+
     $scope.timepicker = {};
     $scope.timepicker.hstep = 1;
     $scope.timepicker.mstep = 15;
@@ -172,8 +180,6 @@
       id: 6,
       name: $translate.instant('Saturday')
     }];
-
-    $scope.weekdayPicker.selection = $scope.weekdayPicker.weekdays[0];
 
     $scope.searchCity = function($select) {
       return utilsService.getPlaces($scope.eventInfo.country.alpha2, $select).then(function (data) {
@@ -369,8 +375,8 @@
           delete dojo.place.toponymName;
         }
         $scope.eventInfo.country = dojo.country;
-        $scope.eventInfo.city = dojo.place;
-        $scope.eventInfo.address = dojo.address1;
+        if(!$scope.eventInfo.city) $scope.eventInfo.city = dojo.place;
+        if(!$scope.eventInfo.address) $scope.eventInfo.address = dojo.address1;
 
         var position = [];
         if(dojo.coordinates) {
@@ -489,6 +495,29 @@
       });
     }
 
+    function loadLocalStorage(done) {
+      if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id].eventForm) {
+        alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+
+        var localStorage = $localStorage[currentUser.data.id].eventForm;
+        if(localStorage.name) $scope.eventInfo.name = localStorage.name;
+        if(localStorage.description) $scope.eventInfo.description = localStorage.description;
+        if(localStorage.public) $scope.eventInfo.public = localStorage.public;
+        if(localStorage.type) $scope.eventInfo.type = localStorage.type;
+        if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
+        if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
+        if(localStorage.date) $scope.eventInfo.date = new Date(localStorage.date);
+        if(localStorage.toDate) $scope.eventInfo.toDate = new Date(localStorage.toDate);
+        if(localStorage.city) $scope.eventInfo.city = localStorage.city;
+        if(localStorage.address) $scope.eventInfo.address = localStorage.address;
+        if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
+      }
+
+      $scope.$watch('eventInfo.sessions', function (sessions) {
+        $scope.updateLocalStorage('sessions', sessions);
+      });
+    }
+
     function isEventInPast(dateObj) {
       var now = moment.utc();
       var eventUtcOffset = moment(dateObj.startTime).utcOffset();
@@ -522,7 +551,8 @@
       loadDojo,
       loadCurrentUser,
       loadDojoUsers,
-      loadUserTypes
+      loadUserTypes,
+      loadLocalStorage
     ], function(err, results) {
       if (err) {
         console.error(err);
@@ -537,6 +567,7 @@
       '$stateParams',
       '$state',
       '$sce',
+      '$localStorage',
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',

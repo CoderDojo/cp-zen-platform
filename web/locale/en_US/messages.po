@@ -2527,3 +2527,6 @@ msgstr "See"
 msgid "to create an event"
 msgstr "to create an event"
 
+msgid "Select a day..."
+msgstr "Select a day..."
+

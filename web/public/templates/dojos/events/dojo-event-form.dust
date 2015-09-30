@@ -5,11 +5,11 @@
 
     <div class="form-group">
       <label for="eventName">{@i18n key="Event Name"/}*:</label>
-      <input type="text" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}">
+      <input type="text" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
     </div>
 
     <div class="checkbox">
-      <input type="checkbox" id="is-public" ng-model="eventInfo.public">
+      <input type="checkbox" id="is-public" ng-model="eventInfo.public" ng-change="updateLocalStorage('public',eventInfo.public)">
       <label for="is-public">
         {@i18n key="is public"/}
       </label>
@@ -17,22 +17,22 @@
 
     <div class="form-group">
       <label for="description">{@i18n key="Description"/}*:</label>
-      <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}">
+      <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}" ng-change="updateLocalStorage('description',eventInfo.description)">
       </textarea>
     </div>
 
-    <div ng-if="!isEditMode" ng-init="eventInfo.type='one-off'" class="form-group form-inline">
+    <div ng-if="!isEditMode" ng-init="eventInfo.type = eventInfo.type || 'one-off'" class="form-group form-inline">
       <h5>{@i18n key="Type"/}:</h5>
 
       <div class="radio">
-        <input type="radio" name="type" ng-model="eventInfo.type" id="recurring" value="recurring">
+        <input type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="recurring" value="recurring">
         <label for="recurring">
           {@i18n key="Recurring"/}
         </label>
       </div>
 
       <div class="radio">
-        <input type="radio" name="type" ng-model="eventInfo.type" id="one-off" value="one-off">
+        <input type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="one-off" value="one-off">
         <label for="one-off">
           {@i18n key="One off"/}
         </label>
@@ -43,14 +43,14 @@
       <div class="row" ng-if="eventInfo.type === 'recurring'">
         <div class="col-lg-4">
           <div class="radio">
-            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" id="weekly" value="weekly">
+            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
             <label for="weekly">
               {@i18n key="Weekly"/}
             </label>
           </div>
 
           <div class="radio">
-            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" id="biweekly" value="biweekly">
+            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
             <label for="biweekly">
               {@i18n key="Every two weeks"/}
             </label>
@@ -61,12 +61,20 @@
 
     <div class="form-group" ng-if="eventInfo.type === 'recurring'">
       <label for="weekday">{@i18n key="Every"/}*:</label>
-      <select class="form-control"
-              ng-model="weekdayPicker.selection"
-              ng-options="item as item.name for item in weekdayPicker.weekdays"
-              id="weekday"
-              required required-message="'{@i18n key="Recurrence is empty"/}'">
-      </select>
+      <ui-select ng-model="weekdayPicker.selection"
+                 ng-init="weekdayPicker.selection = weekdayPicker.selection || weekdayPicker.weekdays[0]" 
+                 name="weekday"
+                 id="weekday"
+                 ng-change="updateLocalStorage('weekdaySelection', weekdayPicker.selection)"
+                 required
+                 required-message="'{@i18n key="Recurrence is empty"/}'">
+        <ui-select-match placeholder="{@i18n key="Select a day..."/}">
+          {{ $select.selected.name }}
+        </ui-select-match>
+        <ui-select-choices repeat="weekday in weekdayPicker.weekdays">
+          <span ng-bind-html="weekday.name"></span>
+        </ui-select-choices>
+      </ui-select>
     </div>
 
     <div class="form-group">
@@ -82,6 +90,7 @@
                close-text="{@i18n key="Done"/}"
                class="form-control"
                ng-click="toggleDatepicker($event, 'datePicker1')"
+               ng-change="updateLocalStorage('date', eventInfo.date)"
                id="date" />
         <span class="input-group-btn">
           <button type="button"
@@ -105,6 +114,7 @@
                close-text="{@i18n key="Done"/}"
                class="form-control"
                ng-click="toggleDatepicker($event, 'datePicker2')"
+               ng-change="updateLocalStorage('toDate', eventInfo.toDate)"
                id="to-date" />
         <span class="input-group-btn">
           <button type="button"
@@ -119,11 +129,11 @@
     <div class="form-group row">
       <div class="col-sm-4 col-md-4 col-lg-4">
         <label for="start-time">{@i18n key="Start time"/}:</label>
-        <timepicker id="start-time" ng-model="eventInfo.startTime" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
+        <timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <label for="endTime">{@i18n key="End time"/}:</label>
-        <timepicker min="{{ eventInfo.date }}" name="endTime" ng-model="eventInfo.endTime" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" required></timepicker>
+        <timepicker min="{{ eventInfo.date }}" name="endTime" ng-model="eventInfo.endTime" ng-change="updateLocalStorage('endTime', eventInfo.endTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" required></timepicker>
       </div>
     </div>
 
@@ -132,8 +142,7 @@
       <ui-select ng-model="eventInfo.city"
                  name="city"
                  id="city"
-                 ng-disabled="disabled"
-                 ng-change="eventInfo.address = null"
+                 ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null"
                  required>
         <ui-select-match placeholder="{@i18n key="Add a city name"/}">
           {{ $select.selected.nameWithHierarchy }}
@@ -150,7 +159,7 @@
 
     <div class="form-group">
       <label for="address">{@i18n key="Address"/}*:</label>
-      <textarea rows="5" required required-message="'{@i18n key="Address is empty"/}'" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+      <textarea rows="5" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
     </div>
 
     <div class="form-group" ng-if="googleMaps">

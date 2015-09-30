@@ -25,7 +25,7 @@
     "lodash": "2.4.1",
     "moment": "2.9.0",
     "ng-ckeditor": "https://github.com/david-cahill/ng-ckeditor.git#master",
-    "ngstorage": "0.3.0",
+    "ngstorage": "0.3.9",
     "spin.js": "2.0.2",
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
     "googlemaps-js-marker-clusterer": "1.0.0",
