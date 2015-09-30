@@ -12,33 +12,44 @@
         $scope.showEventInfo(eventIndex, $scope.event.id);
       }
     }
-    
-    $scope.showSessionDetails = function (session) {
-      var sessionModalInstance = $modal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: '/dojos/template/events/session-details',
-        controller: 'session-modal-controller',
-        size: 'lg',
-        resolve: {
-          dojoId: function () {
-            return $scope.dojoId;
-          },
-          session: function () {
-            return session;
-          },
-          event: function () {
-            return $scope.event;
-          },
-          eventUserSelection: function () {
-            return $scope.eventUserSelection;
-          }
-        }
-      });
 
-      sessionModalInstance.result.then(function (result) {
-        if(result.ok === false) return alertService.showError($translate.instant(result.why));
-        alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
-      }, null);
+    $scope.showSessionDetails = function (session) {
+      if(!_.isEmpty($scope.currentUser)) {
+
+        cdDojoService.dojosForUser($scope.currentUser.id, function (dojos) {
+          var isMember = _.find(dojos, function (dojo) {
+            return dojo.id === $scope.dojoId;
+          });
+          if(!isMember) return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
+          var sessionModalInstance = $modal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/dojos/template/events/session-details',
+            controller: 'session-modal-controller',
+            size: 'lg',
+            resolve: {
+              dojoId: function () {
+                return $scope.dojoId;
+              },
+              session: function () {
+                return session;
+              },
+              event: function () {
+                return $scope.event;
+              },
+              eventUserSelection: function () {
+                return $scope.eventUserSelection;
+              }
+            }
+          });
+
+          sessionModalInstance.result.then(function (result) {
+            if(result.ok === false) return alertService.showError($translate.instant(result.why));
+            alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+          }, null);
+        });
+      } else {
+        $state.go('register-account', {referer:$location.url()});
+      }
     };
 
     $scope.goToGoogleMaps = function (position) {
