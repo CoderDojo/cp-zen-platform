@@ -7,6 +7,7 @@
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
+    $scope.dojoId = dojoId;
     var applicationCheckInDates = [];
 
     $scope.sort = undefined;

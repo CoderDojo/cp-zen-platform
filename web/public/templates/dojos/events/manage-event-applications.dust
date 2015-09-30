@@ -4,7 +4,8 @@
     <span class="col-md-4"><b>{@i18n key="Total attending"/}:</b> {{ eventStats.totalAttending }}</span>
     <span class="col-md-4"><b>{@i18n key="Total waitlist"/}:</b> {{ eventStats.totalWaitlist }}</span>
   </div>
-  <div class="col-md-2 pull-right">
+  <div class="col-md-3 pull-right">
+    <a ui-sref="edit-dojo-event({dojoId: dojoId, eventId: event.id})" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
     <a ng-href="{{ event.guestListDownloadLink }}" target="_blank" class="btn btn-primary white-text export-event-btn">{@i18n key="Export Guest List"/}</a>
   </div>
 </div>
