@@ -7,6 +7,7 @@
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
+    $scope.dojoId = dojoId;
     var applicationCheckInDates = [];
 
     $scope.sort = undefined;
@@ -385,6 +386,9 @@
           controller: 'session-modal-controller',
           size: 'lg',
           resolve: {
+            dojoId: function () {
+              return dojoId;
+            },
             session: function () {
               return session;
             },

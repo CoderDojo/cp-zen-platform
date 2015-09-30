@@ -27,10 +27,10 @@
                           <span tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see"/} <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank'>{@i18n key="here"/}</a>" tooltip-trigger="mouseover" href="#" ng-if="checkboxInput.taoIcon===true" class="setup-dojo-tao-btn"></span>
                         </div>
                       </label>
-                      <input type="text" ng-if="checkboxInput.textField"
-                        ng-init="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']"
-                        ng-show="dojoLead.application.setupYourDojo[checkboxInput.name] === true"
+                        <input type="text" ng-if="checkboxInput.textField && dojoLead.application.setupYourDojo[checkboxInput.name] === true"
                         class="form-control" placeholder="{@i18n key="{{ checkboxInput.placeholder }}"/}"
+                        name="{{ checkboxInput.name }}-Text"
+                        ng-required="checkboxInput.textFieldRequired && checkboxInput.required" required-message="{@i18n key="{{ checkboxInput.requiredTextFieldMessage }}"/}"
                         ng-model="dojoLead.application.setupYourDojo[checkboxInput.name + 'Text']">
                     </div>
                   </div>
