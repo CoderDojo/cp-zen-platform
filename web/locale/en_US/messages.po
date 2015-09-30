@@ -2530,3 +2530,5 @@ msgstr "to create an event"
 msgid "Select a day..."
 msgstr "Select a day..."
 
+msgid "Please add the event location manually by clicking on the map."
+msgstr "Please add the event location manually by clicking on the map."
