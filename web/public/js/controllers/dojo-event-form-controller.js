@@ -145,11 +145,41 @@
     };
 
     $scope.updateLocalStorage = function (item, value) {
-      if(!_.isEmpty(currentUser.data)) {
+      if(!_.isEmpty(currentUser.data) && !$stateParams.eventId) {
         if(!$localStorage[currentUser.data.id]) $localStorage[currentUser.data.id] = {};
-        if(!$localStorage[currentUser.data.id].eventForm) $localStorage[currentUser.data.id].eventForm = {};
-        if(value) $localStorage[currentUser.data.id].eventForm[item] = value;
+        if(!$localStorage[currentUser.data.id][dojoId]) $localStorage[currentUser.data.id][dojoId] = {};
+        if(!$localStorage[currentUser.data.id][dojoId].eventForm) $localStorage[currentUser.data.id][dojoId].eventForm = {};
+        if(value) $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
       }
+    };
+
+    var deleteLocalStorage = function () {
+      if(!_.isEmpty(currentUser.data)) {
+        if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id][dojoId] && $localStorage[currentUser.data.id][dojoId].eventForm) {
+          delete $localStorage[currentUser.data.id][dojoId].eventForm;
+        }
+      }
+    }
+
+    $scope.getLocationFromAddress = function(eventInfo, cb) {
+      utilsService.getEventLocationFromAddress(eventInfo).then(function (data) {
+        $scope.googleMaps.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+        $scope.googleMaps.map.panTo($scope.googleMaps.mapOptions.center);
+        $scope.googleMaps.marker.setMap(null);
+        $scope.googleMaps.marker = new google.maps.Marker({
+          map: $scope.googleMaps.map,
+          position: $scope.googleMaps.mapOptions.center
+        });
+        eventInfo.position = {
+          lat: data.lat,
+          lng: data.lng
+        };
+        if(cb) cb();
+      }, function (err) {
+        if(err) console.error(err);
+        alertService.showError($translate.instant('Please add the event location manually by clicking on the map.'));
+        if(cb) cb();
+      });
     };
 
     $scope.timepicker = {};
@@ -305,6 +335,8 @@
               function (response) {
                 if(response.ok === false) {
                   alertService.showError($translate.instant(response.why));
+                } else {
+                  deleteLocalStorage();
                 }
                 goToManageDojoEvents($state, usSpinnerService, dojoId)
               },
@@ -325,6 +357,8 @@
             function (response) {
               if(response.ok === false) {
                 alertService.showError($translate.instant(response.why));
+              } else {
+                deleteLocalStorage();
               }
               goToManageDojoEvents($state, usSpinnerService, dojoId)
             },
@@ -341,7 +375,12 @@
     };
 
     function addMap(eventPosition) {
-      var markerPosition = new google.maps.LatLng(eventPosition.lat, eventPosition.lng);
+      var markerPosition;
+      if(!$scope.eventInfo.position) {
+        markerPosition = new google.maps.LatLng(eventPosition.lat, eventPosition.lng);
+      } else {
+        markerPosition = new google.maps.LatLng($scope.eventInfo.position.lat, $scope.eventInfo.position.lng);
+      }
 
       $scope.googleMaps = {
         mapOptions: {
@@ -349,7 +388,8 @@
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         },
-        onTilesLoaded: onTilesLoaded
+        onTilesLoaded: onTilesLoaded,
+        addMarker: addMarker
       };
 
       function onTilesLoaded() {
@@ -363,6 +403,19 @@
         });
 
         google.maps.event.clearListeners(map, 'tilesloaded');
+      }
+
+      function addMarker ($event, $params, eventInfo) {
+        var map = $scope.googleMaps.map;
+        $scope.googleMaps.marker.setMap(null);
+        $scope.googleMaps.marker = new google.maps.Marker({
+          map: map,
+          position: $params[0].latLng
+        });
+        eventInfo.position = {
+          lat: $params[0].latLng.lat(),
+          lng: $params[0].latLng.lng()
+        };
       }
     }
 
@@ -488,18 +541,20 @@
 
     function loadSessions(done) {
       var eventId = $stateParams.eventId;
-      cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
+      cdEventsService.searchSessions({eventId: eventId, status: 'active'}, function (sessions) {
         $scope.eventInfo.sessions = sessions;
+        return done();
       }, function (err) {
         console.error(err);
+        return done(err);
       });
     }
 
     function loadLocalStorage(done) {
-      if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id].eventForm) {
+      if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id][dojoId] && $localStorage[currentUser.data.id][dojoId].eventForm) {
         alertService.showAlert($translate.instant('There are unsaved changes on this page'));
 
-        var localStorage = $localStorage[currentUser.data.id].eventForm;
+        var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
         if(localStorage.name) $scope.eventInfo.name = localStorage.name;
         if(localStorage.description) $scope.eventInfo.description = localStorage.description;
         if(localStorage.public) $scope.eventInfo.public = localStorage.public;
@@ -511,11 +566,16 @@
         if(localStorage.city) $scope.eventInfo.city = localStorage.city;
         if(localStorage.address) $scope.eventInfo.address = localStorage.address;
         if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
+        if(localStorage.position) $scope.eventInfo.position = localStorage.position;
       }
-
-      $scope.$watch('eventInfo.sessions', function (sessions) {
-        $scope.updateLocalStorage('sessions', sessions);
+      $scope.$watch('eventInfo.sessions', function (sessionsNew, sessionsOld) {
+        $scope.updateLocalStorage('sessions', sessionsNew);
       });
+
+      $scope.$watch('eventInfo.position', function (mapLatLng) {
+        $scope.updateLocalStorage('position', mapLatLng);
+      });
+      return done();
     }
 
     function isEventInPast(dateObj) {

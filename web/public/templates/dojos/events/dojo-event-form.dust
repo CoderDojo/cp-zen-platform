@@ -163,14 +163,12 @@
     </div>
 
     <div class="form-group" ng-if="googleMaps">
-      <label for="map">{@i18n key="Map"/}:</label>
-      <div ui-map-marker="googleMaps.marker"></div>
-      <div id="map"
-           ui-map="googleMaps.map"
-           ui-options="googleMaps.mapOptions"
-           ui-event="{'map-tilesloaded': 'googleMaps.onTilesLoaded($event, $params)'}"
-           class="map-canvas">
-      </div>
+      <label for="map">{@i18n key="Map"/}:</label><br>
+      <input type="button" ng-click="getLocationFromAddress(eventInfo)" class="btn btn-primary" value="{@i18n key="Get location from address"/}">
+      <section id="map" class="margin-top-1-percent">
+        <div ui-map-marker="googleMaps.marker"></div>
+        <div id="googleMap" ui-map="googleMaps.map" ui-options="googleMaps.mapOptions" ui-event="{'map-tilesloaded': 'googleMaps.onTilesLoaded($event, $params)', 'map-click': 'googleMaps.addMarker($event, $params, eventInfo)'}" class="map-canvas"></div>
+      </section>
     </div>
     <hr />
     <div class="form-group">

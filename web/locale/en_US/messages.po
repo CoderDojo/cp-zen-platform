@@ -15,11 +15,9 @@ msgstr ""
 "X-Poedit-SearchPath-0: web/public\n"
 "X-Poedit-SearchPathExcluded-0: web/public/components\n"
 
-#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "Yes"
 msgstr "Yes"
 
-#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "No"
 msgstr "No"
 
@@ -2532,3 +2530,9 @@ msgstr "Select a day..."
 
 msgid "There are no outstanding applications for this Session"
 msgstr "There are no outstanding applications for this Session"
+
+msgid "Please add the event location manually by clicking on the map."
+msgstr "Please add the event location manually by clicking on the map."
+
+msgid "User must not be checked in to be deleted"
+msgstr "User must not be checked in to be deleted"

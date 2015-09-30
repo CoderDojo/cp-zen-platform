@@ -136,6 +136,22 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 
     return deferred.promise;
   }
 
+  utils.getEventLocationFromAddress = function(obj) {
+    var deferred = $q.defer();
+    if(obj && obj.city) {
+      var address = obj.city.nameWithHierarchy;
+      address = address + ', ' + obj.country.countryName;
+      Geocoder.latLngForAddress(address).then(function (data) {
+        deferred.resolve(data);
+      }, function (err) {
+        deferred.reject('Error geocoding');
+      });
+    } else {
+      deferred.reject('No data to geocode');
+    }
+    return deferred.promise;
+  }
+
   utils.getSortClass = function (sort) {
     if(sort < 0) {
       return 'pointer sortable glyphicon glyphicon-chevron-up';
