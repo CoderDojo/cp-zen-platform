@@ -56,6 +56,16 @@
     });
   }
 
+  function goToManageDojoEvent($state, usSpinnerService, dojoId, eventId) {
+    if(usSpinnerService) {
+      usSpinnerService.stop('create-event-spinner');
+    }
+    $state.go('my-dojos.manage-dojo-events.manage-applications', {
+      dojoId: dojoId,
+      eventId: eventId
+    });
+  }
+
   function goToMyDojos($state, usSpinnerService) {
     usSpinnerService.stop('create-event-spinner');
     $state.go('my-dojos');
@@ -88,7 +98,7 @@
       ticketType.title = $translate.instant(ticketType.title);
       if(index !== 0) {
         $scope.ticketTypesTooltip += '<br>' + $translate.instant(ticketType.tooltip);
-      } else { 
+      } else {
         $scope.ticketTypesTooltip += $translate.instant(ticketType.tooltip);
       }
     });
@@ -343,7 +353,11 @@
                 } else {
                   deleteLocalStorage();
                 }
-                goToManageDojoEvents($state, usSpinnerService, dojoId)
+                if(response.dojoId && response.id) {
+                  goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+                } else {
+                  goToManageDojoEvents($state, usSpinnerService, dojoId)
+                }
               },
               function(err){
                 alertService.showError($translate.instant('Error setting up event') + ' ' + err);
@@ -365,7 +379,11 @@
               } else {
                 deleteLocalStorage();
               }
-              goToManageDojoEvents($state, usSpinnerService, dojoId)
+              if(response.dojoId && response.id) {
+                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+              } else {
+                goToManageDojoEvents($state, usSpinnerService, dojoId)
+              }
             },
             function (err){
               alertService.showError($translate.instant('Error setting up event') + ' ' + err);
@@ -513,7 +531,7 @@
 
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
-        
+
         var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
@@ -581,7 +599,7 @@
         sessions = _.without(sessions, _.findWhere(sessions, {name: null}))
         if(!_.isEmpty(sessions)) $scope.updateLocalStorage('sessions', sessions);
       }, true);
-    
+
       $scope.$watch('eventInfo.position', function (mapLatLng) {
         $scope.updateLocalStorage('position', mapLatLng);
       });
@@ -615,7 +633,7 @@
           addMap(eventPosition);
         }
       });
-    } 
+    }
 
     async.parallel([
       validateEventRequest,
