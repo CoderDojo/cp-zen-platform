@@ -2377,3 +2377,5 @@ msgstr "Please let us know when you plan to start and how regularly you plan to 
 msgid "Please let us know your launch date and time"
 msgstr "Please let us know your launch date and time"
 
+msgid "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
+msgstr "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
