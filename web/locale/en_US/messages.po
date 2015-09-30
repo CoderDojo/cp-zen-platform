@@ -2543,3 +2543,6 @@ msgstr "Cancel Event"
 
 msgid "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
 msgstr "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
+
+msgid "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
+msgstr "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."

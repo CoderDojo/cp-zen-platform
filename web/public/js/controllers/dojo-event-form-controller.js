@@ -230,7 +230,7 @@
     $scope.cancel = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
-
+      deleteLocalStorage();
       goToManageDojoEvents($state, null, dojoId);
     };
 
@@ -557,29 +557,35 @@
 
     function loadLocalStorage(done) {
       if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id][dojoId] && $localStorage[currentUser.data.id][dojoId].eventForm) {
-        alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+        if(!_.isEmpty($localStorage[currentUser.data.id][dojoId].eventForm)) {
+          alertService.showAlert($translate.instant('There are unsaved changes on this page'));
 
-        var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
-        if(localStorage.name) $scope.eventInfo.name = localStorage.name;
-        if(localStorage.description) $scope.eventInfo.description = localStorage.description;
-        if(localStorage.public) $scope.eventInfo.public = localStorage.public;
-        if(localStorage.type) $scope.eventInfo.type = localStorage.type;
-        if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
-        if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
-        if(localStorage.date) $scope.eventInfo.date = new Date(localStorage.date);
-        if(localStorage.toDate) $scope.eventInfo.toDate = new Date(localStorage.toDate);
-        if(localStorage.city) $scope.eventInfo.city = localStorage.city;
-        if(localStorage.address) $scope.eventInfo.address = localStorage.address;
-        if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
-        if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+          var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
+          if(localStorage.name) $scope.eventInfo.name = localStorage.name;
+          if(localStorage.description) $scope.eventInfo.description = localStorage.description;
+          if(localStorage.public) $scope.eventInfo.public = localStorage.public;
+          if(localStorage.type) $scope.eventInfo.type = localStorage.type;
+          if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
+          if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
+          if(localStorage.date) $scope.eventInfo.date = new Date(localStorage.date);
+          if(localStorage.toDate) $scope.eventInfo.toDate = new Date(localStorage.toDate);
+          if(localStorage.city) $scope.eventInfo.city = localStorage.city;
+          if(localStorage.address) $scope.eventInfo.address = localStorage.address;
+          if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
+          if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+        }
+
       }
-      $scope.$watch('eventInfo.sessions', function (sessionsNew, sessionsOld) {
-        $scope.updateLocalStorage('sessions', sessionsNew);
-      });
 
+      $scope.$watch('eventInfo.sessions', function (sessions) {
+        sessions = _.without(sessions, _.findWhere(sessions, {name: null}))
+        if(!_.isEmpty(sessions)) $scope.updateLocalStorage('sessions', sessions);
+      }, true);
+    
       $scope.$watch('eventInfo.position', function (mapLatLng) {
         $scope.updateLocalStorage('position', mapLatLng);
       });
+
       return done();
     }
 
@@ -609,7 +615,7 @@
           addMap(eventPosition);
         }
       });
-    }
+    } 
 
     async.parallel([
       validateEventRequest,
