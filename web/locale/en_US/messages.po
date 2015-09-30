@@ -2530,3 +2530,5 @@ msgstr "to create an event"
 msgid "Select a day..."
 msgstr "Select a day..."
 
+msgid "There are no outstanding applications for this Session"
+msgstr "There are no outstanding applications for this Session"

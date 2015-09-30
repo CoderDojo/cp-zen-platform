@@ -33,6 +33,10 @@
         <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}</button>
       </span>
     </div>
+    <div ng-if="applications.length === 0">
+      <span class="col-md-12 applications-banner">There are no outstanding applications for this Session</span>
+    </div>
+    <div ng-if="applications.length > 0">
     <table class="table cd-grid-table">
       <thead>
         <tr>
@@ -47,7 +51,7 @@
           <th>{@i18n key="Delete"/}</th>
         </tr>
       </thead>
-      <tbody> 
+      <tbody>
         <span spinner-key="session-applications-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
         <tr ng-repeat="application in applications">
           <td><a ui-sref="user-profile({userId: application.userId})">{{ application.name }}</a></td>
@@ -56,11 +60,11 @@
           <td> {{ application.dateApplied }}</td>
           <td><span ng-if="application.age">{{ application.age }}</span></td>
           <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
-          <td> 
+          <td>
             <div class="checkbox">
               <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-disabled="session.status === 'cancelled'" ng-checked="userIsApproved(application)" ng-click="updateApplication(application, 'status')">
               <label for="applicationApprovedCheckbox-{{ application.id }}"></label>
-            </div> 
+            </div>
           </td>
           <td>
             <div ng-if="event.type === 'recurring' && application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
@@ -84,5 +88,6 @@
           boundary-links="true"></pagination>
       </span>
     </div>
+  </div>
   </accordion-group>
 </accordion>
