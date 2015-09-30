@@ -77,16 +77,16 @@
               </div>
             </td>
             <td>
-              <span tabindex="1" tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[application.attendanceModel.length > 0]}}" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="User must not be checked in to be deleted"/}">
-              &nbsp;
-              <button
-                type="button" class="btn btn-danger"
-                ng-disabled="application.attendanceModel.length > 0 || application.attendance.length > 0"
-                ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}"
-                ng-bootbox-confirm-action="updateApplication(application, 'deleted')">
-                {@i18n key="Delet2e"/}
-              </button>
-            </span>
+              <span tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[application.attendanceModel.length > 0]}}" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="User must not be checked in to be deleted"/}">
+                &nbsp;
+                <button
+                  type="button" class="btn btn-danger"
+                  ng-disabled="application.attendanceModel.length > 0 || application.attendance.length > 0"
+                  ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}"
+                  ng-bootbox-confirm-action="updateApplication(application, 'deleted')">
+                  {@i18n key="Delete"/}
+                </button>
+              </span>
             </td>
           </tr>
         </tbody>
