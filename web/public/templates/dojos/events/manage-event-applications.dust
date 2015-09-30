@@ -30,7 +30,10 @@
         <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
       </span>
       <span class="col-md-2">
-        <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}</button>
+        <button type="button" ng-if="event.sessions.length > 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}
+        </button>
+        <button type="button" ng-if="event.sessions.length === 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Event"/}
+        </button>
       </span>
     </div>
     <div ng-if="applications.length === 0">

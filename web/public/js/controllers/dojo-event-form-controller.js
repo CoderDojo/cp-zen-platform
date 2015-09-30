@@ -182,6 +182,11 @@
       });
     };
 
+    $scope.validateSessions = function (sessions) {
+      if(sessions.length === 0) return false;
+      return true;
+    };
+
     $scope.timepicker = {};
     $scope.timepicker.hstep = 1;
     $scope.timepicker.mstep = 15;

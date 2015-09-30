@@ -2534,5 +2534,12 @@ msgstr "There are no outstanding applications for this Session"
 msgid "Please add the event location manually by clicking on the map."
 msgstr "Please add the event location manually by clicking on the map."
 
+
 msgid "User must not be checked in to be deleted"
 msgstr "User must not be checked in to be deleted"
+
+msgid "Cancel Event"
+msgstr "Cancel Event"
+
+msgid "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
+msgstr "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
