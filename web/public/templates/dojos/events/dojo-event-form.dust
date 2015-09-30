@@ -8,13 +8,6 @@
       <input type="text" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
     </div>
 
-<<<<<<< HEAD
-    <div class="checkbox">
-      <input type="checkbox" id="is-public" ng-model="eventInfo.public" ng-change="updateLocalStorage('public',eventInfo.public)">
-      <label for="is-public">
-        {@i18n key="is public"/}
-      </label>
-=======
     <div class="form-group form-inline">
       <div class="checkbox">
         <input type="checkbox" id="is-public" ng-model="eventInfo.public">
@@ -23,7 +16,6 @@
         </label>
       </div>
       <span tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" tooltip-trigger="click" class="info-button fa fa-info-circle event-tooltip"></span>
->>>>>>> ddf21dd7304fc0b16f0e5fd7cae89fe200049f2f
     </div>
     <div class="form-group">
       <label for="description">{@i18n key="Description"/}*:</label>
