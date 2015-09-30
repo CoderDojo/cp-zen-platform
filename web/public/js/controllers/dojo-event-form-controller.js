@@ -353,7 +353,11 @@
                 } else {
                   deleteLocalStorage();
                 }
-                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+                if(response.dojoId && response.id) {
+                  goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+                } else {
+                  goToManageDojoEvents($state, usSpinnerService, dojoId)
+                }
               },
               function(err){
                 alertService.showError($translate.instant('Error setting up event') + ' ' + err);
@@ -375,7 +379,11 @@
               } else {
                 deleteLocalStorage();
               }
-              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+              if(response.dojoId && response.id) {
+                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+              } else {
+                goToManageDojoEvents($state, usSpinnerService, dojoId)
+              }
             },
             function (err){
               alertService.showError($translate.instant('Error setting up event') + ' ' + err);
