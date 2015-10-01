@@ -70,18 +70,20 @@
               </div>
             </td>
             <td>
-              <div ng-if="event.type === 'recurring' && application.status === 'approved'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
-              <div ng-if="event.type === 'one-off' && application.status === 'approved'" class="checkbox">
-                <input type="checkbox" id="checkInCheckbox-{{ application.id }}" ng-checked="userIsCheckedIn(application)" ng-click="updateApplication(application, 'attendance')">
+              <div ng-dropdown-multiselect-disabled="application.status !== 'approved'" ng-if="event.type === 'recurring'" ng-dropdown-multiselect="" options="application.applicationDates" extra-settings="attendanceDropdownSettings" events="attendanceDropdownEvents" selected-model="application.attendanceModel"></div>
+              <div ng-if="event.type === 'one-off'" class="checkbox">
+                <input ng-disabled="application.status !== 'approved'" type="checkbox" id="checkInCheckbox-{{ application.id }}" ng-checked="userIsCheckedIn(application)" ng-click="updateApplication(application, 'attendance')">
                 <label for="checkInCheckbox-{{ application.id }}"></label>
               </div>
             </td>
             <td>
-              <span tooltip-trigger="{{{true: 'mouseenter', false: 'never'}[application.attendanceModel.length > 0]}}" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="User must not be checked in to be deleted"/}">
+              <span tooltip-enable="((event.type == 'recurring') && (application.attendanceModel.length != 0)) || ((event.type == 'one-off') && (application.attendance.length != 0))"
+                tooltip-trigger="mouseenter" tooltip-placement="top"
+                tooltip-html-unsafe="{@i18n key="User must not be checked in to be deleted"/}">
                 &nbsp;
                 <button
                   type="button" class="btn btn-danger"
-                  ng-disabled="application.attendanceModel.length > 0 || application.attendance.length > 0"
+                  ng-disabled="((event.type === 'recurring') && (application.attendanceModel.length > 0)) || ((event.type === 'one-off') && (application.attendance.length > 0))"
                   ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this application?"/}"
                   ng-bootbox-confirm-action="updateApplication(application, 'deleted')">
                   {@i18n key="Delete"/}
