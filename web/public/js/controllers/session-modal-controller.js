@@ -1,13 +1,15 @@
 (function() {
   'use strict';
 
-  function cdSessionModalCtrl($scope, $modalInstance, $translate, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService) {
+  function cdSessionModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService, currentUser, referer) {
     $scope.dojoId = dojoId;
     $scope.session = session;  
     $scope.sessionQuantities = _.range(2);
     $scope.maxQuantities = _.range(11);
     $scope.event = event;
     $scope.eventUserSelection = eventUserSelection[$scope.event.dojoId];
+    $scope.currentUser = currentUser;
+    $scope.referer = referer;
 
     $scope.applyForSettings = {
       displayProp: 'title', 
@@ -39,6 +41,11 @@
     $scope.updateTickets = function (quantity, ticket) {
       $scope.sessionApplication.tickets.other.push({name: ticket.name, quantity: quantity});
       $scope.sessionApplication.tickets.other = _.uniq($scope.sessionApplication.tickets.other, function (otherTicket) { return otherTicket.name });
+    };
+
+    $scope.goToProfile = function () {
+      $state.go('user-profile', {userId: currentUser.id});
+      $modalInstance.dismiss();
     };
 
     $scope.applyForEvent = function (sessionApplication) {
@@ -77,6 +84,6 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
 
 })();

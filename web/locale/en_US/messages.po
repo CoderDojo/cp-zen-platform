@@ -2546,3 +2546,15 @@ msgstr "Cancelling this session will cancel the event as this is the only sessio
 
 msgid "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
 msgstr "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
+
+msgid "Are you a parent/guardian?"
+msgstr "Are you a parent/guardian?"
+
+msgid "Please note that to book tickets for your youths you will need to"
+msgstr "Please note that to book tickets for your youths you will need to"
+
+msgid "add them to your profile first"
+msgstr "add them to your profile first"
+
+msgid "in the ninja section"
+msgstr "in the ninja section"
