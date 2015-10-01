@@ -184,6 +184,7 @@
     <script src="/js/directives/cd-apply-for-event.js"></script>
     <script src="/js/directives/cd-ngEnter.js"></script>
     <script src="/js/directives/cd-http-prefix.js"></script>
+    <script src="/js/directives/cd-dropdown-multiselect-disabled.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>
