@@ -3,12 +3,13 @@
   /*global $*/
 
   function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils, 
-    cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService) {
+    cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService, currentUser) {
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
     $scope.dojoId = dojoId;
     var applicationCheckInDates = [];
+    currentUser = currentUser.data;
 
     $scope.sort = undefined;
     $scope.pagination = {itemsPerPage: 10};
@@ -397,6 +398,12 @@
             },
             eventUserSelection: function () {
               return eventUserSelection;
+            },
+            currentUser: function () {
+              return currentUser;
+            },
+            referer: function () {
+              return 'manage-event-applications';
             }
           }
         });
@@ -425,6 +432,6 @@
 
   angular.module('cpZenPlatform')
     .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService', 
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', manageEventApplicationsControllerCtrl]);
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', 'currentUser', manageEventApplicationsControllerCtrl]);
 
 })();

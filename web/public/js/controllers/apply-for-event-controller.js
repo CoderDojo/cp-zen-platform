@@ -38,6 +38,12 @@
               },
               eventUserSelection: function () {
                 return $scope.eventUserSelection;
+              },
+              currentUser: function () {
+                return $scope.currentUser;
+              },
+              referer: function () {
+                return 'dojo-event-list';
               }
             }
           });

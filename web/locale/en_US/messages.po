@@ -2561,3 +2561,15 @@ msgstr "Public events are viewable by anyone visiting your Dojo listing. Private
 
 msgid "Invite Dojo Members"
 msgstr "Invite Dojo Members"
+
+msgid "Are you a parent/guardian?"
+msgstr "Are you a parent/guardian?"
+
+msgid "Please note that to book tickets for your youths you will need to"
+msgstr "Please note that to book tickets for your youths you will need to"
+
+msgid "add them to your profile first"
+msgstr "add them to your profile first"
+
+msgid "in the ninja section"
+msgstr "in the ninja section"

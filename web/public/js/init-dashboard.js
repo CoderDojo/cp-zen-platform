@@ -223,6 +223,9 @@
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventApplicationsPageTitle}}'
+          },
+          resolve: {
+            currentUser: resolves.loggedInUser
           }
         })
         .state("create-dojo-event", {
