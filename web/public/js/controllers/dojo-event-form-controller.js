@@ -85,7 +85,7 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $modal, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -109,7 +109,7 @@
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
+    $scope.eventInfo.sessions = [{name: null, invites: [], tickets:[{name: null, type: null, quantity: 0}]}];
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
@@ -248,6 +248,7 @@
       if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
+        invites: [],
         tickets: [{name: null, type: null, quantity: 0}]
       };
       $scope.eventInfo.sessions.push(session);
@@ -287,6 +288,63 @@
         total += $scope.totalSessionCapacity(session);
       });
       return total;
+    };
+
+    $scope.inviteDojoMembers = function (session) {
+      async.waterfall([
+        retrieveDojoUsers,
+        showInviteDojoMembersModal
+      ], function (err) {
+        if(err) return console.error(err);
+      });
+
+      function retrieveDojoUsers(done) {
+        cdDojoService.loadDojoUsers({dojoId: dojoId}, function (dojoUsers) {
+          var eventUserSelection = {};
+          eventUserSelection[dojoId] = [];
+          _.each(dojoUsers, function (dojoUser) {
+            eventUserSelection[dojoId].push({userId: dojoUser.id, title: dojoUser.name});
+          });
+          return done(null, eventUserSelection);
+        }, function (err) {
+          if(err) {
+            console.error(err);
+            return done(err);
+          }
+        });
+      }
+
+      function showInviteDojoMembersModal(eventUserSelection, done) {
+        var newApplicantModalInstance = $modal.open({
+          animation: true,
+          templateUrl: '/dojos/template/events/session-details',
+          controller: 'session-modal-controller',
+          size: 'lg',
+          resolve: {
+            dojoId: function () {
+              return dojoId;
+            },
+            session: function () {
+              return session;
+            },
+            event: function () {
+              return $scope.event;
+            },
+            eventUserSelection: function () {
+              return eventUserSelection;
+            }
+          }
+        });
+
+        newApplicantModalInstance.result.then(function (result) {
+          if(result.ok === false) return alertService.showError($translate.instant(result.why));
+          alertService.showAlert($translate.instant('New applicants successfully added.'));
+          $scope.loadPage(session.id, true);
+        }, null);
+        return done();
+      }
+
+
     };
 
     $scope.submit = function(eventInfo) {
@@ -662,6 +720,7 @@
       '$state',
       '$sce',
       '$localStorage',
+      '$modal',
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',
