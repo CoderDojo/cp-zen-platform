@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h3 class="modal-title">{@i18n key="Book tickets for"/} {{ session.name }} {@i18n key="at"/} {{ event.address }}</h3>
+  <h5>{{ event.formattedDate }}</h5>
+</div>
+<div class="modal-body">
+  <span spinner-key="dojo-session-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+  <div ng-if="referer === 'dojo-event-list'" class="border-left-div">
+    <h4>{@i18n key="Are you a parent/guardian?"/}</h4>
+    <p>{@i18n key="Please note that to book tickets for your youths you will need to"/} <a class="pointer" ng-click="goToProfile()">{@i18n key="add them to your profile first"/}</a> {@i18n key="in the ninja section"/}</p>
+  </div>
+
+  <table class="table cd-grid-table">
+    <thead>
+      <th>{@i18n key="Ticket Name"/}</th>
+      <th>{@i18n key="Apply for"/}</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ticket in session.tickets">
+        <td>{{ ticket.name }}</td>
+        <td>
+          <div ng-dropdown-multiselect="" options="eventUserSelection" selected-model="sessionApplication.tickets[ticket.name]" extra-settings="applyForSettings"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">
+    <span ng-if="event.ticketApproval">{@i18n key="Apply now"/}</span>
+    <span ng-if="!event.ticketApproval">{@i18n key="Book now"/}</span>
+  </button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{@i18n key="Cancel"/}</button>
+</div>

@@ -64,8 +64,10 @@
     loggedInUser: function(auth){
       return auth.get_loggedin_user_promise().then(winCb, failCb);
     },
-    usersDojos: function($stateParams, cdDojoService){
-      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId}).then(winCb, failCb);
+    usersDojos: function(auth, cdDojoService){
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+      }, failCb);
     },
     hiddenFields: function(cdUsersService){
       return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
@@ -86,6 +88,9 @@
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    ticketTypes: function (cdEventsService) {
+      return cdEventsService.ticketTypesPromise().then(winCb, failCb);
     }
   };
 
@@ -194,7 +199,8 @@
             pageTitle: 'My Events'
           },
           resolve: {
-            currentUser: resolves.loggedInUser
+            currentUser: resolves.loggedInUser,
+            usersDojos: resolves.usersDojos
           }
         })
         .state("my-dojos.manage-dojo-events", {
@@ -217,17 +223,9 @@
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventApplicationsPageTitle}}'
-          }
-        })
-        .state("my-dojos.manage-dojo-events.manage-attendance", {
-          url: "/:eventId/attendance",
-          templateUrl: '/dojos/template/events/manage-event-attendance',
-          controller: 'manage-event-attendance-controller',
-          params: {
-            pageTitle: 'Attendance'
           },
-          ncyBreadcrumb: {
-            label: '{{manageDojoEventAttendancePageTitle}}'
+          resolve: {
+            currentUser: resolves.loggedInUser
           }
         })
         .state("create-dojo-event", {
@@ -235,6 +233,7 @@
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
             gmap: gmap,
+            ticketTypes: resolves.ticketTypes,
             currentUser: resolves.loggedInUser
           },
           params: {
@@ -247,6 +246,7 @@
           templateUrl: '/dojos/template/events/dojo-event-form',
           resolve: {
             gmap: gmap,
+            ticketTypes: resolves.ticketTypes,
             currentUser: resolves.loggedInUser
           },
           params: {

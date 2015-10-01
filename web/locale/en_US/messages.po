@@ -15,11 +15,9 @@ msgstr ""
 "X-Poedit-SearchPath-0: web/public\n"
 "X-Poedit-SearchPathExcluded-0: web/public/components\n"
 
-#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "Yes"
 msgstr "Yes"
 
-#: web/public/js/controllers/champion-onboarding-controller.js:27
 msgid "No"
 msgstr "No"
 
@@ -2278,6 +2276,45 @@ msgstr "Invite token not found"
 msgid "Only the invited parent can approve this request."
 msgstr "Only the invited parent can approve this request."
 
+msgid "Are you sure you want to delete this Session/room?"
+msgstr "Are you sure you want to delete this Session/room?"
+
+msgid "Session/room name"
+msgstr "Session/room name"
+
+msgid "e.g. Scratch"
+msgstr "e.g. Scratch"
+
+msgid "Ticket Type"
+msgstr "Ticket Type"
+
+msgid "Attendee Type"
+msgstr "Attendee Type"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "e.g. Mentor, Laptops"
+msgstr "e.g. Mentor, Laptops"
+
+msgid "Are you sure you want to delete this ticket type?"
+msgstr "Are you sure you want to delete this ticket type?"
+
+msgid "Session/room capacity"
+msgstr "Session/room capacity"
+
+msgid "Event capacity"
+msgstr "Event capacity"
+
+msgid "Add session/room"
+msgstr "Add session/room"
+
+msgid "You can only create a max of 20 sessions/rooms"
+msgstr "You can only create a max of 20 sessions/rooms"
+
+msgid "You can only create a max of 20 ticket types"
+msgstr "You can only create a max of 20 ticket types"
+
 msgid "This email is already associated with an account."
 msgstr "This email is already associated with an account."
 
@@ -2287,8 +2324,38 @@ msgstr "on"
 msgid "at"
 msgstr "at"
 
+msgid "Mentor"
+msgstr "Mentor"
+
+msgid "Ticket Name"
+msgstr "Ticket Name"
+
+msgid "Ticket Quantity"
+msgstr "Ticket Quantity"
+
+msgid "Session/room"
+msgstr "Session/room"
+
+msgid "Book tickets for"
+msgstr "Book tickets for"
+
+msgid "Apply now"
+msgstr "Apply now"
+
+msgid "You have already applied for this session"
+msgstr "You have already applied for this session"
+
+msgid "Myself"
+msgstr "Myself"
+
+msgid "Apply for"
+msgstr "Apply for"
+
 msgid "Export Guest List"
 msgstr "Export Guest List"
+
+msgid "View attendee list"
+msgstr "View attendee list"
 
 msgid "Start time"
 msgstr "Start time"
@@ -2298,6 +2365,66 @@ msgstr "End time"
 
 msgid "Charter already signed."
 msgstr "Charter already signed."
+
+msgid "Total event capacity"
+msgstr "Total event capacity"
+
+msgid "Total attending"
+msgstr "Total attending"
+
+msgid "Total waitlist"
+msgstr "Total waitlist"
+
+msgid "Select ticket type..."
+msgstr "Select ticket type..."
+
+msgid "Session capacity"
+msgstr "Session capacity"
+
+msgid "Attendee name"
+msgstr "Attendee name"
+
+msgid "Ticket type"
+msgstr "Ticket type"
+
+msgid "Application Date"
+msgstr "Application Date"
+
+msgid "Parents/guardians"
+msgstr "Parents/guardians"
+
+msgid "Check in"
+msgstr "Check in"
+
+msgid "Book"
+msgstr "Book"
+
+msgid "Session description"
+msgstr "Session description"
+
+msgid "e.g. Beginners to attend only please."
+msgstr "e.g. Beginners to attend only please."
+
+msgid "Your event must contain at least one ticket."
+msgstr "Your event must contain at least one ticket."
+
+msgid "Select Ninja to create tickets for attendees under 13 or over 13."
+msgstr "Select Ninja to create tickets for attendees under 13 or over 13."
+
+msgid "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
+msgstr "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
+
+msgid "Select Mentor to create tickets for Mentors."
+msgstr "Select Mentor to create tickets for Mentors."
+
+msgid "Select Other to create tickets for unlisted types e.g. laptops."
+msgstr "Select Other to create tickets for unlisted types e.g. laptops."
+
+msgid "Cancel Session"
+msgstr "Cancel Session"
+
+msgid "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
+msgstr "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
 
 msgid "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
 msgstr "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
@@ -2310,6 +2437,21 @@ msgstr "Avatar upload: file must be an image."
 
 msgid "Avatar upload: max file size of 5MB exceeded."
 msgstr "Avatar upload: max file size of 5MB exceeded."
+
+msgid "has been cancelled"
+msgstr "has been cancelled"
+
+msgid "Your ticket request for"
+msgstr "Your ticket request for"
+
+msgid "has been received"
+msgstr "has been received"
+
+msgid "has been approved"
+msgstr "has been approved"
+
+msgid "Your event must contain at least one session."
+msgstr "Your event must contain at least one session."
 
 msgid "Home"
 msgstr "Home"
@@ -2344,6 +2486,19 @@ msgstr "Terms & Conditions"
 msgid "Edit Event"
 msgstr "Edit Event"
 
+
+msgid "Turn on ticket approval"
+msgstr "Turn on ticket approval"
+
+msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+
+msgid "Book now"
+msgstr "Book now"
+
+msgid "Thank You. You will receive an email containing your booking confirmation."
+msgstr "Thank You. You will receive an email containing your booking confirmation."
+
 msgid "Please explain how your team was background checked"
 msgstr "Please explain how your team was background checked"
 
@@ -2377,5 +2532,41 @@ msgstr "Please let us know when you plan to start and how regularly you plan to 
 msgid "Please let us know your launch date and time"
 msgstr "Please let us know your launch date and time"
 
+msgid "See"
+msgstr "See"
+
+msgid "to create an event"
+msgstr "to create an event"
+
+msgid "Select a day..."
+msgstr "Select a day..."
+
+msgid "There are no outstanding applications for this Session"
+msgstr "There are no outstanding applications for this Session"
+
+msgid "Please add the event location manually by clicking on the map."
+msgstr "Please add the event location manually by clicking on the map."
+
+msgid "User must not be checked in to be deleted"
+msgstr "User must not be checked in to be deleted"
+
+msgid "Cancel Event"
+msgstr "Cancel Event"
+
+msgid "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
+msgstr "Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"
+
 msgid "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
 msgstr "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
+
+msgid "Are you a parent/guardian?"
+msgstr "Are you a parent/guardian?"
+
+msgid "Please note that to book tickets for your youths you will need to"
+msgstr "Please note that to book tickets for your youths you will need to"
+
+msgid "add them to your profile first"
+msgstr "add them to your profile first"
+
+msgid "in the ninja section"
+msgstr "in the ninja section"

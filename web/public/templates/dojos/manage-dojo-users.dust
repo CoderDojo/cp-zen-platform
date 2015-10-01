@@ -30,6 +30,7 @@
           <th class="five-percent-width">{@i18n key="Profile"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
           <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
+          <th ng-if="isDojoAdmin" class="five-percent-width">{@i18n key="Events Attended"/}</th>
           <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
           <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
         </tr>
@@ -60,6 +61,8 @@
             </div>
           </td>
 
+          <td ng-if="isDojoAdmin">{{ user.eventsAttended || 0 }}</td>
+
           <td ng-if="isDojoAdmin">
             <div ng-if="currentUser.id !== user.id">
               <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
@@ -81,7 +84,7 @@
 </div>
 <div class="row">
   <div class="col-md-12 text-center">
-    <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
+    <pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
                 class="pagination-sm"
                 first-text="{@i18n key="First" /}"
                 previous-text="{@i18n key="Previous" /}"

@@ -15,32 +15,17 @@ function cdEventsService(cdApi, $q){
     list: function(query, win, fail){
       cdApi.post('events', {query: query}, win, fail || topfail);
     },
-    applyForEvent: function(applyData, win, fail) {
-      cdApi.post('events/' + applyData.eventId + '/apply', {applyData: applyData}, win, fail || topfail);
-    },
     loadEventApplications: function(eventId, win, fail) {
       cdApi.get('events/applications/' + eventId, win, fail || topfail);
     },
     saveApplication: function(application, win, fail) {
       cdApi.post('events/applications', {application: application}, win, fail || topfail);
     },
-    updateApplication: function(application, win, fail) {
-      cdApi.put('events/applications/' + application.id, {application:application}, win, fail || topfail);
-    },
     searchApplications: function(query, win, fail) {
       cdApi.post('events/applications/search', {query: query}, win, fail || topfail);
     },
-    bulkUpdateApplications: function(applications, win, fail) {
-      cdApi.post('events/applications/bulk_update', {applications: applications}, win, fail || topfail);
-    },
     removeApplicant: function(application, win, fail) {
       cdApi.delete('events/applications/' + application.eventId + '/' + application.id, win, fail || topfail);
-    },
-    searchAttendance: function(query, win, fail) {
-      cdApi.post('events/attendance/search', {query: query}, win, fail || topfail);
-    },
-    saveAttendance: function(attendance, win, fail) {
-      cdApi.post('events/attendance/save', {attendance: attendance}, win, fail || topfail);
     },
     getUserDojosEvents: function(query, win, fail){
       cdApi.post('events/user-dojos-events', {query: query}, win, fail || topfail);
@@ -49,6 +34,26 @@ function cdEventsService(cdApi, $q){
       var deferred = $q.defer();
       cdApi.post('events/search', {query: query}, deferred.resolve, deferred.reject || topfail);
       return deferred.promise;
+    },
+    ticketTypesPromise: function () {
+      var deferred = $q.defer();
+      cdApi.get('events/tickets/types', deferred.resolve, deferred.reject || topfail);
+      return deferred.promise;
+    },
+    searchSessions: function (query, win, fail) {
+      cdApi.post('events/search_sessions', {query: query}, win, fail || topfail);
+    },
+    bulkApplyApplications: function (applications, win, fail) {
+      cdApi.post('events/bulk_apply_applications', {applications: applications}, win, fail || topfail);
+    },
+    updateApplicationAttendance: function (data, win, fail) {
+      cdApi.post('events/update_application_attendance', {data: data}, win, fail || topfail);
+    },
+    saveSession: function(session, win, fail) {
+      cdApi.post('events/save_session', {session: session}, win, fail || topfail);
+    },
+    cancelSession: function(session, win, fail) {
+      cdApi.post('events/cancel_session', {session: session}, win, fail || topfail);
     }
   };
 }

@@ -1,72 +1,73 @@
-'use strict';
+(function () {
+  'use strict';
 
-function cdApplyForEventCtrl($scope, $state, $stateParams, $translate, $location, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
-  var dojoEvents = $scope.dojoRowIndexExpandedCurr;
-  var eventIndex = $scope.tableRowIndexExpandedCurr;
-
-  $scope.cancel = function () {
-    if(dojoEvents){
-      $scope.showEventInfo(dojoEvents, eventIndex);
-    } else {
-      $scope.showEventInfo(eventIndex, $scope.event.id);
+  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
+    var dojoEvents = $scope.dojoRowIndexExpandedCurr;
+    var eventIndex = $scope.tableRowIndexExpandedCurr;
+    
+    $scope.cancel = function () {
+      if(dojoEvents){
+        $scope.showEventInfo(dojoEvents, eventIndex);
+      } else {
+        $scope.showEventInfo(eventIndex, $scope.event.id);
+      }
     }
-  }
 
-  $scope.apply = function () {
-    usSpinnerService.spin('apply-for-event-spinner');
-    if(!_.isEmpty($scope.currentUser)) {
+    $scope.showSessionDetails = function (session) {
+      if(!_.isEmpty($scope.currentUser)) {
 
-      if(!dojoEvents) {
-        //Make sure that this user is a member of this Dojo.
-        cdDojoService.dojosForUser($scope.currentUser.id, function (response) {
-          var dojos = response;
+        cdDojoService.dojosForUser($scope.currentUser.id, function (dojos) {
           var isMember = _.find(dojos, function (dojo) {
             return dojo.id === $scope.dojoId;
           });
+          if(!isMember) return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
+          var sessionModalInstance = $modal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/dojos/template/events/session-details',
+            controller: 'session-modal-controller',
+            size: 'lg',
+            resolve: {
+              dojoId: function () {
+                return $scope.dojoId;
+              },
+              session: function () {
+                return session;
+              },
+              event: function () {
+                return $scope.event;
+              },
+              eventUserSelection: function () {
+                return $scope.eventUserSelection;
+              },
+              currentUser: function () {
+                return $scope.currentUser;
+              },
+              referer: function () {
+                return 'dojo-event-list';
+              }
+            }
+          });
 
-          if (isMember) {
-
-            var applyData = {
-              eventId: $scope.event.id,
-              children: $scope.applyData.childrenSelected,
-              user: $scope.currentUser,
-              emailSubject: $translate.instant('Event application received')
-            };
-
-            $scope.applyForEvent(applyData, $scope.event.id, eventIndex);
-
-          } else {
-            usSpinnerService.stop('apply-for-event-spinner');
-            alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
-          }
+          sessionModalInstance.result.then(function (result) {
+            if(result.ok === false) return alertService.showError($translate.instant(result.why));
+            if($scope.event.ticketApproval) {
+              alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+            } else {
+              alertService.showAlert($translate.instant('Thank You. You will receive an email containing your booking confirmation.'));
+            }
+          }, null);
         });
       } else {
-        var applyData = {
-          eventId: dojoEvents.events[eventIndex].id,
-          children: $scope.applyData.childrenSelected,
-          user: $scope.currentUser,
-          emailSubject: $translate.instant('Event application received')
-        };
-
-        $scope.applyForEvent(applyData, null, eventIndex, dojoEvents);
+        $state.go('register-account', {referer:$location.url()});
       }
-    } else {
-      $state.go('register-account', {referer:$location.url()});
-    }
+    };
+
+    $scope.goToGoogleMaps = function (position) {
+      $window.open('https://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
+    };
+
   }
 
-  $scope.applyForEvent = function(applyData, eventId, eventIndex, dojoEvents){
-    cdEventsService.applyForEvent(applyData, function (response) {
-      usSpinnerService.stop('apply-for-event-spinner');
-        alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
-        if(dojoEvents){
-          $scope.showEventInfo(dojoEvents, eventIndex);
-        } else {
-          $scope.showEventInfo(eventIndex, eventId);
-        }
-    });
-  }
-}
-
-angular.module('cpZenPlatform')
-    .controller('apply-for-event-controller', ['$scope', '$state', '$stateParams', '$translate', '$location', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);
+  angular.module('cpZenPlatform')
+      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);
+})();

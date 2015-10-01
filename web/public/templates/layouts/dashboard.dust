@@ -47,6 +47,9 @@
     <!-- International Tel Input -->
     <link rel="stylesheet" type="text/css" href="/components/intl-tel-input/build/css/intlTelInput.css">
 
+    <!-- Angular Tooltips -->
+    <link rel="stylesheet" type="text/css" href="/components/angular-tooltips/dist/angular-tooltips.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <base href="/" />
@@ -115,6 +118,8 @@
     <script src="/components/international-phone-number/releases/international-phone-number.min.js"></script>
     <script src="/components/ng-idle/angular-idle.min.js"></script>
     <script src="/components/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
+    <script src="/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
+    <script src="/components/angular-tooltips/dist/angular-tooltips.min.js"></script>
 
     <script src="/seneca/init.js"></script>
 
@@ -150,7 +155,6 @@
     <script src="/js/controllers/apply-for-event-controller.js"></script>
     <script src="/js/controllers/manage-event-applications-controller.js"></script>
     <script src="/js/controllers/accept-child-controller.js"></script>
-    <script src="/js/controllers/manage-event-attendance-controller.js"></script>
   	<script src="/js/controllers/setup-dojo-controller.js"></script>
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
     <script src="/js/controllers/accept-badge-controller.js"></script>
@@ -159,6 +163,7 @@
     <script src="/js/controllers/approve-invite-ninja-controller.js"></script>
     <script src="/js/controllers/dojo-setup-confirmation-controller.js"></script>
     <script src="/js/controllers/dojos-map-controller.js"></script>
+    <script src="/js/controllers/session-modal-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>
@@ -179,6 +184,7 @@
     <script src="/js/directives/cd-apply-for-event.js"></script>
     <script src="/js/directives/cd-ngEnter.js"></script>
     <script src="/js/directives/cd-http-prefix.js"></script>
+    <script src="/js/directives/cd-dropdown-multiselect-disabled.js"></script>
 
     <script src="/js/init-dashboard.js"></script>
   </body>
