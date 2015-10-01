@@ -2486,6 +2486,19 @@ msgstr "Terms & Conditions"
 msgid "Edit Event"
 msgstr "Edit Event"
 
+
+msgid "Turn on ticket approval"
+msgstr "Turn on ticket approval"
+
+msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
+
+msgid "Book now"
+msgstr "Book now"
+
+msgid "Thank You. You will receive an email containing your booking confirmation."
+msgstr "Thank You. You will receive an email containing your booking confirmation."
+
 msgid "Please explain how your team was background checked"
 msgstr "Please explain how your team was background checked"
 
@@ -2533,7 +2546,6 @@ msgstr "There are no outstanding applications for this Session"
 
 msgid "Please add the event location manually by clicking on the map."
 msgstr "Please add the event location manually by clicking on the map."
-
 
 msgid "User must not be checked in to be deleted"
 msgstr "User must not be checked in to be deleted"

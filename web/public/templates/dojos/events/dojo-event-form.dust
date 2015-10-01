@@ -23,6 +23,11 @@
       </textarea>
     </div>
 
+    <div class="checkbox">
+      <input type="checkbox" ng-model="eventInfo.ticketApproval" id="ticketApproval" tooltips tooltip-title="{@i18n key="Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"/}">
+      <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
+    </div>
+
     <div ng-if="!isEditMode" ng-init="eventInfo.type = eventInfo.type || 'one-off'" class="form-group form-inline">
       <h5>{@i18n key="Type"/}:</h5>
 

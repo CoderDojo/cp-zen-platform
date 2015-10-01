@@ -50,7 +50,11 @@
 
           sessionModalInstance.result.then(function (result) {
             if(result.ok === false) return alertService.showError($translate.instant(result.why));
-            alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+            if($scope.event.ticketApproval) {
+              alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+            } else {
+              alertService.showAlert($translate.instant('Thank You. You will receive an email containing your booking confirmation.'));
+            }
           }, null);
         });
       } else {

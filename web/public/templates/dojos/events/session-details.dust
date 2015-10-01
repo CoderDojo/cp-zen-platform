@@ -25,6 +25,9 @@
   </table>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">{@i18n key="Apply now"/}</button>
+  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">
+    <span ng-if="event.ticketApproval">{@i18n key="Apply now"/}</span>
+    <span ng-if="!event.ticketApproval">{@i18n key="Book now"/}</span>
+  </button>
   <button class="btn btn-warning" type="button" ng-click="cancel()">{@i18n key="Cancel"/}</button>
 </div>
