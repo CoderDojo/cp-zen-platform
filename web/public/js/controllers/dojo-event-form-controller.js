@@ -109,7 +109,7 @@
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = false;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, invites: [], tickets:[{name: null, type: null, quantity: 0}]}];
+    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
@@ -248,7 +248,6 @@
       if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
-        invites: [],
         tickets: [{name: null, type: null, quantity: 0}]
       };
       $scope.eventInfo.sessions.push(session);
@@ -291,6 +290,10 @@
     };
 
     $scope.inviteDojoMembers = function (session) {
+      var emptyTicketsFound = _.find(session.tickets, function (ticket) {
+        return _.isEmpty(ticket.name) || _.isEmpty(ticket.type);
+      });
+      if(emptyTicketsFound) return alertService.showAlert($translate.instant('You must complete all of the ticket details before inviting Dojo members.'));
       async.waterfall([
         retrieveDojoUsers,
         showInviteDojoMembersModal
@@ -315,10 +318,10 @@
       }
 
       function showInviteDojoMembersModal(eventUserSelection, done) {
-        var newApplicantModalInstance = $modal.open({
+        var inviteDojoMembersModalInstance = $modal.open({
           animation: true,
-          templateUrl: '/dojos/template/events/session-details',
-          controller: 'session-modal-controller',
+          templateUrl: '/dojos/template/events/session-invite',
+          controller: 'session-invite-modal-controller',
           size: 'lg',
           resolve: {
             dojoId: function () {
@@ -328,18 +331,20 @@
               return session;
             },
             event: function () {
-              return $scope.event;
+              return $scope.eventInfo;
             },
             eventUserSelection: function () {
               return eventUserSelection;
+            },
+            currentUser: function () {
+              return currentUser.data;
             }
           }
         });
 
-        newApplicantModalInstance.result.then(function (result) {
+        inviteDojoMembersModalInstance.result.then(function (result) {
           if(result.ok === false) return alertService.showError($translate.instant(result.why));
-          alertService.showAlert($translate.instant('New applicants successfully added.'));
-          $scope.loadPage(session.id, true);
+          alertService.showAlert($translate.instant('Dojo members successfully added to invite list. They will be notified of the invite when you publish this event.'));
         }, null);
         return done();
       }

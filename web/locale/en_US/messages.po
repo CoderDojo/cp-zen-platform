@@ -2573,3 +2573,15 @@ msgstr "add them to your profile first"
 
 msgid "in the ninja section"
 msgstr "in the ninja section"
+
+msgid "Invite Dojo Members to this session"
+msgstr "Invite Dojo Members to this session"
+
+msgid "Save Invite List"
+msgstr "Save Invite List"
+
+msgid "You must complete all of the ticket details before inviting Dojo members."
+msgstr "You must complete all of the ticket details before inviting Dojo members."
+
+msgid "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
+msgstr "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
