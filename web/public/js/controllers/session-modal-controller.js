@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  function cdSessionModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService, currentUser, referer) {
+  function cdSessionModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
     $scope.dojoId = dojoId;
-    $scope.session = session;  
+    $scope.session = angular.copy(session);  
     $scope.sessionQuantities = _.range(2);
     $scope.maxQuantities = _.range(11);
     $scope.event = event;
-    $scope.eventUserSelection = eventUserSelection[$scope.event.dojoId];
+    $scope.applyForModel = applyForModel;
     $scope.currentUser = currentUser;
     $scope.referer = referer;
 
@@ -17,7 +17,7 @@
       showCheckAll: false, 
       showUncheckAll: false,
       idProp: 'userId',
-      externalIdProp: 'userId',
+      externalIdProp: '',
       enableSearch: true,
       scrollableHeight: '250px',
       scrollable: true
@@ -29,9 +29,9 @@
       sessionId: session.id,
       tickets: {}
     };
-    
-    _.each($scope.session.tickets, function (ticket) {
-      $scope.sessionApplication.tickets[ticket.name] = [];
+
+    _.each(_.keys($scope.applyForModel), function (ticketId) {
+      $scope.sessionApplication.tickets[ticketId] = [];
     });
     
     $scope.cancel = function () {
@@ -51,18 +51,16 @@
     $scope.applyForEvent = function (sessionApplication) {
       usSpinnerService.spin('dojo-session-spinner');
       var applications = []
-      _.each(_.keys(sessionApplication.tickets), function (ticket, index) {
-        _.each(sessionApplication.tickets[ticket], function (userIds) {
-          var ticketFound = _.find($scope.session.tickets, function (ticketObj) {
-            return ticketObj.name  === ticket;
-          });
+      _.each(_.keys(sessionApplication.tickets), function (ticketId) {
+        _.each(sessionApplication.tickets[ticketId], function (ticket) {
           var application = {
             dojoId: sessionApplication.dojoId,
             eventId: sessionApplication.eventId,
             sessionId: sessionApplication.sessionId,
-            ticketName: ticket,
-            ticketType: ticketFound.type,
-            userId: userIds.userId
+            ticketName: ticket.ticketName,
+            ticketType: ticket.ticketType,
+            ticketId: ticket.ticketId,
+            userId: ticket.userId
           };
           applications.push(application);
         });
@@ -84,6 +82,6 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
 
 })();
