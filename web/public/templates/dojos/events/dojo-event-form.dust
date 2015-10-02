@@ -244,7 +244,7 @@
         <button type="button" ng-click="addSession()" class="btn btn-success session-expand-button">
           <span class="glyphicon glyphicon-plus"></span>
         </button>
-        <label style="padding-left: 0.2em;">{@i18n key="Add session/room"/}</label>
+        <label>{@i18n key="Add session/room"/}</label>
       </div>
     </div>
 

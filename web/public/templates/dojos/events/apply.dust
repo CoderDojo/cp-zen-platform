@@ -1,44 +1,40 @@
 <span spinner-key="apply-for-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-<div class="modal-header">
-  <h3>{@i18n key="Apply for Event"/}: {{ event.name }}</h3>
-</div>
-<div class="modal-body">
-  <p><b>{@i18n key="Description"/}</b>: {{ event.description }}</p>
+<div class="events-body">
 
-  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Day"/}</b>: {{ event.day }} - {{ event.formattedRecurringType }}</p>
   <p ng-if="event.type === 'recurring'"><b>{@i18n key="Dates"/}</b>:</p>
 
-  <div ng-if="event.type === 'recurring'">
+  <div class="three-column dates" ng-if="event.type === 'recurring'">
     <ul>
       <li ng-repeat="eventDate in event.formattedDates">
         {{ eventDate }}
       </li>
     </ul>
   </div>
-  
-  <p ng-if="event.type === 'one-off'"><b>{@i18n key="Date"/}</b>: {{ event.formattedDate }}</p>
 
-  <p ng-if="event.type === 'recurring'"><b>{@i18n key="Time"/}</b>: {{ event.time }}</p>
+  <div class="form-group">
+    <div class="col-md-6 location">
+      <h3>Location <span ng-click="goToGoogleMaps(event.position)" class="pointer glyphicon glyphicon-map-marker"></span></h3>
+      <p>{{ event.address }} </p>
+      <p>{{ event.city.nameWithHierarchy }}</p>
+    </div>
+    <div class="col-md-6">
+      <p>{{ event.description }}</p>
+    </div>
+  </div>
 
-  <p><b>{@i18n key="CityTown"/}:</b> {{ event.city.nameWithHierarchy }}</p>
-
-  <p><b>{@i18n key="Address"/}:</b> {{ event.address }} <span ng-click="goToGoogleMaps(event.position)" class="pointer glyphicon glyphicon-map-marker"></span></p>
-
-  <legend>Sessions/rooms:</legend>
-  <table id="dojoEventsTable" class="table cd-grid-table">
-    <thead>
-      <th>{@i18n key="Session/room"/}</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="session in event.sessions">
-        <td>{{ session.name }} <br> {{ session.description }}</td>
-        <td>
-          <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">{@i18n key="Book"/}</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="form-group clear events-sessions">
+    <h4>{@i18n key="Sessions/rooms:"/}</h4>
+    <table id="dojoEventsTable" class="table cd-grid-table events-session-table table-striped">
+      <tbody>
+        <tr ng-repeat="session in event.sessions">
+          <td><strong>{{ session.name }}</strong> <br> {{ session.description }}</td>
+          <td>
+            <button type="button" ng-click="showSessionDetails(session)" class="btn btn-warning btn-block">{@i18n key="Book"/}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div class="modal-footer">
  

@@ -1,4 +1,4 @@
-<div class="cd-dashboard cd-color-4-underline">
+<div class="cd-dashboard cd-color-4-underline events-display">
   <div ng-if="isTicketingAdmin" class="alert bg-warning">
     <h5>{@i18n key="See"/} <a ui-sref="my-dojos"><b>{@i18n key="My Dojos"/}</b></a> {@i18n key="to create an event"/}</h5>
   </div>
@@ -8,7 +8,7 @@
       <legend ng-bind-html="dojoEvents.title"></legend>
       <div class="row">
         <div class="col-md-12 table-responsive">
-          <table id="dojoEventsTable" class="table cd-grid-table">
+          <table id="dojoEventsTable" class="table cd-grid-table table-striped">
             <thead>
             <tr>
               <th><span ng-click="toggleSort($event, 'name', dojoEvents.dojo.id)" ng-class="getSortClass(sort[dojoEvents.dojo.id]['name'])">&nbsp;</span>{@i18n key="Event"/}
@@ -20,17 +20,17 @@
               <th></th>
             </tr>
             </thead>
-            <tbody ng-repeat="event in dojoEvents.events" ng-switch on="dojoEvents.events[$index].isCollapsed">
-            <tr>
+            <tbody ng-repeat="event in dojoEvents.events" ng-switch on="dojoEvents.events[$index].isCollapsed" class="events-info">
+            <tr ng-click="showEventInfo(dojoEvents, $index)" class="event-info-row">
               <td>{{ event.name }}</td>
               <td>{{ event.formattedDate }}</td>
               <td>{{ event.type }}</td>
               <td>{{ event.for }}</td>
               <td class="pointer">
-                <button ng-click="showEventInfo(dojoEvents, $index)" class="btn btn-primary" type="button">{@i18n key="Info"/}</button>
+                <i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': events[$index].isCollapsed, 'glyphicon-chevron-right': !events[$index].isCollapsed}"></i>
               </td>
             </tr>
-            <tr ng-switch-when="true">
+            <tr ng-switch-when="true" class="event-info-row-content">
               <td colspan="9">
                 <div class="span9">
                   <cd-apply-for-event></cd-apply-for-event>

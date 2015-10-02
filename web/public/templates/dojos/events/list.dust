@@ -1,11 +1,11 @@
-<div class="cd-dashboard">
+<div class="cd-dashboard events-display">
   <a name="events"></a>
 
   <div class="my-dojos">
     <legend>{@i18n key="Events"/}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
-        <table id="dojoEventsTable" class="table cd-grid-table">
+        <table id="dojoEventsTable" class="table cd-grid-table table-striped">
           <thead>
           <tr>
             <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort.name)">&nbsp;</span>{@i18n key="Event"/}
@@ -16,17 +16,16 @@
             <th></th>
           </tr>
           </thead>
-          <tbody ng-repeat="event in events" ng-switch on="events[$index].isCollapsed">
-          <tr>
+          <tbody ng-repeat="event in events" ng-switch on="events[$index].isCollapsed" class="events-info">
+          <tr ng-click="showEventInfo($index, event.id)" class="event-info-row">
             <td>{{ event.name }}</td>
             <td>{{ event.formattedDate }}</td>
             <td>{{ event.type }}</td>
             <td class="pointer">
-              <button ng-click="showEventInfo($index, event.id)" class="btn btn-primary"
-                      type="button">{@i18n key="Info"/}</button>
+              <i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': events[$index].isCollapsed, 'glyphicon-chevron-right': !events[$index].isCollapsed}"></i>
             </td>
           </tr>
-          <tr ng-switch-when="true">
+          <tr ng-switch-when="true" class="event-info-row-content">
             <td colspan="9">
               <div class="span9">
                 <cd-apply-for-event></cd-apply-for-event>
