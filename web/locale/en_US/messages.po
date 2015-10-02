@@ -2490,9 +2490,6 @@ msgstr "Edit Event"
 msgid "Turn on ticket approval"
 msgstr "Turn on ticket approval"
 
-msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
-msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
-
 msgid "Book now"
 msgstr "Book now"
 
@@ -2586,3 +2583,5 @@ msgstr "Ninja Over 13 - A Ninja is a young person who attends their local Dojo! 
 msgid "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
 msgstr "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
 
+msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
+msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
