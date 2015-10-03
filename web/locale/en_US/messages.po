@@ -2585,3 +2585,21 @@ msgstr "You must complete all of the ticket details before inviting Dojo members
 
 msgid "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
 msgstr "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
+
+msgid "Session Invite"
+msgstr "Session Invite"
+
+msgid "Session invitation is being validated..."
+msgstr "Session invitation is being validated..."
+
+msgid "Invitation successfully validated. Your ticket has been sent to your email."
+msgstr "Invitation successfully validated. Your ticket has been sent to your email."
+
+msgid "Invalid session invitation."
+msgstr "Invalid session invitation."
+
+msgid "Only the invited user can accept this invitation."
+msgstr "Only the invited user can accept this invitation."
+
+msgid "No invites found"
+msgstr "No invites found"

@@ -54,6 +54,9 @@ function cdEventsService(cdApi, $q){
     },
     cancelSession: function(session, win, fail) {
       cdApi.post('events/cancel_session', {session: session}, win, fail || topfail);
+    },
+    validateSessionInvitation: function (invitation, win, fail) {
+      cdApi.post('events/validate_session_invitation', {invitation: invitation}, win, fail || topfail);
     }
   };
 }
