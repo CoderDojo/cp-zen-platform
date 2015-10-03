@@ -8,7 +8,6 @@
     <h4>{@i18n key="Are you a parent/guardian?"/}</h4>
     <p>{@i18n key="Please note that to book tickets for your youths you will need to"/} <a class="pointer" ng-click="goToProfile()">{@i18n key="add them to your profile first"/}</a> {@i18n key="in the ninja section"/}</p>
   </div>
-
   <table class="table cd-grid-table">
     <thead>
       <th>{@i18n key="Ticket Name"/}</th>
@@ -18,7 +17,7 @@
       <tr ng-repeat="ticket in session.tickets">
         <td>{{ ticket.name }}</td>
         <td>
-          <div ng-dropdown-multiselect="" options="eventUserSelection" selected-model="sessionApplication.tickets[ticket.name]" extra-settings="applyForSettings"></div>
+          <div ng-dropdown-multiselect="" options="applyForModel[ticket.id]" selected-model="sessionApplication.tickets[ticket.id]" extra-settings="applyForSettings"></div>
         </td>
       </tr>
     </tbody>

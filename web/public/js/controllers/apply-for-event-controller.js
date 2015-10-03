@@ -36,8 +36,18 @@
               event: function () {
                 return $scope.event;
               },
-              eventUserSelection: function () {
-                return $scope.eventUserSelection;
+              applyForModel: function () {
+                $scope.applyForModel = {};
+                _.each(session.tickets, function (ticket) {
+                  var applyForData = angular.copy($scope.eventUserSelection[$scope.event.dojoId]);
+                  _.each(applyForData, function (applyObj) {
+                    applyObj.ticketId = ticket.id;
+                    applyObj.ticketName = ticket.name;
+                    applyObj.ticketType = ticket.type;
+                  });
+                  $scope.applyForModel[ticket.id] = applyForData;
+                });
+                return $scope.applyForModel;
               },
               currentUser: function () {
                 return $scope.currentUser;

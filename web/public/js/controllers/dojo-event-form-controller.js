@@ -699,7 +699,7 @@
     } else {
       cdEventsService.search({dojoId: dojoId, sort$: {createdAt: 1}, limit$: 1}).then(function (events) {
         var latestEvent = events[0];
-        $scope.eventInfo.ticketApproval = latestEvent.ticketApproval;
+        if(latestEvent) $scope.eventInfo.ticketApproval = latestEvent.ticketApproval;
       });
     }
 
