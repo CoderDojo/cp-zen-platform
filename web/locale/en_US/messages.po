@@ -2490,9 +2490,6 @@ msgstr "Edit Event"
 msgid "Turn on ticket approval"
 msgstr "Turn on ticket approval"
 
-msgid "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
-msgstr "Require approval by ticket admins to attend this Dojos events. Applicants will receive an email informing them their ticket must be approved before admittance"
-
 msgid "Book now"
 msgstr "Book now"
 
@@ -2574,6 +2571,7 @@ msgstr "add them to your profile first"
 msgid "in the ninja section"
 msgstr "in the ninja section"
 
+<<<<<<< HEAD
 msgid "Invite Dojo Members to this session"
 msgstr "Invite Dojo Members to this session"
 
@@ -2603,3 +2601,21 @@ msgstr "Only the invited user can accept this invitation."
 
 msgid "No invites found"
 msgstr "No invites found"
+
+msgid "How do I choose?"
+msgstr "How do I choose?"
+
+msgid "Champion - A CoderDojo Champion is an individual who spearheads setting up and maintaining a Dojo. Champions do not necessarily have to have the ability to code but possess the skills required to bring together technical mentors and supporters to run a Dojo frequently!"
+msgstr "Champion - A CoderDojo Champion is an individual who spearheads setting up and maintaining a Dojo. Champions do not necessarily have to have the ability to code but possess the skills required to bring together technical mentors and supporters to run a Dojo frequently!"
+
+msgid "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
+msgstr "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
+
+msgid "Ninja Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
+msgstr "Ninja Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
+
+msgid "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
+msgstr "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
+
+msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
+msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."

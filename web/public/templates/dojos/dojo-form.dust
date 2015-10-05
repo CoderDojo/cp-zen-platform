@@ -71,7 +71,7 @@
             <span>{@i18n key="City/Town"/}*</span>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
-            <ui-select name="place" ng-disabled="!dojo.country || disableDojoCountryChange" ng-model="dojo.place" required on-select="setPlace(dojo, $item)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
+            <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" required on-select="setPlace(dojo, $item)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
               <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
                 <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
