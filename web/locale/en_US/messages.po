@@ -2618,3 +2618,6 @@ msgstr "Parent/Guardian - Parents/kids are super important in CoderDojo as they 
 
 msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
+
+msgid "Place name must be less than 40 characters."
+msgstr "Place name must be less than 40 characters."
