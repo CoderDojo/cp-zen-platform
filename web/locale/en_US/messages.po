@@ -2571,7 +2571,6 @@ msgstr "add them to your profile first"
 msgid "in the ninja section"
 msgstr "in the ninja section"
 
-<<<<<<< HEAD
 msgid "Invite Dojo Members to this session"
 msgstr "Invite Dojo Members to this session"
 
