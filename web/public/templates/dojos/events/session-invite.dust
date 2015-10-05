@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">{@i18n key="Invite Dojo Members to this session"/}</h3>
+</div>
+<div class="modal-body">
+  <table class="table cd-grid-table">
+    <thead>
+      <th>{@i18n key="Ticket Name"/}</th>
+      <th>{@i18n key="Invite"/}</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ticket in session.tickets">
+        <td>{{ ticket.name }}</td>
+        <td>
+          <div ng-dropdown-multiselect="" options="eventUserSelection" selected-model="session.tickets[$index].invites" extra-settings="inviteSettings"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="buildInvites(invite)">
+    <span>{@i18n key="Save Invite List"/}</span>
+  </button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{@i18n key="Cancel"/}</button>
+</div>

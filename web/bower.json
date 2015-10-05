@@ -36,7 +36,7 @@
     "angular-sb-date-select": "0.3.5",
     "jquery-cookie-disclaimer": "1.0.0",
     "angular-alert-banner": "https://github.com/ckiss/angular-alert-banner.git#master",
-    "angular-spinner": "0.6.2",
+    "angular-spinner": "0.7.0",
     "angular-translate-storage-cookie": "2.7.0",
     "ng-tags-input": "2.3.0",
     "ngBootbox": "0.0.5",

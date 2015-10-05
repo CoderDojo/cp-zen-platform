@@ -2556,6 +2556,9 @@ msgstr "Cancelling this session will cancel the event as this is the only sessio
 msgid "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
 msgstr "Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."
 
+msgid "Invite Dojo Members"
+msgstr "Invite Dojo Members"
+
 msgid "Are you a parent/guardian?"
 msgstr "Are you a parent/guardian?"
 
@@ -2567,6 +2570,36 @@ msgstr "add them to your profile first"
 
 msgid "in the ninja section"
 msgstr "in the ninja section"
+
+msgid "Invite Dojo Members to this session"
+msgstr "Invite Dojo Members to this session"
+
+msgid "Save Invite List"
+msgstr "Save Invite List"
+
+msgid "You must complete all of the ticket details before inviting Dojo members."
+msgstr "You must complete all of the ticket details before inviting Dojo members."
+
+msgid "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
+msgstr "Dojo members successfully added to invite list. They will be notified of the invite when you publish this event."
+
+msgid "Session Invite"
+msgstr "Session Invite"
+
+msgid "Session invitation is being validated..."
+msgstr "Session invitation is being validated..."
+
+msgid "Invitation successfully validated. Your ticket has been sent to your email."
+msgstr "Invitation successfully validated. Your ticket has been sent to your email."
+
+msgid "Invalid session invitation."
+msgstr "Invalid session invitation."
+
+msgid "Only the invited user can accept this invitation."
+msgstr "Only the invited user can accept this invitation."
+
+msgid "No invites found"
+msgstr "No invites found"
 
 msgid "How do I choose?"
 msgstr "How do I choose?"

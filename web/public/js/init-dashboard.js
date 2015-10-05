@@ -392,6 +392,14 @@
           resolve: {
             currentUser: resolves.loggedInUser
           }
+        })
+        .state('accept-session-invite', {
+          url:'/dashboard/accept_session_invitation/:ticketId/:invitedUserId',
+          controller:'accept-session-invite-controller',
+          templateUrl: '/dojos/template/events/accept-session-invite',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise('/404');
