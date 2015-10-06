@@ -400,6 +400,61 @@ label {
   text-align: center;
 }
 
+.events-display {
+  tbody {
+    tr.event-info-row {
+      cursor:pointer;
+    }
+    td {
+      padding:10px;
+    }
+  }
+  .events-body {
+    padding:15px;
+    border-bottom:2px solid #ccc;
+    h4 {
+      color:@cd-body-color-3;
+      font-weight:bold;
+    }
+  }
+  .events-sessions {
+    padding-top:10px;
+  }
+  .events-session-table {
+    border-top:2px solid #ccc;
+  }
+  .three-column {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    -webkit-column-gap: 20px;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+    column-rule-color: #ccc;
+    column-rule-style:solid;
+    column-rule-width: 1px;
+    text-align: justify;
+  }
+  .dates {
+    padding-bottom:15px;
+  }
+  .location {
+    border-right:2px solid #ccc;
+    padding-left:0px;
+    h3 {
+      margin-top:0px;
+    }
+  }
+}
+
+.event-form {
+  .form-inline {
+    .checkbox {
+      padding-left:10px;
+    }
+  }
+}
+
 .ten-percent-width {
   width: 10%;
 
