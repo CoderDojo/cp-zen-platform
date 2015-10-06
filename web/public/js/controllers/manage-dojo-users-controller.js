@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, cdUsersService, initUserTypes, currentUser, utilsService, cdEventsService) {
+  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -29,11 +29,14 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   //Show 404 if current user has no permission to view this page
   cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0}, function (usersDojos) {
     var userDojo = usersDojos[0];
-    var isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
-      return userPermission.name === 'dojo-admin';
-    });
+    var isDojoAdmin;
+    if(userDojo) {
+      isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
+        return userPermission.name === 'dojo-admin';
+      });
+    }
 
-    if(!isDojoAdmin) return $state.go('error-404-no-headers');
+    if(!userDojo || !isDojoAdmin) return $state.go('error-404-no-headers');
     $scope.loadPage(true);
   });
 
@@ -60,7 +63,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
     var users;
-    
+
     async.series([
       getInviteUserTypes,
       getUsersDojosLink,
@@ -71,11 +74,15 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if(err) console.error(err);
       users = _.compact(users);
       $scope.users = users;
-    });    
+    });
 
     function getInviteUserTypes(done) {
       cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId, deleted: 0}, function (usersDojos) {
-        var userDojo = usersDojos[0]
+        if(!usersDojos || usersDojos.length < 1){
+          $state.go('my-dojos');
+          return done();
+        }
+        var userDojo = usersDojos[0];
         user.userTypes = userDojo.userTypes;
         var inviteUserTypes = angular.copy(initUserTypes.data);
         if(_.contains(user.userTypes, 'mentor')) {
@@ -398,5 +405,5 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'cdUsersService', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', cdManageDojoUsersCtrl]);
 
