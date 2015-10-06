@@ -235,7 +235,12 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     dojo.alpha3 = country.alpha3;
   };
 
-  $scope.setPlace = function (dojo, place) {
+  $scope.setPlace = function (dojo, place, form) {
+    if(place.nameWithHierarchy.length > 40) {
+      if(form) form.place.$setValidity("maxLength", false);
+    } else {
+      if(form) form.place.$setValidity("maxLength", true);
+    }
     dojo.placeName = place.name || place.nameWithHierarchy;
     dojo.placeGeonameId = place.geonameId;
     dojo.county = {};
@@ -389,11 +394,11 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
         position: $scope.mapOptions.center
       }));
       dojo.coordinates = data.lat + ', ' + data.lng;
-      if (cb) cb();
+      if (_.isFunction(cb)) cb();
     }, function () {
       //Ask user to add location manually if google geocoding can't find location.
-      alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
-      if (cb) cb();
+      if (!_.isFunction(cb)) alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+      if (_.isFunction(cb)) cb();
     });
   };
 
