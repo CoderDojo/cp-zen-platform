@@ -6,9 +6,6 @@ function cdUsersService(cdApi, $q){
   }
 
   return {
-    list: function(ids, win, fail){
-      cdApi.post('users/list', {ids: ids}, win, fail || topfail);
-    },
     promote: function(id, roles, win, fail) {
       cdApi.put('users/promote/' + id, {roles:roles}, win, fail || topfail);
     },
