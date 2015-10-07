@@ -12,10 +12,6 @@ function cdUsersService(cdApi, $q){
     getUsersByEmails: function(email, win, fail) {
       cdApi.post('users/emails', {email: email}, win, fail || topfail);
     },
-    update: function(user, win, fail) {
-      user = angular.copy(user);
-      cdApi.put('users/update/' + user.id, { user: user }, win, fail);
-    },
     load: function(userId, win, fail) {
       cdApi.get('users/load/' + userId, win, fail || topfail);
     },
