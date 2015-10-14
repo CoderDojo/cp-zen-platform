@@ -40,6 +40,7 @@
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
     "hapi-less": "0.2.0",
+    "hapi-swagger": "2.2.0",
     "heapdump": "0.3.7",
     "inert": "3.1.0",
     "isemail": "1.1.1",
