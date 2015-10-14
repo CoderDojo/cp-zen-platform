@@ -21,12 +21,12 @@ function cdBadgesService(cdApi, $q) {
       cdApi.get('badges/user/' + userId, win, fail || topfail);
     },
     loadBadgeCategories: function(win, fail) {
-      cdApi.get('badge_categories', win, fail || topfail);
+      cdApi.get('badges/categories', win, fail || topfail);
     },
     loadBadgeCategoriesPromise: function () {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      cdApi.get('badge_categories', deferred.resolve, deferred.reject || topfail);
+      cdApi.get('badges/categories', deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     loadBadgeByCode: function(code, win, fail) {
@@ -36,7 +36,7 @@ function cdBadgesService(cdApi, $q) {
       cdApi.post('badges/claim', {badge: badge}, win, fail || topfail);
     },
     exportBadges: function(win, fail) {
-      cdApi.get('export_badges', win, fail || topfail);
+      cdApi.get('badges/export', win, fail || topfail);
     }
   };
 }

@@ -53,7 +53,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
   $scope.upload = function (file) {
     if ($scope.profile.id && file) {
       Upload.upload({
-        url: '/api/1.0/profiles/change-avatar',
+        url: '/api/2.0/profiles/change-avatar',
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -538,4 +538,3 @@ angular.module('cpZenPlatform')
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
     'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'usSpinnerService', 'atomicNotifyService', '$timeout', cdUserProfileCtrl]);
-

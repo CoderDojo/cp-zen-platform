@@ -12,13 +12,14 @@ var Blankie = require('blankie');
 var Scooter = require('scooter');
 var Chairo = require('chairo');
 var path = require('path');
-var options = require('./options.' + env + '.js');
+var options = require('./config/options.js');
 var locale = require('locale');
 var languages = require('./config/languages.js');
 var cacheTimes = require('./config/cache-times');
 var cuid = require('cuid');
 var util = require('util');
 var fs = require('fs');
+var debug = require('debug')('cp-zen-platform:index');
 
 require('./lib/dust-i18n.js');
 
@@ -39,7 +40,6 @@ function checkHapiPluginError (name) {
 }
 
 // Set up HAPI
-
 server.connection({
   port: port,
   // According to the HTTP spec and Chrome audit tool, Cache-Control headers should match what
@@ -75,10 +75,16 @@ server.ext('onPreAuth', function (request, reply) {
 server.ext('onPreResponse', function (request, reply) {
   var status = request.response.statusCode;
 
+  // if it's an api call, continue as normal..
+  if (request.url.path.indexOf('/api/2.0') === 0) {
+    return reply.continue();
+  }
+
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
 
+  debug('onPreResponse', 'showing 404 errors page');
   return reply.view('errors/404', request.locals);
 });
 
@@ -97,13 +103,70 @@ server.ext('onPreResponse', function (request, reply) {
   }
 
   // Otherwise, give a generic error reply to hide errors in production.
+  debug('onPreResponse', 'showing 500 errors page');
   return reply.view('errors/500', request.locals);
 });
 
-// TODO Using stream here causes responses from seneca-web to be buffered, which may impact performance.
-//      However, most of them aren't large sized responses, so the benefit of Etag outweighs that penalty.
-//      Implementing better streaming support in hapi-etags may be fairly straightforward using Etag in the
-//      Trailer rather than Header... - wprl
+// TODO - cache!
+function getUser (request, cb) {
+  var token = request.state['seneca-login'];
+  if (token) {
+    request.seneca.act({role: 'user', cmd:'auth', token: token}, function (err, resp) {
+      if (err) return cb(err);
+      if (resp.ok === false) {
+        return cb('login not ok');
+      }
+      return cb(null, resp);
+    });
+  } else {
+    setImmediate(cb);
+  }
+};
+
+server.ext('onPostAuth', function (request, reply) {
+  debug('onPostAuth', request.url.path, 'login:', request.state['seneca-login']);
+  var url = request.url.path;
+  var profileUrl = '/dashboard/profile';
+  var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
+
+  getUser(request, function (err, user) {
+    if (err) {
+      console.error(err);
+      return reply.continue();
+    }
+    debug('onPostAuth', 'user:', user);
+    request.user = user;
+
+    // profile redirect
+    if (_.contains(url, profileUrl) && !request.user) {
+      var userId = url.split('/')[3];
+      debug('onPostAuth', 'profile redirect:', userId);
+      return reply.redirect('/profile/' + userId);
+    }
+
+    if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user) {
+      // Not logged in, redirect to dojo-detail if trying to see dojo detail
+      if (/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(url)){
+        debug('onPostAuth', 'redirecting to dojo detail');
+        return reply.redirect(url.replace('dashboard/',''))
+      } else {
+        // Otherwise, redirect to /login with referer parameter
+        debug('onPostAuth', 'redirecting to /login with referer', url);
+        var referer = encodeURIComponent(url);
+        return reply.redirect('/login?referer=' + url);
+      }
+    }
+
+    if (_.contains(restrictedRoutesWhenLoggedIn, url) && request.user) {
+      debug('onPostAuth', 'url has restricted routes:', url, 'redirecting to /dashboard/dojo-list');
+      return reply.redirect('/dashboard/dojo-list');
+    }
+
+    debug('onPostAuth', 'continuing');
+    return reply.continue();
+  });
+});
+
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 
 server.register(Scooter, function (err) {
@@ -156,6 +219,84 @@ if (process.env.HAPI_DEBUG === 'true') {
   server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
 }
 
+var dojos = require('../lib/dojos.js');
+server.register(dojos, function (err) {
+  checkHapiPluginError('dojos')(err);
+});
+
+var cdUsers = require('../lib/users.js');
+server.register(cdUsers, function (err) {
+  checkHapiPluginError('users')(err);
+});
+
+var charter = require('../lib/charter.js');
+server.register(charter, function (err) {
+  checkHapiPluginError('charter')(err);
+});
+
+var agreements = require('../lib/agreements.js');
+server.register(agreements, function (err) {
+  checkHapiPluginError('agreements')(err);
+});
+
+var sys = require('../lib/sys.js');
+server.register(sys, function (err) {
+  checkHapiPluginError('sys')(err);
+});
+
+var configRoute = require('../lib/config.js');
+server.register({register: configRoute, options: options.webclient}, function (err) {
+  checkHapiPluginError('config')(err);
+});
+
+var oauth2 = require('../lib/oauth2.js');
+server.register(oauth2, function (err) {
+  checkHapiPluginError('oauth2')(err);
+});
+
+var profiles = require('../lib/profiles.js');
+server.register(profiles, function (err) {
+  checkHapiPluginError('profiles')(err);
+});
+
+var badges = require('../lib/badges.js');
+server.register(badges, function (err) {
+  checkHapiPluginError('badges')(err);
+});
+
+var events = require('../lib/events.js');
+server.register(events, function (err) {
+  checkHapiPluginError('events')(err);
+});
+
+// Locale related server method
+function formatLocaleCode (code) {
+  return code.slice(0, 3) + code.charAt(3).toUpperCase() + code.charAt(4).toUpperCase();
+}
+
+var locality = function(request) {
+  var ngKey;
+  if (request.state.NG_TRANSLATE_LANG_KEY) {
+    // TODO - shouldn't hapi decode cookies?
+    ngKey = decodeURIComponent(request.state.NG_TRANSLATE_LANG_KEY);
+    ngKey = ngKey.replace(/\"/g, '');
+  }
+
+  var local = ngKey || request.headers['accept-language'];
+  if (!local) local = 'en_US';
+  local = formatLocaleCode(local);
+
+  return local;
+}
+
+server.method('locality', locality, {});
+
+// TODO - what's the ttl on the express cookie??
+server.state('seneca-login', {
+  ttl: 2 * 24 * 60 * 60 * 1000,     // two days
+  path: '/'
+});
+
 // Set up Chairo and seneca, then start the server.
 server.register({ register: Chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
@@ -164,62 +305,17 @@ server.register({ register: Chairo, options: options }, function (err) {
     register: require('chairo-cache'),
     options: { cacheName: 'cd-cache' }
   }, function (err) {
-    checkHapiPluginError('chairo-cache')(err);
+     checkHapiPluginError('chairo-cache')(err);
 
-    var seneca = server.seneca;
+     var seneca = server.seneca;
 
-    seneca
-      .use('ng-web')
-      .use(require('../lib/users/user.js'))
-      .use('auth')
-      .use('user-roles')
-      .use('web-access')
-      .use(require('../lib/charter/cd-charter.js'))
-      .use(require('../lib/dojos/cd-dojos.js'))
-      .use(require('../lib/users/cd-users.js'))
-      .use(require('../lib/agreements/cd-agreements.js'))
-      .use(require('../lib/badges/cd-badges.js'))
-      .use(require('../lib/profiles/cd-profiles.js'))
-      .use(require('../lib/events/cd-events.js'))
-      .use(require('../lib/oauth2/cd-oauth2.js'))
-      .use(require('../lib/config/cd-config.js'), options.webclient)
-      .use(require('../lib/sys/cd-sys.js'));
+     _.each(options.client, function(opts) {
+       seneca.client(opts);
+     });
 
-    _.each(options.client, function(opts) {
-      seneca.client(opts);
-    });
-
-    // // Potentially useful extra logging.
-
-    // seneca.logroute( {level:'all' });
-
-    // // capture seneca messages - leaving this here as we *may* do something with it
-    // // if the debug level json is not good enough logging.
-    // seneca.sub({}, captureAllMessages);
-    // function captureAllMessages(args) {
-    //   console.log('*** captured = ', JSON.stringify(args));
-    // }
-
-    // Use seneca-web middleware with Hapi.
-    server.register({
-      register: require('hapi-seneca'),
-      options: {
-        cors: true,
-        session: {
-          /*store: sessionStore, */
-          secret: options.session.secret,
-          name: 'CD.ZENPLATFORM',
-          saveUninitialized: true,
-          resave: true
-        }
-      }
-    }, function (err) {
-      checkHapiPluginError('hapi-seneca')(err);
-      server.start(function() {
-        console.log('[%s] Listening on http://localhost:%d', env, port);
-      });
-    });
-  });
+     server.start(function() {
+       console.log('[%s] Listening on http://localhost:%d', env, port);
+     });
+   });
 });
-
 };

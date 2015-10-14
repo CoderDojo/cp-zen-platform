@@ -16,23 +16,23 @@ function cdUsersService(cdApi, $q){
       cdApi.get('users/load/' + userId, win, fail || topfail);
     },
     getInitUserTypes: function(win, fail) {
-      cdApi.get('users/init_user_types', win, fail || topfail);
+      cdApi.get('users/init-user-types', win, fail || topfail);
     },
     getInitUserTypesPromise: function() {
       var deferred = $q.defer();
       var promise = deferred.promise;
 
-      cdApi.get('users/init_user_types', deferred.resolve, deferred.reject || topfail);
+      cdApi.get('users/init-user-types', deferred.resolve, deferred.reject || topfail);
 
       return promise;
     },
     userProfileData: function(query, win, fail) {
-      cdApi.post('profiles/user_profile_data', {query: query}, win, fail || topfail);
+      cdApi.post('profiles/user-profile-data', {query: query}, win, fail || topfail);
     },
     userProfileDataPromise: function (query) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      cdApi.post('profiles/user_profile_data', {query:query}, deferred.resolve, deferred.reject || topfail);
+      cdApi.post('profiles/user-profile-data', {query:query}, deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     saveProfile: function(profile, win, fail) {
@@ -60,40 +60,40 @@ function cdUsersService(cdApi, $q){
       return promise;
     },
     isChampion: function(id, win, fail){
-      cdApi.post('users/isChampion', {id: id}, win, fail || topfail);
+      cdApi.post('users/is-champion', {id: id}, win, fail || topfail);
     },
     getAvatar: function(id, win, fail){
       cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);
     },
     loadChampionsForUser: function(userId, win, fail) {
-      cdApi.get('users/champions_for_user/' + userId, win, fail || topfail);
+      cdApi.get('users/champions-for-user/' + userId, win, fail || topfail);
     },
     loadChampionsForUserPromise: function (userId) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      cdApi.get('users/champions_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      cdApi.get('users/champions-for-user/' + userId, deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     loadParentsForUserPromise: function (userId) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      cdApi.get('profiles/parents_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      cdApi.get('profiles/parents-for-user/' + userId, deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     loadDojoAdminsForUserPromise: function (userId) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-      cdApi.get('users/dojo_admins_for_user/' + userId, deferred.resolve, deferred.reject || topfail);
+      cdApi.get('users/dojo-admins-for-user/' + userId, deferred.resolve, deferred.reject || topfail);
       return promise;
     },
     inviteNinja: function (ninjaData, win, fail) {
-      cdApi.post('profiles/invite_ninja', {ninjaData: ninjaData}, win, fail || topfail);
+      cdApi.post('profiles/invite-ninja', {ninjaData: ninjaData}, win, fail || topfail);
     },
     approveInviteNinja: function (data, win, fail) {
-      cdApi.post('profiles/approve_invite_ninja', {data: data}, win, fail || topfail);
+      cdApi.post('profiles/approve-invite-ninja', {data: data}, win, fail || topfail);
     },
     loadNinjasForUser: function (userId, win, fail) {
-      cdApi.get('profiles/ninjas_for_user/' + userId, win, fail || topfail);
+      cdApi.get('profiles/ninjas-for-user/' + userId, win, fail || topfail);
     }
   };
 }
