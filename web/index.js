@@ -11,6 +11,7 @@ var Hapi = require('hapi');
 var Blankie = require('blankie');
 var Scooter = require('scooter');
 var Chairo = require('chairo');
+var Inert = require('inert');
 var path = require('path');
 var options = require('./config/options.js');
 var locale = require('locale');
@@ -50,10 +51,17 @@ server.connection({
   }
 });
 
-server.views({
-  engines: { dust: require('hapi-dust') },
-  path: path.join(__dirname, './public/templates'),
-  partialsPath: path.join(__dirname, './public/templates')
+server.register(require('inert'), function (err) {
+  checkHapiPluginError('inert')(err);
+});
+
+server.register(require('vision'), function (err) {
+  checkHapiPluginError('vision')(err);
+  server.views({
+    engines: { dust: require('hapi-dust') },
+    path: path.join(__dirname, './public/templates'),
+    partialsPath: path.join(__dirname, './public/templates')
+  });
 });
 
 server.ext('onPreAuth', function (request, reply) {
