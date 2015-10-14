@@ -36,7 +36,7 @@
 
     <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group form-inline">
-        <div class="col-lg-offset-3 col-lg-5" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
+        <div class="col-lg-offset-3 col-lg-5 col-md-11 col-sm-11 col-xs-11" ng-class="{'has-error': registerForm.$submitted && registerForm.initUserType.$error.required}">
           <ui-select name="initUserType" ng-disabled="onStartDojoWizard" ng-model="registerUser.initUserType" required>
             <ui-select-match allow-clear="false" placeholder="{@i18n key="Select user type"/}">{{ $select.selected.title }}</ui-select-match>
             <ui-select-choices repeat="initUserType in initUserTypes" value="{{ $select.selected.name }}">
