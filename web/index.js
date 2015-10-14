@@ -312,7 +312,8 @@ server.state('seneca-login', {
 });
 
 // This can be turned off in production if needs be
-if (process.env.NO_SWAGGER === 'false') {
+var noSwagger = process.env.NO_SWAGGER === 'true';
+if (!noSwagger) {
   var swaggerOptions = {
     apiVersion: '2.0'
   };
