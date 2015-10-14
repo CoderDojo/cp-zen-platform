@@ -55,6 +55,10 @@ server.register(require('inert'), function (err) {
   checkHapiPluginError('inert')(err);
 });
 
+server.register(require('blipp'), function (err) {
+  checkHapiPluginError('blipp')(err);
+});
+
 server.register(require('vision'), function (err) {
   checkHapiPluginError('vision')(err);
   server.views({
