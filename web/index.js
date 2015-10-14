@@ -311,10 +311,18 @@ server.state('seneca-login', {
   path: '/'
 });
 
-var swaggerOptions = {
-  apiVersion: '2.0'
-};
-
+// This can be turned off in production if needs be
+if (process.env.NO_SWAGGER === 'false') {
+  var swaggerOptions = {
+    apiVersion: '2.0'
+  };
+  server.register({
+    register: hapiSwagger,
+    options: swaggerOptions
+  }, function (err) {
+     checkHapiPluginError('hapi-swagger')(err);
+  });
+}
 
 // Set up Chairo and seneca, then start the server.
 server.register({ register: chairo, options: options }, function (err) {
@@ -332,16 +340,10 @@ server.register({ register: chairo, options: options }, function (err) {
        seneca.client(opts);
      });
 
-       server.register({
-         register: hapiSwagger,
-         options: swaggerOptions
-       }, function (err) {
-            checkHapiPluginError('hapi-swagger')(err);
 
-            server.start(function() {
-              console.log('[%s] Listening on http://localhost:%d', env, port);
-            });
-          });
+     server.start(function() {
+       console.log('[%s] Listening on http://localhost:%d', env, port);
+     });
    });
 });
 };
