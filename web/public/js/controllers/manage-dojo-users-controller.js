@@ -27,7 +27,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   var user = currentUser.data;
   $scope.currentUser = user;
   //Show 404 if current user has no permission to view this page
-  cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0}, function (usersDojos) {
+  cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0, dojoId: dojoId}, function (usersDojos) {
     var userDojo = usersDojos[0];
     var isDojoAdmin;
     if(userDojo) {
@@ -406,4 +406,3 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
     'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', cdManageDojoUsersCtrl]);
-
