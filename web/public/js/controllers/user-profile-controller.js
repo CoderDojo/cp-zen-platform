@@ -178,7 +178,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
       alertService.showError($translate.instant('An error has occurred while sending invitation') );
     };
 
-    data.emailSubject = $translate.instant('Invitation to become a Parent/Guardian');
+    data.emailSubject = $translate.instant('You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.');
     cdUsersService.inviteParent(data, win, fail);
   };
 
