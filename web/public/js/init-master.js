@@ -126,6 +126,9 @@
     }
   };
 
+
+
+
   angular.module('cpZenPlatform')
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
@@ -324,9 +327,5 @@
         pageTitle.push("CoderDojo Zen");
         $rootScope.pageTitle = pageTitle.join(" | ");
       });
-    })
-    .service('cdApi', seneca.ng.web({
-      prefix: '/api/1.0/'
-    }));
+    });
 })();
-

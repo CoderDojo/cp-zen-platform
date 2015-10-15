@@ -139,8 +139,6 @@
     <script src="/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js"></script>
     <script src="/components/angular-tooltips/dist/angular-tooltips.min.js"></script>
 
-    <script src="/seneca/init.js"></script>
-
     <script src="/js/cp-zen-platform.js"></script>
     <script src="/js/controllers/login-controller.js"></script>
 
@@ -158,7 +156,8 @@
     <script src="/js/controllers/accept-child-controller.js"></script>
     <script src="/js/controllers/dojos-map-controller.js"></script>
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
-    
+
+    <script src="/js/services/cd-api.js"></script>
     <script src="/js/services/cd-dojo-service.js"></script>
     <script src="/js/services/geocoder-service.js"></script>
     <script src="/js/services/auth-service.js"></script>
