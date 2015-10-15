@@ -2625,5 +2625,17 @@ msgstr "Enabling this will require you or another admin with Ticketing Admin per
 msgid "Place name must be less than 40 characters."
 msgstr "Place name must be less than 40 characters."
 
-msgid "If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"
-msgstr If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"
+msgid "Zen is open source, you can"
+msgstr "Zen is open source, you can"
+
+msgid "contribute code"
+msgstr "contribute code"
+
+msgid "and"
+msgstr "and"
+
+msgid "suggest features"
+msgstr "suggest features"
+
+msgid "to help make it better."
+msgstr "to help make it better."
