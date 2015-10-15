@@ -7,10 +7,13 @@ if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
 var env = process.env.NODE_ENV || 'development';
 
 var _ = require('lodash');
-var Hapi = require('hapi');
-var Blankie = require('blankie');
-var Scooter = require('scooter');
-var Chairo = require('chairo');
+var hapi = require('hapi');
+var blankie = require('blankie');
+var scooter = require('scooter');
+var chairo = require('chairo');
+var vision = require('vision');
+var inert = require('inert');
+var hapiSwagger = require('hapi-swagger');
 var path = require('path');
 var options = require('./config/options.js');
 var locale = require('locale');
@@ -24,7 +27,7 @@ var debug = require('debug')('cp-zen-platform:index');
 require('./lib/dust-i18n.js');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
-var server = new Hapi.Server(options.hapi)
+var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
 var host = process.env.HOSTNAME || 'localhost';
 var protocol = process.env.PROTOCOL || 'http';
@@ -50,10 +53,21 @@ server.connection({
   }
 });
 
-server.views({
-  engines: { dust: require('hapi-dust') },
-  path: path.join(__dirname, './public/templates'),
-  partialsPath: path.join(__dirname, './public/templates')
+server.register(inert, function (err) {
+  checkHapiPluginError('inert')(err);
+});
+
+server.register(require('blipp'), function (err) {
+  checkHapiPluginError('blipp')(err);
+});
+
+server.register(vision, function (err) {
+  checkHapiPluginError('vision')(err);
+  server.views({
+    engines: { dust: require('hapi-dust') },
+    path: path.join(__dirname, './public/templates'),
+    partialsPath: path.join(__dirname, './public/templates')
+  });
 });
 
 server.ext('onPreAuth', function (request, reply) {
@@ -169,10 +183,10 @@ server.ext('onPostAuth', function (request, reply) {
 
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 
-server.register(Scooter, function (err) {
+server.register(scooter, function (err) {
   checkHapiPluginError('scooter')(err);
 
-  server.register({ register: Blankie, options: {
+  server.register({ register: blankie, options: {
     childSrc: "'none'",
     connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://s3.amazonaws.com/",
     defaultSrc: "'none'",
@@ -297,8 +311,22 @@ server.state('seneca-login', {
   path: '/'
 });
 
+// This can be turned off in production if needs be
+var noSwagger = process.env.NO_SWAGGER === 'true';
+if (!noSwagger) {
+  var swaggerOptions = {
+    apiVersion: '2.0'
+  };
+  server.register({
+    register: hapiSwagger,
+    options: swaggerOptions
+  }, function (err) {
+     checkHapiPluginError('hapi-swagger')(err);
+  });
+}
+
 // Set up Chairo and seneca, then start the server.
-server.register({ register: Chairo, options: options }, function (err) {
+server.register({ register: chairo, options: options }, function (err) {
   checkHapiPluginError('Chairo')(err);
 
   server.register({
@@ -312,6 +340,7 @@ server.register({ register: Chairo, options: options }, function (err) {
      _.each(options.client, function(opts) {
        seneca.client(opts);
      });
+
 
      server.start(function() {
        console.log('[%s] Listening on http://localhost:%d', env, port);

@@ -28,7 +28,7 @@
     "ngstorage": "0.3.9",
     "spin.js": "2.0.2",
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
-    "googlemaps-js-marker-clusterer": "1.0.0",
+    "js-marker-clusterer": "https://github.com/googlemaps/js-marker-clusterer.git#gh-pages",
     "angular-truncate": "*",
     "angular-wizard": "https://github.com/david-cahill/angular-wizard.git#master",
     "slug": "0.9.1",
