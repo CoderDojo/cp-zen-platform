@@ -2624,3 +2624,6 @@ msgstr "Enabling this will require you or another admin with Ticketing Admin per
 
 msgid "Place name must be less than 40 characters."
 msgstr "Place name must be less than 40 characters."
+
+msgid "If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"
+msgstr If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"
