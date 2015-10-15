@@ -14,8 +14,7 @@
             <div>
                 <a href="https://coderdojo.com/contact/">{@i18n key="Contact"/}</a> <a href="https://coderdojo.com/about/">{@i18n key="About"/}</a>
                 <p class="cdf-info">{@i18n key="Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"/} <a href="https://coderdojo.com/about/coderdojo-foundation" title="More information about the CoderDojo Foundation">{@i18n key="here"/}</a>.
-                <br>
-                {@i18n key="If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"/} <a href="https://github.com/coderdojo/community-platform" title="More information about contributing to the platform">{@i18n key="here"/}</a>.
+                <p class="cp-info">{@i18n key="If you find any issues on this site, want to suggest features to the platform, or even better contribute, you can find all the relevant information over"/} <a href="https://github.com/coderdojo/community-platform" title="More information about contributing to the platform">{@i18n key="here"/}</a>.
                 </p>
             </div>
         </span>
