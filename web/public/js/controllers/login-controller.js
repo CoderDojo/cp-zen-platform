@@ -198,7 +198,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.reset({
       email:$scope.forgot.email,
-      emailSubject: $translate.instant('CoderDojo Password Reset')
+      emailSubject: $translate.instant('CoderDojo Zen Password Reset Request')
     }, function(response) {
       usSpinnerService.stop('login-spinner');
 
