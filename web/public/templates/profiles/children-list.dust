@@ -3,7 +3,7 @@
   <div class="col-xs-12">
     <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Ninja over 13"/}</button>
     <button ng-if="editMode && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Ninja under 13"/}</button>
-    <button ng-if="editMode && (loggedInUser.id === profile.userId)" class="btn btn-xs btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Ninja over 13"/}</button>
+    <button ng-if="editMode && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Ninja over 13"/}</button>
   </div>
   <div class="col-xs-12">
     <ul ng-repeat="child in profile.resolvedChildren">
