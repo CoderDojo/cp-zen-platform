@@ -122,7 +122,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     user['g-recaptcha-response'] = $scope.recaptchaResponse;
-    user.emailSubject = $translate.instant('Welcome to CoderDojo!');
+    user.emailSubject = $translate.instant('Welcome to Zen, the CoderDojo community platform.');
 
     auth.register(user, function(data) {
       if(data.ok) {
