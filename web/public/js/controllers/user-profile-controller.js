@@ -511,7 +511,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     usSpinnerService.spin('user-profile-spinner');
     var ninjaData = {
       ninjaEmail: ninjaEmail,
-      emailSubject: $translate.instant('Approve Parent Request')
+      emailSubject: $translate.instant('You have been invited to connect with a parent/guardian on Zen!')
     };
     cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
