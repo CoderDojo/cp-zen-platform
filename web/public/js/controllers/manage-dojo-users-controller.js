@@ -366,7 +366,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     var applicationData = {
       user: user,
       badge: badge,
-      emailSubject: $translate.instant('CoderDojo Badge Nomination')
+      emailSubject: $translate.instant('You have been awarded a new CoderDojo digital badge!')
     };
 
     cdBadgesService.sendBadgeApplication(applicationData, function (response) {
