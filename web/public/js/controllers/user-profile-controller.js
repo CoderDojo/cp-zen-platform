@@ -531,6 +531,12 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
     $scope.inviteNinjaPopover.show = !$scope.inviteNinjaPopover.show;
   }
 
+  $scope.scrollToInvalid = function (form) {
+      if (form.$invalid) {
+          angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+      }
+  };
+
 }
 
 angular.module('cpZenPlatform')
