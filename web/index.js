@@ -87,7 +87,7 @@ server.ext('onPreAuth', function (request, reply) {
 
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
-  var status = request.response.statusCode;
+  var status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
 
   // if it's an api call, continue as normal..
   if (request.url.path.indexOf('/api/2.0') === 0) {
