@@ -2,7 +2,7 @@
   'use strict';
   /*global $*/
 
-  function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils, 
+  function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
     cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService, currentUser) {
 
     var eventId = $stateParams.eventId;
@@ -19,7 +19,7 @@
     $scope.filter = {};
 
     $scope.attendanceDropdownSettings = {
-      idProp: 'date', 
+      idProp: 'date',
       externalIdProp: '',
       displayProp: 'date',
       showUncheckAll: false,
@@ -53,7 +53,7 @@
     ];
 
     cdEventsService.getEvent(eventId, function (event) {
-      event.guestListDownloadLink = '/api/1.0/events/export-guest-list/' + event.id;
+      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id;
 
       var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
       var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
@@ -145,7 +145,7 @@
     $scope.filterApplications = function (sessionId) {
       $scope.loadPage(sessionId);
     };
-    
+
     $scope.pageChanged = function (sessionId) {
       $scope.loadPage(sessionId, false);
     }
@@ -175,7 +175,7 @@
         $scope.pagination.totalItems = result.length;
         $scope.sessionStats[sessionId].attending = 0;
         $scope.sessionStats[sessionId].waitlist = 0;
-        
+
         _.each(result, function (application) {
           if (application.status === 'approved') {
             $scope.sessionStats[sessionId].attending++;
@@ -191,8 +191,8 @@
       });
 
       var meta = {
-        limit$: $scope.pagination.itemsPerPage, 
-        skip$: loadPageData.skip, 
+        limit$: $scope.pagination.itemsPerPage,
+        skip$: loadPageData.skip,
         sort$: $scope.sort
       };
 
@@ -211,7 +211,7 @@
               $scope.checkedIn[application.id] = true;
             } else {
               $scope.checkedIn[application.id] = false;
-            } 
+            }
           }
 
           application.age = moment().diff(application.dateOfBirth, 'years');
@@ -290,7 +290,7 @@
           $scope.sessionStats[application.sessionId].waitlist++;
           $scope.eventStats.totalWaitlist++;
         }
-      } 
+      }
 
       function updateAttendance() {
         var date = moment.utc(application.applicationDates[0].date, 'Do MMMM YY').toISOString();
@@ -314,8 +314,8 @@
       application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
       application.emailSubject = {
         'request':  $translate.instant('Your ticket request for'),
-        'received': $translate.instant('has been received'), 
-        'approved': $translate.instant('has been approved') 
+        'received': $translate.instant('has been received'),
+        'approved': $translate.instant('has been approved')
       };
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
@@ -441,7 +441,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService', 
+    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService',
       'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', 'currentUser', manageEventApplicationsControllerCtrl]);
 
 })();
