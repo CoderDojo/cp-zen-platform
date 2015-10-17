@@ -2082,7 +2082,7 @@ msgid "Event application received"
 msgstr "Event application received"
 
 msgid "You have been awarded a new CoderDojo digital badge!"
-msgstr "You have been awarded a new CoderDojo digital badge!
+msgstr "You have been awarded a new CoderDojo digital badge!"
 
 msgid "New Mentor Request to join your Dojo"
 msgstr "New Mentor Request to join your Dojo"
