@@ -462,6 +462,9 @@ msgstr "Development Community"
 msgid "Events"
 msgstr "Events"
 
+msgid "There are no events currently listed for this Dojo"
+msgstr "There are no events currently listed for this Dojo"
+
 msgid "Word of Mouth"
 msgstr "Word of Mouth"
 

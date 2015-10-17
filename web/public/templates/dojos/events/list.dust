@@ -5,7 +5,8 @@
     <legend>{@i18n key="Events"/}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
-        <table id="dojoEventsTable" class="table cd-grid-table table-striped">
+      <h2 ng-show="events.length === 0" >{@i18n key="There are no events currently listed for this Dojo"/}</h2>
+        <table ng-hide="events.length === 0"  id="dojoEventsTable" class="table cd-grid-table table-striped">
           <thead>
           <tr>
             <th><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(sort.name)">&nbsp;</span>{@i18n key="Event"/}
@@ -36,7 +37,7 @@
         </table>
       </div>
     </div>
-    <div class="row center-children">
+    <div class="row center-children" ng-hide="events.length === 0">
       <span class="row col-lg-7 centered-child">
         <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
                     class="pagination-sm"
