@@ -2057,17 +2057,17 @@ msgstr "This dojo has no coordinates."
 msgid "Register Champion"
 msgstr "Register Champion"
 
-msgid "Invitation to become a Parent/Guardian"
-msgstr "Invitation to become a Parent/Guardian"
+msgid "You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform."
+msgstr "You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform."
 
-msgid "CoderDojo Password Reset"
-msgstr "CoderDojo Password Reset"
+msgid "CoderDojo Zen Password Reset Request"
+msgstr "CoderDojo Zen Password Reset Request"
 
-msgid "Approve Parent Request"
-msgstr "Approve Parent Request"
+msgid "You have been invited to connect with a parent/guardian on Zen!"
+msgstr "You have been invited to connect with a parent/guardian on Zen!"
 
-msgid "Welcome to CoderDojo!"
-msgstr "Welcome to CoderDojo!"
+msgid "Welcome to Zen, the CoderDojo community platform."
+msgstr "Welcome to Zen, the CoderDojo community platform."
 
 msgid "New Dojo Invitation"
 msgstr "New Dojo Invitation"
@@ -2084,14 +2084,14 @@ msgstr "Event application approved"
 msgid "Event application received"
 msgstr "Event application received"
 
-msgid "CoderDojo Badge Nomination"
-msgstr "CoderDojo Badge Nomination"
+msgid "You have been awarded a new CoderDojo digital badge!"
+msgstr "You have been awarded a new CoderDojo digital badge!
 
 msgid "New Mentor Request to join your Dojo"
 msgstr "New Mentor Request to join your Dojo"
 
-msgid "We created a new Google Email for your Dojo"
-msgstr "We created a new Google Email for your Dojo"
+msgid "A Google email account has been created for your Dojo"
+msgstr "A Google email account has been created for your Dojo"
 
 msgid "Please click on the map to pinpoint your location"
 msgstr "Please click on the map to pinpoint your location"
