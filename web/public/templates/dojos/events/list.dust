@@ -5,7 +5,7 @@
     <legend>{@i18n key="Events"/}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
-      <h2 ng-show="events.length === 0" >{@i18n key="There are no events currently listed for this Dojo"/}</h2>
+      <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo"/}</p>
         <table ng-hide="events.length === 0"  id="dojoEventsTable" class="table cd-grid-table table-striped">
           <thead>
           <tr>
