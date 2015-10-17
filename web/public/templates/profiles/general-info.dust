@@ -177,7 +177,7 @@
           </div>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary pull-right">{@i18n key="Save"/}</button>
+        <button type="submit" class="btn btn-primary pull-right" ng-click="scrollToInvalid(generalInfoForm)">{@i18n key="Save"/}</button>
       </form>
     </div>
   </div>

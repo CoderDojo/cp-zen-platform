@@ -493,6 +493,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         $scope.steps.map(function(step){
           step.open = true;
         });
+        angular.element('form[name=' + context.setupYourDojoForm.$name + '] .ng-invalid')[0].scrollIntoView();
       }
     };
 
