@@ -61,9 +61,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}* </label>
+          <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}{{loggedInUserIsChampion() && "*"}} </label>
           <div class="col-sm-8">
-            <textarea rows="5" name="address"  required required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
+            <textarea rows="5" name="address"  ng-required="loggedInUserIsChampion()" required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
           </div>
         </div>
         <div class="form-group" ng-enter="noop()">
