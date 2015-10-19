@@ -169,15 +169,27 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.login($scope.login,
       function(data){
-        $cookieStore.remove('recommendedPracticesAlertShown');
-        if ($scope.redirect) {
-          $window.location.href = $scope.redirect;
-        } else {
-          var user = data.user;
-          if(_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
-            $scope.referer = '/dashboard/manage-dojos';
+        if(data.ok) {
+          $cookieStore.remove('recommendedPracticesAlertShown');
+          if ($scope.redirect) {
+            $window.location.href = $scope.redirect;
+          } else {
+            var user = data.user;
+            if (_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
+              $scope.referer = '/dashboard/manage-dojos';
+            }
+            $window.location.href = $scope.referer || '/dashboard/dojo-list';
           }
-          $window.location.href = $scope.referer || '/dashboard/dojo-list';
+        } else {
+          var reason;
+
+          if(data.why === 'invalid-password'){
+            reason = $translate.instant('Invalid email or password');
+          } else {
+            reason = $translate.instant(data.why);
+          }
+
+          alertService.showAlert($translate.instant('There was a problem logging in:')+ ' ' + reason);
         }
       },
       function(){
