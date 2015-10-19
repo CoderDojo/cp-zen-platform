@@ -351,16 +351,16 @@
 
 
     };
-    
+
     $scope.scrollToInvalid = function (form) {
         if (form.$invalid) {
             angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
         } else {
-            eventInfo.publish=true;
+            $scope.eventInfo.publish=true;
         }
     };
-    
-    
+
+
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
 
