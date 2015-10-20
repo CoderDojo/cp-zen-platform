@@ -16,7 +16,6 @@
               <th><span ng-click="toggleSort($event, 'createdAt', dojoEvents.dojo.id)" ng-class="getSortClass(sort[dojoEvents.dojo.id]['createdAt'])">&nbsp;</span>{@i18n key="Date"/}
               </th>
               <th>{@i18n key="Type"/}</th>
-              <th>{@i18n key="For"/}</th>
               <th></th>
             </tr>
             </thead>
@@ -25,7 +24,6 @@
               <td>{{ event.name }}</td>
               <td>{{ event.formattedDate }}</td>
               <td>{{ event.type }}</td>
-              <td>{{ event.for }}</td>
               <td class="pointer">
                 <i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': events[$index].isCollapsed, 'glyphicon-chevron-right': !events[$index].isCollapsed}"></i>
               </td>
