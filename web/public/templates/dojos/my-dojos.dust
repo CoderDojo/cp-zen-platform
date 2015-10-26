@@ -46,7 +46,7 @@
         </div>
       </div>
       <div ng-hide="(myDojos | filter:criteria).length">
-        <p><a ng-href="/dashboard/start-dojo">{@i18n key="No dojo"/}</a></p>
+        <p><a ng-href="/dashboard/start-dojo">{@i18n key="You don't have any Dojos - click here to start a dojo!"/}</a></p>
       </div>
     </div>
   </div>
