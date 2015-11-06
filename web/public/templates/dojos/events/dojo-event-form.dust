@@ -1,4 +1,5 @@
 <div class="cd-dashboard cd-color-3-underline event-form">
+  <div ng-if="pastEvent" class="alert alert-info">You are viewing a past event which is not possible to edit.</div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
     <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
     <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
