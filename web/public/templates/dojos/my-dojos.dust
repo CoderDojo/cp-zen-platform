@@ -2,46 +2,51 @@
   <div class="row">
     <div class="my-dojos" ui-view>
       <legend>{@i18n key="My Dojos"/}</legend>
-      <div class="row">
-        <div class="col-md-12 table-responsive">
-          <table id="myDojosTable" class="table cd-grid-table">
-            <thead>
-              <tr>
-                <th class="ten-percent-width">{@i18n key="Dojo"/}</th>
-                <th class="ten-percent-width">{@i18n key="Location"/}</th>
-                <th class="ten-percent-width">{@i18n key="Users"/}</th>
-                <th class="ten-percent-width">{@i18n key="Events"/}</th>
-                <th class="ten-percent-width">{@i18n key="Listing"/}</th>
-                <th class="ten-percent-width"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="myDojo in myDojos">
-                <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})" ng-bind-html="myDojo.name"></a></td>
-                <td ng-if="myDojo.place" ng-init="myDojo.place.name = myDojo.place.name || myDojo.place.toponymName || myDojo.place.nameWithHierarchy" ng-bind-html="myDojo.place.name"></td>
-                <td class="pointer">
-                  <a ng-if="myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="Manage"/}</a>
-                </td>
-                <td class="pointer">
-                  <a ng-if="myDojo.isTicketingAdmin && myDojo.verified===1 && myDojo.stage !== 4" ui-sref=".manage-dojo-events({dojoId:myDojo.id})">{@i18n key="Manage"/}</a>
-                  <a ng-if="!myDojo.isTicketingAdmin && myDojo.verified===1 && myDojo.stage !== 4" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path, '#':'events'})">{@i18n key="View"/}</a>
-                </td>
-                <td class="pointer"><a ui-sref="dojo-detail({country:myDojo.country, path:myDojo.path})">{@i18n key="View"/}</a></td>
-                <td class="pointer"><a ng-if="myDojo.isDojoAdmin" ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
+      <div ng-show="(myDojos | filter:criteria).length">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table id="myDojosTable" class="table cd-grid-table">
+              <thead>
+                <tr>
+                  <th class="ten-percent-width">{@i18n key="Dojo"/}</th>
+                  <th class="ten-percent-width">{@i18n key="Location"/}</th>
+                  <th class="ten-percent-width">{@i18n key="Users"/}</th>
+                  <th class="ten-percent-width">{@i18n key="Events"/}</th>
+                  <th class="ten-percent-width">{@i18n key="Listing"/}</th>
+                  <th class="ten-percent-width"></th>
                 </tr>
-              </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <tr ng-repeat="myDojo in myDojos">
+                  <td><a class="pointer" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path})" ng-bind-html="myDojo.name"></a></td>
+                  <td ng-if="myDojo.place" ng-init="myDojo.place.name = myDojo.place.name || myDojo.place.toponymName || myDojo.place.nameWithHierarchy" ng-bind-html="myDojo.place.name"></td>
+                  <td class="pointer">
+                    <a ng-if="myDojo.isDojoAdmin" ui-sref=".manage-dojo-users({id:myDojo.id})">{@i18n key="Manage"/}</a>
+                  </td>
+                  <td class="pointer">
+                    <a ng-if="myDojo.isTicketingAdmin && myDojo.verified===1 && myDojo.stage !== 4" ui-sref=".manage-dojo-events({dojoId:myDojo.id})">{@i18n key="Manage"/}</a>
+                    <a ng-if="!myDojo.isTicketingAdmin && myDojo.verified===1 && myDojo.stage !== 4" ui-sref="dojo-detail({country: myDojo.country, path: myDojo.path, '#':'events'})">{@i18n key="View"/}</a>
+                  </td>
+                  <td class="pointer"><a ui-sref="dojo-detail({country:myDojo.country, path:myDojo.path})">{@i18n key="View"/}</a></td>
+                  <td class="pointer"><a ng-if="myDojo.isDojoAdmin" ui-sref="edit-dojo({id:myDojo.id})">{@i18n key="Edit"/}</a></td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row col-lg-6 col-lg-offset-4">
+          <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"
+                      ng-model="pageNo"
+                      class="pagination-sm"
+                      first-text="{@i18n key="First" /}"
+                      previous-text="{@i18n key="Previous" /}"
+                      next-text="{@i18n key="Next" /}"
+                      last-text="{@i18n key="Last" /}"
+                      boundary-links="true"></pagination>
         </div>
       </div>
-      <div class="row col-lg-6 col-lg-offset-4">
-        <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"
-                    ng-model="pageNo"
-                    class="pagination-sm"
-                    first-text="{@i18n key="First" /}"
-                    previous-text="{@i18n key="Previous" /}"
-                    next-text="{@i18n key="Next" /}"
-                    last-text="{@i18n key="Last" /}"
-                    boundary-links="true"></pagination>
+      <div ng-hide="(myDojos | filter:criteria).length">
+        <p><a ng-href="/dashboard/start-dojo">{@i18n key="You don't have any Dojos - click here to start a dojo!"/}</a></p>
       </div>
     </div>
   </div>

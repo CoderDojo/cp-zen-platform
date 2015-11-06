@@ -2642,3 +2642,6 @@ msgstr "suggest features"
 
 msgid "to help make it better."
 msgstr "to help make it better."
+
+msgid "You don't have any Dojos - click here to start a dojo!"
+msgstr "You don't have any Dojos - click here to start a dojo!"
