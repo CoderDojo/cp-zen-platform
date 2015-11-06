@@ -8,6 +8,11 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
     return _.contains(user.roles, 'cdf-admin');
   }
 
+  function userIsNinja(user) {
+    var initUserTypeStr = JSON.parse(user.initUserType);
+    return initUserTypeStr.name === 'attendee-o13' || initUserTypeStr.name === 'attendee-u13';
+  }
+
   function userIsChampion(user, cb) {
     cdUsersService.isChampion(user.id, cb,
       function (err) {
@@ -62,12 +67,8 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
       if (user) {
         if (userIsCDFAdmin(user)) {
           bootIntercom(null, user);
-        } else {
-          userIsChampion(user, function (res) {
-            if (res.isChampion) {
-              bootIntercom(res.dojos, user);
-            }
-          })
+        } else if(!userIsNinja(user)){
+          bootIntercom(null, user);
         }
       }
     });
