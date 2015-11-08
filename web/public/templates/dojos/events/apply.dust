@@ -18,7 +18,7 @@
       <p>{{ event.city.nameWithHierarchy }}</p>
     </div>
     <div class="col-md-6">
-      <p>{{ event.description }}</p>
+      <p><div ng-bind-html="event.description"></div></p>
     </div>
   </div>
 

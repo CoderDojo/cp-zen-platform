@@ -128,6 +128,13 @@
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
+    //description editor
+    $scope.editorOptions = {
+      language: 'en',
+      uiColor: '#000000',
+      height: '200px'
+    };
+
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
       $scope.eventInfo.startTime = $scope.eventInfo.fixedStartDateTime;
