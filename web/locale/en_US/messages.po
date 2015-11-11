@@ -2628,8 +2628,8 @@ msgstr "Enabling this will require you or another admin with Ticketing Admin per
 msgid "Place name must be less than 40 characters."
 msgstr "Place name must be less than 40 characters."
 
-msgid "Zen is open source, you can"
-msgstr "Zen is open source, you can"
+msgid "Zen is an open source platform, you can"
+msgstr "Zen is an open source platform, you can"
 
 msgid "contribute code"
 msgstr "contribute code"
