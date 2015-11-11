@@ -3,14 +3,10 @@
 angular.module('cpZenPlatform').factory('intercomService', function ($localStorage, $window, cdUsersService, alertService, auth) {
 
   var intercomService = {};
-
-  function userIsCDFAdmin(user) {
-    return _.contains(user.roles, 'cdf-admin');
-  }
+  var userType = '';
 
   function userIsNinja(user) {
-    var initUserTypeStr = JSON.parse(user.initUserType);
-    return initUserTypeStr.name === 'attendee-o13' || initUserTypeStr.name === 'attendee-u13';
+    return userType === 'attendee-o13' || userType === 'attendee-u13';
   }
 
   function userIsChampion(user, cb) {
@@ -36,6 +32,7 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
 
     var userData = {
       name: user.name,
+      user_type: userType,
       email: user.email,
       created_at: moment().unix(),
       app_id: "x7bz1cqn",
@@ -65,9 +62,9 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
   intercomService.InitIntercom = function () {
     auth.get_loggedin_user(function (user) {
       if (user) {
-        if (userIsCDFAdmin(user)) {
-          bootIntercom(null, user);
-        } else if(!userIsNinja(user)){
+        var initUserTypeStr = JSON.parse(user.initUserType);
+        userType = initUserTypeStr.name;
+        if(!userIsNinja(user)){
           bootIntercom(null, user);
         }
       }
