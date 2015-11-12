@@ -1,7 +1,5 @@
 'use strict';
 
-exports.start = function () {
-
 if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
 
 var env = process.env.NODE_ENV || 'development';
@@ -347,4 +345,3 @@ server.register({ register: chairo, options: options }, function (err) {
      });
    });
 });
-};
