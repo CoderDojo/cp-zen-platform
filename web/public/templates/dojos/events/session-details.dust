@@ -15,9 +15,9 @@
     </thead>
     <tbody>
       <tr ng-repeat="ticket in session.tickets">
-        <td>{{ ticket.name }}</td>
+        <td>{{ ticket.name }} <span ng-if="ticket.remaining === 0" class="label label-danger">SOLD OUT</span></td>
         <td>
-          <div ng-dropdown-multiselect="" options="applyForModel[ticket.id]" selected-model="sessionApplication.tickets[ticket.id]" extra-settings="applyForSettings"></div>
+          <div ng-dropdown-multiselect="" ng-if="ticket.remaining !== 0" options="applyForModel[ticket.id]" selected-model="sessionApplication.tickets[ticket.id]" extra-settings="applyForSettings"></div>
         </td>
       </tr>
     </tbody>
