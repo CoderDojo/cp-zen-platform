@@ -29,44 +29,9 @@
                 $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
               });
             });
-          } 
+          }
 
           $scope.loadPage($scope.filter, true);
-
-          //retrieve user's children
-          var query = {userId:$scope.currentUser.id};
-          cdUsersService.userProfileData(query, function (response) {
-            var parentProfile = response;
-            var children = parentProfile.children;
-            var childProfiles = [];
-            async.each(children, function (child, cb) {
-              cdUsersService.userProfileData({userId:child}, function (response) {
-                if(response.userType === 'attendee-u13') {
-                  childProfiles.push(response);
-                }
-                cb();
-              });
-            }, function (err) {
-              if(err) {
-                console.error(err);
-                alertService.showError($translate.instant('Error loading events'));
-              }
-              var childUsers = [];
-              async.each(childProfiles, function (childProfile, cb) {
-                //Load sys_user objects
-                cdUsersService.load(childProfile.userId, function (response) {
-                  childUsers.push(response);
-                  cb();
-                });
-              }, function (err) {
-                if(err) {
-                  console.error(err);
-                  alertService.showError($translate.instant('Error loading events'));
-                }
-                $scope.childUsers = childUsers;
-              });
-            });
-          });
         } else {
           $scope.loadPage($scope.filter, true);
         }
