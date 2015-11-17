@@ -437,7 +437,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
                 _.each(steps, function (item, i) {
                   _.each(item.checkboxes, function (item, i) {
                     $scope.setupDojo[item.name] = (typeof lssd[item.name] === 'undefined') ? $scope.setupDojo[item.name] : lssd[item.name];
-                    $scope.setupDojo[item.name + 'Text'] = (item.textField && lssd[item.name + 'Text']) ? lssd[item.name + 'Text'] : "";
+                    if(typeof item.textField !== 'undefined') {
+                      $scope.setupDojo[item.name + 'Text'] = (lssd[item.name + 'Text']) ? lssd[item.name + 'Text'] : "";
+                    }
                   });
                 });
               }, fail);
