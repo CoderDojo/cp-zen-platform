@@ -132,6 +132,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(initUserType.name === 'champion'){
             $window.location.href = '/dashboard/start-dojo';
           } else {
+            $scope.referer = $scope.referer && $scope.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + $scope.referer : $scope.referer;
             $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
           }
         });
