@@ -117,7 +117,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
-    if (user.initUserType.name ===  'champion') {
+    if (user.initUserType && user.initUserType.name ===  'champion') {
       user.isChampion = true;
     }
 
