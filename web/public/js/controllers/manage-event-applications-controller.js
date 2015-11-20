@@ -228,19 +228,17 @@
             application.attendanceModel.push({applicationId: application.id, date: checkInDate})
           });
 
-          cdUsersService.load(application.userId, function (response) {
-            application.user = response;
-            application.parents = [];
-            cdUsersService.userProfileData({userId: application.user.id}, function (response) {
-              async.each(response.parents, function (parentUserId, cb) {
-                cdUsersService.load(parentUserId, function (response) {
-                  application.parents.push(response);
-                  cb();
-                });
-              }, cb);
-            });
-          });
+          application.parents = [];
 
+          cdUsersService.loadParentsForUserPromise(application.userId).then(function(parents){
+            if(parents) {
+              application.parents = parents;
+            }
+            cb();
+          }, function (err) {
+            alertService.showError($translate.instant('Error loading parents') + ': ' + err);
+            cb();
+          });
         }, function (err) {
           usSpinnerService.stop('session-applications-spinner');
           $scope.applications = result;

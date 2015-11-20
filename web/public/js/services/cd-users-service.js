@@ -12,9 +12,6 @@ function cdUsersService(cdApi, $q){
     getUsersByEmails: function(email, win, fail) {
       cdApi.post('users/emails', {email: email}, win, fail || topfail);
     },
-    load: function(userId, win, fail) {
-      cdApi.get('users/load/' + userId, win, fail || topfail);
-    },
     getInitUserTypes: function(win, fail) {
       cdApi.get('users/init-user-types', win, fail || topfail);
     },
