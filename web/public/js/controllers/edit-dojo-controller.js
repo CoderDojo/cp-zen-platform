@@ -306,7 +306,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
           cdDojoService.updateFounder($scope.founder, function (response) {
             alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
               deleteLocalStorage('editDojoListing');
-              $state.go('my-dojos');
+              $state.go('manage-dojos');
               $scope.$apply();
             });
           }, function (err) {
@@ -319,7 +319,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
             $scope.$apply();
           });
         }
-
       }, function (err) {
         alertService.showError(
           $translate.instant('An error has occurred while saving') + ': <br /> ' +
