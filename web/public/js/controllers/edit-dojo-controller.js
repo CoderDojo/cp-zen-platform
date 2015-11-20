@@ -70,7 +70,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       return done(null, dojo);
     }
 
-    cdUsersService.load(prevFounder.userId, function (response) {
+    cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
 
