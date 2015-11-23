@@ -1,7 +1,7 @@
 'use strict';
 /*global $*/
 
-function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, $location, cdUsersService, $translate, utilsService) {
+function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoService, $location, cdUsersService, $translate, utilsService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
@@ -92,7 +92,11 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
       sort$: $scope.sort
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-    cdDojoService.search(query).then(function (result) {
+    cdDojoService.manageDojos(query).then(function (result) {
+      if(!result.ok){
+        $state.go('error-404-no-headers');
+        return cb();
+      }
       $scope.dojos = _.map(result, function (dojo) {
         dojo.origVerified = dojo.verified;
         dojo.country = dojo.alpha2.toLowerCase();
@@ -282,7 +286,10 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
   };
 
-  auth.get_loggedin_user(function () {
+  auth.get_loggedin_user(function (user) {
+    if (!_.contains(user.roles, 'cdf-admin')){
+      $state.go('error-404-no-headers')
+    }
     $scope.loadPage($scope.filter, true);
   });
 
@@ -291,6 +298,6 @@ function manageDojosCtrl($scope, alertService, auth, tableUtils, cdDojoService, 
 
 angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
-  ['$scope', 'alertService', 'auth',
+  ['$scope', '$state', 'alertService', 'auth',
   'tableUtils', 'cdDojoService', '$location',
   'cdUsersService', '$translate', 'utilsService', manageDojosCtrl]);
