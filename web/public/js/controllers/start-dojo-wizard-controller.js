@@ -84,7 +84,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         } else if(results.length > 0 && !uncompletedDojoLead) {
           //make a copy of dojoLead here then initStep 2
           var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
-          dojoLead.application.championDetails = null;
           if (!dojoLead.application.championDetails) {
             initStep(1);
             return;
@@ -271,6 +270,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         }
       }
 
+      loadChampionFromLocalStorage();
+
       cdDojoService.loadUserDojoLead(user.id, function (response) {
         if (response && response.application && response.application.championDetails) {
           savedDojoLead = response;
@@ -295,8 +296,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             }
           });
         }
-
-        loadChampionFromLocalStorage();
       });
     }
 
