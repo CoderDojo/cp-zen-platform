@@ -62,6 +62,12 @@ function cdUsersService(cdApi, $q){
     getAvatar: function(id, win, fail){
       cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);
     },
+    loadChampionsForUser: function(userId, win, fail) {
+      cdApi.get('users/champions-for-user/' + userId, win, fail || topfail);
+    },
+    loadUserProfile: function(userId, win, fail) {
+      cdApi.get('profiles/load-user-profile/' + userId, win, fail || topfail);
+    },
     loadChampionsForUserPromise: function (userId) {
       var deferred = $q.defer();
       var promise = deferred.promise;
