@@ -93,7 +93,7 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
     }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
     cdDojoService.manageDojos(query).then(function (result) {
-      if(!result.ok){
+      if(!_.isUndefined(result.ok) && result.ok === false){
         $state.go('error-404-no-headers');
         return cb();
       }
