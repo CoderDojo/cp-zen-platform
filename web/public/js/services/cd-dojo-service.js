@@ -25,6 +25,11 @@
           cdApi.post('dojos/search', {query: query}, resolve, reject);
         });
       },
+      manageDojos: function(query) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/manage-dojos', {query: query}, resolve, reject);
+        });
+      },
       save: function(dojo, win, fail) {
         dojo = angular.copy(dojo);
         if (dojo.id) {
