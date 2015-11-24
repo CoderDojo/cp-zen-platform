@@ -416,7 +416,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       deferred.resolve(isCDFAdmin);
     } else {
       cdDojoService.getUsersDojos(query, function (userDojo) {
-        if(!userDojo || userDojo.length <= 1){ return deferred.resolve(false); }
+        if(!userDojo || userDojo.length < 1){ return deferred.resolve(false); }
 
         var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
           return userPermission.name === 'dojo-admin';
