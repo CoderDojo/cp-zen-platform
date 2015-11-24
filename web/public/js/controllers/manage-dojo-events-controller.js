@@ -10,15 +10,22 @@
     var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {
-      cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
-        if(!response || response.length < 1){
-          return $state.go('error-404-no-headers');
-        }
-        var userDojo = response[0];
-        $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
-          return permission.name === 'ticketing-admin';
+      var isCDFAdmin = user && _.contains(user.roles, 'cdf-admin');
+      if(!isCDFAdmin) {
+        cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
+          if (!response || response.length < 1) {
+            return $state.go('error-404-no-headers');
+          }
+          var userDojo = response[0];
+          $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+            return permission.name === 'ticketing-admin';
+          });
+
+          if(!$scope.isTicketingAdmin){
+            return $state.go('error-404-no-headers');
+          }
         });
-      });
+      }
     });
 
     $scope.isNotPast = function(event) {
