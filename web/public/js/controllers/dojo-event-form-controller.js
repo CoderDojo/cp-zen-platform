@@ -51,7 +51,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('my-dojos.manage-dojo-events', {
+    $state.go('manage-dojo-events', {
       dojoId: dojoId
     });
   }
@@ -60,7 +60,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('my-dojos.manage-dojo-events.manage-applications', {
+    $state.go('manage-applications', {
       dojoId: dojoId,
       eventId: eventId
     });

@@ -203,8 +203,8 @@
             usersDojos: resolves.usersDojos
           }
         })
-        .state("my-dojos.manage-dojo-events", {
-          url: "/:dojoId/events",
+        .state("manage-dojo-events", {
+          url: "/dashboard/my-dojos/:dojoId/events",
           templateUrl: '/dojos/template/events/manage-dojo-events',
           controller: 'manage-dojo-events-controller',
           params: {
@@ -214,8 +214,8 @@
             label: '{{manageDojoEventsPageTitle}}'
           }
         })
-        .state("my-dojos.manage-dojo-events.manage-applications", {
-          url: "/:eventId/applications",
+        .state("manage-applications", {
+          url: "/dashboard/my-dojos/:dojoId/events/:eventId/applications",
           templateUrl: '/dojos/template/events/manage-event-applications',
           controller: 'manage-event-applications-controller',
           params: {
@@ -281,8 +281,8 @@
           },
           controller: 'review-champion-application-controller'
         })
-        .state("my-dojos.manage-dojo-users", {
-          url: "/dojo/:id/users",
+        .state("manage-dojo-users", {
+          url: "/dashboard/my-dojos/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
           params: {
