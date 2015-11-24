@@ -2,7 +2,14 @@
 /* global google */
 
 function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
-                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox, $sce) {
+                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox) {
+
+  canUpdateDojo().then(function(isDojoAdmin){
+    if(!isDojoAdmin){
+      $scope.isDojoAdmin = isDojoAdmin;
+      $state.go('error-404-no-headers');
+    }
+  });
 
   $scope.dojo = {};
   $scope.model = {};
@@ -184,7 +191,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   }
 
   function updateFromLocalStorage() {
-    if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
+    if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id] && $scope.isDojoAdmin) {
       alertService.showAlert($translate.instant('There are unsaved changes on this page'));
       var lsed = $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
       if (lsed.name) $scope.dojo.name = lsed.name;
@@ -409,6 +416,8 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       deferred.resolve(isCDFAdmin);
     } else {
       cdDojoService.getUsersDojos(query, function (userDojo) {
+        if(!userDojo || userDojo.length <= 1){ return deferred.resolve(false); }
+
         var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
           return userPermission.name === 'dojo-admin';
         });
@@ -423,5 +432,5 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', '$sce', cdEditDojoCtrl]);
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
 
