@@ -284,13 +284,11 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         else {
           cdUsersService.loadUserProfile(user.id, function(response) {
             if (response) {
-              savedDojoLead = response;
-              step2UpdateFlag = true;
-              $scope.buttonText = $translate.instant("Update Champion");
-
               $scope.champion.phone = response.phone;
               $scope.champion.dateOfBirth = response.dob;
               $scope.champion.country = response.country;
+              $scope.champion.countryName = response.country.countryName;
+              $scope.champion.alpha2 = response.country.alpha2;
               $scope.champion.place = response.place;
               $scope.champion.address1 = response.address;
             }
