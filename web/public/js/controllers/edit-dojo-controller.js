@@ -2,7 +2,14 @@
 /* global google */
 
 function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
-                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox, $sce) {
+                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox) {
+
+  canUpdateDojo().then(function(isDojoAdmin){
+    if(!isDojoAdmin){
+      $scope.isDojoAdmin = isDojoAdmin;
+      $state.go('error-404-no-headers');
+    }
+  });
 
   $scope.dojo = {};
   $scope.model = {};
@@ -70,7 +77,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       return done(null, dojo);
     }
 
-    cdUsersService.load(prevFounder.userId, function (response) {
+    cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
 
@@ -184,7 +191,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   }
 
   function updateFromLocalStorage() {
-    if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
+    if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id] && $scope.isDojoAdmin) {
       alertService.showAlert($translate.instant('There are unsaved changes on this page'));
       var lsed = $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
       if (lsed.name) $scope.dojo.name = lsed.name;
@@ -306,7 +313,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
           cdDojoService.updateFounder($scope.founder, function (response) {
             alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
               deleteLocalStorage('editDojoListing');
-              $state.go('my-dojos');
+              $state.go('manage-dojos');
               $scope.$apply();
             });
           }, function (err) {
@@ -319,7 +326,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
             $scope.$apply();
           });
         }
-
       }, function (err) {
         alertService.showError(
           $translate.instant('An error has occurred while saving') + ': <br /> ' +
@@ -410,6 +416,8 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       deferred.resolve(isCDFAdmin);
     } else {
       cdDojoService.getUsersDojos(query, function (userDojo) {
+        if(!userDojo || userDojo.length < 1){ return deferred.resolve(false); }
+
         var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
           return userPermission.name === 'dojo-admin';
         });
@@ -424,5 +432,5 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', '$sce', cdEditDojoCtrl]);
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
 

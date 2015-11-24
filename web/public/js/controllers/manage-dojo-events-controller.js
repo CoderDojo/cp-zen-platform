@@ -2,7 +2,7 @@
   'use strict';
   /*global $*/
 
-  function manageDojoEventsCtrl($scope, $stateParams, $state, $location, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
+  function manageDojoEventsCtrl($scope, $stateParams, $state, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
@@ -10,12 +10,22 @@
     var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {
-      cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
-        var userDojo = response[0];
-        $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
-          return permission.name === 'ticketing-admin';
+      var isCDFAdmin = user && _.contains(user.roles, 'cdf-admin');
+      if(!isCDFAdmin) {
+        cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
+          if (!response || response.length < 1) {
+            return $state.go('error-404-no-headers');
+          }
+          var userDojo = response[0];
+          $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+            return permission.name === 'ticketing-admin';
+          });
+
+          if(!$scope.isTicketingAdmin){
+            return $state.go('error-404-no-headers');
+          }
         });
-      });
+      }
     });
 
     $scope.isNotPast = function(event) {
@@ -77,15 +87,15 @@
           }
 
           //Retrieve number of applicants & attendees
-          cdEventsService.searchApplications({eventId: event.id}, function (result) { 
+          cdEventsService.searchApplications({eventId: event.id}, function (result) {
             event.eventStats = {capacity: 0, totalApplicants:0, totalAttending: 0};
-            
+
             _.each(result, function (application) {
               if(!application.deleted) {
                 if(application.status === 'pending' || application.status === 'approved') {
                   event.eventStats.totalApplicants++;
                 }
-                if(application.status === 'approved') { 
+                if(application.status === 'approved') {
                   event.eventStats.totalAttending++;
                 }
               }
@@ -148,7 +158,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', '$location', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', manageDojoEventsCtrl]);
 
 })();
 

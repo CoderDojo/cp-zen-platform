@@ -54,9 +54,6 @@
       dojosByCountry: function(query, win, fail) {
         cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
       },
-      dojosStateCount: function(country, win, fail) {
-        cdApi.get('dojos/state-count/' + country, win, fail || topfail);
-      },
       bulkUpdate: function(dojos) {
         return $q(function(resolve, reject) {
           cdApi.post('dojos/bulk-update', {dojos: dojos}, resolve, reject);
