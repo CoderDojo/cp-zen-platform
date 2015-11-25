@@ -46,16 +46,41 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
     var query = {userId: user.id};
 
+    function validateChampionInfo(dojoLead) {
+      var champion = dojoLead.application.championDetails;
+      if (!champion) {
+        return false;
+      }
+      if (!champion.email || !champion.name || !champion.countryName || !champion.alpha2 || !champion.address1) {
+        return false;
+      }
+
+      return true;
+    }
+
     cdDojoService.searchDojoLeads(query).then(function (result) {
       var results = _.map(result, function (dojoLead) {
         return _.omit(dojoLead, 'entity$');
       });
 
+      if (results.length === 0) {
+        //Go to champion registration page
+        initStep(1);
+        return;
+      }
+
       var uncompletedDojoLead = _.find(results, function (dojoLead) {
         return dojoLead.completed === false;
       });
 
-      currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
+      if (uncompletedDojoLead) {
+        if (!validateChampionInfo(uncompletedDojoLead)) {
+          initStep(1);
+          return;
+        }
+        currentStepInt = uncompletedDojoLead.currentStep;
+      }
+
       if (currentStepInt === 4) {
         //Check if user has deleted the Dojo
         cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
@@ -72,10 +97,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             initStep(3);
           }
         }, fail);
-      } else if (results.length > 0 && !uncompletedDojoLead) {
-        //make a copy of dojoLead here then initStep 2
+      } else if (!uncompletedDojoLead) {
+        //Make a copy of dojoLead here then initStep 2
         var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
-        if (!dojoLead.application.championDetails) {
+        if (!validateChampionInfo(dojoLead)) {
           initStep(1);
           return;
         }
@@ -88,18 +113,13 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           initStep(2);
         }, failSave);
       } else {
-        if (uncompletedDojoLead) {
-          cdAgreementsService.loadUserAgreement(user.id, function (response) {
-            if (response && response.id) {
-              initStep(uncompletedDojoLead.currentStep);
-            } else {
-              initStep(1, 'charter');
-            }
-          }, fail);
-        } else {
-          //go to champion registration page
-          initStep(1);
-        }
+        cdAgreementsService.loadUserAgreement(user.id, function (response) {
+          if (response && response.id) {
+            initStep(uncompletedDojoLead.currentStep);
+          } else {
+            initStep(1, 'charter');
+          }
+        }, fail);
       }
     }, function () {
       alertService.showError($translate.instant('error.general'));
