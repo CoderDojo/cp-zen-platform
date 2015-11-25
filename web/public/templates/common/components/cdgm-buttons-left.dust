@@ -1,4 +1,5 @@
 <li><a href="http://www.coderdojo.com">CoderDojo.com</a></li>
 <li><a ng-click="goToCharter()">{@i18n key="Charter"/}</a></li>
-<li><a href="http://help.coderdojo.com/">{@i18n key="FAQ"/}</a></li>
-<li><a href="http://coolestprojects.org/">{@i18n key="CoolestProjects2015"/}</a></li>
+<li><a href="http://kata.coderdojo.com">{@i18n key="Resources"/}</a></li>
+<li><a href="http://help.coderdojo.com/">{@i18n key="Help"/}</a></li>
+<li><a href="http://dojocon.coderdojo.com/">{@i18n key="DojoCon2015"/}</a></li>
