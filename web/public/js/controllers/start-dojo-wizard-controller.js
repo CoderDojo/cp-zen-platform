@@ -2,7 +2,7 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService,
-  cdAgreementsService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
+  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -84,20 +84,18 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         } else if(results.length > 0 && !uncompletedDojoLead) {
           //make a copy of dojoLead here then initStep 2
           var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
-          dojoLead.completed = false;
-          dojoLead.currentStep= 2;
-          if(!dojoLead.application.championDetails) {
-            dojoLead.application.championDetails = {
-              email: user.email,
-              name: user.name
-            };
+          if (!dojoLead.application.championDetails) {
+            initStep(1);
+            return;
           }
+          dojoLead.completed = false;
+          dojoLead.currentStep = 2;
           dojoLead.application.setupYourDojo = {};
           dojoLead.application.dojoListing = {};
 
-          cdDojoService.saveDojoLead(dojoLead, function(response) {
-              initStep(2);
-            }, failSave);
+          cdDojoService.saveDojoLead(dojoLead, function (response) {
+            initStep(2);
+          }, failSave);
         } else {
           if(uncompletedDojoLead){
             cdAgreementsService.loadUserAgreement(user.id, function(response){
@@ -239,49 +237,70 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $scope.showCharterAgreementFlag = false;
     }
 
+    function loadUserDojoLead(user) {
+      $scope.champion.email = $scope.champion ? user.email : '';
+      $scope.champion.name = $scope.champion ? user.name : '';
+
+      function loadChampionFromLocalStorage() {
+        if ($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
+          alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+          var lsc = $localStorage[user.id].dojoLead.championDetails;
+          if (lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
+          if (lsc.phone) $scope.champion.phone = lsc.phone;
+          if (lsc.country) {
+            $scope.champion.country = lsc.country;
+            $scope.setCountry($scope.champion, lsc.country);
+          }
+          if (lsc.place) {
+            $scope.champion.place = lsc.place;
+            $scope.setPlace($scope.champion, lsc.place);
+          }
+          if (lsc.country && lsc.place) {
+            $scope.getLocationFromAddress($scope.champion);
+          }
+          if (lsc.address1) $scope.champion.address1 = lsc.address1;
+          if (lsc.coordinates) $scope.champion.coordinates = lsc.coordinates;
+          if (lsc.projects) $scope.champion.projects = lsc.projects;
+          if (lsc.youthExperience) $scope.champion.youthExperience = lsc.youthExperience;
+          if (lsc.twitter) $scope.champion.twitter = lsc.twitter;
+          if (lsc.linkedIn) $scope.champion.linkedIn = lsc.linkedIn;
+          if (lsc.notes) $scope.champion.notes = lsc.notes;
+          if (lsc.coderDojoReference) $scope.champion.coderDojoReference = lsc.coderDojoReference;
+          if (lsc.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = lsc.coderDojoReferenceOther;
+        }
+      }
+
+      loadChampionFromLocalStorage();
+
+      cdDojoService.loadUserDojoLead(user.id, function (response) {
+        if (response && response.application && response.application.championDetails) {
+          savedDojoLead = response;
+          step2UpdateFlag = true;
+          $scope.buttonText = $translate.instant("Update Champion");
+          _.each(response.application.championDetails, function (item, i) {
+            $scope.champion[i] = item;
+          });
+        }
+        else {
+          cdUsersService.loadUserProfile(user.id, function(response) {
+            if (response) {
+              $scope.champion.phone = response.phone;
+              $scope.champion.dateOfBirth = response.dob;
+              $scope.champion.country = response.country;
+              $scope.champion.countryName = response.country.countryName;
+              $scope.champion.alpha2 = response.country.alpha2;
+              $scope.champion.place = response.place;
+              $scope.champion.address1 = response.address;
+            }
+          });
+        }
+      });
+    }
+
     auth.get_loggedin_user(function (user) {
       currentUser = user;
-      if (currentUser) {
-        $scope.champion.email = $scope.champion ? currentUser.email : '';
-        $scope.champion.name = $scope.champion ? currentUser.name : '';
-
-        cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          if(response.application && response.application.championDetails) {
-            savedDojoLead = response;
-            step2UpdateFlag = true;
-            $scope.buttonText = $translate.instant("Update Champion");
-            _.each(response.application.championDetails, function(item, i) {
-              $scope.champion[i] = item;
-            });
-          }
-
-          if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
-            alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-            var lsc = $localStorage[user.id].dojoLead.championDetails;
-            if(lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
-            if(lsc.phone) $scope.champion.phone = lsc.phone;
-            if(lsc.country) {
-              $scope.champion.country = lsc.country;
-              $scope.setCountry($scope.champion, lsc.country);
-            }
-            if(lsc.place) {
-              $scope.champion.place = lsc.place;
-              $scope.setPlace($scope.champion, lsc.place);
-            }
-            if(lsc.country && lsc.place) {
-              $scope.getLocationFromAddress($scope.champion);
-            }
-            if(lsc.address1) $scope.champion.address1 = lsc.address1;
-            if(lsc.coordinates) $scope.champion.coordinates = lsc.coordinates;
-            if(lsc.projects) $scope.champion.projects = lsc.projects;
-            if(lsc.youthExperience) $scope.champion.youthExperience = lsc.youthExperience;
-            if(lsc.twitter) $scope.champion.twitter = lsc.twitter;
-            if(lsc.linkedIn) $scope.champion.linkedIn = lsc.linkedIn;
-            if(lsc.notes) $scope.champion.notes = lsc.notes;
-            if(lsc.coderDojoReference) $scope.champion.coderDojoReference = lsc.coderDojoReference;
-            if(lsc.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = lsc.coderDojoReferenceOther;
-          }
-        });
+      if (user) {
+        loadUserDojoLead(user);
       }
     }, function () {
       currentUser = null;
@@ -738,5 +757,5 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService',
-    'cdAgreementsService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
+    'cdAgreementsService', 'cdUsersService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
     '$localStorage','$sce', startDojoWizardCtrl]);
