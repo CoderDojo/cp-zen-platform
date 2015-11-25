@@ -355,7 +355,8 @@
           controller: 'user-profile-controller',
           resolve: resolves,
           params: {
-            showBannerMessage: null
+            showBannerMessage: null,
+            referer: null
           },
           templateUrl: '/dojos/template/user-profile'
         })
@@ -446,7 +447,7 @@
     .config(function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     })
-    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService) {
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService, $location) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
@@ -455,7 +456,8 @@
               if(!verifyProfileResult.complete) {
                 $state.go('edit-user-profile', {
                   showBannerMessage: true,
-                  userId: verifyProfileResult.userId
+                  userId: verifyProfileResult.userId,
+                  referer: $location.url()
                 });
               } else {
                 $cookieStore.put('verifyProfileComplete', true);

@@ -4,7 +4,7 @@
   function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
     var dojoEvents = $scope.dojoRowIndexExpandedCurr;
     var eventIndex = $scope.tableRowIndexExpandedCurr;
-    
+
     $scope.cancel = function () {
       if(dojoEvents){
         $scope.showEventInfo(dojoEvents, eventIndex);
@@ -68,7 +68,7 @@
           }, null);
         });
       } else {
-        $state.go('register-account', {referer:$location.url()});
+        $state.go('register-account', { referer: $location.url() });
       }
     };
 
