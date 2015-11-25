@@ -261,7 +261,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
 
     profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
-      'formattedDateOfBirth', 'user', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion']);
+      'formattedDateOfBirth', 'user', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion', 'requestingOwnProfile']);
 
     if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
       saveYouthViaParent(profileCopy);
