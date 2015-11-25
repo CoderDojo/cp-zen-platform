@@ -438,6 +438,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
+        if(loggedInUserIsChild()) return true;
         return false; //Always private
       case 'attendee-o13':
         if($scope.profile.ownProfileFlag) return true;
@@ -474,6 +475,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(!loggedInUser.data) return false;
     return _.find(dojoAdminsForUser.data, function (dojoAdminForUser) {
       return dojoAdminForUser.id === loggedInUser.data.id;
+    });
+  }
+
+  function loggedInUserIsChild() {
+    if(!loggedInUser.data) return false;
+    return _.find(profile.data.resolvedChildren, function (children) {
+      return children.userId === loggedInUser.data.id;
     });
   }
 
