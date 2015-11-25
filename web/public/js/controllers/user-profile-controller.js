@@ -278,6 +278,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
 
     cdUsersService.saveYouthProfile(profile, function (response) {
+      if(response && response.error){
+        return alertService.showError($translate.instant('An error has occurred while saving profile') + ': ' + response.error);
+      }
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
       if($scope.referer){
         $window.location.href = $scope.referer;
