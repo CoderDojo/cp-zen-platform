@@ -147,9 +147,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           reason = $translate.instant('captcha error');
         }
 
-        alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
+        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason, function(){
           if($scope.referer){
-            $state.reload($scope.referer);
+            $window.location.href = $scope.referer;
           } else {
             $state.reload('register-account');
           }

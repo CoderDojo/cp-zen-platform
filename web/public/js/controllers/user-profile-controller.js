@@ -1,9 +1,11 @@
 'use strict';
 
-function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdDojoService, alertService,
+function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, $window, usSpinnerService, atomicNotifyService, $timeout) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService) {
+
+  $scope.referer = $state.params.referer;
 
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError($translate.instant('error.general'));
@@ -277,7 +279,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
 
     cdUsersService.saveYouthProfile(profile, function (response) {
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
-      $state.go('user-profile', {userId: response.userId});
+      if($scope.referer){
+        $window.location.href = $scope.referer;
+      } else {
+        $state.go('user-profile', {userId: response.userId});
+      }
     }, function(){
       alertService.showError($translate.instant('An error has occurred while saving profile'));
     });
@@ -299,7 +305,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
         alertService.showAlert($translate.instant('Profile has been saved successfully'));
         auth.instance(function(data){
           if( data.user ) $rootScope.$broadcast('user-updated', data.user);
-          $state.go('user-profile', {userId: $stateParams.userId});
+          if($scope.referer){
+            $window.location.href = $scope.referer;
+          } else {
+            $state.go('user-profile', {userId: $stateParams.userId});
+          }
         });
       }
     }
@@ -540,7 +550,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, auth, cdUsersService, cdD
 }
 
 angular.module('cpZenPlatform')
-  .controller('user-profile-controller', ['$scope', '$rootScope', '$state', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
+  .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', '$window', 'usSpinnerService', 'atomicNotifyService', '$timeout', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', cdUserProfileCtrl]);
