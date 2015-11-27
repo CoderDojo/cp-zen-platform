@@ -2648,3 +2648,6 @@ msgstr "You don't have any Dojos - click here to start a dojo!"
 
 msgid "Error loading parents"
 msgstr "Error loading parents"
+
+msgid "You are viewing a past event which is not possible to edit."
+msgstr "You are viewing a past event which is not possible to edit."
