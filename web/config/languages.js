@@ -16,7 +16,7 @@ module.exports = [
   },
   {
     "name": "German",
-    "code": "de",
+    "code": "de_DE",
     "country": "Deutsche"
   }
 ];
