@@ -2,7 +2,7 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService,
-  cdAgreementsService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
+  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -33,88 +33,107 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   };
 
   //Check if user has already started the wizard.
-  auth.get_loggedin_user(function(user) {
+  function prepareWizardForm(user) {
+    cdDojoService.getDojoConfig(function (json) {
+      $scope.dojoConfig = json;
+      $scope.dojoStages = _.map(json.dojoStages, function (item) {
+        return {value: item.value, label: $translate.instant(item.label)};
+      });
+      $scope.dojoStates = _.map(json.verificationStates, function (item) {
+        return {value: item.value, label: $translate.instant(item.label)};
+      });
+    }, fail);
+
+    var query = {userId: user.id};
+
+    function validateChampionInfo(dojoLead) {
+      var champion = dojoLead.application.championDetails;
+      if (!champion) {
+        return false;
+      }
+      if (!champion.email || !champion.name || !champion.countryName || !champion.alpha2 || !champion.address1) {
+        return false;
+      }
+
+      return true;
+    }
+
+    cdDojoService.searchDojoLeads(query).then(function (result) {
+      var results = _.map(result, function (dojoLead) {
+        return _.omit(dojoLead, 'entity$');
+      });
+
+      if (results.length === 0) {
+        //Go to champion registration page
+        initStep(1);
+        return;
+      }
+
+      var uncompletedDojoLead = _.find(results, function (dojoLead) {
+        return dojoLead.completed === false;
+      });
+
+      if (uncompletedDojoLead) {
+        if (!validateChampionInfo(uncompletedDojoLead)) {
+          initStep(1);
+          return;
+        }
+        currentStepInt = uncompletedDojoLead.currentStep;
+      }
+
+      if (currentStepInt === 4) {
+        //Check if user has deleted the Dojo
+        cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
+          if (!_.isEmpty(response)) {
+            $state.go('dojo-list',
+              {
+                bannerType: 'success',
+                bannerMessage: $translate.instant('You have a Dojo application awaiting verification. You can create another Dojo after it has been verified.') +
+                $translate.instant('If you need help completing your initial Dojo application, please contact us at info@coderdojo.org'),
+                bannerTimeCollapse: 150000
+              });
+          } else {
+            //Go back to Dojo Listing step
+            initStep(3);
+          }
+        }, fail);
+      } else if (!uncompletedDojoLead) {
+        //Make a copy of dojoLead here then initStep 2
+        var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
+        if (!validateChampionInfo(dojoLead)) {
+          initStep(1);
+          return;
+        }
+        dojoLead.completed = false;
+        dojoLead.currentStep = 2;
+        dojoLead.application.setupYourDojo = {};
+        dojoLead.application.dojoListing = {};
+
+        cdDojoService.saveDojoLead(dojoLead, function (response) {
+          initStep(2);
+        }, failSave);
+      } else {
+        cdAgreementsService.loadUserAgreement(user.id, function (response) {
+          if (response && response.id) {
+            initStep(uncompletedDojoLead.currentStep);
+          } else {
+            initStep(1, 'charter');
+          }
+        }, fail);
+      }
+    }, function () {
+      alertService.showError($translate.instant('error.general'));
+    });
+  }
+
+  auth.get_loggedin_user(function (user) {
     currentUser = user;
 
     var currentPath = $location.path();
-    if(!_.isEmpty(user) && currentPath === '/start-dojo') {
+    if (!_.isEmpty(user) && currentPath === '/start-dojo') {
       $window.location.href = '/dashboard/start-dojo';
     } else {
-      cdDojoService.getDojoConfig(function(json){
-        $scope.dojoConfig = json;
-        $scope.dojoStages = _.map(json.dojoStages, function(item){
-          return { value: item.value, label: $translate.instant(item.label) };
-        });
-        $scope.dojoStates = _.map(json.verificationStates, function(item){
-          return { value: item.value, label: $translate.instant(item.label) };
-        });
-      }, fail);
-
-      var query = {userId: user.id};
-
-      cdDojoService.searchDojoLeads(query).then(function (result) {
-        var results = _.map(result, function(dojoLead) {
-          return _.omit(dojoLead, 'entity$');
-        });
-
-        var uncompletedDojoLead = _.find(results, function(dojoLead){
-          return dojoLead.completed === false;
-        });
-
-        var hasVerifiedDojo = _.find(results, function (dojoLead) {
-          return dojoLead.completed === true;
-        });
-
-        currentStepInt = uncompletedDojoLead ? uncompletedDojoLead.currentStep : 0;
-        if (currentStepInt === 4) {
-          //Check if user has deleted the Dojo
-          cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
-            if (!_.isEmpty(response)) {
-              $state.go('dojo-list',
-                { bannerType:'success',
-                  bannerMessage: $translate.instant('You have a Dojo application awaiting verification. You can create another Dojo after it has been verified.') +
-                  $translate.instant('If you need help completing your initial Dojo application, please contact us at info@coderdojo.org'),
-                  bannerTimeCollapse: 150000
-                });
-            } else {
-              //Go back to Dojo Listing step
-              initStep(3);
-            }
-          }, fail);
-        } else if(results.length > 0 && !uncompletedDojoLead) {
-          //make a copy of dojoLead here then initStep 2
-          var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
-          dojoLead.completed = false;
-          dojoLead.currentStep= 2;
-          if(!dojoLead.application.championDetails) {
-            dojoLead.application.championDetails = {
-              email: user.email,
-              name: user.name
-            };
-          }
-          dojoLead.application.setupYourDojo = {};
-          dojoLead.application.dojoListing = {};
-
-          cdDojoService.saveDojoLead(dojoLead, function(response) {
-              initStep(2);
-            }, failSave);
-        } else {
-          if(uncompletedDojoLead){
-            cdAgreementsService.loadUserAgreement(user.id, function(response){
-              if(response && response.id){
-                initStep(uncompletedDojoLead.currentStep);
-              } else {
-                initStep(1, 'charter');
-              }
-            }, fail);
-          } else {
-            //go to champion registration page
-            initStep(1);
-          }
-        }
-      }, function(){
-        alertService.showError($translate.instant('error.general'));
-      });
+      prepareWizardForm(user);
     }
   }, function () {
     //User not logged in
@@ -239,49 +258,70 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $scope.showCharterAgreementFlag = false;
     }
 
+    function loadUserDojoLead(user) {
+      $scope.champion.email = $scope.champion ? user.email : '';
+      $scope.champion.name = $scope.champion ? user.name : '';
+
+      function loadChampionFromLocalStorage() {
+        if ($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
+          alertService.showAlert($translate.instant('There are unsaved changes on this page'));
+          var lsc = $localStorage[user.id].dojoLead.championDetails;
+          if (lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
+          if (lsc.phone) $scope.champion.phone = lsc.phone;
+          if (lsc.country) {
+            $scope.champion.country = lsc.country;
+            $scope.setCountry($scope.champion, lsc.country);
+          }
+          if (lsc.place) {
+            $scope.champion.place = lsc.place;
+            $scope.setPlace($scope.champion, lsc.place);
+          }
+          if (lsc.country && lsc.place) {
+            $scope.getLocationFromAddress($scope.champion);
+          }
+          if (lsc.address1) $scope.champion.address1 = lsc.address1;
+          if (lsc.coordinates) $scope.champion.coordinates = lsc.coordinates;
+          if (lsc.projects) $scope.champion.projects = lsc.projects;
+          if (lsc.youthExperience) $scope.champion.youthExperience = lsc.youthExperience;
+          if (lsc.twitter) $scope.champion.twitter = lsc.twitter;
+          if (lsc.linkedIn) $scope.champion.linkedIn = lsc.linkedIn;
+          if (lsc.notes) $scope.champion.notes = lsc.notes;
+          if (lsc.coderDojoReference) $scope.champion.coderDojoReference = lsc.coderDojoReference;
+          if (lsc.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = lsc.coderDojoReferenceOther;
+        }
+      }
+
+      loadChampionFromLocalStorage();
+
+      cdDojoService.loadUserDojoLead(user.id, function (response) {
+        if (response && response.application && response.application.championDetails) {
+          savedDojoLead = response;
+          step2UpdateFlag = true;
+          $scope.buttonText = $translate.instant("Update Champion");
+          _.each(response.application.championDetails, function (item, i) {
+            $scope.champion[i] = item;
+          });
+        }
+        else {
+          cdUsersService.loadUserProfile(user.id, function(response) {
+            if (response) {
+              $scope.champion.phone = response.phone;
+              $scope.champion.dateOfBirth = response.dob;
+              $scope.champion.country = response.country;
+              $scope.champion.countryName = response.country.countryName;
+              $scope.champion.alpha2 = response.country.alpha2;
+              $scope.champion.place = response.place;
+              $scope.champion.address1 = response.address;
+            }
+          });
+        }
+      });
+    }
+
     auth.get_loggedin_user(function (user) {
       currentUser = user;
-      if (currentUser) {
-        $scope.champion.email = $scope.champion ? currentUser.email : '';
-        $scope.champion.name = $scope.champion ? currentUser.name : '';
-
-        cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
-          if(response.application && response.application.championDetails) {
-            savedDojoLead = response;
-            step2UpdateFlag = true;
-            $scope.buttonText = $translate.instant("Update Champion");
-            _.each(response.application.championDetails, function(item, i) {
-              $scope.champion[i] = item;
-            });
-          }
-
-          if($localStorage[user.id] && $localStorage[user.id].dojoLead && $localStorage[user.id].dojoLead.championDetails) {
-            alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-            var lsc = $localStorage[user.id].dojoLead.championDetails;
-            if(lsc.dateOfBirth) $scope.champion.dateOfBirth = lsc.dateOfBirth;
-            if(lsc.phone) $scope.champion.phone = lsc.phone;
-            if(lsc.country) {
-              $scope.champion.country = lsc.country;
-              $scope.setCountry($scope.champion, lsc.country);
-            }
-            if(lsc.place) {
-              $scope.champion.place = lsc.place;
-              $scope.setPlace($scope.champion, lsc.place);
-            }
-            if(lsc.country && lsc.place) {
-              $scope.getLocationFromAddress($scope.champion);
-            }
-            if(lsc.address1) $scope.champion.address1 = lsc.address1;
-            if(lsc.coordinates) $scope.champion.coordinates = lsc.coordinates;
-            if(lsc.projects) $scope.champion.projects = lsc.projects;
-            if(lsc.youthExperience) $scope.champion.youthExperience = lsc.youthExperience;
-            if(lsc.twitter) $scope.champion.twitter = lsc.twitter;
-            if(lsc.linkedIn) $scope.champion.linkedIn = lsc.linkedIn;
-            if(lsc.notes) $scope.champion.notes = lsc.notes;
-            if(lsc.coderDojoReference) $scope.champion.coderDojoReference = lsc.coderDojoReference;
-            if(lsc.coderDojoReferenceOther) $scope.champion.coderDojoReferenceOther = lsc.coderDojoReferenceOther;
-          }
-        });
+      if (user) {
+        loadUserDojoLead(user);
       }
     }, function () {
       currentUser = null;
@@ -437,7 +477,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
                 _.each(steps, function (item, i) {
                   _.each(item.checkboxes, function (item, i) {
                     $scope.setupDojo[item.name] = (typeof lssd[item.name] === 'undefined') ? $scope.setupDojo[item.name] : lssd[item.name];
-                    $scope.setupDojo[item.name + 'Text'] = (item.textField && lssd[item.name + 'Text']) ? lssd[item.name + 'Text'] : "";
+                    if(typeof item.textField !== 'undefined') {
+                      $scope.setupDojo[item.name + 'Text'] = (lssd[item.name + 'Text']) ? lssd[item.name + 'Text'] : "";
+                    }
                   });
                 });
               }, fail);
@@ -736,5 +778,5 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService',
-    'cdAgreementsService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
+    'cdAgreementsService', 'cdUsersService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
     '$localStorage','$sce', startDojoWizardCtrl]);

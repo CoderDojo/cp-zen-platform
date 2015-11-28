@@ -3,7 +3,7 @@
 
   function cdSessionModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
     $scope.dojoId = dojoId;
-    $scope.session = angular.copy(session);  
+    $scope.session = angular.copy(session);
     $scope.sessionQuantities = _.range(2);
     $scope.maxQuantities = _.range(11);
     $scope.event = event;
@@ -12,9 +12,9 @@
     $scope.referer = referer;
 
     $scope.applyForSettings = {
-      displayProp: 'title', 
-      buttonClasses: 'btn btn-primary btn-block', 
-      showCheckAll: false, 
+      displayProp: 'title',
+      buttonClasses: 'btn btn-primary btn-block',
+      showCheckAll: false,
       showUncheckAll: false,
       idProp: 'userId',
       externalIdProp: '',
@@ -33,7 +33,12 @@
     _.each(_.keys($scope.applyForModel), function (ticketId) {
       $scope.sessionApplication.tickets[ticketId] = [];
     });
-    
+
+    _.each(_.keys($scope.session.tickets), function(ticketId) {
+      var ticket = $scope.session.tickets[ticketId];
+      $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
+    });
+
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
@@ -67,8 +72,8 @@
       });
       applications[0].emailSubject = {
         'request':  $translate.instant('Your ticket request for'),
-        'received': $translate.instant('has been received'), 
-        'approved': $translate.instant('has been approved') 
+        'received': $translate.instant('has been received'),
+        'approved': $translate.instant('has been approved')
       };
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
@@ -79,6 +84,14 @@
         console.error(err);
       });
     };
+  }
+
+  function applicationHasTickets(sessionApplication) {
+    var ticketCount = 0;
+    for( var i in sessionApplication.tickets ) {
+      ticketCount += sessionApplication.tickets[i].length
+    }
+    return !!ticketCount;
   }
 
   angular.module('cpZenPlatform')

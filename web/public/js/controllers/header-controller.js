@@ -1,6 +1,6 @@
 'use strict';
 
-function headerCtrl($window, $scope, $localStorage, $location, $state, intercomService, auth) {
+function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
 
   var currentUser;
   auth.get_loggedin_user(function (user) {
@@ -65,4 +65,4 @@ function headerCtrl($window, $scope, $localStorage, $location, $state, intercomS
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', '$localStorage', '$location', '$state', 'intercomService', 'auth', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$location', '$state', 'intercomService', 'auth', headerCtrl]);

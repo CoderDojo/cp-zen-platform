@@ -2,14 +2,26 @@
   'use strict';
   /*global $*/
 
-  function manageEventApplicationsControllerCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
-    cdDojoService, cdUsersService, AlertBanner, utilsService, usSpinnerService, currentUser) {
+  function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
+    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth) {
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
     $scope.dojoId = dojoId;
     var applicationCheckInDates = [];
     currentUser = currentUser.data;
+
+    auth.get_loggedin_user(function (user) {
+      cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId}, function (response) {
+        if(!response || response.length < 1){
+          return $state.go('error-404-no-headers');
+        }
+        var userDojo = response[0];
+        $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+          return permission.name === 'ticketing-admin';
+        });
+      });
+    });
 
     $scope.sort = undefined;
     $scope.pagination = {itemsPerPage: 10};
@@ -228,19 +240,17 @@
             application.attendanceModel.push({applicationId: application.id, date: checkInDate})
           });
 
-          cdUsersService.load(application.userId, function (response) {
-            application.user = response;
-            application.parents = [];
-            cdUsersService.userProfileData({userId: application.user.id}, function (response) {
-              async.each(response.parents, function (parentUserId, cb) {
-                cdUsersService.load(parentUserId, function (response) {
-                  application.parents.push(response);
-                  cb();
-                });
-              }, cb);
-            });
-          });
+          application.parents = [];
 
+          cdUsersService.loadParentsForUserPromise(application.userId).then(function(parents){
+            if(parents) {
+              application.parents = parents;
+            }
+            cb();
+          }, function (err) {
+            alertService.showError($translate.instant('Error loading parents') + ': ' + err);
+            cb();
+          });
         }, function (err) {
           usSpinnerService.stop('session-applications-spinner');
           $scope.applications = result;
@@ -337,14 +347,12 @@
 
     $scope.userIsApproved = function (application) {
       var isApproved = $scope.approved[application.id];
-      if (isApproved) return true;
-      return false;
+      return !!isApproved;
     }
 
     $scope.userIsCheckedIn = function (application) {
       var isCheckedIn = $scope.checkedIn[application.id];
-      if (isCheckedIn) return true;
-      return false;
+      return !!isCheckedIn;
     }
 
     $scope.createNewApplicant = function () {
@@ -431,7 +439,7 @@
       session.status = 'cancelled';
       session.emailSubject = $translate.instant('has been cancelled');
       cdEventsService.cancelSession(session, function (response) {
-        $state.go('my-dojos.manage-dojo-events', {dojoId: dojoId});
+        $state.go('manage-dojo-events', {dojoId: dojoId});
         alertService.showAlert($translate.instant('Session successfully cancelled.'));
       }, function (err) {
         if(err) console.error(err);
@@ -442,6 +450,6 @@
 
   angular.module('cpZenPlatform')
     .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService',
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'utilsService', 'usSpinnerService', 'currentUser', manageEventApplicationsControllerCtrl]);
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', manageEventApplicationsCtrl]);
 
 })();

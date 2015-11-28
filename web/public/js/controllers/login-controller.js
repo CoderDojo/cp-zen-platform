@@ -117,7 +117,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
-    if (user.initUserType.name ===  'champion') {
+    if (user.initUserType && user.initUserType.name ===  'champion') {
       user.isChampion = true;
     }
 
@@ -132,6 +132,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(initUserType.name === 'champion'){
             $window.location.href = '/dashboard/start-dojo';
           } else {
+            $scope.referer = $scope.referer && $scope.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + $scope.referer : $scope.referer;
             $window.location.href = $scope.referer || '/dashboard/profile/' + data.user.id + '/edit';
           }
         });
@@ -146,9 +147,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           reason = $translate.instant('captcha error');
         }
 
-        alertService.showAlert($translate.instant('There was a problem registering your account:')+ ' ' + reason, function(){
+        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason, function(){
           if($scope.referer){
-            $state.reload($scope.referer);
+            $window.location.href = $scope.referer;
           } else {
             $state.reload('register-account');
           }

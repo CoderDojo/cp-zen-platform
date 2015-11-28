@@ -203,8 +203,8 @@
             usersDojos: resolves.usersDojos
           }
         })
-        .state("my-dojos.manage-dojo-events", {
-          url: "/:dojoId/events",
+        .state("manage-dojo-events", {
+          url: "/dashboard/my-dojos/:dojoId/events",
           templateUrl: '/dojos/template/events/manage-dojo-events',
           controller: 'manage-dojo-events-controller',
           params: {
@@ -214,8 +214,8 @@
             label: '{{manageDojoEventsPageTitle}}'
           }
         })
-        .state("my-dojos.manage-dojo-events.manage-applications", {
-          url: "/:eventId/applications",
+        .state("manage-applications", {
+          url: "/dashboard/my-dojos/:dojoId/events/:eventId/applications",
           templateUrl: '/dojos/template/events/manage-event-applications',
           controller: 'manage-event-applications-controller',
           params: {
@@ -281,8 +281,8 @@
           },
           controller: 'review-champion-application-controller'
         })
-        .state("my-dojos.manage-dojo-users", {
-          url: "/dojo/:id/users",
+        .state("manage-dojo-users", {
+          url: "/dashboard/my-dojos/:id/users",
           templateUrl: '/dojos/template/manage-dojo-users',
           controller: 'manage-dojo-users-controller',
           params: {
@@ -355,7 +355,8 @@
           controller: 'user-profile-controller',
           resolve: resolves,
           params: {
-            showBannerMessage: null
+            showBannerMessage: null,
+            referer: null
           },
           templateUrl: '/dojos/template/user-profile'
         })
@@ -446,7 +447,7 @@
     .config(function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     })
-    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService) {
+    .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService, $location) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
@@ -455,7 +456,8 @@
               if(!verifyProfileResult.complete) {
                 $state.go('edit-user-profile', {
                   showBannerMessage: true,
-                  userId: verifyProfileResult.userId
+                  userId: verifyProfileResult.userId,
+                  referer: $location.url()
                 });
               } else {
                 $cookieStore.put('verifyProfileComplete', true);

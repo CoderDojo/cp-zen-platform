@@ -12,9 +12,6 @@ function cdUsersService(cdApi, $q){
     getUsersByEmails: function(email, win, fail) {
       cdApi.post('users/emails', {email: email}, win, fail || topfail);
     },
-    load: function(userId, win, fail) {
-      cdApi.get('users/load/' + userId, win, fail || topfail);
-    },
     getInitUserTypes: function(win, fail) {
       cdApi.get('users/init-user-types', win, fail || topfail);
     },
@@ -68,6 +65,9 @@ function cdUsersService(cdApi, $q){
     loadChampionsForUser: function(userId, win, fail) {
       cdApi.get('users/champions-for-user/' + userId, win, fail || topfail);
     },
+    loadUserProfile: function(userId, win, fail) {
+      cdApi.get('profiles/load-user-profile/' + userId, win, fail || topfail);
+    },
     loadChampionsForUserPromise: function (userId) {
       var deferred = $q.defer();
       var promise = deferred.promise;
@@ -94,6 +94,9 @@ function cdUsersService(cdApi, $q){
     },
     loadNinjasForUser: function (userId, win, fail) {
       cdApi.get('profiles/ninjas-for-user/' + userId, win, fail || topfail);
+    },
+    loadPrevFounder: function(userId, win, fail) {
+      cdApi.get('users/load-previous-founder/' + userId, win, fail || topfail);
     }
   };
 }

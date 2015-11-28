@@ -51,7 +51,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('my-dojos.manage-dojo-events', {
+    $state.go('manage-dojo-events', {
       dojoId: dojoId
     });
   }
@@ -60,7 +60,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('my-dojos.manage-dojo-events.manage-applications', {
+    $state.go('manage-applications', {
       dojoId: dojoId,
       eventId: eventId
     });
@@ -200,8 +200,7 @@
     };
 
     $scope.validateSessions = function (sessions) {
-      if(sessions.length === 0) return false;
-      return true;
+      return sessions.length !== 0;
     };
 
     $scope.timepicker = {};
@@ -234,12 +233,14 @@
     }];
 
     $scope.searchCity = function($select) {
-      return utilsService.getPlaces($scope.eventInfo.country.alpha2, $select).then(function (data) {
-        $scope.cities = data;
-      }, function (err) {
-        $scope.cities = [];
-        console.error(err);
-      });
+      if($scope.hasAccess) {
+        return utilsService.getPlaces($scope.eventInfo.country.alpha2, $select).then(function (data) {
+          $scope.cities = data;
+        }, function (err) {
+          $scope.cities = [];
+          console.error(err);
+        });
+      }
     };
 
     $scope.eventInfo.invites = [];
@@ -705,7 +706,7 @@
         loadSessions
       ], function(err, results) {
         if (err) {
-          console.error(err);
+          $scope.hasAccess = false;
           return $state.go('error-404-no-headers');
         } else {
           var eventPosition = results[3].position;
@@ -728,7 +729,7 @@
       loadLocalStorage
     ], function(err, results) {
       if (err) {
-        console.error(err);
+        $scope.hasAccess = false;
         return $state.go('error-404-no-headers');
       }
     });

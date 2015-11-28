@@ -11,32 +11,6 @@
 
     var utcOffset = moment().utcOffset();
 
-    //retrieve children
-    var query = {userId:$scope.currentUser.id};
-    cdUsersService.userProfileData(query, function (response) {
-      var children = response.children;
-      var childProfiles = [];
-      async.each(children, function (child, cb) {
-        cdUsersService.userProfileData({userId:child}, function (response) {
-          if(response.userType === 'attendee-u13') {
-            childProfiles.push(response);
-          }
-          cb();
-        });
-      }, function (err) {
-        var childUsers = [];
-        async.each(childProfiles, function (childProfile, cb) {
-          //Load sys_user objects
-          cdUsersService.load(childProfile.userId, function (response) {
-            childUsers.push(response);
-            cb();
-          });
-        }, function (err) {
-          $scope.childUsers = childUsers;
-        });
-      });
-    });
-
     if(currentUser.id){
       $scope.loadPage = function () {
         $scope.sort = $scope.sort ? $scope.sort: {createdAt: -1};
@@ -62,7 +36,7 @@
                           $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
                         });
                       });
-                    } 
+                    }
                   }
                 });
 
@@ -125,7 +99,7 @@
           return userPermission.name === 'ticketing-admin';
         });
       });
-      
+
       $scope.loadPage();
     }
 

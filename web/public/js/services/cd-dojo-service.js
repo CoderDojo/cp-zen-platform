@@ -25,6 +25,11 @@
           cdApi.post('dojos/search', {query: query}, resolve, reject);
         });
       },
+      manageDojos: function(query) {
+        return $q(function(resolve, reject) {
+          cdApi.post('dojos/manage-dojos', {query: query}, resolve, reject);
+        });
+      },
       save: function(dojo, win, fail) {
         dojo = angular.copy(dojo);
         if (dojo.id) {
@@ -48,9 +53,6 @@
       },
       dojosByCountry: function(query, win, fail) {
         cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
-      },
-      dojosStateCount: function(country, win, fail) {
-        cdApi.get('dojos/state-count/' + country, win, fail || topfail);
       },
       bulkUpdate: function(dojos) {
         return $q(function(resolve, reject) {
