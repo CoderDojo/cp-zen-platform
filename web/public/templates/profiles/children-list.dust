@@ -1,4 +1,5 @@
 <div id="ninjaProfileBlock" class="profile-section">
+  <a name="ninjas"></a>
   <legend class="legend-color-3-border">{@i18n key="Ninjas"/}</legend>
   <div class="col-xs-12">
     <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Ninja over 13"/}</button>

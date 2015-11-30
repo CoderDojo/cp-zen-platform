@@ -2651,3 +2651,15 @@ msgstr "Error loading parents"
 
 msgid "You are viewing a past event which is not possible to edit."
 msgstr "You are viewing a past event which is not possible to edit."
+
+msgid "Registering for an event?"
+msgstr "Registering for an event?"
+
+msgid "If you need to book in to a Dojo event, you need to fill out your profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event via the Dojo listing"
+msgstr "If you need to book in to a Dojo event, you need to fill out your parent profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event on the Dojo listing page."
+
+msgid "Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."
+msgstr "Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."
+
+msgid "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
+msgstr "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
