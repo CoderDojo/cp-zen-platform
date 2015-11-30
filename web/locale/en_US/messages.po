@@ -36,6 +36,9 @@ msgstr "Forgot password?"
 msgid "Register"
 msgstr "Register"
 
+msgid "Register an account"
+msgstr "Register an account"
+
 msgid "Email"
 msgstr "Email"
 
@@ -2663,3 +2666,6 @@ msgstr "Not all information entered on your profile is viewable. You can choose 
 
 msgid "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
 msgstr "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
+
+msgid "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
+msgstr "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
