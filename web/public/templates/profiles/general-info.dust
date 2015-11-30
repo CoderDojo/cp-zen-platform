@@ -1,4 +1,11 @@
 <div ng-if="editMode">
+  <div class="alert alert-info">
+    {@i18n key="Registering for an event?"/}<br />
+    {@i18n key="If you need to book in to a Dojo event, you need to fill out your profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event on the Dojo listing page."/}
+  </div>
+  <div class="alert alert-info">
+    {@i18n key="Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."/}
+  </div>
   <legend class="legend-color-1-border">{@i18n key="General Info"/}</legend>
   <div class="panel-body">
     <div>
