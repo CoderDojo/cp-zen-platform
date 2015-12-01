@@ -72,7 +72,7 @@
                 </ui-select-choices>
               </ui-select>
               <span class="help-block"></span>
-              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to"/} {{ user.name }}?" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
+              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below Ninja?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
             </div>
           </td>
 
