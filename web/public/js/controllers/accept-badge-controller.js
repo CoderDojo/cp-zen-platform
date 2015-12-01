@@ -1,18 +1,21 @@
  'use strict';
 
-function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, alertService, $translate) {
+function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, alertService, $translate, auth) {
   var userId = $state.params.userId;
   var badgeSlug = $state.params.badgeSlug;
 
   var parent = false;
-  if ($scope.user){
-    cdUsersService.userProfileData({userId: $scope.user.id}, function(profile){
-      _.each(profile.children, function(child){
-        if (child === userId) parent = true;
+
+  auth.get_loggedin_user(function (user) {
+    if (user){
+      cdUsersService.userProfileData({userId: user.id}, function(profile){
+        _.each(profile.children, function(child){
+          if (child === userId) parent = true;
+        })
+        finish();
       })
-      finish();
-    })
-  } else finish();
+    } else finish();
+  });
 
   function finish(){
     var badgeData = {
@@ -39,4 +42,4 @@ function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, aler
 }
 
 angular.module('cpZenPlatform')
-    .controller('accept-badge-controller', ['$scope', '$state', 'cdBadgesService', 'cdUsersService', 'alertService', '$translate', cdAcceptBadgeCtrl]);
+    .controller('accept-badge-controller', ['$scope', '$state', 'cdBadgesService', 'cdUsersService', 'alertService', '$translate', 'auth', cdAcceptBadgeCtrl]);
