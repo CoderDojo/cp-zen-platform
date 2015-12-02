@@ -59,7 +59,8 @@
     "seneca": "0.7.2",
     "serve-static": "1.4.0",
     "slug": "0.9.1",
-    "vision": "3.0.0"
+    "vision": "3.0.0",
+    "pm2": "0.15.10"
   },
   "devDependencies": {
     "bower": "1.4.1",
