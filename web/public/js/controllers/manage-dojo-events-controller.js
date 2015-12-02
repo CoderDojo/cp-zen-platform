@@ -25,6 +25,8 @@
             return $state.go('error-404-no-headers');
           }
         });
+      } else {
+        $scope.isTicketingAdmin = isCDFAdmin;
       }
     });
 
