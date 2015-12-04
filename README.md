@@ -1,33 +1,9 @@
 # cp-zen-platform
 
-## Install:
+## About
 
-```
-npm install
-```
+This is the frontend repository of the [CoderDojo Zen Community Platform](https://github.com/CoderDojo/community-platform) project.
 
-To insert test users into the mongo database (development), run:
-```
-node scripts/insert-test-users.js
-```
+If you want to get set up to make a frontend contribution, please see the [cp-local-development repository](https://github.com/CoderDojo/cp-local-development).
 
-It will add manager@example.com/test and admin@example.com/test users to the database.
-
-## Service dependencies
-
-Requires the following micro-services to be running:
-
-cp-core-services/dojos
-
-See https://github.com/CoderDojo/cp-core-services
-
-## Configuration
-
-Ensure configuration file for the running environment exists and has the correct options. Default environment is development, options read from `config/config.js` - environment overrides in `config/<environment>.env`.
-
-## Run
-
-Start Server:
-
-`./start.sh development ./service.js`
-
+General documentation is in the [community-platform repository](https://github.com/CoderDojo/community-platform).
