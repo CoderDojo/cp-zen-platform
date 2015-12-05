@@ -34,7 +34,7 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
       name: user.name,
       user_type: userType,
       email: user.email,
-      created_at: moment().unix(),
+      created_at: moment(user.when).unix(),
       app_id: "x7bz1cqn",
       user_id: user.id,
       widget: {
