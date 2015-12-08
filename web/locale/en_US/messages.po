@@ -1558,7 +1558,7 @@ msgstr "Upload new picture"
 msgid "Intro"
 msgstr "Intro"
 
-msgid "Badges Welcome Text"
+msgid "Welcome to the CoderDojo Badges dashboard."
 msgstr "Welcome to the CoderDojo Badges dashboard."
 
 msgid "Short Description"
@@ -2667,5 +2667,13 @@ msgstr "Not all information entered on your profile is viewable. You can choose 
 msgid "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
 msgstr "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
 
+
 msgid "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
 msgstr "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
+
+msgid "If you'd like to award a badge, please visit the manage users section below:"
+msgstr "If you'd like to award a badge, please visit the manage users section below:"
+
+msgid "Your local Dojo administrator can award you badges."
+msgstr "Your local Dojo administrator can award you badges."
+

@@ -1,6 +1,6 @@
  'use strict';
 
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -9,6 +9,21 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   
   auth.instance(function (data) {
     $scope.user = data.user;
+    $scope.isDojoAdmin = false;
+
+    if(data.user) {
+      var query = {userId: data.user.id};
+
+      cdDojoService.getUsersDojos({userId: $scope.user.id, deleted: 0}, function (usersDojos) {
+        var userDojo = usersDojos[0];
+        var isDojoAdmin;
+        if(userDojo) {
+          $scope.isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
+            return userPermission.name === 'dojo-admin';
+          });
+        }
+      });
+    }
   });
 
   cdBadgesService.listBadges(function (response) {
@@ -89,4 +104,4 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', cdBadgesDashboardCtrl]);

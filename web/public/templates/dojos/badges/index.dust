@@ -1,6 +1,10 @@
 <div class="cd-dashboard cd-color-1-underline cd-badges-dashboard">
   <div class="row">
-    <h4>{@i18n key="Badges Welcome Text"/}</h4>
+    <h4>{@i18n key="Welcome to the CoderDojo Badges dashboard."/}</h4>
+    <div class="alert alert-info">
+      <p ng-if="isDojoAdmin">{@i18n key="If you'd like to award a badge, please visit the manage users section below:"/} <br/><a ui-sref="my-dojos"><b>{@i18n key="My Dojos"/}</b></a></p>
+      <p ng-if="!isDojoAdmin">{@i18n key="Your local Dojo administrator can award you badges."/}</p>
+    </div>
 
     <tabset justified="true">
       <tab ng-repeat="category in categories" class="badge-category-heading" heading="{{ prepareHeading(category) }}" ng-click="categorySelected()">
