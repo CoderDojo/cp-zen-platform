@@ -10,6 +10,7 @@
     $scope.applyForModel = applyForModel;
     $scope.currentUser = currentUser;
     $scope.referer = referer;
+    $scope.notes = "N/A";
 
     $scope.applyForSettings = {
       displayProp: 'title',
@@ -55,7 +56,7 @@
 
     $scope.applyForEvent = function (sessionApplication) {
       usSpinnerService.spin('dojo-session-spinner');
-      var applications = []
+      var applications = [];
       _.each(_.keys(sessionApplication.tickets), function (ticketId) {
         _.each(sessionApplication.tickets[ticketId], function (ticket) {
           var application = {
@@ -65,7 +66,8 @@
             ticketName: ticket.ticketName,
             ticketType: ticket.ticketType,
             ticketId: ticket.ticketId,
-            userId: ticket.userId
+            userId: ticket.userId,
+            notes: $scope.notes
           };
           applications.push(application);
         });

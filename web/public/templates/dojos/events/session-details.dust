@@ -22,6 +22,10 @@
       </tr>
     </tbody>
   </table>
+  <div>
+    <h4> Notes: </h4>
+    <textarea ng-model="notes" name="textarea" rows="10" cols="50">Write something here</textarea>
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">
