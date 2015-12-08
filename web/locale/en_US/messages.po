@@ -2658,8 +2658,14 @@ msgstr "You are viewing a past event which is not possible to edit."
 msgid "Registering for an event?"
 msgstr "Registering for an event?"
 
-msgid "If you need to book in to a Dojo event, you need to fill out your profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event via the Dojo listing"
-msgstr "If you need to book in to a Dojo event, you need to fill out your parent profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event on the Dojo listing page."
+msgid "If you need to book in to a Dojo event, you need to fill out your profile first."
+msgstr "If you need to book in to a Dojo event, you need to fill out your profile first."
+
+msgid "Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile."
+msgstr "Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile."
+
+msgid "Following this you may <a href=\"/\">find your local Dojo</a> and book an event via the Dojo listing"
+msgstr "Following this you may <a href=\"/\">find your local Dojo</a> and book an event via the Dojo listing"
 
 msgid "Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."
 msgstr "Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."
