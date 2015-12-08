@@ -1654,11 +1654,11 @@ msgstr "Error loading Events:"
 msgid "Undisclosed"
 msgstr "Undisclosed"
 
-msgid "Add Ninja under 13"
-msgstr "Add Ninja under 13"
+msgid "Add Youth under 13"
+msgstr "Add Youth under 13"
 
-msgid "Add Ninja over 13"
-msgstr "Add Ninja over 13"
+msgid "Add Youth over 13"
+msgstr "Add Youth over 13"
 
 msgid "This profile is private"
 msgstr "This profile is private"
@@ -1672,11 +1672,11 @@ msgstr "Profile has been saved successfully"
 msgid "An error has occurred while saving profile"
 msgstr "An error has occurred while saving profile"
 
-msgid "Ninja"
-msgstr "Ninja"
+msgid "Youth"
+msgstr "Youth"
 
-msgid "Ninjas"
-msgstr "Ninjas"
+msgid "Youths"
+msgstr "Youths"
 
 msgid "Weekly"
 msgstr "Weekly"
@@ -1885,11 +1885,11 @@ msgstr "Waitlist"
 msgid "New Applicant"
 msgstr "New Applicant"
 
-msgid "Invite Ninja over 13"
-msgstr "Invite Ninja over 13"
+msgid "Invite Youth over 13"
+msgstr "Invite Youth over 13"
 
-msgid "Enter Ninja Email Address"
-msgstr "Enter Ninja Email Address"
+msgid "Enter Youth Email Address"
+msgstr "Enter Youth Email Address"
 
 msgid "Error inviting Ninja"
 msgstr "Error inviting Ninja"
@@ -2264,9 +2264,6 @@ msgstr "Dojo Supported By"
 msgid "Email is required"
 msgstr "Email is required"
 
-msgid "We have just relaunched Zen, click here to reset your password"
-msgstr "We have just relaunched Zen, click here to reset your password"
-
 msgid "Join request not found"
 msgstr "Join request not found"
 
@@ -2417,8 +2414,8 @@ msgstr "e.g. Beginners to attend only please."
 msgid "Your event must contain at least one ticket."
 msgstr "Your event must contain at least one ticket."
 
-msgid "Select Ninja to create tickets for attendees under 13 or over 13."
-msgstr "Select Ninja to create tickets for attendees under 13 or over 13."
+msgid "Select Youth to create tickets for attendees under 18."
+msgstr "Select Youth to create tickets for attendees under 18."
 
 msgid "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
 msgstr "Select Parent/Guardian to create tickets for parents/guardians of the attendees."
@@ -2619,8 +2616,8 @@ msgstr "Champion - A CoderDojo Champion is an individual who spearheads setting 
 msgid "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
 msgstr "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
 
-msgid "Ninja Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
-msgstr "Ninja Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
+msgid "Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
+msgstr "Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
 
 msgid "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
 msgstr "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"

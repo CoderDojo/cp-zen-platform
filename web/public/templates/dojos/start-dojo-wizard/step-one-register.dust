@@ -51,7 +51,7 @@
         </div>
         <span popover="&bull; {@i18n key="Champion - A CoderDojo Champion is an individual who spearheads setting up and maintaining a Dojo. Champions do not necessarily have to have the ability to code but possess the skills required to bring together technical mentors and supporters to run a Dojo frequently!"/}
          &bull; {@i18n key="Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"/}
-         &bull; {@i18n key="Ninja Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."/}
+         &bull; {@i18n key="Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."/}
           &bull; {@i18n key="Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"/}" popover-title="{@i18n key="How do I choose?"/}" popover-placement="right" popover-trigger="click" class="info-button fa fa-info-circle register-tooltip"></span>
       </div>
     </div>
