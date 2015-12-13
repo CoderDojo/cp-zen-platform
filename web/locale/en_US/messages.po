@@ -2264,9 +2264,6 @@ msgstr "Dojo Supported By"
 msgid "Email is required"
 msgstr "Email is required"
 
-msgid "We have just relaunched Zen, click here to reset your password"
-msgstr "We have just relaunched Zen, click here to reset your password"
-
 msgid "Join request not found"
 msgstr "Join request not found"
 
