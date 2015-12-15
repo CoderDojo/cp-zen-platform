@@ -1,7 +1,11 @@
 <div ng-if="editMode">
   <div class="alert alert-info">
     <strong>{@i18n key="Registering for an event?"/}</strong><br />
-    {@i18n key="If you need to book in to a Dojo event, you need to fill out your profile first. Then you will need to <a href=\"#ninjas\">add ninjas</a> to your profile. Following this you may <a href=\"/\">find your local Dojo</a> and book an event on the Dojo listing page."/}
+    {@i18n key="If you need to book in to a Dojo event, you need to fill out your profile first."/}
+    <div ng-if="parentProfile">
+      {@i18n key="Then you will need to <a href=\"#youths\">add youths</a> to your profile."/}
+    </div>
+     {@i18n key="Following this you may <a href=\"/\">find your local Dojo</a> and book an event on the Dojo listing page."/}
   </div>
   <div class="alert alert-info" ng-if="parentProfile">
     {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}

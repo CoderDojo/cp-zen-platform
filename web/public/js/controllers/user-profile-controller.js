@@ -31,10 +31,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
       $scope.inviteNinjaPopover = {
-        title: $translate.instant('Invite Ninja over 13'),
+        title: $translate.instant('Invite Youth over 13'),
         templateUrl: '/profiles/template/invite-ninja-over-13',
         placement: 'top',
-        placeholder: $translate.instant('Enter Ninja Email Address'),
+        placeholder: $translate.instant('Enter Youth Email Address'),
         show: false
       };
     } else {
