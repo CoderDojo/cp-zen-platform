@@ -167,7 +167,7 @@
       usSpinnerService.spin('session-applications-spinner');
       $scope.approved = {};
       $scope.checkedIn = {};
-      $scope.sort = $scope.sort ? $scope.sort: {created: 1};
+      $scope.sort = $scope.sort ? $scope.sort: {created: -1};
 
       var query = _.omit({
         sessionId: sessionId,
