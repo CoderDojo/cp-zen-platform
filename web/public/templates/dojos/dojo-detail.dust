@@ -104,7 +104,13 @@
               <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
             </section>
         </div>
-          <div class="col-xs-12 col-lg-6 clear pull-left">
+        <div class="col-xs-12 col-lg-6 clear pull-left">
+            <div ng-if="dojo.supporterImage">
+            <legend>{@i18n key="Dojo Supported By"/}</legend>
+            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-6 dojo-detail-sidebar">
             <span class="help-block"></span>
             <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
             <div class="alert alert-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
@@ -118,12 +124,6 @@
               <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
             </div>
           </div>
-          <div class="col-xs-12 col-lg-6 dojo-detail-sidebar">
-            <div ng-if="dojo.supporterImage">
-            <legend>{@i18n key="Dojo Supported By"/}</legend>
-            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
-          </div>
-        </div>
       </div>
     </div>
   </div>
