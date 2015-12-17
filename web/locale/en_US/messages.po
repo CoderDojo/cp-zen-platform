@@ -2363,6 +2363,12 @@ msgstr "Session/room"
 msgid "Book tickets for"
 msgstr "Book tickets for"
 
+msgid "Additional information about your application:"
+msgstr "Additional information about your application:"
+
+msgid "N/A"
+msgstr "N/A"
+
 msgid "Apply now"
 msgstr "Apply now"
 

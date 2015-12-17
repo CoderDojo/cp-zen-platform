@@ -50,6 +50,7 @@
             <th>{@i18n key="Application Date"/}</th>
             <th>{@i18n key="Age"/}</th>
             <th>{@i18n key="Parents/guardians"/}</th>
+            <th>{@i18n key="Notes"/}</th>
             <th>{@i18n key="Approve"/}</th>
             <th>{@i18n key="Check in"/}</th>
             <th>{@i18n key="Delete"/}</th>
@@ -64,6 +65,7 @@
             <td> {{ application.dateApplied }}</td>
             <td><span ng-if="application.age">{{ application.age }}</span></td>
             <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
+            <td><span ng-if="application.notes">{{ application.notes }}</span></td>
             <td>
               <div class="checkbox">
                 <input type="checkbox" name="applicationApproved" id="applicationApprovedCheckbox-{{ application.id }}" ng-disabled="session.status === 'cancelled'" ng-checked="userIsApproved(application)" ng-click="updateApplication(application, 'status')">
