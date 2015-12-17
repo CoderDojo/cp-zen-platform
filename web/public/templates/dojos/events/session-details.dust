@@ -23,8 +23,8 @@
     </tbody>
   </table>
   <div>
-    <h4> Notes: </h4>
-    <textarea ng-model="notes" name="textarea" rows="10" cols="50">Write something here</textarea>
+    <h4> {@i18n key="Additional information about your application:"/} </h4>
+    <textarea ng-model="notes" class="form-control" name="textarea" rows="10" cols="50"></textarea>
   </div>
 </div>
 <div class="modal-footer">

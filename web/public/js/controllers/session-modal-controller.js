@@ -10,7 +10,7 @@
     $scope.applyForModel = applyForModel;
     $scope.currentUser = currentUser;
     $scope.referer = referer;
-    $scope.notes = "N/A";
+    $scope.notes = $translate.instant('N/A');
 
     $scope.applyForSettings = {
       displayProp: 'title',
