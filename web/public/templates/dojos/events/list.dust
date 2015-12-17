@@ -5,7 +5,8 @@
     <legend>{@i18n key="Events"/}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
-      <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo"/}</p>
+      <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."/}
+      </p>
         <table ng-hide="events.length === 0"  id="dojoEventsTable" class="table cd-grid-table table-striped">
           <thead>
           <tr>
@@ -37,7 +38,7 @@
         </table>
       </div>
     </div>
-    <div class="row center-children" ng-hide="events.length === 0">
+    <div class="row center-children" ng-hide="events.length < 10">
       <span class="row col-lg-7 centered-child">
         <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
                     class="pagination-sm"
@@ -48,5 +49,6 @@
                     boundary-links="true"></pagination>
       </span>
     </div>
+    <span class="help-block" ng-hide="events.length >= 10"></span>
   </div>
 </div>

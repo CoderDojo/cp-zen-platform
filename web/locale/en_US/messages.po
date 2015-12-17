@@ -465,8 +465,8 @@ msgstr "Development Community"
 msgid "Events"
 msgstr "Events"
 
-msgid "There are no events currently listed for this Dojo"
-msgstr "There are no events currently listed for this Dojo"
+msgid "There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."
+msgstr "There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."
 
 msgid "Word of Mouth"
 msgstr "Word of Mouth"
@@ -777,24 +777,33 @@ msgstr "Status Messages"
 msgid "Need Mentors"
 msgstr "Need Mentors"
 
-msgid "Mentors needed!"
-msgstr "Mentors needed!"
+msgid "We need mentors!"
+msgstr "We need mentors!"
 
 
 msgid "Current Stage"
 msgstr "Current Stage"
 
-msgid "In planning"
-msgstr "In planning"
+msgid "In planning - check back soon"
+msgstr "In planning - check back soon"
 
-msgid "Open, come along"
-msgstr "Open, come along"
+msgid "Open, just show up"
+msgstr "Open, just show up"
 
-msgid "Register ahead"
-msgstr "Register ahead"
+msgid "Booking required"
+msgstr "Booking required"
+
+msgid "Booking is required to attend this Dojo. Please contact the Dojo administrator if no events are listed."
+msgstr "Booking is required to attend this Dojo. Please contact the Dojo administrator if no events are listed."
+
+msgid "Contact for more information"
+msgstr "Contact for more information"
 
 msgid "Inactive"
 msgstr "Inactive"
+
+msgid "Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"
+msgstr "Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"
 
 msgid "Full up"
 msgstr "Full up"
@@ -837,6 +846,12 @@ msgstr "Any"
 
 msgid "Verified"
 msgstr "Verified"
+
+msgid "Officially verified!"
+msgstr "Officially verified!"
+
+msgid "Not verified"
+msgstr "Not verified"
 
 msgid "Unverified"
 msgstr "Unverified"
@@ -1665,6 +1680,9 @@ msgstr "This profile is private"
 
 msgid "We need mentors!"
 msgstr "We need mentors!"
+
+msgid "Find out more about becoming a CoderDojo mentor"
+msgstr "Find out more about becoming a CoderDojo mentor"
 
 msgid "Profile has been saved successfully"
 msgstr "Profile has been saved successfully"

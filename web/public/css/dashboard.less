@@ -192,10 +192,6 @@ label {
 .dojo-list-dashboard {
   min-height: 350px;
   margin:0 auto;
-
-  .widget {
-    margin-bottom:55px;
-  }
 }
 
 .cd-text-heading1 {
@@ -345,6 +341,14 @@ label {
 .dojo-detail {
   padding:20px;
   
+  .alert a {
+    color:@cd-green;
+  }
+
+  .alert {
+    display:block;
+  }
+
   img {
     max-width: 100%;
   }
@@ -365,7 +369,6 @@ label {
     float: right;
     left: 20px;
     .widget {
-      margin-bottom:55px;
       .widget-block {
         margin-top:20px;
       }
@@ -771,6 +774,22 @@ div.invite-button {
 
 div.status-wrapper {
   padding: 10px;
+  .alert-info {
+    display:block;
+  }
+}
+
+.cd-success-text {
+  color: @cd-green;
+}
+
+.cd-warning-text {
+  color: @cd-red;
+}
+
+.verification-icon {
+  padding-left:5px;
+  font-size:12px;
 }
 
 legend {
@@ -1133,6 +1152,7 @@ img.dojoSupporterImage {
 
 span.tooltipfocus {
   outline: none;
+  cursor:pointer;
 }
 
 .badge-information {
