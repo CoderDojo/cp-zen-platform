@@ -910,6 +910,9 @@ msgstr "Listing"
 msgid "Times"
 msgstr "Times"
 
+msgid "Frequency Dojo runs"
+msgstr "Frequency Dojo runs"
+
 msgid "Join Mailing List"
 msgstr "Join Mailing List"
 
@@ -1701,6 +1704,9 @@ msgstr "Weekly"
 
 msgid "Every two weeks"
 msgstr "Every two weeks"
+
+msgid "Monthly"
+msgstr "Monthly"
 
 msgid "An error has occured verifying your profile."
 msgstr "An error has occured verifying your profile."
