@@ -913,6 +913,9 @@ msgstr "Times"
 msgid "Frequency Dojo runs"
 msgstr "Frequency Dojo runs"
 
+msgid "Frequency"
+msgstr "Frequency"
+
 msgid "Join Mailing List"
 msgstr "Join Mailing List"
 
