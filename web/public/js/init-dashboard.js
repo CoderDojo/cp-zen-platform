@@ -430,8 +430,8 @@
       function($translateProvider) {
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
-        .useSanitizeValueStrategy('sanitize')
-        .registerAvailableLanguageKeys(['en_US', 'it_IT'])
+        .useSanitizeValueStrategy('sanitizeParameters')
+        .registerAvailableLanguageKeys(['en_US', 'it_IT', 'de_DE', 'pt_PT'])
         .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
