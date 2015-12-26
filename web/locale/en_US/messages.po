@@ -2812,6 +2812,69 @@ msgstr "We use traffic log cookies to identify which pages are being used. This 
 msgid "If you click on a link to a third party website, such third party may also transmit cookies to you. This Privacy Policy does not cover the use of cookies by any third parties."
 msgstr "If you click on a link to a third party website, such third party may also transmit cookies to you. This Privacy Policy does not cover the use of cookies by any third parties."
 
+msgid "List of cookies used by this website:"
+msgstr "List of cookies used by this website:"
+
+msgid "Cookie Name"
+msgstr "Cookie Name"
+
+msgid "Typical Value"
+msgstr "Typical Value"
+
+msgid "Purpose"
+msgstr "Purpose"
+
+msgid "Expires"
+msgstr "Expires"
+
+msgid "seneca-login"
+msgstr "seneca-login"
+
+msgid "Randomly generated alphanumeric string"
+msgstr "Randomly generated alphanumeric string"
+
+msgid "Used to identify user session"
+msgstr "Used to identify user session"
+
+msgid "2 days after creation"
+msgstr "2 days after creation"
+
+msgid "cookieDisclaimer"
+msgstr "cookieDisclaimer"
+
+msgid "confirmed"
+msgstr "confirmed"
+
+msgid "Whether the user has seen the sitewide notice regarding the use of cookies "
+msgstr "Whether the user has seen the sitewide notice regarding the use of cookies "
+
+msgid "1 year from being set"
+msgstr "1 year from being set"
+
+msgid "canViewYouthForums"
+msgstr "canViewYouthForums"
+
+msgid "boolean"
+msgstr "boolean"
+
+msgid "Whether the user can see the O13 forums"
+msgstr "Whether the user can see the O13 forums"
+
+msgid "On session expiry"
+msgstr "On session expiry"
+
+msgid "verifyProfileComplete"
+msgstr "verifyProfileComplete"
+
+msgid "Whether the user has completed required fields of their profile"
+msgstr "Whether the user has completed required fields of their profile"
+
+msgid "NG_TRANSLATE_LANG_KEY"
+msgstr "NG_TRANSLATE_LANG_KEY"
+
+msgid "The locale of the users browser, to display the relevant language to them"
+msgstr "The locale of the users browser, to display the relevant language to them"
+
 msgid "Links to other websites"
 msgstr "Links to other websites"
 
