@@ -49,7 +49,7 @@
 
           <div ng-if="dojo.supporterImage">
             <legend>{@i18n key="Dojo Supported By"/}</legend>
-            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
+            <img ng-src="{{ dojo.supporterImage }}">
           </div>
 
 
