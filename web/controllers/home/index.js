@@ -65,6 +65,14 @@ var controller = module.exports = [
     }
   },
 
+  {
+    method: 'GET',
+    path: '/privacy-statement',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
   {	    
     method: 'GET',
     path: '/dojo/{id}/{alpha2*}',
@@ -155,6 +163,14 @@ var controller = module.exports = [
     path: '/templates/terms-and-conditions',
     handler: function (request, reply) {
       reply.view('accounts/terms-and-conditions', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/privacy-statement',
+    handler: function (request, reply) {
+      reply.view('privacy-statement/privacy-statement', request.locals);
     }
   },
 

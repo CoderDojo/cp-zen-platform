@@ -148,6 +148,7 @@
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
     <script src="/js/controllers/terms-and-conditions-controller.js"></script>
+    <script src="/js/controllers/privacy-statement-controller.js"></script>
     <script src="/js/controllers/accept-dojo-user-invitation-controller.js"></script>
     <script src="/js/controllers/accept-dojo-user-request-controller.js"></script>
     <script src="/js/controllers/user-profile-controller.js"></script>

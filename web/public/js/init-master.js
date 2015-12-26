@@ -230,6 +230,14 @@
             pageTitle: 'Terms & Conditions',
           }
         })
+        .state("privacy-statement", {
+          url: "/privacy-statement",
+          templateUrl: '/templates/privacy-statement',
+          controller: 'privacy-statement-controller',
+          params: {
+            pageTitle: 'Privacy Statement',
+          }
+        })
         .state('charter',{
           url: '/charter',
           templateUrl: '/charter/template/charter-info',
