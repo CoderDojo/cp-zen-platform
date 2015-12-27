@@ -55,7 +55,7 @@
         <p>{@i18n key="We use traffic log cookies to identify which pages are being used. This helps us analyse data about web page traffic and improve our Website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system. Overall cookies help us provide you with a better Website, by enabling us to monitor which pages you find useful and which you do not. A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us. You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the Website. "/}</p>
         <p>{@i18n key="If you click on a link to a third party website, such third party may also transmit cookies to you. This Privacy Policy does not cover the use of cookies by any third parties."/}</p>
         <p><strong>{@i18n key="List of cookies used by this website:"/}</strong></p>
-        <table>
+        <table class="table table-striped">
           <tr>
             <th>{@i18n key="Cookie Name"/}</th>
             <th>{@i18n key="Typical Value"/}</th>
