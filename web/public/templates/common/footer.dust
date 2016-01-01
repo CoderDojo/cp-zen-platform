@@ -12,7 +12,7 @@
         </span>
         <span class="col-sm-7 footer-center-column">
             <div>
-                <a href="https://coderdojo.com/contact/">{@i18n key="Contact"/}</a> <a href="https://coderdojo.com/about/">{@i18n key="About"/}</a>
+                <a href="https://coderdojo.com/contact/">{@i18n key="Contact"/}</a> <a href="https://coderdojo.com/about/">{@i18n key="About"/}</a> <a href="/privacy-statement">{@i18n key="Privacy Statement"/}</a>
                 <p class="cdf-info">{@i18n key="Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"/} <a href="https://coderdojo.com/about/coderdojo-foundation" title="More information about the CoderDojo Foundation">{@i18n key="here"/}</a>.
                 <p class="cp-info">{@i18n key="Zen is an open source platform, you can"/} <a href="https://github.com/coderdojo/community-platform" title="Zen community-platform repository">{@i18n key="contribute code"/}</a> {@i18n key="and"/} <a href="https://github.com/CoderDojo/community-platform/issues?q=is%3Aopen+is%3Aissue+label%3Abacklog" title="Zen community-platform issue tracker">{@i18n key="suggest features"/}</a> {@i18n key="to help make it better."/}
                 </p>
