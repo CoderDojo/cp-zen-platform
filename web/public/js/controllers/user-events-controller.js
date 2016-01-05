@@ -13,7 +13,7 @@
 
     if(currentUser.id){
       $scope.loadPage = function () {
-        $scope.sort = $scope.sort ? $scope.sort: {createdAt: -1};
+        $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
         var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
         cdEventsService.getUserDojosEvents(query, function (response) {
           $scope.dojosEvents = response;
@@ -41,7 +41,7 @@
                 });
 
                 $scope.currentEvents = true;
-                $scope.sort[dojoEvents.dojo.id] = {createdAt: -1};
+                $scope.sort[dojoEvents.dojo.id] = {createdAt: 1};
                 var events = [];
                 dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
                 _.each(dojoEvents.events, function(event){

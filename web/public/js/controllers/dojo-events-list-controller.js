@@ -45,7 +45,7 @@
 
       cb = cb || function () {};
 
-      $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
+      $scope.sort = $scope.sort ? $scope.sort: {createdAt: -1};
 
       var query = _.omit({
         dojoId: filter.dojoId,

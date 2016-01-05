@@ -58,7 +58,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   };
 
   $scope.loadPage = function(resetFlag) {
-    $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: -1};
+    $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: 1};
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, $scope.filterQuery, $scope.queryModel.sort);
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.myDojos = [];
