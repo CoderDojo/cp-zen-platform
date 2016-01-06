@@ -40,7 +40,7 @@
     <div ng-if="applications.length === 0">
       <span class="col-md-12 applications-banner">{@i18n key="There are no outstanding applications for this Session"/}</span>
     </div>
-    <div ng-if="applications.length > 0">
+    <div class="table-responsive" ng-if="applications.length > 0">
       <table class="table cd-grid-table">
         <thead>
           <tr>
