@@ -76,7 +76,7 @@
     "grunt-dustjs": "1.2.1",
     "grunt-localizr": "0.1.0",
     "grunt-mocha-cli": "1.9.0",
-    "karma": "0.13.10",
+    "karma": "0.13.19",
     "karma-browserify": "4.2.1",
     "karma-coverage": "0.3.1",
     "karma-fixture": "0.2.5",
