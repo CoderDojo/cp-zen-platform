@@ -19,12 +19,12 @@
 
           if(_.contains(response[0].userTypes, 'parent-guardian') || _.contains($scope.currentUser.roles, 'cdf-admin')) isParent = true;
           if(!$scope.eventUserSelection[dojoId]) $scope.eventUserSelection[dojoId] = [];
-          $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
+          $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself'), initUserType: response[0].userTypes[0]});
           $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
           if(isParent) {
             cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
               _.each(ninjas, function (ninja) {
-                $scope.eventUserSelection[dojoId].push({userId: ninja.userId, title: ninja.name});
+                $scope.eventUserSelection[dojoId].push({userId: ninja.userId, title: ninja.name, initUserType: ninja.userType});
                 $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
               });
             });

@@ -11,6 +11,27 @@
       } else {
         $scope.showEventInfo(eventIndex, $scope.event.id);
       }
+    };
+
+    // Functions to map Service ticket types to front-end ticket types.
+    // Front end types are: 1.ninja, 2.guardian-parent 3.mentor, 4.other
+    function isNinja(user) {
+      return user === 'attendee-u13' || user === 'attendee-o13';
+    }
+
+    function isParent(user) {
+      return user === 'parent-guardian' || user === 'champion';
+    }
+
+    function isMentor(user) {
+      return user === 'mentor' || user === 'champion';
+    }
+
+    function rightTicketType(ticketType, userType){
+      if (ticketType === 'ninja') return isNinja(userType);
+      if (ticketType === 'mentor') return isMentor(userType);
+      if (ticketType === 'parent-guardian') return isParent(userType);
+      if (ticketType === 'other') return isParent(userType);
     }
 
     $scope.showSessionDetails = function (session) {
@@ -40,12 +61,16 @@
                 $scope.applyForModel = {};
                 _.each(session.tickets, function (ticket) {
                   var applyForData = angular.copy($scope.eventUserSelection[$scope.event.dojoId]);
+                  var ticketByType = [];
                   _.each(applyForData, function (applyObj) {
-                    applyObj.ticketId = ticket.id;
-                    applyObj.ticketName = ticket.name;
-                    applyObj.ticketType = ticket.type;
+                    if (rightTicketType(ticket.type, applyObj.initUserType)) {
+                      applyObj.ticketId = ticket.id;
+                      applyObj.ticketName = ticket.name;
+                      applyObj.ticketType = ticket.type;
+                      ticketByType.push(applyObj);
+                    }
                   });
-                  $scope.applyForModel[ticket.id] = applyForData;
+                  $scope.applyForModel[ticket.id] = ticketByType;
                 });
                 return $scope.applyForModel;
               },
