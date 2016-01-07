@@ -44,6 +44,21 @@
             <b>{@i18n key="Notes"/}</b>
             <div class="row" ng-bind-html="dojo.notes"></div>
           </div>
+
+          <cd-dojo-events-list dojo-id="{{ dojo.id }}"></cd-dojo-events-list>
+
+          <legend>{@i18n key="Map"/}</legend>
+          <p ng-if="!dojo.coordinates"><strong>{@i18n key="This dojo has no coordinates."/}</strong></p>
+          <section ng-if="mapLoaded" id="map">
+            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
+          </section>
+          <br><br>
+
+          <div ng-if="dojo.supporterImage">
+            <legend>{@i18n key="Dojo Supported By"/}</legend>
+            <img ng-src="{{ dojo.supporterImage }}">
+          </div>
         </div>
 
         <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
