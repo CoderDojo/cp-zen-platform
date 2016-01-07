@@ -4,7 +4,7 @@
     <ol>
       <li>
         <strong>{@i18n key="Introduction"/}</strong>
-        <p><strong>{@i18n key="coderdojo.com and its sub-sites "/}</strong>{@i18n key="(the \"Website\", \"Zen\", \"Kata\") are operated by Hello World Foundation. We have created this Privacy Statement in order to demonstrate our firm commitment to privacy. This Privacy Statement sets out the basis on which any personal data we collect from you or that you provide to us, will be processed by us.  In order to fully understand your rights, we encourage you to read this Privacy Statement and to consult our Terms and Conditions of Use."/}</p>
+        <p><strong>{@i18n key="coderdojo.com and its sub-sites "/}</strong>{@i18n key="(the \"Website\", \"Zen\", \"Kata\") are operated by CoderDojo Foundation. We have created this Privacy Statement in order to demonstrate our firm commitment to privacy. This Privacy Statement sets out the basis on which any personal data we collect from you or that you provide to us, will be processed by us.  In order to fully understand your rights, we encourage you to read this Privacy Statement and to consult our Terms and Conditions of Use."/}</p>
         <p>{@i18n key="For the purpose of the Data Protection Acts 1988 and 2003, the data controller is contactable at info@coderdojo.com."/}</p>
       </li>
       <li>
@@ -23,7 +23,7 @@
       </li>
       <li>
         <strong>{@i18n key="Storing your personal data"/}</strong>
-        <p>{@i18n key="The data that we collect from you may be transferred to, and stored at, a destination outside the European Economic Area (\"EEA\"). It may also be processed by staff of Hello World Foundation operating from outside the EEA. Such staff may be engaged in the provision of support services. By submitting your personal data, you agree to this transfer, storing or processing.  We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Statement."/}</p>
+        <p>{@i18n key="The data that we collect from you may be transferred to, and stored at, a destination outside the European Economic Area (\"EEA\"). It may also be processed by staff of CoderDojo Foundation operating from outside the EEA. Such staff may be engaged in the provision of support services. By submitting your personal data, you agree to this transfer, storing or processing.  We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Statement."/}</p>
         <p>{@i18n key="All information you provide to us is stored on our secure servers and user information is encrypted with SSL technology. Any payments made through our website utilise Stripe. You can see Stripe Privacy Policy "/}<a href="https://stripe.com/ie/privacy">{@i18n key="here"/}</a>{@i18n key=" and more about their security "/}<a href="https://stripe.com/help/security">{@i18n key="here"/}</a></p>
         <p>{@i18n key="Where we have given you (or where you have chosen) a password which enables you to access certain parts of our Website, you are responsible for keeping this password confidential.  We ask you not to share a password with anyone."/}</p>
       </li>
