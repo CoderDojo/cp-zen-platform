@@ -107,7 +107,7 @@
         <div class="col-xs-12 col-lg-6 clear pull-left">
             <div ng-if="dojo.supporterImage">
             <legend>{@i18n key="Dojo Supported By"/}</legend>
-            <img class="dojoSupporterImage" ng-src="{{ dojo.supporterImage }}">
+            <img ng-src="{{ dojo.supporterImage }}">
           </div>
         </div>
         <div class="col-xs-12 col-lg-6 dojo-detail-sidebar">
