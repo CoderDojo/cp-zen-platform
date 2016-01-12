@@ -1891,6 +1891,18 @@ msgstr "Oops! This is not the page you are looking for."
 msgid "Maybe you'd like to check out some of the following fun sections of our site:"
 msgstr "Maybe you'd like to check out some of the following fun sections of our site:"
 
+msgid "Find your local Dojo"
+msgstr "Find your local Dojo"
+
+msgid "Community Forums"
+msgstr "Community Forums"
+
+msgid "Kata, our community wiki"
+msgstr "Kata, our community wiki"
+
+msgid "CoderDojo community news"
+msgstr "CoderDojo community news"
+
 msgid "Founder"
 msgstr "Founder"
 
