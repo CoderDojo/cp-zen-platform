@@ -1885,8 +1885,11 @@ msgstr "Please add your location manually by clicking on the map."
 msgid "You do not have permission to update this Dojo."
 msgstr "You do not have permission to update this Dojo."
 
-msgid "Page not found"
-msgstr "PAGE NOT FOUND!"
+msgid "Oops! This is not the page you are looking for."
+msgstr "Oops! This is not the page you are looking for."
+
+msgid "Maybe you'd like to check out some of the following fun sections of our site:"
+msgstr "Maybe you'd like to check out some of the following fun sections of our site:"
 
 msgid "Founder"
 msgstr "Founder"
