@@ -1,5 +1,20 @@
 <div class="container">
-  <div>
-    {@i18n key="Page not found"/}
+  <div class="container">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
+      <div class="ninja-container">
+        <div class="ninja"></div>
+      </div>
+      <div class="page-not-found-caption">
+        <h4>{@i18n key="Oops! This is not the page you are looking for."/}</h4>
+        <h5>{@i18n key="Maybe you'd like to check out some of the following fun sections of our site:"/}</h5>
+        <a href="http://zen.coderdojo.com">Find your local Dojo</a>
+        <br>
+        <a href="http://forums.coderdojo.com">Community Forums</a>
+        <br>
+        <a href="http://kata.coderdojo.com">Kata, our community wiki</a>
+        <br>
+        <a href="https://coderdojo.com/news/">CoderDojo community news</a>
+      </div>
+    </div>
   </div>
 </div>
