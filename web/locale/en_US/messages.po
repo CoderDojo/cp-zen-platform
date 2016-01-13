@@ -99,8 +99,8 @@ msgstr "Throughout the site, the terms \"we\", \"us\" and \"our\" refer to the C
 msgid "Information about us"
 msgstr "Information about us"
 
-msgid "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. Hello World Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
-msgstr "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. Hello World Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
+msgid "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. CoderDojo Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
+msgstr "Zen is operated and presented to users by the CoderDojo Foundation (formerly known as the 'Hello World Foundation') with registered address Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, Ireland. CoderDojo Foundation is an Irish Company registered under company number 524255 and a registered charity in Republic of Ireland, CHY 20812."
 
 msgid "SECTION 1 - USER AGREEMENT"
 msgstr "SECTION 1 - USER AGREEMENT"
