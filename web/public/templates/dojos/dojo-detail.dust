@@ -71,6 +71,14 @@
                 </tbody>
               </table>
             </div>
+            <div class="alert alert-warning text-center" ng-show="dojo.needMentors" role="alert">
+              {@i18n key="We need mentors!"/} 
+              <span tooltip-trigger="focus" tooltip-placement="right" tooltip-html-unsafe="<a href='http://kata.coderdojo.com/wiki/Mentor_Guide' target='_blank'>{@i18n key="Find out more about becoming a CoderDojo mentor"/}</a>" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+            </div>
+            <span class="help-block"></span>
+            <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+            <div class="alert alert-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+            <div class="alert alert-danger text-center" ng-if="dojo.stage.value === 3" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
           </div>
           <a name="events"></a>
           <span class="alert alert-info text-center" ng-if="dojo.stage.value === 2" role="alert">{@i18n key="Booking is required to attend this Dojo. Please contact the Dojo administrator if no events are listed."/}</span>
@@ -111,14 +119,6 @@
           </div>
         </div>
         <div class="col-xs-12 col-lg-6 dojo-detail-sidebar">
-            <span class="help-block"></span>
-            <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
-            <div class="alert alert-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
-            <div class="alert alert-danger text-center" ng-if="dojo.stage.value === 3" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
-            <div class="alert alert-warning text-center" ng-show="dojo.needMentors" role="alert">
-              {@i18n key="We need mentors!"/} 
-              <span tooltip-trigger="focus" tooltip-placement="right" tooltip-html-unsafe="<a href='http://kata.coderdojo.com/wiki/Mentor_Guide' target='_blank'>{@i18n key="Find out more about becoming a CoderDojo mentor"/}</a>" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
-            </div>
             <span class="help-block"></span>
             <div ng-if="dojoMember && !dojoOwner && userMemberCheckComplete" class="widget pull-left">
               <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
