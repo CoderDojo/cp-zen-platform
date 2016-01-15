@@ -1,6 +1,6 @@
 
 * {
-  border-radius: 0px!important;
+  border-radius: 0 !important;
 }
 
 legend {
@@ -8,6 +8,7 @@ legend {
   border-bottom: 3px solid black;
   position: relative;
 }
+
 legend::after {
     content: "";
     display: block;
@@ -18,30 +19,30 @@ legend::after {
 }
 
 body {
-	background:white;
-  font-family: "latoregular",Arial,Helvetica,sans-serif;
+	background: white;
+  font-family: "latoregular", Arial, Helvetica, sans-serif;
 }
 
 p {
-	font-size:13px;
+	font-size: 13px;
 }
 
 h1 {
-	font-size:28px;
-	font-weight:bold;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 h2 {
-	font-size:24px;
-	font-weight:bold;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 ul {
-	font-size:13px;
+	font-size: 13px;
 }
 
 .footer-text {
-  color:white;
+  color: white;
 }
 
 .cd-container {
@@ -53,37 +54,49 @@ ul {
 }
 
 .cp-login {
+
   .cd-input-row {
-    margin: 25px 0px;
+    margin: 25px 0;
   }
+
   .cd-info-row {
-    margin: 0px;
+    margin: 0;
+
     span {
+
       &.cd-msg-info {
         color: @cd-blue;
       }
+
       &.cd-msg-warn {
         color: @cd-orange;
       }
+
       &.cd-msg-error {
         color: @cd-red;
       }
     }
   }
+
   .cd-btn-row {
-    margin: 15px 0px;
+    margin: 15px 0;
   }
+
   .cd-link-row {
-    margin: 5px 0px;
+    margin: 5px 0;
+  }
+
+  .alert-info {
+    margin: 0;
+    margin-top: 15px;
   }
 }
 
 label {
 	display: inline-block;
-	font-size:14px;
+	font-size: 14px;
 	text-align: left;
 }
-	​
 
 .main-container {
     padding: 46px 100px 0 100px;
@@ -91,130 +104,160 @@ label {
 
 .cd-dashboard {
 	background: white;
-	padding: 0px 20px;
+	padding: 0 20px;
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
+
   a {
-    color:#315169;
+    color: #315169;
   }
+
   .setup-dojo{
-    padding:20px;
+    padding: 20px;
 
     .validationMessage{
-      width:100%;
+      width: 100%;
     }
   }
+
   .state-heading {
-    font-weight:bold;
-    margin-left:20px;
+    font-weight: bold;
+    margin-left: 20px;
   }
+
   .start-dojo-wizard {
-    margin-bottom:20px;
+    margin-bottom: 20px;
+
     .form-group input[type="checkbox"] {
       display: none;
     }
+
     .form-group input[type="checkbox"] + .btn-group > label span {
       width: 20px;
     }
+
     .form-group input[type="checkbox"] + .btn-group > label span:first-child {
       display: none;
     }
+
     .form-group input[type="checkbox"] + .btn-group > label span:last-child {
       display: inline-block;
     }
+
     .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
       display: inline-block;
     }
+
     .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
       display: none;
     }
+
     .glyphicon-info-sign {
-      margin-top:7px;
+      margin-top: 7px;
     }
+
     .validationMessage {
       position: relative;
       width: 100%;
       text-align: left;
       line-height: 30px;
     }
+
     .terms-conditions-checkbox {
       .validationMessage {
-        text-align:center;
+        text-align: center;
       }
+
       label::before {
-        position:relative;
+        position: relative;
       }
     }
+
     .gatherTeamChecklist {
       border: 1px dashed rgb(66, 139, 202);
       padding: 5px;
-      margin:10px;
+      margin: 10px;
     }
   }
+
   .dojoWizardComplete {
-    width:100%;
+    width: 100%;
     background: #5cb85c;
-    color:@cd-white;
-    padding:10px;
-    border-radius:5px;
+    color: @cd-white;
+    padding: 10px;
+    border-radius: 5px;
   }
+
   .event-tooltip {
-    font-size:18px;
-    margin-left:10px;
-    cursor:pointer;
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
   }
 }
 
 .event-form {
+
   .checkbox {
-    padding-left:7px;
+    padding-left: 7px;
+
     label {
-      padding-left:10px;
+      padding-left: 10px;
     }
   }
+
   .radio {
-    padding-left:1.5em;
+    padding-left: 1.5em;
   }
+
   .session-expand-button {
-    margin-right:1em;
-    margin:0.5em 1em 0.5em 0em;
+    margin-right: 1em;
+    margin: 0.5em 1em 0.5em 0em;
   }
+
   .session-name-container {
-    padding-left:0px;
+    padding-left: 0;
   }
 }
 
 .clear {
-  clear:both;
+  clear: both;
 }
 
 .dojo-list-dashboard {
   min-height: 350px;
-  margin:0 auto;
+  margin: 0 auto;
+
+  .widget {
+    margin-bottom: 55px;
+  }
 }
 
 .cd-text-heading1 {
-	color:black;
-	font-size:20px;
+	color: black;
+	font-size: 20px;
 }
 
 .cd-border-bottom {
-	padding-bottom:10px;
+	padding-bottom: 10px;
 }
 
 #cd-charter-text {
 	width: 75%;
   min-width: 275px;
   margin: auto;
+
   input {
-  	margin-bottom:15px;
+    margin-bottom: 15px;
   }
+
   ul {
     list-style-type: square;
+
     li {
       font-size: 15px;
       color: @cd-green;
+
       span {
         font-size: 13px;
         color: black;
@@ -223,98 +266,113 @@ label {
   }
 }
 
-
 .cd-create-dojo-container {
-  padding:0px;
+  padding: 0;
+
   .pre-game-warning {
     background-color: #FBF9E4;
     width: 550px;
-    padding:10px;
-    border:1px solid #FBEED5;
-    border-radius:5px;
-    margin-top:15px;
+    padding: 10px;
+    border: 1px solid #FBEED5;
+    border-radius: 5px;
+    margin-top: 15px;
+
     span {
-      font-size:15px;
-      font-weight:bold;
+      font-size: 15px;
+      font-weight: bold;
     }
+
     p {
-      padding-top:0px;
-      color:#C09853;
+      padding-top: 0;
+      color: #C09853;
     }
   }
+
   .setup-dojo-icons {
     position: relative;
     display: inline-block;
     transform: translateY(25%);
+
     .setup-dojo-info-btn {
-      font-size:2em;
-      margin-left:10px;
-      vertical-align:6%;
+      font-size: 2em;
+      margin-left: 10px;
+      vertical-align: 6%;
     }
+
     .setup-dojo-tao-btn {
       background: url("../img/cdtao.png") no-repeat right center;
-      margin-left:10px;
-      width:51px;
-      height:24px;
-      display:inline-block;
+      margin-left: 10px;
+      width: 51px;
+      height: 24px;
+      display: inline-block;
     }
   }
 }
 
-
 @media only screen and (max-width: 768px) {
+
   .fullscreen-only {
-    display: none!important;
+    display: none !important;
   }
 }
+
 @media only screen and (min-width: 768px) {
+
   .mobile-only {
-    display: none!important;
+    display: none !important;
   }
 }
 
 @media only screen and (min-width: 1200px) {
+
   .info-button-container {
     .col-xs-10 {
-      padding-left: 0px;
+      padding-left: 0;
     }
   }
 }
+
 @media only screen and (max-width: 1200px) {
+
   .infoCheckbox {
     padding-left: 35px;
   }
 }
 
 .cd-tabset {
+
   .nav.nav-tabs {
     color: #000000;
-    width:80%;
+    width: 80%;
     padding-left: 0;
     font-size: 18px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border:none;
+    border: none;
+
     li {
-      margin: 0 0px 0 0;
+      margin: 0;
+
       a, a:hover, a:focus {
         font-size: 16px;
         font-weight: normal;
         border: none;
         cursor: pointer;
         color: #ffffff;
-        padding-left:30px;
-        padding-right:30px;
+        padding-left: 30px;
+        padding-right: 30px;
         border-radius: 0;
         margin-right: 0;
       }
+
       &.active {
         border: none;
+
         a, a:hover, a:focus {
           color: #FFFFFF;
           font-size: 16px;
           font-weight: normal;
-          background-color:#46A0CA;
+          background-color: #46A0CA;
           box-shadow: none;
           margin-top: 0 !important;
           border-radius: 2px;
@@ -322,9 +380,12 @@ label {
       }
     }
   }
+
   .tab-content {
     padding-top: 20px;
+
     .tab-pane {
+
       &.active {
         border: none;
       }
@@ -333,14 +394,16 @@ label {
 }
 
 .pointer {
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.map-canvas { height: 360px; }
+.map-canvas {
+  height: 360px;
+}
 
 .dojo-detail {
-  padding:20px;
-  
+  padding: 20px;
+
   .alert a {
     color:@cd-green;
   }
@@ -353,43 +416,56 @@ label {
     max-width: 100%;
   }
 
-  cd-dojo-events-list {
+  .cd-dojo-events-list {
+
     .cd-dashboard {
       padding: 0;
     }
   }
+
   td {
-    border:none !important;
+    border: none !important;
+
     ul {
-      padding-left:15px;
+      padding-left: 15px;
     }
   }
+
   .dojo-detail-sidebar {
     position: relative;
     float: right;
     left: 20px;
+
     .widget {
+      margin-bottom: 55px;
+
       .widget-block {
-        margin-top:20px;
+        margin-top: 20px;
       }
+
       form {
-        display: inline-block!important;
+        display: inline-block !important;
         width: 100%;
       }
+
       .contact {
         overflow: auto
       }
+
       .join-dropdown {
+
         .ui-select-toggle,
         .ui-select-search,
         .ui-select-choices-row-inner {
           line-height: 31px;
           height: 45px;
         }
+
         .ui-select-choices-row-inner {
           line-height: 38px;
         }
       }
+
       .need-mentors-notice {
         margin-bottom: 20px;
       }
@@ -405,31 +481,40 @@ label {
 }
 
 .events-display {
+
   tbody {
+
     tr.event-info-row {
-      cursor:pointer;
+      cursor: pointer;
     }
+
     td {
-      padding:10px;
+      padding: 10px;
     }
   }
+
   .events-body {
-    padding:15px;
-    border-bottom:2px solid #ccc;
+    padding: 15px;
+    border-bottom: 2px solid #ccc;
+
     h4 {
       color:@cd-body-color-3;
-      font-weight:bold;
+      font-weight: bold;
     }
+
     img {
-      max-width:100%;
+      max-width: 100%;
     }
   }
+
   .events-sessions {
-    padding-top:10px;
+    padding-top: 10px;
   }
+
   .events-session-table {
-    border-top:2px solid #ccc;
+    border-top: 2px solid #ccc;
   }
+
   .three-column {
     -webkit-column-count: 3;
     -moz-column-count: 3;
@@ -438,26 +523,31 @@ label {
     -moz-column-gap: 20px;
     column-gap: 20px;
     column-rule-color: #ccc;
-    column-rule-style:solid;
+    column-rule-style: solid;
     column-rule-width: 1px;
     text-align: justify;
   }
+
   .dates {
-    padding-bottom:15px;
+    padding-bottom: 15px;
   }
+
   .location {
-    border-right:2px solid #ccc;
-    padding-left:0px;
+    border-right: 2px solid #ccc;
+    padding-left: 0;
+
     h3 {
-      margin-top:0px;
+      margin-top: 0;
     }
   }
 }
 
 .event-form {
+
   .form-inline {
+
     .checkbox {
-      padding-left:10px;
+      padding-left: 10px;
     }
   }
 }
@@ -466,7 +556,7 @@ label {
   width: 10%;
 
   .checkbox{
-    margin-top:-10px;
+    margin-top: -10px;
   }
 }
 
@@ -506,14 +596,17 @@ label {
 }
 
 .cd-badges-dashboard {
+
   .nav-tabs.nav-justified>.active>a {
     color: @cd-orange;
     border: 1px solid @cd-orange;
     border-bottom-color: @cd-white;
   }
+
   input.has-error {
     border: 1px solid @cd-red;
   }
+
   label.validationMessage {
     color: @cd-red;
     margin-left: 10px;
@@ -521,63 +614,80 @@ label {
 }
 
 .user-registration, .cd-dojo-main, .cd-charter {
+
   .cd-page-title {
-    margin: 20px 0px;
+    margin: 20px 0;
   }
+
   .cd-page-header {
-    margin: 20px 0px;
+    margin: 20px 0;
   }
+
   .cd-page-intro {
-    margin: 20px 0px;
+    margin: 20px 0;
   }
+
   .cd-section-header {
-    margin: 30px 0px;
+    margin: 30px 0;
     font-size: 16px;
   }
+
   .cd-input-row {
-    margin: 20px 0px;
+    margin: 20px 0;
+
     .cd-form-label1 {
-      text-align:right;
+      text-align: right;
       padding-top: 5px;
+
       &.with-info-btn {
+
         .cd-info-btn {
-          display:inline-block;
+          display: inline-block;
           padding-left: 10px;
           float: none;
-          text-decoration:none;
+          text-decoration: none;
           color: inherit;
         }
       }
+
       &.with-checkbox {
         padding-top: 8px;
       }
     }
   }
+
   .register-tooltip {
-    font-size:30px;
-    margin-top:3px;
-    cursor:pointer;
+    font-size: 30px;
+    margin-top: 3px;
+    cursor: pointer;
   }
+
   .cd-btn-row {
-    margin: 30px 0px;
+    margin: 30px 0;
   }
+
   .dob-picker {
     padding-right: 15px;
     padding-left: 15px;
   }
+
   .form-group {
-    margin: 0px;
+    margin: 0;
   }
+
   textarea {
-    margin: 0px;
+    margin: 0;
   }
+
   .google-map {
-    margin-top:15px;
+    margin-top: 15px;
   }
 
   .cd-checkbox {
+
     &.checkbox.has-error {
-      margin-top: 0px;
+      margin-top: 0;
+
       label.validationMessage {
         margin-left: -25px;
         margin-bottom: 10px;
@@ -585,97 +695,118 @@ label {
         display: block;
       }
     }
+
     label.cd-checkbox-label1{
-      padding-bottom:32px;
+      padding-bottom: 32px;
     }
+
     label.cd-checkbox-label2{
-      padding-bottom:5px;
+      padding-bottom: 5px;
       /* font-size:14 - needed to keep label text correctly aligned with checkbox */
       font-size: 14px;
     }
+
     div.cd-checkbox-title{
       font-size: 15px;
     }
+
     a:link, a:visited {
       color: @cd-green;
       text-decoration: none;
     }
+
     a:hover, a:focus, a:active {
       color: @cd-orange;
       text-decoration: none;
     }
   }
+
   .cd-wizard-submit {
     margin-top: 30px;
-    float:right;
+    float: right;
   }
+
   label.validationMessage {
     text-align: left;
     width: 100%;
     color: @cd-red;
   }
-  #createChampionForm {
-  }
-  #charterForm {
-  }
+
   #setup-dojo-form {
+
     .steps-indicator {
       margin: 90px 0 0 0;
       height: 30px;
       position: relative;
+
       li:first-child {
         pointer-events: none;
       }
     }
+
     .steps-indicator.steps-4:before {
       left: 0%;
       right: 0%;
     }
+
     .steps-indicator li.done a:before {
       background-color: @cd-green;
     }
+
     .steps-indicator li.current a:before {
       background-color: @cd-light-blue;
     }
+
     .start-dojo-wizard-step {
-      margin-bottom:30px;
+      margin-bottom: 30px;
     }
+
     .subItemsList {
-        list-style-type: square;
-        li {
-          font-size: 15px;
-          color: @cd-green;
-          span {
-            font-size: 13px;
-            color: black;
-          }
+      list-style-type: square;
+
+      li {
+        font-size: 15px;
+        color: @cd-green;
+
+        span {
+          font-size: 13px;
+          color: black;
         }
+      }
     }
   }
+
   #createDojoForm {
+
     .cd-private-msg {
       color: @cd-light-gray;
-      padding-left: 0px;
+      padding-left: 0;
     }
   }
+
   #user-registration-form {
+
     label.validationMessage {
       text-align: left;
       width: auto;
     }
+
     .cd-wizard-submit {
-      margin-top: 0px;
-      float:left;
+      margin-top: 0;
+      float: left;
     }
   }
 }
 
 .cd-dojo-main {
+
   .cd-input-row {
-    margin: 20px 0px 35px;
+    margin: 20px 0 35px;
   }
+
   .cd-checkbox {
     margin-bottom: 0;
+
     .cd-checkbox-input {
       margin-top: 15px;
     }
@@ -683,22 +814,27 @@ label {
 }
 
 .user-registration{
+
   .cd-checkbox {
     margin-bottom: 10px;
   }
 }
 
 .charter-sign {
+
   legend {
     border-bottom: 0;
   }
+
   legend::after {
     display: none;
   }
 }
 
 #manageDojos {
+
   .manage-table-checkbox {
+
     label {
       padding-bottom: 17px;
     }
@@ -706,6 +842,7 @@ label {
 }
 
 #requestToJoinDojo {
+
   label.validationMessage {
     text-align: left;
     width: 100%;
@@ -715,8 +852,7 @@ label {
 
 .cd-grid-table {
   font-size: 13px;
-
-  margin-bottom: 0px;
+  margin-bottom: 0;
 
   tbody>tr>td {
     vertical-align: middle;
@@ -733,8 +869,8 @@ label {
 }
 
 .gm-style-iw {
-        left: 26px !important;
-      }
+  left: 26px !important;
+}
 
 .green-text {
   color: #00FF00;
@@ -745,14 +881,17 @@ label {
 }
 
 .sb-date-select {
+
   .sb-date-select-day {
-    margin-right:10px;
+    margin-right: 10px;
   }
+
   .sb-date-select-month {
-    margin-right:10px;
+    margin-right: 10px;
   }
+
   .sb-date-select-year {
-    margin-right:10px;
+    margin-right: 10px;
   }
 }
 
@@ -793,7 +932,7 @@ div.status-wrapper {
 }
 
 legend {
-  font-size:16px;
+  font-size: 16px;
 }
 
 .viewPrereqVal {
@@ -816,7 +955,7 @@ div.badge-container {
   width: 150px;
   height: 150px;
   margin: 25px;
-  margin-top: 0px;
+  margin-top: 0;
   display: inline-block;
   text-align: center;
   float: left;
@@ -838,85 +977,138 @@ img.badge-thumbnail {
 html body .cd-dashboard .cd-color-1 {
   background-color: @cd-body-color-1;
 }
+
 html body .cd-dashboard .cd-color-2 {
   background-color: @cd-body-color-2;
 }
+
 html body .cd-dashboard .cd-color-3 {
   background-color: @cd-body-color-3;
 }
+
 html body .cd-dashboard .cd-color-4 {
   background-color: @cd-body-color-4;
 }
+
 html body .cd-dashboard .cd-color-5 {
   background-color: @cd-body-color-5;
 }
+
 html body .cd-dashboard .cd-color-6 {
   background-color: @cd-body-color-6;
 }
+
 .cd-color-1-underline {
-  legend { border-color: @cd-body-color-1!important; }
-  legend::after { background-color: @cd-body-color-1!important; }
+
+  legend {
+    border-color: @cd-body-color-1 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-1 !important;
+  }
 }
+
 .cd-color-2-underline {
-  legend { border-color: @cd-body-color-2!important; }
-  legend::after { background-color: @cd-body-color-2!important; }
+
+  legend {
+    border-color: @cd-body-color-2 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-2 !important;
+  }
 }
+
 .cd-color-3-underline {
-  legend { border-color: @cd-body-color-3!important; }
-  legend::after { background-color: @cd-body-color-3!important; }
+
+  legend {
+    border-color: @cd-body-color-3 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-3 !important;
+  }
 }
+
 .cd-color-4-underline {
-  legend { border-color: @cd-body-color-4!important; }
-  legend::after { background-color: @cd-body-color-4!important; }
+
+  legend {
+    border-color: @cd-body-color-4 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-4 !important;
+  }
 }
+
 .cd-color-5-underline {
-  legend { border-color: @cd-body-color-5!important; }
-  legend::after { background-color: @cd-body-color-5!important; }
+
+  legend {
+    border-color: @cd-body-color-5 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-5 !important;
+  }
 }
+
 .cd-color-6-underline {
-  legend { border-color: @cd-body-color-6!important; }
-  legend::after { background-color: @cd-body-color-6!important; }
+
+  legend {
+    border-color: @cd-body-color-6 !important;
+  }
+
+  legend::after {
+    background-color: @cd-body-color-6 !important;
+  }
 }
 
 .legend-color-1-border{
-  border-color: @cd-body-color-1!important;
+  border-color: @cd-body-color-1 !important;
+
   &::after{
-    background-color: @cd-body-color-1!important;
+    background-color: @cd-body-color-1 !important;
   }
 }
 
 .legend-color-2-border{
-  border-color: @cd-body-color-2!important;
+  border-color: @cd-body-color-2 !important;
+
   &::after{
-    background-color: @cd-body-color-2!important;
+    background-color: @cd-body-color-2 !important;
   }
 }
 
 .legend-color-3-border{
-  border-color: @cd-body-color-3!important;
+  border-color: @cd-body-color-3 !important;
+
   &::after{
-    background-color: @cd-body-color-3!important;
+    background-color: @cd-body-color-3 !important;
   }
 }
 
 .legend-color-4-border{
-  border-color: @cd-body-color-4!important;
+  border-color: @cd-body-color-4 !important;
+
   &::after{
-    background-color: @cd-body-color-4!important;
+    background-color: @cd-body-color-4 !important;
   }
 }
 
 .legend-color-5-border{
-  border-color: @cd-body-color-5!important;
+  border-color: @cd-body-color-5 !important;
+
   &::after{
-    background-color: @cd-body-color-5!important;
+    background-color: @cd-body-color-5 !important;
   }
 }
 
 .legend-color-6-border{
-  border-color: @cd-body-color-6!important;
+  border-color: @cd-body-color-6 !important;
+
   &::after{
-    background-color: @cd-body-color-6!important;
+    background-color: @cd-body-color-6 !important;
   }
 }
 
@@ -931,6 +1123,7 @@ html body .cd-dashboard .cd-color-6 {
     margin-top: 20px;
     margin-bottom: 40px;
   }
+
   .panel-heading {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -942,19 +1135,24 @@ html body .cd-dashboard .cd-color-6 {
       width: 85%;
     }
   }
+
   .panel-title {
     font-size: 20px;
     color: @cd-white;
   }
+
   label {
     font-size: 16px;
   }
+
   .panel-collapse {
     margin: 20px;
   }
+
   .validationMessage {
     margin-left: -25px;
   }
+
   .btn-left {
     margin-top: 30px;
     float: left;
@@ -1002,7 +1200,7 @@ html body .cd-dashboard .cd-color-6 {
 
 .preview-badge-container {
   width: 300px;
-  margin-top:25px;
+  margin-top: 25px;
 }
 
 .preview-badge-thumbnail {
@@ -1016,12 +1214,13 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 .preview-badge-description {
-  font-size:16px;
+  font-size: 16px;
   text-align: center;
   margin-top: 20px;
 }
 
 #generalInfoForm {
+
   .validationMessage {
     text-align: left;
   }
@@ -1034,10 +1233,12 @@ html body .cd-dashboard .cd-color-6 {
 }
 
 .dojofind-tabset {
+
   .nav-tabs {
     margin-bottom: 20px;
   }
 }
+
 .dojofind-tab-heading {
   font-size: 16px;
   font-weight: bold;
@@ -1058,14 +1259,14 @@ html body .cd-dashboard .cd-color-6 {
 
 .table-general-info > tbody > tr > td {
   border-top: 0;
-  font-size:12px;
+  font-size: 12px;
 }
 
 div.dojo-container {
   width: 150px;
   height: 150px;
   margin: 25px;
-  margin-top: 0px;
+  margin-top: 0;
   margin-left: 40px;
   display: inline-block;
   text-align: center;
@@ -1076,10 +1277,11 @@ img.dojo-thumbnail {
 }
 
 .panel-heading-with-buttons {
-  overflow:hidden;
+  overflow: hidden;
+
   .panel-heading-button {
     float: right;
-    margin-left:10px;
+    margin-left: 10px;
   }
 }
 
@@ -1108,7 +1310,7 @@ img.dojo-thumbnail {
     background-color: @cd-blue;
 
     span{
-      color:white !important;
+      color: white !important;
     }
   }
 }
@@ -1119,27 +1321,30 @@ img.dojo-thumbnail {
 }
 
 #ninjaProfileBlock {
+
   .popover {
-    width:45%;
+    width: 45%;
     max-width: 100%;
   }
+
   button {
     margin-left: 10px;
   }
+
   .col-xs-12 {
     padding: 0;
   }
 }
 
 .form-inline .form-control {
-  width:100% !important;
+  width: 100% !important;
 }
 
 .intl-tel-input {
   display: inherit;
 
   .flag-dropdown {
-    height: 34px; 
+    height: 34px;
   }
 }
 
@@ -1151,7 +1356,7 @@ img.dojo-thumbnail {
 
 span.tooltipfocus {
   outline: none;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .badge-information {
@@ -1176,7 +1381,8 @@ span.tooltipfocus {
 }
 
 .dojos-members-list{
-  min-width:100px;
+  min-width: 100px;
+
   .dropdown-menu {
     position: relative;
   }
@@ -1226,7 +1432,7 @@ span.tooltipfocus {
 
 span.applications-banner {
   text-align: center;
-  margin: 20px 0px;
+  margin: 20px 0;
 }
 
 .margin-top-1-percent {
