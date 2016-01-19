@@ -2604,6 +2604,9 @@ msgstr "Public events are viewable by anyone visiting your Dojo listing. Private
 msgid "Use Dojos listing address. This will pre-fill the address fields."
 msgstr "Use Dojos listing address. This will pre-fill the address fields."
 
+msgid "Use Dojo listing address"
+msgstr "Use Dojo listing address"
+
 msgid "Invite Dojo Members"
 msgstr "Invite Dojo Members"
 
