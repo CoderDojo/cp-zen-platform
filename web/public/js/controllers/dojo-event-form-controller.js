@@ -543,8 +543,8 @@
           delete dojo.place.toponymName;
         }
         $scope.eventInfo.country = dojo.country;
-        if(!$scope.eventInfo.city) $scope.eventInfo.city = dojo.place;
-        if(!$scope.eventInfo.address) $scope.eventInfo.address = dojo.address1;
+        $scope.eventInfo.dojoCity = dojo.place;
+        $scope.eventInfo.dojoAddress = dojo.address1;
 
         var position = [];
         if(dojo.coordinates) {
