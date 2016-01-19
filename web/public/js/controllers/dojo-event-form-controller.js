@@ -244,6 +244,17 @@
       }
     };
 
+    $scope.prefillDojoAddress = function() {
+      if($scope.eventInfo.prefillAddress) {
+        $scope.eventInfo.city = $scope.eventInfo.dojoCity;
+        $scope.eventInfo.address = $scope.eventInfo.dojoAddress;
+        return;
+      }
+
+      $scope.eventInfo.city = null;
+      $scope.eventInfo.address = null;
+    };
+
     $scope.eventInfo.invites = [];
 
     $scope.cancel = function($event) {
