@@ -167,7 +167,11 @@
         if(!$localStorage[currentUser.data.id]) $localStorage[currentUser.data.id] = {};
         if(!$localStorage[currentUser.data.id][dojoId]) $localStorage[currentUser.data.id][dojoId] = {};
         if(!$localStorage[currentUser.data.id][dojoId].eventForm) $localStorage[currentUser.data.id][dojoId].eventForm = {};
-        if(value) $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
+
+        // what if the actual value is 'false' or 'null'
+        if(value === false || value === null || value) {
+          $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
+        }
       }
     };
 
