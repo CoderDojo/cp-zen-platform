@@ -252,11 +252,17 @@
       if($scope.eventInfo.prefillAddress) {
         $scope.eventInfo.city = $scope.eventInfo.dojoCity;
         $scope.eventInfo.address = $scope.eventInfo.dojoAddress;
+
+        $scope.updateLocalStorage('city', $scope.eventInfo.dojoCity);
+        $scope.updateLocalStorage('address', $scope.eventInfo.dojoAddress);
+        $scope.updateLocalStorage('prefillAddress', true);
         return;
       }
 
-      $scope.eventInfo.city = null;
-      $scope.eventInfo.address = null;
+      $scope.updateLocalStorage('prefillAddress', false);
+      $scope.eventInfo.city = $scope.eventInfo.address = null;
+      $scope.updateLocalStorage('city', null);
+      $scope.updateLocalStorage('address', null);
     };
 
     $scope.eventInfo.invites = [];
