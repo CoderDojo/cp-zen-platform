@@ -684,6 +684,7 @@
           if(localStorage.name) $scope.eventInfo.name = localStorage.name;
           if(localStorage.description) $scope.eventInfo.description = localStorage.description;
           if(localStorage.public) $scope.eventInfo.public = localStorage.public;
+          if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
           if(localStorage.type) $scope.eventInfo.type = localStorage.type;
           if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
           if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
