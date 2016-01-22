@@ -288,8 +288,10 @@
           $scope.approved[application.id] = true;
           $scope.sessionStats[application.sessionId].attending++;
           $scope.eventStats.totalAttending++;
-          $scope.sessionStats[application.sessionId].waitlist--;
-          $scope.eventStats.totalWaitlist--;
+          if($scope.sessionStats[application.sessionId].waitlist > 0) {
+            $scope.sessionStats[application.sessionId].waitlist--;
+          }
+          if($scope.eventStats.totalWaitlist > 0) $scope.eventStats.totalWaitlist--;
           successMessage = application.name + ' ' + $translate.instant('has been successfully approved');
         } else {
           //Disapprove user
