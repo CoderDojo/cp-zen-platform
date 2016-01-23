@@ -15,6 +15,7 @@ function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
     'dojo-list': '/dashboard/dojo-list',
     'manage-dojos': '/dashboard/manage-dojos',
     'stats':'/dashboard/stats',
+    'charter-page': '/dashboard/charter',
 
     //master states
     'home': '/',
