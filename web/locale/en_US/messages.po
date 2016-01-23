@@ -2029,9 +2029,6 @@ msgstr "Search by dojo name"
 msgid "Search by dojo email"
 msgstr "Search by dojo email"
 
-msgid "Go!"
-msgstr "Go!"
-
 msgid "Alias"
 msgstr "Alias"
 
@@ -2915,3 +2912,6 @@ msgid "We welcome any queries, comments or requests you may have regarding this 
 "
 msgstr "We welcome any queries, comments or requests you may have regarding this Privacy Statement.  Please contact us in writing at Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, IRELAND or by e-mail at info@coderdojo.com.
 "
+
+msgid "Find nearby Dojos"
+msgstr "Find nearby Dojos"
