@@ -1996,8 +1996,8 @@ msgstr "Partner Enquiries:"
 msgid "About"
 msgstr "About"
 
-msgid "Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"
-msgstr "Supported by the CoderDojo Foundation, CHY  20812. For more information about the CoderDojo Foundation, click"
+msgid "Supported by"
+msgstr "Supported by"
 
 msgid "here"
 msgstr "here"
