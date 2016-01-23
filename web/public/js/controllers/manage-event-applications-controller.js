@@ -23,7 +23,7 @@
       });
     });
 
-    $scope.sort = undefined;
+    $scope.sort = {};
     $scope.pagination = {itemsPerPage: 10};
     $scope.newApplicant = {};
     $scope.eventStats = {totalAttending:0, totalWaitlist: 0};
@@ -31,7 +31,9 @@
     $scope.filter = {};
     $scope.guest = {};
     $scope.guest.partialName = '';
+    $scope.predicate = 'created';
     $scope.reverse = -1;
+
 
     $scope.attendanceDropdownSettings = {
       idProp: 'date',
@@ -162,9 +164,20 @@
       $scope.loadPage(sessionId);
     };
 
-    $scope.orderApplications = function(sessionId){
+    $scope.orderApplications = function(sessionId, predicate){
       $scope.reverse = $scope.reverse === -1 ? 1 : -1;
+      $scope.predicate = predicate;
       $scope.filterApplications(sessionId);
+    }
+
+    $scope.setOrderingClasses = function(predicate){
+      var classes = '';
+      if(predicate !== $scope.predicate){
+        classes = 'fa fa-minus';
+      }else{
+        classes = $scope.reverse === 1? 'glyphicon glyphicon-chevron-up':'glyphicon glyphicon-chevron-down';
+      }
+      return classes;
     }
 
     $scope.pageChanged = function (sessionId) {
@@ -175,7 +188,8 @@
       usSpinnerService.spin('session-applications-spinner');
       $scope.approved = {};
       $scope.checkedIn = {};
-      $scope.sort = {name: $scope.reverse};
+      $scope.sort = {};
+      $scope.sort[$scope.predicate]= $scope.reverse;
 
       var query = _.omit({
         sessionId: sessionId,

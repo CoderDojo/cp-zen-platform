@@ -32,11 +32,9 @@
       <span class="col-md-2"><b>{@i18n key="Session capacity"/}:</b> {{ sessionStats[session.id].capacity }}</span>
       <span class="col-md-2"><b>{@i18n key="Attending"/}:</b> {{ sessionStats[session.id].attending }}</span>
       <span class="col-md-2"><b>{@i18n key="Waitlist"/}:</b> {{ sessionStats[session.id].waitlist }}</span>
-      <span class="col-md-2">
+      <span class="col-md-2 text-center">
         <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
       </span>
-      <span class="col-md-1">
-              </span>
     </div>
     <div ng-if="applications.length === 0">
       <span class="col-md-12 applications-banner">{@i18n key="There are no outstanding applications for this Session"/}</span>
@@ -45,12 +43,18 @@
       <table class="table cd-grid-table">
         <thead>
           <tr>
-            <th>{@i18n key="Attendee name"/} <button type="button" class="btn btn-xs" ng-click="orderApplications(session.id)">
-                                                <i ng-class="reverse == -1?'fa fa-chevron-up': 'fa fa-chevron-down'" ></i>
-                                              </button></th>
+            <th class="pointer" ng-click="orderApplications(session.id, 'name')">
+              <span class="pointer sortable glyphicon "
+                ng-class="setOrderingClasses('name')">&nbsp;</span>
+                {@i18n key="Attendee name"/}
+            </th>
             <th>{@i18n key="Ticket name"/}</th>
             <th>{@i18n key="Ticket type"/}</th>
-            <th>{@i18n key="Application Date"/}</th>
+            <th class="pointer" ng-click="orderApplications(session.id, 'created')">
+              <span class="sortable "
+                ng-class="setOrderingClasses('created')">&nbsp;</span>
+                {@i18n key="Application Date"/}
+            </th>
             <th>{@i18n key="Age"/}</th>
             <th>{@i18n key="Parents/guardians"/}</th>
             <th>{@i18n key="Notes"/}</th>
