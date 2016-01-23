@@ -19,6 +19,16 @@
       <span tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
     </div>
 
+    <div class="form-group form-inline" ng-show="!eventInfo.status">
+      <div class="checkbox">
+        <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()">
+        <label for="prefill-address">
+          {@i18n key="Use Dojo listing address"/}
+        </label>
+      </div>
+      <span tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
+    </div>
+
     <div class="form-group">
       <label for="description">{@i18n key="Description"/}*:</label>
         <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" ng-if="editorOptions" ckeditor="editorOptions" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}" ng-change="updateLocalStorage('description',eventInfo.description)"></textarea>

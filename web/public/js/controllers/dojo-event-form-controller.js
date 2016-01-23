@@ -108,6 +108,7 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
+    $scope.eventInfo.prefillAddress = false;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
@@ -166,7 +167,11 @@
         if(!$localStorage[currentUser.data.id]) $localStorage[currentUser.data.id] = {};
         if(!$localStorage[currentUser.data.id][dojoId]) $localStorage[currentUser.data.id][dojoId] = {};
         if(!$localStorage[currentUser.data.id][dojoId].eventForm) $localStorage[currentUser.data.id][dojoId].eventForm = {};
-        if(value) $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
+
+        // what if the actual value is 'false' or 'null'
+        if(value === false || value === null || value) {
+          $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
+        }
       }
     };
 
@@ -241,6 +246,23 @@
           console.error(err);
         });
       }
+    };
+
+    $scope.prefillDojoAddress = function() {
+      if($scope.eventInfo.prefillAddress) {
+        $scope.eventInfo.city = $scope.eventInfo.dojoCity;
+        $scope.eventInfo.address = $scope.eventInfo.dojoAddress;
+
+        $scope.updateLocalStorage('city', $scope.eventInfo.dojoCity);
+        $scope.updateLocalStorage('address', $scope.eventInfo.dojoAddress);
+        $scope.updateLocalStorage('prefillAddress', true);
+        return;
+      }
+
+      $scope.updateLocalStorage('prefillAddress', false);
+      $scope.eventInfo.city = $scope.eventInfo.address = null;
+      $scope.updateLocalStorage('city', null);
+      $scope.updateLocalStorage('address', null);
     };
 
     $scope.eventInfo.invites = [];
@@ -531,8 +553,8 @@
           delete dojo.place.toponymName;
         }
         $scope.eventInfo.country = dojo.country;
-        if(!$scope.eventInfo.city) $scope.eventInfo.city = dojo.place;
-        if(!$scope.eventInfo.address) $scope.eventInfo.address = dojo.address1;
+        $scope.eventInfo.dojoCity = dojo.place;
+        $scope.eventInfo.dojoAddress = dojo.address1;
 
         var position = [];
         if(dojo.coordinates) {
@@ -662,6 +684,7 @@
           if(localStorage.name) $scope.eventInfo.name = localStorage.name;
           if(localStorage.description) $scope.eventInfo.description = localStorage.description;
           if(localStorage.public) $scope.eventInfo.public = localStorage.public;
+          if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
           if(localStorage.type) $scope.eventInfo.type = localStorage.type;
           if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
           if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
