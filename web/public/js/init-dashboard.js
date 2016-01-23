@@ -449,7 +449,7 @@
     })
     .run(function ($rootScope, $state, $cookieStore, $translate, $document, $filter, verifyProfileComplete, alertService, $location) {
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        var publicStates = ['dojo-list', 'badges-dashboard', 'start-dojo'];
+        var publicStates = ['dojo-detail', 'dojo-list', 'badges-dashboard', 'start-dojo'];
         if(!$cookieStore.get('verifyProfileComplete') && !_.contains(publicStates, toState.name)) {
           if(toState.name !== 'edit-user-profile') {
             verifyProfileComplete().then(function (verifyProfileResult) {
