@@ -322,6 +322,7 @@
       function updateDeleted() {
         application.updateAction = 'delete';
         application.deleted = true;
+        successMessage = $translate.instant('Ticket for') + ' ' + application.name + ' ' + $translate.instant('has been successfully deleted');
       }
 
       application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
@@ -333,7 +334,7 @@
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
         if(_.isEmpty(applications)) return;
-        if (applications[0].status === 'approved' || applications[0].attended) {
+        if ($scope.showAlertBanner(applications[0], successMessage)) {
           AlertBanner.publish({
             type: 'info',
             message: successMessage,
@@ -346,6 +347,10 @@
       }, function (err) {
         if(err) alertService.showError($translate.instant('Error updating application') + '<br>' + JSON.stringify(err));
       });
+    }
+
+    $scope.showAlertBanner = function (application, successMessage) {
+      return (application.status === 'approved' || application.attended || application.deleted) && successMessage !== undefined;
     }
 
     $scope.userIsApproved = function (application) {
