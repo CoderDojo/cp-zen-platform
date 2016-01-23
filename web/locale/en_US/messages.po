@@ -1591,6 +1591,9 @@ msgstr "Award a badge..."
 msgid "Select a user type to invite..."
 msgstr "Select a user type to invite..."
 
+msgid "Search by name"
+msgstr "Search by name"
+
 msgid "Are you sure you want to award this badge to the below Ninja?"
 msgstr "Are you sure you want to award this badge to the below Ninja?"
 

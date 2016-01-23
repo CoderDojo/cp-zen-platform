@@ -1,3 +1,5 @@
+
+
 <div class="row">
   <div class="margin-bottom-15 col-md-8">
     <span class="col-md-4"><b>{@i18n key="Total event capacity"/}:</b> {{ event.capacity }}</span>
@@ -17,6 +19,9 @@
     </accordion-heading>
     <div class="margin-bottom-15 row">
       <div class="col-md-2">
+        <input type="text" ng-model="guest.partialName" placeholder="{@i18n key="Search by name"/}" class="form-control" ng-change="filterName(session.id)" />
+      </div>
+      <div class="col-md-2">
         <ui-select name="ticketTypeFilter" ng-model="filter.ticketType" ng-change="filterApplications(session.id)" >
           <ui-select-match allow-clear="true" placeholder="{@i18n key="Select ticket type..."/}">{{ $select.selected.title }}</ui-select-match>
             <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes | filter: { label: $select.search }">
@@ -30,12 +35,8 @@
       <span class="col-md-2">
         <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
       </span>
-      <span class="col-md-2">
-        <button type="button" ng-if="event.sessions.length > 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}
-        </button>
-        <button type="button" ng-if="event.sessions.length === 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Event"/}
-        </button>
-      </span>
+      <span class="col-md-1">
+              </span>
     </div>
     <div ng-if="applications.length === 0">
       <span class="col-md-12 applications-banner">{@i18n key="There are no outstanding applications for this Session"/}</span>
@@ -44,7 +45,9 @@
       <table class="table cd-grid-table">
         <thead>
           <tr>
-            <th>{@i18n key="Attendee name"/}</th>
+            <th>{@i18n key="Attendee name"/} <button type="button" class="btn btn-xs" ng-click="orderApplications(session.id)">
+                                                <i ng-class="reverse == -1?'fa fa-chevron-up': 'fa fa-chevron-down'" ></i>
+                                              </button></th>
             <th>{@i18n key="Ticket name"/}</th>
             <th>{@i18n key="Ticket type"/}</th>
             <th>{@i18n key="Application Date"/}</th>
@@ -105,6 +108,12 @@
             next-text="{@i18n key="Next" /}"
             last-text="{@i18n key="Last" /}"
             boundary-links="true"></pagination>
+        </span>
+        <span class="col-md-2 pull-right">
+          <button type="button" ng-if="event.sessions.length > 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Session"/}
+          </button>
+          <button type="button" ng-if="event.sessions.length === 1" ng-disabled="session.status === 'cancelled'" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Cancelling this session will cancel the event as this is the only session. All of the attendees will be notified by email. Are you sure you want to continue?"/}" ng-bootbox-confirm-action="cancelSession(session)">{@i18n key="Cancel Event"/}
+          </button>
         </span>
       </div>
     </div>
