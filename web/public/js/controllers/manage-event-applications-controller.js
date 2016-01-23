@@ -23,12 +23,17 @@
       });
     });
 
-    $scope.sort = undefined;
+    $scope.sort = {};
     $scope.pagination = {itemsPerPage: 10};
     $scope.newApplicant = {};
     $scope.eventStats = {totalAttending:0, totalWaitlist: 0};
     $scope.sessionStats = {};
     $scope.filter = {};
+    $scope.guest = {};
+    $scope.guest.partialName = '';
+    $scope.predicate = 'created';
+    $scope.reverse = -1;
+
 
     $scope.attendanceDropdownSettings = {
       idProp: 'date',
@@ -159,6 +164,22 @@
       $scope.loadPage(sessionId);
     };
 
+    $scope.orderApplications = function(sessionId, predicate){
+      $scope.reverse = $scope.reverse === -1 ? 1 : -1;
+      $scope.predicate = predicate;
+      $scope.filterApplications(sessionId);
+    }
+
+    $scope.setOrderingClasses = function(predicate){
+      var classes = '';
+      if(predicate !== $scope.predicate){
+        classes = 'fa fa-minus';
+      }else{
+        classes = $scope.reverse === 1? 'glyphicon glyphicon-chevron-up':'glyphicon glyphicon-chevron-down';
+      }
+      return classes;
+    }
+
     $scope.pageChanged = function (sessionId) {
       $scope.loadPage(sessionId, false);
     }
@@ -167,7 +188,8 @@
       usSpinnerService.spin('session-applications-spinner');
       $scope.approved = {};
       $scope.checkedIn = {};
-      $scope.sort = $scope.sort ? $scope.sort: {created: -1};
+      $scope.sort = {};
+      $scope.sort[$scope.predicate]= $scope.reverse;
 
       var query = _.omit({
         sessionId: sessionId,
@@ -176,6 +198,7 @@
         return value === '' || _.isNull(value) || _.isUndefined(value)
       });
 
+      //Front-end filtering
       if(!_.isEmpty($scope.filter)) {
         _.extend(query, $scope.filter);
       }
@@ -211,6 +234,7 @@
 
       _.extend(query, meta);
 
+      //Request
       cdEventsService.searchApplications(query, function (result) {
         async.each(result, function (application, cb) {
           if (application.status === 'approved') {
@@ -252,6 +276,7 @@
             alertService.showError($translate.instant('Error loading parents') + ': ' + err);
             cb();
           });
+
         }, function (err) {
           usSpinnerService.stop('session-applications-spinner');
           $scope.applications = result;
@@ -262,6 +287,21 @@
           alertService.showError($translate.instant('Error loading applications'));
         }
       });
+    }
+
+    $scope.filterName = function(sessionId){
+      var mustReload = false;
+      //we unset the filter
+      if($scope.guest.partialName.length < 3 || angular.isUndefined($scope.guest.partialName)){
+        if( $scope.filter.name ) mustReload = true; // we had a filter and we remove it
+        $scope.filter.name = void 0;
+      }else {
+        $scope.filter.name = $scope.guest.partialName;
+        mustReload = true;
+      }
+      if( mustReload ){
+          $scope.filterApplications(sessionId);
+      }
     }
 
     $scope.updateApplication = function (application, updateType) {
@@ -279,6 +319,7 @@
           updateDeleted();
           break;
       }
+
 
       function updateStatus() {
         if (!$scope.userIsApproved(application)) {
