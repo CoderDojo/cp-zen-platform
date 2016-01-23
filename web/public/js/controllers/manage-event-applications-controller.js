@@ -322,7 +322,7 @@
       function updateDeleted() {
         application.updateAction = 'delete';
         application.deleted = true;
-        successMessage = $translate.instant('Ticket for') + ' ' + application.name + ' ' + $translate.instant('has been successfully deleted');
+        successMessage = $translate.instant('Ticket for the following application has been successfully deleted:') + ' ' + application.name;
       }
 
       application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);

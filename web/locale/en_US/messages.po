@@ -1966,6 +1966,9 @@ msgstr "Email address not found."
 msgid "has been successfully approved"
 msgstr "has been successfully approved"
 
+msgid "Ticket for the following application has been successfully deleted:"
+msgstr "Ticket for the following application has been successfully deleted:"
+
 msgid "captcha error"
 msgstr "captcha error"
 
