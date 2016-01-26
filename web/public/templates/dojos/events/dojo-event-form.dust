@@ -105,6 +105,7 @@
                id="date" />
         <span class="input-group-btn">
           <button type="button"
+                  ng-disabled="pastEvent"
                   class="btn btn-default"
                   ng-click="toggleDatepicker($event, 'datePicker1')">
             <i class="glyphicon glyphicon-calendar"></i>
