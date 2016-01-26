@@ -138,7 +138,7 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" ng-show="!pastEvent">
       <div class="col-sm-4 col-md-4 col-lg-4">
         <label for="start-time">{@i18n key="Start time"/}:</label>
         <timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
