@@ -128,12 +128,6 @@
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
 
-    //description editor
-    $scope.editorOptions = {
-      language: 'en',
-      uiColor: '#000000',
-      height: '200px'
-    };
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
@@ -636,6 +630,14 @@
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = isEventInPast(_.last(event.dates));
+
+        //description editor
+        $scope.editorOptions = {
+          readOnly: $scope.pastEvent,
+          language: 'en',
+          uiColor: '#000000',
+          height: '200px'
+        };
 
         done(null, event);
       }, done);
