@@ -247,7 +247,7 @@
         <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} </h5>
       </div>
       <div class="margin-top-point-5-em">
-        <button type="button" ng-click="addSession()" class="btn btn-success session-expand-button">
+        <button type="button" ng-disabled="pastEvent" ng-click="addSession()" class="btn btn-success session-expand-button">
           <span class="glyphicon glyphicon-plus"></span>
         </button>
         <label>{@i18n key="Add session/room"/}</label>
