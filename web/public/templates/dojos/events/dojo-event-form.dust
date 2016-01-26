@@ -201,7 +201,7 @@
           </div>
           <div class="form-group clear">
             <label for="sessionDescription">{@i18n key="Session description"/}</label>
-            <textarea class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
+            <textarea ng-readonly="pastEvent" class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
           </div>
 
           <table id="dojoEventsTable" class="table cd-grid-table table-striped">
