@@ -11,7 +11,7 @@
 
     <div class="form-group form-inline">
       <div class="checkbox">
-        <input type="checkbox" id="is-public" ng-model="eventInfo.public">
+        <input ng-disabled="pastEvent" type="checkbox" id="is-public" ng-model="eventInfo.public">
         <label for="is-public">
           {@i18n key="is public"/}
         </label>
