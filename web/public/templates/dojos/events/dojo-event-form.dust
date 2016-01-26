@@ -26,7 +26,7 @@
 
     <div class="form-group form-inline">
       <div class="checkbox">
-        <input type="checkbox" ng-model="eventInfo.ticketApproval" id="ticketApproval">
+        <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.ticketApproval" id="ticketApproval">
         <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
       </div>
       <span tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" class="info-button fa fa-info-circle event-tooltip"></span>
