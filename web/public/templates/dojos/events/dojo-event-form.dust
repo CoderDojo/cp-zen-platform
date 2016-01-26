@@ -196,7 +196,7 @@
               <label for="session-{{ sessionIndex }}-sessionName form-inline">{@i18n key="Session/room name"/}*:</label>
             </div>
             <div class="col-lg-9 session-name-container">
-              <input type="text" required required-message="'{@i18n key="Name is empty"/}'" name="session-{{ sessionIndex }}-sessionName" class="form-control session-name margin-top-point-5-em" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+              <input ng-readonly="pastEvent" type="text" required required-message="'{@i18n key="Name is empty"/}'" name="session-{{ sessionIndex }}-sessionName" class="form-control session-name margin-top-point-5-em" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
             </div>
           </div>
           <div class="form-group clear">
