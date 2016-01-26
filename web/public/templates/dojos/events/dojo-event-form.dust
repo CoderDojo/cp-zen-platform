@@ -152,6 +152,7 @@
     <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
       <label for="city">{@i18n key="City"/}*:</label>
       <ui-select ng-model="eventInfo.city"
+                 ng-disabled="pastEvent"
                  name="city"
                  id="city"
                  ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null"
