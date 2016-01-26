@@ -172,7 +172,7 @@
 
     <div class="form-group">
       <label for="address">{@i18n key="Address"/}*:</label>
-      <textarea rows="5" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+      <textarea rows="5" ng-readonly="pastEvent" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
     </div>
 
     <div class="form-group" ng-if="googleMaps">
