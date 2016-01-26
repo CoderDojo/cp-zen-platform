@@ -54,14 +54,14 @@
       <div class="row" ng-if="eventInfo.type === 'recurring'">
         <div class="col-lg-4">
           <div class="radio">
-            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
+            <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
             <label for="weekly">
               {@i18n key="Weekly"/}
             </label>
           </div>
 
           <div class="radio">
-            <input type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
+            <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
             <label for="biweekly">
               {@i18n key="Every two weeks"/}
             </label>
