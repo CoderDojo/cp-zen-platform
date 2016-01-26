@@ -36,14 +36,14 @@
       <label>{@i18n key="Type"/}:</label>
 
       <div class="radio">
-        <input type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="recurring" value="recurring">
+        <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="recurring" value="recurring">
         <label for="recurring">
           {@i18n key="Recurring"/}
         </label>
       </div>
 
       <div class="radio">
-        <input type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="one-off" value="one-off">
+        <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="one-off" value="one-off">
         <label for="one-off">
           {@i18n key="One off"/}
         </label>
