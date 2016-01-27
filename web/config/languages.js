@@ -18,5 +18,10 @@ module.exports = [
     "name": "German",
     "code": "de_DE",
     "country": "Deutsche"
+  },
+  {
+    "name": "Dutch",
+    "code": "nl_NL",
+    "country": "Nederlands"
   }
 ];
