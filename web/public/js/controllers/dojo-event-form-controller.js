@@ -128,6 +128,7 @@
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
+    $scope.hasAccess = true;
 
 
     $scope.$watch('eventInfo.date', function (date) {
