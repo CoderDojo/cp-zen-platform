@@ -58,7 +58,7 @@
                   </tr>
                   <tr ng-if="dojo.twitter">
                     <td><b>{@i18n key="Twitter"/}</b></td>
-                    <td><a target="_blank" href="http://twitter.com/{{ dojo.twitter }}">{{ dojo.twitter }}</a></td>
+                    <td><a target="_blank" href="http://twitter.com/{{ dojo.twitter }}"><i class="fa fa-twitter fa-2x col-lg-3"></i>{{ dojo.twitter }}</a></td>
                   </tr>
                   <tr ng-if="dojo.website">
                     <td><b>{@i18n key="Website"/}</b></td>
