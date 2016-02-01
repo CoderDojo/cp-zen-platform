@@ -6,45 +6,35 @@
     usSpinnerService.spin('session-spinner');
     
     var applicationId = $stateParams.applicationId;
-    var ticketId = $stateParams.eventId;
+    var eventId = $stateParams.eventId;
+    
     currentUser = currentUser.data;
-
     if (_.isEmpty(currentUser)) {
         return $state.go('error-404-no-headers');
     }
 
     var application = {
       id: applicationId,
-      ticketId: ticketId,
-      updateAction: 'delete',
-      deleted: true
+      eventId: eventId
     };
-    
-    $scope.showAlertBanner = function (application, successMessage) {
-      return (application.status === 'approved' || application.attended || application.deleted) && successMessage !== undefined;
-    }
 
-    cdEventsService.bulkApplyApplications([application], function (applications) {   
+    cdEventsService.removeApplicant(application, function (response) {   
         
-        var successMessage = $translate.instant('Thank you for confirming you will not be in attendance; your ticket has now been cancelled.');
+        var successMessage = $translate.instant('Thank you for confirming you will not be in attendance; your application has now been cancelled.');
              
-        if (_.isEmpty(applications)) {
-            return;
-        }
-        if ($scope.showAlertBanner(applications[0], successMessage)) {
+        if (response.ok === true) {
           alertService.showAlert(successMessage);
-        } else if (applications.ok === true) {
-            alertService.showAlert(successMessage);
         } else {
-            alertService.showAlert($translate.instant(applications.why));
+            alertService.showAlert($translate.instant(response.why));
         }
         $state.go('home');
         
     }, function (err) {
         if (err) {
             console.error(err);
-            alertService.showError($translate.instant('Invalid ticket cancellation link.'));
+            alertService.showError($translate.instant('Invalid application cancellation link.'));
         }
+        $state.go('home');
     })
   }
 
