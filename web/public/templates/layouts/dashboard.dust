@@ -165,6 +165,7 @@
     <script src="/js/controllers/session-modal-controller.js"></script>
     <script src="/js/controllers/session-invite-modal-controller.js"></script>
     <script src="/js/controllers/accept-session-invite-controller.js"></script>
+    <script src="/js/controllers/cancel-session-invite-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>

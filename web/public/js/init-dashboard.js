@@ -401,6 +401,14 @@
           resolve: {
             currentUser: resolves.loggedInUser
           }
+        })
+        .state('cancel-session-invite', {
+            url:'/dashboard/cancel_session_invitation/:eventId/:applicationId',
+            controller:'cancel-session-invite-controller',
+            templateUrl:'/dojos/template/events/cancel-session-invite',
+            resolve: {
+                currentUser: resolves.loggedInUser
+            }
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise('/404');
