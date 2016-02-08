@@ -2649,8 +2649,17 @@ msgstr "Invitation successfully validated. Your ticket has been sent to your ema
 msgid "Invalid session invitation."
 msgstr "Invalid session invitation."
 
-msgid "Only the invited user can accept this invitation."
-msgstr "Only the invited user can accept this invitation."
+msgid "Cancelling Ticket"
+msgstr "Cancelling Ticket"
+
+msgid "Ticket is being cancelled..."
+msgstr "Ticket is being cancelled..."
+
+msgid "Thank you for confirming you will not be in attendance; your application has now been cancelled."
+msgstr "Thank you for confirming you will not be in attendance; your application has now been cancelled."
+
+msgid "Invalid application cancellation link."
+msgstr "Invalid application cancellation link."
 
 msgid "No invites found"
 msgstr "No invites found"
