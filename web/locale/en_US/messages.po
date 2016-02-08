@@ -237,8 +237,8 @@ msgstr "CoderDojo Foundation reserves the right, at our discretion, to change, m
 msgid "SECTION 5 - USER CONTENT LICENSE GRANT; REPRESENTATIONS AND WARRANTIES"
 msgstr "SECTION 5 - USER CONTENT LICENSE GRANT; REPRESENTATIONS AND WARRANTIES"
 
-msgid "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\|) (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
-msgstr "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\|) (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
+msgid "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\") (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
+msgstr "CoderDojo Foundation may permit (a) the posting and/or publishing by You and other Users of notes, questions, comments, ratings, reviews, images, videos and other audio-visual materials and communications (collectively, \"User Postings\") and (b) the posting, creation, or modification by You and other users of computer code (including source code and object code) (\"User Code\") (User Postings and User Code, collectively, \"User Content\"). You understand that whether or not such User Content is published, CoderDojo Foundation does not guarantee any confidentiality with respect to any submissions."
 
 msgid "License Grant to CoderDojo Foundation."
 msgstr "License Grant to CoderDojo Foundation."
@@ -292,7 +292,7 @@ msgid "SECTION 8 - INDEMNIFICATION"
 msgstr "SECTION 8 - INDEMNIFICATION"
 
 msgid "You agree to indemnify The CoderDojo Foundation, and all their affiliates, employees, faculty members, fellows, students, agents, representatives, third party service providers, and members of their governing boards (all of which are \"CoderDojo Entities\"), and to defend and hold each of them harmless, from any and all claims and liabilities (including attorneys' fees) arising out of or related to your breach of the Terms of Service or your use of Zen."
-msgstr "You agree to indemnify The CoderDojo Foundation, and all their affiliates, employees, faculty members, fellows, students, agents, representatives, third party service providers, and members of their governing boards (all of which are "CoderDojo Entities"), and to defend and hold each of them harmless, from any and all claims and liabilities (including attorneys' fees) arising out of or related to your breach of the Terms of Service or your use of Zen."
+msgstr "You agree to indemnify The CoderDojo Foundation, and all their affiliates, employees, faculty members, fellows, students, agents, representatives, third party service providers, and members of their governing boards (all of which are \"CoderDojo Entities\"), and to defend and hold each of them harmless, from any and all claims and liabilities (including attorneys' fees) arising out of or related to your breach of the Terms of Service or your use of Zen."
 
 msgid "SECTION 9 - DISCLAIMER OF WARRANTY"
 msgstr "SECTION 9 - DISCLAIMER OF WARRANTY"
@@ -1768,8 +1768,8 @@ msgstr "Create a plan for what content you would like to cover with your mentors
 msgid "See <a href='http://kata.coderdojo.com/wiki/Learning_Resource' target='_blank'>Kata</a>, the CoderDojo community wiki for more information on learning resources"
 msgstr "See <a href='http://kata.coderdojo.com/wiki/Learning_Resource' target='_blank'>Kata</a>, the CoderDojo community wiki for more information on learning resources"
 
-msgid "Many Dojos start with Scratch or dive straight into HTML. See Kata, the CoderDojo community wiki for <a href="http://kata.coderdojo.com/wiki/Learning_Resource">more information on learning resources.</a>"
-msgstr "Many Dojos start with Scratch or dive straight into HTML. See Kata, the CoderDojo community wiki for <a href="http://kata.coderdojo.com/wiki/Learning_Resource">more information on learning resources.</a>"
+msgid "Many Dojos start with Scratch or dive straight into HTML. See Kata, the CoderDojo community wiki for <a href=\"http://kata.coderdojo.com/wiki/Learning_Resource\">more information on learning resources.</a>"
+msgstr "Many Dojos start with Scratch or dive straight into HTML. See Kata, the CoderDojo community wiki for <a href=\"http://kata.coderdojo.com/wiki/Learning_Resource\">more information on learning resources.</a>"
 
 msgid "Setup ticketing and registration for your Dojo"
 msgstr "Setup ticketing and registration for your Dojo"
