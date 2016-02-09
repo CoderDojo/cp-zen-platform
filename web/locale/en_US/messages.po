@@ -2177,8 +2177,8 @@ msgstr "Online Safety: Ensure all mentors have read the Online Safety 101 docume
 msgid "Please see Online Safety 101 for Mentors <a href='https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing' target='_blank'>here</a> and Online Safety 101 for Ninjas <a href='https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing' target='_blank'>here</a>"
 msgstr "Please see Online Safety 101 for Mentors <a href='https://docs.google.com/document/d/1DDwpYKBltkJXH15pr_p2Ig0_9l4Uq2TdE7zG_9QsdjI/edit?usp=sharing' target='_blank'>here</a> and Online Safety 101 for Ninjas <a href='https://docs.google.com/document/d/1BIhYjhOiTxeFdbBRVouBZQRWLQD_v-gCkCIYtDcP2CM/edit?usp=sharing' target='_blank'>here</a>"
 
-msgid "Data protection is increasingly becoming an important topic, <a href="http://kata.coderdojo.com/wiki/Data_Protection_101">here are some simple tips to make sure you stay informed</a>."
-msgstr "Data protection is increasingly becoming an important topic, <a href="http://kata.coderdojo.com/wiki/Data_Protection_101">here are some simple tips to make sure you stay informed</a>."
+msgid "Data protection is increasingly becoming an important topic, <a href=\"http://kata.coderdojo.com/wiki/Data_Protection_101\">here are some simple tips to make sure you stay informed</a>."
+msgstr "Data protection is increasingly becoming an important topic, <a href=\"http://kata.coderdojo.com/wiki/Data_Protection_101\">here are some simple tips to make sure you stay informed</a>."
 
 msgid "You can see more information on Data Protection <a href='https://docs.google.com/document/d/18XQNYEMQrBDJoR0Gt1ryC6CzxDEd_k41p4PEeKYtIxE/edit?usp=sharing' target='_blank'>here</a>"
 msgstr "You can see more information on Data Protection <a href='https://docs.google.com/document/d/18XQNYEMQrBDJoR0Gt1ryC6CzxDEd_k41p4PEeKYtIxE/edit?usp=sharing' target='_blank'>here</a>"
@@ -2929,10 +2929,8 @@ msgstr "Any changes to this Privacy Statement will be posted on the Website so y
 msgid "Contact"
 msgstr "Contact"
 
-msgid "We welcome any queries, comments or requests you may have regarding this Privacy Statement.  Please contact us in writing at Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, IRELAND or by e-mail at info@coderdojo.com.
-"
-msgstr "We welcome any queries, comments or requests you may have regarding this Privacy Statement.  Please contact us in writing at Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, IRELAND or by e-mail at info@coderdojo.com.
-"
+msgid "We welcome any queries, comments or requests you may have regarding this Privacy Statement.  Please contact us in writing at Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, IRELAND or by e-mail at info@coderdojo.com."
+msgstr "We welcome any queries, comments or requests you may have regarding this Privacy Statement.  Please contact us in writing at Dogpatch Labs, The CHQ Building, Custom House Quay, Dublin 1, IRELAND or by e-mail at info@coderdojo.com."
 
 msgid "Find nearby Dojos"
 msgstr "Find nearby Dojos"
