@@ -1807,8 +1807,8 @@ msgstr "Please describe how you have background checked your team."
 msgid "Set up background checking for all volunteers."
 msgstr "Set up background checking for all volunteers."
 
-msgid "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on <a href="http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking">Kata</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
-msgstr "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on <a href="http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking">Kata</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
+msgid "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on <a href=\"http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking\">Kata</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
+msgstr "The requirements for background checking are specific to the legislation in your jurisdiction. You can see some guidelines on Child Protection and Background Checking on <a href=\"http://kata.coderdojo.com/wiki/Child_Protection_and_Background_Checking\">Kata</a>. Please also ensure you check your local legislation. Please comment below describing the situation in your local Dojo."
 
 msgid "A suitable venue has tables, chairs, heat and ideally, wifi! Canteens, community centers, libraries, schools and corporate offices all make great venues. Venues should not replicate a teacher led classroom environment, instead rearrange the desks and chairs, put youths together and ensure there is space for mentors to walk around and assist the young people. Dojos should only be hosted in public spaces, you cannot host your Dojo in a private residence!"
 msgstr "A suitable venue has tables, chairs, heat and ideally, wifi! Canteens, community centers, libraries, schools and corporate offices all make great venues. Venues should not replicate a teacher led classroom environment, instead rearrange the desks and chairs, put youths together and ensure there is space for mentors to walk around and assist the young people. Dojos should only be hosted in public spaces, you cannot host your Dojo in a private residence!"
@@ -2075,8 +2075,8 @@ msgstr "Optionally describe how this was achieved."
 msgid "Our Dojo abides by data protection regulations in our jurisdiction"
 msgstr "Our Dojo abides by data protection regulations in our jurisdiction"
 
-msgid "Inclusion is a fundamental principle of CoderDojo, <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Statement">read our short inclusion statement and confirm you and your mentors are in agreement.</a>"
-msgstr "Inclusion is a fundamental principle of CoderDojo, <a href="http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Statement">read our short inclusion statement and confirm you and your mentors are in agreement.</a>"
+msgid "Inclusion is a fundamental principle of CoderDojo, <a href=\"http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Statement\">read our short inclusion statement and confirm you and your mentors are in agreement.</a>"
+msgstr "Inclusion is a fundamental principle of CoderDojo, <a href=\"http://kata.coderdojo.com/wiki/Guiding_Principles_and_Philosophies#Inclusion_Statement\">read our short inclusion statement and confirm you and your mentors are in agreement.</a>"
 
 msgid "Our Dojo will work to engage with and improve the greater CoderDojo movement by:"
 msgstr "Our Dojo will work to engage with and improve the greater CoderDojo movement by:"
