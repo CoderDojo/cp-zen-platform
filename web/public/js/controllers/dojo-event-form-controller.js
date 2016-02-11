@@ -3,6 +3,7 @@
   'use strict';
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
+    endDateTime = moment.utc(endDateTime).add(1, 'days');
     var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
@@ -11,8 +12,8 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
-      var startDateTimeOffset = moment(startDateTime.toISOString()).utcOffset();
-      var endDateTimeOffset = moment(endDateTime.toISOString()).utcOffset();
+      var startDateTimeOffset = moment().utcOffset();
+      var endDateTimeOffset = moment().utcOffset();
       date.startTime = moment.utc(startDateTime).add(startDateTimeOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
       var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
@@ -91,7 +92,7 @@
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
-	  $scope.ticketTypes = ticketTypes.data || [];
+    $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
 
     _.each($scope.ticketTypes, function (ticketType, index) {
@@ -638,9 +639,18 @@
         event.startTime = moment(startTime).subtract(startDateUtcOffset, 'minutes').toDate();
         event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
-        event.date = new Date(startTime);
-        var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
-        event.toDate = new Date(lastEventOcurrance);
+        
+        //manually cconstruct date object to keep local
+        var startYear = startTime.slice(0,4);
+        var startMonth = startTime.slice(5,7);
+        var startDay = startTime.slice(8,10);
+
+        var endYear = endTime.slice(0,4);
+        var endMonth = endTime.slice(5,7);
+        var endDay = endTime.slice(8,10);
+
+        event.date = new Date(startYear, startMonth-1, startDay);
+        event.toDate = new Date(endYear, endMonth-1, endDay);
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
