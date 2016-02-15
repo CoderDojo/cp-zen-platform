@@ -38,6 +38,10 @@
                 <td class="col-xs-2"><b>{@i18n key="Notes"/}</b></td>
                 <td><div ng-bind-html="dojo.notes"></div></td>
               </tr>
+              <tr ng if="dojo.taoVerified === 1" class="fullscreen-only">
+                <td class="col-xs-2"><b>{@i18n key="Tao verified"/}</b></td>
+                <td class="text-center"><img src="/img/taobadge.png" alt="{@i18n key="Tao verified"/}" /></td>
+              </tr>                
             </tbody>
           </table>
           <div class="mobile-only row" style="margin-left: 40px">
