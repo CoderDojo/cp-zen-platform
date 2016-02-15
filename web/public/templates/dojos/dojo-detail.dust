@@ -8,7 +8,6 @@
             <b ng-bind-html="dojo.name"></b>
             <span ng-if="dojo.verified === 1" class="verification-icon"><span class="cd-success-text glyphicon glyphicon-ok-sign"></span> {@i18n key=" Verified!"/}</span>
             <span ng-if="dojo.verified != 1" class="verification-icon"><span class="cd-warning-text glyphicon glyphicon-remove-sign"></span> {@i18n key=" Not verified"/}</span>
-            <span ng-if="dojo.taoVerified === 1" class="verification-icon"><span class="cd-success-text glyphicon glyphicon-certificate"></span> {@i18n key=" Tao verified"/}</span>
           </legend>
           <div class="alert alert-danger" ng-if="dojo.private">
             <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
@@ -39,6 +38,10 @@
                 <td class="col-xs-2"><b>{@i18n key="Notes"/}</b></td>
                 <td><div ng-bind-html="dojo.notes"></div></td>
               </tr>
+              <tr ng if="dojo.taoVerified === 1" class="fullscreen-only">
+                <td class="col-xs-2"><b>{@i18n key="Tao verified"/}</b></td>
+                <td class="text-center"><img src="/img/taobadge.png" alt="{@i18n key="Tao verified"/}" /></td>
+              </tr>                
             </tbody>
           </table>
           <div class="mobile-only row" style="margin-left: 40px">
