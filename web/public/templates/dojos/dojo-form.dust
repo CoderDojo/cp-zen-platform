@@ -114,18 +114,19 @@
       </div>
       <div class="row cd-input-row" ng-show="isCDFAdmin">
         <div class="form-group">
-          <label class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Tao verified"/}</label>
-          <div class="col-lg-8">
-            <div class="checkbox cd-checkbox checkbox-primary">
-              <input type="checkbox"
-                    ng-model="dojo.taoVerified"
-                    id="taoVerifiedCheckbox"
-                    ng-true-value="1"
-                    ng-false-value="0"
-                    ng-change="updateLocalStorage('dojoListing','taoVerified', dojo.taoVerified)"
-                  >
-                  <label class="cd-checkbox-label1" for="taoVerified"></label>
-            </div>
+            <label class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Tao verified"/}</label>
+            <div class="col-lg-8">
+              <div class="checkbox cd-checkbox checkbox-primary">
+                <input type="checkbox"
+                      ng-model="dojo.taoVerified"
+                      id="taoVerifiedCheckbox"
+                      ng-true-value="1"
+                      ng-false-value="0"
+                      ng-change="updateLocalStorage('dojoListing','taoVerified', dojo.taoVerified)"
+                    >
+                    <label class="cd-checkbox-label1" for="taoVerified"></label>
+              </div>
+          </div>
         </div>
       </div>
       <div class="row cd-input-row" ng-enter="noop()">
