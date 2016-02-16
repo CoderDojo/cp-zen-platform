@@ -2,7 +2,7 @@
   'use strict';
   /*global $*/
 
-  function manageDojoEventsCtrl($scope, $stateParams, $state, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService) {
+  function manageDojoEventsCtrl($scope, $stateParams, $state, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService, usSpinnerService) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
@@ -76,6 +76,7 @@
       $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.events = [];
       cdEventsService.search({dojoId: $scope.dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+        usSpinnerService.stop('manage-dojo-events-spinner');
         var events = [];
         _.each(result, function (event) {
           if(event.type === 'recurring') {
@@ -126,6 +127,7 @@
           alertService.showError($translate.instant('Error loading events'));
         });
       }, function (err) {
+        usSpinnerService.stop('manage-dojo-events-spinner');
         console.error(err);
         alertService.showError($translate.instant('Error loading events'));
       });
@@ -160,7 +162,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', 'usSpinnerService', manageDojoEventsCtrl]);
 
 })();
 
