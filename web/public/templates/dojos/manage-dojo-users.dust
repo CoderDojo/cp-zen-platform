@@ -1,6 +1,6 @@
 <div ncy-breadcrumb></div>
 <legend>{@i18n key="Manage Dojo Users"/}</legend>
-<span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+<span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
 <div class="row">
 	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm">
   	<div class="form-group">
