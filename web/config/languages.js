@@ -5,14 +5,9 @@ module.exports = [
     "country": "United States"
   },
   {
-    "name": "Italian",
-    "code": "it_IT",
-    "country": "Italia"
-  },
-  {
-    "name": "Portuguese",
-    "code": "pt_PT",
-    "country": "Portuguesa"
+    "name": "Dutch",
+    "code": "nl_NL",
+    "country": "Nederlands"
   },
   {
     "name": "German",
@@ -20,8 +15,28 @@ module.exports = [
     "country": "Deutsche"
   },
   {
-    "name": "Dutch",
-    "code": "nl_NL",
-    "country": "Nederlands"
-  }
+    "name": "Italian",
+    "code": "it_IT",
+    "country": "Italia"
+  },
+  {
+    "name": "Polish",
+    "code": "pl_PL",
+    "country": "Polski"
+  },
+  {
+    "name": "Portuguese",
+    "code": "pt_PT",
+    "country": "Portuguesa"
+  },
+  {
+    "name": "Spanish",
+    "code": "es_ES",
+    "country": "Español"
+  },
+  {
+    "name": "Turkish",
+    "code": "tr_TR",
+    "country": "Türk"
+  },
 ];
