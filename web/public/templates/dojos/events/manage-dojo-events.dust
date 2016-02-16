@@ -1,3 +1,5 @@
+<span spinner-key="manage-dojo-events-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+
 <div ng-if="isTicketingAdmin">
   <div ncy-breadcrumb></div>
   <div ui-view>
