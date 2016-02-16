@@ -69,11 +69,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       getUsersDojosLink,
       loadDojoUsers,
       retrieveEventsAttended,
-      getTotalCount
+      getTotalCount,
+      usSpinnerService.stop('manage-dojo-users-spinner');
     ], function (err) {
       if(err) console.error(err);
       users = _.compact(users);
       $scope.users = users;
+      usSpinnerService.stop('manage-dojo-users-spinner');
     });
 
     function getInviteUserTypes(done) {
