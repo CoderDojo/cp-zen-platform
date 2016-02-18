@@ -82,7 +82,7 @@
       if(event.type === 'recurring') {
         event.formattedDates = [];
         _.each(event.dates, function (eventDate) {
-          event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YY'));
+          event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
         });
 
         event.day = moment(startDate).format('dddd');
