@@ -2703,6 +2703,9 @@ msgstr "suggest features"
 msgid "to help make it better."
 msgstr "to help make it better."
 
+msgid "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
+msgstr "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
+
 msgid "You don't have any Dojos - click here to start a dojo!"
 msgstr "You don't have any Dojos - click here to start a dojo!"
 
