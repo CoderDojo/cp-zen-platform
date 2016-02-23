@@ -2495,6 +2495,9 @@ msgstr "has been cancelled"
 msgid "Your ticket request for"
 msgstr "Your ticket request for"
 
+msgid "A ticket request for"
+msgstr "A ticket request for"
+
 msgid "has been received"
 msgstr "has been received"
 

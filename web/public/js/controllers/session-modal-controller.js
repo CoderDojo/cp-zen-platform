@@ -74,6 +74,7 @@
       });
       applications[0].emailSubject = {
         'request':  $translate.instant('Your ticket request for'),
+        'requestDojo':  $translate.instant('A ticket request for'),
         'received': $translate.instant('has been received'),
         'approved': $translate.instant('has been approved')
       };
