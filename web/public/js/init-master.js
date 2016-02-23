@@ -182,7 +182,7 @@
         .state("dojo-list-index", {
           url: "/dojo-list-index",
           templateUrl: '/dojos/template/dojo-list-index',
-          controller: 'dojo-list-index-controller',
+          controller: 'dojo-events-list-controller',
           params: {
             pageTitle: 'Dojo List'
           }
