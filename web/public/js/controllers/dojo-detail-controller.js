@@ -142,7 +142,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
         }
       }, function () {
         //Not logged in
-        $state.go('register-account', {referer:$location.url()});
+        $state.go('register-account', {referer:$location.url(), userType: userType});
       });
     }
   };

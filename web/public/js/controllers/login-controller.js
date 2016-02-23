@@ -33,6 +33,10 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.initUserTypes = _.filter(userTypes, function(userType){
       return userType.name !== 'attendee-u13';
     });
+    var userType = _.find($scope.initUserTypes, function(type) { return type.name===$state.params.userType});
+    if (userType) {
+      $scope.registerUser = {initUserType: userType};
+    }
   });
 
   $scope.isVisible = function(view) {
