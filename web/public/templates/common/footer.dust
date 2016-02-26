@@ -16,6 +16,7 @@
                 <p class="cdf-info">{@i18n key="Supported by"/} <a href="https://coderdojo.com/about/coderdojo-foundation" title="More information about the CoderDojo Foundation">the CoderDojo Foundation</a>, CHY  20812.</p>
                 <p class="cp-info">{@i18n key="Zen is an open source platform, you can"/} <a href="https://github.com/coderdojo/community-platform" title="Zen community-platform repository">{@i18n key="contribute code"/}</a> {@i18n key="and"/} <a href="https://github.com/CoderDojo/community-platform/issues?q=is%3Aopen+is%3Aissue+label%3Abacklog" title="Zen community-platform issue tracker">{@i18n key="suggest features"/}</a> {@i18n key="to help make it better."/}
                 </p>
+                <p class="cp-info">{@i18n key="You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."/}</p>
             </div>
         </span>
     </span>
