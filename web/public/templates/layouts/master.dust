@@ -144,7 +144,6 @@
     <script src="/js/controllers/login-controller.js"></script>
 
     <script src="/js/controllers/header-controller.js"></script>
-    <script src="/js/controllers/dojo-list-index-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
     <script src="/js/controllers/terms-and-conditions-controller.js"></script>
