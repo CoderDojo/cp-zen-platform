@@ -47,8 +47,8 @@
       </div>
       <div ng-hide="(myDojos | filter:criteria).length">
         <p>{@i18n key="You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."/}</p>
-        <p><a ng-href="/dashboard/dojo-list">{@i18n key="Alternatively, click here to search for Dojos"/}</a></p>
-        <p><a ng-href="/dashboard/start-dojo">{@i18n key="Or, click here to start a dojo."/}</a></p>
+        <p><a ui-sref="dojo-list">{@i18n key="Alternatively, click here to search for Dojos"/}</a></p>
+        <p><a ui-sref="start-dojo">{@i18n key="Or, click here to start a dojo."/}</a></p>
       </div>
     </div>
   </div>
