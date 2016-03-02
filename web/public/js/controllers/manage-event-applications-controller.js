@@ -64,10 +64,10 @@
 
     /* ninja is defined as a key in many areas, keep it for backward compatibility */
     $scope.ticketTypes = [
-      {name: 'ninja', title: 'Youth' },
-      {name: 'parent-guardian', title: 'Parent/guardian'},
-      {name: 'mentor', title: 'Mentor'},
-      {name: 'other', title: 'Other'}
+      {name: 'ninja', title: $translate.instant('Youth')},
+      {name: 'parent-guardian', title: $translate.instant('Parent/guardian')},
+      {name: 'mentor', title: $translate.instant('Mentor')},
+      {name: 'other', title: $translate.instant('Other')}
     ];
 
     cdEventsService.getEvent(eventId, function (event) {
