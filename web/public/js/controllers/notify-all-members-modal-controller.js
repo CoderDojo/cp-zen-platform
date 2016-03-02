@@ -15,11 +15,11 @@
         return
       } else {
         var selectedEventId = $scope.selectedEvent.value.id
-        cdDojoService.notifyAllMembers({dojoId: dojoId, eventId: selectedEventId}, function (response) {
+        cdDojoService.notifyAllMembers({dojoId: dojoId, eventId: selectedEventId, emailSubject: $translate.instant('Tickets Now Available for')}, function (response) {
           usSpinnerService.stop('notify-all-members-spinner');
           $modalInstance.dismiss('success')
         }, function (err) {
-          usSpinnerService.spin('notify-all-members-spinner');
+          usSpinnerService.stop('notify-all-members-spinner');
           alertService.showError(
             $translate.instant('An error has occurred while notifying members') + ': <br /> ' +
             (err.error || JSON.stringify(err))

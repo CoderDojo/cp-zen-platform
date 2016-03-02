@@ -2955,3 +2955,6 @@ msgstr "Send notifications"
 
 msgid "You must choose an event"
 msgstr "You must choose an event"
+
+msgid "Tickets Now Available for"
+msgstr "Tickets Now Available for"
