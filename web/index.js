@@ -53,6 +53,16 @@ server.connection({
   }
 });
 
+
+if ('production' === env || 'staging' === env) {
+  server.ext('onRequest', function(request, reply) {
+    if (request.headers['x-forwarded-proto'] != 'https') {
+      return reply.redirect('https://' + request.headers.host + request.path);
+    }
+    reply.continue();
+  });
+}
+
 server.register(inert, function (err) {
   checkHapiPluginError('inert')(err);
 });
