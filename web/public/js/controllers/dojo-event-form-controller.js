@@ -93,7 +93,6 @@
     $scope.today = moment.utc().toDate();
 	  $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
-    $scope.ticketQuantityTooltip = '';
 
     _.each($scope.ticketTypes, function (ticketType, index) {
       ticketType.title = $translate.instant(ticketType.title);
