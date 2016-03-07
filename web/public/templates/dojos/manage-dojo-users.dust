@@ -21,9 +21,11 @@
     </div>
 
   </form>
-
-  <form id="filterUserForm" novalidate ng-submit="filterUsersByType(filter, this)" name="filterUserForm">
+  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm">
     <div class="form-group">
+      <div class="col-lg-3">
+        <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control" name="filterUserName" ng-model="filter.name" id="filterUserName">
+      </div>
       <div class="col-lg-3">
         <ui-select name="filterUserType" ng-model="filter.userType">
           <ui-select-match allow-clear="true" placeholder="{@i18n key="Filter Users by type..."/}">{{ $select.selected.title  }}</ui-select-match>
@@ -36,7 +38,6 @@
     </div>
 
   </form>
-
 	<div class="col-md-12 table-responsive">
     <table id="manageDojoUsers" class="table cd-grid-table">
       <thead>

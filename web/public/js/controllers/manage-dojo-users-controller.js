@@ -133,7 +133,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
 
     function loadDojoUsers(done) {
-      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort, userType: $scope.queryModel.userType}, function (response) {
+      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, 
+                                    skip$: loadPageData.skip, sort$: $scope.queryModel.sort, 
+                                    userType: $scope.queryModel.userType, name: $scope.queryModel.name}, function (response) {
         _.each(response, function (user) {
           var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
           user.types = thisUsersDojoLink.userTypes;
@@ -346,12 +348,18 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     });
   }
 
-  $scope.filterUsersByType = function (filter, context) {
+  $scope.filterUsers = function (filter, context) {
     if(filter.userType) {
       $scope.queryModel.userType = filter.userType.name;
     }
     else {
       delete $scope.queryModel.userType;
+    }
+    if(filter.name) {
+      $scope.queryModel.name = filter.name;
+    }
+    else {
+      delete $scope.queryModel.name;
     }
     $scope.loadPage(true);
   }
