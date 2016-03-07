@@ -71,7 +71,10 @@
     ];
 
     cdEventsService.getEvent(eventId, function (event) {
-      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id;
+      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id + '/guests';
+      event.waitingListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id + '/waiting';
+      event.fullListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id + '/all';
+
 
       var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
       var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();

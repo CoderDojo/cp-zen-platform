@@ -7,8 +7,17 @@
     <span class="col-md-4"><b>{@i18n key="Total waitlist"/}:</b> {{ eventStats.totalWaitlist }}</span>
   </div>
   <div class="col-md-3 pull-right">
-    <a ui-sref="edit-dojo-event({dojoId: dojoId, eventId: event.id})" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
-    <a ng-href="{{ event.guestListDownloadLink }}" target="_blank" class="btn btn-primary white-text export-event-btn">{@i18n key="Export Guest List"/}</a>
+      <a ui-sref="edit-dojo-event({dojoId: dojoId, eventId: event.id})" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {@i18n key="Export to CSV"/}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a ng-href="{{ event.guestListDownloadLink }}" target="_blank">{@i18n key="Export Guest List"/}</a></li>
+          <li><a ng-href="{{ event.waitingListDownloadLink }}" target="_blank">{@i18n key="Export Waiting List"/}</a></li>
+          <li><a ng-href="{{ event.fullListDownloadLink }}" target="_blank">{@i18n key="Export Full  List"/}</a></li>
+        </ul>
+      </div>
   </div>
 </div>
 <accordion close-others="true">
