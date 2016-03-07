@@ -16,6 +16,8 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.awardBadgeButtonModel = {};
   $scope.manageDojoUsersPageTitle = $translate.instant('Manage Dojo Users');
   $scope.invite = {};
+  $scope.filter = {};
+  $scope.filterUserTypes = [];
   $scope.queryModel = {};
   $scope.pagination = {itemsPerPage: 10};
 
@@ -66,6 +68,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
     async.series([
       getInviteUserTypes,
+      getFilterUserTypes,
       getUsersDojosLink,
       loadDojoUsers,
       retrieveEventsAttended,
@@ -115,6 +118,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       });
     }
 
+    function getFilterUserTypes(done) {
+      // TODO: Only allow filtering by types that are already in list? 
+      // Rather than showing all options all the time
+      $scope.filterUserTypes = angular.copy(initUserTypes.data);
+      return done();
+    }
+
     function getUsersDojosLink(done) {
       cdDojoService.getUsersDojos({dojoId:dojoId, deleted: 0, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip}, function (response) {
         usersDojosLink = response;
@@ -123,7 +133,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
 
     function loadDojoUsers(done) {
-      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort}, function (response) {
+      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort, userType: $scope.queryModel.userType}, function (response) {
         _.each(response, function (user) {
           var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
           user.types = thisUsersDojoLink.userTypes;
@@ -250,7 +260,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         return userType.title;
       })
       .value();
-
     return filteredUserTypes;
   }
 
@@ -335,6 +344,16 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       usSpinnerService.stop('manage-dojo-users-spinner');
       alertService.showError($translate.instant('Error sending invite') + ' ' + err);
     });
+  }
+
+  $scope.filterUsersByType = function (filter, context) {
+    if(filter.userType) {
+      $scope.queryModel.userType = filter.userType.name;
+    }
+    else {
+      delete $scope.queryModel.userType;
+    }
+    $scope.loadPage(true);
   }
 
   $scope.removeUser = function (user) {
