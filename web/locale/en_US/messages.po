@@ -2340,7 +2340,7 @@ msgid "Quantity"
 msgstr "Quantity"
 
 msgid "Please note that the capacity excludes tickets of the type other."
-msgtr "Please note that the capacity excludes tickets of the type other."
+msgstr "Please note that the capacity excludes tickets of the type other."
 
 msgid "e.g. Mentor, Laptops"
 msgstr "e.g. Mentor, Laptops"
