@@ -219,7 +219,7 @@
               <tr>
                 <th>{@i18n key="Ticket Name"/}</th>
                 <th>{@i18n key="Ticket Type"/} <span class="glyphicon glyphicon-info-sign" tooltip-html="ticketTypesTooltip"></span></th>
-                <th>{@i18n key="Ticket Quantity"/}</th>
+                <th>{@i18n key="Ticket Quantity"/} <span tooltip="{@i18n key="Please note that the capacity excludes tickets of the type other."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span></th>
                 <th></th>
               </tr>
             </thead>
