@@ -720,6 +720,15 @@ msgstr "This should be different to the personal email you signed up for an acco
 msgid "Times are empty"
 msgstr "Times are empty"
 
+msgid "Frequency"
+msgstr "Frequency"
+
+msgid "Select a frequency"
+msgstr "Select a frequency"
+
+msgid "Please enter the frequency in which your Dojo will run."
+msgstr "Please enter the frequency in which your Dojo will run."
+
 msgid "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 msgstr "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
 
