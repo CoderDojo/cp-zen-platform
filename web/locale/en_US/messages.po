@@ -729,8 +729,11 @@ msgstr "Select a frequency"
 msgid "Please enter the frequency in which your Dojo will run."
 msgstr "Please enter the frequency in which your Dojo will run."
 
-msgid "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
-msgstr "State whether it's every week or on a certain day (Eg. \"Every Friday, 5.30pm - 8pm\" or \"Saturday 25th, 12pm - 3pm\")"
+msgid "State the time and day in which your Dojo will run"
+msgstr "State the time and day in which your Dojo will run"
+
+msgid "Day and time is empty"
+msgstr "Day and time is empty"
 
 msgid "Select or search a country in the list..."
 msgstr "Select or search a country in the list..."
@@ -916,8 +919,8 @@ msgstr "Users"
 msgid "Listing"
 msgstr "Listing"
 
-msgid "Times"
-msgstr "Times"
+msgid "Day and time"
+msgstr "Day and time"
 
 msgid "Tao verified"
 msgstr "Tao verified"
@@ -2300,8 +2303,8 @@ msgstr "e.g. docklands.ie@coderdojo.com/docklandsdojo@gmail.com"
 msgid "e.g. Docklands, Dublin 1 @ CHQ Building"
 msgstr "e.g. Docklands, Dublin 1 @ CHQ Building"
 
-msgid "e.g. Saturdays, monthly, 9-11am"
-msgstr "e.g. Saturdays, monthly, 9-11am"
+msgid "e.g. Saturdays, 9-11am"
+msgstr "e.g. Saturdays, 9-11am"
 
 msgid "Badge Accepted!"
 msgstr "Badge Accepted!"
