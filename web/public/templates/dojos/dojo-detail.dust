@@ -18,7 +18,7 @@
           </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
-            <tr>
+              <tr ng-if="dojo.frequency != null">
                 <td class="col-xs-2"><b>{@i18n key="Frequency"/}</b></td>
                 <td>{{ dojo.frequency }}</td>
               </tr>
