@@ -723,11 +723,26 @@ msgstr "Times are empty"
 msgid "Frequency"
 msgstr "Frequency"
 
+msgid "Weekly"
+msgstr "Weekly"
+
+msgid "Bi-Weekly"
+msgstr "Bi-Weekly"
+
+msgid "Monthly"
+msgstr "Monthly"
+
+msgid "Other - See info below"
+msgstr "Other - See info below"
+
 msgid "Select a frequency"
 msgstr "Select a frequency"
 
 msgid "Please enter the frequency in which your Dojo will run."
 msgstr "Please enter the frequency in which your Dojo will run."
+
+msgid "Please only choose other if your Dojo runs more than once a week, or is not one of the three other options listed"
+msgstr "Please only choose other if your Dojo runs more than once a week, or is not one of the three other options listed"
 
 msgid "State the time and day in which your Dojo will run"
 msgstr "State the time and day in which your Dojo will run"

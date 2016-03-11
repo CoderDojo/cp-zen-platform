@@ -23,6 +23,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       $translate.instant('Weekly'),
       $translate.instant('Bi-Weekly'),
       $translate.instant('Monthly'),
+      $translate.instant('Other - See info below')
     ];
 
   $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');

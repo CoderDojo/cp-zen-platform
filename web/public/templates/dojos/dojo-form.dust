@@ -48,6 +48,7 @@
               </ui-select>
               <div class="cd-tooltip">
                 {@i18n key="Please enter the frequency in which your Dojo will run."/}
+                <span tooltip="{@i18n key="Please only choose other if your Dojo runs more than once a week, or is not one of the three other options listed."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span>
               </div>
             <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && createDojoForm.frequency.$error.required">{@i18n key="Select a frequency"/}</label>
             </div>

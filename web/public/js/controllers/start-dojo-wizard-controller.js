@@ -571,6 +571,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       $translate.instant('Weekly'),
       $translate.instant('Bi-Weekly'),
       $translate.instant('Monthly'),
+      $translate.instant('Other - See info below')
     ];
 
     $scope.hideIndicators = false;
