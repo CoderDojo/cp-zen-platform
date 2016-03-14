@@ -2144,8 +2144,8 @@ msgstr "Dojo Attendees"
 msgid "Dojo Attendees is empty"
 msgstr "Dojo Attendees is empty"
 
-msgid "e.g. 10-15"
-msgstr "e.g. 10-15"
+msgid "e.g. 10"
+msgstr "e.g. 10"
 
 msgid "Please enter the number of Ninjas that you expect to be present at your Dojo."
 msgstr "Please enter the number of Ninjas that you expect to be present at your Dojo."

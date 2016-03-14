@@ -647,7 +647,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       var lsdl = $localStorage[currentUser.id].dojoLead.dojoListing;
 
       if(lsdl.name) $scope.dojo.name = lsdl.name;
-      if(lsdl.attendee) $scope.dojo.attendee = lsdl.attendee;
+      if(lsdl.expectedAttendees) $scope.dojo.expectedAttendees = lsdl.expectedAttendees;
       if(lsdl.email) $scope.dojo.email = lsdl.email;
       if(lsdl.time) $scope.dojo.time = lsdl.time;
       if(lsdl.country) {
