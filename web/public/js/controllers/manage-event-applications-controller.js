@@ -71,7 +71,7 @@
     ];
 
     cdEventsService.getEvent(eventId, function (event) {
-      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/' + event.id;
+      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/dojo/' + dojoId + '/event/'+ event.id;
 
       var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
       var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
