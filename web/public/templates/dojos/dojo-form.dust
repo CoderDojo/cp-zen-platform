@@ -36,13 +36,35 @@
 
         <div class="row cd-input-row" ng-enter="noop()">
           <div class="form-group">
+            <label for="dojoFrequency" class="col-lg-4 cd-form-label1">
+              <span>{@i18n key="Frequency"/}*</span>
+            </label>
+            <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.frequency.$error.required}">
+              <ui-select name="frequency" ng-model="dojo.frequency" required ng-change="updateLocalStorage('dojoListing','frequency', dojo.frequency)">
+                <ui-select-match placeholder="{@i18n key="Select a frequency"/}">{{ $select.selected  }}</ui-select-match>
+                <ui-select-choices repeat="frequency in frequencies">
+                  <span ng-bind-html="frequency"></span>
+                </ui-select-choices>
+              </ui-select>
+              <div class="cd-tooltip">
+                {@i18n key="Please enter the frequency in which your Dojo will run."/}
+                <span tooltip="{@i18n key="Please only choose other if your Dojo runs more than once a week, or is not one of the three other options listed."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span>
+              </div>
+            <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && createDojoForm.frequency.$error.required">{@i18n key="Select a frequency"/}</label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row cd-input-row" ng-enter="noop()">
+          <div class="form-group">
             <label for="dojoTimes" class="col-lg-4 cd-form-label1">
-              <span>{@i18n key="Times"/}</span>
+              <span>{@i18n key="Day and time"/}</span>
             </label>
             <div class="col-lg-8">
-              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" placeholder="{@i18n key="e.g. Saturdays, monthly, 9-11am"/}" ng-change="updateLocalStorage('dojoListing','time', dojo.time)">
+              <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes" required required-message="'{@i18n key="Day and time is empty"/}'" placeholder="{@i18n key="e.g. Saturdays, 9-11am"/}" ng-change="updateLocalStorage('dojoListing','time', dojo.time)">
               <div class="cd-tooltip">
-                {@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}
+                {@i18n key="State the time and day in which your Dojo will run"/}
               </div>
             </div>
           </div>

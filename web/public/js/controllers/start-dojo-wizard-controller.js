@@ -566,6 +566,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   //--Step Four:
   function setupStep4(wizardRedirect) {
+
+    $scope.frequencies = [
+      $translate.instant('Weekly'),
+      $translate.instant('Bi-Weekly'),
+      $translate.instant('Monthly'),
+      $translate.instant('Other - See info below')
+    ];
+
     $scope.hideIndicators = false;
     $scope.buttonText = $translate.instant("Create Dojo");
 
@@ -653,6 +661,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         $scope.dojo.country = lsdl.country;
         $scope.setCountry($scope.dojo, lsdl.country);
       }
+      if(lsdl.frequency) $scope.dojo.frequency = lsdl.frequency;
       if(lsdl.place) {
         $scope.dojo.place = lsdl.place;
         $scope.setPlace($scope.dojo, lsdl.place);

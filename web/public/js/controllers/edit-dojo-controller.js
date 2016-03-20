@@ -19,6 +19,12 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   $scope.hideUserSelect = true;
   $scope.changedLocation = false;
   $scope.disableDojoCountryChange = false;
+  $scope.frequencies = [
+      $translate.instant('Weekly'),
+      $translate.instant('Bi-Weekly'),
+      $translate.instant('Monthly'),
+      $translate.instant('Other - See info below')
+    ];
 
   $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
 
@@ -196,6 +202,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       var lsed = $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
       if (lsed.name) $scope.dojo.name = lsed.name;
       if (lsed.email) $scope.dojo.email = lsed.email;
+      if (lsed.frequency) $scope.dojo.frequency = lsed.frequency;
       if (lsed.time) $scope.dojo.time = lsed.time;
       if (lsed.country) {
         $scope.dojo.country = lsed.country;

@@ -18,6 +18,10 @@
           </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
+              <tr ng-if="dojo.frequency != null || dojo.frequency == "Other - See info below"">
+                <td class="col-xs-2"><b>{@i18n key="Frequency"/}</b></td>
+                <td>{{ dojo.frequency }}</td>
+              </tr>
               <tr>
                 <td class="col-xs-2"><b>{@i18n key="Time"/}</b></td>
                 <td>{{ dojo.time }}</td>
