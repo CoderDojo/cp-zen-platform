@@ -2138,6 +2138,18 @@ msgstr "A Google email account has been created for your Dojo"
 msgid "Please click on the map to pinpoint your location"
 msgstr "Please click on the map to pinpoint your location"
 
+msgid "Dojo Attendees"
+msgstr "Dojo Attendees"
+
+msgid "Dojo Attendees is empty"
+msgstr "Dojo Attendees is empty"
+
+msgid "e.g. 10"
+msgstr "e.g. 10"
+
+msgid "Please enter the number of Ninjas that you expect to be present at your Dojo."
+msgstr "Please enter the number of Ninjas that you expect to be present at your Dojo."
+
 msgid "Welcome New CoderDojo Champion!"
 msgstr "Welcome New CoderDojo Champion!"
 
