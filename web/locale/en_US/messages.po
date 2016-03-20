@@ -2706,8 +2706,14 @@ msgstr "to help make it better."
 msgid "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
 msgstr "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
 
-msgid "You don't have any Dojos - click here to start a dojo!"
-msgstr "You don't have any Dojos - click here to start a dojo!"
+msgid "Alternatively, click here to search for Dojos!"
+msgstr "Alternatively, click here to search for Dojos!"
+
+msgid "You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."
+msgstr "You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."
+
+msgid "Or, click here to start a dojo."
+msgstr "Or, click here to start a dojo."
 
 msgid "Error loading parents"
 msgstr "Error loading parents"
