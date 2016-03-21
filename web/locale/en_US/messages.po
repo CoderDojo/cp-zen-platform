@@ -744,6 +744,9 @@ msgstr "Address of the Dojo (e.g. LIT Downtown Centre)"
 msgid "Coordinates"
 msgstr "Coordinates"
 
+msgid "Times is Empty"
+msgstr "Times is Empty"
+
 msgid "Address is empty"
 msgstr "Address is empty"
 
