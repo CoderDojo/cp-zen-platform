@@ -2964,3 +2964,21 @@ msgstr "We welcome any queries, comments or requests you may have regarding this
 
 msgid "Find nearby Dojos"
 msgstr "Find nearby Dojos"
+
+msgid "Notify all Members"
+msgstr "Notify all Members"
+
+msgid "Notify Dojo members about Event opening"
+msgstr "Notify Dojo members about Event opening"
+
+msgid "Please select about which event you want to notify Dojo members:"
+msgstr "Please select about which event you want to notify Dojo members:"
+
+msgid "Send notifications"
+msgstr "Send notifications"
+
+msgid "You must choose an event"
+msgstr "You must choose an event"
+
+msgid "Tickets Now Available for"
+msgstr "Tickets Now Available for"

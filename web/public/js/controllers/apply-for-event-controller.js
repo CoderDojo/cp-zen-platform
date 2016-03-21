@@ -22,7 +22,6 @@
           });
           if(!isMember && $state.current.name !== 'user-events') return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
           var sessionModalInstance = $modal.open({
-            animation: $scope.animationsEnabled,
             templateUrl: '/dojos/template/events/session-details',
             controller: 'session-modal-controller',
             size: 'lg',

@@ -172,7 +172,10 @@
       },
       getContinentCodes: function(win, fail){
         cdApi.get('countries/continents/codes', win, fail || topfail);
-      }
+      },
+      notifyAllMembers: function (data, win, fail) {
+        cdApi.post('dojos/notify-all-members', { data: data }, win, fail || topfail);
+      },
     };
   }
 angular.module('cpZenPlatform')

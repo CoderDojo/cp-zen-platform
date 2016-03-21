@@ -137,7 +137,6 @@
     <script src="/js/controllers/header-controller.js"></script>
     <script src="/js/controllers/my-dojos-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
-    <script src="/js/controllers/dojo-list-index-controller.js"></script>
     <script src="/js/controllers/edit-dojo-controller.js"></script>
     <script src="/js/controllers/manage-dojo-controller.js"></script>
     <script src="/js/controllers/stats-controller.js"></script>
@@ -166,6 +165,7 @@
     <script src="/js/controllers/session-invite-modal-controller.js"></script>
     <script src="/js/controllers/accept-session-invite-controller.js"></script>
     <script src="/js/controllers/cancel-session-invite-controller.js"></script>
+    <script src="/js/controllers/notify-all-members-modal-controller.js"></script>
 
     <script src="/js/services/alert-service.js"></script>
     <script src="/js/services/spinner-service.js"></script>
