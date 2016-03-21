@@ -175,6 +175,7 @@
           templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
           params: {
             referer:null,
+            userType:null,
             pageTitle: 'Register'
           },
           controller: 'login'

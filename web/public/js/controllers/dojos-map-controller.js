@@ -26,7 +26,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 
   $scope.loadMap = function () {
     clearMarkers();
-    cdDojoService.list({verified: 1, deleted: 0, fields$:['id', 'name', 'geo_point', 'stage']}, function (dojos) {
+    cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage']}, function (dojos) {
       var filteredDojos = [];
       _.each(dojos, function (dojo) {
         if(dojo.stage !== 4) filteredDojos.push(dojo);

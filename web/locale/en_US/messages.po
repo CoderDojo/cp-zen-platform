@@ -744,6 +744,9 @@ msgstr "Address of the Dojo (e.g. LIT Downtown Centre)"
 msgid "Coordinates"
 msgstr "Coordinates"
 
+msgid "Times is Empty"
+msgstr "Times is Empty"
+
 msgid "Address is empty"
 msgstr "Address is empty"
 
@@ -1597,8 +1600,8 @@ msgstr "Select a user type to invite..."
 msgid "Search by name"
 msgstr "Search by name"
 
-msgid "Are you sure you want to award this badge to the below Ninja?"
-msgstr "Are you sure you want to award this badge to the below Ninja?"
+msgid "Are you sure you want to award this badge to the below user?"
+msgstr "Are you sure you want to award this badge to the below user?"
 
 msgid "Badge Application Sent!"
 msgstr "Badge Application Sent!"
@@ -1951,7 +1954,7 @@ msgstr "This Dojo currently has no active events"
 msgid "'Cannot find founder of dojo'"
 msgstr "'Cannot find founder of dojo'"
 
-msgid "dojo.setup.confirmation"
+msgid "Are you sure you have filled out all the information correctly and wish to proceed?"
 msgstr "Are you sure you have filled out all the information correctly and wish to proceed?"
 
 msgid "Confirmation"
@@ -2137,6 +2140,18 @@ msgstr "A Google email account has been created for your Dojo"
 
 msgid "Please click on the map to pinpoint your location"
 msgstr "Please click on the map to pinpoint your location"
+
+msgid "Dojo Attendees"
+msgstr "Dojo Attendees"
+
+msgid "Dojo Attendees is empty"
+msgstr "Dojo Attendees is empty"
+
+msgid "e.g. 10"
+msgstr "e.g. 10"
+
+msgid "Please fill out the amount of expected attendees you think you will have attending your Dojo per session"
+msgstr "Please fill out the amount of expected attendees you think you will have attending your Dojo per session"
 
 msgid "Welcome New CoderDojo Champion!"
 msgstr "Welcome New CoderDojo Champion!"
@@ -2338,6 +2353,9 @@ msgstr "Attendee Type"
 
 msgid "Quantity"
 msgstr "Quantity"
+
+msgid "Please note that the capacity excludes tickets of the type other."
+msgstr "Please note that the capacity excludes tickets of the type other."
 
 msgid "e.g. Mentor, Laptops"
 msgstr "e.g. Mentor, Laptops"
@@ -2706,8 +2724,14 @@ msgstr "to help make it better."
 msgid "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
 msgstr "You can correct any mistakes in the text on the websites using <a href=\"https://crowdin.com/project/zen-community-platform\" target=\"_blank\">crowdin</a> and make this website better."
 
-msgid "You don't have any Dojos - click here to start a dojo!"
-msgstr "You don't have any Dojos - click here to start a dojo!"
+msgid "Alternatively, click here to search for Dojos!"
+msgstr "Alternatively, click here to search for Dojos!"
+
+msgid "You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."
+msgstr "You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."
+
+msgid "Or, click here to start a dojo."
+msgstr "Or, click here to start a dojo."
 
 msgid "Error loading parents"
 msgstr "Error loading parents"

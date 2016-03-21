@@ -254,7 +254,7 @@
             </div>
           </div>
         </div>
-        <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} </h5>
+        <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} <span tooltip="{@i18n key="Please note that the capacity excludes tickets of the type other."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span> </h5>
       </div>
       <div class="margin-top-point-5-em">
         <button type="button" ng-disabled="pastEvent" ng-click="addSession()" class="btn btn-success session-expand-button">
