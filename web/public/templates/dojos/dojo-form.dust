@@ -152,9 +152,9 @@
               <span>{@i18n key="Expected Attendees"/}*</span>
             </label>
             <div class="col-lg-8">
-              <input type="number" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Dojo Attendees is empty"/}'" ng-model="dojo.expectedAttendees" name="expectedAttendees" id="expectedAttendees" placeholder="{@i18n key="e.g. 10"/}" ng-change="updateLocalStorage('dojoListing','expectedAttendees', dojo.expectedAttendees)">
+              <input type="number" class="form-control" form="createDojoForm" ng-model="dojo.expectedAttendees" name="expectedAttendees" id="expectedAttendees" placeholder="{@i18n key="e.g. 10"/}" ng-change="updateLocalStorage('dojoListing','expectedAttendees', dojo.expectedAttendees)">
               <div class="cd-tooltip">
-                {@i18n key="Please enter the number of Ninjas that you expect to be present at your Dojo."/}
+                {@i18n key="Please fill out the amount of expected attendees you think you will have attending your Dojo per session"/}
               </div>
             </div>
           </div>
