@@ -1,3 +1,5 @@
+<span spinner-key="badge-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+
 <div class="cd-dashboard cd-color-1-underline cd-badges-dashboard">
   <div class="row">
     <h4>{@i18n key="Welcome to the CoderDojo Badges dashboard."/}</h4>
