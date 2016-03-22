@@ -4,6 +4,7 @@
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
     var currentDate = startDateTime;
+    endDateTime = moment.utc(endDateTime).add(1, 'days');
     var dates = [];
     var biWeeklyEventSwitch = false;
 
@@ -638,9 +639,9 @@
         event.startTime = moment(startTime).subtract(startDateUtcOffset, 'minutes').toDate();
         event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
-        event.date = new Date(startTime);
+        event.date = event.startTime();
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
-        event.toDate = new Date(lastEventOcurrance);
+        event.toDate = new Date(lastEventOcurrance.replace(/-/g, '\/').replace(/T.+/, ''));
 
         var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {

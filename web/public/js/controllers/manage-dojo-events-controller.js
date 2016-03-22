@@ -88,7 +88,7 @@
           if (event.type === 'recurring') {
             var startDate = _.first(event.dates).startTime;
             var endDate = _.last(event.dates).startTime;
-            event.formattedDate = moment(startDate).format('MMMM Do YYYY') + ' - ' + moment(endDate).format('MMMM Do YYYY');
+            event.formattedDate = moment.utc(startDate).format('MMMM Do YYYY') + ' - ' + moment.utc(endDate).format('MMMM Do YYYY');
           } else {
             //One-off event
             var eventDate = _.first(event.dates).startTime;
