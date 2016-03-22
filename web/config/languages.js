@@ -27,7 +27,7 @@ module.exports = [
   {
     "name": "Portuguese",
     "code": "pt_PT",
-    "country": "Portuguesa"
+    "country": "Português"
   },
   {
     "name": "Spanish",
@@ -39,4 +39,35 @@ module.exports = [
     "code": "tr_TR",
     "country": "Türk"
   },
+  {
+    "name": "Bulgarian",
+    "code": "bg_BG",
+    "country": "български"
+  },
+  {
+    "name": "Greek",
+    "code": "el_GR",
+    "country": "ελληνικά"
+  },
+  {
+    "name": "Estonian",
+    "code": "et_EE",
+    "country": "eesti"
+  },
+  {
+    "name": "Hindi",
+    "code": "hi_IN",
+    "country": "हिंदी"
+  },
+  {
+    "name": "Japanese",
+    "code": "ja_JP",
+    "country": "日本語"
+  },
+  {
+    "name": "Romanian",
+    "code": "ro_RO",
+    "country": "Română"
+  },
+
 ];
