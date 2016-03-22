@@ -70,7 +70,10 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       loadDojoUsers,
       retrieveEventsAttended,
       getTotalCount,
-      usSpinnerService.stop('manage-dojo-users-spinner')
+      function(done){
+        usSpinnerService.stop('manage-dojo-users-spinner');
+        return done();
+      }
     ], function (err) {
       if(err) console.error(err);
       users = _.compact(users);
