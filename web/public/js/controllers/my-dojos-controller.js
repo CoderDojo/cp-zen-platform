@@ -135,7 +135,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
             canDeleteDojo(dojo, function (result) {
               dojo.canDelete$ = result;
             });
-            usSpinnerService.stop('default-spinner');
+            usSpinnerService.stop('my-dojos-spinner');
             return cb();
         });
       }, function (err) {
@@ -167,7 +167,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         }
       });
     }, function(err) {
-      usSpinnerService.stop('default-spinner');
+      usSpinnerService.stop('my-dojos-spinner');
       alertService.showError(
         $translate.instant('An error has occurred while loading Dojos')
       );
