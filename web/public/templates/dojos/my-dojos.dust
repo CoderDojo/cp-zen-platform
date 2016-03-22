@@ -47,6 +47,7 @@
       </div>
       <div ng-hide="(myDojos | filter:criteria).length">
         <p>{@i18n key="You may be waiting to be approved for a Dojo. Once approved, the Dojo will show here."/}</p>
+        <span spinner-key="my-dojos-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
         <p><a ui-sref="dojo-list">{@i18n key="Alternatively, click here to search for Dojos"/}</a></p>
         <p><a ui-sref="start-dojo">{@i18n key="Or, click here to start a dojo."/}</a></p>
       </div>

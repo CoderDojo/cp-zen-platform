@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService, usersDojos) {
+  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService, usersDojos, usSpinnerService) {
     $scope.applyData = {};
     $scope.currentEvents = false;
     currentUser = currentUser.data;
@@ -16,6 +16,7 @@
         $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
         var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
         cdEventsService.getUserDojosEvents(query, function (response) {
+          usSpinnerService.stop('user-events-spinner');
           $scope.dojosEvents = response;
           if(_.isEmpty($scope.dojosEvents)) {
             //This user has no Events.
@@ -90,6 +91,7 @@
             });
           }
         }, function (err) {
+          usSpinnerService.stop('user-events-spinner');
           alertService.showError( $translate.instant('Error loading Events') + ' ' + err);
         })
       }
@@ -209,6 +211,6 @@
   }
 
   angular.module('cpZenPlatform')
-      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', 'usersDojos', userEventsCtrl]);
+      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', 'usersDojos', 'usSpinnerService', userEventsCtrl]);
 
 })();

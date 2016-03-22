@@ -1,6 +1,6 @@
 'use strict';
 
-function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStore, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner) {
+function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStore, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner, usSpinnerService) {
   $scope.itemsPerPage = 10;
   var currentUser;
   $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
@@ -135,6 +135,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
             canDeleteDojo(dojo, function (result) {
               dojo.canDelete$ = result;
             });
+            usSpinnerService.stop('my-dojos-spinner');
             return cb();
         });
       }, function (err) {
@@ -166,6 +167,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         }
       });
     }, function(err) {
+      usSpinnerService.stop('my-dojos-spinner');
       alertService.showError(
         $translate.instant('An error has occurred while loading Dojos')
       );
@@ -183,4 +185,4 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
 }
 
 angular.module('cpZenPlatform')
-  .controller('my-dojos-controller', ['$q', '$rootScope', '$scope', '$state', '$stateParams', '$cookieStore', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', cdMyDojosCtrl]);
+  .controller('my-dojos-controller', ['$q', '$rootScope', '$scope', '$state', '$stateParams', '$cookieStore', 'cdDojoService', '$location', 'auth', 'tableUtils', 'alertService', '$translate', 'AlertBanner', 'usSpinnerService', cdMyDojosCtrl]);

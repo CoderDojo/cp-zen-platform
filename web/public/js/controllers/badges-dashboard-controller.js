@@ -1,12 +1,11 @@
  'use strict';
-
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
   var lastClicked = {};
   var errorMsg = $translate.instant('error.general');
-  
+
   auth.instance(function (data) {
     $scope.user = data.user;
     $scope.isDojoAdmin = false;
@@ -27,6 +26,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
   });
 
   cdBadgesService.listBadges(function (response) {
+    usSpinnerService.stop('badge-spinner');
     var badges = response.badges;
 
     //Filter badges because badgekit api doesn't support querying by tags.
@@ -52,6 +52,9 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
         });
       });
     });
+  }, function(err) {
+    usSpinnerService.stop('badge-spinner');
+    console.log(err);
   });
 
   $scope.prepareHeading = function(heading){
@@ -100,8 +103,8 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
       return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
     });
   }
-    
+
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', cdBadgesDashboardCtrl]);
