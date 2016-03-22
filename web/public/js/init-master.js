@@ -304,8 +304,10 @@
       function($translateProvider) {
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
-        .useSanitizeValueStrategy('sanitize')
-        .registerAvailableLanguageKeys(['en_US', 'it_IT'])
+        .useSanitizeValueStrategy('sanitizeParameters')
+        .registerAvailableLanguageKeys(['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL',
+                                        'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
+                                        'hi_IN', 'ja_JP', 'ro_RO' ])
         .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
