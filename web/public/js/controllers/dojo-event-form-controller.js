@@ -3,7 +3,7 @@
   'use strict';
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
-    endDateTime = moment.utc(endDateTime);
+    endDateTime = moment.utc(endDateTime).add(1, 'days');
     var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
