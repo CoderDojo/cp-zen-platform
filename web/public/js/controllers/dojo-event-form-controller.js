@@ -132,6 +132,7 @@
 
     //description editor
     $scope.editorOptions = {
+      lanaguage: 'en',
       readOnly: $scope.pastEvent,
       height: '100px'
     };
