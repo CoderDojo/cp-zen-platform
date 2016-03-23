@@ -12,11 +12,10 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
-      var startDateTimeOffset = moment().utcOffset();
-      var endDateTimeOffset = moment().utcOffset();
-      date.startTime = moment.utc(startDateTime).add(startDateTimeOffset, 'minutes').toDate();
+      var utcOffset = moment().utcOffset();
+      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
       var mEventDate = moment.utc(startDateTime);
-      var mEventLastDate = moment.utc(endDateTime).add(endDateTimeOffset, 'minutes');
+      var mEventLastDate = moment.utc(endDateTime).add(utcOffset, 'minutes');
       date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
         mEventLastDate.get('hour'), mEventLastDate.get('minute'), mEventLastDate.get('second'), mEventLastDate.get('millisecond') ]).toDate();
       return date;
@@ -633,11 +632,10 @@
         var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
-        var startDateUtcOffset = moment().utcOffset();
-        var endDateUtcOffset = moment().utcOffset();
+        var utcOffset = moment().utcOffset();
 
-        event.startTime = moment(startTime).subtract(startDateUtcOffset, 'minutes').toDate();
-        event.endTime = moment(endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+        event.startTime = moment(startTime).subtract(utcOffset, 'minutes').toDate();
+        event.endTime = moment(endTime).subtract(utcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = event.startTime;
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
