@@ -364,6 +364,16 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile.alpha3 = country.alpha3;
   };
 
+  /** Define for template usage if the email address is a required field based upon userType
+  **/
+  $scope.isEmailRequired = function(){
+      if($scope.profile && ($scope.profile.userTypes.indexOf('attendee-u13') > -1 ||
+         $scope.profile.userTypes.indexOf('attendee-o13') > -1)){
+        return false;
+      }
+      return true;
+  };
+
   $scope.getPlaces = function (countryCode, $select) {
     return utilsService.getPlaces(countryCode, $select).then(function (data) {
       $scope.places = data;
@@ -371,7 +381,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $scope.places = [];
       console.error(err);
     });
-  }
+  };
 
   $scope.setPlace = function(profile, place) {
     profile.placeName = place.name;
