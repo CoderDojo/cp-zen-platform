@@ -1,11 +1,12 @@
 <div class="cd-dashboard cd-color-3-underline event-form">
   <div class="row">
     <div class="event-form">
-      <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
-      <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
+      <strong><legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend></strong>
+      <strong><legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend></strong>
         <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
           <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
             <div class="col-xs-12 col-lg-6">
+              <h5 style="text-align:center;"><u>Event Details</u></h5>
               <div class="form-group">
                 <label for="eventName">{@i18n key="Event Name"/}*:</label>
                 <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
@@ -146,7 +147,7 @@
               <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
                 <label for="city">{@i18n key="City"/}*:</label>
                 <ui-select ng-model="eventInfo.city"
-                           ng-disabled="pastEvent"
+                           ng-disabled="pastEvent || eventInfo.prefillAddress"
                            name="city"
                            id="city"
                            ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null"
@@ -166,11 +167,12 @@
 
               <div class="form-group">
                 <label for="address">{@i18n key="Address"/}*:</label>
-                <textarea rows="3" ng-readonly="pastEvent" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+                <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
               </div>
 
             </div>
           <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
+            <h5 style="text-align:center;"><u>Tickets</u></h5>
             <div class="padding">
               <div class="form-group">
                 <div class="margin-top-point-5-em">
@@ -204,7 +206,7 @@
                       </thead>
                       <tbody>
                         <tr ng-repeat="ticket in session.tickets" ng-init="ticketIndex = $index" >
-                          <td><input ng-readonly="pastEvent" placeholder="{@i18n key="e.g. Mentor, Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'"></td>
+                          <td><input ng-readonly="pastEvent" placeholder="{@i18n key="e.g. Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'"></td>
                           <td>
                             <div class="min-width-170" ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
                               <ui-select ng-disabled="pastEvent" name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
