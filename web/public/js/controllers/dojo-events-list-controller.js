@@ -62,16 +62,15 @@
 
         var events = [];
         _.each(result, function (event) {
-          var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
-          var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+          var utcOffset = moment().utcOffset();
 
-          var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+          var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+          var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
 
           if(event.type === 'recurring') {
             event.formattedDates = [];
             _.each(event.dates, function (eventDate) {
-              event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
+              event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YY'));
             });
 
             event.day = moment(startDate).format('dddd');
