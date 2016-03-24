@@ -15,6 +15,8 @@
               <input type="text" class="form-control" form="createDojoForm" required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName" placeholder="{@i18n key="e.g. Docklands, Dublin 1 @ CHQ Building"/}" ng-change="updateLocalStorage('dojoListing','name', dojo.name)">
               <div class="cd-tooltip">
                 {@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}
+                <br/>
+                <strong>{@i18n key="Please type Dojo name in English/Latin character a-Z!"/}</strong>
               </div>
             </div>
           </div>
@@ -68,7 +70,7 @@
       <div class="row cd-input-row" ng-enter="noop()">
         <div class="form-group">
           <label for="dojoPlace" class="col-lg-4 cd-form-label1">
-            <span>{@i18n key="City/Town"/}*</span>
+            <span>{@i18n key="CityTown"/}*</span>
           </label>
           <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || createDojoForm.place.$error.maxLength || !dojo.place)}">
             <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" required on-select="setPlace(dojo, $item, createDojoForm)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
@@ -79,6 +81,7 @@
             </ui-select>
             <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
             <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && createDojoForm.place.$error.maxLength">{@i18n key="Place name must be less than 40 characters."/}</label>
+            <div class="cd-tooltip"><strong>{@i18n key="Please type City name in English/Latin character a-Z!"/}</strong></div>
           </div>
         </div>
       </div>
