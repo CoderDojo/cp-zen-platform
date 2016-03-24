@@ -108,7 +108,7 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
-    $scope.eventInfo.prefillAddress = false;
+    $scope.eventInfo.prefillAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
