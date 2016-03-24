@@ -2420,8 +2420,17 @@ msgstr "Myself"
 msgid "Apply for"
 msgstr "Apply for"
 
+msgid "Export to CSV"
+msgstr "Export to CSV"
+
 msgid "Export Guest List"
 msgstr "Export Guest List"
+
+msgid "Export Waiting List"
+msgstr "Export Waiting List"
+
+msgid "Export Full List"
+msgstr "Export Full List"
 
 msgid "View attendee list"
 msgstr "View attendee list"
