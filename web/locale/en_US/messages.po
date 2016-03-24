@@ -1145,7 +1145,7 @@ msgid "A parent! (Very important). If you are 12 or under, your parent must stay
 msgstr "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session."
 
 msgid "Join Request Sent"
-msgstr "Join Request Sent!"
+msgstr "Join Request Sent"
 
 msgid "Successfully Joined Dojo"
 msgstr "Successfully Joined Dojo!"
