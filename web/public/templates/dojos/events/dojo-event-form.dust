@@ -1,6 +1,6 @@
 <div class="cd-dashboard cd-color-3-underline event-form">
-  <strong><legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend></strong>
-  <strong><legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend></strong>
+  <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
+  <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
   <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
     <div class="col-xs-12 col-lg-6">
@@ -145,7 +145,8 @@
       <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
         <label for="city">{@i18n key="City"/}*:</label>
         <ui-select ng-model="eventInfo.city"
-                   ng-disabled="pastEvent || eventInfo.prefillAddress"
+                   ng-disabled="pastEvent"
+                   ng-readonly="eventInfo.prefillAddress"
                    name="city"
                    id="city"
                    ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null"
