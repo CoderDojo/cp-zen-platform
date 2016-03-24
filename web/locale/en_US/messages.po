@@ -438,6 +438,9 @@ msgstr "Country"
 msgid "CityTown"
 msgstr "City/Town"
 
+msgid "Please type City name in English/Latin character a-Z!"
+msgstr "Please type City name in English/Latin character a-Z!"
+
 msgid "Languages Spoken"
 msgstr "Languages Spoken"
 
@@ -713,6 +716,9 @@ msgstr "Dojo Name"
 
 msgid "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
 msgstr "Normally named after an area, like \"Cork\", or if there are multiple Dojos are in your area \"San Fran @ GitHub\". Try refrain from prefixing the name with \"CoderDojo\"."
+
+msgid "Please type Dojo name in English/Latin character a-Z!"
+msgstr "Please type Dojo name in English/Latin character a-Z!"
 
 msgid "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
 msgstr "This should be different to the personal email you signed up for an account here with. For your own CoderDojo email address (e.g. limerick@coderdojo.com), please contact us and leave this field blank."
