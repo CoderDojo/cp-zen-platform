@@ -2453,6 +2453,9 @@ msgstr "Charter already signed."
 msgid "Total event capacity"
 msgstr "Total event capacity"
 
+msgid "Add ticket type"
+msgstr "Add ticket type"
+
 msgid "Total attending"
 msgstr "Total attending"
 
