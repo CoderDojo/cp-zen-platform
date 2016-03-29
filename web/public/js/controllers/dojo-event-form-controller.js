@@ -554,9 +554,10 @@
           dojo.place.nameWithHierarchy = dojo.place.toponymName;
           delete dojo.place.toponymName;
         }
+
         $scope.eventInfo.country = dojo.country;
-        $scope.eventInfo.dojoCity = dojo.place;
-        $scope.eventInfo.dojoAddress = dojo.address1;
+        $scope.eventInfo.dojoAddress = $scope.eventInfo.address = dojo.address1;
+        $scope.eventInfo.dojoCity = $scope.eventInfo.city = dojo.place;
 
         var position = [];
         if(dojo.coordinates) {

@@ -6,7 +6,7 @@
   <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
     <div class="col-xs-12 col-lg-6">
-      <h5 class="text-center hidden-md"><strong><u>Event Details</u></strong></h5>
+      <h5 class="text-center visible-lg"><strong><u>Event Details</u></strong></h5>
       <div class="form-group">
         <label for="eventName">{@i18n key="Event Name"/}*:</label>
         <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
@@ -139,9 +139,9 @@
           <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
           <label for="prefill-address">
             {@i18n key="Use Dojo listing address"/}
+            <span tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
           </label>
         </div>
-        <span tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
       </div>
 
       <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
@@ -173,7 +173,7 @@
     </div>
     <legend class="hidden-lg" ng-if="!isEditMode">{@i18n key="Event Tickets"/}</legend>
     <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
-      <h5 class="text-center hidden-md"><strong><u>Event Tickets</u></strong></h5>
+      <h5 class="text-center visible-lg"><strong><u>Event Tickets</u></strong></h5>
       <div class="padding">
         <div class="form-group">
           <div class="margin-top-point-5-em">
@@ -259,16 +259,16 @@
             <label for="is-public">
               {@i18n key="Is public"/}
             </label>
+            <span tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
           </div>
-          <span tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
         </div>
 
         <div class="form-group form-inline">
           <div class="checkbox">
             <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.ticketApproval" id="ticketApproval">
             <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
+            <span tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" class="info-button fa fa-info-circle event-tooltip"></span>
           </div>
-          <span tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" class="info-button fa fa-info-circle event-tooltip"></span>
         </div>
 
         <div class="btn-toolbar">
