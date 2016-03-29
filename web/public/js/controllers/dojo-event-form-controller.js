@@ -108,7 +108,7 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
-    $scope.eventInfo.prefillAddress = false;
+    $scope.eventInfo.prefillAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
@@ -129,6 +129,13 @@
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
     $scope.hasAccess = true;
+
+    //description editor
+    $scope.editorOptions = {
+      lanaguage: 'en',
+      readOnly: $scope.pastEvent,
+      height: '100px'
+    };
 
 
     $scope.$watch('eventInfo.date', function (date) {
@@ -547,9 +554,10 @@
           dojo.place.nameWithHierarchy = dojo.place.toponymName;
           delete dojo.place.toponymName;
         }
+
         $scope.eventInfo.country = dojo.country;
-        $scope.eventInfo.dojoCity = dojo.place;
-        $scope.eventInfo.dojoAddress = dojo.address1;
+        $scope.eventInfo.dojoAddress = $scope.eventInfo.address = dojo.address1;
+        $scope.eventInfo.dojoCity = $scope.eventInfo.city = dojo.place;
 
         var position = [];
         if(dojo.coordinates) {
@@ -652,14 +660,6 @@
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = isEventInPast(_.last(event.dates));
-
-        //description editor
-        $scope.editorOptions = {
-          readOnly: $scope.pastEvent,
-          language: 'en',
-          uiColor: '#000000',
-          height: '200px'
-        };
 
         done(null, event);
       }, done);
