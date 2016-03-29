@@ -1,10 +1,12 @@
 <div class="cd-dashboard cd-color-3-underline event-form">
-  <legend ng-if="!isEditMode">{@i18n key="Create Event"/}</legend>
-  <legend ng-if="isEditMode">{@i18n key="Edit Event"/}</legend>
+  <h3 ng-if="!isEditMode">{@i18n key="Create Event"/}</h3>
+  <h3 ng-if="isEditMode">{@i18n key="Edit Event"/}</h3>
+  <legend ng-if="!isEditMode">{@i18n key="Event Details"/}</legend>
+
   <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
     <div class="col-xs-12 col-lg-6">
-      <h5 class="text-center"><strong><u>Event Details</u></strong></h5>
+      <h5 class="text-center hidden-md"><strong><u>Event Details</u></strong></h5>
       <div class="form-group">
         <label for="eventName">{@i18n key="Event Name"/}*:</label>
         <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
@@ -134,7 +136,7 @@
 
       <div class="form-group form-inline" ng-show="!eventInfo.status">
         <div class="checkbox">
-          <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()">
+          <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
           <label for="prefill-address">
             {@i18n key="Use Dojo listing address"/}
           </label>
@@ -168,10 +170,10 @@
         <label for="address">{@i18n key="Address"/}*:</label>
         <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
       </div>
-
     </div>
+    <legend class="hidden-lg" ng-if="!isEditMode">{@i18n key="Event Tickets"/}</legend>
     <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
-      <h5 class="text-center"><strong><u>Tickets</u></strong></h5>
+      <h5 class="text-center hidden-md"><strong><u>Event Tickets</u></strong></h5>
       <div class="padding">
         <div class="form-group">
           <div class="margin-top-point-5-em">
