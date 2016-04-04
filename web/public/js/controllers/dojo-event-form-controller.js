@@ -85,7 +85,9 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $modal, cdEventsService, cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService, alertService, utilsService, ticketTypes, currentUser) {
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $modal, cdEventsService,
+                            cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
+                            alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -108,6 +110,7 @@
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
+    $scope.eventInfo.type = 'one-off';
     $scope.eventInfo.prefillAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
@@ -209,6 +212,8 @@
     $scope.validateSessions = function (sessions) {
       return sessions.length !== 0;
     };
+
+    $scope.dupEventPicker = {};
 
     $scope.timepicker = {};
     $scope.timepicker.hstep = 1;
@@ -319,6 +324,80 @@
         total += $scope.totalSessionCapacity(session);
       });
       return total;
+    };
+
+    /** @function: allow an event to be reused as a model
+    * Dates are recalculated based upon next possible same day than the starting one, keeping the same time gape
+    * @param: Object event the selected event from the UI
+    */
+    $scope.copyEvent = function(event){
+      cdEventsService.getEvent(event.id, function(event){
+        var utcOffset = moment().utcOffset();
+        var firstDate = moment(_.first(event.dates).startTime).subtract(utcOffset, 'minutes');
+        var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
+        var now = moment().utc();
+        var dayRange = lastDate.diff(firstDate, 'days');
+        var startingDay = firstDate.day();
+        var endingDay = lastDate.day();
+        var isPastEvent = isEventInPast({startTime : firstDate});
+
+        _.defaults($scope.eventInfo, event);
+        //TODO: when lodash will be updated, use defaultsDeep
+        $scope.eventInfo.recurringType = event.recurringType;
+        $scope.eventInfo.description = event.description;
+        if(isPastEvent){
+          if(now.day() >= startingDay) startingDay += 7;
+          var offsetedFirstDate = angular.copy(now).day(startingDay);
+          offsetedFirstDate.hour( firstDate.hours()).minute(firstDate.minutes());
+
+          var offsetedLastDate = angular.copy(offsetedFirstDate).add(dayRange, 'day').day(endingDay);
+          offsetedLastDate.hour( lastDate.hours()).minute(lastDate.minutes());
+          firstDate = offsetedFirstDate;
+          lastDate = offsetedLastDate;
+        }
+        $scope.eventInfo.date = firstDate.toDate();
+        $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
+        $scope.eventInfo.toDate = lastDate.toDate();
+        $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = lastDate;
+        $scope.eventInfo.address = event.address;
+        $scope.eventInfo.city = event.city;
+        $scope.eventInfo.position = event.position;
+
+        //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
+        $scope.eventInfo.type = event.type;
+
+        cdEventsService.searchSessions({eventId : event.id}, function(sessions) {
+            $scope.eventInfo.sessions = sessions;
+            _.map($scope.eventInfo.sessions, function(session){
+              delete session.id;
+              _.map(session.tickets, function(ticketDefinition){
+                delete ticketDefinition.id;
+                delete ticketDefinition.invites;
+                ticketDefinition.totalApplications = 0;
+                ticketDefinition.approvedApplications = 0;
+                ticketDefinition.deleted = 0;
+              });
+            });
+        });
+
+        //We adapt the dates based upon today
+        if ($scope.eventInfo.type === 'recurring') {
+          $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, {id: startingDay});
+        }
+
+        if (!_.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) ||
+          $scope.eventInfo.address !== $scope.dojoInfo.address1) {
+            $scope.eventInfo.prefillAddress = false;
+        }
+        //remove processed info coming from the db,
+        //which are normally not created by the front-end submit process
+        delete $scope.eventInfo.dates;
+        delete $scope.eventInfo.status;
+        delete $scope.eventInfo.userId;
+        delete $scope.eventInfo.id;
+        delete $scope.eventInfo.createdAt;
+        delete $scope.eventInfo.createdBy;
+      });
     };
 
     $scope.inviteDojoMembers = function (session) {
@@ -547,6 +626,15 @@
     }
 
 
+    function loadPreviousEvents(done) {
+      if($scope.isEditMode) return done();
+      cdEventsService.search({dojoId: dojoId, sort$: {createdAt: -1}}).then( function(events) {
+        $scope.dupEventPicker.events = events;
+        return done();
+      });
+    }
+
+
     function loadDojo(done) {
       cdDojoService.load(dojoId, function(dojo) {
 
@@ -677,28 +765,33 @@
       });
     }
 
-    function loadLocalStorage(done) {
+    function isLocalStorageUsable() {
       if($localStorage[currentUser.data.id] && $localStorage[currentUser.data.id][dojoId] && $localStorage[currentUser.data.id][dojoId].eventForm) {
         if(!_.isEmpty($localStorage[currentUser.data.id][dojoId].eventForm)) {
-          alertService.showAlert($translate.instant('There are unsaved changes on this page'));
-
-          var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
-          if(localStorage.name) $scope.eventInfo.name = localStorage.name;
-          if(localStorage.description) $scope.eventInfo.description = localStorage.description;
-          if(localStorage.public) $scope.eventInfo.public = localStorage.public;
-          if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
-          if(localStorage.type) $scope.eventInfo.type = localStorage.type;
-          if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
-          if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
-          if(localStorage.date) $scope.eventInfo.date = new Date(localStorage.date);
-          if(localStorage.toDate) $scope.eventInfo.toDate = new Date(localStorage.toDate);
-          if(localStorage.city) $scope.eventInfo.city = localStorage.city;
-          if(localStorage.address) $scope.eventInfo.address = localStorage.address;
-          if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
-          if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+          return true;
         }
-
       }
+      return false;
+    }
+
+    function loadLocalStorage(done) {
+      if(isLocalStorageUsable()){
+        var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
+        if(localStorage.name) $scope.eventInfo.name = localStorage.name;
+        if(localStorage.description) $scope.eventInfo.description = localStorage.description;
+        if(localStorage.public) $scope.eventInfo.public = localStorage.public;
+        if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
+        if(localStorage.type) $scope.eventInfo.type = localStorage.type;
+        if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
+        if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
+        if(localStorage.date) $scope.eventInfo.date = new Date(localStorage.date);
+        if(localStorage.toDate) $scope.eventInfo.toDate = new Date(localStorage.toDate);
+        if(localStorage.city) $scope.eventInfo.city = localStorage.city;
+        if(localStorage.address) $scope.eventInfo.address = localStorage.address;
+        if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
+        if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+      }
+
 
       $scope.$watch('eventInfo.sessions', function (sessions) {
         sessions = _.without(sessions, _.findWhere(sessions, {name: null}))
@@ -748,6 +841,7 @@
     async.parallel([
       validateEventRequest,
       loadDojo,
+      loadPreviousEvents,
       loadCurrentUser,
       loadDojoUsers,
       loadUserTypes,

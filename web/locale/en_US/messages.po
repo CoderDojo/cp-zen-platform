@@ -1357,6 +1357,9 @@ msgstr "Error applying for event"
 msgid "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."
 msgstr "By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."
 
+msgid "Copy from an existing event"
+msgstr "Copy from an existing event"
+
 msgid "Add the event name"
 msgstr "Add the event name"
 
