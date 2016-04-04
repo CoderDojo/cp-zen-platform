@@ -1165,6 +1165,9 @@ msgstr "Thank you for registering. Your CoderDojo account has been successfully 
 msgid "user name already exists"
 msgstr "user name already exists"
 
+msgid "Alias already exists."
+msgstr "Alias already exists."
+
 msgid "server error"
 msgstr "server error"
 

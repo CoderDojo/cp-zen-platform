@@ -280,8 +280,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     cdUsersService.saveYouthProfile(profile, function (response) {
       if(response && response.error){
         var error_string = "";
-        error_string = response.error === 'nick-exists' ? $translate.instant('user name already exists') : response.error;
-        return alertService.showError($translate.instant('An error has occurred while saving profile') + ': ' + error_string);
+        error_string = response.error === 'nick-exists' ? $translate.instant('Alias already exists.') : response.error;
+        return alertService.showError($translate.instant('An error has occurred while saving profile.') + ': ' + error_string);
       }
       alertService.showAlert($translate.instant('Profile has been saved successfully'));
       if($scope.referer){
