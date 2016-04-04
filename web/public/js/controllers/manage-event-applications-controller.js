@@ -24,7 +24,7 @@
     });
 
     $scope.sort = {};
-    $scope.pagination = {itemsPerPage: 10};
+    $scope.pagination = {itemsPerPage: 20};
     $scope.newApplicant = {};
     $scope.eventStats = {totalAttending:0, totalWaitlist: 0};
     $scope.sessionStats = {};
