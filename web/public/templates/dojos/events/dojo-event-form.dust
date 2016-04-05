@@ -1,7 +1,22 @@
 <div class="cd-dashboard cd-color-3-underline event-form">
-  <h3 ng-if="!isEditMode">{@i18n key="Create Event"/}</h3>
+  <div ng-if="!isEditMode">
+    <h3 class="inline" >{@i18n key="Create Event"/}</h3>
+    <div class="pull-right col-xs-4">
+      <ui-select ng-model="dupEventPicker.selected"
+                 name="dupEventPicker"
+                 id="dupEventPicker"
+                 ng-change="copyEvent(dupEventPicker.selected)">
+        <ui-select-match placeholder="{@i18n key="Copy from an existing event"/}">
+          {{ $select.selected.name }}
+        </ui-select-match>
+        <ui-select-choices repeat="event in dupEventPicker.events">
+          <span ng-bind-html="event.name"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
   <h3 ng-if="isEditMode">{@i18n key="Edit Event"/}</h3>
-  <legend ng-if="!isEditMode">{@i18n key="Event Details"/}</legend>
+  <legend >{@i18n key="Event Details"/}</legend>
 
   <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)">
@@ -9,26 +24,33 @@
       <h5 class="text-center visible-lg"><strong><u>Event Details</u></strong></h5>
       <div class="form-group">
         <label for="eventName">{@i18n key="Event Name"/}*:</label>
-        <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
+        <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'"
+               name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name"
+               placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
       </div>
 
       <div class="form-group">
         <label for="description">{@i18n key="Description"/}*:</label>
-          <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" ng-if="editorOptions" ckeditor="editorOptions" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}" ng-change="updateLocalStorage('description',eventInfo.description)"></textarea>
+          <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'"
+                    ng-if="editorOptions" ckeditor="editorOptions" id="description" class="form-control"
+                    rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}"
+                    ng-change="updateLocalStorage('description',eventInfo.description)"></textarea>
       </div>
 
-      <div ng-if="!isEditMode" ng-init="eventInfo.type = eventInfo.type || 'one-off'" class="form-group form-inline">
+      <div ng-if="!isEditMode" class="form-group form-inline">
         <label>{@i18n key="Type"/}:</label>
 
         <div class="radio">
-          <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="recurring" value="recurring">
+          <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type"
+                 ng-change="updateLocalStorage('type', eventInfo.type)" id="recurring" value="recurring">
           <label for="recurring">
             {@i18n key="Recurring"/}
           </label>
         </div>
 
         <div class="radio">
-          <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type',eventInfo.type)" id="one-off" value="one-off">
+          <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type"
+                 ng-change="updateLocalStorage('type', eventInfo.type)" id="one-off" value="one-off">
           <label for="one-off">
             {@i18n key="One off"/}
           </label>
@@ -39,14 +61,16 @@
         <div class="row" ng-if="eventInfo.type === 'recurring'">
           <div class="col-lg-4">
             <div class="radio">
-              <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
+              <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType"
+                     ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
               <label for="weekly">
                 {@i18n key="Weekly"/}
               </label>
             </div>
 
             <div class="radio">
-              <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
+              <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType"
+                     ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
               <label for="biweekly">
                 {@i18n key="Every two weeks"/}
               </label>
@@ -171,7 +195,7 @@
         <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
       </div>
     </div>
-    <legend class="hidden-lg" ng-if="!isEditMode">{@i18n key="Event Tickets"/}</legend>
+    <legend class="hidden-lg" >{@i18n key="Event Tickets"/}</legend>
     <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
       <h5 class="text-center visible-lg"><strong><u>Event Tickets</u></strong></h5>
       <div class="padding">
@@ -280,6 +304,3 @@
     </div>
   </form>
 </div>
-
-
-
