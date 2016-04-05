@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService) {
+  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -93,23 +93,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         var userDojo = usersDojos[0];
         user.userTypes = userDojo.userTypes;
         var inviteUserTypes = angular.copy(initUserTypes.data);
-        if(_.contains(user.userTypes, 'mentor')) {
-          inviteUserTypes = _.without(inviteUserTypes, _.findWhere(inviteUserTypes, {name: 'champion'}));
-        } else if(_.contains(user.userTypes, 'parent-guardian')) {
-          inviteUserTypes = _.chain(inviteUserTypes)
-            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
-            .value();
-        } else if(_.contains(user.userTypes, 'attendee-o13')) {
-          $scope.userTypes = _.chain(inviteUserTypes)
-            .without(_.findWhere(inviteUserTypes, {name: 'champion'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'mentor'}))
-            .without(_.findWhere(inviteUserTypes, {name: 'parent-guardian'}))
-            .value();
-        } else if(_.contains(user.userTypes, 'attendee-u13')) {
-          inviteUserTypes = [];
-        }
-        $scope.userTypes = inviteUserTypes;
+        var mainUserType = permissionService.getUserType(user.userTypes);
+
+        //TODO: permissionService should handle that check when every user capabilities will be defined
+        var allowedUserTypes = permissionService.getAllowedUserTypes(mainUserType, mainUserType === 'attendee-u13');
+        $scope.userTypes = _.filter(inviteUserTypes, function(inviteUserType){
+          return _.contains(allowedUserTypes, inviteUserType.name);
+        });
 
         cdDojoService.getUserPermissions(function (response) {
           $scope.userPermissions = response;
@@ -119,7 +109,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
 
     function getFilterUserTypes(done) {
-      // TODO: Only allow filtering by types that are already in list? 
+      // TODO: Only allow filtering by types that are already in list?
       // Rather than showing all options all the time
       $scope.filterUserTypes = angular.copy(initUserTypes.data);
       return done();
@@ -133,8 +123,8 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
 
     function loadDojoUsers(done) {
-      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, 
-                                    skip$: loadPageData.skip, sort$: $scope.queryModel.sort, 
+      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage,
+                                    skip$: loadPageData.skip, sort$: $scope.queryModel.sort,
                                     userType: $scope.queryModel.userType, name: $scope.queryModel.name}, function (response) {
         _.each(response, function (user) {
           var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
@@ -437,4 +427,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', cdManageDojoUsersCtrl]);
