@@ -49,7 +49,7 @@ server.connection({
   // would be sent for 200 when a 304 (Not Modified) is sent.
   routes: {
     cache: { statuses: [200,304] },
-    cors: { origin: [ hostWithPort, 'https://changex.org' ] }
+    cors: { origin: [ hostWithPort, 'https://changex.org', 'https://coderdojo.com' ] }
   }
 });
 
