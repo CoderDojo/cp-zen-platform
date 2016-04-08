@@ -157,6 +157,7 @@
     <script src="/js/controllers/accept-child-controller.js"></script>
     <script src="/js/controllers/dojos-map-controller.js"></script>
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
+    <script src="/js/controllers/session-modal-controller.js"></script>
 
     <script src="/js/services/cd-api.js"></script>
     <script src="/js/services/cd-dojo-service.js"></script>
