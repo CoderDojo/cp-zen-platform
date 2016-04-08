@@ -724,7 +724,7 @@
 
       cdEventsService.getEvent(eventId, function(event) {
         $scope.isEditMode = true;
-
+        $scope.eventInfo.prefillAddress = false;  
         var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
