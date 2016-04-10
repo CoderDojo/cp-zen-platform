@@ -385,10 +385,8 @@
           $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, {id: startingDay});
         }
 
-        if (!_.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) ||
-          $scope.eventInfo.address !== $scope.dojoInfo.address1) {
-            $scope.eventInfo.prefillAddress = false;
-        }
+        $scope.eventInfo.prefillAddress = _.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
+          $scope.eventInfo.address === $scope.dojoInfo.address1;
         //remove processed info coming from the db,
         //which are normally not created by the front-end submit process
         delete $scope.eventInfo.dates;
@@ -644,8 +642,12 @@
         }
 
         $scope.eventInfo.country = dojo.country;
-        $scope.eventInfo.dojoAddress = $scope.eventInfo.address = dojo.address1;
-        $scope.eventInfo.dojoCity = $scope.eventInfo.city = dojo.place;
+        $scope.eventInfo.dojoAddress  = dojo.address1;
+        $scope.eventInfo.dojoCity = dojo.place;
+
+        if(!$scope.isEditMode){
+          $scope.prefillDojoAddress();
+        }
 
         var position = [];
         if(dojo.coordinates) {
@@ -721,10 +723,10 @@
 
     function loadEvent(done) {
       var eventId = $stateParams.eventId;
+      $scope.eventInfo.prefillAddress = false;
+      $scope.isEditMode = true;
 
       cdEventsService.getEvent(eventId, function(event) {
-        $scope.isEditMode = true;
-        $scope.eventInfo.prefillAddress = false;  
         var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
