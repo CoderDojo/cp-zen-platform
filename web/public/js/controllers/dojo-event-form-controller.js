@@ -414,6 +414,7 @@
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (dojoUsers) {
           var eventUserSelection = {};
           eventUserSelection[dojoId] = [];
+          dojoUsers = dojoUsers.response;
           _.each(dojoUsers, function (dojoUser) {
             eventUserSelection[dojoId].push({userId: dojoUser.id, title: dojoUser.name});
           });
@@ -701,11 +702,8 @@
     }
 
     function loadDojoUsers(done) {
-      cdDojoService.loadDojoUsers({
-        dojoId: dojoId,
-        limit$: 'NULL'
-      }, function(users) {
-        $scope.dojoUsers = users;
+      cdDojoService.loadDojoUsers({dojoId: dojoId, limit$: 'NULL'}, function(users) {
+        $scope.dojoUsers = users.response;
         done(null, users);
       }, done);
     }

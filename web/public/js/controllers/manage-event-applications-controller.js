@@ -428,6 +428,7 @@
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (dojoUsers) {
           var eventUserSelection = {};
           eventUserSelection[dojoId] = [];
+          dojoUsers = dojoUsers.response;
           _.each(dojoUsers, function (dojoUser) {
             eventUserSelection[dojoId].push({userId: dojoUser.id, title: dojoUser.name});
           });

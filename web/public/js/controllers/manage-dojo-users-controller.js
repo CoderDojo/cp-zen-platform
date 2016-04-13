@@ -72,7 +72,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       getUsersDojosLink,
       loadDojoUsers,
       retrieveEventsAttended,
-      getTotalCount,
       function(done){
         usSpinnerService.stop('manage-dojo-users-spinner');
         return done();
@@ -116,16 +115,16 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
 
     function getUsersDojosLink(done) {
-      cdDojoService.getUsersDojos({dojoId:dojoId, deleted: 0, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip}, function (response) {
+      cdDojoService.getUsersDojos({dojoId:dojoId, deleted: 0}, function (response) {
         usersDojosLink = response;
         return done();
       });
     }
 
     function loadDojoUsers(done) {
-      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage,
-                                    skip$: loadPageData.skip, sort$: $scope.queryModel.sort,
-                                    userType: $scope.queryModel.userType, name: $scope.queryModel.name}, function (response) {
+      cdDojoService.loadDojoUsers({dojoId:dojoId, limit$: $scope.pagination.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.queryModel.sort, userType: $scope.queryModel.userType, name: $scope.queryModel.name}, function (response) {
+        $scope.pagination.totalItems = response.length;
+        response = response.response;
         _.each(response, function (user) {
           var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
           user.types = thisUsersDojoLink.userTypes;
@@ -164,14 +163,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           return cb();
         });
       }, done);
-    }
-
-    function getTotalCount(done) {
-      //Query the loadDojoUsers service without the limit to get the total number of users.
-      cdDojoService.loadDojoUsers({dojoId: dojoId, deleted: 0, limit$: 'NULL'}, function (response) {
-        $scope.pagination.totalItems = response.length;
-        return done();
-      });
     }
   };
 
