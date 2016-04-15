@@ -105,6 +105,8 @@
                  is-open="datepicker.datePicker1"
                  ng-required="true"
                  ng-readonly="true"
+                 ng-disabled="pastEvent"
+                 ng-class="{'selectable': !pastEvent}"
                  current-text="{@i18n key="Today"/}"
                  clear-text="{@i18n key="Clear"/}"
                  close-text="{@i18n key="Done"/}"
@@ -130,6 +132,8 @@
                  is-open="datepicker.datePicker2"
                  ng-required="true"
                  ng-readonly="true"
+                 ng-disabled="pastEvent"
+                 ng-class="{'selectable': !pastEvent}"
                  current-text="{@i18n key="Today"/}"
                  clear-text="{@i18n key="Clear"/}"
                  close-text="{@i18n key="Done"/}"
@@ -192,7 +196,7 @@
 
       <div class="form-group">
         <label for="address">{@i18n key="Address"/}*:</label>
-        <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" 
+        <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress"
                   required required-message="'{@i18n key="Address is empty"/}'"
                   ng-change="updateLocalStorage('address', eventInfo.address)" name="address"
                   id="address" class="form-control" ng-model="eventInfo.address"
