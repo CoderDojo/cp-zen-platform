@@ -491,32 +491,37 @@
         eventInfo.emailSubject = $translate.instant('Event Invitation');
       }
 
-      var isDateRange = !moment.utc(eventInfo.toDate).isSame(eventInfo.date, 'day');
+      // TODO: remove when https://github.com/CoderDojo/community-platform/issues/932# will be fixed
+      try{
+        var isDateRange = !moment.utc(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
-      if (eventInfo.type === 'recurring' && isDateRange) {
-        // Extend eventInfo
-        if(eventInfo.recurringType === 'weekly') {
-          eventInfo.dates = getEveryTargetWeekdayInDateRange(
-            eventInfo.fixedStartDateTime,
-            eventInfo.fixedEndDateTime,
-            $scope.weekdayPicker.selection.id,
-            'weekly'
-          );
+        if (eventInfo.type === 'recurring' && isDateRange) {
+          // Extend eventInfo
+          if(eventInfo.recurringType === 'weekly') {
+            eventInfo.dates = getEveryTargetWeekdayInDateRange(
+              eventInfo.fixedStartDateTime,
+              eventInfo.fixedEndDateTime,
+              $scope.weekdayPicker.selection.id,
+              'weekly'
+            );
+          } else {
+            eventInfo.dates = getEveryTargetWeekdayInDateRange(
+              eventInfo.fixedStartDateTime,
+              eventInfo.fixedEndDateTime,
+              $scope.weekdayPicker.selection.id,
+              'biweekly'
+            );
+          }
         } else {
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
-            $scope.weekdayPicker.selection.id,
-            'biweekly'
+            null,
+            'one-off'
           );
         }
-      } else {
-        eventInfo.dates = getEveryTargetWeekdayInDateRange(
-          eventInfo.fixedStartDateTime,
-          eventInfo.fixedEndDateTime,
-          null,
-          'one-off'
-        );
+      } catch (err){
+        alertService.debugError($translate.instant('Error creating the dates') + ' ' + err, eventInfo);
       }
 
       if(!$scope.dojoInfo) {
@@ -541,12 +546,12 @@
                 }
               },
               function(err){
-                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+                alertService.debugError($translate.instant('Error setting up event') + ' ' + err, eventInfo);
                 goToMyDojos($state, usSpinnerService, dojoId)
               }
             );
           } else {
-            alertService.showError($translate.instant('Error setting up event'));
+            alertService.debugError($translate.instant('Error setting up event'), eventInfo);
             goToMyDojos($state, usSpinnerService, dojoId)
           }
         })
@@ -567,12 +572,12 @@
               }
             },
             function (err){
-              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+              alertService.debugError($translate.instant('Error setting up event') + ' ' + err, eventInfo);
               goToMyDojos($state, usSpinnerService, dojoId)
             }
           );
         } else {
-          alertService.showError($translate.instant('Error setting up event'));
+          alertService.debugError($translate.instant('Error setting up event'), eventInfo);
           goToMyDojos($state, usSpinnerService, dojoId)
         }
       }

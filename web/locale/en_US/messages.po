@@ -3006,3 +3006,12 @@ msgstr "You must choose an event"
 
 msgid "Tickets Now Available for"
 msgstr "Tickets Now Available for"
+
+msgid "We\'re trying to track down what is causing this bug :"
+msgstr "We\'re trying to track down what is causing this bug :"
+
+msgid "Please use the following link to our support messenger to report more details about it!"
+msgstr "Please use the following link to our support messenger to report more details about it!"
+
+msgid "Click here so we can help you !"
+msgstr "Click here so we can help you !"
