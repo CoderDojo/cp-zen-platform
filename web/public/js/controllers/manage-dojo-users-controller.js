@@ -175,7 +175,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     cdDojoService.saveUsersDojos(userDojo, null, function (err) {
       alertService.showError(JSON.stringify(err));
     });
-  }
+}
 
   $scope.updateUserPermissions = function(user, permission) {
     var hasPermission = false;
@@ -344,6 +344,12 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
     $scope.loadPage(true);
   }
+
+  $scope.userListDownloadLink = function (dojo) {
+    console.log('pressed');
+    cdDojoService.exportDojoUsers(dojoId);
+  };
+
 
   $scope.removeUser = function (user) {
     if($scope.canRemoveUsers) {
