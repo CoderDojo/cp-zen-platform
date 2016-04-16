@@ -409,6 +409,14 @@
             resolve: {
                 currentUser: resolves.loggedInUser
             }
+        })
+        .state("privacy-statement", {
+          url: "/privacy-statement",
+          templateUrl: '/templates/privacy-statement',
+          controller: 'privacy-statement-controller',
+          params: {
+            pageTitle: 'Privacy Statement',
+          }
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise('/404');
