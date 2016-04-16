@@ -79,6 +79,9 @@
   }
 
   function fixEventTime(newTime, date){
+    if (!newTime) {
+      return date;
+    }
     newTime = moment.utc(newTime);
     date = moment.utc(date);
     return moment.utc([ date.get('year'), date.get('month'), date.date(),
