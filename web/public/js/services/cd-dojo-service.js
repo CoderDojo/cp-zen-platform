@@ -100,7 +100,7 @@
         cdApi.post('dojos/load-dojo-users', {query: query}, win, fail || topfail);
       },
       exportDojoUsers: function(dojoId, win, fail) {
-        cdApi.get('dojos/export-users' + dojoId, win, fail || topfail);
+        cdApi.get('dojos/export-users/' + dojoId, win, fail || topfail);
       },
       generateUserInviteToken: function(data, win, fail) {
         cdApi.post('dojos/generate-user-invite-token', data, win, fail || topfail);
