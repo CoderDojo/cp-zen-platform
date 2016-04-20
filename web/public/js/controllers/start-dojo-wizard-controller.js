@@ -613,11 +613,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     $scope.setPlace = function(dojo, place, form) {
-      if(place.nameWithHierarchy.length > 40) {
-        if(form) form.place.$setValidity("maxLength", false);
-      } else {
-        if(form) form.place.$setValidity("maxLength", true);
-      }
       dojo.placeName = place.name;
       dojo.placeGeonameId = place.geonameId;
       dojo.county = {};

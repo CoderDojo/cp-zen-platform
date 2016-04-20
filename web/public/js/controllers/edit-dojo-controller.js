@@ -243,11 +243,6 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.setPlace = function (dojo, place, form) {
-    if(place.nameWithHierarchy.length > 40) {
-      if(form) form.place.$setValidity("maxLength", false);
-    } else {
-      if(form) form.place.$setValidity("maxLength", true);
-    }
     dojo.placeName = place.name || place.nameWithHierarchy;
     dojo.placeGeonameId = place.geonameId;
     dojo.county = {};
@@ -433,4 +428,3 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
     '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
-
