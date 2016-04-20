@@ -10,8 +10,14 @@
       <a ng-click="goTo('user-events')"><span ng-class="{'cd-active-tab': isSelected('events')}"
                                               class="cd-header-button cd-color-3">
         {@i18n key="Events"/}</span></a>
-      <a><span ng-click="adultForums()" class="cd-header-button cd-color-4">
+      <button class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a><span class="cd-header-button cd-color-4">
         {@i18n key="Forum"/}</span></a>
+      </button>
+        <ul class="dropdown-menu">
+          <li><a><span ng-click="kidsForums()" class="cd-header-button cd-color-4">{@i18n key="Kids Forum"/}</span></a></li>
+          <li><a><span ng-click="adultForums()" class="cd-header-button cd-color-4">{@i18n key="Adultss Forum"/}</span></a></li>
+        </ul>
       <a ng-click="goTo('badges-dashboard')"><span ng-class="{'cd-active-tab': isSelected('badges')}"
                                                    class="cd-header-button cd-color-5">
         {@i18n key="Badges"/}</span></a>

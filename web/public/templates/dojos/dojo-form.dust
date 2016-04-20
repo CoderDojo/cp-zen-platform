@@ -72,7 +72,7 @@
           <label for="dojoPlace" class="col-lg-4 cd-form-label1">
             <span>{@i18n key="CityTown"/}*</span>
           </label>
-          <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || createDojoForm.place.$error.maxLength || !dojo.place)}">
+          <div class="col-lg-8" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
             <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" required on-select="setPlace(dojo, $item, createDojoForm)" ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
               <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
@@ -80,7 +80,6 @@
               </ui-select-choices>
             </ui-select>
             <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
-            <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && createDojoForm.place.$error.maxLength">{@i18n key="Place name must be less than 40 characters."/}</label>
             <div class="cd-tooltip"><strong>{@i18n key="Please type City name in English/Latin character a-Z!"/}</strong></div>
           </div>
         </div>
