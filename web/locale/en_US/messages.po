@@ -3006,3 +3006,7 @@ msgstr "You must choose an event"
 
 msgid "Tickets Now Available for"
 msgstr "Tickets Now Available for"
+
+msgid "This  is shown to other users when your child uses the youth forums or if they choose to make their profile public. It should be a unique nickname. Try adding numbers at the beginning or end to make your alias unique."
+
+msgstr "This  is shown to other users when your child uses the youth forums or if they choose to make their profile public. It should be a unique nickname. Try adding numbers at the beginning or end to make your alias unique."
