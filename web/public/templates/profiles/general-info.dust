@@ -1,3 +1,11 @@
+<div ng-if="!edit-mode">
+  <div class="alert alert-info" ng-if="parentProfile && profile.ownProfileFlag">
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
+  </div>
+  <div class="alert alert-info" ng-if="!parentProfile && (profile.ownProfileFlag  || profile.myChild)">
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
+  </div>
+</div>
 <div ng-if="editMode">
   <div class="alert alert-info">
     <strong>{@i18n key="Registering for an event?"/}</strong><br />
