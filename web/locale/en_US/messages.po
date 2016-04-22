@@ -3006,3 +3006,6 @@ msgstr "You must choose an event"
 
 msgid "Tickets Now Available for"
 msgstr "Tickets Now Available for"
+
+msgid "Terms and Conditions here"
+msgstr "Terms and Conditions here"
