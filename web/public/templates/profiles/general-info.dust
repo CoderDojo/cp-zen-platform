@@ -33,7 +33,7 @@
           <div class="col-sm-8">
             <input type="text" name="alias" class="form-control" placeholder="{@i18n key="Alias"/}" ng-model="profile.alias">
             <div class="cd-tooltip">
-              {@i18n key="This  is shown to other users when your child uses the youth forums or if they choose to make their profile public. It should be a <b>unique</b> nickname. Try adding numbers at the beginning or end to make your alias unique."/}
+              {@i18n key="This  is shown to other users when your child uses the youth forums or if they choose to make their profile public. It should be a <strong>unique</strong> nickname. Try adding numbers at the beginning or end to make your alias unique."/}
             </div>
           </div>
         </div>
