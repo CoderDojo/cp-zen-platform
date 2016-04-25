@@ -373,7 +373,8 @@
       application.emailSubject = {
         'request':  $translate.instant('Your ticket request for'),
         'received': $translate.instant('has been received'),
-        'approved': $translate.instant('has been approved')
+        'approved': $translate.instant('has been approved'),
+        'cancelled': $translate.instant('has been cancelled')
       };
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
