@@ -23,6 +23,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   });
 
   $scope.editMode = false;
+  $scope.publicMode = false;
+  $scope.publicChampion = false;
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
@@ -425,6 +427,15 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.viewProfile = function () {
     $state.go('user-profile', {userId: $stateParams.userId});
+  }
+
+  $scope.publicProfile = function () {
+    var highestUserType = getHighestUserType(profile.data.userTypes);
+    $scope.publicMode = !$scope.publicMode;
+    if (highestUserType === 'champion') {
+      $scope.publicMode = false;
+      $scope.publicChampion = !$scope.publicChampion;
+    }
   }
 
   $scope.viewDojo = function(dojo) {

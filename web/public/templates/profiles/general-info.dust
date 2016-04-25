@@ -1,9 +1,11 @@
-<div ng-if="!edit-mode">
+<div ng-if="!editMode && !publicChampion">
   <div class="alert alert-info" ng-if="parentProfile && profile.ownProfileFlag">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
+    <a ng-click="publicProfile()">Click to view your public profile</a>
   </div>
   <div class="alert alert-info" ng-if="!parentProfile && (profile.ownProfileFlag  || profile.myChild)">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
+    <a ng-click="publicProfile()">Click to view your public profile</a>
   </div>
 </div>
 <div ng-if="editMode">
