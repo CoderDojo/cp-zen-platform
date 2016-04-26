@@ -1,9 +1,13 @@
 <div class="container target">
   <span spinner-key="user-profile-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-  <div class="row" ng-if="!profileVisible()">
+  <div class="row" ng-if="!profileVisible() || publicMode">
     <h3>{@i18n key="This profile is private"/}</h3>
+    <div class="col-sm-3">
+      <button ng-if="publicMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile"/}</button>
+    </div>
+    <div class="col-sm-8" contenteditable="false"></div>
   </div>
-  <div class="row" ng-if="profileVisible()">
+  <div class="row" ng-if="profileVisible() && !publicMode">
     <div class="col-sm-3">
       <!--left col-->
       <form name="uploadAvatarForm">
@@ -30,20 +34,19 @@
       </form>
 
       <span class="help-block"></span>
-      <button ng-if="!editMode && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
+      <button ng-if="!editMode &&  !publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
+      <button ng-if="editMode && !publicChampion && currentStateName !== 'add-child'" class="btn btn-default btn-block" ng-click="viewProfile()">{@i18n key="View Profile"/}</button>
+      <button ng-if="!publicMode && !publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile as Public"/}</button>
+      <button ng-if="publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile"/}</button>
       <span class="help-block"></span>
-      <div ng-if="hasAccess(profile.userTypes, ['parent-guardian'])" class="clearfix">
+      <div ng-if="hasAccess(profile.userTypes, ['parent-guardian']) && !publicChampion " class="clearfix">
         <button ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-left" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
         <button ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
       </div>
 
-      <span class="help-block"></span>
+      <span class="help-block"></span><span class="help-block"></span>
 
-      <button ng-if="editMode && currentStateName !== 'add-child'" class="btn btn-default btn-block" ng-click="viewProfile()">{@i18n key="View Profile"/}</button>
-
-      <span class="help-block"></span>
-
-      <div ng-if="!editMode && !hideGeneralInfoBlock()" class="panel panel-default">
+      <div ng-if="!editMode && !publicChampion && !hideGeneralInfoBlock()" class="panel panel-default">
         <div class="panel-heading">{@i18n key="General Info"/}</div>
         <div class="panel-body">
 
