@@ -17,7 +17,7 @@
         <h4 ng-bind="profile.userTypeTitle"></h4>
 
         <input type="file" ngf-select ng-model="avatar" name="avatar" class="center-block"
-               ng-show="editMode && profile.id" accept="image/*"
+               ng-show="editMode && profile.id && !publicChampion" accept="image/*"
                ngf-multiple="false"
                ngf-max-height="1200"
                ngf-max-width="1200"
@@ -28,7 +28,7 @@
           {@i18n key="Your profile image is too large. Please resize to a maximum of 640/640 pixels."/}
         </label>
 
-        <div ng-if="editMode && profile.id" ng-disabled="!avatar || !uploadAvatarForm.$valid" class="btn btn-default center-block" ng-click="upload(avatar)">
+        <div ng-if="editMode && profile.id && !publicChampion" ng-disabled="!avatar || !uploadAvatarForm.$valid" class="btn btn-default center-block" ng-click="upload(avatar)">
           {@i18n key="Upload new picture"/}
         </div>
       </form>

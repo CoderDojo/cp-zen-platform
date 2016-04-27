@@ -8,7 +8,7 @@
     <a ng-click="publicProfile()">Click to view your public profile</a>
   </div>
 </div>
-<div ng-if="editMode">
+<div ng-if="editMode && !publicChampion">
   <div class="alert alert-info">
     <strong>{@i18n key="Registering for an event?"/}</strong><br />
     {@i18n key="If you need to book in to a Dojo event, you need to fill out your profile first."/}
