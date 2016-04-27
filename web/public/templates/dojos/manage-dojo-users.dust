@@ -37,7 +37,7 @@
       <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
     </div>
   </form>
-  <button class="btn btn-primary" ng-click="userListDownloadLink()">{@i18n key="Export User List"/}</button>
+  <button class="btn btn-primary" ng-click="userListDownloadLink()" ng-href="{{ url }}">{@i18n key="Export User List"/}</button>
   <div class="col-md-12 table-responsive">
     <table id="manageDojoUsers" class="table cd-grid-table">
       <thead>
