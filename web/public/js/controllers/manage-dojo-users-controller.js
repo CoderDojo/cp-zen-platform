@@ -348,8 +348,8 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.userListDownloadLink = function () {
     cdDojoService.exportDojoUsers(dojoId, function (response) {
       var downloadLink = angular.element('<a></a>');
-      var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
-      downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
+      var csv = "data:text/csv;charset=utf-8," + response;
+      downloadLink.attr('href', encodeURI(csv));
       downloadLink.attr('download', 'dojo-' + dojoId + '.csv');
       downloadLink[0].click();
     });

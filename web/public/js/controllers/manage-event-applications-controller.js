@@ -71,10 +71,24 @@
     ];
 
     cdEventsService.getEvent(eventId, function (event) {
-      event.guestListDownloadLink = '/api/2.0/events/export-guest-list/dojo/' + dojoId + '/event/'+ event.id + '/guests';
-      event.waitingListDownloadLink = '/api/2.0/events/export-guest-list/dojo/' + dojoId + '/event/'+ event.id + '/waiting';
-      event.fullListDownloadLink = '/api/2.0/events/export-guest-list/dojo/' + dojoId + '/event/'+ event.id + '/all';
-
+      event.listDownloadLink = function (status) {
+        cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
+          var downloadLink = angular.element('<a></a>');
+          var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
+          downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
+          downloadLink.attr('download', 'dojo-' + dojoId + 'event-' + event.id + ' ' + status + 'list.csv');
+          downloadLink[0].click();
+        });
+      };
+      event.guestListDownloadLink = function () {
+				event.listDownloadLink('guests');
+			};
+      event.waitingListDownloadLink = function () {
+        event.listDownloadLink('waiting');
+      };
+      event.fullListDownloadLink = function () {
+        event.listDownloadLink('all');
+      };
 
       var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
       var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
