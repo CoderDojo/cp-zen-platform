@@ -13,7 +13,7 @@
     scriptTag = doc.createElement('script');
     scriptTag.id = scriptId;
     scriptTag.setAttribute('src',
-      'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyD7i1_IMvI1ulfsvX7sntwlGULTL_iQ69U');
+      'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyDSItbbuNOuRljJbY9nJiO1WFJh7BUgt_Q');
     doc.head.appendChild(scriptTag);
     $window.mapReady = (function(dfd) {
       return function() {
