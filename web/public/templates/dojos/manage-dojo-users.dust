@@ -2,6 +2,7 @@
 <legend>{@i18n key="Manage Dojo Users"/}</legend>
 <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
 <div class="row">
+  <button class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()" ng-href="{{ url }}">{@i18n key="Export User List"/}</button>
 	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm">
   	<div class="form-group">
 	    <div class="col-lg-3">
@@ -36,9 +37,8 @@
       </div>
       <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
     </div>
-
   </form>
-	<div class="col-md-12 table-responsive">
+  <div class="col-md-12 table-responsive">
     <table id="manageDojoUsers" class="table cd-grid-table">
       <thead>
         <tr>

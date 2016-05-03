@@ -345,6 +345,16 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.loadPage(true);
   }
 
+  $scope.userListDownloadLink = function () {
+    cdDojoService.exportDojoUsers(dojoId, function (response) {
+      var downloadLink = angular.element('<a></a>');
+      var csv = "data:text/csv;charset=utf-8," + response;
+      downloadLink.attr('href', encodeURI(csv));
+      downloadLink.attr('download', 'dojo-' + dojoId + '.csv');
+      downloadLink[0].click();
+    });
+  };
+
   $scope.removeUser = function (user) {
     if($scope.canRemoveUsers) {
       usSpinnerService.spin('manage-dojo-users-spinner');
