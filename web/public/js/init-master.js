@@ -17,6 +17,12 @@
     doc.head.appendChild(scriptTag);
     $window.mapReady = (function(dfd) {
       return function() {
+        //since we're loading gmap asyncly, we need to load any lib depending on it the same way
+        var scriptTag = doc.createElement('script');
+        scriptTag.id = scriptId;
+        scriptTag.setAttribute('src',
+          '/components/google-maps-utility-library-v3/styledmarker/src/StyledMarker.js');
+        doc.head.appendChild(scriptTag);
         dfd.resolve(true);
         delete $window.mapReady;
       };
@@ -261,6 +267,28 @@
           templateUrl: '/dojos/template/badges/index',
           params: {
             pageTitle: 'Badges',
+          }
+        })
+        .state('poll-stats', {
+          url:'/poll/:pollId',
+          controller: 'poll-controller',
+          templateUrl: '/dojos/template/poll-stats',
+          params: {
+            pageTitle: 'Poll stats',
+          },
+          resolve: {
+            gmap: gmap
+          }
+        })
+        .state('fill-poll', {
+          url:'/poll/:pollId/dojo/:dojoId',
+          controller: 'poll-controller',
+          templateUrl: '/dojos/template/fill-poll',
+          params: {
+            pageTitle: 'Poll',
+          },
+          resolve: {
+            gmap: gmap
           }
         })
         .state('error-404-no-headers', {

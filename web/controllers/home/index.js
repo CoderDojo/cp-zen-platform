@@ -20,7 +20,7 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/register',
-    handler: function (request, reply) { 
+    handler: function (request, reply) {
       reply.view('index', request.locals);
     }
   },
@@ -73,7 +73,7 @@ var controller = module.exports = [
     }
   },
 
-  {	    
+  {
     method: 'GET',
     path: '/dojo/{id}/{alpha2*}',
     handler: function (request, reply) {
@@ -86,7 +86,7 @@ var controller = module.exports = [
     }
   },
 
-  {     
+  {
     method: 'GET',
     path: '/dojo/{legacyId}',
     handler: function (request, reply) {
@@ -104,7 +104,7 @@ var controller = module.exports = [
 
   {
     method: 'GET',
-    path: '/accept_dojo_user_request/{userId}/{userInviteToken}', 
+    path: '/accept_dojo_user_request/{userId}/{userInviteToken}',
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
@@ -112,7 +112,7 @@ var controller = module.exports = [
 
   {
     method: 'GET',
-    path: '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}', 
+    path: '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}',
     handler: function (request, reply){
       reply.view('index', request.locals);
     }
@@ -137,6 +137,22 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/badges',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
+    path: '/poll/{pollId}',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
+    path: '/poll/{pollId}/dojo/{dojoId}',
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }

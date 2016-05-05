@@ -103,7 +103,6 @@ server.ext('onPreResponse', function (request, reply) {
   if (request.url.path.indexOf('/api/2.0') === 0) {
     return reply.continue();
   }
-
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
@@ -291,6 +290,11 @@ server.register(badges, function (err) {
 var events = require('../lib/events.js');
 server.register(events, function (err) {
   checkHapiPluginError('events')(err);
+});
+
+var polls = require('../lib/polls.js');
+server.register(polls, function (err) {
+  checkHapiPluginError('polls')(err);
 });
 
 // Locale related server method
