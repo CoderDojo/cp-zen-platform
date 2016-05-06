@@ -135,6 +135,35 @@
   background-color: #FFA500;
 }
 
+.dropdown-menu {
+  min-width: 0px !important;
+  position: relative;
+  float: none;
+  margin: 0 0 0;
+  padding: 0;
+}
+
+.navbar-nav .open .dropdown-menu > li >a {
+  padding: 0 0;
+  text-align: center;
+}
+
+.dropdown-menu > li > a > cd-header-button {
+  width: 0;
+}
+
+open > .dropdown-menu {
+  display: inline-block;
+}
+
+.dropdown-menu ul {
+  white-space: nowrap;
+}
+
+.nav > li > a {
+  padding: 0 0;
+}
+
 #intercom-container .intercom-launcher {
   visibility: visible !important;
 }
@@ -157,6 +186,11 @@
     width: 100%;
   }
   .cd-header-button {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    positon: fixed;
     width: 100%;
   }
 }
