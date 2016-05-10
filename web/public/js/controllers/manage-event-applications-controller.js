@@ -76,8 +76,7 @@
           var downloadLink = angular.element('<a></a>');
           var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
           downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-          downloadLink.attr('download', 'dojo-' + dojoId + 'event-' + event.id + ' ' + status + 'list.csv');
-          downloadLink[0].click();
+          window.open(downloadLink[0]);
         });
       };
       event.guestListDownloadLink = function () {
