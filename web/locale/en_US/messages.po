@@ -789,6 +789,14 @@ msgstr "Need Mentors"
 msgid "We need mentors!"
 msgstr "We need mentors!"
 
+msgid "Submit!"
+msgstr "Submit!"
+
+msgid "Thanks for submitting your information!\n We will be sharing the final results of this survey with the community once it has been collected."
+msgstr "Thanks for submitting your information!\n We will be sharing the final results of this survey with the community once it has been collected."
+
+msgid "Your Dojo already submitted its answer, thanks for your participation !"
+msgstr "Your Dojo already submitted its answer, thanks for your participation !"
 
 msgid "Current Stage"
 msgstr "Current Stage"

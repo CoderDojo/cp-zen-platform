@@ -156,6 +156,7 @@
     <script src="/js/controllers/apply-for-event-controller.js"></script>
     <script src="/js/controllers/accept-child-controller.js"></script>
     <script src="/js/controllers/dojos-map-controller.js"></script>
+    <script src="/js/controllers/poll-controller.js"></script>
     <script src="/js/controllers/badges-dashboard-controller.js"></script>
     <script src="/js/controllers/session-modal-controller.js"></script>
 
@@ -167,7 +168,9 @@
     <script src="/js/services/cd-agreements-service.js"></script>
     <script src="/js/services/cd-users-service.js"></script>
     <script src="/js/services/cd-badges-service.js"></script>
+    <script src="/js/services/cd-poll-service.js"></script>
     <script src="/js/services/programming-languages-service.js"></script>
+    <script src="/js/services/cd-theme.js"></script>
 
     <script src="/js/services/cd-config-service.js"></script>
     <script src="/js/services/languages-service.js"></script>
@@ -189,6 +192,9 @@
     <script src="/js/directives/cd-apply-for-event.js"></script>
     <script src="/js/directives/cd-ngEnter.js"></script>
     <script src="/js/directives/cd-http-prefix.js"></script>
+    <script src="/js/directives/cd-poll-counter.js"></script>
+    <script src="/js/directives/cd-poll-map.js"></script>
+    <script src="/js/directives/cd-poll-form.js"></script>
 
     <script src="/js/init-master.js"></script>
 </body>

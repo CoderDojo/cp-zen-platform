@@ -140,7 +140,7 @@
             <tags-input ng-model="profile.languagesSpoken"  placeholder="{@i18n key="Languages Spoken"/}"></tags-input>
           </div>
         </div>
-        <div class="form-group form-inline">
+        <div class="form-group form-inline full-width">
           <label class="col-sm-4 control-label" for="gender-selection">{@i18n key="Gender"/}:</label>
           <div class="radio">
             <input type="radio" ng-model="profile.gender" name="gender" id="female" value="Female">
@@ -161,7 +161,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group form-inline" ng-if="canMakeProfilePrivate()">
+        <div class="form-group form-inline full-width" ng-if="canMakeProfilePrivate()">
           <label class="col-sm-4 control-label">{@i18n key="Private Profile"/} </label>
           <div class="radio">
             <input type="radio" ng-model="profile.private" name="privateProfile" id="privateProfile-yes" value="true">
