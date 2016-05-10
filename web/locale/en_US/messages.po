@@ -2333,6 +2333,9 @@ msgstr "Email is required"
 msgid "Join request not found"
 msgstr "Join request not found"
 
+msgid "Request to join sent!"
+msgstr "Request to join sent!"
+
 msgid "You must have the Dojo Admin permission to accept user join requests."
 msgstr "You must have the Dojo Admin permission to accept user join requests."
 
