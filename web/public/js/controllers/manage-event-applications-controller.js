@@ -70,11 +70,12 @@
       {name: 'other', title: $translate.instant('Other')}
     ];
 
-    cdEventsService.getEvent(eventId, function (event) {
+    cdEventsService.load(eventId, function (event) {
       event.listDownloadLink = function (status) {
         cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
           var downloadLink = angular.element('<a></a>');
           var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
+
           downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
           window.open(downloadLink[0]);
         });

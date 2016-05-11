@@ -1,5 +1,9 @@
 <div class="cd-dashboard cd-color-3-underline">
   <div class="dojo-list-dashboard">
+    <div class="alert alert-info" ng-show="showBanner()">
+      <strong>{@i18n key="Your profile has now been created."/}</strong><br />
+      {@i18n key="You can now sign up to the Dojo below and book your ticket."/}
+    </div>
     <span spinner-key="dojo-detail-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="row">
       <div class="dojo-detail">
