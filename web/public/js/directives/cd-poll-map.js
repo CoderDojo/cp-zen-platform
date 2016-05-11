@@ -33,7 +33,6 @@ function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $
             cdPollService.getResults(query,
               function(results){
                 var votes = {};
-                console.log(results, query);
                 if(results.length > 0){
                   cdDojoService.list({ids: _.map(results, 'dojoId')}, function(dojos){
                     async.eachSeries(dojos, function(dojo, done){
@@ -54,6 +53,8 @@ function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $
                             done();
                             $scope.markers.push(marker);
                           }, 1000/results.length);
+                      }else {
+                        done();
                       }
                     });
                 });
