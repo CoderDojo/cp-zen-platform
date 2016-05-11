@@ -7,6 +7,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
   $scope.markers = [];
   $scope.requestInvite = {};
   $scope.userMemberCheckComplete = false;
+  $scope.inviteExists = false;
   currentUser = currentUser.data;
   var approvalRequired = ['mentor', 'champion'];
 
@@ -19,6 +20,10 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
     if(!dojo.verified && dojo.creator !== currentUser.id && !_.contains(currentUser.roles, 'cdf-admin')){
       return $state.go('error-404-no-headers');
+    }
+
+    if(_.contains(_.map(currentUser.joinRequests, 'dojoId'), dojo.id)){
+      $scope.inviteExists = true;
     }
 
     //Check if user is a member of this Dojo
@@ -107,6 +112,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
             usSpinnerService.stop('dojo-detail-spinner');
             if(!response.error) {
               alertService.showAlert($translate.instant('Join Request Sent'));
+              $scope.inviteExists = true;
             } else {
               alertService.showError($translate.instant(response.error));
             }
@@ -157,8 +163,11 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     });
   }
 
+  $scope.isInviteExisting = function () {
+    return $scope.inviteExists;
+  }
+
 }
 
 angular.module('cpZenPlatform')
   .controller('dojo-detail-controller', ['$scope', '$state', '$location', 'cdDojoService', 'cdUsersService', 'alertService', 'usSpinnerService', 'auth', 'dojo', 'gmap', '$translate', 'currentUser', cdDojoDetailCtrl]);
-
