@@ -2,8 +2,8 @@
 <legend>{@i18n key="Manage Dojo Users"/}</legend>
 <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
 <div class="row">
-  <button class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()" ng-href="{{ url }}">{@i18n key="Export User List"/}</button>
-	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm">
+  <button type="button" class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()">{@i18n key="Export User List"/}</button>
+	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm" class="col-xs-12 col-md-10">
   	<div class="form-group">
 	    <div class="col-lg-3">
 	      <input type="email" required required-message="'{@i18n key="Email is empty"/}'" placeholder="{@i18n key="Enter Email"/}" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
@@ -22,7 +22,7 @@
     </div>
 
   </form>
-  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm">
+  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm" class="col-xs-12 col-md-10">
     <div class="form-group">
       <div class="col-lg-3">
         <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control" name="filterUserName" ng-model="filter.name" id="filterUserName">
