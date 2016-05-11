@@ -179,6 +179,7 @@
     <script src="/js/services/utils-service.js"></script>
     <script src="/js/services/intercom-service.js"></script>
     <script src="/js/services/cd-theme.js"></script>
+    <script src="/js/services/dojo-utils.js"></script>
 
     <script src="/js/directives/cd-register-account.js"></script>
     <script src="/js/directives/cd-champion-registration.js"></script>
@@ -190,6 +191,7 @@
     <script src="/js/directives/cd-apply-for-event.js"></script>
     <script src="/js/directives/cd-ngEnter.js"></script>
     <script src="/js/directives/cd-http-prefix.js"></script>
+    <script src="/js/directives/cd-event.js"></script>
     <script src="/js/directives/cd-dropdown-multiselect-disabled.js"></script>
     <script src="/js/directives/cd-poll-counter.js"></script>
     <script src="/js/directives/cd-poll-map.js"></script>

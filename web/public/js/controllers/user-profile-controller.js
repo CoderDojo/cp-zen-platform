@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils) {
 
   $scope.referer = $state.params.referer;
 
@@ -249,7 +249,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.parentProfile = _.contains(profile.data.userTypes, 'parent-guardian');
-
   $scope.save = function(profile){
     _.each(['http://', 'https://', 'www.'], function(prefix){
       _.each(['linkedin', 'twitter'], function(field){
@@ -265,67 +264,109 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
     profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
-      'formattedDateOfBirth', 'user', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion', 'requestingOwnProfile']);
+      'formattedDateOfBirth', 'user', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion', 'requestingOwnProfile',
+       'isOpen']);
 
-    if($stateParams.userType === 'attendee-o13' || $stateParams.userType === 'attendee-u13' || profile.myChild){
-      saveYouthViaParent(profileCopy);
-    } else {
-      saveDirect(profileCopy);
-    }
+    var childrenCopy = _.omit(profileCopy, ['address','alpha3','avatar','badges','countryname',
+      'countrynumber','email','entity$','gender','userId','languageSpoken','lastEdited','linkedin','ninjaInvites',
+      'notes','optionalHiddenFields','parentInvites','phone','projects','state','twitter','userType','userTypes',
+      'parents', 'requiredFieldsComplete', 'id', 'children']);
+
+      async.series([
+        function(callback){
+          saveDirect(profileCopy, callback);
+        },
+        function(callback){
+          if($scope.profile.children !== null) {
+            localStorage.setItem('children', 'true');
+            async.mapSeries($scope.profile.children, function(child, doneChild){
+              childrenCopy.name = child.name;
+              childrenCopy.alias = child.alias;
+              childrenCopy.dob = child.dateOfBirth;
+              childrenCopy.gender = child.gender;
+              childrenCopy.email = child.email;
+              childrenCopy.parents = [profileCopy.id];
+              if(getAge(child.dateOfBirth) >=13){
+                childrenCopy.userTypes = ['attendee-o13'];
+              } else {
+                childrenCopy.userTypes = ['attendee-u13'];
+              }
+              saveYouthViaParent(childrenCopy, doneChild);
+            }, function(err, results){
+              callback(err, results);
+            });
+          } else {
+            async.mapSeries($scope.profile, function(profile, doneProfile){
+              saveDirect(profileCopy, doneProfile);
+            }, function(err, results){
+              callback(err, results);
+            });
+          }
+        }
+      ], function (err, results) {
+          results = _.flatten(results);
+          var messages = [];
+          //  Server error
+          if (err) {
+            return alertService.showError($translate.instant('An error has occurred while saving profile'));
+          } else { // Functional errors
+            var errorous = false;
+            _.each( results, function (result) {
+              if(result && result.error){
+                var error_string = "";
+                error_string = result.error === 'nick-exists' ? $translate.instant('Alias already exists.') : result.error;
+                messages.push($translate.instant('An error has occurred while saving youth profile') + ': ' + error_string);
+                errorous = true;
+              }
+              if (result && result.ok === false) {
+                messages.push($translate.instant(result.why));
+                errorous = true;
+                goTo();
+              } else {
+                messages.push($translate.instant('Profile(s) have been saved successfully'));
+              }
+            });
+            var message = _.uniq(messages).join('</br>');
+            if(errorous){
+              return alertService.showError(message);
+            } else {
+              $scope.profile = profile;
+              $scope.profile.private =  $scope.profile.private ? "true" : "false";
+              alertService.showAlert(message);
+              auth.instance(function(data){
+                if( data.user ) $rootScope.$broadcast('user-updated', data.user);
+                if($scope.referer){
+                  $window.location.href = $scope.referer;
+                } else {
+                  goTo();
+                }
+              });
+            }
+          }
+      });
+
   };
 
-  function saveYouthViaParent(profile){
+  function saveYouthViaParent(profile, callback){
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-
-    cdUsersService.saveYouthProfile(profile, function (response) {
-      if(response && response.error){
-        var error_string = "";
-        error_string = response.error === 'nick-exists' ? $translate.instant('Alias already exists.') : response.error;
-        return alertService.showError($translate.instant('An error has occurred while saving profile.') + ': ' + error_string);
-      }
-      alertService.showAlert($translate.instant('Profile has been saved successfully'));
-      if($scope.referer){
-        $window.location.href = $scope.referer;
-      } else {
-        $state.go('user-profile', {userId: response.userId});
-      }
-    }, function(){
-      alertService.showError($translate.instant('An error has occurred while saving profile'));
-    });
+    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed);
   }
 
-  function saveDirect(profile){
-    profile = _.omit(profile, ['userTypes', 'dojos']);
+  function saveDirect(profile, callback){
+    profile = _.omit(profile, ['userTypes', 'dojos', 'children']);
 
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
 
-    function win(profile){
-      if(profile.ok === false) {
-        alertService.showError($translate.instant(profile.why));
-        $state.go('user-profile', {userId: $stateParams.userId});
-      } else {
-        $scope.profile = profile;
-        $scope.profile.private =  $scope.profile.private ? "true" : "false";
-        alertService.showAlert($translate.instant('Profile has been saved successfully'));
-        auth.instance(function(data){
-          if( data.user ) $rootScope.$broadcast('user-updated', data.user);
-          if($scope.referer){
-            $window.location.href = $scope.referer;
-          } else {
-            $state.go('user-profile', {userId: $stateParams.userId});
-          }
-        });
-      }
-    }
-
-    function fail(){
-      alertService.showError($translate.instant('An error has occurred while saving profile'));
-    }
-
-    cdUsersService.saveProfile(profile, win, fail);
+    cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed);
+  }
+  function saveProfileWorked (response){
+    this.callback(null, response);
+  }
+  function saveProfileFailed (err){
+    this.callback(err);
   }
 
   $scope.toggleEdit = function(field){
@@ -339,10 +380,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.picker = {opened: false};
 
-  $scope.open = function ($event) {
+  $scope.open = function ($event, opened) {
     $event.preventDefault();
     $event.stopPropagation();
-    $scope.picker.opened = true;
+    opened.isOpen = true;
   };
 
   cdDojoService.listCountries(function(countries) {
@@ -351,7 +392,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   var initialDate = new Date();
   initialDate.setFullYear(initialDate.getFullYear()-18);
-  $scope.dobDateOptions = {
+  $scope.dobDateOptions = $scope.childDobDateOptions = {
     formatYear: 'yyyy',
     startingDay: 1,
     'datepicker-mode': "'year'",
@@ -576,10 +617,84 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.scrollToInvalid = function (form) {
-      if (form.$invalid) {
-          angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
-      }
+    if (form.$invalid) {
+      angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+    }
   };
+
+  $scope.initialForm = function () { //if no event id, user is not taking flow from dojo through booking
+    if(localStorage.eventId){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  $scope.afterForm = function () {
+    if(document.referrer.indexOf('/register')>=0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  $scope.abilityToAddChildren = function (){ //dont show add children section if user is youth or is taking direct registration flow (not from booking event ticket)
+    if($scope.profile && ($scope.profile.userTypes.indexOf('attendee-u13') > -1 ||
+       $scope.profile.userTypes.indexOf('attendee-o13') > -1) || (!localStorage.eventId)){
+      return false;
+    }
+    return true;
+  };
+
+  $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+
+  $scope.addChild = function () { //add another child object
+    var child = {
+      name: null,
+      alias: null,
+      dateOfBirth: null,
+      email: null,
+      gender: null
+    };
+    $scope.profile.children.push(child);
+  }
+
+  $scope.removeChild = function ($index) {
+    return $scope.profile.children.splice($index, 1);
+  };
+
+  $scope.hideRemoveChild = function () {
+    if($scope.profile.children.length === 0){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function getAge(birthday) {
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  function goTo(){
+    var eventId = localStorage.getItem('eventId');
+    var dojoId = localStorage.getItem('dojoId');
+    var urlSlug = localStorage.getItem('dojoUrlSlug');
+    if (urlSlug.indexOf("/dojo")>=0){
+      return $state.go('dojo-event-details', {
+        dojoId: dojoId,
+        eventId: eventId
+      });
+    } else {
+      var userId = $state.params.userId;
+      $state.go('user-profile', {userId: userId});
+    }
+  }
+
+  if(profile.data.userType==='attendee-o13' || !localStorage.eventId){ //youth can't have children
+    $scope.profile.children = null;
+  }
 
 }
 
@@ -587,4 +702,4 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', cdUserProfileCtrl]);

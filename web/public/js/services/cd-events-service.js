@@ -6,8 +6,13 @@ function cdEventsService(cdApi, $q){
   }
 
   return {
-    getEvent: function(id, win, fail) {
+    load: function(id, win, fail) {
       cdApi.get('events/' + id, win, fail || topfail);
+    },
+    loadPromise: function (id) {
+      var deferred = $q.defer();
+      cdApi.get('events/' + id, deferred.resolve, deferred.reject || topfail);
+      return deferred.promise;
     },
     saveEvent: function(eventInfo, win, fail){
       cdApi.post('events/save', {eventInfo: eventInfo}, win, fail || topfail);
@@ -42,6 +47,11 @@ function cdEventsService(cdApi, $q){
     },
     searchSessions: function (query, win, fail) {
       cdApi.post('events/sessions/search', {query: query}, win, fail || topfail);
+    },
+    searchSessionsPromise: function (query) {
+      var deferred = $q.defer();
+      cdApi.post('events/sessions/search', {query: query}, deferred.resolve, deferred.reject || topfail);
+      return deferred.promise;
     },
     bulkApplyApplications: function (applications, win, fail) {
       cdApi.post('events/bulk-apply-applications', {applications: applications}, win, fail || topfail);

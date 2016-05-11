@@ -1,0 +1,17 @@
+<table>
+  <tbody class="events-info">
+    <tr>
+      <td>{{ event.name }}</td>
+      <td>{{ event.formattedDate }}</td>
+      <td>{{ event.type }}</td>
+
+    </tr>
+    <tr class="event-info-row-content">
+      <td colspan="3">
+        <div>
+          <cd-apply-for-event></cd-apply-for-event>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

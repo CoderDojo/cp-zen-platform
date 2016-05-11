@@ -1,4 +1,4 @@
-<div class="profile-section cd-color-4-underline">
+<div class="profile-section cd-color-4-underline" ng-show="initialForm()">
   <legend>{@i18n key="Badges"/}</legend>
   <button ng-show="false" ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>
   <div class="panel-body">
