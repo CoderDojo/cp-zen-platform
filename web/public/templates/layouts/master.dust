@@ -195,6 +195,7 @@
     <script src="/js/directives/cd-poll-counter.js"></script>
     <script src="/js/directives/cd-poll-map.js"></script>
     <script src="/js/directives/cd-poll-form.js"></script>
+    <script src="/js/directives/cd-unfinished-workflow.js"></script>
 
     <script src="/js/init-master.js"></script>
 </body>
