@@ -188,7 +188,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
         $scope.markers.push(marker);
       }
     });
-    markerClusterer = new MarkerClusterer($scope.model.map, $scope.markers);
+    markerClusterer = new MarkerClusterer($scope.model.map, $scope.markers, {imagePath:'components/google-maps-utility-library-v3/markerclusterer/images/m'});
   }
 
   function getBoundsRadius(bounds) {
