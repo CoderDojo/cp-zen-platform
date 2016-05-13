@@ -143,6 +143,7 @@
     <script src="/js/cp-zen-platform.js"></script>
     <script src="/js/controllers/login-controller.js"></script>
 
+    <script src="/components/ngGeolocation/ngGeolocation.min.js"></script>
     <script src="/js/controllers/header-controller.js"></script>
     <script src="/js/controllers/dojo-detail-controller.js"></script>
     <script src="/js/controllers/start-dojo-wizard-controller.js"></script>
