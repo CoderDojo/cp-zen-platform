@@ -3020,3 +3020,21 @@ msgstr "Tickets Now Available for"
 
 msgid "Terms and Conditions here"
 msgstr "Terms and Conditions here"
+
+msgid "An error has occurred while saving youth profile"
+msgstr "An error has occurred while saving youth profile"
+
+msgid "Profile(s) have been saved successfully"
+msgstr "Profile(s) have been saved successfully"
+
+msgid "Got a child? Add them below"
+msgstr "Got a child? Add them below"
+
+msgid "Add child"
+msgstr "Add child"
+
+msgid "Remove child"
+msgstr "Remove child"
+
+msgid "Are you sure you want to remove this child?"
+msgstr "Are you sure you want to remove this child?"

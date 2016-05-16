@@ -40,8 +40,8 @@
       <button ng-if="publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile"/}</button>
       <span class="help-block"></span>
       <div ng-if="hasAccess(profile.userTypes, ['parent-guardian']) && !publicChampion " class="clearfix">
-        <button ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-left" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
-        <button ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
+        <button ng-show="initialForm()" ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-left" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
+        <button ng-show="initialForm()" ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
       </div>
 
       <span class="help-block"></span><span class="help-block"></span>
@@ -121,7 +121,7 @@
       <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
       <notes ng-if="!hideChampionProfileBlock('notes') && hasAccess(profile.userTypes, ['champion'])"></notes>
 
-      <div ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13', 'parent-guardian', 'mentor', 'champion'])">
+      <div  ng-show="initialForm()" ng-if="!hideProfileBlock('dojos') && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13', 'parent-guardian', 'mentor', 'champion'])">
         <legend contenteditable="false" class="legend-color-6-border">{@i18n key="Member of Dojos"/}</legend>
         <div class="panel-heading" ></div>
         <div class="panel-body">

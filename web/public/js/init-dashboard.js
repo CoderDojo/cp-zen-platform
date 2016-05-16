@@ -39,15 +39,22 @@
       }, function (err) {
         dfd.reject(err);
       });
-    } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
-      cdDojoService.find({
-        urlSlug: $stateParams.country + '/' + $stateParams.path
-      }, function(data) {
-        dfd.resolve(data);
-      }, function(err) {
-        dfd.reject(err);
-      });
-    } else {
+    } else if(($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) ) {
+      cdDojoService.find({ urlSlug: $stateParams.country + '/' + $stateParams.path },
+       function(data) {
+          dfd.resolve(data);
+        }, function(err) {
+          dfd.reject(err);
+        });
+    } else if ($stateParams.dojoId){
+      cdDojoService.load($stateParams.dojoId,
+        function(data) {
+          dfd.resolve(data);
+        }, function(err) {
+          dfd.reject(err);
+        });
+    }
+    else {
       dfd.reject(new Error('No Dojo found.'));
     }
     return dfd.promise;
@@ -63,6 +70,11 @@
   var resolves = {
     profile: function($stateParams, cdUsersService){
       return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
+    },
+    ownProfile: function(auth, cdUsersService){
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        return cdUsersService.userProfileDataPromise({userId: currentUser.id}).then(winCb, failCb);
+      }, failCb);
     },
     initUserTypes: function(cdUsersService) {
       return cdUsersService.getInitUserTypesPromise().then(winCb, failCb);
@@ -97,6 +109,12 @@
     },
     ticketTypes: function (cdEventsService) {
       return cdEventsService.ticketTypesPromise().then(winCb, failCb);
+    },
+    event: function($stateParams, cdEventsService){
+     return cdEventsService.loadPromise($stateParams.eventId).then(winCb, failCb);
+    },
+    sessions: function($stateParams, cdEventsService){
+      return cdEventsService.searchSessionsPromise({eventId: $stateParams.eventId, status: 'active'}).then(winCb, failCb);
     }
   };
 
@@ -218,6 +236,28 @@
           },
           ncyBreadcrumb: {
             label: '{{manageDojoEventsPageTitle}}'
+          }
+        })
+        .state("dojo-event-details", {
+          url: "/dashboard/dojo/:dojoId/event/:eventId",
+          templateUrl: '/dojos/template/events/details',
+          controller: function($scope, dojo, event, sessions, currentUser){
+            $scope.dojo = dojo;
+            $scope.event = event.data;
+            $scope.sessions = sessions.data;
+            $scope.currentUser = currentUser.data;
+          },
+          params: {
+            pageTitle: 'Event details'
+          },
+          resolve: {
+            currentUser: resolves.ownProfile,
+            dojo: resolveDojo,
+            sessions: resolves.sessions,
+            event: resolves.event
+          },
+          ncyBreadcrumb: {
+            label: '{{EventDetailsPageTitle}}'
           }
         })
         .state("manage-applications", {
