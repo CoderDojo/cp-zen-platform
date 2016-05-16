@@ -631,10 +631,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.afterForm = function () {
-    if(document.referrer.indexOf('/register')>=0){
-      return true;
-    } else {
+    if(!localStorage.eventId){
       return false;
+    } else {
+      return true;
     }
   }
 
