@@ -1,0 +1,28 @@
+<div ng-if="!dojoMember && userMemberCheckComplete" class="widget">
+  <div class="center-children">
+  </div>
+  <form id="requestToJoinDojo" novalidate angular-validator angular-validator-submit="requestToJoin(requestInvite)" name="requestToJoinDojo">
+    <div ng-hide="isInviteExisting()">
+      <div class="col-lg-12" >
+        <div class="form-group join-dropdown">
+          <ui-select name="inviteUserType" ng-model="requestInvite.userType" on-select="userTypeSelected($item.name)">
+            <ui-select-match allow-clear="false" placeholder="{@i18n key="Join Dojo as..."/}">{{ $select.selected.title  }}</ui-select-match>
+            <ui-select-choices repeat="userType in initUserTypes">
+              <span ng-bind-html="userType.title"></span>
+            </ui-select-choices>
+          </ui-select>
+          <label class="validationMessage" ng-show="requestInvite.validate">{@i18n key="You must choose a user type"/}</label>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group pull-right">
+          <button ng-show="approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Send Request"/}</button>
+          <button ng-show="!approvalRequired" class="btn btn-success btn-210px" type="submit">{@i18n key="Join Dojo"/}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="col-lg-12" ng-show="isInviteExisting()">
+    {@i18n key="Request to join sent!"/}
+  </div>
+</div>

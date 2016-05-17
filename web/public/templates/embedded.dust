@@ -1,0 +1,7 @@
+{>"layouts/master" /}
+{<body}
+{>"common/embedding-header" /}
+  <div class="container">
+    <div ui-view></div>
+  </div>
+{/body}

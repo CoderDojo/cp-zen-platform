@@ -138,9 +138,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
           if(initUserType.name === 'champion'){
-            $window.location.href = '/dashboard/start-dojo';
+            $state.go('start-dojo');
           } else {
-            $window.location.href = '/dashboard/profile/' + data.user.id + '/edit';
+            $state.go('edit-user-profile', {userId : data.user.id});
           }
         });
       } else {

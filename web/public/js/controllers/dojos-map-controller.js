@@ -1,6 +1,7 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
+//  TODO : reuse cd-dojos-map instead of this mixed-up controller
 function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
   $scope.model = {};
   $scope.markers = [];

@@ -1,7 +1,8 @@
 'use strict';
 /* global bootbox */
 
-angular.module('cpZenPlatform').factory('alertService', function($rootScope) {
+angular.module('cpZenPlatform').factory('alertService', ['$rootScope', '$state', '$window',
+function($rootScope, $state, $window) {
   var alertService = {};
 
   alertService.showAlert = function(message, callback) {
@@ -20,7 +21,7 @@ angular.module('cpZenPlatform').factory('alertService', function($rootScope) {
         }
       }
     });
-  }
+  };
 
   return alertService;
-});
+}]);

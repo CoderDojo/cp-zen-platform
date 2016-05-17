@@ -2597,6 +2597,9 @@ msgstr "Turn on ticket approval"
 msgid "Book now"
 msgstr "Book now"
 
+msgid "Invite your friends!"
+msgstr "Invite your friends!"
+
 msgid "Thank You. You will receive an email containing your booking confirmation."
 msgstr "Thank You. You will receive an email containing your booking confirmation."
 

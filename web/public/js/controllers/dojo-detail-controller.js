@@ -8,44 +8,22 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
-  $scope.requestInvite = {};
-  $scope.userMemberCheckComplete = false;
-  $scope.inviteExists = false;
-  currentUser = currentUser.data;
-  var approvalRequired = ['mentor', 'champion'];
-
+  $scope.currentUser = currentUser.data;
   var latitude, longitude;
 
-  if(!_.isEmpty(currentUser)) {
+  if(!_.isEmpty($scope.currentUser)) {
     if(!dojo || !dojo.id){
       return $state.go('error-404-no-headers');
     }
 
-    if(!dojo.verified && dojo.creator !== currentUser.id && !_.contains(currentUser.roles, 'cdf-admin')){
+    if(!dojo.verified && dojo.creator !== $scope.currentUser.id && !_.contains($scope.currentUser.roles, 'cdf-admin')){
       return $state.go('error-404-no-headers');
     }
 
-    if(_.contains(_.map(currentUser.joinRequests, 'dojoId'), dojo.id)){
-      $scope.inviteExists = true;
-    }
-
-    //Check if user is a member of this Dojo
-    var query = {dojoId:dojo.id, userId: currentUser.id};
-    cdDojoService.getUsersDojos(query, function (response) {
-      $scope.dojoMember = !_.isEmpty(response);
-      $scope.dojoOwner = false;
-      if($scope.dojoMember) $scope.dojoOwner = (response[0].owner === 1) ? true : false;
-      $scope.userMemberCheckComplete = true;
-    });
   } else {
     if(!dojo || !dojo.id || !dojo.verified) return $state.go('error-404-no-headers');
     $scope.userMemberCheckComplete = true;
   }
-
-  cdUsersService.getInitUserTypes(function (response) {
-    var userTypes = _.filter(response, function(type) { return type.name.indexOf('u13') === -1; });
-    $scope.initUserTypes = userTypes;
-  });
 
   cdDojoService.getDojoConfig(function(json){
     $scope.dojoStages = _.map(json.dojoStages, function(item){
@@ -94,81 +72,15 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     }
   }
 
-  $scope.userTypeSelected = function ($item) {
-    if(_.contains(approvalRequired, $item)) return $scope.approvalRequired = true;
-    return $scope.approvalRequired = false;
-  };
-
-  $scope.requestToJoin = function (requestInvite) {
-    if(!$scope.requestInvite.userType) {
-      $scope.requestInvite.validate="false";
-      return
-    } else {
-      var userType = requestInvite.userType.name;
-
-      auth.get_loggedin_user(function (user) {
-        usSpinnerService.spin('dojo-detail-spinner');
-        var data = {user:user, dojoId:dojo.id, userType:userType, emailSubject: $translate.instant('New Request to join your Dojo')};
-
-        if(_.contains(approvalRequired, userType)) {
-          cdDojoService.requestInvite(data, function (response) {
-            usSpinnerService.stop('dojo-detail-spinner');
-            if(!response.error) {
-              alertService.showAlert($translate.instant('Join Request Sent'));
-              $scope.inviteExists = true;
-            } else {
-              alertService.showError($translate.instant(response.error));
-            }
-          });
-        } else {
-          //Check if user is already a member of this Dojo
-          var query = {userId:user.id, dojoId:dojo.id};
-          var userDojo = {};
-          cdDojoService.getUsersDojos(query, function (response) {
-            if(_.isEmpty(response)) {
-              //Save
-              userDojo.owner = 0;
-              userDojo.userId = user.id;
-              userDojo.dojoId = dojo.id;
-              userDojo.userTypes = [userType];
-              cdDojoService.saveUsersDojos(userDojo, function (response) {
-                usSpinnerService.stop('dojo-detail-spinner');
-                $state.go($state.current, {}, {reload: true});
-                alertService.showAlert($translate.instant('Successfully Joined Dojo'));
-              });
-            } else {
-              //Update
-              userDojo = response[0];
-              if(!userDojo.userTypes) userDojo.userTypes = [];
-              userDojo.userTypes.push(userType);
-              cdDojoService.saveUsersDojos(userDojo, function (response) {
-                usSpinnerService.stop('dojo-detail-spinner');
-                $state.go($state.current, {}, {reload: true});
-                alertService.showAlert($translate.instant('Successfully Joined Dojo'));
-              });
-            }
-          });
-        }
-      }, function () {
-        //Not logged in
-        $state.go('register-account', {referer:$location.url(), userType: userType});
-      });
-    }
-  };
-
   $scope.leaveDojo = function () {
     usSpinnerService.spin('dojo-detail-spinner');
-    cdDojoService.removeUsersDojosLink({userId: currentUser.id, dojoId: dojo.id, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
+    cdDojoService.removeUsersDojosLink({userId: $scope.currentUser.id, dojoId: dojo.id, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
       usSpinnerService.stop('dojo-detail-spinner');
       $state.go($state.current, {}, {reload: true});
     }, function (err) {
       alertService.showError($translate.instant('Error leaving Dojo'));
     });
-  }
-
-  $scope.isInviteExisting = function () {
-    return $scope.inviteExists;
-  }
+  };
 
 }
 

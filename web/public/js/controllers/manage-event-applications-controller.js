@@ -3,7 +3,7 @@
   /*global $*/
 
   function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
-    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth) {
+    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event) {
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
@@ -24,6 +24,7 @@
     });
 
     $scope.sort = {};
+    $scope.event = event = event.data;
     $scope.pagination = {itemsPerPage: 20};
     $scope.newApplicant = {};
     $scope.eventStats = {totalAttending:0, totalWaitlist: 0};
@@ -70,107 +71,106 @@
       {name: 'other', title: $translate.instant('Other')}
     ];
 
-    cdEventsService.load(eventId, function (event) {
-      event.listDownloadLink = function (status) {
-        cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
-          var downloadLink = angular.element('<a></a>');
-          var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
 
-          downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-          window.open(downloadLink[0]);
-        });
-      };
-      event.guestListDownloadLink = function () {
-				event.listDownloadLink('guests');
-			};
-      event.waitingListDownloadLink = function () {
-        event.listDownloadLink('waiting');
-      };
-      event.fullListDownloadLink = function () {
-        event.listDownloadLink('all');
-      };
+    event.listDownloadLink = function (status) {
+      cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
+        var downloadLink = angular.element('<a></a>');
+        var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
 
-      var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
-      var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+        downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
+        window.open(downloadLink[0]);
+      });
+    };
+    event.guestListDownloadLink = function () {
+			event.listDownloadLink('guests');
+		};
+    event.waitingListDownloadLink = function () {
+      event.listDownloadLink('waiting');
+    };
+    event.fullListDownloadLink = function () {
+      event.listDownloadLink('all');
+    };
 
-      var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
-      var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+    var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
+    var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
 
-      if(event.type === 'recurring') {
-        event.formattedDates = [];
-        _.each(event.dates, function (eventDate) {
-          event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
-        });
+    var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+    var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
 
-        event.day = moment(startDate).format('dddd');
-        event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
-
-        if(event.recurringType === 'weekly') {
-          event.formattedRecurringType = $translate.instant('Weekly');
-          event.formattedDate = $translate.instant('Weekly') + " " +
-            $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-            $translate.instant('at') + " " + event.time;
-        } else {
-          event.formattedRecurringType = $translate.instant('Every two weeks');
-          event.formattedDate = $translate.instant('Every two weeks') + " " +
-            $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-            $translate.instant('at') + " " + event.time;
-        }
-      } else {
-        //One-off event
-        event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
-          moment(startDate).format('HH:mm') +  ' - ' +
-          moment(endDate).format('HH:mm');
-      }
-
-      _.each(event.dates, function (eventDateObj) {
-        var date = moment(eventDateObj.startTime).format('Do MMMM YY');
-        applicationCheckInDates.push(date);
+    if(event.type === 'recurring') {
+      event.formattedDates = [];
+      _.each(event.dates, function (eventDate) {
+        event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
       });
 
-      $scope.event = event;
-      $scope.event.capacity = 0;
+      event.day = moment(startDate).format('dddd');
+      event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
 
-      cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
-        $scope.event.sessions = sessions;
-        _.each($scope.event.sessions, function (session, index) {
-          if(!$scope.sessionStats[session.id]) $scope.sessionStats[session.id] = {};
-          $scope.sessionStats[session.id].capacity = 0;
-          $scope.sessionStats[session.id].attending = 0;
-          $scope.sessionStats[session.id].waitlist = 0;
-          _.each(session.tickets, function (ticket) {
-            if(ticket.type !== 'other') {
-              $scope.event.capacity += ticket.quantity;
-              $scope.sessionStats[session.id].capacity += ticket.quantity;
+      if(event.recurringType === 'weekly') {
+        event.formattedRecurringType = $translate.instant('Weekly');
+        event.formattedDate = $translate.instant('Weekly') + " " +
+          $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+          $translate.instant('at') + " " + event.time;
+      } else {
+        event.formattedRecurringType = $translate.instant('Every two weeks');
+        event.formattedDate = $translate.instant('Every two weeks') + " " +
+          $translate.instant('on') + " " + $translate.instant(event.day) + " " +
+          $translate.instant('at') + " " + event.time;
+      }
+    } else {
+      //One-off event
+      event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+        moment(startDate).format('HH:mm') +  ' - ' +
+        moment(endDate).format('HH:mm');
+    }
+
+    _.each(event.dates, function (eventDateObj) {
+      var date = moment(eventDateObj.startTime).format('Do MMMM YY');
+      applicationCheckInDates.push(date);
+    });
+
+    $scope.event = event;
+    $scope.event.capacity = 0;
+
+    cdEventsService.searchSessions({eventId: eventId}, function (sessions) {
+      $scope.event.sessions = sessions;
+      _.each($scope.event.sessions, function (session, index) {
+        if(!$scope.sessionStats[session.id]) $scope.sessionStats[session.id] = {};
+        $scope.sessionStats[session.id].capacity = 0;
+        $scope.sessionStats[session.id].attending = 0;
+        $scope.sessionStats[session.id].waitlist = 0;
+        _.each(session.tickets, function (ticket) {
+          if(ticket.type !== 'other') {
+            $scope.event.capacity += ticket.quantity;
+            $scope.sessionStats[session.id].capacity += ticket.quantity;
+          }
+        });
+        $scope.$watch('event.sessions['+index+'].isOpen', function (isOpen){
+          if (isOpen) loadAttendeeList(session);
+        });
+      });
+
+      $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
+
+      async.each($scope.event.sessions, function (session, cb) {
+        cdEventsService.searchApplications({sessionId: session.id, deleted: false}, function (applications) {
+          _.each(applications, function (application) {
+            if(application.status === 'approved') {
+              $scope.eventStats.totalAttending++;
+            } else {
+              $scope.eventStats.totalWaitlist++;
             }
           });
-          $scope.$watch('event.sessions['+index+'].isOpen', function (isOpen){
-            if (isOpen) loadAttendeeList(session);
-          });
-        });
-
-        $scope.manageDojoEventApplicationsPageTitle = $scope.event.name;
-
-        async.each($scope.event.sessions, function (session, cb) {
-          cdEventsService.searchApplications({sessionId: session.id, deleted: false}, function (applications) {
-            _.each(applications, function (application) {
-              if(application.status === 'approved') {
-                $scope.eventStats.totalAttending++;
-              } else {
-                $scope.eventStats.totalWaitlist++;
-              }
-            });
-            return cb();
-          }, function (err) {
-            if(err) console.error(err);
-          });
+          return cb();
         }, function (err) {
           if(err) console.error(err);
-          $scope.loadPage($scope.event.sessions[0].id);
-          $scope.event.sessions[0].isOpen = true;
         });
-
+      }, function (err) {
+        if(err) console.error(err);
+        $scope.loadPage($scope.event.sessions[0].id);
+        $scope.event.sessions[0].isOpen = true;
       });
+
     });
 
     var loadAttendeeList = function(session) {
@@ -518,6 +518,6 @@
 
   angular.module('cpZenPlatform')
     .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService',
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', manageEventApplicationsCtrl]);
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', manageEventApplicationsCtrl]);
 
 })();

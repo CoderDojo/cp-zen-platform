@@ -51,15 +51,7 @@ function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
   };
 
   $scope.goTo = function (state) {
-    if($state.current.url === '^'){
-      $window.location.href = stateUrls[state];
-    } else {
-      if (currentUser && !_.contains($location.path(), '/dashboard') && $state.current.url !== '/') {
-        $window.location.href = stateUrls[state];
-      } else {
-        $state.go(state);
-      }
-    }
+      $state.go(state);
   };
 
   intercomService.InitIntercom();

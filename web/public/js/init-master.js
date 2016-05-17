@@ -53,82 +53,67 @@
     return dfd.promise;
   };
 
-  var profileHelpers = {
+  var failCb = function(err){
+    return {err: err};
+  };
+
+  var winCb = function(data){
+    return {data: data};
+  };
+
+  var resolves = {
     profile: function($stateParams, cdUsersService){
-      return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(
-        function(data){
-          return {data: data};
-        }, function(err){
-          return {err: err};
-        });
+      return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
+    },
+    // profile is silently failling to allow us to use optional resolves
+    ownProfile: function(auth, cdUsersService){
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.userProfileDataPromise({userId: currentUser.id}).then(winCb, failCb);
+        }else {
+          winCb(void 0);
+        }
+      }, failCb);
     },
     initUserTypes: function(cdUsersService) {
-      return cdUsersService.getInitUserTypesPromise().then(
-        function (data){
-          return {data: data};
-        }, function (err) {
-          return {err: err};
-        });
+      return cdUsersService.getInitUserTypesPromise().then(winCb, failCb);
     },
     loggedInUser: function(auth){
-      return auth.get_loggedin_user_promise().then(function(data){
-        return {data: data};
-      }, function(err){
-        return {err: err};
-      });
+      return auth.get_loggedin_user_promise().then(winCb, failCb);
     },
-    usersDojos: function($stateParams, cdDojoService){
-      return cdDojoService.getUsersDojosPromise({userId: $stateParams.userId})
-        .then(function(data){
-          return {data: data};
-        }, function(err){
-          return {err: err};
-        });
+    usersDojos: function(auth, cdDojoService){
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+      }, failCb);
     },
     hiddenFields: function(cdUsersService){
-      return cdUsersService.getHiddenFieldsPromise().then(function(data){
-        return {data: data};
-      }, function(err){
-        return {err: err};
-      });
+      return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
     },
     championsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     parentsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
     badgeCategories: function(cdBadgesService) {
-      return cdBadgesService.loadBadgeCategoriesPromise().then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
-    },
-    dojoAdminsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(function (data) {
-        return {data: data};
-      }, function (err) {
-        return {err: err};
-      });
+      return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
     },
     agreement: function(cdAgreementsService, $stateParams, $window, auth){
       return auth.get_loggedin_user_promise().then(function (user) {
-        if(!user) return {data:{}};
-        return cdAgreementsService.loadUserAgreementPromise(user.id).then(function (data) {
-          return {data: data};
-        }, function (err) {
-          return {err: err};
-        });
+        return cdAgreementsService.loadUserAgreementPromise(user.id).then(winCb, failCb);
       });
+    },
+    dojoAdminsForUser: function ($stateParams, cdUsersService) {
+      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    ticketTypes: function (cdEventsService) {
+      return cdEventsService.ticketTypesPromise().then(winCb, failCb);
+    },
+    event: function($stateParams, cdEventsService){
+     return cdEventsService.loadPromise($stateParams.eventId).then(winCb, failCb);
+    },
+    sessions: function($stateParams, cdEventsService){
+      return cdEventsService.searchSessionsPromise({eventId: $stateParams.eventId, status: 'active'}).then(winCb, failCb);
     }
   };
 
@@ -159,6 +144,11 @@
           },
           controller: 'dojos-map-controller'
         })
+        .state("dashboard", {
+          url: "/dashboard",
+          template: '<ui-view></ui-view>',
+          abstract: true
+        })
         .state("login", {
           url: "/login?referer",
           templateUrl: '/templates/login',
@@ -186,6 +176,64 @@
           },
           controller: 'login'
         })
+        .state("stats", {
+          url: "/stats",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/stats',
+          params: {
+            pageTitle: 'Stats'
+          },
+          controller: 'stats-controller'
+        })
+        .state("review-champion-application", {
+          url: "/champion-applications/:id",
+          parent: 'dashboard',
+          templateUrl: '/champion/template/review-application',
+          params: {
+            pageTitle: 'Review Champion Application'
+          },
+          controller: 'review-champion-application-controller'
+        })
+        .state("manage-dojo-users", {
+          url: "/my-dojos/:id/users",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/manage-dojo-users',
+          controller: 'manage-dojo-users-controller',
+          params: {
+            pageTitle: 'Manage Dojo Users'
+          },
+          ncyBreadcrumb: {
+            label: '{{manageDojoUsersPageTitle}}'
+          },
+          resolve: {
+            initUserTypes: resolves.initUserTypes,
+            currentUser: resolves.loggedInUser
+          }
+        })
+        .state("setup-dojo", {
+          url: "/setup-dojo/:id",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/setup-dojo',
+          params: {
+            pageTitle: 'Setup Dojo'
+          },
+          controller: 'setup-dojo-controller'
+        })
+        .state("dojo-list", {
+          url: "/dojo-list",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/dojos-map',
+          resolve: {
+            gmap: gmap
+          },
+          params: {
+            bannerType: null,
+            bannerMessage: null,
+            bannerTimeCollapse: null,
+            pageTitle: 'Home'
+          },
+          controller: 'dojos-map-controller'
+        })
         .state("dojo-list-index", {
           url: "/dojo-list-index",
           templateUrl: '/dojos/template/dojo-list-index',
@@ -194,13 +242,47 @@
             pageTitle: 'Dojo List'
           }
         })
+        .state("manage-dojos", {
+          url: "/manage-dojos",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/manage-dojos',
+          params: {
+            pageTitle: 'Manage Dojos'
+          },
+          controller: 'manage-dojo-controller'
+        })
+        .state("my-dojos", {
+          url: "/my-dojos",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/my-dojos',
+          controller: 'my-dojos-controller',
+          params: {
+            pageTitle: 'My Dojos'
+          },
+          ncyBreadcrumb: {
+            label: '{{myDojosPageTitle}}'
+          }
+        })
+        .state("dojo-detail-id", {
+          url: "/dojo/:dojoId",
+          templateUrl: '/dojos/template/dojo-detail',
+          resolve: {
+            dojo: resolveDojo,
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Dojo'
+          },
+          controller: 'dojo-detail-controller'
+        })
         .state("dojo-detail", {
           url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,
             gmap: gmap,
-            currentUser: profileHelpers.loggedInUser
+            currentUser: resolves.loggedInUser
           },
           params: {
             pageTitle: 'Dojo'
@@ -213,9 +295,181 @@
           resolve: {
             dojo: resolveDojo,
             gmap: gmap,
-            currentUser: profileHelpers.loggedInUser
+            currentUser: resolves.loggedInUser
           },
           controller: 'dojo-detail-controller'
+        })
+        .state("edit-dojo", {
+          url: "/edit-dojo/:id",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/edit-dojo',
+          resolve: {
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Edit Dojo'
+          },
+          controller: 'edit-dojo-controller'
+        })
+        .state("manage-dojo-events", {
+          url: "/my-dojos/:dojoId/events",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/manage-dojo-events',
+          controller: 'manage-dojo-events-controller',
+          params: {
+            pageTitle: 'Manage Dojo Events'
+          },
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventsPageTitle}}'
+          }
+        })
+        .state("manage-applications", {
+          url: "/my-dojos/:dojoId/events/:eventId/applications",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/manage-event-applications',
+          controller: 'manage-event-applications-controller',
+          params: {
+            pageTitle: 'Applicants'
+          },
+          ncyBreadcrumb: {
+            label: '{{manageDojoEventApplicationsPageTitle}}'
+          },
+          resolve: {
+            currentUser: resolves.loggedInUser,
+            event: resolves.event
+          }
+        })
+        .state("create-dojo-event", {
+          url: "/dojo/:dojoId/event-form",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap,
+            ticketTypes: resolves.ticketTypes,
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Create Event'
+          },
+          controller: 'dojo-event-form-controller'
+        })
+        .state("edit-dojo-event", {
+          url: "/dojo/:dojoId/event-form/:eventId",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/dojo-event-form',
+          resolve: {
+            gmap: gmap,
+            ticketTypes: resolves.ticketTypes,
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Edit Event'
+          },
+          controller: 'dojo-event-form-controller'
+        })
+        .state("dojo-event-details", {
+          url: "/dojo/:dojoId/event/:eventId",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/details',
+          controller: function($scope, dojo, event, sessions, profile){
+            $scope.dojo = dojo;
+            $scope.event = event.data;
+            $scope.sessions = sessions.data;
+            $scope.profile = profile.data;
+          },
+          params: {
+            pageTitle: 'Event details'
+          },
+          resolve: {
+            profile: resolves.ownProfile,
+            dojo: resolveDojo,
+            sessions: resolves.sessions,
+            event: resolves.event
+          },
+          ncyBreadcrumb: {
+            label: '{{EventDetailsPageTitle}}'
+          }
+        })
+        .state("user-events", {
+          url: "/dojos/events/user-events",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/events/user-events',
+          controller: 'user-events-controller',
+          params: {
+            pageTitle: 'My Events'
+          },
+          resolve: {
+            currentUser: resolves.loggedInUser,
+            usersDojos: resolves.usersDojos
+          }
+        })
+        .state("event",{
+          url: "/event/:eventId",
+          templateUrl: '/dojos/template/events/details',
+          controller: function($scope, event, sessions, profile){
+            $scope.event = event.data;
+            $scope.sessions = sessions.data;
+            if(profile){
+              $scope.profile = profile.data;
+            }
+          },
+          params: {
+            pageTitle: 'Event details'
+          },
+          resolve: {
+            sessions: resolves.sessions,
+            event: resolves.event,
+            profile: resolves.ownProfile
+          },
+          ncyBreadcrumb: {
+            label: '{{EventDetailsPageTitle}}'
+          }
+        })
+        .state("embedded", {
+          url: "/embedded",
+          template: '<ui-view/>',
+          abstract : true
+        })
+        .state("embedded.event",{
+          parent : 'embedded',
+          url: "/event/:eventId",
+          templateUrl: '/dojos/template/events/details',
+          controller: function($scope, event, sessions, profile){
+            $scope.event = event.data;
+            $scope.sessions = sessions.data;
+            if(profile){
+              $scope.profile = profile.data;
+            }
+          },
+          params: {
+            pageTitle: 'Event details'
+          },
+          resolve: {
+            sessions: resolves.sessions,
+            event: resolves.event,
+            profile: resolves.ownProfile
+          },
+          ncyBreadcrumb: {
+            label: '{{EventDetailsPageTitle}}'
+          }
+        })
+        .state("embedded.dojo-map",{
+          parent : 'embedded',
+          url: "/dojos-map/lat/:lat/lon/:lon?zoom",
+          template: '<cd-dojos-map></cd-dojos-map>',
+          resolve: {
+            gmap: gmap
+          },
+          controller: function( $scope, gmap ){
+            $scope.gmap = gmap;
+          },
+          params: {
+            pageTitle: 'Dojo Map'
+          },
+          ncyBreadcrumb: {
+            label: '{{DojosMapPageTitle}}'
+          }
         })
         .state("start-dojo", {
           url: "/start-dojo",
@@ -252,10 +506,89 @@
             pageTitle: 'Charter',
           }
         })
+        .state('charter-page', {
+          url: '/charter',
+          parent: 'dashboard',
+          templateUrl: '/charter/template/index',
+          controller: 'charter-controller',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          },
+          params: {
+            pageTitle: 'Charter',
+            showBannerMessage: null
+          }
+        })
+        .state('approve-invite-ninja', {
+          url:'/approve_invite_ninja/:parentProfileId/:inviteTokenId',
+          parent: 'dashboard',
+          controller:'approve-invite-ninja-controller',
+          templateUrl: '/profiles/template/approve-invite-ninja',
+          params: {
+            pageTitle: 'Approve Ninja'
+          },
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
+        })
+        .state('accept-session-invite', {
+          url:'/accept_session_invitation/:ticketId/:invitedUserId',
+          parent: 'dashboard',
+          controller:'accept-session-invite-controller',
+          templateUrl: '/dojos/template/events/accept-session-invite',
+          resolve: {
+            currentUser: resolves.loggedInUser
+          }
+        })
+        .state('cancel-session-invite', {
+            url:'/cancel_session_invitation/:eventId/:applicationId',
+            parent: 'dashboard',
+            controller:'cancel-session-invite-controller',
+            templateUrl:'/dojos/template/events/cancel-session-invite',
+            resolve: {
+                currentUser: resolves.loggedInUser
+            }
+        })
+        .state("accept-dojo-user-invitation", {
+          url: "/accept_dojo_user_invitation/:dojoId/:userInviteToken",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/accept-dojo-user-invitation',
+          controller: 'accept-dojo-user-invitation-controller'
+        })
+        .state("accept-dojo-user-request", {
+          url: "/accept_dojo_user_request/:userId/:userInviteToken",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/accept-dojo-user-request',
+          controller: 'accept-dojo-user-request-controller'
+        })
+        .state('add-child',{
+          url: "/profile/child/add/:userType/:parentId",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/user-profile',
+          resolve: resolves,
+          controller: 'user-profile-controller'
+        })
+        .state('accept-child-invite',{
+          url: '/accept_parent_guardian_request/:childProfileId/:inviteToken',
+          parent: 'dashboard',
+          controller: 'accept-child-controller',
+          templateUrl: '/profiles/template/accept-child-invite'
+        })
+        .state('edit-user-profile', {
+          url:'/profile/:userId/edit',
+          parent: 'dashboard',
+          controller: 'user-profile-controller',
+          resolve: resolves,
+          params: {
+            showBannerMessage: null,
+            referer: null
+          },
+          templateUrl: '/dojos/template/user-profile'
+        })
         .state("user-profile", {
           url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: profileHelpers,
+          resolve: resolves,
           controller: 'user-profile-controller',
           params: {
             pageTitle: 'Profile',
@@ -268,6 +601,15 @@
           params: {
             pageTitle: 'Badges',
           }
+        })
+        .state('accept-badge', {
+          url:'/badges/accept/:userId/:badgeSlug',
+          parent: 'dashboard',
+          controller:'accept-badge-controller',
+          params: {
+            pageTitle: 'Accept Badge'
+          },
+          templateUrl: '/dojos/template/badges/accept'
         })
         .state('poll-stats', {
           url:'/poll/:pollId',
@@ -306,6 +648,14 @@
           }
         });
       $urlRouterProvider.when('', '/');
+      $urlRouterProvider.otherwise(function ($injector, $location) {
+          var $state = $injector.get('$state');
+          var $window = $injector.get('$window');
+          var url = $location.url();
+          if ( url.indexOf('dashboard') > -1  ) {
+            $window.location.href = url.replace('/dashboard', '');
+          }
+      });
     })
     .config(function(paginationConfig) {
       paginationConfig.maxSize = 5;
@@ -341,6 +691,13 @@
         .fallbackLanguage('en_US');
       }
     ])
+    .config(function (tagsInputConfigProvider) {
+      tagsInputConfigProvider.setTextAutosizeThreshold(40);
+    })
+    .config(function(IdleProvider, KeepaliveProvider) {
+      IdleProvider.idle(172800); // 2 days
+      IdleProvider.timeout(10);
+    })
     .config(function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     })
@@ -357,14 +714,88 @@
       doc.head.appendChild(googleCaptchaScriptTag);
       tmhDynamicLocale.set(userLangCode);
     })
-    .run(function($rootScope, $filter){
+    .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
+     function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
+
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if(!$cookieStore.get('verifyProfileComplete') && toState.parent === 'dashboard' ) {
+          if(toState.name !== 'edit-user-profile') {
+            verifyProfileComplete().then(function (verifyProfileResult) {
+              if(!verifyProfileResult.complete) {
+                $state.go('edit-user-profile', {
+                  showBannerMessage: true,
+                  userId: verifyProfileResult.userId,
+                  referer: $location.url()
+                });
+              } else {
+                $cookieStore.put('verifyProfileComplete', true);
+              }
+            }, function (err) {
+              alertService.showError($translate.instant('An error has occured verifying your profile.'));
+            });
+          }
+        }
+      });
+
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        if ( embedder.isEmbedded(fromState) ) {
+          var url = $state.href(toState, toParams);
+          window.open(url, '_blank');
+          event.preventDefault();
+        }
+      });
+
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
+
         var pageTitle = [];
         if(toParams.pageTitle) {
           pageTitle.push($filter('translate')(toParams.pageTitle));
         }
         pageTitle.push("CoderDojo Zen");
         $rootScope.pageTitle = pageTitle.join(" | ");
+      });
+
+      //  uncomment when debugging routing error
+      $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+        console.log(toState, fromState);
+      });
+    }])
+    .run(function ($window, $cookieStore, tmhDynamicLocale) {
+      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
+      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      tmhDynamicLocale.set(userLangCode);
+    })
+    .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
+      return function () {
+        var deferred = $q.defer();
+        auth.get_loggedin_user_promise().then(function (user) {
+          if(user && user.id) {
+            cdUsersService.userProfileDataPromise({userId: user.id}).then(function (profile) {
+              deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
+            }, function (err) {
+              deferred.reject(err);
+            });
+          } else {
+            deferred.reject(new Error('User not found.'));
+          }
+        }, function (err) {
+          deferred.reject(err);
+        });
+        return deferred.promise;
+      }
+    })
+    .run(function (Idle){
+      Idle.watch();
+    })
+    .controller('cdDashboardCtrl', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
+      $scope.$on('IdleTimeout', function() {
+        //session timeout
+        $cookieStore.remove('verifyProfileComplete');
+        $cookieStore.remove('canViewYouthForums');
+        auth.logout(function(data){
+          $window.location.href = '/'
+        })
       });
     });
 })();

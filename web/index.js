@@ -106,7 +106,6 @@ server.ext('onPreResponse', function (request, reply) {
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
-
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('errors/404', request.locals);
 });
@@ -149,7 +148,7 @@ function getUser (request, cb) {
 server.ext('onPostAuth', function (request, reply) {
   debug('onPostAuth', request.url.path, 'login:', request.state['seneca-login']);
   var url = request.url.path;
-  var profileUrl = '/dashboard/profile';
+  var profileUrl = '/profile';
   var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
 
   getUser(request, function (err, user) {
@@ -181,8 +180,8 @@ server.ext('onPostAuth', function (request, reply) {
     }
 
     if (_.contains(restrictedRoutesWhenLoggedIn, url) && request.user) {
-      debug('onPostAuth', 'url has restricted routes:', url, 'redirecting to /dashboard/dojo-list');
-      return reply.redirect('/dashboard/dojo-list');
+      debug('onPostAuth', 'url has restricted routes:', url, 'redirecting to /dojo-list');
+      return reply.redirect('/dojo-list');
     }
 
     debug('onPostAuth', 'continuing');

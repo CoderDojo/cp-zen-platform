@@ -321,7 +321,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
               if (result && result.ok === false) {
                 messages.push($translate.instant(result.why));
                 errorous = true;
-                goTo();
               } else {
                 messages.push($translate.instant('Profile(s) have been saved successfully'));
               }

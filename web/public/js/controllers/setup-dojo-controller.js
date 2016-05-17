@@ -31,7 +31,7 @@ function cdSetupDojoCtrl($scope, $window, $state, cdDojoService, alertService, $
 
   $scope.submitSetupYourDojo = function (dojoLead) {
     cdDojoService.saveDojoLead(dojoLead, function() {
-      $window.location.href = '/dashboard/my-dojos';
+      $state.go('my-dojos')
     });
   }
 }

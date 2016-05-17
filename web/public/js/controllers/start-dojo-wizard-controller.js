@@ -128,13 +128,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
   auth.get_loggedin_user(function (user) {
     currentUser = user;
-
-    var currentPath = $location.path();
-    if (!_.isEmpty(user) && currentPath === '/start-dojo') {
-      $window.location.href = '/dashboard/start-dojo';
-    } else {
-      prepareWizardForm(user);
-    }
+    prepareWizardForm(user);
   }, function () {
     //User not logged in
     currentUser = null;
