@@ -131,16 +131,32 @@ angular.module('cpZenPlatform').factory('Geocoder', function ($localStorage, $q,
       d.resolve(resultBounds);
       return d.promise;
     },
-    geocode: function(address) {
+    geocode: function(address, country) {
       var d = $q.defer();
       var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({address:address}, function (results, status) {
+      geocoder.geocode({'address': address, 'region': country}, function (results, status) {
         if(status === google.maps.GeocoderStatus.OK) {
           d.resolve(results);
         } else {
           d.reject({
             type: 'error',
-            message: 'Error getting bounds for ' + address
+            message: 'Error getting geocode for ' + address
+          });
+        }
+      });
+      return d.promise
+    },
+    reverse: function(geocode) {
+      var d = $q.defer();
+      var geocoder = new google.maps.Geocoder();
+      var latlng = {lat: geocode.latitude, lng: geocode.longitude};
+      geocoder.geocode({'location': latlng}, function(results,status) {
+        if(status === google.maps.GeocoderStatus.OK) {
+          d.resolve(results);
+        } else {
+          d.reject({
+            type: 'error',
+            message: 'Error getting revese geocode for user'
           });
         }
       });

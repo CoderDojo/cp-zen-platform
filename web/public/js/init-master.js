@@ -139,7 +139,7 @@
       });
       $stateProvider
         .state("home", {
-          url: "/",
+          url: "/?search",
           templateUrl: '/dojos/template/dojos-map',
           resolve: {
             gmap: gmap
@@ -227,7 +227,7 @@
           controller: 'setup-dojo-controller'
         })
         .state("dojo-list", {
-          url: "/dojo-list",
+          url: "/dojo-list?search",
           parent: 'dashboard',
           templateUrl: '/dojos/template/dojos-map',
           resolve: {

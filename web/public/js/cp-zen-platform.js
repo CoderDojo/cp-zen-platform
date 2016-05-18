@@ -33,6 +33,7 @@
     'tmh.dynamicLocale',
     'angularjs-dropdown-multiselect',
     '720kb.tooltips',
-    '720kb.socialshare'
+    '720kb.socialshare',
+    'ngGeolocation'
   ]);
 })();
