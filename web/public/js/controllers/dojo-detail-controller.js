@@ -3,8 +3,6 @@
 
 function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate, currentUser, dojoUtils) {
 
-  localStorage.setItem('dojoId', dojo.id);
-
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];

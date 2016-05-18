@@ -32,7 +32,7 @@ function cdShareEvent($stateParams, cdDojoService, $state, $translate, $location
         '</li>'+
         '<li>'+
           '<a ng-click="show = !show">Embed me!</a>'+
-          '<input type="text" read-only="read-only" ng-show="show" ng-model="iframe"/> '+
+          '<textarea type="text" read-only="read-only" ng-show="show"  class="form-control" ng-model="iframe"/> '+
           '</input>'+
         '</li>'+
       '</ul>',

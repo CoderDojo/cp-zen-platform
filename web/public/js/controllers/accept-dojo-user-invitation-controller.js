@@ -6,7 +6,7 @@ function cdAcceptDojoUserInvitationCtrl($scope, $window, $state, $stateParams, $
   var currentPath = $location.path();
 
   auth.get_loggedin_user(function(user) {
-    if($state.current.url === '/accept_dojo_user_invitation/:dojoId/:userInviteToken') {
+    if($location.url === '/accept_dojo_user_invitation/:dojoId/:userInviteToken') {
       $window.location.href = '/dashboard' + currentPath;
     } else {
 

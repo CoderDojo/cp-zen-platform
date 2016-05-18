@@ -14,7 +14,7 @@ angular
             var isParent = false;
             $scope.dojoId = $scope.dojo ? $scope.dojo.id : $scope.event.dojoId;
             if($scope.profile && $scope.dojoId){
-              $scope.currentUser.id = $scope.profile.userId;
+              $scope.currentUser = $scope.profile.user;
               $scope.currentUser.profileId = $scope.profile.id;
               if(_.contains($scope.profile.userTypes, 'parent-guardian') || _.contains($scope.profile.roles, 'cdf-admin')) isParent = true;
               if(!$scope.eventUserSelection[$scope.dojoId]) $scope.eventUserSelection[$scope.dojoId] = [];

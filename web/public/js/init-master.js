@@ -39,6 +39,13 @@
       }, function (err) {
         dfd.reject(err);
       });
+    } else if($stateParams.dojoId && _.isNumber(parseInt($stateParams.dojoId))) {
+      cdDojoService.load({id: parseInt($stateParams.dojoId)},
+      function (data) {
+        dfd.resolve(data);
+      }, function (err) {
+        dfd.reject(err);
+      });
     } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
         urlSlug: $stateParams.country + '/' + $stateParams.path
@@ -167,7 +174,7 @@
           }
         })
         .state("register-account", {
-          url: "/register",
+          url: "/register?referer",
           templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
           params: {
             referer:null,
@@ -575,10 +582,21 @@
           templateUrl: '/profiles/template/accept-child-invite'
         })
         .state('edit-user-profile', {
-          url:'/profile/:userId/edit',
+          url:'/profile/:userId/edit?referer',
           parent: 'dashboard',
           controller: 'user-profile-controller',
-          resolve: resolves,
+          resolve: {
+            profile: resolves.profile,
+            loggedInUser: resolves.loggedInUser,
+            hiddenFields: resolves.hiddenFields,
+            agreement: resolves.agreement ,
+            championsForUser: resolves.championsForUser,
+            parentsForUser: resolves.parentsForUser,
+            badgeCategories: resolves.badgeCategories,
+            dojoAdminsForUser: resolves.dojoAdminsForUser,
+            usersDojos: resolves.usersDojos,
+            initUserTypes: resolves.initUserTypes
+          },
           params: {
             showBannerMessage: null,
             referer: null
@@ -588,7 +606,18 @@
         .state("user-profile", {
           url: "/profile/:userId",
           templateUrl: '/dojos/template/user-profile',
-          resolve: resolves,
+          resolve: {
+            profile: resolves.profile,
+            loggedInUser: resolves.loggedInUser,
+            hiddenFields: resolves.hiddenFields,
+            agreement: resolves.agreement ,
+            championsForUser: resolves.championsForUser,
+            parentsForUser: resolves.parentsForUser,
+            badgeCategories: resolves.badgeCategories,
+            dojoAdminsForUser: resolves.dojoAdminsForUser,
+            usersDojos: resolves.usersDojos,
+            initUserTypes: resolves.initUserTypes
+          },
           controller: 'user-profile-controller',
           params: {
             pageTitle: 'Profile',
@@ -639,13 +668,6 @@
           params: {
             pageTitle: 'Page not found',
           }
-        })
-        .state('error-404', {
-          url:'/404',
-          templateUrl: '/errors/template/404',
-          params: {
-            pageTitle: 'Page not found',
-          }
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise(function ($injector, $location) {
@@ -654,6 +676,8 @@
           var url = $location.url();
           if ( url.indexOf('dashboard') > -1  ) {
             $window.location.href = url.replace('/dashboard', '');
+          }else{
+            $state.go('error-404-no-headers');
           }
       });
     })
@@ -758,7 +782,7 @@
 
       //  uncomment when debugging routing error
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-        console.log(toState, fromState);
+        console.log(toState, toParams, error);
       });
     }])
     .run(function ($window, $cookieStore, tmhDynamicLocale) {

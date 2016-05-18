@@ -6,7 +6,7 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
   var currentPath = $location.path();
 
   auth.get_loggedin_user(function(user) {
-    if($state.current.url === '/accept_dojo_user_request/:userId/:userInviteToken') {
+    if($location.url === '/accept_dojo_user_request/:userId/:userInviteToken') {
       $window.location.href = '/dashboard' + currentPath;
     } else {
       usSpinnerService.spin('user-request-spinner');

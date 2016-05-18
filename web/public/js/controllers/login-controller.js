@@ -11,7 +11,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils) {
 
   $scope.noop = angular.noop
-  $scope.referer = $state.params.referer;
+  $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
 
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;
@@ -137,10 +137,14 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
+          //We use window.location because we need a global reload of templates to take into account the fact that the user is logged-in
           if(initUserType.name === 'champion'){
-            $state.go('start-dojo');
+            $window.location.href = $state.href('start-dojo');
           } else {
-            $state.go('edit-user-profile', {userId : data.user.id});
+            if($scope.referer.indexOf('event') > -1 || $scope.referer.indexOf('/dojo') > -1){
+              localStorage.setItem('joinDojo', true);
+            }
+            $window.location.href = $state.href('edit-user-profile', {userId : data.user.id});
           }
         });
       } else {
@@ -185,6 +189,11 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
             var user = data.user;
             if (_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
               $scope.referer = '/dashboard/manage-dojos';
+            }
+            if (localStorage.eventId){
+              $scope.referer = $state.href('event', {
+                eventId: localStorage.eventId
+              });
             }
             $window.location.href = $scope.referer || '/dashboard/dojo-list';
           }

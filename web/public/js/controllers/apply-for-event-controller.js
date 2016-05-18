@@ -1,33 +1,27 @@
 (function () {
   'use strict';
 
-  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils) {
+  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal,
+    alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils) {
     var dojoEvents = $scope.dojoRowIndexExpandedCurr;
     var eventIndex = $scope.tableRowIndexExpandedCurr;
     var accountName;
     var accountTitle;
 
-    if(localStorage.children){ //champions and o13s don't take this flow and so are not included below
-      accountName = 'parent-guardian';
-      accountTitle = 'Parent/Guardian';
-    } else {
-      accountName = 'mentor';
-      accountTitle = 'Mentor/Volunteer';
-    }
-
-    var userObject = {
-      userType : {name: accountName, title: accountTitle},
-      validate: 'false'
-    };
-
     var url = window.location.href;
+    if((localStorage.joinDojo) && url.indexOf('event/')>=1){
+      var initUserTypes = cdUsersService.getInitUserTypes( function (userTypes) {
+        var userType = _.find(userTypes, JSON.parse($scope.currentUser.initUserType));
+        var userObject = {
+          userType : userType,
+          validate: 'false'
+        };
 
-    if((localStorage.dojoId) && url.indexOf('event/')>=1){
-      dojoUtils.requestToJoin(userObject);
-      delete localStorage.dojoId;
-      delete localStorage.eventId;
-      delete localStorage.dojoUrlSlug;
+        dojoUtils.requestToJoin(userObject, $scope.event.dojoId);
+        delete localStorage.joinDojo;
+      });
     }
+
 
     $scope.cancel = function () {
       if(dojoEvents){
@@ -38,7 +32,6 @@
     }
 
     $scope.showSessionDetails = function (session) {
-      localStorage.setItem('eventId', session.eventId);
       if(!_.isEmpty($scope.currentUser)) {
 
         cdDojoService.dojosForUser($scope.currentUser.id, function (dojos) {
@@ -94,6 +87,7 @@
           }, null);
         });
       } else {
+        localStorage.setItem('eventId', session.eventId);
         $state.go('register-account', { referer: $location.url() });
       }
     };
@@ -104,5 +98,6 @@
   }
 
   angular.module('cpZenPlatform')
-      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', cdApplyForEventCtrl]);
+      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService',
+      'cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', cdApplyForEventCtrl]);
 })();

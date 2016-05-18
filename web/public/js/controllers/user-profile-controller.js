@@ -3,10 +3,9 @@
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout) {
 
-  $scope.referer = $state.params.referer;
-
+  $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
     alertService.showError($translate.instant('error.general'));
     return;
@@ -677,12 +676,12 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   function goTo(){
-    var eventId = localStorage.getItem('eventId');
-    var dojoId = localStorage.getItem('dojoId');
     var urlSlug = localStorage.getItem('dojoUrlSlug');
-    if (urlSlug.indexOf("/dojo")>=0){
-      return $state.go('dojo-event-details', {
-        dojoId: dojoId,
+    var eventId = localStorage.getItem('eventId');
+    delete localStorage.eventId;
+    delete localStorage.dojoUrlSlug;
+    if (urlSlug.indexOf("/dojo")> -1  || urlSlug.indexOf("/event")> -1 ){
+      $state.go('event', {
         eventId: eventId
       });
     } else {
@@ -701,4 +700,4 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', cdUserProfileCtrl]);

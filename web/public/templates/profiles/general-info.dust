@@ -182,7 +182,7 @@
 
         <legend ng-if="abilityToAddChildren()" ng-show="afterForm()" class="legend-color-1-border">{@i18n key="Got a child? Add them below"/}</legend>
         <div ng-show="afterForm()">
-          <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()">
+          <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()" ng-show="profile.children.length > 0">
             <span class="icon-group">Remove child</span>
             <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this child?"/}" ng-bootbox-confirm-action="removeChild($index)" class="btn btn-danger margin-point-5-em session-expand-button">
               <span class="glyphicon glyphicon-minus"></span>

@@ -107,7 +107,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
   debug('onPreResponse', 'showing 404 errors page');
-  return reply.view('errors/404', request.locals);
+  return reply.view('index', request.locals);
 });
 
 // Handler for 500
@@ -181,7 +181,7 @@ server.ext('onPostAuth', function (request, reply) {
 
     if (_.contains(restrictedRoutesWhenLoggedIn, url) && request.user) {
       debug('onPostAuth', 'url has restricted routes:', url, 'redirecting to /dojo-list');
-      return reply.redirect('/dojo-list');
+      return reply.redirect('/dashboard/dojo-list');
     }
 
     debug('onPostAuth', 'continuing');
