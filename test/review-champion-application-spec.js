@@ -7,6 +7,7 @@ describe('review-champion-application-controller', function() {
         ctrl,
         sandbox,
         $httpBackend,
+        tmhDynamicLocale,
         services,
         stubs;
 
@@ -21,9 +22,11 @@ describe('review-champion-application-controller', function() {
         $controller,
         _$browser_,
         _$httpBackend_,
-        _cdDojoService_
+        _cdDojoService_,
+        _tmhDynamicLocale_
     ) {
         $httpBackend = _$httpBackend_;
+        tmhDynamicLocale = _tmhDynamicLocale_;
 
         // Ref: https://github.com/angular/angular.js/issues/11373
         _$browser_['cookies'] = function() {
@@ -72,6 +75,8 @@ describe('review-champion-application-controller', function() {
 
 
     it('load dojo lead', function() {
+      var lang = tmhDynamicLocale.set('en-ie')
+      .then(function(){
         $httpBackend.when('GET', '/locale/data?format=mf&lang=en_US').respond({});
         $httpBackend.expectGET('/locale/data?format=mf&lang=en_US');
         $httpBackend.when('GET', '/locale/data?format=mf&lang=en_IE').respond({});
@@ -85,4 +90,5 @@ describe('review-champion-application-controller', function() {
         expect(ca.dateOfBirth).to.equal('01/01/2015');
         //expect(ca.prerequisites[0].name).to.equal("testName");
     });
+  });
 });
