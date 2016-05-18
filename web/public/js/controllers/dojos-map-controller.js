@@ -1,7 +1,7 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
   $scope.model = {};
   $scope.markers = [];
   var markerClusterer;
@@ -23,6 +23,12 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
       }
     }, 100);
   }
+
+  $geolocation.watchPosition({
+    timeout: 60000,
+    maximumAge: 250,
+    enableHighAccuracy: true
+  })
 
   $scope.loadMap = function () {
     clearMarkers();
@@ -114,22 +120,42 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     if (!$scope.search.dojo) return;
     $scope.searchResult = null;
     $scope.noResultsFound = null;
-
+    //reverse look up current country
+    $scope.myPosition = $geolocation.position;
     var address = $scope.search.dojo;
-    Geocoder.geocode(address).then(function (results) {
-      if (!results.length) return;
-      var location = results[0].geometry.location;
-
-      if (results[0].geometry.bounds) {
-        var bounds = results[0].geometry.bounds;
-        searchBounds(location, bounds, $scope.search.dojo);
-      } else {
-        searchNearest(location);
-      }
-    }, function (reason) {
-      $scope.searchResult = true;
-      $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
-    });
+    if(_.isEmpty($scope.myPosition)) {
+      Geocoder.geocode(address).then(function (results) {
+        if (!results.length) return;
+        var location = results[0].geometry.location;
+        if (results[0].geometry.bounds) {
+          var bounds = results[0].geometry.bounds;
+          searchBounds(location, bounds, $scope.search.dojo);
+        } else {
+          searchNearest(location, $scope.search.dojo);
+        }
+      }, function (reason) {
+        $scope.searchResult = true;
+        $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
+      });
+    } else {
+      Geocoder.reverse($scope.myPosition.coords).then(function (results) {
+        if (!results.length) return;
+        var country = results[0].address_components[results[0].address_components.length-1].short_name;
+        Geocoder.geocode(address, country).then(function (results) {
+          if (!results.length) return;
+          var location = results[0].geometry.location;
+          if (results[0].geometry.bounds) {
+            var bounds = results[0].geometry.bounds;
+            searchBounds(location, bounds, $scope.search.dojo);
+          } else {
+            searchNearest(location, $scope.search.dojo);
+          }
+        }, function (reason) {
+          $scope.searchResult = true;
+          $scope.noResultsFound = $translate.instant('No Dojos match your search query.');
+        });
+      });
+    }
   };
 
   function clearMarkers() {
@@ -158,8 +184,8 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
     });
   }
 
-  function searchNearest(location) {
-    cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng()}).then(function (result) {
+  function searchNearest(location, search) {
+    cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng(), search:search}).then(function (result) {
       if(result.length > 0) {
         $scope.searchResult = result;
       }
@@ -206,4 +232,4 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);

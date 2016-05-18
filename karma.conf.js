@@ -58,6 +58,7 @@ module.exports = function(config) {
             './web/public/components/ng-idle/angular-idle.min.js',
             './web/public/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js',
             './web/public/components/angular-tooltips/dist/angular-tooltips.min.js',
+            './web/public/components/ngGeolocation/ngGeolocation.min.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
             './web/public/js/directives/*.js',
