@@ -6,6 +6,7 @@ describe('stats-controller', function() {
         ctrl,
         sandbox,
         $httpBackend,
+        tmhDynamicLocale,
         services, // contains refs to implementations
         stubs, // contains stubs of these
         expected;
@@ -23,18 +24,20 @@ describe('stats-controller', function() {
 
     beforeEach(angular.mock.module('cpZenPlatform'));
 
-    beforeEach(inject(function(
-        $rootScope,
-        $controller,
-        _$browser_,
-        _$httpBackend_,
-        _alertService_,
-        _auth_,
-        _cdAgreementsService_,
-        _cdDojoService_
-    ) {
+    beforeEach(
+      inject(function(
+          $rootScope,
+          $controller,
+          _$browser_,
+          _$httpBackend_,
+          _alertService_,
+          _auth_,
+          _cdAgreementsService_,
+          _cdDojoService_,
+          _tmhDynamicLocale_
+      ) {
         $httpBackend = _$httpBackend_;
-
+        tmhDynamicLocale = _tmhDynamicLocale_;
         // Ref: https://github.com/angular/angular.js/issues/11373
         _$browser_['cookies'] = function() {
             return {};
@@ -58,12 +61,13 @@ describe('stats-controller', function() {
         stubs.cdDojo.getContinentCodes.yields(expected.continent_codes);
 
         ctrl = $controller('stats-controller', {
-            $scope: scope,
-            alertService: services.alert,
-            auth: services.auth,
-            cdAgreementsService: services.cdAgreements,
-            cdDojoService: services.cdDojo
+          $scope: scope,
+          alertService: services.alert,
+          auth: services.auth,
+          cdAgreementsService: services.cdAgreements,
+          cdDojoService: services.cdDojo
         });
+
     }));
 
     afterEach(function() {
@@ -71,26 +75,29 @@ describe('stats-controller', function() {
     });
 
     it('get stats', function() {
-        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_US').respond({});
-        $httpBackend.expectGET('/locale/data?format=mf&lang=en_US');
-        $httpBackend.when('GET', '/locale/data?format=mf&lang=en_IE').respond({});
-        $httpBackend.expectGET('/locale/data?format=mf&lang=en_IE');
-        $httpBackend.when('GET', '/auth/instance').respond({});
-        $httpBackend.expectGET('/auth/instance');
+        var lang = tmhDynamicLocale.set('en-ie')
+        .then(function(){
+          $httpBackend.when('GET', '/locale/data?format=mf&lang=en_US').respond({});
+          $httpBackend.expectGET('/locale/data?format=mf&lang=en_US');
+          $httpBackend.when('GET', '/locale/data?format=mf&lang=en_IE' ).respond({});
+          $httpBackend.expectGET('/locale/data?format=mf&lang=en_IE' );
+          $httpBackend.when('GET', '/auth/instance').respond({});
+          $httpBackend.expectGET('/auth/instance');
 
-        scope.$apply();
+          scope.$apply();
 
-        // verify calls
-        expect(stubs.alert.showError.callCount).to.equal(0);
-        expect(stubs.auth.get_loggedin_user.callCount).to.equal(1);
-        expect(stubs.cdAgreements.count.callCount).to.equal(1);
-        expect(stubs.cdDojo.getStats.callCount).to.equal(1);
-        expect(stubs.cdDojo.getContinentCodes.callCount).to.equal(1);
+          // verify calls
+          expect(stubs.alert.showError.callCount).to.equal(0);
+          expect(stubs.auth.get_loggedin_user.callCount).to.equal(1);
+          expect(stubs.cdAgreements.count.callCount).to.equal(1);
+          expect(stubs.cdDojo.getStats.callCount).to.equal(1);
+          expect(stubs.cdDojo.getContinentCodes.callCount).to.equal(1);
 
-        // verify scope changes
-        expect(scope.count).to.be.equal(7);
-        expect(scope.dojos).to.deep.equal(expected.stats);
-        expect(scope.totals).to.deep.equal(expected.totals);
-        expect(scope.continentMap).to.deep.equal(_.invert(expected.continent_codes));
+          // verify scope changes
+          expect(scope.count).to.be.equal(7);
+          expect(scope.dojos).to.deep.equal(expected.stats);
+          expect(scope.totals).to.deep.equal(expected.totals);
+          expect(scope.continentMap).to.deep.equal(_.invert(expected.continent_codes));
+        })
     });
 });
