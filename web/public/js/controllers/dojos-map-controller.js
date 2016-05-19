@@ -1,7 +1,8 @@
 'use strict';
 /* global google,jQuery,MarkerClusterer */
 
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDojoService,
+   gmap, Geocoder, atomicNotifyService, usSpinnerService) {
   $scope.model = {};
   $scope.markers = [];
   var markerClusterer;
@@ -206,4 +207,5 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, cdDoj
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', 'cdDojoService', 'gmap',
+   'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);
