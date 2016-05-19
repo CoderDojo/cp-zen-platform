@@ -464,7 +464,7 @@
         .state("embedded.dojo-map",{
           parent : 'embedded',
           url: "/dojos-map/lat/:lat/lon/:lon?zoom",
-          template: '<cd-dojos-map></cd-dojos-map>',
+          template: '<cd-dojos-map class="col-xs-12"></cd-dojos-map>',
           resolve: {
             gmap: gmap
           },
