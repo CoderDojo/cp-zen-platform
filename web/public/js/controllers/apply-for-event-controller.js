@@ -1,9 +1,27 @@
 (function () {
   'use strict';
 
-  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal, alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService) {
+  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal,
+    alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils) {
     var dojoEvents = $scope.dojoRowIndexExpandedCurr;
     var eventIndex = $scope.tableRowIndexExpandedCurr;
+    var accountName;
+    var accountTitle;
+
+    var url = window.location.href;
+    if((localStorage.joinDojo) && url.indexOf('event/')>=1){
+      var initUserTypes = cdUsersService.getInitUserTypes( function (userTypes) {
+        var userType = _.find(userTypes, JSON.parse($scope.currentUser.initUserType));
+        var userObject = {
+          userType : userType,
+          validate: 'false'
+        };
+
+        dojoUtils.requestToJoin(userObject, $scope.event.dojoId);
+        delete localStorage.joinDojo;
+      });
+    }
+
 
     $scope.cancel = function () {
       if(dojoEvents){
@@ -20,7 +38,7 @@
           var isMember = _.find(dojos, function (dojo) {
             return dojo.id === $scope.dojoId;
           });
-          if(!isMember && $state.current.name !== 'user-events') return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
+          if(!isMember) return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
           var sessionModalInstance = $modal.open({
             templateUrl: '/dojos/template/events/session-details',
             controller: 'session-modal-controller',
@@ -61,12 +79,15 @@
             if(result.ok === false) return alertService.showError($translate.instant(result.why));
             if($scope.event.ticketApproval) {
               alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
+              $state.go('dojo-list');
             } else {
               alertService.showAlert($translate.instant('Thank You. You will receive an email containing your booking confirmation.'));
+              $state.go('dojo-list');
             }
           }, null);
         });
       } else {
+        localStorage.setItem('eventId', session.eventId);
         $state.go('register-account', { referer: $location.url() });
       }
     };
@@ -74,9 +95,9 @@
     $scope.goToGoogleMaps = function (position) {
       $window.open('https://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
     };
-
   }
 
   angular.module('cpZenPlatform')
-      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService','cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', cdApplyForEventCtrl]);
+      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService',
+      'cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', cdApplyForEventCtrl]);
 })();

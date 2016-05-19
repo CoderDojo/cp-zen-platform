@@ -1,7 +1,7 @@
-<div id="ninjaProfileBlock" class="profile-section">
+<div id="ninjaProfileBlock" class="profile-section" ng-show="initialForm()">
   <a name="youths"></a>
   <legend class="legend-color-3-border">{@i18n key="Youths"/}</legend>
-  <div class="col-xs-12">
+  <div class="col-xs-12" ng-show="initialForm()">
     <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Youth over 13"/}</button>
     <button ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
     <button ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>

@@ -1,8 +1,0 @@
-{>"layouts/dashboard" /}
-{<body}
-  {>"common/header" /}
-  <div class="container">
-  	<div ui-view></div> 
-  </div>
-  {>"common/footer" /}
-{/body}

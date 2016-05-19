@@ -57,6 +57,7 @@
     "ng-idle": "1.1.0",
     "angular-dynamic-locale": "0.1.27",
     "angularjs-dropdown-multiselect": "https://github.com/wardormeur/angularjs-dropdown-multiselect.git#master",
+    "angular-socialshare": "https://github.com/720kb/angular-socialshare.git#master",
     "angular-tooltips": "0.1.23",
     "google-maps-utility-library-v3": "*"
   },

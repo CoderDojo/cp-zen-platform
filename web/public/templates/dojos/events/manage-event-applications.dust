@@ -130,3 +130,4 @@
     </div>
   </accordion-group>
 </accordion>
+<cd-share-event share-event="event"></cd-share-event>

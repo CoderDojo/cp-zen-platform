@@ -80,15 +80,20 @@ var controller = module.exports = [
       if (request.params.alpha2) {
         reply.view('index', request.locals);
       }
-      else {
-        reply.view('dashboard/index');
-      }
     }
   },
 
   {
     method: 'GET',
     path: '/dojo/{legacyId}',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
+    path: '/event/{eventId}',
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }

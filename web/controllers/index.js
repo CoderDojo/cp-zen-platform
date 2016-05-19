@@ -11,6 +11,7 @@ delete controllers.package;
 
 module.exports.register = function (server, options, next) {
   // Add all the server routes from the controllers.
+
   _.each(controllers, function (controller) {
     server.route(controller);
   });
