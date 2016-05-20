@@ -148,7 +148,7 @@ function getUser (request, cb) {
 server.ext('onPostAuth', function (request, reply) {
   debug('onPostAuth', request.url.path, 'login:', request.state['seneca-login']);
   var url = request.url.path;
-  var profileUrl = '/profile';
+  var profileUrl = '/dashboard/profile';
   var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
 
   getUser(request, function (err, user) {
@@ -158,14 +158,7 @@ server.ext('onPostAuth', function (request, reply) {
     }
     debug('onPostAuth', 'user:', user);
     request.user = user;
-
-    // profile redirect
-    if (_.contains(url, profileUrl) && !request.user) {
-      var userId = url.split('/')[3];
-      debug('onPostAuth', 'profile redirect:', userId);
-      return reply.redirect('/profile/' + userId);
-    }
-
+    
     if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user) {
       // Not logged in, redirect to dojo-detail if trying to see dojo detail
       if (/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(url)){

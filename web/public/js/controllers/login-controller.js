@@ -132,7 +132,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.register(user, function(data) {
       $scope.referer = $scope.referer && $scope.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + $scope.referer : $scope.referer;
-      localStorage.setItem('dojoUrlSlug', $scope.referer);
+      if($scope.referer) localStorage.setItem('dojoUrlSlug', $scope.referer);
       if(data.ok) {
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
@@ -141,7 +141,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
           if(initUserType.name === 'champion'){
             $window.location.href = $state.href('start-dojo');
           } else {
-            if($scope.referer.indexOf('event') > -1 || $scope.referer.indexOf('/dojo') > -1){
+            if($scope.referer && ($scope.referer.indexOf('event') > -1 || $scope.referer.indexOf('/dojo') > -1)){
               localStorage.setItem('joinDojo', true);
             }
             $window.location.href = $state.href('edit-user-profile', {userId : data.user.id});

@@ -680,7 +680,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     var eventId = localStorage.getItem('eventId');
     delete localStorage.eventId;
     delete localStorage.dojoUrlSlug;
-    if (urlSlug.indexOf("/dojo")> -1  || urlSlug.indexOf("/event")> -1 ){
+    if (urlSlug && (urlSlug.indexOf("/dojo")> -1  || urlSlug.indexOf("/event")> -1) ){
       $state.go('event', {
         eventId: eventId
       });
