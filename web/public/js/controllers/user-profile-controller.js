@@ -273,7 +273,17 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
       async.series([
         function(callback){
-          saveDirect(profileCopy, callback);
+          if( !_.isUndefined($state.params.parentId) || !_.isEmpty(profileCopy.parents) ) {
+            if(_.isEmpty(profileCopy.parents)){
+              profileCopy.parents = [];
+            }
+            if($state.params.parentId && !_.contains(profileCopy.parents, $state.params.parentId)){
+              profileCopy.parents.push($state.params.parentId);
+            }
+            saveYouthViaParent(profileCopy, callback);
+          }else{
+            saveDirect(profileCopy, callback);
+          }
         },
         function(callback){
           if($scope.profile.children !== null) {
@@ -294,12 +304,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
             }, function(err, results){
               callback(err, results);
             });
-          } else {
-            async.mapSeries($scope.profile, function(profile, doneProfile){
-              saveDirect(profileCopy, doneProfile);
-            }, function(err, results){
-              callback(err, results);
-            });
+          }else{
+            callback(null, []);
           }
         }
       ], function (err, results) {
@@ -349,7 +355,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed);
+    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){
@@ -358,7 +364,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
 
-    cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed);
+    cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
   }
   function saveProfileWorked (response){
     this.callback(null, response);
@@ -685,7 +691,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         eventId: eventId
       });
     } else {
-      var userId = $state.params.userId;
+      var userId = $state.params.userId || $state.params.parentId;
       $state.go('user-profile', {userId: userId});
     }
   }
