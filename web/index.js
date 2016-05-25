@@ -158,7 +158,7 @@ server.ext('onPostAuth', function (request, reply) {
     }
     debug('onPostAuth', 'user:', user);
     request.user = user;
-    
+
     if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user) {
       // Not logged in, redirect to dojo-detail if trying to see dojo detail
       if (/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(url)){
@@ -320,8 +320,23 @@ server.state('seneca-login', {
 // This can be turned off in production if needs be
 var noSwagger = process.env.NO_SWAGGER === 'true';
 if (!noSwagger) {
+  var version = '2.0';
   var swaggerOptions = {
-    apiVersion: '2.0'
+    apiVersion: version,
+    info: {
+       'title': 'CoderDojo API',
+       'version': version,
+   },
+    tags: [
+      {
+        'name': 'users'
+      },
+      {
+         'name': 'dojos'
+      },
+      {
+         'name': 'events'
+      }]
   };
   server.register({
     register: hapiSwagger,
