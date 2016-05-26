@@ -29,7 +29,11 @@ module.exports = {
           // Don't allow this site to be displayed in frames.
           xframe: true,
           // Don't allow HTTP requests at all on this subdomain (only HTTPS).
-          hsts: false, // TODO only enable in production
+          hsts: {
+            maxAge: 15768000,
+            includeSubDomains: true,
+            preload: true
+          },
           // Add a header that helps protect against XSS.
           xss: true,
           // Strictly enforce the response MIME-type.
