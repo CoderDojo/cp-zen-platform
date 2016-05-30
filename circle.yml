@@ -1,0 +1,29 @@
+machine:
+  node:
+    version: 0.10.40
+  environment:
+    LANG: en_US.utf8
+dependencies:
+  pre:
+    - gem install crowdin-cli
+    - crowdin-cli upload sources
+    - for lang in it pt-PT de nl ro es-ES el pl et bg tr ja hi lt; do crowdin-cli download -l $lang; done
+  override:
+    - npm install
+test:
+  override:
+    - npm run test
+deployment:
+  production:
+    branch: master
+    codedeploy:
+      cp-zen-platform:
+        application_root: /
+        region: eu-west-1
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: zen-deployments
+            key_pattern: applications/cp-zen-platform-ci-{BUILD_NUM}.zip
+        deployment_group: prod-zen
+        deployment_config: CodeDeployDefault.OneAtATime
