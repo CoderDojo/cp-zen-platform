@@ -205,7 +205,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
           map: $scope.model.map,
           dojoName: dojo.name,
           dojoId: dojo.id,
-          icon: '//chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
+          icon: 'https//chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
           position: new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
         });
         marker.dojo = dojo;
