@@ -36,7 +36,7 @@
 
         cdDojoService.dojosForUser($scope.currentUser.id, function (dojos) {
           var isMember = _.find(dojos, function (dojo) {
-            return dojo.id === $scope.dojoId;
+            return dojo.id === $scope.event.dojoId;
           });
           if(!isMember) return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
           var sessionModalInstance = $modal.open({
