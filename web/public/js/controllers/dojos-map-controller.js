@@ -2,9 +2,10 @@
 /* global google,jQuery,MarkerClusterer */
 
 //  TODO : reuse cd-dojos-map instead of this mixed-up controller
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation,  $location, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation,  $location, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
   $scope.model = {};
   $scope.markers = [];
+  $scope.getDojoURL = dojoUtils.getDojoURL;
   var markerClusterer;
   var centerLocation = new google.maps.LatLng(25, -5);
 
@@ -33,7 +34,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 
   $scope.loadMap = function () {
     clearMarkers();
-    cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage']}, function (dojos) {
+    cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage', 'url_slug']}, function (dojos) {
       var filteredDojos = [];
       _.each(dojos, function (dojo) {
         if(dojo.stage !== 4) filteredDojos.push(dojo);
@@ -106,7 +107,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
   $scope.getDojo = function (marker) {
     var dojoId = marker.dojoId;
     cdDojoService.load(dojoId, function (response) {
-      $scope.viewDojo(response);
+      $scope.getDojoURL(response);
     });
   };
 
@@ -230,4 +231,4 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', '$location', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', '$location', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', 'dojoUtils', cdDojosMapCtrl]);

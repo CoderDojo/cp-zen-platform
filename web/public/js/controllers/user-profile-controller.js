@@ -13,6 +13,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.currentStateName = $state.current.name;
 
+  $scope.getDojoURL = dojoUtils.getDojoURL;
+
+
   if ($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
   }

@@ -50,5 +50,12 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
       });
     }
   };
+
+  dojoUtils.getDojoURL = function(dojo) {
+    if (dojo) {
+      var urlSlug = dojo.url_slug || dojo.urlSlug;
+      return "/dojo/" + urlSlug;
+    }
+  }
   return dojoUtils;
 });
