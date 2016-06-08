@@ -1,11 +1,8 @@
+api_key: <%= ENV['CROWDIN_API_KEY'] %>
+project_identifier: zen-community-platform
 base_path: .
-   
 files:
   -
     source: '/web/locale/en_US/messages.po'
     dest: '/messages.po'
     translation: '/web/locale/%locale_with_underscore%/%original_file_name%'
-
-
-  
-  
