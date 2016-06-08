@@ -127,9 +127,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="dojo-container" ng-repeat="dojo in profile.dojos">
-              <img ng-click="viewDojo(dojo)" src="/img/dojo-default-logo.png" class="dojo-thumbnail pointer">
+              <a ng-href="{{ getDojoURL(dojo) }}"><img src="/img/dojo-default-logo.png" class="dojo-thumbnail pointer">
               <div class="caption">
-                <h3><a ng-click="viewDojo(dojo)" class="pointer" ng-bind-html="dojo.name"></a></h3>
+                <h3><a ng-href="{{ getDojoURL(dojo) }}" ng-bind-html="dojo.name"></a></h3>
                 <p>{{ dojo.description }}</p>
               </div>
             </div>
