@@ -270,19 +270,6 @@
             label: '{{myDojosPageTitle}}'
           }
         })
-        .state("dojo-detail-id", {
-          url: "/dojo/:dojoId",
-          templateUrl: '/dojos/template/dojo-detail',
-          resolve: {
-            dojo: resolveDojo,
-            gmap: gmap,
-            currentUser: resolves.loggedInUser
-          },
-          params: {
-            pageTitle: 'Dojo'
-          },
-          controller: 'dojo-detail-controller'
-        })
         .state("dojo-detail", {
           url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
           templateUrl: '/dojos/template/dojo-detail',
