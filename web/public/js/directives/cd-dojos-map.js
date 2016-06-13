@@ -2,13 +2,13 @@
   'use strict';
   /*global google, StyledMarker, StyledIcon, StyledIconTypes */
 
-function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
+function cdDojosMap($stateParams, cdDojoService, $state) {
     return {
       restrict: 'E',
       template: '<div class="dojo-map row">'+
         '<section ng-if="mapLoaded" id="map">'+
         '<div ui-map-info-window="model.markerInfoWindow">'+
-          '<h3><a class="pointer" ng-href="{{getDojoURL(currentMarker)}}">{{ currentMarker.dojoName }}</a></h3>'+
+          '<h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojoName }}</a></h3>'+
         '</div>'+
         '<div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{\'map-click\': \'openMarkerInfo(marker)\'}"></div>'+
         '<div id="googleMap" ui-map="model.map" ui-event="{\'map-dragend\':\'mapDragEnd()\', \'map-zoom_changed\':\'mapZoomChanged()\'}" ui-options="mapOptions" class="map-canvas"></div>'+
@@ -16,7 +16,6 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
       controller: function($scope){
         $scope.markers = [];
         $scope.model = {};
-        $scope.getDojoURL = dojoUtils.getDojoURL;
         if($scope.gmap){
           var position = new google.maps.LatLng($stateParams.lat, $stateParams.lon);
           var zoom = parseInt($stateParams.zoom);
@@ -26,7 +25,7 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
             zoom: zoom || 2,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
-          cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage', 'url_slug']}, function (dojos) {
+          cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage']}, function (dojos) {
             var filteredDojos = [];
             _.each(dojos, function (dojo) {
               if(dojo.stage !== 4){
@@ -36,8 +35,7 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
                     map: $scope.model.map,
                     dojoName: dojo.name,
                     dojoId: dojo.id,
-                    urlSlug: dojo.urlSlug,
-                    icon: 'img/marker' + pinColor + '.png',
+                    icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|' + pinColor,
                     position: new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
                   });
                   marker.dojo = dojo;
@@ -52,7 +50,6 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
               $scope.model.markerInfoWindow.open($scope.model.map, marker);
             }
           };
-
           $scope.viewDojo = function(dojo) {
             var urlSlug = dojo.url_slug || dojo.urlSlug;
             var urlSlugArray = urlSlug.split('/');
@@ -61,7 +58,6 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
             var path = urlSlugArray.join('/');
             $state.go('dojo-detail', {country:country, path:path });
           }
-
           $scope.getDojo = function (marker) {
             var dojoId = marker.dojoId;
             cdDojoService.load(dojoId, function (response) {
@@ -76,6 +72,6 @@ function cdDojosMap($stateParams, cdDojoService, dojoUtils, $state) {
 
 angular
     .module('cpZenPlatform')
-    .directive('cdDojosMap', ['$stateParams', 'cdDojoService', 'dojoUtils', '$state', cdDojosMap]);
+    .directive('cdDojosMap', ['$stateParams', 'cdDojoService', '$state', cdDojosMap]);
 
 }());
