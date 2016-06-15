@@ -38,3 +38,7 @@ web/.build
 .idea
 .nodemon-find-ref
 *~
+
+# i18n dictionaries from crowdin, except en_US
+web/locale/*
+!web/locale/en_US

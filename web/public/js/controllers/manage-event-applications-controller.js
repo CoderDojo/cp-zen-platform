@@ -385,10 +385,9 @@
 
       application = _.omit(application, ['user', 'age', 'parents', 'dateApplied', 'applicationDates', 'attendanceModel']);
       application.emailSubject = {
-        'request':  $translate.instant('Your ticket request for'),
-        'received': $translate.instant('has been received'),
-        'approved': $translate.instant('has been approved'),
-        'cancelled': $translate.instant('has been cancelled')
+        'received': 'Your ticket request for %1$s has been received',
+        'approved': 'Your ticket request for %1$s has been approved',
+        'cancelled': 'Your ticket request for %1$s has been cancelled'
       };
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
@@ -505,7 +504,7 @@
 
     $scope.cancelSession = function (session) {
       session.status = 'cancelled';
-      session.emailSubject = $translate.instant('has been cancelled');
+      session.emailSubject = 'Your ticket request for %1$s has been cancelled';
       cdEventsService.cancelSession(session, function (response) {
         $state.go('manage-dojo-events', {dojoId: dojoId});
         alertService.showAlert($translate.instant('Session successfully cancelled.'));

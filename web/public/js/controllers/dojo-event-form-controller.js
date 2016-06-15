@@ -492,7 +492,7 @@
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
       if(!_.isEmpty(eventInfo.invites)) {
-        eventInfo.emailSubject = $translate.instant('Event Invitation');
+        eventInfo.emailSubject = 'Event Invitation';
       }
 
       var isDateRange = !moment.utc(eventInfo.toDate).isSame(eventInfo.date, 'day');

@@ -15,7 +15,7 @@
         return
       } else {
         var selectedEventId = $scope.selectedEvent.value.id
-        cdDojoService.notifyAllMembers({dojoId: dojoId, eventId: selectedEventId, emailSubject: $translate.instant('Tickets Now Available for')}, function (response) {
+        cdDojoService.notifyAllMembers({dojoId: dojoId, eventId: selectedEventId, emailSubject: 'Tickets Now Available for %1$s'}, function (response) {
           usSpinnerService.stop('notify-all-members-spinner');
           $modalInstance.dismiss('success')
         }, function (err) {
