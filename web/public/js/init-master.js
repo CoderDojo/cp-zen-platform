@@ -117,7 +117,7 @@
       return cdEventsService.ticketTypesPromise().then(winCb, failCb);
     },
     event: function($stateParams, cdEventsService){
-     return cdEventsService.loadPromise($stateParams.eventId).then(winCb, failCb);
+      return cdEventsService.loadPromise($stateParams.eventId).then(winCb, failCb);
     },
     sessions: function($stateParams, cdEventsService){
       return cdEventsService.searchSessionsPromise({eventId: $stateParams.eventId, status: 'active'}).then(winCb, failCb);
@@ -559,7 +559,18 @@
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',
           templateUrl: '/dojos/template/user-profile',
-          resolve: resolves,
+          resolve: {
+            profile: resolves.profile,
+            loggedInUser: resolves.loggedInUser,
+            usersDojos: resolves.usersDojos,
+            hiddenFields: resolves.hiddenFields,
+            initUserTypes: resolves.initUserTypes,
+            agreement: resolves.agreement ,
+            championsForUser: resolves.championsForUser,
+            parentsForUser: resolves.parentsForUser,
+            badgeCategories: resolves.badgeCategories,
+            dojoAdminsForUser: resolves.dojoAdminsForUser
+          },
           controller: 'user-profile-controller'
         })
         .state('accept-child-invite',{
