@@ -128,7 +128,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
 
     user['g-recaptcha-response'] = $scope.recaptchaResponse;
-    user.emailSubject = $translate.instant('Welcome to Zen, the CoderDojo community platform.');
+    user.emailSubject = 'Welcome to Zen, the CoderDojo community platform.';
 
     auth.register(user, function(data) {
       $scope.referer = $scope.referer && $scope.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + $scope.referer : $scope.referer;
@@ -227,7 +227,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
 
     auth.reset({
       email:$scope.forgot.email,
-      emailSubject: $translate.instant('CoderDojo Zen Password Reset Request')
+      emailSubject: 'CoderDojo Zen Password Reset Request'
     }, function(response) {
       usSpinnerService.stop('login-spinner');
 
