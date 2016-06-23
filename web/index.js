@@ -53,7 +53,6 @@ server.connection({
   }
 });
 
-
 if ('production' === env || 'staging' === env) {
   server.ext('onRequest', function(request, reply) {
     if (request.headers['x-forwarded-proto'] != 'https') {
