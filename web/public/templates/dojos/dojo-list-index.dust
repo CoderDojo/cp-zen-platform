@@ -21,7 +21,8 @@
         <div ng-repeat="(country, dojos) in dojoList">
           <legend>{{ country }}</legend>
           <ul ng-repeat="dojo in dojos" ng-hide="{{ dojo.stage === 4 }}">
-            <li><a class="pointer" ng-click="viewDojo(dojo)">{{ dojo.name }}</a></li>
+            <li><a ng-href="{{ getDojoURL(dojo) }}">{{ dojo.name }}</a></li>
+            
           </ul>
         </div>
       </div>

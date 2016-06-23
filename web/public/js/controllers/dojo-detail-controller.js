@@ -72,7 +72,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
 
   $scope.leaveDojo = function () {
     usSpinnerService.spin('dojo-detail-spinner');
-    cdDojoService.removeUsersDojosLink({userId: $scope.currentUser.id, dojoId: dojo.id, emailSubject: $translate.instant('A user has left your Dojo')}, function (response) {
+    cdDojoService.removeUsersDojosLink({userId: $scope.currentUser.id, dojoId: dojo.id, emailSubject: 'A user has left your Dojo'}, function (response) {
       usSpinnerService.stop('dojo-detail-spinner');
       $state.go($state.current, {}, {reload: true});
     }, function (err) {

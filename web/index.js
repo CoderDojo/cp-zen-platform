@@ -29,7 +29,7 @@ require('./lib/dust-i18n.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
-var host = process.env.HOSTNAME || 'localhost';
+var host = process.env.HOSTNAME || '127.0.0.1:8000';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
 
@@ -294,18 +294,12 @@ function formatLocaleCode (code) {
 }
 
 var locality = function(request) {
-  var ngKey;
-  if (request.state.NG_TRANSLATE_LANG_KEY) {
-    // TODO - shouldn't hapi decode cookies?
-    ngKey = decodeURIComponent(request.state.NG_TRANSLATE_LANG_KEY);
-    ngKey = ngKey.replace(/\"/g, '');
-  }
+  var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, ''))
+    || request.headers['accept-language'];
 
-  var local = ngKey || request.headers['accept-language'];
-  if (!local) local = 'en_US';
-  local = formatLocaleCode(local);
+  var requestLocales = new locale.Locales(localesFormReq);
 
-  return local;
+  return requestLocales.best(availableLocales).code;
 }
 
 server.method('locality', locality, {});

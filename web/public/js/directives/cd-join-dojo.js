@@ -52,7 +52,7 @@ angular
 
                 auth.get_loggedin_user(function (user) {
                   usSpinnerService.spin('dojo-detail-spinner');
-                  var data = {user:user, dojoId: dojoId, userType: userType, emailSubject: $translate.instant('New Request to join your Dojo')};
+                  var data = {user:user, dojoId: dojoId, userType: userType, emailSubject: 'New Request to join your Dojo'};
 
                   if(_.contains(approvalRequired, userType)) {
                     cdDojoService.requestInvite(data, function (response) {

@@ -13,9 +13,8 @@
       ticketId: ticketId,
       invitedUserId: invitedUserId,
       emailSubject: {
-        'request':  $translate.instant('Your ticket request for'),
-        'received': $translate.instant('has been received'), 
-        'approved': $translate.instant('has been approved') 
+        'received': 'Your ticket request for %1$s has been received',
+        'approved': 'Your ticket request for %1$s has been approved'
       }
     };
 

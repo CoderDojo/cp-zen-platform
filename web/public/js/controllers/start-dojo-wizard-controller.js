@@ -673,7 +673,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
             dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
             cdDojoService.saveDojoLead(dojoLead, function (response) {
               dojo.dojoLeadId = response.id;
-              dojo.emailSubject = $translate.instant('A Google email account has been created for your Dojo');
+              dojo.emailSubject = 'A Google email account has been created for your Dojo';
               cdDojoService.save(dojo, function (response) {
                 deleteLocalStorage('dojoListing');
 

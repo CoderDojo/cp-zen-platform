@@ -14,7 +14,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
 
       auth.get_loggedin_user(function (user) {
         usSpinnerService.spin('dojo-detail-spinner');
-        var data = {user:user, dojoId:dojoId, userType:userType, emailSubject: $translate.instant('New Request to join your Dojo')};
+        var data = {user:user, dojoId:dojoId, userType:userType, emailSubject: 'New Request to join your Dojo'};
 
         //Check if user is already a member of this Dojo
         var query = {userId:user.id, dojoId:dojoId};
@@ -50,5 +50,12 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
       });
     }
   };
+
+  dojoUtils.getDojoURL = function(dojo) {
+    if (dojo) {
+      var urlSlug = dojo.url_slug || dojo.urlSlug;
+      return "/dojo/" + urlSlug;
+    }
+  }
   return dojoUtils;
 });

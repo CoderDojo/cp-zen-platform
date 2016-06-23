@@ -13,6 +13,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.currentStateName = $state.current.name;
 
+  $scope.getDojoURL = dojoUtils.getDojoURL;
+
+
   if ($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
   }
@@ -181,7 +184,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       alertService.showError($translate.instant('An error has occurred while sending invitation') );
     };
 
-    data.emailSubject = $translate.instant('You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.');
+    data.emailSubject = 'You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.';
     cdUsersService.inviteParent(data, win, fail);
   };
 
@@ -600,7 +603,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     usSpinnerService.spin('user-profile-spinner');
     var ninjaData = {
       ninjaEmail: ninjaEmail,
-      emailSubject: $translate.instant('You have been invited to connect with a parent/guardian on Zen!')
+      emailSubject: 'You have been invited to connect with a parent/guardian on Zen!'
     };
     cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
