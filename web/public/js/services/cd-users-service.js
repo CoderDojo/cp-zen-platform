@@ -56,8 +56,8 @@ function cdUsersService(cdApi, $q){
 
       return promise;
     },
-    isChampion: function(id, win, fail){
-      cdApi.post('users/is-champion', {id: id}, win, fail || topfail);
+    isChampion: function(win, fail){
+      cdApi.post('users/is-champion', win, fail || topfail);
     },
     getAvatar: function(id, win, fail){
       cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);

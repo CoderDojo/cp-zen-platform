@@ -9,18 +9,6 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
     return userType === 'attendee-o13' || userType === 'attendee-u13';
   }
 
-  function userIsChampion(user, cb) {
-    cdUsersService.isChampion(user.id, cb,
-      function (err) {
-        alertService.showError(
-          'An error has occurred while checking user: <br /> ' +
-          (err.error || JSON.stringify(err))
-        );
-
-        return cb(err);
-      })
-  }
-
   function bootIntercom(dojos, user) {
     var dojoIds = null;
     $localStorage.dojoIds = null;
