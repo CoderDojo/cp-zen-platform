@@ -47,7 +47,8 @@
               <img ng-src="{{ previewBadgeData.imageUrl }}" class="preview-badge-thumbnail">
               <p class="preview-badge-name"><b>{{ previewBadgeData.name }}</b></p>
               <p class="preview-badge-description">{{ previewBadgeData.strapline }}</p>
-              <button ng-click="claimBadge()" class="btn btn-warning btn-block">{@i18n key="Claim Now"/}</button>
+              <div ng-dropdown-multiselect="" class="childSelect" ng-if="user && profile.children" options="profile.children" selected-model="claimerIds" extra-settings="claimerDropdownSettings"></div>
+              <button ng-click="claimBadge()" class="btn btn-warning btn-block" ng-class="{'inline-select':profile.children}">{@i18n key="Claim Now"/}</button>
               <button ng-click="hideBadgePreview()" class="btn btn-primary btn-block">{@i18n key="Cancel"/}</button>
             </div>
           </div>
