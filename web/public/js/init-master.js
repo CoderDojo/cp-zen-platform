@@ -705,9 +705,10 @@
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitizeParameters')
-        .registerAvailableLanguageKeys(['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL',
+        .registerAvailableLanguageKeys(['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
                                         'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
-                                        'hi_IN', 'ja_JP', 'ro_RO' ])
+                                        'hi_IN', 'ja_JP', 'ro_RO', 'es_AR', 'fr_FR', 'uk_UK',
+                                        'sl_SL', 'sk_SK'])
         .uniformLanguageTag('java')
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');

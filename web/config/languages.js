@@ -5,69 +5,98 @@ module.exports = [
     "country": "United States"
   },
   {
-    "name": "Dutch",
+    "name": "Nederlands",
     "code": "nl_NL",
-    "country": "Nederlands"
+    "country": "Nederland"
   },
   {
-    "name": "German",
+    "name": "Deutsch",
     "code": "de_DE",
-    "country": "Deutsche"
+    "country": "Deutschland"
   },
   {
-    "name": "Italian",
+    "name": "Italiano",
     "code": "it_IT",
     "country": "Italia"
   },
   {
-    "name": "Polish",
+    "name": "Polski",
     "code": "pl_PL",
-    "country": "Polski"
+    "country": "Polska"
   },
   {
-    "name": "Portuguese",
+    "name": "Português",
     "code": "pt_PT",
-    "country": "Português"
+    "country": "Portugal"
   },
   {
-    "name": "Spanish",
+    "name": "Español",
     "code": "es_ES",
-    "country": "Español"
+    "country": "España"
   },
   {
-    "name": "Turkish",
+    "name": "Türkçe",
     "code": "tr_TR",
-    "country": "Türk"
+    "country": "Türkiye"
   },
   {
-    "name": "Bulgarian",
+    "name": "Български",
     "code": "bg_BG",
-    "country": "български"
+    "country": "България"
   },
   {
-    "name": "Greek",
+    "name": "Ελληνικά",
     "code": "el_GR",
-    "country": "ελληνικά"
+    "country": "Ελλάδα"
   },
   {
-    "name": "Estonian",
+    "name": "Eesti",
     "code": "et_EE",
-    "country": "eesti"
+    "country": "Eesti"
   },
   {
-    "name": "Hindi",
+    "name": "हिंदी",
     "code": "hi_IN",
-    "country": "हिंदी"
+    "country": "इंडिया"
   },
   {
-    "name": "Japanese",
+    "name": "日本語",
     "code": "ja_JP",
-    "country": "日本語"
+    "country": "日本"
   },
   {
-    "name": "Romanian",
+    "name": "Română",
     "code": "ro_RO",
-    "country": "Română"
+    "country": "România"
   },
-
+  {
+    "name": "Español",
+    "code": "es_AR",
+    "country": "Argentina"
+  },
+  {
+    "name": "Français",
+    "code": "fr_FR",
+    "country": "France"
+  },
+  {
+    "name": "Maltese",
+    "code": "mt_MT",
+    "country": "Malta"
+  },
+  {
+    "name": "Slovenski",
+    "code": "sl_SL",
+    "country": "Slovenija"
+  },
+  {
+    "name": "Slovenský",
+    "code": "sk_SK",
+    "country": "Slovensko"
+  },
+  {
+    "name": "Українська",
+    "code": "uk_UK",
+    "country": "Україна"
+  }
 ];
