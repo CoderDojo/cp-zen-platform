@@ -1,8 +1,18 @@
  'use strict';
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService) {
+function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService, cdUsersService) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
+  $scope.claimerIds = [];
+  $scope.claimerDropdownSettings = {
+    idProp: 'id',
+    externalIdProp: '',
+    displayProp: 'name',
+    showUncheckAll: false,
+    showCheckAll: false,
+    scrollableHeight: '200px',
+    scrollable: true
+  };
   var lastClicked = {};
   var errorMsg = $translate.instant('error.general');
 
@@ -20,6 +30,19 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
           $scope.isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
             return userPermission.name === 'dojo-admin';
           });
+        }
+      });
+      cdUsersService.userProfileData({userId: $scope.user.id}, function (profile) {
+        if (profile) {
+          $scope.profile = profile;
+          if (profile.children) {
+            var children = {};
+            _.forEach(profile.children, function(child, index){
+              cdUsersService.userProfileData({userId: child}, function(childProfile){
+                profile.children[index] = childProfile;
+              });
+            });
+          }
         }
       });
     }
@@ -69,12 +92,12 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
       $scope.badgeInfoIsCollapsed[tag] = !$scope.badgeInfoIsCollapsed[tag];
     }
     lastClicked[tag] = badge.id;
-  }
+  };
 
   $scope.categorySelected = function () {
     lastClicked = {};
     $scope.badgeInfoIsCollapsed = {};
-  }
+  };
 
   $scope.previewBadge = function (badgeClaimNumber) {
     cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
@@ -86,7 +109,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
       $scope.previewBadgeData = response.badge;
       $scope.showBadgePreview = true;
     });
-  }
+  };
 
   $scope.hideBadgePreview = function () {
     $scope.badgeClaimNumber = '';
@@ -94,17 +117,25 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
     $scope.previewBadgeForm.$setPristine();
     $scope.previewBadgeData = {};
     $scope.showBadgePreview = false;
-  }
+  };
 
   $scope.claimBadge = function () {
-    cdBadgesService.claimBadge($scope.previewBadgeData, function (response) {
+    if(!_.isEmpty($scope.claimerIds)){
+      _.forEach($scope.claimerIds, function (child){
+        cdBadgesService.claimBadgeFor($scope.previewBadgeData, child.userId, cb);
+      });
+    } else {
+      cdBadgesService.claimBadge($scope.previewBadgeData, cb);
+    }
+
+    function cb (response){
       $scope.hideBadgePreview();
-      if(response.error) return alertService.showError($translate.instant(errorMsg));
+      if(response.error) return alertService.showError($translate.instant(response.error));
       return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
-    });
-  }
+    }
+  };
 
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', 'cdUsersService', cdBadgesDashboardCtrl]);

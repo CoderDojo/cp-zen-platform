@@ -35,6 +35,9 @@ function cdBadgesService(cdApi, $q) {
     claimBadge: function(badge, win, fail) {
       cdApi.post('badges/claim', {badge: badge}, win, fail || topfail);
     },
+    claimBadgeFor: function(badge, userId, win, fail) {
+      cdApi.post('badges/claim', {badge: badge, userId: userId}, win, fail || topfail);
+    },
     exportBadges: function(win, fail) {
       cdApi.get('badges/export', win, fail || topfail);
     }
