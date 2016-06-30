@@ -7,7 +7,7 @@ dependencies:
   pre:
     - gem install crowdin-cli
     - crowdin-cli upload sources
-    - for lang in it pt-PT de nl ro es-ES el pl et bg tr ja hi lt; do crowdin-cli download -l $lang; done
+    - for lang in it pt-PT de nl ro mt sl sk fr uk es-ES es-AR el pl et bg tr ja hi lt; do crowdin-cli download -l $lang; done
   override:
     - npm install
 test:
