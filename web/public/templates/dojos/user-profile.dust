@@ -113,7 +113,7 @@
     <!--/col-3-->
     <div class="col-sm-8" contenteditable="false">
       <general-info></general-info>
-      <projects-list ng-if="!hideChampionProfileBlock('projects') && hasAccess(profile.userTypes, ['champion'])"></projects-list>
+      <projects-list ng-if="!hideProfileBlock('projects') || !hideChampionProfileBlock('projects')"></projects-list>
       <programming-languages-list ng-if="!hideProfileBlock('programmingLanguages') && hasAccess(profile.userTypes, ['mentor', 'champion'])"></programming-languages-list>
       <languages-spoken-list ng-if="!hideProfileBlock('languagesSpoken') && hasAccess(profile.userTypes, ['mentor', 'champion'])" ></languages-spoken-list>
       <children-list ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>

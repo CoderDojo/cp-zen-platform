@@ -121,7 +121,7 @@
           </div>
         </div>
 
-        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])">
+        <div class="form-group" ng-show="initialForm()">
           <label for="projects" class="col-sm-4 control-label">{@i18n key="Projects"/} </label>
           <div class="col-sm-8">
             <textarea class="form-control" ng-model="profile.projects"  placeholder="{@i18n key="Projects"/}"></textarea>
