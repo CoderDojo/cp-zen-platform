@@ -59,6 +59,16 @@ module.exports.register = function (server, options, next) {
       }
     }
   });
+
+  server.route({
+    method: 'GET',
+    path: '/dist/{filename*}',
+    handler: {
+      directory: {
+        path: path.join(__dirname, '../public/dist')
+      }
+    }
+  });
 };
 
 module.exports.register.attributes = {

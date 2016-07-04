@@ -1,0 +1,7 @@
+[
+  "./web/public/js/cp-zen-platform.js",
+  "./web/public/js/services/*.js",
+  "./web/public/js/directives/*.js",
+  "./web/public/js/controllers/*.js",
+  "./web/public/js/init-master.js"
+]
