@@ -46,7 +46,7 @@ gulp.task('semistandard', function () {
     ]))
     .pipe(semistandard())
     .pipe(semistandard.reporter('default', {
-      breakOnError: false
+      breakOnError: true
     }));
 });
 
