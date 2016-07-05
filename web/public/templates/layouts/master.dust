@@ -75,6 +75,8 @@
 <body ng-cloak ng-class="{'lock-view':blockUI}" lock-view>
     {+body /}
 
+    <!-- This needs to be separate as it loads a config files relative to itself -->
+    <script src="/components/ckeditor/ckeditor.js"></script>
     {@loadJS /}
 </body>
 

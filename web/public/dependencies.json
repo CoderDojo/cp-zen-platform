@@ -25,7 +25,6 @@
   "./web/public/components/spin.js/spin.js",
   "./web/public/components/angular-loading/angular-loading.min.js",
   "./web/public/components/angular-truncate/src/truncate.js",
-  "./web/public/components/ckeditor/ckeditor.js",
   "./web/public/components/ng-ckeditor/ng-ckeditor.js",
   "./web/public/components/js-marker-clusterer/src/markerclusterer.js",
   "./web/public/components/angular-wizard/dist/angular-wizard.min.js",
