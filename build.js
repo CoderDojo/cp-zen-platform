@@ -5,6 +5,25 @@ var gulp = require('gulp'),
 
 var cb = function () {};
 
+function formatError(e) {
+  if (!e.err) {
+    return e.message;
+  }
+
+  // PluginError
+  if (typeof e.err.showStack === 'boolean') {
+    return e.err.toString();
+  }
+
+  // Normal error
+  if (e.err.stack) {
+    return e.err.stack;
+  }
+
+  // Unknown (string, number, etc.)
+  return new Error(String(e.err)).stack;
+}
+
 function logEvents(gulpInst) {
 
   // Total hack due to poor error management in orchestrator
