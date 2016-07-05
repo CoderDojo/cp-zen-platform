@@ -25,6 +25,7 @@ var fs = require('fs');
 var debug = require('debug')('cp-zen-platform:index');
 
 require('./lib/dust-i18n.js');
+require('./lib/dust-loadjs.js');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
@@ -206,16 +207,18 @@ server.register(scooter, function (err) {
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
 
-// Serve CSS files.
-server.register({
-  register: require('hapi-less'),
-  options: {
-    home: path.join(__dirname, './public/css'),
-    route: '/css/{filename*}',
-    config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
-    less: { compress: true }
-  }
-}, checkHapiPluginError('hapi-less'));
+if (process.env.UIDEBUG === 'true') {
+  // Serve CSS files.
+  server.register({
+    register: require('hapi-less'),
+    options: {
+      home: path.join(__dirname, './public/css'),
+      route: '/dist/css/{filename*}',
+      config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
+      less: { compress: true }
+    }
+  }, checkHapiPluginError('hapi-less'));
+}
 
 if (process.env.HAPI_DEBUG === 'true') {
   var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
