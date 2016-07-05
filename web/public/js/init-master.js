@@ -128,7 +128,7 @@
 
 
   angular.module('cpZenPlatform')
-    .config(function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
       function valFromString(val) { return val !== null ? val.toString() : val; }
@@ -678,11 +678,11 @@
             $state.go('error-404-no-headers');
           }
       });
-    })
-    .config(function(paginationConfig) {
+    }])
+    .config(['paginationConfig', function(paginationConfig) {
       paginationConfig.maxSize = 5;
       paginationConfig.rotate = false;
-    })
+    }])
     .factory('authHttpResponseInterceptor', ['$q', '$window',
       function($q, $window) {
         return {
@@ -714,17 +714,17 @@
         .fallbackLanguage('en_US');
       }
     ])
-    .config(function (tagsInputConfigProvider) {
+    .config(['tagsInputConfigProvider', function (tagsInputConfigProvider) {
       tagsInputConfigProvider.setTextAutosizeThreshold(40);
-    })
-    .config(function(IdleProvider, KeepaliveProvider) {
+    }])
+    .config(['IdleProvider', 'KeepaliveProvider', function(IdleProvider, KeepaliveProvider) {
       IdleProvider.idle(172800); // 2 days
       IdleProvider.timeout(10);
-    })
-    .config(function (tmhDynamicLocaleProvider) {
+    }])
+    .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
-    })
-    .run(function ($window, $cookieStore, tmhDynamicLocale) {
+    }])
+    .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
       var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
@@ -736,7 +736,7 @@
         'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
       doc.head.appendChild(googleCaptchaScriptTag);
       tmhDynamicLocale.set(userLangCode);
-    })
+    }])
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
 
@@ -789,7 +789,7 @@
       var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
       tmhDynamicLocale.set(userLangCode);
     })
-    .factory('verifyProfileComplete', function (cdUsersService, auth, $q) {
+    .factory('verifyProfileComplete', ['cdUsersService', 'auth', '$q', function (cdUsersService, auth, $q) {
       return function () {
         var deferred = $q.defer();
         auth.get_loggedin_user_promise().then(function (user) {
@@ -807,11 +807,11 @@
         });
         return deferred.promise;
       }
-    })
-    .run(function (Idle){
+    }])
+    .run(['Idle', function (Idle){
       Idle.watch();
-    })
-    .controller('cdDashboardCtrl', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
+    }])
+    .controller('cdDashboardCtrl', ['$scope', '$modal', '$cookieStore', '$window', 'Idle', 'auth', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
       $scope.$on('IdleTimeout', function() {
         //session timeout
         $cookieStore.remove('verifyProfileComplete');
@@ -820,5 +820,5 @@
           $window.location.href = '/'
         })
       });
-    });
+    }]);
 })();

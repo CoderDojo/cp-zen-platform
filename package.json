@@ -12,7 +12,6 @@
     "lint-lib": "./node_modules/.bin/gulp semistandard"
   },
   "pre-commit": [
-    "jshint-check",
     "test"
   ],
   "repository": {

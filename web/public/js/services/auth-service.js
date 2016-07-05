@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').service('auth', function($http, $q) {
+angular.module('cpZenPlatform').service('auth', ['$http', '$q', function($http, $q) {
 
   var loggedin_user = null;
   function topfail( data ) {
@@ -64,4 +64,4 @@ angular.module('cpZenPlatform').service('auth', function($http, $q) {
       return deferred.promise;
     }
   };
-});
+}]);
