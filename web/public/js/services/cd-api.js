@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').service('cdApi', function($http) {
+angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
   var baseUrl = 'api/2.0/';
   return {
     post: function(url, params, resolve, reject) {
@@ -42,4 +42,4 @@ angular.module('cpZenPlatform').service('cdApi', function($http) {
       }, reject);
    }
   };
-});
+}]);

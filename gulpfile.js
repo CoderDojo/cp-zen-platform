@@ -71,7 +71,7 @@ gulp.task('build', ['clean', 'jshint', 'build-less', 'build-dependencies'], func
   return gulp.src(relativePath(app))
     .pipe(ngAnnotate())
     .pipe(concat('app.js'))
-    .pipe(uglify())
+    //.pipe(uglify()) // Commented out until we figure it out why it's breaking
     .pipe(gulp.dest(relativePath('./web/public/dist/')));
 });
 
