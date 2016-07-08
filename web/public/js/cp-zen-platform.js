@@ -34,6 +34,8 @@
     'angularjs-dropdown-multiselect',
     '720kb.tooltips',
     '720kb.socialshare',
-    'ngGeolocation'
+    'ngGeolocation',
+    'angular-google-analytics',
+    'ngAria'
   ]);
 })();

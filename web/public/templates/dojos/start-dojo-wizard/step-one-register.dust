@@ -150,7 +150,7 @@
               </div>
             </div>
             <div class="row cd-link-row back-button">
-              <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('login')">{@i18n key="Cancel"/}</a>
+              <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('login')" aria-label="Cancel">{@i18n key="Cancel"/}</a>
             </div>
           </form>
         </div>

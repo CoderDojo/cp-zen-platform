@@ -128,7 +128,8 @@
 
 
   angular.module('cpZenPlatform')
-    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider',
+        function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
       function valFromString(val) { return val !== null ? val.toString() : val; }
@@ -724,7 +725,33 @@
     .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     }])
-    .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
+    .config(['AnalyticsProvider', '$provide', function(AnalyticsProvider, $provide){
+      AnalyticsProvider.setAccount({
+        tracker: 'UA-25136319-2',
+      });
+      AnalyticsProvider.setDomainName('none');
+      AnalyticsProvider.trackUrlParams(true);
+      AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+
+      $provide.decorator('ngClickDirective', ['$delegate','Analytics', '$state',
+       function ($delegate, Analytics, $state) {
+        var originalCompile = $delegate[0].compile;
+        $delegate[0].compile = function() {
+          var originalLink = originalCompile.apply(this, arguments);
+          var action = 'click';
+          return function postLink(scope, element, attr) {
+            element.bind(action, {attrs: attr}, function(event) {
+              var data = !_.isUndefined(event.data.attrs['aria-label']) ? event.data.attrs['aria-label'] :
+                !_.isEmpty(event.target.name) ? event.target.name : $(event.target.lastChild).text();
+              Analytics.trackEvent($state.current.name, action, data);
+            });
+            return originalLink.apply(this, arguments);
+          };
+        };
+        return $delegate;
+      }]);
+    }])
+    .run(['$window', '$cookieStore', 'tmhDynamicLocale', 'Analytics', function ($window, $cookieStore, tmhDynamicLocale, Analytics) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
       var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);

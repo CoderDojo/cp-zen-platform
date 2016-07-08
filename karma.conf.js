@@ -60,6 +60,8 @@ module.exports = function(config) {
             './web/public/components/angular-tooltips/dist/angular-tooltips.min.js',
             './web/public/components/ngGeolocation/ngGeolocation.min.js',
             './web/public/components/angular-socialshare/lib/angular-socialshare.js',
+            './web/public/components/angular-google-analytics/dist/angular-google-analytics.min.js',
+            './web/public/components/angular-aria/angular-aria.min.js',
             './web/public/js/cp-zen-platform.js',
             './web/public/js/controllers/*.js',
             './web/public/js/directives/*.js',

@@ -57,5 +57,7 @@
   "./web/public/components/angular-socialshare/lib/angular-socialshare.js",
   "./web/public/components/ngGeolocation/ngGeolocation.min.js",
   "./web/public/components/dustjs-linkedin/dist/dust-core.min.js",
-  "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js"
+  "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js",
+  "./web/public/components/angular-google-analytics/dist/angular-google-analytics.min.js",
+  "./web/public/components/angular-aria/angular-aria.min.js"
 ]

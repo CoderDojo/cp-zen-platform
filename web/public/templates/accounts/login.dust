@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="row cd-link-row">
-          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('forgot-password')">{@i18n key="Forgot password" /}</a>
+          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('forgot-password')" aria-label="Forgot Password">{@i18n key="Forgot password" /}</a>
         </div>
         <div class="row cd-link-row">
           <a class="col-lg-offset-3 col-lg-6" ui-sref="register-account({referer: referer})">{@i18n key="Register" /}</a>
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="row cd-link-row back-button">
-          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('login')">{@i18n key="Cancel"/}</a>
+          <a class="col-lg-offset-3 col-lg-6 pointer" ng-click="show('login')" aria-label="Cancel">{@i18n key="Cancel"/}</a>
         </div>
       </form>
     </div>
