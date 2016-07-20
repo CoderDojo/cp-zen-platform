@@ -42,7 +42,6 @@ hasher.update(os.hostname());
 var hostUid = hasher.digest('hex') + '-' + uid;
 server.method('getUid', function() { return hostUid });
 
-
 function checkHapiPluginError (name) {
   return function (error) {
     if (error) {
@@ -203,7 +202,7 @@ server.register(scooter, function (err) {
 
   server.register({ register: blankie, options: {
     childSrc: "'none'",
-    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com",
+    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com https://www.eventbrite.com",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
@@ -302,13 +301,18 @@ server.register(events, function (err) {
   checkHapiPluginError('events')(err);
 });
 
+var eventbrite = require('../lib/eventbrite.js');
+server.register(eventbrite, function (err) {
+  checkHapiPluginError('eventbrite')(err);
+});
+
 var polls = require('../lib/polls.js');
 server.register(polls, function (err) {
   checkHapiPluginError('polls')(err);
 });
 
 server.register({register: require('./lib/plugins/seneca-preloader-dustjs'),
-  options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}}, 
+  options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}},
   checkHapiPluginError('Seneca preloader'));
 
 // Locale related server method
