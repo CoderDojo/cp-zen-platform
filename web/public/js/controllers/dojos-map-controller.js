@@ -2,12 +2,13 @@
 /* global google,jQuery,MarkerClusterer */
 
 //  TODO : reuse cd-dojos-map instead of this mixed-up controller
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation,  $location, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation, $q, $location, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
   $scope.model = {};
   $scope.markers = [];
   $scope.getDojoURL = dojoUtils.getDojoURL;
   var markerClusterer;
   var centerLocation = new google.maps.LatLng(25, -5);
+  $scope.pos = centerLocation;
 
   if (gmap) {
     $scope.mapLoaded = true;
@@ -39,14 +40,33 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
       _.each(dojos, function (dojo) {
         if(dojo.stage !== 4) filteredDojos.push(dojo);
       });
-      addMarkersToMap(filteredDojos);
+      addMarkersToMap(filteredDojos).then(function () {
+          setZoom();
+      }, function(error) {
+        console.error("Failed!", error);
+      });
     });
 
     if($scope.model.map) {
-      $scope.model.map.setZoom(2);
-      $scope.model.map.setCenter(centerLocation);
       $scope.searchResult = null;
       delete $scope.search.dojo;
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        $scope.pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        $scope.model.map.setCenter($scope.pos);
+        setZoom();
+      }, function() {
+        $scope.pos = centerLocation;
+        setZoom();
+      });
+    } else {
+      $scope.pos = centerLocation;
+      $scope.model.map.setCenter($scope.pos);
     }
   }
 
@@ -146,7 +166,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
     //reverse look up current country
     $scope.myPosition = $geolocation.position;
     var address = $scope.search.dojo;
-    if(_.isEmpty($scope.myPosition)) {
+    if(_.isEmpty($scope.myPosition) || !_.isUndefined($scope.myPosition.error)) {
       searchArea(address);
     } else {
       Geocoder.reverse($scope.myPosition.coords).then(function (results) {
@@ -198,22 +218,46 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
   }
 
   function addMarkersToMap(dojos) {
-    if (markerClusterer) markerClusterer.clearMarkers();
-    _.each(dojos, function (dojo) {
-      if (dojo.geoPoint || dojo.geo_point) {
-        var pinColor = dojo.private === 1 ? 'FF0000' : '008000';
-        var marker = new google.maps.Marker({
-          map: $scope.model.map,
-          dojoName: dojo.name,
-          dojoId: dojo.id,
-          icon: 'img/marker' + pinColor +'.png',
-          position: new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
-        });
-        marker.dojo = dojo;
-        $scope.markers.push(marker);
-      }
+    return $q(function(resolve, reject) {
+      if (markerClusterer) markerClusterer.clearMarkers();
+      _.each(dojos, function (dojo) {
+        if (dojo.geoPoint || dojo.geo_point) {
+          var pinColor = dojo.private === 1 ? 'FF0000' : '008000';
+          var marker = new google.maps.Marker({
+            map: $scope.model.map,
+            dojoName: dojo.name,
+            dojoId: dojo.id,
+            icon: 'img/marker' + pinColor +'.png',
+            position: new google.maps.LatLng(dojo.geoPoint && dojo.geoPoint.lat || dojo.geo_point.lat, dojo.geoPoint && dojo.geoPoint.lon || dojo.geo_point.lon)
+          });
+          marker.dojo = dojo;
+          $scope.markers.push(marker);
+        }
+      });
+      markerClusterer = new MarkerClusterer($scope.model.map, $scope.markers, {imagePath:'components/google-maps-utility-library-v3/markerclusterer/images/m'});
+      resolve(markerClusterer);
     });
-    markerClusterer = new MarkerClusterer($scope.model.map, $scope.markers, {imagePath:'components/google-maps-utility-library-v3/markerclusterer/images/m'});
+  }
+
+  function setZoom() {
+    if (_.isEmpty($scope.search.dojo)) {
+      var zoom = 14, set = false;
+      $scope.model.map.setZoom(zoom);
+      $scope.model.map.setCenter($scope.pos);
+      while (zoom > 2 && !set && $scope.pos !== centerLocation) {
+        zoom--;
+        _.each($scope.markers, function (marker){
+          if ($scope.model.map.getBounds().contains(marker.getPosition())){
+            set = true
+          }
+        });
+        $scope.model.map.setZoom(zoom);
+      }
+      if ($scope.pos === centerLocation) {
+        zoom = 2;
+      }
+      $scope.model.map.setZoom(zoom);
+    }
   }
 
   function getBoundsRadius(bounds) {
@@ -231,4 +275,4 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', '$location', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', 'dojoUtils', cdDojosMapCtrl]);
+  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', '$q', '$location', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', 'dojoUtils', cdDojosMapCtrl]);

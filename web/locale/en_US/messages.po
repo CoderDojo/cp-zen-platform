@@ -2548,11 +2548,20 @@ msgstr "has been cancelled"
 msgid "Your ticket request for"
 msgstr "Your ticket request for"
 
+msgid "Your ticket request for %1$s has been cancelled"
+msgstr "Your ticket request for %1$s has been cancelled"
+
 msgid "has been received"
 msgstr "has been received"
 
+msgid "Your ticket request for %1$s has been received"
+msgstr "Your ticket request for %1$s has been received"
+
 msgid "has been approved"
 msgstr "has been approved"
+
+msgid "Your ticket request for %1$s has been approved"
+msgstr "Your ticket request for %1$s has been approved"
 
 msgid "Your event must contain at least one session."
 msgstr "Your event must contain at least one session."
@@ -3018,8 +3027,8 @@ msgstr "Send notifications"
 msgid "You must choose an event"
 msgstr "You must choose an event"
 
-msgid "Tickets Now Available for"
-msgstr "Tickets Now Available for"
+msgid "Tickets Now Available for %1$s"
+msgstr "Tickets Now Available for %1$s"
 
 msgid "Terms and Conditions here"
 msgstr "Terms and Conditions here"
@@ -3053,3 +3062,9 @@ msgstr " and see what we are working on, as well as the latest features for Zen.
 
 msgid "Access our e-learning module"
 msgstr "Access our e-learning module"
+
+msgid "A new dojo has been created"
+msgstr "A new dojo has been created!"
+
+msgid "You have been invited to a Dojo session"
+msgstr "You have been invited to a Dojo session"
