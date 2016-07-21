@@ -23,5 +23,9 @@ function($rootScope, $state, $window) {
     });
   };
 
+  alertService.confirm = function(message, callback){
+    bootbox.confirm(message, callback);
+  }
+
   return alertService;
 }]);

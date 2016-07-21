@@ -8,8 +8,10 @@ angular
         template: '<div class="panel panel-default" ng-show="getVisibility()">'+
         '<button ng-click="getLoginURL()" class="btn btn-default btn-block">{{ lmsLink }}</button>'+
         '</div>',
-        controller: ['$scope', 'auth', 'cdDojoService', 'cdLMSService', 'cdUsersService', '$window', '$translate',
-        function($scope, auth, cdDojoService, cdLMSService, cdUsersService, $window, $translate) {
+        controller: ['$scope', 'auth', 'cdDojoService', 'cdLMSService', 'cdUsersService',
+         '$window', '$translate', 'alertService',
+        function ($scope, auth, cdDojoService, cdLMSService, cdUsersService,
+          $window, $translate, alertService) {
           $scope.allowed = false;
           var user = {};
           var userTypes = [];
@@ -55,9 +57,21 @@ angular
           };
 
           $scope.getLoginURL = function () {
-            cdLMSService.getLoginURL(function (link) {
-              $window.location.href = link.url;
-            });
+            cdLMSService.getLoginURL({}, callback);
+
+            function callback (link) {
+              if (link.approvalRequired){
+                alertService.confirm(
+                  $translate.instant('By using this functionnality, you allow us to share basic information with this provider (email, name, user type (Parent, Mentor, Champion))\n Do you agree?'),
+                  function (response) {
+                    if(response === true) {
+                      cdLMSService.getLoginURL({approval: true}, callback);
+                    }
+                });
+              } else if(link.url){
+                $window.location.href = link.url;
+              }
+            }
           };
         }]
       };

@@ -5,8 +5,10 @@
     }
 
     return {
-      getLoginURL: function(win, fail) {
-        cdApi.get('users/lms/user', win, fail || topfail);
+      getLoginURL: function(data, win, fail) {
+        var url = 'users/lms/user';
+        if (data && data.approval) url += '?approval=' + data.approval;
+        cdApi.get(url, win, fail || topfail);
       }
     };
   }
