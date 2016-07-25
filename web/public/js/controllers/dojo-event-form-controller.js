@@ -88,7 +88,7 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $modal, cdEventsService,
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
                             alertService, utilsService, ticketTypes, currentUser) {
     var dojoId = $stateParams.dojoId;
@@ -146,13 +146,10 @@
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
-      $scope.eventInfo.startTime = $scope.eventInfo.fixedStartDateTime;
-      $scope.eventInfo.endTime = fixEventDates($scope.eventInfo.fixedStartDateTime, $scope.eventInfo.fixedEndDateTime);
     });
 
     $scope.$watch('eventInfo.toDate', function (toDate) {
       $scope.eventInfo.fixedEndDateTime = fixEventDates(toDate, $scope.eventInfo.fixedEndDateTime);
-      $scope.eventInfo.endTime = $scope.eventInfo.fixedEndDateTime;
     });
 
     $scope.$watch('eventInfo.startTime', function (startTime) {
@@ -336,7 +333,7 @@
     $scope.copyEvent = function(event){
       cdEventsService.load(event.id, function(event){
         var utcOffset = moment().utcOffset();
-        var firstDate = moment(_.first(event.dates).startTime).subtract(utcOffset, 'minutes');
+        var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
         var now = moment().utc();
         var dayRange = lastDate.diff(firstDate, 'days');
@@ -431,7 +428,7 @@
       }
 
       function showInviteDojoMembersModal(eventUserSelection, done) {
-        var inviteDojoMembersModalInstance = $modal.open({
+        var inviteDojoMembersModalInstance = $uibModal.open({
           animation: true,
           templateUrl: '/dojos/template/events/session-invite',
           controller: 'session-invite-modal-controller',
@@ -727,7 +724,7 @@
       $scope.eventInfo.prefillAddress = false;
       $scope.isEditMode = true;
       cdEventsService.load(eventId, function(event) {
-        var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
+        var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var utcOffset = moment().utcOffset();
@@ -739,7 +736,7 @@
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
         event.toDate = new Date(lastEventOcurrance.replace(/-/g, '\/').replace(/T.+/, ''));
 
-        var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
+        var eventDay =  moment.utc(_.head(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
@@ -748,7 +745,7 @@
         $scope.eventInfo.fixedEndDateTime = event.endTime;
 
         $scope.eventInfo = _.assign($scope.eventInfo, event);
-        $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
+        $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = isEventInPast(_.last(event.dates));
 
         done(null, event);
@@ -796,7 +793,7 @@
 
 
       $scope.$watch('eventInfo.sessions', function (sessions) {
-        sessions = _.without(sessions, _.findWhere(sessions, {name: null}))
+        sessions = _.without(sessions, _.find(sessions, {name: null}))
         if(!_.isEmpty(sessions)) $scope.updateLocalStorage('sessions', sessions);
       }, true);
 
@@ -863,7 +860,7 @@
       '$state',
       '$sce',
       '$localStorage',
-      '$modal',
+      '$uibModal',
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',

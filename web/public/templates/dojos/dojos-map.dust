@@ -1,11 +1,11 @@
 <div class="cd-dashboard cd-color-2-underline">
 
-  <tabset class="dojofind-tabset" justified="true">
-    <tab class="dojofind-tab-heading" heading="{@i18n key="Map"/}">
+  <uib-tabset class="dojofind-tabset" justified="true">
+    <uib-tab class="dojofind-tab-heading" heading="{@i18n key="Map"/}">
       {>"dojos/map-search" /}
-    </tab>
-    <tab select="loadDojosList()" class="dojofind-tab-heading" heading="{@i18n key="List"/}">
+    </uib-tab>
+    <uib-tab select="loadDojosList()" class="dojofind-tab-heading" heading="{@i18n key="List"/}">
       {>"dojos/dojo-list-index" /}
-    </tab>
-  </tabset>
+    </uib-tab>
+  </uib-tabset>
 </div>

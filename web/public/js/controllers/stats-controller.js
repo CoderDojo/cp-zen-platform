@@ -38,9 +38,9 @@ function statsCtrl($scope, alertService, auth, cdAgreementsService, cdDojoServic
     _.forEach(dojos, function(n, key) {
       var total = {};
 
-      var allValues = _.pluck(n, 'all');
-      var verifiedValues = _.pluck(n, 'verified');
-      var activeValues = _.pluck(n, 'activeVerified');
+      var allValues = _.map(n, 'all');
+      var verifiedValues = _.map(n, 'verified');
+      var activeValues = _.map(n, 'activeVerified');
 
       for(var i = 0; i < n.length ; i++){
         total.all = total.all ? total.all : 0;

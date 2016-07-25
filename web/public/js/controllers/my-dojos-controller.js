@@ -67,7 +67,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
       return $q(function(resolve, reject) {
         cdDojoService.getUsersDojos(query, function (response) {
           var userDojo    = response[0];
-          isChampion  = _.contains(userDojo.userTypes, 'champion');
+          isChampion  = _.includes(userDojo.userTypes, 'champion');
           isDojoAdmin = _.find(userDojo.userPermissions, function(userPermission) {
                           return userPermission.name === 'dojo-admin';
                         });
@@ -117,7 +117,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
           getUsersDojos(query, function (err, response) {
             if(err) return cb(err);
             var userDojo = response[0];
-            var isChampion = _.contains(userDojo.userTypes, 'champion');
+            var isChampion = _.includes(userDojo.userTypes, 'champion');
             var isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
               return permission.name === 'ticketing-admin';
             });

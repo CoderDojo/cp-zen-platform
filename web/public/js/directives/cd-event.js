@@ -8,7 +8,7 @@ angular
           templateUrl: '/dojos/template/events/event-apply',
           controller: ['$scope', 'cdEventsService', 'cdUsersService', '$translate', function($scope, cdEventsService, cdUsersService, $translate) {
             $scope.event.sessions = $scope.sessions;
-            $scope.event.formattedDate = moment.utc(_.first($scope.event.dates).startTime).format('Do MMMM YY');
+            $scope.event.formattedDate = moment.utc(_.head($scope.event.dates).startTime).format('Do MMMM YY');
             $scope.eventUserSelection = {};
             $scope.currentUser = {};
             var isParent = false;
@@ -16,7 +16,7 @@ angular
             if($scope.profile && $scope.dojoId){
               $scope.currentUser = $scope.profile.user;
               $scope.currentUser.profileId = $scope.profile.id;
-              if(_.contains($scope.profile.userTypes, 'parent-guardian') || _.contains($scope.profile.roles, 'cdf-admin')) isParent = true;
+              if(_.includes($scope.profile.userTypes, 'parent-guardian') || _.includes($scope.profile.roles, 'cdf-admin')) isParent = true;
               if(!$scope.eventUserSelection[$scope.dojoId]) $scope.eventUserSelection[$scope.dojoId] = [];
               $scope.eventUserSelection[$scope.dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
               $scope.eventUserSelection[$scope.dojoId] = _.uniq($scope.eventUserSelection[$scope.dojoId], function (user) { return user.userId; });

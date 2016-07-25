@@ -20,7 +20,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
         var query = {userId:user.id, dojoId:dojoId};
         cdDojoService.getUsersDojos(query, function (response) {
           if(_.isEmpty(response)) {
-            if(_.contains(approvalRequired, userType)) {
+            if(_.includes(approvalRequired, userType)) {
               cdDojoService.requestInvite(data, function (response) {
                 usSpinnerService.stop('dojo-detail-spinner');
                 if(!response.error) {

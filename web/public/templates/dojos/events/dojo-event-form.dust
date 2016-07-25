@@ -101,7 +101,7 @@
         <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
         <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
         <div class="input-group">
-          <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" datepicker-popup ng-model="eventInfo.date"
+          <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="eventInfo.date"
                  is-open="datepicker.datePicker1"
                  ng-required="true"
                  ng-readonly="true"
@@ -128,7 +128,7 @@
       <div class="form-group" ng-if="eventInfo.type === 'recurring'">
         <label for="to-date">{@i18n key="To"/}:</label>
         <div class="input-group">
-          <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" datepicker-popup ng-model="eventInfo.toDate"
+          <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate"
                  is-open="datepicker.datePicker2"
                  ng-required="true"
                  ng-readonly="true"
@@ -154,11 +154,11 @@
       <div class="form-group row" ng-show="!pastEvent">
         <div class="col-sm-4 col-md-4 col-lg-4">
           <label for="start-time">{@i18n key="Start time"/}:</label>
-          <timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></timepicker>
+          <uib-timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker"></uib-timepicker>
         </div>
         <div class="col-sm-4 col-md-4 col-lg-4">
           <label for="endTime">{@i18n key="End time"/}:</label>
-          <timepicker min="{{ eventInfo.date }}" name="endTime" ng-model="eventInfo.endTime" ng-change="updateLocalStorage('endTime', eventInfo.endTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" required></timepicker>
+          <uib-timepicker min="eventInfo.startTime" name="endTime" ng-model="eventInfo.endTime" ng-change="updateLocalStorage('endTime', eventInfo.endTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.ismeridian" class="timepicker" required></uib-timepicker>
         </div>
       </div>
 
@@ -167,7 +167,7 @@
           <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
           <label for="prefill-address">
             {@i18n key="Use Dojo listing address"/}
-            <span tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
+            <span uib-tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
           </label>
         </div>
       </div>
@@ -232,7 +232,7 @@
                 <thead>
                   <tr>
                     <th>{@i18n key="Ticket Name"/}</th>
-                    <th>{@i18n key="Ticket Type"/} <span class="glyphicon glyphicon-info-sign" tooltip-html="ticketTypesTooltip"></span></th>
+                    <th>{@i18n key="Ticket Type"/} <span class="glyphicon glyphicon-info-sign" uib-tooltip-html="ticketTypesTooltip"></span></th>
                     <th colspan="2">{@i18n key="Ticket Quantity"/}</th>
                   </tr>
                 </thead>
@@ -267,7 +267,7 @@
                 </div>
               </div>
             </div>
-            <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} <span tooltip="{@i18n key="Please note that the capacity excludes tickets of the type other."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span> </h5>
+            <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} <span uib-tooltip="{@i18n key="Please note that the capacity excludes tickets of the type other."/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span> </h5>
           </div>
           <div class="margin-top-point-5-em icon-group">
             <label class="icon-group">{@i18n key="Add session/room"/}</label>
@@ -291,7 +291,7 @@
             <label for="is-public">
               {@i18n key="Is public"/}
             </label>
-            <span tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
+            <span uib-tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="right" class="info-button fa fa-info-circle event-tooltip"></span>
           </div>
         </div>
 
@@ -299,7 +299,7 @@
           <div class="checkbox">
             <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.ticketApproval" id="ticketApproval">
             <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
-            <span tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" class="info-button fa fa-info-circle event-tooltip"></span>
+            <span uib-tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" class="info-button fa fa-info-circle event-tooltip"></span>
           </div>
         </div>
 

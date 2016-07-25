@@ -2,7 +2,11 @@
  /*global google*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService,
-  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $modal, $localStorage, $sce) {
+  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $uibModal, $localStorage, $sce) {
+
+  $scope.strings = {
+    taoTooltip: 'This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href="http://kata.coderdojo.com/wiki/Recommended_Practice" target="_blank">here</a>'
+  };
 
   $scope.noop = angular.noop;
   $scope.stepFinishedLoading = false;
@@ -388,7 +392,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     }
 
     $scope.otherLanguageSelected = function () {
-      var otherSelected = _.contains($scope.champion.languagesSpoken, $translate.instant('Other'));
+      var otherSelected = _.includes($scope.champion.languagesSpoken, $translate.instant('Other'));
       return otherSelected;
     }
 
@@ -755,7 +759,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   }
   var openConfirmation = function (win, fail) {
 
-    var modalInstance = $modal.open({
+    var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: '/dojos/template/dojo-setup-confirm',
         controller: 'dojoSetupConfirmationCtrl'
@@ -768,5 +772,5 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService',
-    'cdAgreementsService', 'cdUsersService', 'gmap', '$translate', 'utilsService', 'intercomService', '$modal',
+    'cdAgreementsService', 'cdUsersService', 'gmap', '$translate', 'utilsService', 'intercomService', '$uibModal',
     '$localStorage','$sce', startDojoWizardCtrl]);

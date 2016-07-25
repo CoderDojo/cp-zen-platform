@@ -24,15 +24,15 @@
                     <div class="checkbox cd-checkbox checkbox-primary">
                       <input type="checkbox" name="{{ checkboxInput.name }}" id="{{ checkboxInput.name }}"
                         ng-required="{{ checkboxInput.required }}" required-message="'{@i18n key="{{ checkboxInput.requiredMessage }}"/}'"
-                        ng-model="setupDojo[checkboxInput.name]" 
+                        ng-model="setupDojo[checkboxInput.name]"
                         ng-change="updateLocalStorage('setupYourDojo',checkboxInput.name, setupDojo[checkboxInput.name])">
                       <label for="{{ checkboxInput.name }}">&nbsp;</label>
                       <span>
                         <span ng-bind-html="checkboxInput.title"></span>
                         <span ng-show="checkboxInput.required===true">*</span>
                         <span class="setup-dojo-icons">
-                          <span tooltip-trigger="focus" tooltip-placement="top" tooltip-html-unsafe="{{ checkboxInput.infoText }}" ng-if="checkboxInput.infoIcon===true" class="tooltipfocus info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-animation="true" tabindex="1"></span>
-                          <span tooltip-trigger="focus" tooltip-placement="top" tooltip-html-unsafe="{@i18n key="This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href='http://kata.coderdojo.com/wiki/Recommended_Practice' target='_blank'>here</a>"/}" ng-show="checkboxInput.taoIcon" class="tooltipfocus setup-dojo-tao-btn" tooltip-animation="true" tabindex="0"></span>
+                          <span tooltip-trigger="focus" tooltip-placement="top" uib-tooltip-html="checkboxInput.infoText" ng-if="checkboxInput.infoIcon===true" class="tooltipfocus info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-animation="true" tabindex="1"></span>
+                          <span tooltip-trigger="focus" tooltip-placement="top" uib-tooltip-html="strings.taoTooltip" ng-show="checkboxInput.taoIcon" class="tooltipfocus setup-dojo-tao-btn" tooltip-animation="true" tabindex="0"></span>
                         </span>
                         <ul class="subItemsList" ng-if="checkboxInput.subList === true">
                           <li ng-repeat="listItem in checkboxInput.subListItems">

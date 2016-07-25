@@ -31,7 +31,7 @@ function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
 
   $scope.userIsCDFAdmin = function () {
     if (!$scope.user) return false;
-  	return _.contains($scope.user.roles, 'cdf-admin');
+  	return _.includes($scope.user.roles, 'cdf-admin');
   };
 
   $scope.isSelected = function (tab) {

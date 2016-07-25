@@ -8,8 +8,8 @@
       <p ng-if="!isDojoAdmin">{@i18n key="Your local Dojo administrator can award you badges."/}</p>
     </div>
 
-    <tabset justified="true">
-      <tab ng-repeat="category in categories" class="badge-category-heading" heading="{{ prepareHeading(category) }}" ng-click="categorySelected()">
+    <uib-tabset justified="true">
+      <uib-tab ng-repeat="category in categories" class="badge-category-heading" heading="{{ prepareHeading(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <span class="help-block"></span>
@@ -28,8 +28,8 @@
             </div>
           </div>
         </div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </div>
   <div class="row">
     <div ng-show="user" class="input-group claim-badge-input-container">

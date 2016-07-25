@@ -42,14 +42,14 @@
           </div>
         </div>
         <div class="row col-lg-6 col-lg-offset-4" ng-if="events.length > 0">
-          <pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage"
+          <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage"
                       ng-model="pagination.pageNo"
                       class="pagination-sm"
                       first-text="{@i18n key="First" /}"
                       previous-text="{@i18n key="Previous" /}"
                       next-text="{@i18n key="Next" /}"
                       last-text="{@i18n key="Last" /}"
-                      boundary-links="true"></pagination>
+                      boundary-links="true"></uib-pagination>
         </div>
         <div ng-if="!events || events.length < 1">
           {@i18n key="This Dojo currently has no active events"/}

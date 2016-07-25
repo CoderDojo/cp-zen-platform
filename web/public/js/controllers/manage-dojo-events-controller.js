@@ -2,7 +2,7 @@
   'use strict';
   /*global $*/
 
-  function manageDojoEventsCtrl ($scope, $stateParams, $state, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService, $modal, usSpinnerService) {
+  function manageDojoEventsCtrl ($scope, $stateParams, $state, cdDojoService, cdEventsService, tableUtils, $translate, auth, utilsService, alertService, $uibModal, usSpinnerService) {
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
@@ -10,7 +10,7 @@
     var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {
-      var isCDFAdmin = user && _.contains(user.roles, 'cdf-admin');
+      var isCDFAdmin = user && _.includes(user.roles, 'cdf-admin');
       if (!isCDFAdmin) {
         cdDojoService.getUsersDojos({userId: user.id, dojoId: $scope.dojoId}, function (response) {
           if (!response || response.length < 1) {
@@ -35,7 +35,7 @@
         var dateOfLastEventRecurrence = _.last(event.dates).startTime;
         return moment.utc(dateOfLastEventRecurrence).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > -480;
       } else {
-        var oneOffEventDate = _.first(event.dates).startTime;
+        var oneOffEventDate = _.head(event.dates).startTime;
         return moment.utc(oneOffEventDate).subtract(utcOffset, 'minutes').diff(moment.utc(), 'minutes') > -480;
       }
     };
@@ -87,12 +87,12 @@
         var events = [];
         _.each(result, function (event) {
           if (event.type === 'recurring') {
-            var startDate = _.first(event.dates).startTime;
+            var startDate = _.head(event.dates).startTime;
             var endDate = _.last(event.dates).startTime;
             event.formattedDate = moment.utc(startDate).format('MMMM Do YYYY') + ' - ' + moment.utc(endDate).format('MMMM Do YYYY');
           } else {
             //One-off event
-            var eventDate = _.first(event.dates).startTime;
+            var eventDate = _.head(event.dates).startTime;
             event.formattedDate = moment(eventDate).format('MMMM Do YYYY');
           }
 
@@ -168,7 +168,7 @@
     $scope.getSortClass = utilsService.getSortClass;
 
     $scope.showNotifyAllMembers = function () {
-      var notifyAllMembersModal = $modal.open({
+      var notifyAllMembersModal = $uibModal.open({
         animation: true,
         templateUrl: '/dojos/template/events/notify-all-members',
         controller: 'notify-all-members-modal-controller',
@@ -188,5 +188,5 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', '$modal', 'usSpinnerService', manageDojoEventsCtrl]);
+    .controller('manage-dojo-events-controller', ['$scope', '$stateParams', '$state', 'cdDojoService', 'cdEventsService', 'tableUtils', '$translate', 'auth', 'utilsService', 'alertService', '$uibModal', 'usSpinnerService', manageDojoEventsCtrl]);
 })();
