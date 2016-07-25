@@ -17,7 +17,7 @@
         if(!_.isEmpty(response)) {
           $scope.isMember = true;
 
-          if(_.contains(response[0].userTypes, 'parent-guardian') || _.contains($scope.currentUser.roles, 'cdf-admin')) isParent = true;
+          if(_.includes(response[0].userTypes, 'parent-guardian') || _.includes($scope.currentUser.roles, 'cdf-admin')) isParent = true;
           if(!$scope.eventUserSelection[dojoId]) $scope.eventUserSelection[dojoId] = [];
           $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
           $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
@@ -64,8 +64,8 @@
         _.each(result, function (event) {
           var utcOffset = moment().utcOffset();
 
-          var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+          var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+          var endDate = moment.utc(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
 
           if(event.type === 'recurring') {
             event.formattedDates = [];

@@ -10,7 +10,7 @@ var languageCtrl = function($scope, cdLanguagesService, alertService, $cookies, 
 
       var language  = ( $cookies.NG_TRANSLATE_LANG_KEY && $cookies.NG_TRANSLATE_LANG_KEY.replace(/\"/g, "")) || $translate.proposedLanguage();
       
-      if(!_.findWhere(languages,{code: language})){
+      if(!_.find(languages,{code: language})){
         $translate.useFallbackLanguage(DEFAULT_LANGUAGE);
         language = DEFAULT_LANGUAGE;
         $scope.languageUpdated = true;

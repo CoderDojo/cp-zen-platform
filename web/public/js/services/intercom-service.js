@@ -14,7 +14,7 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
     $localStorage.dojoIds = null;
 
     if (dojos) {
-      dojoIds = _.pluck(dojos.records, 'id').toString();
+      dojoIds = _.map(dojos.records, 'id').toString();
       $localStorage.dojoIds = dojoIds;
     }
 

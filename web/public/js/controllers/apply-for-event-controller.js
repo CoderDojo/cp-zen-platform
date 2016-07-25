@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $modal,
+  function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $uibModal,
     alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils) {
     var dojoEvents = $scope.dojoRowIndexExpandedCurr;
     var eventIndex = $scope.tableRowIndexExpandedCurr;
@@ -39,7 +39,7 @@
             return dojo.id === $scope.event.dojoId;
           });
           if(!isMember) return alertService.showAlert($translate.instant('Please click the Join Dojo button before applying for events.'));
-          var sessionModalInstance = $modal.open({
+          var sessionModalInstance = $uibModal.open({
             templateUrl: '/dojos/template/events/session-details',
             controller: 'session-modal-controller',
             size: 'lg',
@@ -98,6 +98,6 @@
   }
 
   angular.module('cpZenPlatform')
-      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$modal', 'alertService',
+      .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$uibModal', 'alertService',
       'cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', cdApplyForEventCtrl]);
 })();

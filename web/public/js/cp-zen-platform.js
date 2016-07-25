@@ -26,7 +26,6 @@
     'vcRecaptcha',
     'ngFileUpload',
     'ng-slide-down',
-    'popoverToggle',
     'atomic-notify',
     'internationalPhoneNumber',
     'ngIdle',

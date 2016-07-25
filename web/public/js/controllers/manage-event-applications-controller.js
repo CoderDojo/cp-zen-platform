@@ -2,8 +2,12 @@
   'use strict';
   /*global $*/
 
-  function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
+  function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $uibModal, alertService, cdEventsService, tableUtils,
     cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event) {
+
+    $scope.strings = {
+      deleteUserCheckedIn: $translate.instant('User must not be checked in to be deleted')
+    };
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
@@ -91,11 +95,11 @@
       event.listDownloadLink('all');
     };
 
-    var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
-    var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+    var startDateUtcOffset = moment(_.head(event.dates).startTime).utcOffset();
+    var endDateUtcOffset = moment(_.head(event.dates).endTime).utcOffset();
 
-    var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
-    var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+    var startDate = moment.utc(_.head(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+    var endDate = moment.utc(_.head(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
 
     if(event.type === 'recurring') {
       event.formattedDates = [];
@@ -456,7 +460,7 @@
       }
 
       function showNewApplicantModal(eventUserSelection, done) {
-        var newApplicantModalInstance = $modal.open({
+        var newApplicantModalInstance = $uibModal.open({
           animation: true,
           templateUrl: '/dojos/template/events/session-details',
           controller: 'session-modal-controller',
@@ -516,7 +520,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService',
+    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$uibModal', 'alertService', 'cdEventsService',
       'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', manageEventApplicationsCtrl]);
 
 })();

@@ -18,7 +18,7 @@
           </div>
           <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 4" role="alert">
             {@i18n key="Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"/}
-            <span tooltip-html-unsafe="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-trigger="mouseover" tooltip-animation="true"></span>
+            <span uib-tooltip-html="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-trigger="mouseover" tooltip-animation="true"></span>
           </div>
           <table class="table" style="margin-left: 30px; margin-bottom: 10px">
             <tbody>
@@ -81,7 +81,7 @@
             </div>
             <div class="alert alert-warning text-center" ng-show="dojo.needMentors" role="alert">
               {@i18n key="We need mentors!"/}
-              <span tooltip-trigger="focus" tooltip-placement="right" tooltip-html-unsafe="<a href='http://kata.coderdojo.com/wiki/Mentor_Guide' target='_blank'>{@i18n key="Find out more about becoming a CoderDojo mentor"/}</a>" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+              <span tooltip-trigger="focus" tooltip-placement="right" uib-tooltip-html="needMentorsTooltip" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
             </div>
             <span class="help-block"></span>
             <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>

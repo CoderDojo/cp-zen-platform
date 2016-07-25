@@ -89,11 +89,11 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
         if(userProfile.userType === 'attendee-o13') return deferred.resolve(true);
         cdDojoService.getUsersDojos({userId: user.id}, function (usersDojos) {
           var userTypesFound = _.find(usersDojos, function (userDojo) {
-            return _.contains(userDojo.userTypes, 'attendee-o13');
+            return _.includes(userDojo.userTypes, 'attendee-o13');
           });
           if(userTypesFound) return deferred.resolve(true);
           cdConfigService.get('forumModerators', function (response) {
-            if(_.contains(response.forumModerators, user.email)) return deferred.resolve(true);
+            if(_.includes(response.forumModerators, user.email)) return deferred.resolve(true);
             return deferred.resolve(false);
           });
         }, function (err) {
@@ -187,7 +187,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
             $window.location.href = $scope.redirect;
           } else {
             var user = data.user;
-            if (_.contains(user.roles, 'cdf-admin') && !$scope.referer) {
+            if (_.includes(user.roles, 'cdf-admin') && !$scope.referer) {
               $scope.referer = '/dashboard/manage-dojos';
             }
             if (localStorage.eventId){

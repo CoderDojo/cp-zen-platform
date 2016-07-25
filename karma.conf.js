@@ -1,6 +1,17 @@
 // Karma configuration
 // Generated on Mon Jul 21 2014 11:48:34 GMT+0200 (CEST)
 
+var dependencies = require('./web/public/dependencies.json');
+var appCode = require('./web/public/app.json');
+var filesToLoad = [
+    './test/utils/globals.js',
+    './web/public/components/ckeditor/ckeditor.js'
+  ]
+  .concat(dependencies)
+  .concat(['./web/public/components/angular-mocks/angular-mocks.js'])
+  .concat(appCode)
+  .concat(['./test/*-spec.js', './test/fixtures/*.json']);
+
 module.exports = function(config) {
     config.set({
 
@@ -14,60 +25,7 @@ module.exports = function(config) {
 
 
         // list of files / patterns to load in the browser
-        files: [
-            './test/utils/globals.js',
-            './web/public/components/jquery/dist/jquery.js',
-            './web/public/components/angular/angular.js',
-            './web/public/components/angular-mocks/angular-mocks.js',
-            './web/public/components/angular-bootstrap/ui-bootstrap.js',
-            './web/public/components/angular-bootstrap/ui-bootstrap-tpls.js',
-            './web/public/components/moment/moment.js',
-            './web/public/components/angular-translate/angular-translate.js',
-            './web/public/components/bootstrap/dist/js/bootstrap.js',
-            './web/public/components/ckeditor/ckeditor.js',
-            './web/public/components/ng-ckeditor/ng-ckeditor.js',
-            './web/public/components/tg-angular-validator/dist/angular-validator.js',
-            './web/public/components/angular-ui-router/release/angular-ui-router.js',
-            './web/public/components/ngstorage/ngStorage.js',
-            './web/public/components/angular-route/angular-route.js',
-            './web/public/components/angular-ui-select/dist/select.js',
-            './web/public/components/angular-sanitize/angular-sanitize.js',
-            './web/public/components/angular-ui-map/ui-map.js',
-            './web/public/components/angular-ui-utils/ui-utils.js',
-            './web/public/components/angular-truncate/src/truncate.js',
-            './web/public/components/angular-wizard/dist/angular-wizard.js',
-            './web/public/components/checklist-model/checklist-model.js',
-            './web/public/components/angular-sb-date-select/src/sb-date-select.js',
-            './web/public/components/angular-alert-banner/dist/angular-alert-banner.js',
-            './web/public/components/angular-translate-loader-url/angular-translate-loader-url.js',
-            './web/public/components/angular-spinner/angular-spinner.min.js',
-            './web/public/components/ng-tags-input/ng-tags-input.min.js',
-            './web/public/components/ngBootbox/ngBootbox.js',
-            './web/public/components/angular-cookies/angular-cookies.js',
-            './web/public/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js',
-            './web/public/components/angular-breadcrumb/dist/angular-breadcrumb.min.js',
-            './web/public/components/angular-recaptcha/release/angular-recaptcha.min.js',
-            './web/public/components/ng-file-upload/ng-file-upload.min.js',
-            './web/public/components/ng-file-upload-shim/ng-file-upload-shim.min.js',
-            './web/public/components/ng-slide-down/dist/ng-slide-down.min.js',
-            './web/public/components/angular-popover-toggle/popover-toggle.js',
-            './web/public/components/angular-dynamic-locale/dist/tmhDynamicLocale.js',
-            './web/public/components/angular-atomic-notify/src/angular-atomic-notify.js',
-            './web/public/components/intl-tel-input/build/js/intlTelInput.min.js',
-            './web/public/components/international-phone-number/releases/international-phone-number.min.js',
-            './web/public/components/ng-idle/angular-idle.min.js',
-            './web/public/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js',
-            './web/public/components/angular-tooltips/dist/angular-tooltips.min.js',
-            './web/public/components/ngGeolocation/ngGeolocation.min.js',
-            './web/public/components/angular-socialshare/lib/angular-socialshare.js',
-            './web/public/js/cp-zen-platform.js',
-            './web/public/js/controllers/*.js',
-            './web/public/js/directives/*.js',
-            './web/public/js/services/*.js',
-            './web/public/js/init-master.js',
-            './test/*-spec.js',
-            './test/fixtures/*.json'
-        ],
+        files: filesToLoad,
 
         jsonFixturesPreprocessor: {
           variableName: '__json__'

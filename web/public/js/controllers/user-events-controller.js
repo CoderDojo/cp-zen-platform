@@ -26,7 +26,7 @@
                 cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId: dojoEvents.dojo.id}, function (response) {
                   if(!_.isEmpty(response)) {
                     var isParent = false;
-                    if(_.contains(response[0].userTypes, 'parent-guardian') || _.contains($scope.currentUser.roles, 'cdf-admin')) isParent = true;
+                    if(_.includes(response[0].userTypes, 'parent-guardian') || _.includes($scope.currentUser.roles, 'cdf-admin')) isParent = true;
                     if(!$scope.eventUserSelection[dojoEvents.dojo.id]) $scope.eventUserSelection[dojoEvents.dojo.id] = [];
                     $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
                     $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
@@ -49,8 +49,8 @@
 
                   var utcOffset = moment().utcOffset();
 
-                  var startDate = moment(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-                  var endDate = moment(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+                  var startDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+                  var endDate = moment(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
 
                   if(event.type === 'recurring') {
                     event.formattedDates = [];
@@ -160,8 +160,8 @@
         var events = [];
         _.each(result, function (event) {
 
-          var startDate = moment.utc(_.first(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.first(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+          var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
+          var endDate = moment.utc(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
 
           if(event.type === 'recurring') {
             event.formattedDates = [];

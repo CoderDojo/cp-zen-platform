@@ -679,9 +679,12 @@
           }
       });
     }])
-    .config(['paginationConfig', function(paginationConfig) {
-      paginationConfig.maxSize = 5;
-      paginationConfig.rotate = false;
+    .config(['uibPaginationConfig', function(uibPaginationConfig) {
+      uibPaginationConfig.maxSize = 5;
+      uibPaginationConfig.rotate = false;
+    }])
+    .config(['ipnConfig', function (ipnConfig) {
+      ipnConfig.nationalMode = false;
     }])
     .factory('authHttpResponseInterceptor', ['$q', '$window',
       function($q, $window) {
@@ -811,7 +814,7 @@
     .run(['Idle', function (Idle){
       Idle.watch();
     }])
-    .controller('cdDashboardCtrl', ['$scope', '$modal', '$cookieStore', '$window', 'Idle', 'auth', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
+    .controller('cdDashboardCtrl', ['$scope', '$uibModal', '$cookieStore', '$window', 'Idle', 'auth', function ($scope, $uibModal, $cookieStore, $window, Idle, auth) {
       $scope.$on('IdleTimeout', function() {
         //session timeout
         $cookieStore.remove('verifyProfileComplete');

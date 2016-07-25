@@ -20,7 +20,7 @@ angular
             };
 
             $scope.userTypeSelected = function ($item) {
-              if(_.contains(approvalRequired, $item)) return $scope.approvalRequired = true;
+              if(_.includes(approvalRequired, $item)) return $scope.approvalRequired = true;
               return $scope.approvalRequired = false;
             };
 
@@ -30,7 +30,7 @@ angular
             });
 
             if(!_.isEmpty($scope.currentUser)){
-              if(_.contains(_.map($scope.currentUser.joinRequests, 'dojoId'), dojoId)){
+              if(_.includes(_.map($scope.currentUser.joinRequests, 'dojoId'), dojoId)){
                 $scope.inviteExists = true;
               }
               //Check if user is a member of this Dojo
@@ -54,7 +54,7 @@ angular
                   usSpinnerService.spin('dojo-detail-spinner');
                   var data = {user:user, dojoId: dojoId, userType: userType, emailSubject: 'New Request to join your Dojo'};
 
-                  if(_.contains(approvalRequired, userType)) {
+                  if(_.includes(approvalRequired, userType)) {
                     cdDojoService.requestInvite(data, function (response) {
                       usSpinnerService.stop('dojo-detail-spinner');
                       if(!response.error) {

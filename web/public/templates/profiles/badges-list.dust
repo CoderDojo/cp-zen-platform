@@ -2,8 +2,8 @@
   <legend>{@i18n key="Badges"/}</legend>
   <button ng-show="false" ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>
   <div class="panel-body">
-    <tabset justified="true">
-      <tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
+    <uib-tabset justified="true">
+      <uib-tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <span class="help-block"></span>
@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </div>
 </div>

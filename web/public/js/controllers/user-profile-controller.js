@@ -87,7 +87,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
     _.each(userTypes, function(userType){
       var filteredFields = _.filter(hiddenFields, function(hiddenField){
-        return _.contains(hiddenField.allowedUserTypes, userType);
+        return _.includes(hiddenField.allowedUserTypes, userType);
       });
 
       retHiddenFields = _.union(retHiddenFields, filteredFields);
@@ -147,6 +147,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       }
     });
   });
+
+  profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
 
@@ -232,7 +234,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       for(var i = 0; i < usersDojos.length; i++) {
         var userDojoLink = usersDojos[i];
         var userTypes = userDojoLink.userTypes;
-        if(_.contains(userTypes, userType)) {
+        if(_.includes(userTypes, userType)) {
           highestTypeFound = true;
           return userType;
         }
@@ -250,7 +252,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   }
 
-  $scope.parentProfile = _.contains(profile.data.userTypes, 'parent-guardian');
+  $scope.parentProfile = _.includes(profile.data.userTypes, 'parent-guardian');
   $scope.save = function(profile){
     _.each(['http://', 'https://', 'www.'], function(prefix){
       _.each(['linkedin', 'twitter'], function(field){
@@ -280,7 +282,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
             if(_.isEmpty(profileCopy.parents)){
               profileCopy.parents = [];
             }
-            if($state.params.parentId && !_.contains(profileCopy.parents, $state.params.parentId)){
+            if($state.params.parentId && !_.includes(profileCopy.parents, $state.params.parentId)){
               profileCopy.parents.push($state.params.parentId);
             }
             saveYouthViaParent(profileCopy, callback);
@@ -558,7 +560,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.loggedInUserIsCDFAdmin = function () {
     if(!loggedInUser.data) return false;
-    return _.contains(loggedInUser.data.roles, 'cdf-admin');
+    return _.includes(loggedInUser.data.roles, 'cdf-admin');
   }
 
   $scope.hideProfileBlock = function (block) {
@@ -590,7 +592,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.canUpdateHiddenField = function (hiddenField) {
-    return _.contains(hiddenField.allowedUserTypes, $scope.highestUserType);
+    return _.includes(hiddenField.allowedUserTypes, $scope.highestUserType);
   }
 
   $scope.hideChampionProfileBlock = function (block) {

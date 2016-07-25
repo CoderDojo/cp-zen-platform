@@ -38,11 +38,11 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
   function allSigned(dojo){
     var currentAgreementVersion = 2;
     var creators = dojo.creators;
-    var agreements = _.flatten(_.pluck(creators, 'agreements'));
+    var agreements = _.flatten(_.map(creators, 'agreements'));
     var signedCreators = [];
 
     _.each(creators, function(creator){
-      var result = _.findWhere(agreements, {agreementVersion: currentAgreementVersion, userId: creator.id});
+      var result = _.find(agreements, {agreementVersion: currentAgreementVersion, userId: creator.id});
 
       if(result){
         signedCreators.push(creator);
@@ -274,7 +274,7 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
     query.userId = item.id;
 
     cdDojoService.getUsersDojos(query, function(usersDojos){
-      var dojoIds = _.pluck(usersDojos, 'dojoId');
+      var dojoIds = _.map(usersDojos, 'dojoId');
 
       dojoIds = _.filter(dojoIds, function(dojoId){
         return dojoId !== null;
@@ -287,7 +287,7 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
   };
 
   auth.get_loggedin_user(function (user) {
-    if (!_.contains(user.roles, 'cdf-admin')){
+    if (!_.includes(user.roles, 'cdf-admin')){
       $state.go('error-404-no-headers')
     }
     $scope.loadPage($scope.filter, true);

@@ -42,7 +42,7 @@
         <div class="form-group" ng-enter="noop()">
           <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-            <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="profile.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event, profile)" />
+            <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="profile.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event, profile)" />
             <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
               <button type="button" class="btn btn-default" ng-click="open($event, profile)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
@@ -199,7 +199,7 @@
             </div>
 
             <div class="form-group" ng-enter="noop()">
-              <label for="childAlias" class="col-sm-4 control-label">{@i18n key="Child Alias"/}* <span tooltip="{@i18n key="The alias is a nickname which your child would have while using the Zen platform"/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span></label>
+              <label for="childAlias" class="col-sm-4 control-label">{@i18n key="Child Alias"/}* <span uib-tooltip="{@i18n key="The alias is a nickname which your child would have while using the Zen platform"/}" tooltip-placement="right" class="glyphicon glyphicon-info-sign"></span></label>
               <div class="col-sm-8">
                 <input name="childAlias-{{ $index }}" type="text" required required-message="'{@i18n key="Alias is required"/}'" class="form-control" id="childAlias" placeholder="{@i18n key="Alias"/}" ng-model="child.alias">
               </div>
@@ -208,7 +208,7 @@
             <div class="form-group" ng-enter="noop()">
               <label for="childDateOfBirth" class="col-sm-4 text-right">{@i18n key="Child Date of Birth"/}*</label>
               <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-                <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="childDobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="child.dateOfBirth" name="childDateOfBirth-{{ $index }}" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="child.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your childs date of birth here..."/}" ng-click="open($event, child)" />
+                <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="childDobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="child.dateOfBirth" name="childDateOfBirth-{{ $index }}" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="child.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your childs date of birth here..."/}" ng-click="open($event, child)" />
                 <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
                   <button type="button" class="btn btn-default" ng-click="open($event, child)"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>

@@ -20,7 +20,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   $scope.changedLocation = false;
   $scope.disableDojoCountryChange = false;
 
-  $scope.isCDFAdmin = currentUser && currentUser.data && _.contains(currentUser.data.roles, 'cdf-admin');
+  $scope.isCDFAdmin = currentUser && currentUser.data && _.includes(currentUser.data.roles, 'cdf-admin');
 
   var DEFAULT_COORDS = '53.3478,6.2597';
 
@@ -406,7 +406,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   function canUpdateDojo() {
     var deferred = $q.defer();
     var query = {userId: currentUser.data.id, dojoId: $state.params.id};
-    var isCDFAdmin = _.contains(currentUser.data.roles, 'cdf-admin');
+    var isCDFAdmin = _.includes(currentUser.data.roles, 'cdf-admin');
     if (isCDFAdmin) {
       deferred.resolve(isCDFAdmin);
     } else {

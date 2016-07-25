@@ -12,14 +12,14 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 
   };
 
   utils.frTags = function(tags){
-    return _.pluck(tags, 'text');
+    return _.map(tags, 'text');
   };
 
-  utils.contains = _.contains;
+  utils.contains = _.includes;
 
   utils.hasAccess = function(userTypes, allowedTypes){
     var returnType = _.find(allowedTypes, function(allowedType){
-      return _.contains(userTypes, allowedType);
+      return _.includes(userTypes, allowedType);
     });
     return (typeof returnType === 'undefined') ? false : true;
   };
