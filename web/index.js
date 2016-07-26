@@ -26,6 +26,7 @@ var debug = require('debug')('cp-zen-platform:index');
 
 require('./lib/dust-i18n.js');
 require('./lib/dust-loadjs.js');
+require('./lib/dust-loadDirectivesCSS.js');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
@@ -75,7 +76,7 @@ server.register(vision, function (err) {
   checkHapiPluginError('vision')(err);
   server.views({
     engines: { dust: require('hapi-dust') },
-    path: path.join(__dirname, './public/templates'),
+    path: [path.join(__dirname, './public/templates'), path.join(__dirname, './public/js/')] ,
     partialsPath: path.join(__dirname, './public/templates')
   });
 });
@@ -214,6 +215,16 @@ if (process.env.UIDEBUG === 'true') {
     options: {
       home: path.join(__dirname, './public/css'),
       route: '/dist/css/{filename*}',
+      config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
+      less: { compress: true }
+    }
+  }, checkHapiPluginError('hapi-less'));
+
+  server.register({
+    register: require('hapi-less'),
+    options: {
+      home: path.join(__dirname, './public/js/directives'),
+      route: '/dist/css/directives/{filename*}',
       config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
       less: { compress: true }
     }
