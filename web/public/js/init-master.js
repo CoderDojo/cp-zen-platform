@@ -160,7 +160,7 @@
         })
         .state("login", {
           url: "/login?referer",
-          templateUrl: '/templates/login',
+          template: '<cd-login></cd-login>',
           controller: 'login',
           params: {
             referer: null,
@@ -174,6 +174,13 @@
           params: {
             referer: null,
             pageTitle: 'Logout'
+				.state("reset", {
+          url: "/reset?referer",
+          templateUrl: '/tpl/accounts/reset',
+          controller: 'login',
+          params: {
+            referer: null,
+            pageTitle: 'Password Reset'
           }
         })
         .state("reset-password", {
@@ -187,12 +194,26 @@
         .state("register-account", {
           url: "/register?referer",
           templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
+          abstract: true,
           params: {
             referer:null,
             userType:null,
             pageTitle: 'Register'
           },
           controller: 'login'
+        })
+        .state("register-account.user", {
+          url: "/user",
+          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register-user',
+          params: {
+            referer:null,
+          }
+        })
+        .state("register-account.profile", {
+          url: "/profile",
+          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register-profile',
+          params: {
+          }
         })
         .state("stats", {
           url: "/stats",
@@ -680,6 +701,7 @@
           }
         });
       $urlRouterProvider.when('', '/');
+      $urlRouterProvider.when('/register', '/register/user');
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');

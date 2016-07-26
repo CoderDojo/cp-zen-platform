@@ -1,8 +1,9 @@
  'use strict';
  /*global google*/
+ /*Here be dragons*/
 
 function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertService, WizardHandler, cdDojoService,
-  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $uibModal, $localStorage, $sce) {
+  cdAgreementsService, cdUsersService, gmap, $translate, utilsService, intercomService, $uibModal, $localStorage, $sce, userUtils) {
 
   $scope.strings = {
     taoTooltip: 'This is a part of CoderDojo Tao and CoderDojo recommended practice! To find out more about CoderDojo Tao and best practices for CoderDojo please see <a href="http://kata.coderdojo.com/wiki/Recommended_Practice" target="_blank">here</a>'
@@ -16,12 +17,16 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   var currentStepInt = 0;
   var stepNames = [
                     'Register Account',
+                    'Complete Profile',
                     'Champion Registration',
                     'Setup your Dojo',
                     'Dojo Listing'
                   ];
 
-  $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
+	$scope.formData = {};
+	$scope.userFormData = {};
+
+  $scope.recap = {publicKey: '6Lc--SQTAAAAAGifz--Vwm5rflsgbUvtO5k4C8In'};
   setupGoogleMap();
 
   var fail = function(){
@@ -69,7 +74,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
       if (results.length === 0) {
         //Go to champion registration page
-        initStep(1);
+        initStep(2);
         return;
       }
 
@@ -79,7 +84,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 
       if (uncompletedDojoLead) {
         if (!validateChampionInfo(uncompletedDojoLead)) {
-          initStep(1);
+          initStep(2);
           return;
         }
         currentStepInt = uncompletedDojoLead.currentStep;
@@ -98,14 +103,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
               });
           } else {
             //Go back to Dojo Listing step
-            initStep(3);
+            initStep(4);
           }
         }, fail);
       } else if (!uncompletedDojoLead) {
         //Make a copy of dojoLead here then initStep 2
         var dojoLead = _.omit(_.cloneDeep(results[0]), ['completed', 'converted', 'deleted', 'deletedAt', 'deletedBy', 'id', 'entity$']);
         if (!validateChampionInfo(dojoLead)) {
-          initStep(1);
+          initStep(2);
           return;
         }
         dojoLead.completed = false;
@@ -114,14 +119,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         dojoLead.application.dojoListing = {};
 
         cdDojoService.saveDojoLead(dojoLead, function (response) {
-          initStep(2);
+          initStep(3);
         }, failSave);
       } else {
         cdAgreementsService.loadUserAgreement(user.id, function (response) {
           if (response && response.id) {
             initStep(uncompletedDojoLead.currentStep);
           } else {
-            initStep(1, 'charter');
+            initStep(2, 'charter');
           }
         }, fail);
       }
@@ -219,10 +224,18 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     });
   }
 
+  $scope.disabled = true;
+	$scope.next = function () {
+		$scope.disabled = false;
+		WizardHandler.wizard().next();
+	}
+
+	$scope.submit = function () {
+    userUtils.doRegister(_.extend($scope.formData, $scope.userFormData));
+	}
+
   //--Step One:
   function setupStep1() {
-    $scope.registerUser = {initUserType:{name:'champion', title:'Champion'}};
-    $scope.hideIndicators = true;
     currentStepInt = 0;
     WizardHandler.wizard().goTo(0);
     $scope.onStartDojoWizard = true;
@@ -773,4 +786,4 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
 angular.module('cpZenPlatform')
   .controller('start-dojo-wizard-controller', ['$scope', '$window', '$state', '$location', 'auth', 'alertService', 'WizardHandler', 'cdDojoService',
     'cdAgreementsService', 'cdUsersService', 'gmap', '$translate', 'utilsService', 'intercomService', '$uibModal',
-    '$localStorage','$sce', startDojoWizardCtrl]);
+    '$localStorage','$sce', 'userUtils',  startDojoWizardCtrl]);

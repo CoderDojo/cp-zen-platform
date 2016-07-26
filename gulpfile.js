@@ -93,5 +93,4 @@
   gulp.task('default', ['test']);
 
   gulp.task('dev', ['watch-less']);
-
-})();
+};

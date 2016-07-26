@@ -62,11 +62,19 @@ module.exports.register = function (server, options, next) {
 
   server.route({
     method: 'GET',
+<<<<<<< 8f60419a044531a02b5f6c4bbff4d0a93908f72a
     path: '/directives/tpl/{name*}',
     handler: function (request, reply) {
       reply.view('directives/' + request.params.name + '/template.dust', request.locals);
     }
   })
+=======
+    path: '/directive/tpl/{name*}',
+    handler: function (request, reply) {
+      reply.view('directives/' + request.params.name + '/template.dust', request.locals);
+    }
+  });
+>>>>>>> add less file
 
   server.route({
     method: 'GET',
