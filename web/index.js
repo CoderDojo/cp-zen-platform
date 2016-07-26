@@ -30,7 +30,7 @@ require('./lib/dust-loadjs.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
-var host = process.env.HOSTNAME || '127.0.0.1:8000';
+var host = process.env.HOSTNAME || '127.0.0.1';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
 
@@ -194,7 +194,7 @@ server.register(scooter, function (err) {
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: *",
+    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",

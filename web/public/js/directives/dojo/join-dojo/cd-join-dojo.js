@@ -5,19 +5,32 @@ angular
     .module('cpZenPlatform')
     .directive('cdJoinDojo', function () {
         return {  restrict: 'AE',
-          templateUrl: '/dojos/template/join-dojo',
-          controller: ['$scope', 'cdDojoService', '$translate', 'cdUsersService', 'auth', 'usSpinnerService', '$state', 'alertService', '$location',
-           function($scope, cdDojoService, $translate, cdUsersService, auth, usSpinnerService, $state, alertService, $location ) {
+          templateUrl: '/directives/tpl/dojo/join-dojo/join-dojo',
+          controller:
+          ['$scope', 'cdDojoService', '$translate', 'cdUsersService', 'auth',
+           'usSpinnerService', '$state', 'alertService', '$location', '$uibModal',
+           function($scope, cdDojoService, $translate, cdUsersService, auth,
+             usSpinnerService, $state, alertService, $location, $uibModal ) {
             $scope.dojoMember = false;
             $scope.userMemberCheckComplete = false;
             $scope.requestInvite = {};
             var approvalRequired = ['mentor', 'champion'];
+            $scope.roles = [{
+                              name: 'Parent'
+                            },
+                            {
+                              name: 'Volunteer'
+                            }];
 
             var dojoId = $scope.dojo ? $scope.dojo.id : $scope.event.dojoId;
 
             $scope.isInviteExisting = function () {
                 return $scope.inviteExists;
             };
+
+            $scope.canLeave = function () {
+              return $scope.dojoMember && !$scope.dojoOwner && $scope.userMemberCheckComplete;
+            }
 
             $scope.userTypeSelected = function ($item) {
               if(_.includes(approvalRequired, $item)) return $scope.approvalRequired = true;
@@ -100,6 +113,37 @@ angular
               }
             };
 
+            // $scope.choseRoleToJoin = function () {
+            //   $uibModal.open({
+            //     template: '<cd-chose-role roles="roles" dojoId="dojoId" currentUser="currentUser" referer="referer"></cd-chose-role>',
+            //     size: 'lg',
+            //     controller: function(dojoId, roles, currentUser, referer) {
+            //       $scope.dojoId = dojoId;
+            //       $scope.roles = roles;
+            //       $scope.currentUser = currentUser;
+            //       $scope.referer = referer;
+            //     },
+            //     resolve: {
+            //       dojoId: function () {
+            //         return $scope.dojoId;
+            //       },
+            //       roles: function() {
+            //         return [{
+            //           name: 'Parent'
+            //         },
+            //         {
+            //           name: 'Volunteer'
+            //         }]
+            //       },
+            //       currentUser: function () {
+            //         return $scope.currentUser;
+            //       },
+            //       referer: function () {
+            //         return $state.current.name;
+            //       }
+            //     }
+            //   });
+            // }
           }]
         };
     });

@@ -39,12 +39,14 @@
       }, function (err) {
         dfd.reject(err);
       });
-    } else if($stateParams.dojoId && _.isNumber(parseInt($stateParams.dojoId))) {
-      cdDojoService.load({id: parseInt($stateParams.dojoId)},
-      function (data) {
-        dfd.resolve(data);
-      }, function (err) {
-        dfd.reject(err);
+    } else if( ($stateParams.dojoId && !_.isNumber($stateParams.dojoId) ) ||
+      ($stateParams.id && !_.isNumber($stateParams.dojoId) ) ) {
+        var id = $stateParams.dojoId || $stateParams.id;
+        cdDojoService.load(id,
+        function (data) {
+          dfd.resolve(data);
+        }, function (err) {
+          dfd.reject(err);
       });
     } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
@@ -298,6 +300,7 @@
           parent: 'dashboard',
           templateUrl: '/dojos/template/edit-dojo',
           resolve: {
+            dojo: resolveDojo,
             gmap: gmap,
             currentUser: resolves.loggedInUser
           },

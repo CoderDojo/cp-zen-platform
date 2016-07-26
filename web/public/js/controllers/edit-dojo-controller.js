@@ -1,17 +1,22 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
-                        $state, $q, $translate, utilsService, currentUser, cdUsersService, $localStorage, $ngBootbox) {
+function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
+                        $state, $q, $translate, utilsService, currentUser, cdUsersService,
+                        $localStorage, $ngBootbox, dojoUtils) {
 
-  canUpdateDojo().then(function(isDojoAdmin){
+  dojoUtils.canUpdateDojo(currentUser, $state.params.id).then(function(isDojoAdmin){
+    $scope.isDojoAdmin = isDojoAdmin;
     if(!isDojoAdmin){
-      $scope.isDojoAdmin = isDojoAdmin;
       $state.go('error-404-no-headers');
     }
   });
 
-  $scope.dojo = {};
+  $scope.getIsDojoAdmin = function () {
+    return $scope.isDojoAdmin;
+  }
+
+  $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
   $scope.markerPlaced = false;
@@ -47,45 +52,35 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
   };
 
   async.waterfall([function (done) {
-    var dojoId = $state.params.id;
-
-    cdDojoService.load(dojoId, function (response) {
-      if (!_.isEmpty(response)) {
-        return done(null, response);
-      } else {
-        return done($translate.instant('Failed to load Dojo'));
-      }
-    });
-  }, function (dojo, done) {
     var query = {};
 
-    query.dojoId = dojo.id;
+    query.dojoId = $scope.dojo.id;
 
     query.owner = 1;
 
     cdDojoService.getUsersDojos(query, function (response) {
 
-      return done(null, dojo, response[0]);
+      return done(null, response[0]);
     }, function () {
       return done($translate.instant('Failed to load Dojo'));
     });
 
 
-  }, function (dojo, prevFounder, done) {
+  }, function (prevFounder, done) {
 
     if (_.isEmpty(prevFounder)) {
-      return done(null, dojo);
+      return done();
     }
 
     cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
 
-      return done(null, dojo, prevFounder);
+      return done(null, prevFounder);
     }, function (err) {
       return done(err);
     });
-  }], function (err, dojo, prevFounder) {
+  }], function (err, prevFounder) {
     if (err) {
       alertService.showError(err);
       return;
@@ -103,11 +98,10 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
       uiColor: '#000000',
       height: '200px'
     };
-    if (dojo.notes === '') $scope.editorOptions.initContent = initContent;
+    if ($scope.dojo.notes === '') $scope.editorOptions.initContent = initContent;
 
-    $scope.originalDojoListing = angular.copy(dojo);
-    $scope.dojo = dojo;
-    $scope.disableDojoCountryChange = dojo.verified === 1;
+    $scope.originalDojoListing = angular.copy($scope.dojo);
+    $scope.disableDojoCountryChange = $scope.dojo.verified === 1;
     $scope.prevFounder = prevFounder;
     $scope.founder = angular.copy(prevFounder);
     loadDojoMap();
@@ -330,7 +324,7 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     }
 
     function finish() {
-      canUpdateDojo().then(function (isDojoAdmin) {
+      dojoUtils.canUpdateDojo(currentUser, $state.params.id).then(function (isDojoAdmin) {
         if (isDojoAdmin) {
           if($scope.originalDojoListing.alpha2 !== $scope.dojo.alpha2 ||
             $scope.originalDojoListing.admin1Name !== $scope.dojo.admin1Name ||
@@ -403,28 +397,11 @@ function cdEditDojoCtrl($scope, cdDojoService, alertService, gmap, auth,
     });
   };
 
-  function canUpdateDojo() {
-    var deferred = $q.defer();
-    var query = {userId: currentUser.data.id, dojoId: $state.params.id};
-    var isCDFAdmin = _.includes(currentUser.data.roles, 'cdf-admin');
-    if (isCDFAdmin) {
-      deferred.resolve(isCDFAdmin);
-    } else {
-      cdDojoService.getUsersDojos(query, function (userDojo) {
-        if(!userDojo || userDojo.length < 1){ return deferred.resolve(false); }
-
-        var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
-          return userPermission.name === 'dojo-admin';
-        });
-        deferred.resolve(isDojoAdmin);
-      }, function (err) {
-        deferred.reject(err);
-      });
-    }
-    return deferred.promise;
+  $scope.upload = function (file) {
+    return cdDojoService.uploadAvatar($scope.dojo.id, file);
   }
 }
 
 angular.module('cpZenPlatform')
-  .controller('edit-dojo-controller', ['$scope', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', cdEditDojoCtrl]);
+  .controller('edit-dojo-controller', ['$scope', 'dojo', 'cdDojoService', 'alertService', 'gmap', 'auth',
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', 'dojoUtils', cdEditDojoCtrl]);

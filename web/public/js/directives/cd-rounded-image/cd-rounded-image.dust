@@ -1,0 +1,34 @@
+<span ng-switch="edit" class="cd-rounded-image">
+  <div ng-switch-when="true" >
+    <form name="imageUpload">
+      <div class="--hover-upload" >
+        <input class="__img" ng-style="{'width': cdRI.size, 'height': cdRI.size}"
+          ngf-select ng-model="cdRI.file" name="avatar" ngf-pattern="'image/*'"
+          ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+          ngf-resize="{width: {{ cdRI.size }}, height: {{ cdRI.size }}}"></input>
+        <i class="fa fa-upload --middle"></i>
+        <i ng-show="cdRI.file" class="fa fa-save __rounded --right-side" ng-click="cdRI.submit()"></i>
+        <!-- TODO: resize/move image
+        <!-- <ul class="list-unstyled list-inline">
+          <li><i class="fa fa-upload --right-side"
+            ></i></li>
+          <li><i class="fa fa-arrows --right-side" ng-click="cdRI.toggleFullWidth()"></i></li>
+        </ul> -->
+      </div>
+    <!-- <img-crop image="cdRI.file | cdRI.ngfDataUrl"
+          result-image="cdRI.croppedDataUrl" ng-init="cdRI.croppedDataUrl=''">
+    </img-crop> -->
+      <img ng-show = "!cdRI.file" src="{{ cdRI.src }}" class="__img img-responsive " alt="{{ cdRI.alt }}"
+         aria-describedby="{{ cdRI.alt }}" width="{{ cdRI.size }}" ng-class="{'--full-width': cdRI.fullWidth}"></img>
+      <img ng-show = "cdRI.file" ngf-thumbnail="cdRI.file" class="__img img-responsive " alt="{{ cdRI.alt }}" width="{{ cdRI.size }}"></img>
+    </form>
+  </div>
+  <object ng-switch-default class="__img img-responsive"
+    width="{{ cdRI.size }}"
+    data="{{ cdRI.fallbackSrc }}" type="image/png">
+    <img src="{{ cdRI.src }}" class="__img img-responsive" alt="{{ cdRI.alt }}"
+      aria-describedby="{{ cdRI.alt }}" width="{{ cdRI.size }}"></img>
+  </object>
+  <!-- <div > -->
+  <!-- </div> -->
+</span>
