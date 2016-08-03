@@ -9,7 +9,7 @@ var languageCtrl = function($scope, cdLanguagesService, alertService, $cookies, 
       $scope.languages = languages;
 
       var language  = ( $cookies.NG_TRANSLATE_LANG_KEY && $cookies.NG_TRANSLATE_LANG_KEY.replace(/\"/g, "")) || $translate.proposedLanguage();
-      
+
       if(!_.find(languages,{code: language})){
         $translate.useFallbackLanguage(DEFAULT_LANGUAGE);
         language = DEFAULT_LANGUAGE;
@@ -26,16 +26,11 @@ var languageCtrl = function($scope, cdLanguagesService, alertService, $cookies, 
 
 
   $scope.updateLocale = function(){
-    $scope.languageUpdated = true;
-    $translate.use($scope.selectedLanguage);
+    $translate.use($scope.selectedLanguage)
+      .then(function () {
+        $window.location.reload();
+      });
   };
-
-  $scope.$watch(function() { return $cookies.NG_TRANSLATE_LANG_KEY; }, function(newValue) {
-    if($scope.languageUpdated){
-      $window.location.reload();
-      $scope.languageUpdated = false;
-    }
-  });
 };
 
 angular.module('cpZenPlatform')
