@@ -12,7 +12,7 @@ function cdRoundedImage(){
         upload: '=?'
       },
       restrict: 'EA',
-      templateUrl: '/directives/tpl/cd-rounded-image/cd-rounded-image',
+      templateUrl: '/directives/tpl/cd-rounded-image',
       controller: ['$scope', 'atomicNotifyService', '$translate', function ($scope, atomicNotifyService, $translate) {
         this.fallbackSrc = 'https://placekitten.com/g/400/400';
         this.src = $scope.src ? $scope.src : this.fallbackSrc;

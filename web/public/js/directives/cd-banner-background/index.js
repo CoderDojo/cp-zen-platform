@@ -7,7 +7,7 @@ function cdBannerBackground(){
         src: '=?',
       },
       restrict: 'EA',
-      templateUrl: '/directives/tpl/cd-banner-background/cd-banner-background',
+      templateUrl: '/directives/tpl/cd-banner-background',
       controller: function ($scope) {
         var imageWatcher = $scope.$watch('src', function(newSrc, oldSrc){
           if (newSrc) {

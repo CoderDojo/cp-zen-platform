@@ -1,1 +1,0 @@
-<i class="fa fa-edit" ng-click="switchEdit()" ng-if="canEdit"></i>

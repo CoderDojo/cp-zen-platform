@@ -87,7 +87,7 @@
   });
 
   gulp.task('watch-less', [], function(){
-    return gulp.watch(lessFiles, ['build-less']);
+    return gulp.watch([ relativePath('./web/public/css/**/*.less'), relativePath('./web/public/js/directives/**/*.less')], ['build-less']);
   });
 
   gulp.task('default', ['test']);

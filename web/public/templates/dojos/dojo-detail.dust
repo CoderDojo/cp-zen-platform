@@ -24,8 +24,8 @@
                 <i class="fa" ng-class="dojo.private === true? 'fa-lock': 'fa-child'"
                   ng-attr-title="{{ dojo.private === false?'{@i18n key="Public Dojo"/}':'{@i18n key="Private Dojo"/} {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}'}}"></i>
               </div>
-              <div cd-dojo-actions is-dojo-admin="{{ isDojoAdmin }}" dojo="dojo"></div>
             </div>
+            <div cd-dojo-actions is-dojo-admin="{{ isDojoAdmin }}" dojo="dojo"></div>
             <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" alt="{{ dojo.name }}" class="col-md-3 hidden-xs"></div>
             <div class="col-md-6 __dojo-name">
               <h2 ng-bind="::dojo.name"></h2>

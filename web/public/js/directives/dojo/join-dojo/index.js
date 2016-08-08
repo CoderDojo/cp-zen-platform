@@ -5,7 +5,7 @@ angular
     .module('cpZenPlatform')
     .directive('cdJoinDojo', function () {
         return {  restrict: 'AE',
-          templateUrl: '/directives/tpl/dojo/join-dojo/join-dojo',
+          templateUrl: '/directives/tpl/dojo/join-dojo',
           controller:
           ['$scope', 'cdDojoService', '$translate', 'cdUsersService', 'auth',
            'usSpinnerService', '$state', 'alertService', '$location', '$uibModal',

@@ -13,7 +13,7 @@ function cdSocialNetwork(){
         twitter: '=?'
       },
       restrict: 'EA',
-      templateUrl: '/directives/tpl/cd-social-network/cd-social-network',
+      templateUrl: '/directives/tpl/cd-social-network',
       controller: function ($scope) {
         var providers = ['flickr', 'google', 'linkedin', 'facebook', 'twitter'];
         var urls = ['', '', '//linkedin.com/', '//facebook.com/', '//twitter.com/'];

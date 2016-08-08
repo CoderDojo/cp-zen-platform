@@ -64,7 +64,7 @@ module.exports.register = function (server, options, next) {
     method: 'GET',
     path: '/directives/tpl/{name*}',
     handler: function (request, reply) {
-      reply.view('directives/' + request.params.name, request.locals);
+      reply.view('directives/' + request.params.name + '/template.dust', request.locals);
     }
   })
 

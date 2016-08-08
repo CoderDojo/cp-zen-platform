@@ -8,7 +8,7 @@ function cdDojoActions(){
         dojo: '='
       },
       restrict: 'EA',
-      templateUrl: '/directives/tpl/dojo/dojo-actions/cd-dojo-actions',
+      templateUrl: '/directives/tpl/dojo/dojo-actions',
       controller: ['$scope', 'dojoUtils', '$state', function ($scope, dojoUtils, $state) {
         var cdDA = this;
         var conditionWatcher = $scope.$watch('isDojoAdmin', function(newCd, oldCd){
