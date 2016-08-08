@@ -1,0 +1,5 @@
+<div ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions hidden-xs hidden-sm">
+  <a ui-sref="edit-dojo({id: cdDA.dojo.id})" ng-if="cdDA.currentState !== 'edit-dojo'" alt="{@i18n key="Edit Dojo"/}"><i class="fa fa-edit"></i></a>
+  <a ui-sref="manage-dojo-users({id: cdDA.dojo.id})" alt="{@i18n key="Manage Users"/}"><i class="fa fa-group"></i></a>
+  <a ng-href="{{ cdDA.previewUrl }}" target="_blank" ng-if="cdDA.currentState !== 'dojo-detail'" alt="{@i18n key="Dojo"/}"><i class="fa fa-eye"></i></a>
+</div>

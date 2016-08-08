@@ -30,7 +30,7 @@ require('./lib/dust-loadjs.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
-var host = process.env.HOSTNAME || '127.0.0.1:8000';
+var host = process.env.HOSTNAME || '127.0.0.1';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
 
@@ -75,7 +75,7 @@ server.register(vision, function (err) {
   checkHapiPluginError('vision')(err);
   server.views({
     engines: { dust: require('hapi-dust') },
-    path: path.join(__dirname, './public/templates'),
+    path: [path.join(__dirname, './public/templates'), path.join(__dirname, './public/js/')] ,
     partialsPath: path.join(__dirname, './public/templates')
   });
 });
@@ -194,7 +194,7 @@ server.register(scooter, function (err) {
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: *",
+    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",
@@ -205,20 +205,6 @@ server.register(scooter, function (err) {
 });
 
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
-
-
-if (process.env.UIDEBUG === 'true') {
-  // Serve CSS files.
-  server.register({
-    register: require('hapi-less'),
-    options: {
-      home: path.join(__dirname, './public/css'),
-      route: '/dist/css/{filename*}',
-      config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
-      less: { compress: true }
-    }
-  }, checkHapiPluginError('hapi-less'));
-}
 
 if (process.env.HAPI_DEBUG === 'true') {
   var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';

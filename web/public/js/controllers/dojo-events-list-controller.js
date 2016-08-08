@@ -92,6 +92,8 @@
             event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
               moment(startDate).format('HH:mm') +  ' - ' +
               moment(endDate).format('HH:mm');
+            event.startDate = startDate;
+            event.endDate = endDate;
           }
 
           var userType = event.userType;

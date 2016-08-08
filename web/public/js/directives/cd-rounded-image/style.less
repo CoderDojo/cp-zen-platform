@@ -1,0 +1,67 @@
+.cd-rounded-image{
+  .__img {
+    border-radius: 100% !important;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding-top: 10%;
+    &.--full-width {
+      width: 100%;
+      border-radius: none;
+      .fa.--middle {
+        display: none;
+      }
+    }
+  }
+  .__rounded {
+    border-radius: 100% !important;
+    background-color: @cd-green;
+    font-size: @font-size-h1;
+    padding: 1em;
+    &::before {
+      position: absolute;
+      top: 0.5em;
+      left: 0.6em;
+    }
+  }
+  .fa.--bottom {
+    margin-left: 80%;
+  }
+  .--hover-upload{
+    position: absolute;
+    cursor: pointer;
+    .__img{
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .fa {
+      color: @cd-white;
+      &.--middle {
+        position: absolute;
+        //  50% minus the font-size/width of the icon
+        top: 41%;
+        right: 41%;
+        font-size: @font-size-h1;
+      }
+      &.--right-side {
+        right: 1em;
+        position: absolute;
+        margin-left: 100%;
+        top: 0%;
+        height: 1em;
+        width: 1em;
+        font-size: @font-size-h3;
+      }
+    }
+    &:hover {
+
+      .fa{
+        &.--middle {
+          display: none;
+        }
+        &.--right-side {
+          display: block;
+        }
+      }
+    }
+  }
+}

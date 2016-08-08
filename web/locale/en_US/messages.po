@@ -819,6 +819,9 @@ msgstr "Contact for more information"
 msgid "Inactive"
 msgstr "Inactive"
 
+msgid "Active Dojo"
+msgstr "Active Dojo"
+
 msgid "Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"
 msgstr "Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"
 
@@ -929,6 +932,9 @@ msgstr "Times"
 
 msgid "Tao verified"
 msgstr "Tao verified"
+
+msgid "Tao unverified"
+msgstr "Tao unverified"
 
 msgid "Join Mailing List"
 msgstr "Join Mailing List"
@@ -2316,6 +2322,9 @@ msgstr "No Dojos match your search query."
 
 msgid "Private Dojo"
 msgstr "Private Dojo"
+
+msgid "Public Dojo"
+msgstr "Public Dojo"
 
 msgid "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."
 msgstr "This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."

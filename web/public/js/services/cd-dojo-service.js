@@ -1,5 +1,5 @@
 'use strict';
-  function cdDojoService($q, cdApi, $http){
+  function cdDojoService($q, cdApi, $http, Upload){
     function topfail(err){
       console.log(err);
     }
@@ -38,6 +38,12 @@
         else {
           cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
         }
+      },
+      uploadAvatar: function (dojoId, file){
+        return Upload.upload({
+          url: cdApi.baseUrl + 'dojos/' + dojoId + '/avatar',
+          data: {file: file}
+        });
       },
       setDojo: function(dojo, win, fail) {
         currentDojo = dojo;
@@ -176,5 +182,5 @@
     };
   }
 angular.module('cpZenPlatform')
-  .service('cdDojoService', ['$q', 'cdApi', '$http', cdDojoService])
+  .service('cdDojoService', ['$q', 'cdApi', '$http', 'Upload', cdDojoService])
 ;

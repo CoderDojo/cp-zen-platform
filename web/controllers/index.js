@@ -62,6 +62,14 @@ module.exports.register = function (server, options, next) {
 
   server.route({
     method: 'GET',
+    path: '/directives/tpl/{name*}',
+    handler: function (request, reply) {
+      reply.view('directives/' + request.params.name + '/template.dust', request.locals);
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/dist/{filename*}',
     handler: {
       directory: {

@@ -1,3 +1,30 @@
 .table-responsive .dropdown-menu {
     position: relative;
 }
+
+.uib-tab {
+  &.nav-item {
+    & > a.nav-link {
+      padding-left: 1%;
+    }
+  }
+}
+
+.alert {
+  border: none !important;
+  box-shadow: @cd-box-shadow;
+  .fa {
+    font-size: 1.5em;
+    &:before {
+      position: absolute;
+      top: 0.5em;
+      left: 1em;
+      margin-left: -0.5em;
+    }
+  }
+}
+
+.btn.btn-block {
+  font-weight: 700;
+  text-transform: uppercase;
+}

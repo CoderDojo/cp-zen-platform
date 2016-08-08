@@ -19,7 +19,7 @@ legend::after {
 }
 
 body {
-	background: white;
+	background: @background-color;
   font-family: "latoregular", Arial, Helvetica, sans-serif;
 }
 
@@ -108,7 +108,6 @@ label {
 
 .cd-dashboard {
 	background: white;
-	padding: 0 20px;
 	width: 100%;
 	margin: 0 auto;
 	margin-top: 10px;
@@ -267,55 +266,6 @@ label {
         font-size: 13px;
         color: black;
       }
-    }
-  }
-}
-
-.cd-create-dojo-container {
-  padding: 0;
-
-  .pre-game-warning {
-    background-color: #FBF9E4;
-    width: 550px;
-    padding: 10px;
-    border: 1px solid #FBEED5;
-    border-radius: 5px;
-    margin-top: 15px;
-
-    span {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    p {
-      padding-top: 0;
-      color: #C09853;
-    }
-  }
-
-  .setup-dojo-icons {
-    position: relative;
-    display: inline-block;
-    transform: translateY(25%);
-
-    .tooltip {
-        .tooltip-inner {
-          width: 30em;
-        }
-    }
-
-    .setup-dojo-info-btn {
-      font-size: 2em;
-      margin-left: 10px;
-      vertical-align: 6%;
-    }
-
-    .setup-dojo-tao-btn {
-      background: url("../../img/cdtao.png") no-repeat right center;
-      margin-left: 10px;
-      width: 51px;
-      height: 24px;
-      display: inline-block;
     }
   }
 }
@@ -509,7 +459,6 @@ label {
 
   .events-body {
     padding: 15px;
-    border-bottom: 2px solid #ccc;
 
     h4 {
       color:@cd-body-color-3;
@@ -636,6 +585,11 @@ label {
   }
 }
 
+.cd-section-header, .__cd-section-header {
+  border-bottom: @cd-very-light-gray 2px solid;
+  margin-top: 2em;
+}
+
 .user-registration, .cd-dojo-main, .cd-charter {
 
   .cd-page-title {
@@ -650,10 +604,7 @@ label {
     margin: 20px 0;
   }
 
-  .cd-section-header {
-    margin: 30px 0;
-    font-size: 16px;
-  }
+
 
   .cd-input-row {
     margin: 20px 0;
@@ -1385,6 +1336,7 @@ img.dojo-thumbnail {
 span.tooltipfocus {
   outline: none;
   cursor: pointer;
+  margin-right: 1em;
 }
 
 .badge-information {
