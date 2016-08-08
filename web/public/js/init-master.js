@@ -167,6 +167,15 @@
             pageTitle: 'Login'
           }
         })
+        .state("logout", {
+          url: "/logout?referer",
+          template: '<span us-spinner="{radius:30, width:8, length: 16}"></span>',
+          controller: 'logout',
+          params: {
+            referer: null,
+            pageTitle: 'Logout'
+          }
+        })
         .state("reset-password", {
           url: "/reset_password/:token",
           templateUrl: '/templates/reset_password',

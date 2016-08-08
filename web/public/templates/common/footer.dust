@@ -1,4 +1,4 @@
-<footer id="footer" class="container">
+<footer id="footer" class="cd-menu__contentContainer">
     <span class="col-sm-9 footer-column pull-left">
         <span class="col-sm-5 footer-left-column">
             <a ui-sref="home"><div class="cd-logo-small"></div></a>
@@ -22,14 +22,41 @@
         </span>
     </span>
     <span class="col-sm-3 pull-right footer-column footer-right-column">
-        <span>
-            <a title="Flickr" href="https://www.flickr.com/photos/helloworldfoundation/"><div class="media-img flickr"></div></a>
-            <a title="Google+" href="https://plus.google.com/+coderdojo/posts"><div class="media-img google"></div></a>
-            <a title="LinkedIn" href="https://www.linkedin.com/company/5178906?trk=tyah&amp;trkInfo=tarId%3A1409649959259%2Ctas%3Acoderdojo%2Cidx%3A3-1-3"><div class="media-img linkedin"></div></a>
-            <a title="Facebook" href="https://www.facebook.com/CoderDojo"><div class="media-img facebook"></div></a>
-            <a title="Twitter" href="https://twitter.com/coderdojo"><div class="media-img twitter"></div></a>
-        </span>
+      <span>
+          <a href="https://twitter.com/coderdojo">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+              <i class="fa fa-twitter fa-stack-1x footer-social-media" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a href="https://www.facebook.com/CoderDojo">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+              <i class="fa fa-facebook fa-stack-1x footer-social-media" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a href="https://plus.google.com/+coderdojo/posts">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+              <i class="fa fa-google-plus fa-stack-1x footer-social-media" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a href="mailto:info@coderdojo.com">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+              <i class="fa fa-envelope fa-stack-1x footer-social-media" aria-hidden="true"></i>
+            </span>
+          </a>
+      </span>
     </span>
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <span class="fa fa-language fa-2x language-picker-icon"></span>{>"common/components/cdgm-lang-bar" /}
+      </div>
+      <div class="col-md-8 col-sm-6">
+        <a href="https://crowdin.com/project/zen-community-platform" class="translate-link">Help us translate</a>
+      </div>
+    </div>
     <!-- Google Tag Manager -->
     <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P3CNG3"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
