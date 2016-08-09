@@ -174,9 +174,11 @@
           params: {
             referer: null,
             pageTitle: 'Logout'
+          }
+        })
 				.state("reset", {
           url: "/reset?referer",
-          templateUrl: '/tpl/accounts/reset',
+          template: '<cd-reset></cd-reset>',
           controller: 'login',
           params: {
             referer: null,
@@ -185,7 +187,7 @@
         })
         .state("reset-password", {
           url: "/reset_password/:token",
-          templateUrl: '/templates/reset_password',
+          template: '<cd-reset-password></cd-reset-password>',
           controller: 'login',
           params: {
             pageTitle: 'Reset Password'
@@ -193,7 +195,7 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
+          template: '<cd-register></cd-register>',
           abstract: true,
           params: {
             referer:null,
@@ -204,14 +206,14 @@
         })
         .state("register-account.user", {
           url: "/user",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register-user',
+          template: '<cd-register-user></cd-register-user>',
           params: {
             referer:null,
           }
         })
         .state("register-account.profile", {
           url: "/profile",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register-profile',
+          template: '<cd-register-profile></cd-register-profile>',
           params: {
           }
         })

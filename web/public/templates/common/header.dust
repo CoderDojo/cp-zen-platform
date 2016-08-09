@@ -12,7 +12,7 @@
       </form>
       <div class="cd-menu__flexSpacer"></div>
       <div class="cd-menu__account">
-        <a href="/register">{@i18n key="Register"/}</a>
+        <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
       <div class="cd-menu__profile">
@@ -72,7 +72,7 @@
         <button class="cd-menu__searchButton" type="button"><span class="fa fa-search fa-2x"></span></button>
       </div>
       <div class="cd-menu__contentBlock cd-menu__account">
-        <a href="/register">{@i18n key="Register"/}</a>
+        <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
       <ul class="cd-menu__contentBlock">

@@ -1,22 +1,9 @@
-.btn {
-	-webkit-border-radius: 4px !important;
-	-moz-border-radius: 4px !important;
-	border-radius: 4px !important;
-}
-
-.btn-primary {
-  width: 100%;
-}
-
 .btn-danger {
   background-color: @cd-red;
-  width: 100%;
 }
 
-.btn-secondary:extend(.btn-primary) {
-  background-color: #fff;
-  color: @cd-purple;
-  border-color: @cd-purple;
+.btn-secondary {
+  .button-variant(@cd-purple, #fff, @cd-purple);
 }
 
 .btn-success {

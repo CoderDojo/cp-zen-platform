@@ -23,8 +23,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
                     'Dojo Listing'
                   ];
 
-	$scope.formData = {};
-	$scope.userFormData = {};
+  $scope.formData = {};
+  $scope.userFormData = {};
+  $scope.signUpForm = {};
+  var signUpForm = {};
 
   $scope.recap = {publicKey: '6Lc--SQTAAAAAGifz--Vwm5rflsgbUvtO5k4C8In'};
   setupGoogleMap();
@@ -196,6 +198,11 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     return false;
   }
 
+  $scope.userSuccessfullyRegistered = function () {
+    if(currentStepInt > 0 || $scope.signUpForm.$valid) return true;
+    return false;
+  }
+
   $scope.championApplicationSubmitted = function () {
       if(currentStepInt > 1) return true;
       if(WizardHandler.wizard().currentStepNumber() > 1) {
@@ -225,14 +232,14 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   }
 
   $scope.disabled = true;
-	$scope.next = function () {
-		$scope.disabled = false;
-		WizardHandler.wizard().next();
-	}
+  $scope.next = function () {
+    $scope.disabled = false;
+    WizardHandler.wizard().next();
+  }
 
-	$scope.submit = function () {
+  $scope.submit = function () {
     userUtils.doRegister(_.extend($scope.formData, $scope.userFormData));
-	}
+  }
 
   //--Step One:
   function setupStep1() {
@@ -430,7 +437,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     $scope.clearPlace = function(champion) {
-      console.log($scope);
       champion.placeName = "";
       champion.placeGeonameId = "";
       champion.county = {};

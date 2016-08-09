@@ -47,8 +47,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.userFormData = {};
     $scope.userFormData.profile = {};
   }
-  $scope.signUpForm = {};
-  $scope.profileForm = {};
 
   // This redirect function is not strictly to do with login, just lives here for convenience.
   // Gets the redirect link to the Adult Forum from the server side 'webclient' config.

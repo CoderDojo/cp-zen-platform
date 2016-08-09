@@ -1,15 +1,15 @@
 ;(function() {
   'use strict';
 
-function cdReset(){
+function cdResetPassword(){
     return {
       restrict: 'E',
-      templateUrl: '/directives/tpl/user/cd-reset',
+      templateUrl: '/directives/tpl/user/cd-reset-password',
       controller: 'login'
     }
   }
 
 angular
     .module('cpZenPlatform')
-    .directive('cdReset', cdReset)
+    .directive('cdResetPassword', cdResetPassword)
 }());

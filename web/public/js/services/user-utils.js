@@ -12,7 +12,6 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
   }
 
   userUtils.doRegister = function (userFormData) {
-    console.log(userFormData);
     if(!userFormData.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
     delete userFormData.passwordConfirm;
 
@@ -64,8 +63,6 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
         alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason, function(){
           if(userFormData.referer){
             $window.location.href = userFormData.referer;
-          } else {
-            $state.reload('register-account.user');
           }
         });
       }
