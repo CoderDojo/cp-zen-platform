@@ -136,7 +136,6 @@
       </ul>
     </div>
   </nav>
-  <script type="text/javascript" src="/components/cd-menu/dist/cd-menu.min.js"></script>
   <alert-banner></alert-banner>
   <ng-atomic-notify></ng-atomic-notify>
 </header>
