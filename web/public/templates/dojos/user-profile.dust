@@ -109,6 +109,7 @@
           </form>
         </div>
       </div>
+      <cd-connect-lms></cd-connect-lms>
     </div>
     <!--/col-3-->
     <div class="col-sm-8" contenteditable="false">
