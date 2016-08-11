@@ -4,7 +4,7 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding-top: 10%;
+    z-index: 2;
     &.--full-width {
       width: 100%;
       border-radius: none;
@@ -64,4 +64,8 @@
       }
     }
   }
+}
+div[cd-rounded-image] {
+  z-index: 1;
+  margin-top: 2em;
 }

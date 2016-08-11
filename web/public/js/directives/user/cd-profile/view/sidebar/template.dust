@@ -1,0 +1,38 @@
+<div ng-if="!editMode && !publicChampion && !hideGeneralInfoBlock()" class=" __contact">
+    <!--left col-->
+
+    <!-- <button ng-if="!editMode &&  !publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="editProfile()">{@i18n key="Edit Profile"/}</button>
+    <button ng-if="editMode && !publicChampion && currentStateName !== 'add-child'" class="btn btn-default btn-block" ng-click="viewProfile()">{@i18n key="View Profile"/}</button>
+    <button ng-if="!publicMode && !publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile as Public"/}</button>
+    <button ng-if="publicChampion && loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild)" class="btn btn-default btn-block" ng-click="publicProfile()">{@i18n key="View Profile"/}</button> -->
+
+  <div class="row">
+    <div ng-if="profile.formattedDateOfBirth" class="col-xs-12">
+      <b>{@i18n key="Date of Birth"/}</b>
+      <div ng-bind="::profile.formattedDateOfBirth"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" ng-if="profile.gender">
+      <b>{@i18n key="Gender"/}</b>
+      <div ng-bind="::profile.gender"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" ng-if="profile.gender">
+      <b>{@i18n key="Address"/}</b>
+      <div>
+        <span ng-bind="::profile.place.nameWithHierarchy"></span> &nbsp;
+        <span ng-bind="::profile.country.countryName"></span>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-if="!hideProfileBlock('languagesSpoken') && hasAccess(profile.userTypes, ['mentor', 'champion'])">
+    <div class="col-xs-12">
+      <b>{@i18n key="Languages Spoken"/}</b>
+      <ul ng-repeat="languageSpoken in profile.widget.languagesSpoken" class="list-unstyled">
+        <li>{{ languageSpoken }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

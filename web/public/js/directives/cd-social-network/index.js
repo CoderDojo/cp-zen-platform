@@ -10,7 +10,9 @@ function cdSocialNetwork(){
         google: '=?',
         linkedin: '=?',
         facebook: '=?',
-        twitter: '=?'
+        twitter: '=?',
+        email: '=?',
+        phone: '=?'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-social-network',
@@ -23,6 +25,8 @@ function cdSocialNetwork(){
             if (!_.includes(urls[index], this[provider])) this[provider] = urls[index] + this[provider];
           }
         }.bind(this));
+        this.email = $scope.email;
+        this.phone = $scope.phone;
       },
       controllerAs: 'cdSN'
     };

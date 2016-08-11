@@ -137,12 +137,10 @@
     $scope.hasAccess = true;
 
     //description editor
-    $scope.editorOptions = {
-      lanaguage: 'en',
-      readOnly: $scope.pastEvent,
-      height: '100px'
-    };
-
+    $scope.editorOptions = utilsService.getCKEditorConfig({
+      height: '100px',
+      readOnly: $scope.pastEvent
+    });
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);

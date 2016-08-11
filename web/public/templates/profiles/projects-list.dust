@@ -1,6 +1,9 @@
-<div class="profile-section">
-  <legend class="legend-color-1-border">{@i18n key="Projects"/}</legend>
-  <div>
+<div class="profile-section" >
+  <h3 class="cd-section-header"><a id="projects" href="#projects">{@i18n key="Projects"/}</a></h3>
+  <div ng-if="profile.projects">
     {{ profile.projects }}
+  </div>
+  <div ng-if="!profile.projects">
+    <p>{@i18n key="No project yet"/}</p>
   </div>
 </div>

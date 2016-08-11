@@ -35,7 +35,7 @@
                   </div>
                 </div>
                 <div class="__link">
-                  <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block">{@i18n key="Book"/}</a>
+                  <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block btn-main">{@i18n key="Book"/}</a>
                 </div>
               </div>
             </div>

@@ -1,0 +1,5 @@
+<div class="profile-section" ng-if="profile.notes">
+  <div>
+    <p>{{ profile.notes }}</p>
+  </div>
+</div>

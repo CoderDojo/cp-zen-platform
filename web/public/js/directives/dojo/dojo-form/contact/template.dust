@@ -1,10 +1,10 @@
 <div id="contact">
-  <h4 class="cd-section-header"><a href="#contact">{@i18n key="Contact"/}</a></h4>
+  <h3 class="cd-section-header"><a href="#contact">{@i18n key="Contact"/}</a></h3>
 
     <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <label for="dojoEmail" class="col-lg-4 cd-form-label1">
-          <span>{@i18n key="Dojo Email"/}</span>
+          <i class="fa fa-envelope-o" title="{@i18n key="Dojo Email"/}"></i>
         </label>
         <div class="col-lg-8">
           <input type="email" class="form-control" form="createDojoForm" ng-model="dojo.email" name="dojoEmail" id="dojoEmail"
@@ -13,13 +13,11 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row cd-input-row" ng-enter="noop()">
       <div class="form-group">
         <label for="dojoWebsite" class="col-lg-4 cd-form-label1">
-          <span>
-            {@i18n key="Website"/}
-          </span>
+          <i class="fa fa-globe" title="{@i18n key="Website"/}"></i>
         </label>
         <div class="col-lg-8">
           <input type="url" http-prefix class="form-control" form="createDojoForm" ng-model="dojo.website" name="dojoWebsite"

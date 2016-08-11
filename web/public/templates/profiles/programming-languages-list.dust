@@ -1,8 +1,8 @@
-<div class="profile-section">
-  <legend class="legend-color-2-border">{@i18n key="Programming Languages"/}</legend>
+<div class="profile-section cd-programming-languages">
+  <h3 class="cd-section-header"><a href="#prog" id="#prog">{@i18n key="Programming Languages"/}</a></h3>
   <div>
-    <ul ng-repeat="language in profile.widget.programmingLanguages">
-      <li>{{ language }}</li>
+    <ul ng-repeat="language in profile.widget.programmingLanguages" class="list-unstyled">
+      <li class="col-md-6"> <span class="badge">{{ language }}</span></li>
     </ul>
   </div>
 </div>

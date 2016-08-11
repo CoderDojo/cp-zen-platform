@@ -1,5 +1,0 @@
-<ul>
-  <li ng-repeat="role in cdCR.roles" >
-    {{ role.name }}
-  </li>
-</ul>

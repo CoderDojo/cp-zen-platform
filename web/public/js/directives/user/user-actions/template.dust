@@ -1,0 +1,4 @@
+<div ng-if="cdUA.canEdit" class="cd-user-actions hidden-xs hidden-sm">
+  <a ui-sref="edit-user-profile({userId: cdUA.user.userId})" ng-if="cdUA.currentState !== 'edit-user-profile'" alt="{@i18n key="Edit Profile"/}"><i class="fa fa-edit"></i></a>
+  <a ui-sref="user-profile({userId: cdUA.user.userId})" target="_blank" ng-if="cdUA.currentState !== 'user-profile'" alt="{@i18n key="Profile"/}"><i class="fa fa-eye"></i></a>
+</div>

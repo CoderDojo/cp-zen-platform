@@ -8,26 +8,27 @@ function cdChoseRole(){
         var cdCR = this;
         this.roles = $scope.roles;
         this.selected = {};
+        this.callback = $scope.modalCallback;
+        this.class = "col-xs-12 col-md-" + Math.round(12/this.roles.length);
 
         this.submit = function () {
           var modalInstance = $uibModal.open({
-               animation: $scope.animationsEnabled,
-               template: '<ul class="list-unstyled list-inline">' +
-                           '<li ng-repeat="role in cdCR.roles" ng-click="select(role)">' +
-                             '{{ role.name }}' +
-                           '</li>' +
-                         '</ul>',
+              animation: $scope.animationsEnabled,
+              templateUrl: '/directives/tpl/dojo/join-dojo/modal',
+              size: 'lg',
               controller: function($scope){
                 $scope.select = function(role) {
                   modalInstance.close(role);
                 }
+                $scope.close = modalInstance.dismiss;
               },
               scope: $scope
            });
 
            modalInstance.result.then(function(selectedRole) {
-               cdCR.selected = selectedRole;
-           }, function() {});
+             $scope.modalData.userType = selectedRole;
+             if (cdCR.callback) cdCR.callback($scope.modalData);
+           });
         }
       }],
       link: function(scope, element) {

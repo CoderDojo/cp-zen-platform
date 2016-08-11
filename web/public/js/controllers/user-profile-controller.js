@@ -151,6 +151,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
+  $scope.canEdit = $scope.profile.ownProfileFlag || $scope.profile.myChild;
 
   cdUsersService.getAvatar($scope.profile.id, function(response){
     if(!_.isEmpty(response)) {

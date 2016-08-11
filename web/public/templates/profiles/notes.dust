@@ -1,6 +1,0 @@
-<div class="profile-section">
-  <legend class="legend-color-5-border">{@i18n key="Notes"/}</legend>
-  <div>
-    <p>{{ profile.notes }}</p>
-  </div>
-</div>

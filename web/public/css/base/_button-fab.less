@@ -1,6 +1,6 @@
 /**Stolen from https://github.com/FezVrasta/bootstrap-material-design/blob/master/less/_buttons.less**/
 @mdb-btn-fab-size: 5em;
-@mdb-btn-fab-font-size: @font-size-base;
+@mdb-btn-fab-font-size: @font-size-h3;
 
 .btn-fab {
   border-radius: 50% !important;
@@ -14,10 +14,25 @@
   position: fixed;
   line-height: normal;
   z-index: 900;
-  right: 10%;
-  top: 80%;
+  right: 0;
+  top: 50%;
 
-
+  @media (min-width: @screen-xs-min) {
+    left: (@screen-xs-min - @mdb-btn-fab-size);
+  }
+  @media (min-width: @screen-sm-min) {
+    right: 0;
+    top: 50%;
+    left: (@screen-sm-min - @mdb-btn-fab-size);
+  }
+  @media (min-width: @screen-md-min) {
+    right: 0;
+    left: (@screen-md-min - (@mdb-btn-fab-size * 10) );
+  }
+  @media (min-width: @screen-lg-min) {
+    right: 0;
+    left: (@screen-lg-min - (@mdb-btn-fab-size * 10));
+  }
   i.fa {
     position: absolute;
     top: 50%;
@@ -25,5 +40,6 @@
     transform: translate(-(@mdb-btn-fab-font-size / 2), -(@mdb-btn-fab-font-size / 2));
     line-height: @mdb-btn-fab-font-size;
     width: @mdb-btn-fab-font-size;
+    font-size: @mdb-btn-fab-font-size;
   }
 }

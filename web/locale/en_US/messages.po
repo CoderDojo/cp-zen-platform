@@ -447,6 +447,9 @@ msgstr "Languages Spoken"
 msgid "Projects"
 msgstr "Projects"
 
+msgid "No project yet"
+msgstr "No project yet"
+
 msgid "Prerequisites"
 msgstr "Prerequisites"
 

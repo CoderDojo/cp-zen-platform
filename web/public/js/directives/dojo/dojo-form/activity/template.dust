@@ -1,10 +1,10 @@
 <div id="activity">
-  <h4 class="cd-section-header"><a href="#activity">{@i18n key="Activity"/}</a></h4>
+  <h3 class="cd-section-header"><a href="#activity">{@i18n key="Activity"/}</a></h3>
   <div class="row cd-input-row" ng-enter="noop()">
     <div class="form-group">
       <label for="dojoNotes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
       <div class="col-lg-8">
-        <textarea ng-if="editorOptions" ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes"></textarea>
+        <textarea ng-if="editorOptions" ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes" class="form-control"></textarea>
       </div>
     </div>
   </div>

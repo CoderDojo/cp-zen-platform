@@ -1,20 +1,6 @@
-<div ng-if="!editMode && !publicChampion">
-<div class="alert alert-info" ng-if="parentProfile && profile.ownProfileFlag">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
-    <a ng-click="publicProfile()">Click to view your public profile</a>
-  </div>
-  <div class="alert alert-info" ng-if="!parentProfile && (profile.ownProfileFlag  || profile.myChild)">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
-    <a ng-click="publicProfile()">Click to view your public profile</a>
-  </div>
-</div>
+
 <div ng-if="editMode && !publicChampion">
-  <div class="alert alert-info" ng-if="parentProfile" ng-show="initialForm()">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
-  </div>
-  <div class="alert alert-info" ng-if="!parentProfile" ng-show="initialForm()">
-    {@i18n key="Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."/}
-  </div>
+
   <legend class="legend-color-1-border">{@i18n key="Your Details"/}</legend>
   <div class="panel-body">
     <div>

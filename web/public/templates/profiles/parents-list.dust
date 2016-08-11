@@ -1,6 +1,21 @@
-<legend class="legend-color-3-border">{@i18n key="Parents/Guardians"/}</legend>
-<div class="panel-body">
+<div class="panel-body" ng-if="profile.resolvedParents.length > 0">
+  <h3 class="cd-section-header"><a id="parents" href="#parents">{@i18n key="Parents/Guardians"/}</a></h3>
   <ul ng-repeat="parent in profile.resolvedParents">
-    <li><a ui-sref="user-profile({userId: parent.userId })"> {{ parent.name }} </a></li>
+    <li>
+      <img src="{{ parent.img }}" alt="{@i18n key="Parent"/}"></img>
+      <a ui-sref="user-profile({userId: parent.userId })"> {{ parent.name }} </a></li>
   </ul>
+  <div class="panel panel-default" ng-if="(loggedInUser && (loggedInUser.id === profile.userId) || profile.myChild) && hasAccess(profile.userTypes, ['attendee-o13'])">
+    <div class="panel-heading">{@i18n key="Invite Parent"/}</div>
+    <div class="panel-body invite-parent-guardian-form">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="invitedParentEmail" name="invite-parent" placeholder="{@i18n key="Parent's/Guardian's email"/}">
+          <div class="text-right invite-button">
+            <button class="btn btn-primary" ng-click="inviteParent({childId: profile.userId, invitedParentEmail: invitedParentEmail})">{@i18n key="Invite"/}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
