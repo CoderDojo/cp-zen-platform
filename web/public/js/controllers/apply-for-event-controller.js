@@ -88,7 +88,7 @@
         });
       } else {
         localStorage.setItem('eventId', session.eventId);
-        $state.go('register-account', { referer: $location.url() });
+        $state.go('register-account.user', { referer: $location.url() });
       }
     };
 

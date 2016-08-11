@@ -160,16 +160,34 @@
         })
         .state("login", {
           url: "/login?referer",
-          templateUrl: '/templates/login',
+          template: '<cd-login></cd-login>',
           controller: 'login',
           params: {
             referer: null,
             pageTitle: 'Login'
           }
         })
+        .state("logout", {
+          url: "/logout?referer",
+          template: '<span us-spinner="{radius:30, width:8, length: 16}"></span>',
+          controller: 'logout',
+          params: {
+            referer: null,
+            pageTitle: 'Logout'
+          }
+        })
+				.state("reset", {
+          url: "/reset?referer",
+          template: '<cd-reset></cd-reset>',
+          controller: 'login',
+          params: {
+            referer: null,
+            pageTitle: 'Password Reset'
+          }
+        })
         .state("reset-password", {
           url: "/reset_password/:token",
-          templateUrl: '/templates/reset_password',
+          template: '<cd-reset-password></cd-reset-password>',
           controller: 'login',
           params: {
             pageTitle: 'Reset Password'
@@ -177,13 +195,27 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
+          template: '<cd-register></cd-register>',
+          abstract: true,
           params: {
             referer:null,
             userType:null,
             pageTitle: 'Register'
           },
           controller: 'login'
+        })
+        .state("register-account.user", {
+          url: "/user",
+          template: '<cd-register-user></cd-register-user>',
+          params: {
+            referer:null,
+          }
+        })
+        .state("register-account.profile", {
+          url: "/profile",
+          template: '<cd-register-profile></cd-register-profile>',
+          params: {
+          }
         })
         .state("stats", {
           url: "/stats",
@@ -671,6 +703,7 @@
           }
         });
       $urlRouterProvider.when('', '/');
+      $urlRouterProvider.when('/register', '/register/user');
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');

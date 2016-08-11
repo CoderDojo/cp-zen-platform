@@ -78,6 +78,12 @@ msgstr "Select user type"
 msgid "Login"
 msgstr "Login"
 
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Sign in"
+msgstr "Enter your email to sign in"
+
 msgid "Zen Terms of Service"
 msgstr "Zen Terms of Service"
 

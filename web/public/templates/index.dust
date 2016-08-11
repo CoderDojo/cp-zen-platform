@@ -1,7 +1,7 @@
 {>"layouts/master" /}
 {<body}
   {>"common/header" /}
-  <div class="container">
+  <div class="cd-menu__contentContainer">
   	<div ui-view></div>
   </div>
   {>"common/footer" /}
