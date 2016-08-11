@@ -96,7 +96,7 @@
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
-	  $scope.ticketTypes = ticketTypes.data || [];
+    $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
 
     _.each($scope.ticketTypes, function (ticketType, index) {
@@ -300,10 +300,18 @@
       session.tickets.push(ticket);
     };
 
+    $scope.lastTicket = function (session) {
+      return session.tickets.length === 1;
+    }
+
     $scope.removeTicket = function ($index, session) {
       if(session.tickets.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one ticket.'));
       return session.tickets.splice($index, 1);
     };
+
+    $scope.lastSession = function () {
+      return $scope.eventInfo.sessions.length === 1;
+    }
 
     $scope.removeSession = function ($index) {
       if($scope.eventInfo.sessions.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one session.'));
