@@ -2,13 +2,11 @@
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService',
-  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', loginCtrl]);
-
-
+  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', 'WizardHandler', 'userUtils', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService,
-  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils) {
+  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, WizardHandler, userUtils) {
 
   $scope.noop = angular.noop
   $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
@@ -41,14 +39,13 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
   });
 
-  $scope.isVisible = function(view) {
-    return $scope.currentView === view
+  if (_.isUndefined($scope.formData)) {
+    $scope.formData = {};
+    $scope.formData.user = {};
   }
-
-  $scope.show = function(view) {
-    $scope.message = ''
-    $scope.errorMessage = ''
-    $scope.currentView = view
+  if (_.isUndefined($scope.userFormData)) {
+    $scope.userFormData = {};
+    $scope.userFormData.profile = {};
   }
 
   // This redirect function is not strictly to do with login, just lives here for convenience.
@@ -111,64 +108,78 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   }
 
   $scope.setRecaptchaResponse = function (response) {
-    $scope.recaptchaResponse = response;
+    $scope.userFormData.recaptchaResponse = response;
   }
 
   $scope.recaptchaExpired = function () {
-    $scope.recaptchaResponse = null;
+    $scope.userFormData.recaptchaResponse = null;
   }
 
-  $scope.doRegister = function(user) {
-    if(!$scope.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
+  $scope.toggleMin = function() {
+    $scope.minDate = $scope.minDate ? null : new Date();
+  };
+  $scope.toggleMin();
 
-    // We need to know if the user is registering as a champion to create a dojo.
-    // This is primarily for Salesforce on the backend.
-    if (user.initUserType && user.initUserType.name ===  'champion') {
-      user.isChampion = true;
+  $scope.picker = {opened: false};
+
+  $scope.open = function () {
+    $scope.picker.opened = true;
+  };
+
+  $scope.showButton = true;
+  if ($state.current.name === 'start-dojo') {
+    $scope.showButton = false;
+  }
+
+  $scope.next = function () {
+    $state.go('register-account.profile', { referer: $scope.referer});
+  }
+
+  cdDojoService.listCountries(function(countries) {
+    $scope.countries = countries;
+  });
+
+  var initialDate = new Date();
+  initialDate.setFullYear(initialDate.getFullYear()-18);
+  $scope.dobDateOptions = $scope.childDobDateOptions = {
+    formatYear: 'yyyy',
+    startingDay: 1,
+    'datepicker-mode': "'year'",
+    initDate: initialDate
+  };
+
+  $scope.setCountry = function(country) {
+    $scope.userFormData.profile.countryname = country.countryName;
+    $scope.userFormData.profile.countrynumber = country.countryNumber;
+    $scope.userFormData.profile.continent = country.continent;
+    $scope.userFormData.profile.alpha2 = country.alpha2;
+    $scope.userFormData.profile.alpha3 = country.alpha3;
+  };
+
+
+  $scope.getPlaces = function (countryCode, $select) {
+    return utilsService.getPlaces(countryCode, $select).then(function (data) {
+      $scope.places = data;
+    }, function (err) {
+      $scope.places = [];
+      console.error(err);
+    });
+  };
+
+  $scope.setPlace = function(place) {
+    $scope.userFormData.profile.placeName = place.name;
+    $scope.userFormData.profile.placeGeonameId = place.geonameId;
+    $scope.userFormData.profile.county = {};
+    $scope.userFormData.profile.state = {};
+    $scope.userFormData.profile.city = {};
+    for (var adminidx=1; adminidx<=4; adminidx++) {
+      $scope.userFormData.profile['admin'+ adminidx + 'Code'] = place['admin'+ adminidx + 'Code'];
+      $scope.userFormData.profile['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
     }
+  };
 
-    user['g-recaptcha-response'] = $scope.recaptchaResponse;
-    user.emailSubject = 'Welcome to Zen, the CoderDojo community platform.';
-
-    auth.register(user, function(data) {
-      $scope.referer = $scope.referer && $scope.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + $scope.referer : $scope.referer;
-      if($scope.referer) localStorage.setItem('dojoUrlSlug', $scope.referer);
-      if(data.ok) {
-        auth.login(user, function(data) {
-          var initUserTypeStr = data.user && data.user.initUserType;
-          var initUserType = JSON.parse(initUserTypeStr);
-          //We use window.location because we need a global reload of templates to take into account the fact that the user is logged-in
-          if(initUserType.name === 'champion'){
-            $window.location.href = $state.href('start-dojo');
-          } else {
-            if($scope.referer && ($scope.referer.indexOf('event') > -1 || $scope.referer.indexOf('/dojo') > -1)){
-              localStorage.setItem('joinDojo', true);
-            }
-            $window.location.href = $state.href('edit-user-profile', {userId : data.user.id});
-          }
-        });
-      } else {
-        var reason;
-
-        if(data.why === 'nick-exists'){
-          reason = $translate.instant('user name already exists');
-        }
-
-        if(data.error === 'captcha-failed'){
-          reason = $translate.instant('captcha error');
-        }
-
-        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason, function(){
-          if($scope.referer){
-            $window.location.href = $scope.referer;
-          } else {
-            $state.reload('register-account');
-          }
-        });
-      }
-    }, function(err) {
-         alertService.showError(JSON.stringify(err));
-       });
+  $scope.doRegister = function() {
+    userUtils.doRegister(_.extend($scope.formData, $scope.userFormData));
   };
 
   $scope.doLogin = function() {
@@ -243,7 +254,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     })
   }
 
-
   $scope.goHome = function() {
     window.location.href = '/'
   };
@@ -287,20 +297,17 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     });
   }
 
-  auth.instance(function(data){
-    if( data.user ) {
-      $scope.user = data.user;
-      $scope.$on('user-updated', function ($event, updatedUser) {
-        $scope.user = updatedUser;
-     });
-      if (path==='/') {
-        $window.location.href = 'dashboard'
-      }
-    }
-    else {
-      $scope.show('login')
-    }
-  });
+	auth.instance(function(data){
+		if( data.user ) {
+			$scope.user = data.user;
+			$scope.$on('user-updated', function ($event, updatedUser) {
+				$scope.user = updatedUser;
+			});
+			if (path === '/') {
+				$window.location.href = 'dashboard';
+			}
+		}
+	});
 
   $scope.showBanner = function () {
     if(path.indexOf("/dojo")>=0){

@@ -19,6 +19,14 @@ var controller = module.exports = [
 
   {
     method: 'GET',
+    path: '/reset',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    }
+  },
+
+  {
+    method: 'GET',
     path: '/register',
     handler: function (request, reply) {
       reply.view('index', request.locals);

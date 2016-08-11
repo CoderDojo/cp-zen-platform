@@ -66,7 +66,7 @@ module.exports.register = function (server, options, next) {
     handler: function (request, reply) {
       reply.view('directives/' + request.params.name + '/template.dust', request.locals);
     }
-  })
+  });
 
   server.route({
     method: 'GET',
