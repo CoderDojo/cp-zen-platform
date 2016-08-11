@@ -82,6 +82,11 @@
 
     <!-- This needs to be separate as it loads a config files relative to itself -->
     <script src="/components/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+      window.cdMenuConfig = {
+        zenBase: '/'
+      };
+    </script>
     {@loadJS /}
 </body>
 
