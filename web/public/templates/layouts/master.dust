@@ -60,7 +60,7 @@
     <link rel="stylesheet" type="text/css" href="/components/angular-tooltips/dist/angular-tooltips.min.css">
 
     <!-- CoderDojo Menu -->
-    <link rel="stylesheet" type="text/css" href="/components/cd-menu/dist/cd-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="/components/cd-common/dist/cd-common.min.css">
 
     <!-- Custom styles for this template -->
     <link href="/dist/css/app.css" rel="stylesheet">
@@ -82,12 +82,12 @@
 
     <!-- This needs to be separate as it loads a config files relative to itself -->
     <script src="/components/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript">
-      window.cdMenuConfig = {
-        zenBase: '/'
-      };
-    </script>
     {@loadJS /}
+    <script type="text/javascript">
+      window.cdMenu({
+        zenBase: '/'
+      });
+    </script>
 </body>
 
 </html>

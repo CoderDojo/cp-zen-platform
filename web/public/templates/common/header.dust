@@ -1,36 +1,36 @@
 
 <header class="header">
-  <div class="cd-menu cd-menu__desktopNav">
-    <div class="cd-menu__firstRow">
+  <div class="cd-menu cd-menu__desktop-nav">
+    <div class="cd-menu__first-row">
       <a href="/">
-        <img src="/components/cd-menu/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
+        <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
       </a>
-      <a href="https://coderdojo.com/donate/" class="cd-menu__donateButton">Donate</a>
+      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">Donate</a>
       <form class="cd-menu__search" role="search" action="https://coderdojo.com/">
-        <input class="cd-menu__searchInput" type="text" placeholder="Search..." name="s" />
-        <button class="cd-menu__searchButton" type="submit"><span class="fa fa-search fa-2x"></span></button>
+        <input class="cd-menu__search-input" type="text" placeholder="Search..." name="s" />
+        <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
       </form>
-      <div class="cd-menu__flexSpacer"></div>
+      <div class="cd-menu__flex-spacer"></div>
       <div class="cd-menu__account">
         <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
       <div class="cd-menu__profile">
-        <img class="cd-menu__profilePic" src="http://placekitten.com/32/32" />
-        <span class="cd-menu__profileName">{@i18n key="My Account"/}</span>
-        <i class="cd-menu__subMenuIcon fa fa-chevron-down"></i>
-        <ul class="cd-menu__profileMenu">
-          <li><a class="cd-menu__profileLink">{@i18n key="My Profile"/}</a></li>
+        <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+        <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
+        <i class="cd-menu__sub-menu-icon fa fa-chevron-down"></i>
+        <ul class="cd-menu__profile-menu">
+          <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
           <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
           <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-          <li><a class="cd-menu__cdfAdminLink" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
-          <li><a class="cd-menu__cdfAdminLink" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
-          <li><a class="cd-menu__cdfAdminLink" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
-          <li><a class="cd-menu__refererLink" href="/logout">{@i18n key="Logout"/}</a></li>
+          <li><a class="cd-menu__cdf-admin-link" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+          <li><a class="cd-menu__cdf-admin-link" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+          <li><a class="cd-menu__cdf-admin-link" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+          <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
         </ul>
       </div>
     </div>
-    <ul class="cd-menu__secondRow">
+    <ul class="cd-menu__second-row">
       <li><a href="https://coderdojo.com/about/">{@i18n key="About"/}</a></li>
       <li><a href="https://coderdojo.com/attend-a-dojo/">{@i18n key="Attend a Dojo"/}</a></li>
       <li><a href="https://coderdojo.com/volunteer/">{@i18n key="Volunteer"/}</a></li>
@@ -40,7 +40,7 @@
       <li class="cd-menu__dropdown">
         <span>
           {@i18n key="Community"/}
-          <i class="cd-menu__dropdownIcon fa fa-chevron-down"></i>
+          <i class="cd-menu__dropdown-icon fa fa-chevron-down"></i>
           <ul>
             <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
             <li><a href="https://coderdojo.com/regional-bodies/">{@i18n key="Regional Bodies"/}</a></li>
@@ -50,56 +50,56 @@
       </li>
     </ul>
   </div>
-  <div class="cd-menu__mobileNavBar">
+  <div class="cd-menu__mobile-nav-bar">
     <button type="button" class="cd-menu__hamburger" aria-expanded="false" aria-controls="navbar">
       <span class="sr-only">{@i18n key="Toggle navigation"/}</span>
-      <span class="cd-menu__hamburgerBar"></span>
-      <span class="cd-menu__hamburgerBar"></span>
-      <span class="cd-menu__hamburgerBar"></span>
+      <span class="cd-menu__hamburger-bar"></span>
+      <span class="cd-menu__hamburger-bar"></span>
+      <span class="cd-menu__hamburger-bar"></span>
     </button>
     <a href="/">
       <img src="/components/cd-menu/dist/coderdojo-logo-light-bg.svg" width="120" height="44" style="padding-left: 5px;" />
     </a>
   </div>
   <div class="cd-menu__scrim"></div>
-  <nav id="cd-menu__slidingMenuPrimary" class="cd-menu__slidingMenu" data-toggle="closed">
-    <div class="cd-menu__closeRow">
-      <span class="cd-menu__closeButton">&times;</span>
+  <nav id="cd-menu__sliding-menu-primary" class="cd-menu__sliding-menu" data-toggle="closed">
+    <div class="cd-menu__close-row">
+      <span class="cd-menu__close-button">&times;</span>
     </div>
     <div class="cd-menu__content">
-      <div class="cd-menu__contentBlock cd-menu__search">
-        <input class="cd-menu__searchInput" type="text" placeholder="Search...">
-        <button class="cd-menu__searchButton" type="button"><span class="fa fa-search fa-2x"></span></button>
+      <div class="cd-menu__content-block cd-menu__search">
+        <input class="cd-menu__search-input" type="text" placeholder="Search...">
+        <button class="cd-menu__search-button" type="button"><span class="fa fa-search fa-2x"></span></button>
       </div>
-      <div class="cd-menu__contentBlock cd-menu__account">
+      <div class="cd-menu__content-block cd-menu__account">
         <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
-      <ul class="cd-menu__contentBlock">
+      <ul class="cd-menu__content-block">
         <li class="cd-menu__profile">
           <span>
-            <img class="cd-menu__profilePic" src="http://placekitten.com/32/32" />
-            <span class="cd-menu__profileName">{@i18n key="My Account"/}</span>
-            <i class="cd-menu__subMenuIcon fa fa-chevron-right"></i>
+            <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+            <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
+            <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
           </span>
-          <div class="cd-menu__slidingMenu cd-menu__slidingMenuSecondary" data-toggle="closed">
-            <div class="cd-menu__closeRow" style="background:white;">
-              <span class="cd-menu__backButton fa fa-chevron-left fa-lg"></span>
-              <span class="cd-menu__closeButton">&times;</span>
+          <div class="cd-menu__sliding-menu cd-menu__sliding-menu-secondary" data-toggle="closed">
+            <div class="cd-menu__close-row" style="background:white;">
+              <span class="cd-menu__back-button fa fa-chevron-left fa-lg"></span>
+              <span class="cd-menu__close-button">&times;</span>
             </div>
             <div class="cd-menu__content">
-              <div class="cd-menu__contentBlock cd-menu__profileHeader">
-                <img class="cd-menu__profilePic" src="http://placekitten.com/128/128" />
-                <span class="cd-menu__profileName"></span>
+              <div class="cd-menu__content-block cd-menu__profile-header">
+                <img class="cd-menu__profile-pic" src="http://placekitten.com/128/128" />
+                <span class="cd-menu__profile-name"></span>
               </div>
-              <ul class="cd-menu__contentBlock cd-menu__profileMenu">
-                <li><a class="cd-menu__profileLink">{@i18n key="My Profile"/}</a></li>
+              <ul class="cd-menu__content-block cd-menu__profile-menu">
+                <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
                 <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
                 <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-                <li><a class="cd-menu__cdfAdminLink" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
-                <li><a class="cd-menu__cdfAdminLink" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
-                <li><a class="cd-menu__cdfAdminLink" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
-                <li><a class="cd-menu__refererLink" href="/logout">{@i18n key="Logout"/}</a></li>
+                <li><a class="cd-menu__cdf-admin-link" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+                <li><a class="cd-menu__cdf-admin-link" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+                <li><a class="cd-menu__cdf-admin-link" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+                <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
               </ul>
             </div>
           </div>
@@ -113,18 +113,18 @@
         <li>
           <span>
             {@i18n key="Community"/}
-            <i class="cd-menu__subMenuIcon fa fa-chevron-right"></i>
+            <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
           </span>
-          <div class="cd-menu__slidingMenu cd-menu__slidingMenuSecondary" data-toggle="closed">
-            <div class="cd-menu__closeRow">
-              <span class="cd-menu__backButton fa fa-chevron-left fa-lg"></span>
-              <span class="cd-menu__closeButton">&times;</span>
+          <div class="cd-menu__sliding-menu cd-menu__sliding-menu-secondary" data-toggle="closed">
+            <div class="cd-menu__close-row">
+              <span class="cd-menu__back-button fa fa-chevron-left fa-lg"></span>
+              <span class="cd-menu__close-button">&times;</span>
             </div>
             <div class="cd-menu__content">
-              <div class="cd-menu__contentBlock cd-menu__header">
+              <div class="cd-menu__content-block cd-menu__header">
                 <span>{@i18n key="Community"/}</span>
               </div>
-              <ul class="cd-menu__contentBlock">
+              <ul class="cd-menu__content-block">
                 <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
                 <li><a href="https://coderdojo.com/regional-bodies/">{@i18n key="Regional Bodies"/}</a></li>
                 <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
