@@ -1,4 +1,4 @@
-<footer id="footer" class="cd-menu__contentContainer">
+<footer id="footer" class="cd-menu__content-container">
     <span class="col-sm-9 footer-column pull-left">
         <span class="col-sm-5 footer-left-column">
             <a ui-sref="home"><div class="cd-logo-small"></div></a>
