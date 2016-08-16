@@ -1,0 +1,29 @@
+.side-actions-position() {
+  position: absolute;
+  bottom: 7%;
+  right: 1em;
+  z-index: 1;
+}
+.side-actions() {
+  .side-actions-position();
+  clear: both;
+  width: 100%;
+  text-align: right;
+
+  .dropdown-menu {
+    .side-actions-position();
+  }
+  &.open > .dropdown-menu {
+    left: initial;
+    right: 0;
+    bottom: initial;
+  }
+  a {
+    margin-right: 0.2em;
+    padding: 0.8em;
+    display: inline-block;
+    .fa {
+      margin-right: 1em;
+    }
+  }
+}

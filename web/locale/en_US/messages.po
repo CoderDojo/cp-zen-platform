@@ -2548,6 +2548,9 @@ msgstr "Cancel Session"
 msgid "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
 msgstr "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?"
 
+msgid "Avatar"
+msgstr "Avatar"
+
 msgid "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
 msgstr "Your profile image is too large. Please resize to a maximum of 640/640 pixels."
 
@@ -2822,6 +2825,11 @@ msgstr "Not all information entered on your profile is viewable. You can choose 
 msgid "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
 msgstr "Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."
 
+msgid "Click to view your public profile"
+msgstr "Click to view your public profile"
+
+msgid "Public profile"
+msgstr "Public profile"
 
 msgid "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
 msgstr "Registering an account does not guarantee you entry to a Dojo event. To gain entry to an event you must fill out your profile and book via the Dojo listing page. You will need your email confirmation to attend or direct permission from the Dojo administrators."
@@ -3056,6 +3064,13 @@ msgstr "An error has occurred while saving youth profile"
 
 msgid "Profile(s) have been saved successfully"
 msgstr "Profile(s) have been saved successfully"
+
+msgid "Your details"
+msgstr "Your details"
+
+msgid "About you"
+msgstr "About you"
+
 
 msgid "Got a child? Add them below"
 msgstr "Got a child? Add them below"

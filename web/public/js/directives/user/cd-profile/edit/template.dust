@@ -1,22 +1,31 @@
-<form name="uploadAvatarForm">
-  <img title="profile image" class="img-circle img-responsive center-block" data-ng-src="{{ profile.avatar || 'img/avatar.png' }}">
-
-  <h1 ng-bind="profile.name || profile.alias" class="text-truncate"></h1>
-  <h4 ng-bind="profile.userTypeTitle"></h4>
-
-  <input type="file" ngf-select ng-model="avatar" name="avatar" class="center-block"
-         ng-show="editMode && profile.id && !publicChampion" accept="image/*"
-         ngf-multiple="false"
-         ngf-max-height="1200"
-         ngf-max-width="1200"
-         ngf-max-size="5242880" >
-
-  <br>
-  <label class="validationMessage" style="color:red; width:100%;" ng-show="uploadAvatarForm.avatar.$error.maxHeight || uploadAvatarForm.avatar.$error.maxWidth">
-    {@i18n key="Your profile image is too large. Please resize to a maximum of 640/640 pixels."/}
-  </label>
-
-  <div ng-if="editMode && profile.id && !publicChampion" ng-disabled="!avatar || !uploadAvatarForm.$valid" class="btn btn-default center-block" ng-click="upload(avatar)">
-    {@i18n key="Upload new picture"/}
+<div class="cd-profile row">
+  <span spinner-key="user-profile-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+  <div class="col-xs-12" ng-if="profileVisible() && !publicMode">
+    <div class="row">
+      <div class="col-xs-12">
+        <div cd-banner-background class="row">
+          <div class="row">
+            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" alt="{@i18n key="Avatar"/}"
+            edit="true" upload="upload"
+            class="col-md-3 hidden-xs"></div>
+            <div class="col-md-6 cd-profile__username">
+              <h2 ng-bind="::profile.name"></h2>
+              <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+            </div>
+          </div>
+          <cd-user-actions user="profile" can-edit="canEdit"></cd-user-actions>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <cd-user-profile-alerts></cd-user-profile-alerts>
+      <div class="col-xs-12 col-md-10 col-md-offset-1">
+        <general-info></general-info>
+        <!-- We only keep display of elements which are not covered by the general-info/profile-info form -->
+        <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
+        <parents-list ng-if="!hideProfileBlock() && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])"></parents-list>
+        <children-list ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian', 'champion', 'mentor'])"></children-list>
+      </div>
+    </div>
   </div>
-</form>
+</div>

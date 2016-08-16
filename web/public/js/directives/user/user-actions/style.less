@@ -1,16 +1,10 @@
 .cd-user-actions {
-  position: absolute;
-  bottom: 7%;
-  right: 1em;
-  clear: both;
-  width: 100%;
-  text-align: right;
-  z-index: 0;
-  a {
-    color: @cd-white !important;
-    background-color: @cd-purple;
-    margin-right: 0.2em;
-    padding: 0.8em;
-    display: inline-block;
+  .side-actions();
+  .fa-stack {
+    margin-left: -0.5em;
+    margin-right: 0.5em;
+    a .fa {
+      margin-right: 0;
+    }
   }
 }

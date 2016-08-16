@@ -62,11 +62,20 @@ label {
     padding: 46px 100px 0 100px;
 }
 
+
+.anchor-jump {
+  padding-top: 140px;
+  margin-top: -140px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  a[id] {
+    .anchor-jump();
+  }
+}
+
 .cd-dashboard {
 	background: white;
-	width: 100%;
-	margin: 0 auto;
-	margin-top: 10px;
 
   a {
     color: #315169;
@@ -859,144 +868,6 @@ img.badge-thumbnail {
   background-color: #FF851B;
 }
 
-/* we want color schema in body to be different than color schema in header */
-html body .cd-dashboard .cd-color-1 {
-  background-color: @cd-body-color-1;
-}
-
-html body .cd-dashboard .cd-color-2 {
-  background-color: @cd-body-color-2;
-}
-
-html body .cd-dashboard .cd-color-3 {
-  background-color: @cd-body-color-3;
-}
-
-html body .cd-dashboard .cd-color-4 {
-  background-color: @cd-body-color-4;
-}
-
-html body .cd-dashboard .cd-color-5 {
-  background-color: @cd-body-color-5;
-}
-
-html body .cd-dashboard .cd-color-6 {
-  background-color: @cd-body-color-6;
-}
-
-.cd-color-1-underline {
-
-  legend {
-    border-color: @cd-body-color-1 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-1 !important;
-  }
-}
-
-.cd-color-2-underline {
-
-  legend {
-    border-color: @cd-body-color-2 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-2 !important;
-  }
-}
-
-.cd-color-3-underline {
-
-  legend {
-    border-color: @cd-body-color-3 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-3 !important;
-  }
-}
-
-.cd-color-4-underline {
-
-  legend {
-    border-color: @cd-body-color-4 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-4 !important;
-  }
-}
-
-.cd-color-5-underline {
-
-  legend {
-    border-color: @cd-body-color-5 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-5 !important;
-  }
-}
-
-.cd-color-6-underline {
-
-  legend {
-    border-color: @cd-body-color-6 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-6 !important;
-  }
-}
-
-.legend-color-1-border{
-  border-color: @cd-body-color-1 !important;
-
-  &::after{
-    background-color: @cd-body-color-1 !important;
-  }
-}
-
-.legend-color-2-border{
-  border-color: @cd-body-color-2 !important;
-
-  &::after{
-    background-color: @cd-body-color-2 !important;
-  }
-}
-
-.legend-color-3-border{
-  border-color: @cd-body-color-3 !important;
-
-  &::after{
-    background-color: @cd-body-color-3 !important;
-  }
-}
-
-.legend-color-4-border{
-  border-color: @cd-body-color-4 !important;
-
-  &::after{
-    background-color: @cd-body-color-4 !important;
-  }
-}
-
-.legend-color-5-border{
-  border-color: @cd-body-color-5 !important;
-
-  &::after{
-    background-color: @cd-body-color-5 !important;
-  }
-}
-
-.legend-color-6-border{
-  border-color: @cd-body-color-6 !important;
-
-  &::after{
-    background-color: @cd-body-color-6 !important;
-  }
-}
 
 .cd-accordian {
   margin: 3% 0%;
@@ -1192,10 +1063,6 @@ img.dojo-thumbnail {
   }
 }
 /* -------------------------- end date picker styling --------------------- */
-
-.profile-section {
-  margin-bottom: 60px;
-}
 
 #ninjaProfileBlock {
 

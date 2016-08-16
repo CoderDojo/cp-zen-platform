@@ -92,7 +92,11 @@
     },
     usersDojos: function(auth, cdDojoService){
       return auth.get_loggedin_user_promise().then(function (currentUser) {
-        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        if(currentUser){
+          return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
       }, failCb);
     },
     hiddenFields: function(cdUsersService){
@@ -634,11 +638,11 @@
             showBannerMessage: null,
             referer: null
           },
-          templateUrl: '/dojos/template/user-profile'
+          templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
         .state("user-profile", {
-          url: "/profile/:userId",
-          templateUrl: '/dojos/template/user-profile',
+          url: "/profile/:userId?public",
+          templateUrl: '/directives/tpl/user/cd-profile/view',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,

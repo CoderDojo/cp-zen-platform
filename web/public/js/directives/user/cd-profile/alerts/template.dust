@@ -1,0 +1,28 @@
+<div ng-if="!editMode && !publicChampion" class="pull-right alert-container alert-right">
+  <div class="alert alert-info alert-right" ng-if="parentProfile && profile.ownProfileFlag">
+    <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
+    <div class="text-center"><a ng-click="publicProfile()">{@i18n key="Click to view your public profile"/}</a></div>
+  </div>
+  <div class="alert alert-info alert-right" ng-if="!parentProfile && (profile.ownProfileFlag  || profile.myChild)">
+    <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
+    <div class="text-center"><a ng-click="publicProfile()">{@i18n key="Click to view your public profile"/}</a></div>
+  </div>
+</div>
+<div ng-if="editMode && !publicChampion" class="pull-right alert-container alert-right">
+  <div class="alert alert-info alert-right" ng-if="parentProfile" ng-show="initialForm()">
+    <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
+  </div>
+  <div class="alert alert-info alert-right" ng-if="!parentProfile" ng-show="initialForm()">
+    <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+    {@i18n key="Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."/}
+  </div>
+</div>
+<div class="row" ng-if="!profileVisible() || publicMode" class="pull-right alert-container alert-right">
+  <div class="alert alert-info alert-right" ng-if="!parentProfile" ng-show="initialForm()">
+    <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+    {@i18n key="This profile is private"/}
+  </div>
+</div>

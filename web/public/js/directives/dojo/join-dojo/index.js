@@ -8,20 +8,20 @@ angular
           templateUrl: '/directives/tpl/dojo/join-dojo',
           controller:
           ['$scope', 'cdDojoService', '$translate', 'cdUsersService', 'auth',
-           'usSpinnerService', '$state', 'alertService', '$location', '$uibModal', 'atomicNotifyService',
+           'usSpinnerService', '$state', 'alertService', '$location', '$uibModal', 'atomicNotifyService', 'userUtils',
            function($scope, cdDojoService, $translate, cdUsersService, auth,
-             usSpinnerService, $state, alertService, $location, $uibModal, atomicNotifyService ) {
+             usSpinnerService, $state, alertService, $location, $uibModal, atomicNotifyService, userUtils ) {
             $scope.dojoMember = false;
             $scope.userMemberCheckComplete = false;
             $scope.requestInvite = $scope.modalData = {};
             $scope.loggedOut = _.isEmpty($scope.currentUser);
             var approvalRequired = ['mentor', 'champion'];
-            // NOTE: does $translate support i18n ?
             $scope.ninjaRole = {
               name: 'Ninja',
               userType: {
                 name:'attendee-o13'
               },
+              image: userUtils.defaultAvatar('attendee-o13'),
               approvalRequired: false,
               text: $translate.instant('Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account.'),
               class: 'cd-ninja'
@@ -31,8 +31,8 @@ angular
               userType: {
                 name: 'parent-guardian'
               },
+              image: userUtils.defaultAvatar('parent-guardian'),
               approvalRequired: false,
-              image: '',
               text: $translate.instant('Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!'),
               class: 'cd-parent'
             };
@@ -43,7 +43,7 @@ angular
                   name:  'mentor'
                 },
                 approvalRequired: true,
-                image: '',
+                image: userUtils.defaultAvatar('mentor'),
                 text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
                 class: 'cd-volunteer'
               },
@@ -53,10 +53,26 @@ angular
                   name:  'champion'
                 },
                 approvalRequired: true,
-                image: '',
+                image: userUtils.defaultAvatar('champion'),
                 text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
                 class: 'cd-champion'
               }];
+
+            if (!$scope.loggedOut) {
+              cdUsersService.userProfileDataPromise({userId: $scope.currentUser.id}).then(
+                function (profile) {
+                  $scope.profile = profile;
+                  setJoinData();
+                }
+              );
+            }
+            function setJoinData (){
+              $scope.ninjaRole.image = userUtils.defaultAvatar($scope.ninjaRole.userType.name, $scope.profile.gender);
+              $scope.parentRole.image = userUtils.defaultAvatar($scope.parentRole.userType.name, $scope.profile.gender);
+              _.forEach($scope.roles, function(role, index){
+                $scope.roles[index].image = userUtils.defaultAvatar(role.userType.name, $scope.profile.gender);
+              })
+            }
 
             var dojoId = $scope.dojo ? $scope.dojo.id : $scope.event.dojoId;
 
@@ -103,6 +119,7 @@ angular
                 $scope.roles.unshift($scope.ninjaRole);
               }
             }
+
 
             $scope.requestToJoin = $scope.modalCallback = function (requestInvite) {
               if(!$scope.requestInvite.userType) {

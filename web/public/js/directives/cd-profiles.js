@@ -57,6 +57,13 @@ function bio() {
   };
 }
 
+function listOfDojos() {
+  return {
+    restrict: 'E',
+    templateUrl: '/profiles/template/dojo-list'
+  };
+}
+
 angular
   .module('cpZenPlatform')
   .directive('projectsList', listOfProjects)
@@ -66,6 +73,7 @@ angular
   .directive('childrenList', listOfChildren)
   .directive('generalInfo', generalInfo)
   .directive('parentsList', listOfParents)
-  .directive('bio', bio);
+  .directive('bio', bio)
+  .directive('dojoList', listOfDojos);
 
 }());

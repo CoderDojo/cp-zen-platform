@@ -394,7 +394,10 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.upload = function (file) {
-    return cdDojoService.uploadAvatar($scope.dojo.id, file);
+    return cdDojoService.uploadAvatar($scope.dojo.id, file)
+    .then(function(){
+      return 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/' + $scope.dojo.id;
+    });
   }
 }
 

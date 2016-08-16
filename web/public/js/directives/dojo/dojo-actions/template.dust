@@ -1,5 +1,16 @@
-<div ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions hidden-xs hidden-sm">
-  <a ui-sref="edit-dojo({id: cdDA.dojo.id})" ng-if="cdDA.currentState !== 'edit-dojo'" alt="{@i18n key="Edit Dojo"/}"><i class="fa fa-edit"></i></a>
-  <a ui-sref="manage-dojo-users({id: cdDA.dojo.id})" alt="{@i18n key="Manage Users"/}"><i class="fa fa-group"></i></a>
-  <a ng-href="{{ cdDA.previewUrl }}" target="_blank" ng-if="cdDA.currentState !== 'dojo-detail'" alt="{@i18n key="Dojo"/}"><i class="fa fa-eye"></i></a>
+<div uib-dropdown is-open="status.isopen" ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions hidden-xs hidden-sm">
+  <button id="cd-dojo-action" type="button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
+    <i class="fa fa-gear"></i> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="cd-dojo-action">
+    <li role="menuitem">
+      <a ui-sref="edit-dojo({id: cdDA.dojo.id})" ng-if="cdDA.currentState !== 'edit-dojo'" alt="{@i18n key="Edit Dojo"/}"><i class="fa fa-edit"></i>{@i18n key="Edit Dojo"/}</a>
+    </li>
+    <li role="menuitem">
+      <a ui-sref="manage-dojo-users({id: cdDA.dojo.id})" alt="{@i18n key="Manage Users"/}"><i class="fa fa-group"></i>{@i18n key="Manage Users"/}</a>
+    </li>
+    <li role="menuitem">
+      <a ng-href="{{ cdDA.previewUrl }}" target="_blank" ng-if="cdDA.currentState !== 'dojo-detail'" alt="{@i18n key="Dojo"/}"><i class="fa fa-eye"></i>{@i18n key="Dojo"/}</a>
+    </li>
+  </ul>
 </div>

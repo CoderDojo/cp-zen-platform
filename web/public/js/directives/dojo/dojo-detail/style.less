@@ -6,7 +6,11 @@
   @media (max-width: @screen-sm-max) {
     text-align: center;
   }
+  .fa {
+    margin-right: 1em;
+  }
 }
+
 @media (min-width: @screen-xs-max){
   .__dojo-name {
     position: absolute;
@@ -22,6 +26,7 @@
 }
 .__dojo-name, .__dojo-website > a {
   color: @cd-white;
+  z-index: 100;
 }
 .popover {
   color: @cd-black;
@@ -55,7 +60,7 @@
     color: @state-success-text;
   }
   &.--info {
-    background-color: @state-info-bg;
+    background-color: @cd-light-gray;
     color: @state-info-text;
   }
 

@@ -17,6 +17,7 @@ function cdSocialNetwork(){
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-social-network',
       controller: function ($scope) {
+        var cdSN = this;
         var providers = ['flickr', 'google', 'linkedin', 'facebook', 'twitter'];
         var urls = ['', '', '//linkedin.com/', '//facebook.com/', '//twitter.com/'];
         _.each(providers, function (provider, index){
@@ -27,6 +28,11 @@ function cdSocialNetwork(){
         }.bind(this));
         this.email = $scope.email;
         this.phone = $scope.phone;
+        this.empty = [this.email, this.phone, this.flickr, this.linkedin, this.facebook, this.twitter].every(_.isEmpty);
+
+        this.expand = function ($event) {
+          cdSN[$event.currentTarget.title + 'Visible'] = !cdSN[$event.currentTarget.title + 'Visible'];
+        }
       },
       controllerAs: 'cdSN'
     };

@@ -1,12 +1,16 @@
 <div class="cd-dashboard events-display">
-  <a name="events"></a>
 
   <div class="my-dojos">
-    <h3 class="text-center cd-section-header">{@i18n key="Events"/}</h3>
+    <h3 class="text-center cd-section-header"><a name="events" id="events">{@i18n key="Events"/}</a></h3>
     <div class="row cd-event-detail">
       <div class="col-md-12">
         <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."/}
         </p>
+
+        <div class="row" ng-transclude>
+
+        </div>
+
         <div ng-hide="events.length === 0">
           <div ng-repeat="event in events" ng-switch on="events[$index].isCollapsed" class="row cd-event" ng-click="showEventInfo($index, event.id)">
             <div class="col-sm-7">

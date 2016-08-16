@@ -1,0 +1,46 @@
+<div class="cd-profile row">
+  <span spinner-key="user-profile-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+  <div class="col-xs-12" ng-if="profileVisible() && !publicMode">
+    <div class="row">
+      <div class="col-xs-12">
+        <div cd-banner-background class="row">
+          <div cd-social-network email="profile.email" phone="profile.phone"></div>
+          <div class="row">
+            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="col-md-3 hidden-xs"></div>
+            <div class="col-md-6 cd-profile__username">
+              <h2 ng-bind="::profile.name"></h2>
+              <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+            </div>
+          </div>
+          <cd-user-actions user="profile" can-edit="canEdit"></cd-user-actions>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div ng-class="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock()? 'col-xs-12 col-md-3': 'hidden-xs'">
+        <div class="row">
+          <div class="col-md-offset-6">
+            <cd-view-profile-sidebar></cd-view-profile-sidebar>
+          </div>
+        </div>
+      </div>
+      <div ng-class="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock() ? 'col-xs-12 col-md-9': 'col-xs-12' " contenteditable="false">
+        <div class="row">
+            <cd-user-profile-alerts></cd-user-profile-alerts>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-9 col-md-offset-2">
+            <general-info ng-if="editMode && !publicChampion"></general-info>
+            <bio ng-if="!hideChampionProfileBlock('notes') && profile.notes"></bio>
+            <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
+            <projects-list ng-if="!hideChampionProfileBlock('projects') && hasAccess(profile.userTypes, ['champion'])"></projects-list>
+            <parents-list ng-if="!hideProfileBlock() && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])"></parents-list>
+            <children-list ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian'])"></children-list>
+            <programming-languages-list ng-if="!hideProfileBlock('programmingLanguages') && profile.widget.languages"></programming-languages-list>
+            <dojo-list ng-if="!hideProfileBlock('dojos') && profile.dojos.length > 0"></dojo-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

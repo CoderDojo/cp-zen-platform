@@ -1,4 +1,4 @@
-<div class="profile-section" ng-show="initialForm()" >
+<div class="profile-section" ng-show="initialForm() && badgesData.length > 0" >
   <h3 class="cd-section-header"><a id="badges" href="#badges">{@i18n key="Badges"/}</a></h3>
 
   <button ng-show="false" ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>
@@ -21,9 +21,10 @@
               </div>
             </div>
           </div>
-          <div cd-claim-badge></div>
+          <div cd-claim-badge ng-if="isEditMode"></div>
         </div>
       </uib-tab>
     </uib-tabset>
+    <div cd-claim-badge ng-if="categories.length === 0 && isEditMode"></div>
   </div>
 </div>

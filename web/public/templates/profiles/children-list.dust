@@ -1,4 +1,4 @@
-<div class="profile-section" ng-show="initialForm()">
+<div class="profile-section" ng-show="initialForm() && profile.resolvedChildren.length > 0">
   <h3 class="cd-section-header"><a id="youths" href="#youths">{@i18n key="Youths"/}</a></h3>
   <div class="col-xs-12" ng-show="initialForm()">
     <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" uib-popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Youth over 13"/}</button>
