@@ -71,7 +71,7 @@
     opacity: 0;
     transition: height @card-opening-speed ease-in-out;
     &-size-wrapper {
-      padding: 0 16px 16px 16px;
+      padding: 16px;
     }
   }
 
@@ -146,6 +146,10 @@
   }
 
   &[data-expanded=expanded] {
-    height: auto;
+    .cd-expanding-card {
+      &__card-content {
+        overflow: visible;
+      }
+    }
   }
 }
