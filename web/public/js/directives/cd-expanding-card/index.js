@@ -8,17 +8,28 @@
         roundImage: '@',
         mainTitle: '@',
         subTitle1: '@',
-        subTitle2: '@'
+        subTitle2: '@',
+        startExpanded: '@'
     },
     templateUrl: '/directives/tpl/cd-expanding-card',
     controller: function ($timeout, $element) {
       var ctrl = this;
       var content = $element.find('.cd-expanding-card__card-content');
       var contentWrapper = $element.find('.cd-expanding-card__card-content-size-wrapper');
-      ctrl.expanded = 'collapsed';
+      if (ctrl.startExpanded === 'true') {
+        ctrl.expanded = 'expanded';
+        content.css('height', 'auto');
+        requestAnimationFrame(function () {
+          content.css('height', contentWrapper.outerHeight() + 'px');
+        });
+      } else {
+        ctrl.expanded = 'collapsed';
+      }
 
       ctrl.expand = function (e, force) {
-        e.stopPropagation();
+        if (force) {
+          e.stopPropagation();
+        }
         if (ctrl.expanded === 'collapsed' || ctrl.expanded === 'collapsing') {
           ctrl.expanded = 'expanding';
           //content.css('height', 'auto');
