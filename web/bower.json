@@ -62,7 +62,7 @@
     "ngGeolocation": ">=0.0.2",
     "angular-animate": "1.5.7",
     "angular-touch": "1.5.7",
-    "cd-menu": "https://github.com/DanielBrierton/cd-menu.git#master"
+    "cd-common": "https://github.com/CoderDojo/cd-common.git#0.0.1"
   },
   "devDependencies": {
     "angular-mocks": "1.5.7",
