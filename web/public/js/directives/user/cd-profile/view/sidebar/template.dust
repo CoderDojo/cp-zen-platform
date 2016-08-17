@@ -1,4 +1,4 @@
-<div ng-if="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock()" class=" __contact">
+<div ng-if="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock()" class="cd-profile__contact">
 
   <div class="row">
     <div ng-if="profile.formattedDateOfBirth" class="col-xs-12">

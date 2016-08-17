@@ -10,8 +10,8 @@ function cdShareEvent($stateParams, cdDojoService, $state, $translate, $location
         mobile : '='
       },
       template:
-      '<span class="__share-btn" ng-click="setMenuVisibility($event)" tabindex="-1" ><i class="fa fa-share" title="{{ share }}"></i></span>'+
-      '<ul class="list-unstyled __share-list" ng-show="visible">'+
+      '<span class="cd-share-event__share-btn" ng-click="setMenuVisibility($event)" tabindex="-1" ><i class="fa fa-share" title="{{ share }}"></i></span>'+
+      '<ul class="list-unstyled cd-share-event__share-list" ng-show="visible">'+
         '<li>'+
           '<button socialshare="" socialshare-provider="facebook" '+
           'class="btn btn-medium'+

@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-sm-5 cd-date">
-              <div class="__content">
+              <div class="cd-date__content">
                 <cd-share-event share-event="event" class="pull-right cd-share-event"></cd-share-event>
                 <div ng-switch="event.type">
                   <p ng-switch-when="recurring">
@@ -34,11 +34,11 @@
                     </span>
                   </p>
                   <div ng-switch-default>
-                    <div class="__date h3" ng-bind="::event.startDate | date : 'mediumDate'"></div>
-                    <div class="__date h3" ng-bind="::event.endDate | date : 'mediumTime'"></div>
+                    <div class="cd-date__date h3" ng-bind="::event.startDate | date : 'mediumDate'"></div>
+                    <div class="cd-date__date h3" ng-bind="::event.endDate | date : 'mediumTime'"></div>
                   </div>
                 </div>
-                <div class="__link">
+                <div class="cd-event-detail__link">
                   <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block btn-main">{@i18n key="Book"/}</a>
                 </div>
               </div>

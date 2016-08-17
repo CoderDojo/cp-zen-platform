@@ -6,9 +6,9 @@
   </div>
   <div class="modal-body">
    <div class="flex-row row">
-       <div ng-repeat="role in cdCR.roles" ng-class="cdCR.class" class="__choice">
+       <div ng-repeat="role in cdCR.roles" ng-class="cdCR.class" class="cd-join-dojo-modal__choice">
           <div cd-rounded-image src="{{ role.image }}"  alt="{{ role.name }}" size="100" ></div>
-          <h3 ng-class="role.class" class="__role">{{ role.name }}</h3>
+          <h3 ng-class="role.class" class="cd-join-dojo-modal__role">{{ role.name }}</h3>
           <p>
             {{ role.text }}
           </p>

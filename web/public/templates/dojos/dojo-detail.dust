@@ -1,4 +1,4 @@
-<div class="cd-dashboard cd-color-3-underline row">
+<div class="cd-dashboard cd-dojo-detail row">
   <div class="dojo-list-dashboard col-xs-12">
     <!-- <div class="alert alert-info" ng-show="showBanner()">
       <strong>{@i18n key="Your profile has now been created."/}</strong><br />
@@ -10,15 +10,15 @@
         <div cd-banner-background class="row">
           <div class="row">
             <div class="pull-right">
-              <div class="__ribbon --vertical-right" ng-class="dojo.verified === 1? '--success': '--info'">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.verified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
                 <i class="fa" ng-class="dojo.verified === 1? 'fa-check': 'fa-exclamation'"
                   ng-attr-title="{{ dojo.verified === 1?'{@i18n key=" Verified!"/}':'{@i18n key=" Not verified"/}' }}"></i>
               </div>
-              <div class="__ribbon --vertical-right" ng-class="dojo.private === true? '--info': '--success'">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.private === true? 'cd-dojo-detail__ribbon--info': 'cd-dojo-detail__ribbon--success'">
                 <i class="fa" ng-class="dojo.private === true? 'fa-lock': 'fa-child'"
                   ng-attr-title="{{ dojo.private === false?'{@i18n key="Public Dojo"/}':'{@i18n key="Private Dojo"/} {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}'}}"></i>
               </div>
-              <div class="__ribbon --vertical-right" ng-class="dojo.taoVerified === 1? '--success': '--info'">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
                 <img src="/img/cdtao.png" class="img-responsive"
                 ng-attr-alt="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"
                 ng-attr-title="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"/>
@@ -26,9 +26,9 @@
             </div>
             <div cd-dojo-actions is-dojo-admin="{{ isDojoAdmin }}" dojo="dojo"></div>
             <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}" class="col-md-3 hidden-xs"></div>
-            <div class="col-md-6 __dojo-name">
+            <div class="col-md-6 cd-dojo-detail__dojo-name">
               <h2 ng-bind="::dojo.name"></h2>
-              <h5 ng-if="dojo.website" class="__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
+              <h5 ng-if="dojo.website" class="cd-dojo-detail__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
             </div>
             <cd-join-dojo></cd-join-dojo>
           </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="row">
       <div class="col-md-offset-1 col-md-10">
-        <div class="col-xs-12 col-md-3 __contact">
+        <div class="col-xs-12 col-md-3 cd-dojo-detail__contact">
           <div class="row">
             <div ng-if="dojo.email" class="col-xs-12">
               <b><i class="fa fa-envelope"></i>{@i18n key="Email"/}</b>
@@ -89,7 +89,7 @@
               </p>
             </div>
             <div class="col-xs-12 col-md-3">
-              <a class="btn btn-secondary btn-block" href="#map"><i class="fa fa-location-arrow"></i>{@i18n key="Locate the Dojo"/}</a>
+              <a class="btn btn-secondary btn-block" href="#googleMap"><i class="fa fa-location-arrow"></i>{@i18n key="Locate the Dojo"/}</a>
             </div>
           </div>
           <div class="row">
@@ -105,7 +105,6 @@
           </div>
         </cd-dojo-events-list>
         <div ng-if="mapLoaded" class="col-xs-12">
-          <h3 ng-show="false"><a href="#map" id="map"></a></h3>
           <p ng-if="!dojo.coordinates"><strong>{@i18n key="This dojo has no coordinates."/}</strong></p>
           <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
           <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
