@@ -82,15 +82,18 @@
 }
 
 .alert-message {
-  display: inline-block;
+  display: none;
   overflow: initial;
 
   &.active {
+    display: block;
     min-height: 45px;
     height: auto !important;
     line-height: 20px;
     text-align: left;
-    position: relative !important;
+    position: static !important;
+    margin: 0 -16px 16px -16px;
+    width: auto;
   }
 
   .container {

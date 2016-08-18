@@ -1,4 +1,3 @@
-
 <header class="header">
   <div class="cd-menu cd-menu__desktop-nav">
     <div class="cd-menu__first-row">
@@ -58,7 +57,7 @@
       <span class="cd-menu__hamburger-bar"></span>
     </button>
     <a href="/">
-      <img src="/components/cd-menu/dist/coderdojo-logo-light-bg.svg" width="120" height="44" style="padding-left: 5px;" />
+      <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" style="padding-left: 5px;" />
     </a>
   </div>
   <div class="cd-menu__scrim"></div>
@@ -136,6 +135,5 @@
       </ul>
     </div>
   </nav>
-  <alert-banner></alert-banner>
   <ng-atomic-notify></ng-atomic-notify>
 </header>
