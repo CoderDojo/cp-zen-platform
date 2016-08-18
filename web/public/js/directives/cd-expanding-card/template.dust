@@ -15,5 +15,5 @@
   <div class="cd-expanding-card__card-content">
     <div class="cd-expanding-card__card-content-size-wrapper" ng-transclude></div>
   </div>
-  <span class="cd-expanding-card__expand-button fa fa-chevron-down fa-2x" ng-click="$ctrl.expand($event, true)"></span>
+  <span class="cd-expanding-card__expand-button fa fa-chevron-down fa-2x" ng-click="$ctrl.collapse($event)"></span>
 </div>
