@@ -3,10 +3,11 @@
 
 angular
     .module('cpZenPlatform')
-    .directive('cdEvent', function () {
-        return {  restrict: 'AE',
-          templateUrl: '/dojos/template/events/event-apply',
-          controller: ['$scope', 'cdEventsService', 'cdUsersService', '$translate', function($scope, cdEventsService, cdUsersService, $translate) {
+    .directive('cdEventDetail', function () {
+        return {
+          restrict: 'AE',
+          templateUrl: '/directives/tpl/event/detail',
+          controller: ['$scope', 'cdEventsService', 'cdUsersService', '$translate', '$window', function($scope, cdEventsService, cdUsersService, $translate, $window) {
             $scope.event.sessions = $scope.sessions;
             $scope.event.formattedDate = moment.utc(_.head($scope.event.dates).startTime).format('Do MMMM YY');
             $scope.eventUserSelection = {};
@@ -29,7 +30,9 @@ angular
                 });
               }
             }
-
+            $scope.goToGoogleMaps = function () {
+              $window.open('https://maps.google.com/maps?z=12&t=m&q=loc:' + $scope.event.position.lat + '+' + $scope.event.position.lng);
+            };
           }]
         };
     });

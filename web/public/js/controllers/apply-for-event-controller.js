@@ -91,10 +91,6 @@
         $state.go('register-account.user', { referer: $location.url() });
       }
     };
-
-    $scope.goToGoogleMaps = function (position) {
-      $window.open('https://maps.google.com/maps?z=12&t=m&q=loc:' + position.lat + '+' + position.lng);
-    };
   }
 
   angular.module('cpZenPlatform')

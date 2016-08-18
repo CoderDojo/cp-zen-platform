@@ -403,13 +403,15 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          parent: 'dashboard',
-          templateUrl: '/dojos/template/events/details',
-          controller: function($scope, dojo, event, sessions, profile){
+          template: '<cd-event-detail></cd-event-detail>',
+          controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
             $scope.sessions = sessions.data;
-            $scope.profile = profile.data;
+            if (profile){
+              $scope.profile = profile.data;
+            }
+            $scope.currentUser = currentUser;
           },
           params: {
             pageTitle: 'Event details'
@@ -418,7 +420,8 @@
             profile: resolves.ownProfile,
             dojo: resolveDojo,
             sessions: resolves.sessions,
-            event: resolves.event
+            event: resolves.event,
+            currentUser: resolves.loggedInUser
           },
           ncyBreadcrumb: {
             label: '{{EventDetailsPageTitle}}'
@@ -439,7 +442,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '/dojos/template/events/details',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -467,7 +470,7 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<cd-event-detail></cd-event-detail>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;

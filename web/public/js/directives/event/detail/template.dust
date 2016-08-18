@@ -1,0 +1,28 @@
+<div class="cd-event-detail row">
+  <div class="col-xs-12 col-md-10 col-md-offset-1">
+    <cd-join-dojo></cd-join-dojo>
+    <div class="row">
+      <h2 class="cd-event-detail__title">
+        <span ng-bind="::event.name"></span>
+      </h2>
+      <cd-share-event share-event="event"></cd-share-event>
+      <span class="cd-event-detail__date col-xs-12">
+        <i class="fa fa-clock-o"></i>
+        <h3><span ng-bind="::event.formattedDate"></span></h3>
+      </span>
+    </div>
+    <div class="row">
+      <span class="col-xs-12 col-sm-6">
+        <i class="fa fa-location-arrow"></i>
+        <span ng-bind="::event.address"></span>
+      </span>
+      <span class="col-xs-12 col-sm-6 cd-event-detail__map-link">
+        <!-- TODO : map from event location, means rework map directive to take an address and display it -->
+        <button class="btn btn-secondary btn-block-xs" ng-click="goToGoogleMaps()" ng-show="event.position">{@i18n key="Location"/}</button>
+      </span>
+    </div>
+    <p ng-bind-html="::event.description"></p>
+
+    <cd-apply-for-event ></cd-apply-for-event>
+  </div>
+</div>

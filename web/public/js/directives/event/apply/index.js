@@ -4,7 +4,7 @@
 function cdApplyForEvent(){
   return {
     restrict: 'E',
-    templateUrl: '/dojos/template/events/apply',
+    templateUrl: '/directives/tpl/event/apply',
     controller:'apply-for-event-controller'
   }
 }
@@ -12,5 +12,5 @@ function cdApplyForEvent(){
 angular
     .module('cpZenPlatform')
     .directive('cdApplyForEvent', cdApplyForEvent)
- 
+
 }());

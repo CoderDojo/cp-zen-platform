@@ -1,0 +1,30 @@
+<div class="col-sm-7">
+  <h5 class="h3" ng-bind="::event.name"></h5>
+  <div> {@i18n key="Location"/}
+    <p ng-bind="::event.address"></p>
+    <p ng-bind="::event.city.nameWithHierarchy"></p>
+  </div>
+  <div ng-bind-html="::event.description">
+  </div>
+</div>
+
+<div class="col-sm-5 cd-date">
+  <div class="cd-date__content">
+    <cd-share-event share-event="event" class="pull-right cd-share-event"></cd-share-event>
+    <div ng-switch="event.type">
+      <p ng-switch-when="recurring">
+        <b>{@i18n key="Dates"/}</b>:
+        <span ng-repeat="eventDate in event.formattedDates">
+          {{ eventDate }}
+        </span>
+      </p>
+      <div ng-switch-default>
+        <div class="cd-date__date h3" ng-bind="::event.startDate | date : 'mediumDate'"></div>
+        <div class="cd-date__date h3" ng-bind="::event.endDate | date : 'mediumTime'"></div>
+      </div>
+    </div>
+    <div class="cd-event-list-item__link">
+      <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block btn-main">{@i18n key="Book"/}</a>
+    </div>
+  </div>
+</div>

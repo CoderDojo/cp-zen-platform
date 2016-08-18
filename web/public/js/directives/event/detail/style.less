@@ -1,0 +1,29 @@
+.cd-event-detail{
+
+  &__date {
+    h3 {
+      display: inline-block;
+    }
+  }
+  &__map-link {
+    @media(min-width: @screen-sm-max){
+      margin-top: -0.5em;
+    }
+  }
+  .fa {
+    margin-right: 0.5em;
+  }
+
+  cd-join-dojo {
+    position: inherit;
+  }
+  
+  cd-share-event {
+    ul {
+      position: absolute;
+      right: 0;
+      top: 20%;
+      z-index: 1;
+    }
+  }
+}
