@@ -1,0 +1,32 @@
+.cd-picture-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &__item {
+      flex: 1;
+      min-width: 208px;
+      max-width: 208px;
+      padding: 16px 32px;
+    }
+
+    &__picture {
+      border-radius: 100%;
+      padding-top: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &__caption {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: @screen-xs-max) {
+      &__item {
+        min-width: 144px;
+        max-width: 144px;
+      }
+    }
+}

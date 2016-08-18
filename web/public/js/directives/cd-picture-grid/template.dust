@@ -1,0 +1,6 @@
+<div class="cd-picture-grid">
+    <a class="cd-picture-grid__item" ng-repeat="item in $ctrl.items" ng-href="{{ item.href }}">
+        <div class="cd-picture-grid__picture" style="background-image: url({{ item.picture }});"></div>
+        <p class="cd-picture-grid__caption">{{ item.caption }}</p>
+    </a>
+</div>
