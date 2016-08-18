@@ -26,23 +26,28 @@
         ctrl.expanded = 'collapsed';
       }
 
-      ctrl.expand = function (e, force) {
-        if (force) {
-          e.stopPropagation();
-        }
+      ctrl.expand = function (e) {
         if (ctrl.expanded === 'collapsed' || ctrl.expanded === 'collapsing') {
           ctrl.expanded = 'expanding';
-          //content.css('height', 'auto');
           content.css('height', contentWrapper.outerHeight() + 'px');
           $timeout(function () {
+            content.css('height', 'auto');
             ctrl.expanded = 'expanded';
           }, 300);
-        } else if (force) {
-          ctrl.expanded = 'collapsing';
-          content.css('height', 0);
-          $timeout(function () {
-            ctrl.expanded = 'collapsed';
-          }, 300);
+        }
+      };
+
+      ctrl.collapse = function (e) {
+        if (ctrl.expanded === 'expanded' || ctrl.expanded === 'expanding') {
+          e.stopPropagation();
+          content.css('height', contentWrapper.outerHeight() + 'px');
+          requestAnimationFrame(function () {
+            ctrl.expanded = 'collapsing';
+            content.css('height', 0);
+            $timeout(function () {
+              ctrl.expanded = 'collapsed';
+            }, 300);
+          });
         }
       };
     }
