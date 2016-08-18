@@ -2,6 +2,7 @@
 {<body}
   {>"common/header" /}
   <div class="cd-menu__content-container">
+    <alert-banner></alert-banner>
   	<div ui-view></div>
   </div>
   {>"common/footer" /}
