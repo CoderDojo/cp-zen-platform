@@ -1,6 +1,6 @@
 <div class="cd-dashboard cd-color-2-underline">
   <span spinner-key="dojos-list-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-  <div class="dojo-list-dashboard">
+  <div class="dojo-list-dashboard row">
     <div class="col-xs-12 col-lg-4 pull-right">
       <div class="widget">
         <legend>{@i18n key="Register a Dojo"/}</legend>
@@ -22,7 +22,6 @@
           <legend>{{ country }}</legend>
           <ul ng-repeat="dojo in dojos" ng-hide="{{ dojo.stage === 4 }}">
             <li><a ng-href="{{ getDojoURL(dojo) }}">{{ dojo.name }}</a></li>
-            
           </ul>
         </div>
       </div>
