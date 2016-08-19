@@ -600,7 +600,7 @@
         .state('add-child',{
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/user-profile',
+          templateUrl: '/directives/tpl/user/cd-profile/edit',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,

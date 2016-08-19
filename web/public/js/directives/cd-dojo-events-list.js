@@ -16,5 +16,4 @@ function cdDojoEventsList(){
 angular
     .module('cpZenPlatform')
     .directive('cdDojoEventsList', cdDojoEventsList)
-
 }());

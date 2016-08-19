@@ -1,5 +1,5 @@
 <div class="profile-section" >
-  <h3 class="cd-section-header"><a id="projects" href="#projects">{@i18n key="Projects"/}</a></h3>
+  <h3 class="cd-section-header"><a  id="projects"></a><a href="#projects">{@i18n key="Projects"/}</a></h3>
   <div ng-if="profile.projects">
     {{ profile.projects }}
   </div>

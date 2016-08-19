@@ -708,6 +708,12 @@ msgstr "The Dojos listed here are all verified by the CoderDojo team."
 msgid "Learn more"
 msgstr "Learn more..."
 
+msgid "View more"
+msgstr "View more"
+
+msgid "View less"
+msgstr "View less"
+
 msgid "Search Results"
 msgstr "Search Results"
 
@@ -3070,7 +3076,6 @@ msgstr "Your details"
 
 msgid "About you"
 msgstr "About you"
-
 
 msgid "Got a child? Add them below"
 msgstr "Got a child? Add them below"

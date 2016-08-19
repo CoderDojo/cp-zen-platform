@@ -62,17 +62,18 @@ label {
     padding: 46px 100px 0 100px;
 }
 
-
-.anchor-jump {
-  padding-top: 140px;
-  margin-top: -140px;
+.anchor-jump() {
+  display: block;
+  position: relative;
+  top: -140px;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6, .cd-section-header{
   a[id] {
     .anchor-jump();
   }
 }
+
 
 .cd-dashboard {
 	background: white;

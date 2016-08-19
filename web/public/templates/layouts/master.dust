@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,400" type="text/css">
 
     <!-- Bootstrap core CSS -->
-    <link href="/components/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/components/angular-loading/angular-loading.css" rel="stylesheet">
 
     <!-- Angular UI Select -->

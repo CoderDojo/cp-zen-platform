@@ -24,7 +24,7 @@
                 ng-attr-title="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"/>
               </div>
             </div>
-            <div cd-dojo-actions is-dojo-admin="{{ isDojoAdmin }}" dojo="dojo"></div>
+            <div cd-dojo-actions is-dojo-admin="isDojoAdmin" dojo="dojo"></div>
             <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}" class="col-md-3 hidden-xs"></div>
             <div class="col-md-6 cd-dojo-detail__dojo-name">
               <h2 ng-bind="::dojo.name"></h2>
@@ -92,9 +92,10 @@
               <a class="btn btn-secondary btn-block" href="#googleMap"><i class="fa fa-location-arrow"></i>{@i18n key="Locate the Dojo"/}</a>
             </div>
           </div>
-          <div class="row">
+          <div class="row cd-dojo-detail__notes" cd-expandable-container="200" >
             <!-- <h3 class="cd-section-header"><a href="#notes" id="notes">{@i18n key="Notes"/}</a></h3> -->
-            <div class="col-xs-12" ng-bind-html="dojo.notes"></div>
+            <div class="col-xs-12 cd-expandable-block" ng-bind-html="dojo.notes"></div>
+            <a cd-expander class="text-center col-xs-12"></a>
           </div>
         </div>
         <cd-dojo-events-list dojo-id="{{ dojo.id }}" dojo-stage="{{ dojo.stage.value }}" class="col-xs-12">
@@ -111,7 +112,8 @@
         </div>
         <div class="col-xs-12">
           <div ng-if="dojo.supporterImage">
-            <h3 class="text-center cd-section-header">{@i18n key="Dojo Supported By"/}</h3>
+            <h3 class="text-center cd-section-header">
+              <a id="supporter"></a><a href="#supporter">{@i18n key="Dojo Supported By"/}</a></h3>
             <img ng-src="{{ dojo.supporterImage }}">
           </div>
         </div>

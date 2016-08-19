@@ -45,6 +45,17 @@
           data: {file: file}
         });
       },
+      // We should probably do that on the backend to avoid logging to console, srsly
+      getAvatar: function(dojoId) {
+        var bucketUrl = 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/' + dojoId;
+        return $http.head('https://s3-eu-west-1.amazonaws.com/zen-dojo-images/' + dojoId).then(function successCallback(response) {
+          //Nothing to do, it all works as expected, the image is stored online
+          return bucketUrl;
+        }, function errorCallback(response) {
+          //File doesn't exists, we should fallback
+          return $q.resolve('/img/avatars/dojo-default-logo.png');
+        });
+      },
       setDojo: function(dojo, win, fail) {
         currentDojo = dojo;
         if(currentDojo) return win(currentDojo);

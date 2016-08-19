@@ -2,8 +2,9 @@
   border: none !important;
   box-shadow: @cd-box-shadow;
   box-sizing: border-box;
+  position: relative;
   .fa {
-    font-size: 1.5em;
+    .fa-2x();
     &:before {
       position: relative;
       left: 0.8em;
@@ -22,12 +23,9 @@
     @alert-right-corner-size: 15px;
     &:after {
       content: "";
-      height: 0;
-      width: 0;
-      display: block;
-      position: relative;
-      bottom: -(@alert-right-corner-size * 2);
-      margin-left: 100%;
+      position: absolute;
+      bottom: -@alert-right-corner-size;
+      right: 0;
       border-right: @alert-right-corner-size solid transparent;
     }
     &.alert-success:after {

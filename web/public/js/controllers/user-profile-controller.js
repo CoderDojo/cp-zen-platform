@@ -154,12 +154,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.profile = profile.data;
   $scope.canEdit = $scope.profile.ownProfileFlag || $scope.profile.myChild;
 
-  // cdUsersService.getAvatar($scope.profile.id, function(response){
-  //   if(!_.isEmpty(response)) {
-  //     $scope.profile.avatar.data = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-  //   }
-  // });
-
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
   $scope.showBadgeInfo = function (tag, badge) {

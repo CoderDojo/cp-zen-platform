@@ -1,6 +1,6 @@
 <div>
   <div class="row cd-input-row" ng-enter="noop()">
-    <h3 class="cd-section-header"><a href="#status" id="status">{@i18n key="Status Messages"/}</a></h3>
+    <h3 class="cd-section-header"><a id="status"></a><a href="#status">{@i18n key="Status Messages"/}</a></h3>
     <div class="form-group">
       <label class="col-lg-4 cd-form-label1 with-checkbox">
         <span>{@i18n key="Need Mentors"/}</span>

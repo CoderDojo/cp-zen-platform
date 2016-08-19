@@ -42,6 +42,7 @@ function cdRoundedImage(){
             cdRI.src += $scope.srcId ? $scope.srcId : '';
             idWatcher();
             if(_.isUndefined(cdRI.format)) {
+              //  TODO: use a provider like cd-Entity-Service (i.e: cd-dojos-service=>getAvatar) to get the proper image
               $http.head(cdRI.src).then(function successCallback(response) {
                 //Nothing to do, it all works as expected, the image is stored online
               }, function errorCallback(response) {
