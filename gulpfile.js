@@ -94,4 +94,6 @@
 
   gulp.task('dev', ['watch-less']);
 
+  gulp.on('stop', function () { process.exit(0); });
+  gulp.on('err', function () { process.exit(1); });
 })();
