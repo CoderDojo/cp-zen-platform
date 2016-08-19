@@ -93,7 +93,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
     jQuery('body').cookieDisclaimer({
       text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."),
       style: "light", // dark,light
-      cssPosition: "relative", //fixed,absolute,relative
+      position: 'bottom',
       acceptBtn: { text: 'x' },
       policyBtn: { active: false },
       cookie: {
