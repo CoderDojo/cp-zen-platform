@@ -84,6 +84,9 @@
       configFile: __dirname + '/karma.conf.js',
       singleRun: true
     }, done).start();
+
+    gulp.on('stop', function () { process.exit(0); });
+    gulp.on('err', function () { process.exit(1); });
   });
 
   gulp.task('watch-less', ['build-less'], function(){
@@ -93,7 +96,4 @@
   gulp.task('default', ['test']);
 
   gulp.task('dev', ['watch-less']);
-
-  gulp.on('stop', function () { process.exit(0); });
-  gulp.on('err', function () { process.exit(1); });
 })();
