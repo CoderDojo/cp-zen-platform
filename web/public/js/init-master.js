@@ -79,7 +79,7 @@
       return auth.get_loggedin_user_promise().then(function (currentUser) {
         if(currentUser){
           return cdUsersService.userProfileDataPromise({userId: currentUser.id}).then(winCb, failCb);
-        }else {
+        } else {
           winCb(void 0);
         }
       }, failCb);
@@ -372,7 +372,7 @@
         .state("create-dojo-event", {
           url: "/dojo/:dojoId/event-form",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,
@@ -386,7 +386,7 @@
         .state("edit-dojo-event", {
           url: "/dojo/:dojoId/event-form/:eventId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,

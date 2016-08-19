@@ -1,0 +1,246 @@
+<div class="cd-dashboard event-form">
+  <div class="row">
+    <div class="col-xs-12">
+      <div cd-banner-background class="row">
+        <div class="row">
+          <div cd-rounded-icon src="ticket"class="col-md-3 hidden-xs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)" class="row">
+    <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
+    <div class="row controls">
+      <div class="col-md-2 col-md-offset-6">
+        <h5>{@i18n key="Duplicate Existing Event"/}</h5>
+      </div>
+      <div class="col-md-4">
+        <ui-select ng-model="dupEventPicker.selected" name="dupEventPicker" id="dupEventPicker" ng-change="copyEvent(dupEventPicker.selected)">
+          <ui-select-match placeholder="{@i18n key="Copy from an existing event"/}">
+            {{ $select.selected.name }}
+          </ui-select-match>
+          <ui-select-choices repeat="event in dupEventPicker.events">
+            <span ng-bind-html="event.name"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <cd-expanding-card main-title="{@i18n key="Event Details"/}" sub-title-1="{@i18n key="Description, Location, Time & Date"/}">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+            <input autofocus type="text" ng-readonly="pastEvent" required required-message="'{@i18n key="Event name is empty"/}'" name="event-name" id="event-name" class="form-control" ng-model="eventInfo.name" placeholder="{@i18n key="Add the event name"/}" ng-change="updateLocalStorage('name',eventInfo.name)">
+          </div>
+          <div class="form-group">
+            <label for="description">{@i18n key="Description"/}*:</label>
+            <textarea name="description" required required-message="'{@i18n key="Description is empty"/}'" ng-if="editorOptions" ckeditor="editorOptions" id="description" class="form-control" rows="3" ng-model="eventInfo.description" placeholder="{@i18n key="Add a description"/}" ng-change="updateLocalStorage('description',eventInfo.description)"></textarea>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="row">
+            <div class="col-sm-2">
+              <label>{@i18n key="Type"/}:</label>
+            </div>
+            <div class="col-sm-4">
+              <div class="radio">
+                <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type', eventInfo.type)" id="recurring" value="recurring">
+                <label for="recurring">{@i18n key="Recurring"/}</label>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="radio">
+                <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type"
+                    ng-change="updateLocalStorage('type', eventInfo.type)" id="one-off" value="one-off">
+                <label for="one-off">{@i18n key="One off"/}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-if="eventInfo.type === 'recurring'">
+            <div class="col-sm-4">
+              <label for="weekday">{@i18n key="Every"/}*: </label>
+              <ui-select ng-model="weekdayPicker.selection" ng-init="weekdayPicker.selection = weekdayPicker.selection || weekdayPicker.weekdays[0]" name="weekday" id="weekday" ng-change="updateLocalStorage('weekdaySelection', weekdayPicker.selection)" required required-message="'{@i18n key="Recurrence is empty"/}'">
+                <ui-select-match placeholder="{@i18n key="Select a day..."/}">
+                  {{ $select.selected.name }}
+                </ui-select-match>
+                <ui-select-choices repeat="weekday in weekdayPicker.weekdays">
+                  <span ng-bind-html="weekday.name"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+            <div class="col-sm-4">
+              <div class="radio">
+                <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType', eventInfo.recurringType)" id="weekly" value="weekly">
+                <label for="weekly">
+                  {@i18n key="Weekly"/}
+                </label>
+              </div>
+              <div class="radio">
+                <input ng-disabled="pastEvent" type="radio" name="recurringType" ng-model="eventInfo.recurringType" ng-change="updateLocalStorage('recurringType',eventInfo.recurringType)" id="biweekly" value="biweekly">
+                <label for="biweekly">
+                  {@i18n key="Every two weeks"/}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
+              <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
+              <div class="input-group">
+                <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'datePicker1')" ng-change="updateLocalStorage('date', eventInfo.date)" id="date" />
+                <span class="input-group-btn">
+                  <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker1')">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-3 col-sm-offset-2" ng-if="eventInfo.type === 'recurring'">
+              <label for="to-date">{@i18n key="To"/}:</label>
+              <div class="input-group">
+                <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'datePicker2')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker2')">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-show="!pastEvent">
+            <div class="col-sm-3 col-xs-3">
+              <label for="start-time">{@i18n key="Start time"/}:</label>
+              <uib-timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
+            </div>
+            <div class="col-sm-3 col-xs-3 col-sm-offset-2 col-xs-offset-3">
+              <label for="endTime">{@i18n key="End time"/}:</label>
+              <uib-timepicker min="eventInfo.startTime" name="endTime" ng-model="eventInfo.endTime" ng-change="updateLocalStorage('endTime', eventInfo.endTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker" required></uib-timepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form-inline full-width" ng-show="!eventInfo.status">
+        <div class="checkbox checkbox-block">
+          <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
+          <label for="prefill-address">{@i18n key="Use Dojo listing address"/}</label>
+          <i uib-tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="top" tooltip-trigger="click" class="info-button fa fa-info-circle event-tooltip"></i>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
+        <label for="city">{@i18n key="City"/}*:</label>
+        <ui-select ng-model="eventInfo.city" ng-disabled="pastEvent" ng-readonly="eventInfo.prefillAddress" name="city" id="city" ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null" required>
+          <ui-select-match placeholder="{@i18n key="Add a city name"/}">
+            {{ $select.selected.nameWithHierarchy }}
+          </ui-select-match>
+          <ui-select-choices repeat="city in cities" refresh="searchCity($select)" refresh-delay="500">
+            <span ng-bind-html="city.nameWithHierarchy | highlight: $select.search"></span>
+          </ui-select-choices>
+        </ui-select>
+        <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm.city.$error.required">{@i18n key="Select a place"/}</label>
+      </div>
+      <div class="form-group">
+        <label for="address">{@i18n key="Address"/}*:</label>
+        <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+      </div>
+    </cd-expanding-card>
+    <cd-expanding-card main-title="{@i18n key="Event Tickets"/}" sub-title-1="{@i18n key="Ticket Type"/}">
+      <div class="row ticket-form">
+        <input type="hidden" name="sessionValidation" ng-model="eventInfo.sessionValidation" validator="validateSessions(eventInfo.sessions)" invalid-message="'{@i18n key="Your event must contain at least one session."/}'">
+        <div class="col-xs-12 col-md-6 form-group ticket-box" ng-repeat="session in eventInfo.sessions" ng-init="sessionIndex = $index">
+          <div class="form-group form-inline full-width" ng-hide="lastSession()">
+            <label class="icon-group"> Remove session </label>
+            <button type="button" ng-disabled="pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Session/room?"/}" ng-bootbox-confirm-action="removeSession($index)" class="btn btn-danger">
+              <i class="fa fa-close" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="form-group">
+            <label for="session-{{ sessionIndex }}-sessionName form-inline full-width">{@i18n key="Session/room name"/}*: </label>
+            <input ng-readonly="pastEvent" type="text" required required-message="'{@i18n key="Name is empty"/}'" name="session-{{ sessionIndex }}-sessionName" class="form-control session-name margin-top-point-5-em" ng-model="session.name" placeholder="{@i18n key="e.g. Scratch"/}">
+          </div>
+          <div class="form-group clear">
+            <label for="sessionDescription">{@i18n key="Session description"/}</label>
+            <textarea ng-readonly="pastEvent" class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
+          </div>
+          <div class="row hidden-xs">
+            <div class="col-sm-4">
+              <h5>{@i18n key="Ticket Name"/}</h5>
+            </div>
+            <div class="col-sm-4">
+              <h5>{@i18n key="Ticket Type"/} <i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></h5>
+            </div>
+            <div class="col-sm-3">
+              <h5>{@i18n key="Ticket Quantity"/}</h5>
+            </div>
+          </div>
+          <div class="row ticket-row" ng-repeat="ticket in session.tickets" ng-init="ticketIndex = $index" >
+            <div class="col-sm-4 form-group">
+              <label class="visible-xs-block">{@i18n key="Ticket Name"/}</label>
+              <input ng-readonly="pastEvent" placeholder="{@i18n key="e.g. Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'">
+            </div>
+            <div class="col-sm-4">
+              <label class="visible-xs-block">{@i18n key="Ticket Type"/}<i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></label>
+              <div ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
+                <ui-select ng-disabled="pastEvent" name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
+                  <ui-select-match allow-clear="true" placeholder="{@i18n key="e.g. Mentor"/}">{{ $select.selected.title }}</ui-select-match>
+                  <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
+                    <span ng-bind-html="ticketType.title"></span>
+                  </ui-select-choices>
+                </ui-select>
+                <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="visible-xs-block">{@i18n key="Ticket Quantity"/}</label>
+              <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">
+            </div>
+            <div class="col-sm-1 remove-control">
+              <label class="visible-xs-block" ng-hide="lastTicket(session) || pastEvent">{@i18n key="Remove Ticket"/}</label>
+              <i ng-hide="lastTicket(session) || pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="fa fa-close fa-2x pointer cd-color-red" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="well clearfix ticket-controls">
+            <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
+            <div class="pull-right">
+              <label class="icon-group">{@i18n key="Add ticket type"/}</label>
+              <button type="button" ng-disabled="pastEvent" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 ng-show="eventInfo.sessions.length" class="text-right"><strong>{@i18n key="Total event capacity"/}</strong>: {{ totalEventCapacity() }} <i uib-tooltip="{@i18n key="Please note that the capacity excludes tickets of the type other."/}" tooltip-placement="left" class="fa fa-info-circle event-tooltip" aria-hidden="true"></i></h5>
+      <div ng-disabled="pastEvent" ng-click="addSession()" class="btn btn-success session-expand-button cd-bg-green-80">
+        <i class="fa fa-plus" aria-hidden="true"></i> <label class="icon-group">{@i18n key="Add session/room"/}</label>
+      </div>
+    </cd-expanding-card>
+    <div class="row">
+      <div class="col-md-12">
+         <span spinner-key="create-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+      </div>
+    </div>
+    <div class="row controls">
+      <div class="col-md-6">
+        <label> Additional options </label>
+        <div class="checkbox checkbox-block">
+          <input ng-disabled="pastEvent" type="checkbox" id="is-public" ng-model="eventInfo.public">
+          <label for="is-public">
+            {@i18n key="Is public"/}
+          </label>
+          <i uib-tooltip="{@i18n key="Public events are viewable by anyone visiting your Dojo listing. Private events can only be seen by members of your Dojo."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+        </div>
+        <div class="checkbox checkbox-block">
+          <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.ticketApproval" id="ticketApproval">
+          <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
+          <i uib-tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
+        </div>
+      </div>
+      <div class="col-md-6 btn-toolbar">
+        <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
+        <button ng-if="!pastEvent" type="submit" class="btn btn-secondary pull-right" >{@i18n key="Save Draft"/}</button>
+        <button ng-if="!pastEvent" type="submit" class="btn btn-success pull-right" ng-click="scrollToInvalid(eventForm)">{@i18n key="Publish"/}</button>
+      </div>
+    </div>
+  </form>
+</div>
