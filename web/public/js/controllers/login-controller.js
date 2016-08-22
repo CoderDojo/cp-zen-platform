@@ -179,7 +179,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   };
 
   $scope.doRegister = function() {
-    userUtils.doRegister(_.extend($scope.formData, $scope.userFormData));
+    userUtils.doRegister(_.extend($scope.formData, $scope.userFormData, {referer: $scope.referer}));
   };
 
   $scope.doLogin = function() {

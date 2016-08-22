@@ -2,11 +2,12 @@
   'use strict';
 
   function cdApplyForEventCtrl($scope, $window, $state, $stateParams, $translate, $location, $uibModal,
-    alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils) {
+    alertService, cdEventsService, cdUsersService, cdDojoService, usSpinnerService, dojoUtils, eventUtils) {
     var dojoEvents = $scope.dojoRowIndexExpandedCurr;
     var eventIndex = $scope.tableRowIndexExpandedCurr;
     var accountName;
     var accountTitle;
+    $scope.event.isPast = eventUtils.isEventInPast(_.last($scope.event.dates));
 
     var url = window.location.href;
     if((localStorage.joinDojo) && url.indexOf('event/')>=1){
@@ -95,5 +96,5 @@
 
   angular.module('cpZenPlatform')
       .controller('apply-for-event-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$location', '$uibModal', 'alertService',
-      'cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', cdApplyForEventCtrl]);
+      'cdEventsService', 'cdUsersService', 'cdDojoService', 'usSpinnerService', 'dojoUtils', 'eventUtils', cdApplyForEventCtrl]);
 })();

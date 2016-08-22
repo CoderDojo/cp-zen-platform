@@ -2,6 +2,11 @@
   font-weight: 700;
   text-transform: uppercase;
   text-align: center;
+  &[disabled] {
+    background-color: @cd-very-light-gray;
+    color: @cd-black;
+    cursor: not-allowed;
+  }
 }
 
 .btn {

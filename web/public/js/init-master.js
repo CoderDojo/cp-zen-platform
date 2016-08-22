@@ -442,7 +442,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          template: '/dojos/template/events/details',
+          template: '<cd-event-detail></cd-event-detail>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -470,7 +470,7 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          template: '<cd-event-detail></cd-event-detail>',
+          template: '<div class="cd-event-list col-xs-12"><cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event"></cd-event-list-item></div>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;

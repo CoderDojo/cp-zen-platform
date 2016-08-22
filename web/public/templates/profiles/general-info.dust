@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <h3 class="cd-section-header"><a id="contact" href="#contact">{@i18n key="Contact"/}</a></h3>
+    <h3 class="cd-section-header"><a id="contact"></a><a  href="#contact">{@i18n key="Contact"/}</a></h3>
     <div class="panel-body">
       <div>
         <div class="form-group" ng-enter="noop()">
@@ -105,7 +105,7 @@
       </div>
     </div>
 
-    <h3 class="cd-section-header"><a id="about" href="#about">{@i18n key="About you"/}</a></h3>
+    <h3 class="cd-section-header"><a id="about"></a><a href="#about">{@i18n key="About you"/}</a></h3>
     <div class="panel-body">
       <div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
@@ -174,7 +174,7 @@
           </div>
         </div>
 
-        <legend ng-if="abilityToAddChildren()" ng-show="afterForm()" class="legend-color-1-border">{@i18n key="Got a child? Add them below"/}</legend>
+        <h4 ng-if="abilityToAddChildren()" ng-show="afterForm()" >{@i18n key="Got a child? Add them below"/}</h4>
         <div ng-show="afterForm()">
           <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()" ng-show="profile.children.length > 0">
             <span class="icon-group">Remove child</span>

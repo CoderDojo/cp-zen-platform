@@ -1,30 +1,34 @@
 <div class="col-sm-7">
-  <h5 class="h3" ng-bind="::event.name"></h5>
+  <h5 class="h3" ng-bind="::cdELI.event.name"></h5>
   <div> {@i18n key="Location"/}
-    <p ng-bind="::event.address"></p>
-    <p ng-bind="::event.city.nameWithHierarchy"></p>
+    <p ng-bind="::cdELI.event.address"></p>
+    <p ng-bind="::cdELI.event.city.nameWithHierarchy"></p>
   </div>
-  <div ng-bind-html="::event.description">
+  <div ng-bind-html="::cdELI.event.description">
   </div>
 </div>
 
 <div class="col-sm-5 cd-date">
   <div class="cd-date__content">
-    <cd-share-event share-event="event" class="pull-right cd-share-event"></cd-share-event>
-    <div ng-switch="event.type">
+    <cd-share-event share-event="cdELI.event" class="pull-right cd-share-event" ng-if="!cdELI.isEmbedded"></cd-share-event>
+    <div ng-switch="cdELI.event.type">
       <p ng-switch-when="recurring">
         <b>{@i18n key="Dates"/}</b>:
-        <span ng-repeat="eventDate in event.formattedDates">
+        <span ng-repeat="eventDate in cdELI.event.formattedDates">
           {{ eventDate }}
         </span>
       </p>
       <div ng-switch-default>
-        <div class="cd-date__date h3" ng-bind="::event.startDate | date : 'mediumDate'"></div>
-        <div class="cd-date__date h3" ng-bind="::event.endDate | date : 'mediumTime'"></div>
+        <div class="cd-date__date h3" ng-bind="::cdELI.event.startDate | date : 'mediumDate'"></div>
+        <div class="cd-date__date h3" ng-bind="::cdELI.event.endDate | date : 'mediumTime'"></div>
       </div>
     </div>
     <div class="cd-event-list-item__link">
-      <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block btn-main">{@i18n key="Book"/}</a>
+      <a ng-click="cdELI.goTo()" class="btn btn-warning btn-block btn-main" ng-disabled="cdELI.event.isPast">
+        <span ng-if="!cdELI.event.isPast">{@i18n key="Book"/}</span>
+        <!-- TODO : isFull? <span ng-if="cdELI.event.isFull && !cdELI.event.isPast">{@i18n key="Book"/}</span> -->
+        <span ng-if="cdELI.event.isPast">{@i18n key="Booking closed"/}</span>
+      </a>
     </div>
   </div>
 </div>

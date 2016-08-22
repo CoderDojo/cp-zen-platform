@@ -1,5 +1,5 @@
 <span class="col-xs-12 ">
-    <a ui-sref="home"><div class="cd-logo-small"></div></a>
+    <a ui-sref="home"><div class="cd-logo-embedded"></div></a>
 </span>
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P3CNG3"

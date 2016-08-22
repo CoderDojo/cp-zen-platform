@@ -529,6 +529,29 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
   }
 
+  $scope.areChildrenVisible = function () {
+    if($state.current.name === 'add-child') return true;
+    var highestUserType = getHighestUserType(profile.data.userTypes);
+    switch (highestUserType) {
+      case 'champion':
+      case 'mentor':
+      case 'parent-guardian':
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
+        if(loggedInUserIsChild()) return true;
+        return false; //Always private
+      case 'attendee-o13':
+        if(loggedInUserIsParent()) return true;
+        return false;
+      case 'attendee-u13':
+        if(loggedInUserIsParent()) return true;
+        return false; //Always private
+      default:
+        return false;
+    }
+  }
+
+
   function loggedInUserIsParent() {
     if(!loggedInUser.data) return false;
     return _.find(parentsForUser.data, function (parentForUser) {

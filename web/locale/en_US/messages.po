@@ -2527,6 +2527,9 @@ msgstr "Check in"
 msgid "Book"
 msgstr "Book"
 
+msgid "Booking closed"
+msgstr "Booking closed"
+
 msgid "Session description"
 msgstr "Session description"
 

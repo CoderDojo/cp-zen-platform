@@ -1,7 +1,7 @@
 <div class="cd-event-detail row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <cd-join-dojo></cd-join-dojo>
     <div class="row">
+      <cd-join-dojo ng-class="{'hidden': dojoMember || loggedOut}"></cd-join-dojo>
       <h2 class="cd-event-detail__title">
         <span ng-bind="::event.name"></span>
       </h2>

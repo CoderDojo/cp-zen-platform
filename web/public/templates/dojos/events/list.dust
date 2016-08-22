@@ -12,8 +12,8 @@
         </div>
 
         <div ng-hide="events.length === 0">
-          <cd-event-list-item ng-repeat="event in events" ng-switch on="events[$index].isCollapsed"
-            class="row flex-row cd-event-list-item" ng-click="showEventInfo($index, event.id)"></cd-event-list-item>
+          <cd-event-list-item ng-repeat="event in events" event="event"
+            class="row flex-row cd-event-list-item"></cd-event-list-item>
         </div>
       </div>
     </div>

@@ -24,7 +24,8 @@
         <!-- We only keep display of elements which are not covered by the general-info/profile-info form -->
         <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
         <parents-list ng-if="!hideProfileBlock() && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])"></parents-list>
-        <children-list ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian', 'champion', 'mentor'])"></children-list>
+        <!-- ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian', 'champion', 'mentor'])" -->
+        <children-list ></children-list>
       </div>
     </div>
   </div>
