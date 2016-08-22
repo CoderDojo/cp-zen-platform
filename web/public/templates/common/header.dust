@@ -15,7 +15,7 @@
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
       <div class="cd-menu__profile">
-        <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+        <img class="cd-menu__profile-pic" src="/img/avatar.png" />
         <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
         <i class="cd-menu__sub-menu-icon fa fa-chevron-down"></i>
         <ul class="cd-menu__profile-menu">
@@ -77,7 +77,7 @@
       <ul class="cd-menu__content-block">
         <li class="cd-menu__profile">
           <span>
-            <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+            <img class="cd-menu__profile-pic" src="/img/avatar.png" />
             <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
             <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
           </span>
@@ -88,7 +88,7 @@
             </div>
             <div class="cd-menu__content">
               <div class="cd-menu__content-block cd-menu__profile-header">
-                <img class="cd-menu__profile-pic" src="http://placekitten.com/128/128" />
+                <img class="cd-menu__profile-pic" src="/img/avatar.png" />
                 <span class="cd-menu__profile-name"></span>
               </div>
               <ul class="cd-menu__content-block cd-menu__profile-menu">
