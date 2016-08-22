@@ -10,6 +10,10 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     if(!isDojoAdmin){
       $state.go('error-404-no-headers');
     }
+  })
+  .catch(function(){
+    $scope.isDojoAdmin = false;
+    $state.go('error-404-no-headers');
   });
 
   $scope.getIsDojoAdmin = function () {
@@ -356,6 +360,9 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         } else {
           alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
         }
+      })
+      .catch(function(){
+        alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
       });
     }
   };
