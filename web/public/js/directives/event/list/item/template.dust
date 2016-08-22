@@ -20,7 +20,7 @@
       </p>
       <div ng-switch-default>
         <div class="cd-date__date h3" ng-bind="::cdELI.event.startDate | date : 'mediumDate'"></div>
-        <div class="cd-date__date h3" ng-bind="::cdELI.event.endDate | date : 'mediumTime'"></div>
+        <div class="cd-date__date h3" ng-bind="::cdELI.event.endDate | date : 'shortTime'"></div>
       </div>
     </div>
     <div class="cd-event-list-item__link">
