@@ -489,6 +489,7 @@ label {
 }
 
 .cd-badges-dashboard {
+  .main-content-padding;
 
   .nav-tabs.nav-justified>.active>a {
     color: @cd-orange;
@@ -512,6 +513,11 @@ label {
   button.inline-select {
     display: inline;
     width: 74%;
+  }
+
+  .claim-badge-input-container {
+    margin: 35px;
+    text-align: center;
   }
 }
 
@@ -660,10 +666,6 @@ label {
 
 .cd-dojo-main {
 
-  .cd-input-row {
-    margin: 20px 0 35px;
-  }
-
   .cd-checkbox {
     margin-bottom: 0;
 
@@ -720,7 +722,6 @@ label {
 
   .form-control, .btn {
     font-size: 13px;
-    border-radius: 0;
   }
 
   select {
@@ -1048,10 +1049,6 @@ html body .cd-dashboard .cd-color-6 {
 
 .claim-badge-input {
   text-align: center;
-}
-
-.claim-badge-input-container {
-  margin: 25px;
 }
 
 .preview-badge-container {
@@ -1819,4 +1816,28 @@ span.applications-banner {
     12em 22em,
     13em 22em,
     14em 22em;
+}
+// Classes made to fix padding should eventually be moved for coresponding dierectives
+.main-content-padding {
+  padding: 0 32px;
+}
+.my-dojos {
+  .main-content-padding;
+}
+
+.dojo-users {
+  .main-content-padding;
+}
+
+.manage-event {
+  .main-content-padding;
+}
+
+.manage-event-applicants {
+  .main-content-padding;
+  padding-top: 10px;
+}
+
+.event-display {
+  .main-content-padding;
 }

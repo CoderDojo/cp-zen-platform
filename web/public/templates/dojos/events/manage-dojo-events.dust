@@ -1,8 +1,6 @@
 <span spinner-key="manage-dojo-events-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
-
 <div ng-if="isTicketingAdmin">
-  <div ncy-breadcrumb></div>
-  <div ui-view>
+  <div class="manage-event" ui-view>
     <legend>{@i18n key="Events for Dojo"/}: {{ dojo.name }}</legend>
     <div class="row">
       <div class="col-md-12 table-responsive">
@@ -41,21 +39,15 @@
             </table>
           </div>
         </div>
-        <div class="row col-lg-6 col-lg-offset-4" ng-if="events.length > 0">
-          <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage"
-                      ng-model="pagination.pageNo"
-                      class="pagination-sm"
-                      first-text="{@i18n key="First" /}"
-                      previous-text="{@i18n key="Previous" /}"
-                      next-text="{@i18n key="Next" /}"
-                      last-text="{@i18n key="Last" /}"
-                      boundary-links="true"></uib-pagination>
+        <div class="row">
+          <div class="col-md-12 text-center" ng-if="events.length > 0">
+            <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>
+          </div>
         </div>
         <div ng-if="!events || events.length < 1">
           {@i18n key="This Dojo currently has no active events"/}
         </div>
-        <span class="help-block"></span>
-        <div class="btn-group inline pull-right">
+        <div class="inline pull-right">
           <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()">{@i18n key="Notify all Members"/}</button>
           <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
         </div>
