@@ -32,8 +32,8 @@ function cdShareEvent($stateParams, cdDojoService, $state, $translate, $location
           '</button>'+
         '</li>'+
         '<li>'+
-          '<button class="btn btn-medium" ng-mousedown="setSubItemVisibility($event, \'show\')">Embed me!</button>'+
-          '<textarea type="text" read-only="read-only" ng-show="show"  class="form-control" ng-model="iframe"/> '+
+          '<button class="btn btn-medium" ng-mousedown="setSubItemVisibility($event, \'show\')"><i class="fa fa-code"></i>Embed me!</button>'+
+          '<textarea type="text" read-only="read-only" ng-show="show"  class="form-control" ng-model="iframe" ng-click="$event.stopPropagation()"></textarea> '+
           '</input>'+
         '</li>'+
       '</ul>',
@@ -81,12 +81,14 @@ function cdShareEvent($stateParams, cdDojoService, $state, $translate, $location
         }
 
         function hideItem (event, field) {
-          var watcher = $scope.watchers[field];
-          $(watcher).off('focusout');
-          delete $scope.watchers[field];
-          $timeout(function(){
-            $scope[field] = false;
-          });
+          if (event.button === 1) {
+            var watcher = $scope.watchers[field];
+            $(watcher).off('focusout');
+            delete $scope.watchers[field];
+            $timeout(function(){
+              $scope[field] = false;
+            });
+          }
         }
 
         $scope.iframe = '<iframe src="'+ $scope.event.embeddedUrl +'" width="500px" height="600px"></iframe>';
