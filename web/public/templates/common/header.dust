@@ -41,7 +41,7 @@
           {@i18n key="Community"/}
           <i class="cd-menu__dropdown-icon fa fa-chevron-down"></i>
           <ul>
-            <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
+            <li><a href="/badges">{@i18n key="Badges"/}</a></li>
             <li><a href="https://coderdojo.com/regional-bodies/">{@i18n key="Regional Bodies"/}</a></li>
             <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
           </ul>
