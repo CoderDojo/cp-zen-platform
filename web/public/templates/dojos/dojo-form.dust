@@ -16,7 +16,8 @@
                 <input type="text" ng-bind="::dojo.name" class="form-control h2" form="createDojoForm"
                   required required-message="'{@i18n key="Name is Empty"/}'" ng-model="dojo.name" name="dojoName" id="dojoName"
                   placeholder="{@i18n key="e.g. Docklands, Dublin 1 @ CHQ Building"/}" ng-change="updateLocalStorage('dojoListing','name', dojo.name)"
-                  uib-popover="{@i18n key="Please type Dojo name in English/Latin character a-Z!"/} {@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}" popover-trigger="focus">
+                  uib-popover="{@i18n key="Please type Dojo name in English/Latin character a-Z!"/} {@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}"
+                  popover-trigger="focus" popover-placement="bottom">
             </div>
             <div cd-dojo-actions is-dojo-admin="isDojoAdmin" dojo="dojo"></div>
           </div>
@@ -26,6 +27,6 @@
       <div cd-dojo-form-contact class="col-md-10 col-md-offset-1"></div>
       <div cd-dojo-form-map class="col-md-10 col-md-offset-1"></div>
       <div cd-dojo-form-status class="col-md-10 col-md-offset-1"></div>
-  </form>
-</div>
+    </form>
+  </div>
 </div>
