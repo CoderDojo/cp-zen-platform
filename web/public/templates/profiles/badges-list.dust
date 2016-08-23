@@ -1,5 +1,6 @@
-<div class="profile-section cd-color-4-underline" ng-show="initialForm()">
-  <legend>{@i18n key="Badges"/}</legend>
+<div class="profile-section" ng-show="initialForm() && badgesData.length > 0" >
+  <h3 class="cd-section-header"><a id="badges"></a><a href="#badges">{@i18n key="Badges"/}</a></h3>
+
   <button ng-show="false" ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>
   <div class="panel-body">
     <uib-tabset justified="true">
@@ -7,7 +8,6 @@
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <span class="help-block"></span>
-            <legend>{{ capitalizeFirstLetter(tag) }}</legend>
             <div class="badge-container" ng-repeat="badge in badgesData">
               <img ng-click="showBadgeInfo(tag, badge)" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
               <p class="badge-name"><b>{{ badge.name }}</b></p>
@@ -17,11 +17,14 @@
                 <p><b>{@i18n key="Name"/}:</b> {{ badgeInfo[tag].name }}</p>
                 <p><b>{@i18n key="Short Description"/}:</b> {{ badgeInfo[tag].strapline }}</p>
                 <p><b>{@i18n key="Date Awarded"/}:</b> {{ badgeInfo[tag].formattedDateAccepted }}</p>
+                <p ng-if="badgeInfo[tag].evidenceType"><b>{@i18n key="Proof"/}:</b> {{ badgeInfo[tag].evidenceType }}</p>
               </div>
             </div>
           </div>
+          <div cd-claim-badge ng-if="isEditMode"></div>
         </div>
       </uib-tab>
     </uib-tabset>
+    <div cd-claim-badge ng-if="categories.length === 0 && isEditMode"></div>
   </div>
 </div>

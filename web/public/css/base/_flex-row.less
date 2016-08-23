@@ -1,0 +1,15 @@
+/* Ripped off from http://codepen.io/bootstrapped/full/RrabNe/ */
+@media only screen and (min-width : @screen-sm-min) {
+  .flex-row.row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .flex-row.row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+  .flex-row.row:after,
+  .flex-row.row:before {
+    display: flex;
+  }
+}

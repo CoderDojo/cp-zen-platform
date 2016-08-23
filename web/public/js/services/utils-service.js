@@ -171,5 +171,13 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 
     return str.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); })
   }
 
+  utils.getCKEditorConfig = function (conf) {
+    return _.defaults(conf, {
+      language: 'en',
+      uiColor: '#FFFFFF',
+      height: '200px'
+    });
+  }
+
   return utils;
 }]);

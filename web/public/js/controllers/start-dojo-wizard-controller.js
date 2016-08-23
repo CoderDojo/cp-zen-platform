@@ -622,12 +622,9 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') +"</b></li>" +
       "</ul></p>";
 
-    $scope.editorOptions = {
-      language: 'en',
-      uiColor: '#000000',
-      height:'200px',
+    $scope.editorOptions = utilsService.getCKEditorConfig({
       initContent:initContent
-    };
+    });
 
     $scope.setPlace = function(dojo, place, form) {
       dojo.placeName = place.name;

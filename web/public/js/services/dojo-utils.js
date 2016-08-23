@@ -70,12 +70,16 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
         deferred.resolve(isCDFAdmin);
       } else {
         cdDojoService.getUsersDojos(query, function (userDojo) {
-          if(!userDojo || userDojo.length < 1){ return deferred.resolve(false); }
+          if(!userDojo || userDojo.length < 1){ return deferred.reject(); }
 
           var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
             return userPermission.name === 'dojo-admin';
           });
-          deferred.resolve(isDojoAdmin);
+          if(!_.isEmpty(isDojoAdmin) && !_.isUndefined(isDojoAdmin)){
+            deferred.resolve(true);
+          }else {
+            deferred.reject(false);
+          }
         }, function (err) {
           deferred.reject(err);
         });

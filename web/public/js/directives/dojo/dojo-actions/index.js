@@ -4,7 +4,7 @@
 function cdDojoActions(){
     return {
       scope: {
-        isDojoAdmin: '@?',
+        isDojoAdmin: '=',
         dojo: '='
       },
       restrict: 'EA',

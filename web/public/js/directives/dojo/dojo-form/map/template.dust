@@ -1,0 +1,69 @@
+<div >
+  <h3 class="cd-section-header"><a id="location"></a><a href="#location">{@i18n key="Location"/}</a></h3>
+
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group row cd-input-row">
+      <label for="dojoCountry" class="col-xs-12 col-sm-2 cd-form-label1">
+        <span>{@i18n key="Country"/}*</span>
+      </label>
+      <div class="col-xs-12 col-sm-5" ng-class="{'has-error': createDojoForm.$submitted && createDojoForm.country.$error.required}">
+        <ui-select name="country" ng-model="dojo.country" on-select="setCountry(dojo, $item)" ng-disabled="disableDojoCountryChange" required ng-change="updateLocalStorage('dojoListing','country', dojo.country); clearPlace(dojo)">
+          <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
+          <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
+            <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+          </ui-select-choices>
+        </ui-select>
+        <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && createDojoForm.country.$error.required">{@i18n key="Select a country"/}</label>
+      </div>
+      <label for="dojoPlace" class="col-xs-12 hidden-sm hidden-md hidden-lg cd-form-label1">
+        <span>{@i18n key="CityTown"/}*</span>
+      </label>
+      <div class="col-xs-12 col-sm-5" ng-class="{'has-error': createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)}">
+        <ui-select name="place" ng-disabled="!dojo.country" ng-model="dojo.place" required on-select="setPlace(dojo, $item, createDojoForm)"
+          uib-popover="{@i18n key="Please type City name in English/Latin character a-Z!"/}" popover-trigger="focus"
+          ng-change="updateLocalStorage('dojoListing','place', dojo.place)">
+          <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+          <ui-select-choices repeat="place in places" refresh="getPlaces(dojo.country.alpha2, $select)" refresh-delay="500">
+            <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+          </ui-select-choices>
+        </ui-select>
+        <label class="control-label has-error validationMessage" ng-show="createDojoForm.$submitted && (createDojoForm.place.$error.required || !dojo.place)">{@i18n key="Select a place"/}</label>
+      </div>
+    </div>
+
+    <div class="form-group row cd-input-row">
+      <label for="dojoAddress1" class="col-md-2 cd-form-label1">
+        <span>{@i18n key="Address"/}*</span>
+      </label>
+      <div class="col-md-8">
+        <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address"/}" ng-change="updateLocalStorage('dojoListing','address1', dojo.address1)"
+          uib-popover="{@i18n key="Address of the Dojo (e.g. LIT Downtown Centre)"/}" popover-trigger="focus" ></textarea>
+
+          <button ng-click="getLocationFromAddress(dojo)" class="btn btn-primary pull-right">
+            <i class="fa fa-map-marker" title="{@i18n key="Get location from address"/}"></i>
+            {@i18n key="Get location from address"/}
+          </button>
+      </div>
+    </div>
+    <div class="form-group row cd-input-row">
+      <div class="col-xs-12 col-md-offset-3 col-md-6">
+        <div class="alert alert-info text-center" role="alert">
+          <span tooltip-trigger="focus" tooltip-placement="right" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
+          {@i18n key="Please click on the map to pinpoint your location"/}
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-12 google-map">
+        <section ng-if="mapLoaded" id="map">
+          <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+          <div id="googleMap" ui-map="model.map" ui-event="{'map-click': 'addMarker($event, $params, dojo)'}" ui-options="mapOptions" class="map-canvas"></div>
+        </section>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-4 col-lg-8">
+        <input type="hidden" readonly="readonly" ng-model="dojo.coordinates" class="form-control" placeholder="{@i18n key="Click on the map to select a location"/}" name="dojoCoordinates" id="dojoLocation"  ng-change="updateLocalStorage('dojoListing','coordinates', dojo.coordinates)">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,45 +1,19 @@
 <div class="cd-dashboard events-display">
-  <a name="events"></a>
 
   <div class="my-dojos">
-    <h3 class="text-center cd-section-header">{@i18n key="Events"/}</h3>
-    <div class="row cd-event-detail">
+    <h3 class="text-center cd-section-header"><a id="events"></a><a name="events" href="#events">{@i18n key="Events"/}</a></h3>
+    <div class="row cd-event-list">
       <div class="col-md-12">
         <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."/}
         </p>
-        <div ng-hide="events.length === 0">
-          <div ng-repeat="event in events" ng-switch on="events[$index].isCollapsed" class="row cd-event" ng-click="showEventInfo($index, event.id)">
-            <div class="col-sm-7">
-              <h5 class="h3" ng-bind="::event.name"></h5>
-              <div> {@i18n key="Location"/}
-                <p ng-bind="::event.address"></p>
-                <p ng-bind="::event.city.nameWithHierarchy"></p>
-              </div>
-              <div ng-bind-html="::event.description">
-              </div>
-            </div>
 
-            <div class="col-sm-5 cd-date">
-              <div class="__content">
-                <cd-share-event share-event="event" class="pull-right cd-share-event"></cd-share-event>
-                <div ng-switch="event.type">
-                  <p ng-switch-when="recurring">
-                    <b>{@i18n key="Dates"/}</b>:
-                    <span ng-repeat="eventDate in event.formattedDates">
-                      {{ eventDate }}
-                    </span>
-                  </p>
-                  <div ng-switch-default>
-                    <div class="__date h3" ng-bind="::event.startDate | date : 'mediumDate'"></div>
-                    <div class="__date h3" ng-bind="::event.endDate | date : 'mediumTime'"></div>
-                  </div>
-                </div>
-                <div class="__link">
-                  <a ui-sref="dojo-event-details({dojoId: event.dojoId, eventId: event.id})" class="btn btn-warning btn-block">{@i18n key="Book"/}</a>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="row" ng-transclude>
+
+        </div>
+
+        <div ng-hide="events.length === 0">
+          <cd-event-list-item ng-repeat="event in events" event="event"
+            class="row flex-row cd-event-list-item"></cd-event-list-item>
         </div>
       </div>
     </div>

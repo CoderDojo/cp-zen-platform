@@ -71,7 +71,6 @@
   });
 
   gulp.task('build', ['clean', 'jshint', 'build-less', 'build-dependencies'], function () {
-
     return gulp.src(relativePath(app))
       .pipe(ngAnnotate())
       .pipe(concat('app.js'))

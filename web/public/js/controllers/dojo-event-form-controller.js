@@ -90,7 +90,7 @@
 
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -137,12 +137,10 @@
     $scope.hasAccess = true;
 
     //description editor
-    $scope.editorOptions = {
-      lanaguage: 'en',
-      readOnly: $scope.pastEvent,
-      height: '100px'
-    };
-
+    $scope.editorOptions = utilsService.getCKEditorConfig({
+      height: '100px',
+      readOnly: $scope.pastEvent
+    });
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
@@ -347,7 +345,7 @@
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
-        var isPastEvent = isEventInPast({startTime : firstDate});
+        var isPastEvent = eventUtils.isEventInPast({startTime : firstDate});
 
         _.defaults($scope.eventInfo, event);
         //TODO: when lodash will be updated, use defaultsDeep
@@ -754,7 +752,7 @@
 
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
-        $scope.pastEvent = isEventInPast(_.last(event.dates));
+        $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
 
         done(null, event);
       }, done);
@@ -810,14 +808,6 @@
       });
 
       return done();
-    }
-
-    function isEventInPast(dateObj) {
-      var now = moment.utc();
-      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
-      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
-
-      return now.isAfter(start);
     }
 
     if ($stateParams.eventId) {
@@ -880,6 +870,7 @@
       'utilsService',
       'ticketTypes',
       'currentUser',
+      'eventUtils',
       dojoEventFormCtrl
     ]);
 })();

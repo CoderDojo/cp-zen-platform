@@ -92,7 +92,11 @@
     },
     usersDojos: function(auth, cdDojoService){
       return auth.get_loggedin_user_promise().then(function (currentUser) {
-        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        if(currentUser){
+          return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
       }, failCb);
     },
     hiddenFields: function(cdUsersService){
@@ -399,13 +403,15 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          parent: 'dashboard',
-          templateUrl: '/dojos/template/events/details',
-          controller: function($scope, dojo, event, sessions, profile){
+          template: '<cd-event-detail></cd-event-detail>',
+          controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
             $scope.sessions = sessions.data;
-            $scope.profile = profile.data;
+            if (profile){
+              $scope.profile = profile.data;
+            }
+            $scope.currentUser = currentUser;
           },
           params: {
             pageTitle: 'Event details'
@@ -414,7 +420,8 @@
             profile: resolves.ownProfile,
             dojo: resolveDojo,
             sessions: resolves.sessions,
-            event: resolves.event
+            event: resolves.event,
+            currentUser: resolves.loggedInUser
           },
           ncyBreadcrumb: {
             label: '{{EventDetailsPageTitle}}'
@@ -435,7 +442,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<cd-event-detail></cd-event-detail>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -463,7 +470,7 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<div class="cd-event-list col-xs-12"><cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event"></cd-event-list-item></div>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -593,7 +600,7 @@
         .state('add-child',{
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/user-profile',
+          templateUrl: '/directives/tpl/user/cd-profile/edit',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
@@ -634,11 +641,11 @@
             showBannerMessage: null,
             referer: null
           },
-          templateUrl: '/dojos/template/user-profile'
+          templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
         .state("user-profile", {
-          url: "/profile/:userId",
-          templateUrl: '/dojos/template/user-profile',
+          url: "/profile/:userId?public",
+          templateUrl: '/directives/tpl/user/cd-profile/view',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,

@@ -1,0 +1,28 @@
+<div uib-dropdown is-open="status.isopen" ng-if="cdUA.canEdit" class="cd-user-actions hidden-xs hidden-sm" ng-if="loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild">
+  <button id="cd-dojo-action" type="button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
+    <i class="fa fa-gear"></i> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="cd-dojo-action">
+    <li role="menuitem">
+      <a ui-sref="edit-user-profile({userId: cdUA.user.userId})" ng-if="cdUA.currentState !== 'edit-user-profile'" alt="{@i18n key="Edit Profile"/}">
+        <i class="fa fa-edit"></i>
+        {@i18n key="Edit Profile"/}
+      </a>
+    </li>
+    <li role="menuitem">
+      <a ui-sref="user-profile({userId: cdUA.user.userId})" target="_blank" ng-if="cdUA.currentState !== 'user-profile'" alt="{@i18n key="Profile"/}">
+        <i class="fa fa-eye"></i>
+        {@i18n key="Profile"/}
+      </a>
+    </li>
+    <li role="menuitem">
+      <a ui-sref="user-profile({userId: cdUA.user.userId, public: true})" target="_blank" ng-if="!publicMode" alt="{@i18n key="Profile"/}">
+        <span class="fa-stack">
+          <i class="fa fa-stack-2x fa-circle-o"></i>
+          <i class="fa fa-stack-1x fa-eye"></i>
+        </span>
+        {@i18n key="Public profile"/}
+      </a>
+    </li>
+  </ul>
+</div>

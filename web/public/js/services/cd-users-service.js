@@ -60,7 +60,7 @@ function cdUsersService(cdApi, $q){
       cdApi.post('users/is-champion', win, fail || topfail);
     },
     getAvatar: function(id, win, fail){
-      cdApi.get('profiles/' + id + '/avatar', win, fail || topfail);
+      cdApi.get('profiles/' + id + '/avatar_img', win, fail || topfail);
     },
     loadChampionsForUser: function(userId, win, fail) {
       cdApi.get('users/champions-for-user/' + userId, win, fail || topfail);

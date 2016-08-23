@@ -1,0 +1,50 @@
+/* Another rip off in the code (8) http://csshexagon.com/ */
+@cd-claim-badge-width: 120px;
+@cd-claim-badge-color: @cd-light-blue;
+@cd-claim-badge-color-hover: @cd-blue;
+.cd-claim-badge {
+  position: relative;
+  display: inline-block;
+  width: @cd-claim-badge-width;
+  height: (@cd-claim-badge-width * 0.6);
+  background-color: @cd-claim-badge-color;
+  margin: (@cd-claim-badge-width / 3) 0;
+  cursor: pointer;
+  &:hover{
+    background-color: @cd-claim-badge-color-hover;
+    & > div {
+      font-weight: 600;
+    }
+    &:before {
+      border-bottom-color: @cd-claim-badge-color-hover;
+    }
+    &:after{
+      border-top-color: @cd-claim-badge-color-hover;
+    }
+  }
+  & > div {
+    text-align: center;
+    color: @cd-white;
+    margin-top: (@cd-claim-badge-width / 4);
+  }
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: (@cd-claim-badge-width / 2) solid transparent;
+    border-right: (@cd-claim-badge-width / 2) solid transparent;
+  }
+
+  &:before {
+    bottom: 100%;
+    border-bottom: (@cd-claim-badge-width / 3) solid @cd-claim-badge-color;
+  }
+
+  &:after {
+    top: 100%;
+    width: 0;
+    left: 0;
+    border-top: (@cd-claim-badge-width / 3) solid @cd-claim-badge-color;
+  }
+}
