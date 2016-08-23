@@ -28,6 +28,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   var user = currentUser.data;
   $scope.currentUser = user;
+  $scope.isCDFAdmin = _.includes($scope.currentUser.roles, 'cdf-admin');
   //Show 404 if current user has no permission to view this page
   cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0, dojoId: dojoId}, function (usersDojos) {
     var userDojo = usersDojos[0];
@@ -38,7 +39,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       });
     }
 
-    if(!userDojo || !isDojoAdmin) return $state.go('error-404-no-headers');
+    if(!$scope.isCDFAdmin && (!userDojo || !isDojoAdmin) ) return $state.go('error-404-no-headers');
     $scope.loadPage(true);
   });
 
@@ -85,15 +86,19 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
     function getInviteUserTypes(done) {
       cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId, deleted: 0}, function (usersDojos) {
-        if(!usersDojos || usersDojos.length < 1){
+        if(!$scope.isCDFAdmin && (!usersDojos || usersDojos.length < 1)){
           $state.go('my-dojos');
           return done();
         }
-        var userDojo = usersDojos[0];
-        user.userTypes = userDojo.userTypes;
+        var mainUserType = void 0;
         var inviteUserTypes = angular.copy(initUserTypes.data);
-        var mainUserType = permissionService.getUserType(user.userTypes);
-
+        if (usersDojos.length){
+          var userDojo = usersDojos[0];
+          user.userTypes = userDojo.userTypes;
+          mainUserType = permissionService.getUserType(user.userTypes);
+        }else if($scope.isCDFAdmin){
+          mainUserType = 'champion';
+        }
         //TODO: permissionService should handle that check when every user capabilities will be defined
         var allowedUserTypes = permissionService.getAllowedUserTypes(mainUserType, mainUserType === 'attendee-u13');
         $scope.userTypes = _.filter(inviteUserTypes, function(inviteUserType){
@@ -298,12 +303,14 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         var isDojoAdmin;
         cdDojoService.getUsersDojos(query, function (response) {
           var userDojo = response[0];
-          isChampion   = _.includes(userDojo.userTypes, 'champion');
-          isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
-                          return userPermission.name === 'dojo-admin';
-                        });
-          if(isDojoAdmin) $scope.isDojoAdmin = true;
-          if(isChampion && isDojoAdmin) return resolve(true);
+          if(userDojo){
+            isChampion   = _.includes(userDojo.userTypes, 'champion');
+            isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
+              return userPermission.name === 'dojo-admin';
+            });
+            if(isDojoAdmin) $scope.isDojoAdmin = true;
+          }
+          if(isChampion && isDojoAdmin || $scope.isCDFAdmin) return resolve(true);
           return resolve(false);
         }, function (err) {
           alertService.showError($translate.instant('Error loading user dojo entity') + ' <br /> ' +
