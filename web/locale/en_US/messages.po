@@ -21,6 +21,9 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
+msgid "Loading ..."
+msgid "Loading ..."
+
 msgid "Register a Dojo"
 msgstr "Register a Dojo"
 
