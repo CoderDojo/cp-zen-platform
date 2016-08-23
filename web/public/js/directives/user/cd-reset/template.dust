@@ -4,10 +4,10 @@
     <div id="main">
       <form class="login-form" name="forgotPasswordForm" role="form">
         <div class="cd-title">{@i18n key="Request Password Reset"/}</div>
-        <div class="row cd-input-row">
+        <div class="row">
           <div class="form-group col-xs-12">
             <div class="row">
-              <div class="col-sm-offset-3 col-sm-6">
+              <div class="col-sm-offset-2 col-sm-8">
                 <input type="email" class="form-control" required ng-model="forgot.email" placeholder="{@i18n key="Email"/}">
               </div>
             </div>

@@ -176,7 +176,7 @@
             pageTitle: 'Logout'
           }
         })
-				.state("reset", {
+        .state("reset", {
           url: "/reset?referer",
           template: '<cd-reset></cd-reset>',
           controller: 'login',
