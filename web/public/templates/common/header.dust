@@ -15,16 +15,16 @@
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
       <div class="cd-menu__profile">
-        <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+        <div class="cd-menu__profile-pic"></div>
         <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
         <i class="cd-menu__sub-menu-icon fa fa-chevron-down"></i>
         <ul class="cd-menu__profile-menu">
           <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
           <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
           <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-          <li><a class="cd-menu__cdf-admin-link" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
-          <li><a class="cd-menu__cdf-admin-link" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
-          <li><a class="cd-menu__cdf-admin-link" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
           <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
         </ul>
       </div>
@@ -77,27 +77,27 @@
       <ul class="cd-menu__content-block">
         <li class="cd-menu__profile">
           <span>
-            <img class="cd-menu__profile-pic" src="http://placekitten.com/32/32" />
+            <div class="cd-menu__profile-pic"></div>
             <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
             <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
           </span>
           <div class="cd-menu__sliding-menu cd-menu__sliding-menu-secondary" data-toggle="closed">
-            <div class="cd-menu__close-row" style="background:white;">
+            <div class="cd-menu__close-row cd-bg-alt-white">
               <span class="cd-menu__back-button fa fa-chevron-left fa-lg"></span>
               <span class="cd-menu__close-button">&times;</span>
             </div>
             <div class="cd-menu__content">
               <div class="cd-menu__content-block cd-menu__profile-header">
-                <img class="cd-menu__profile-pic" src="http://placekitten.com/128/128" />
+                <div class="cd-menu__profile-pic"></div>
                 <span class="cd-menu__profile-name"></span>
               </div>
               <ul class="cd-menu__content-block cd-menu__profile-menu">
                 <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
                 <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
                 <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-                <li><a class="cd-menu__cdf-admin-link" href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
-                <li><a class="cd-menu__cdf-admin-link" href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
-                <li><a class="cd-menu__cdf-admin-link" href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
                 <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
               </ul>
             </div>

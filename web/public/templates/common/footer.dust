@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-3">
       <p>{@i18n key="Maintained by"/}</p>
-      <img class="cd-footer__foundation-logo" src="http://localhost/wp-content/themes/cd-theme/static/img/coderdojo/coderdojo-foundation.svg" />
+      <img class="cd-footer__foundation-logo" src="/components/cd-common/dist/coderdojo-foundation.svg" />
       </svg>
     </div>
     <div class="col-sm-3">
@@ -14,9 +14,9 @@
     </div>
     <div class="col-sm-3"></div>
     <div class="col-sm-3">
-      <p><a href="/charter">Charter</a></p>
-      <p><a href="/privacy-statement">Privacy Statement</a></p>
-      <p><a href="http://github.coderdojo.com">Contribute</a></p>
+      <p><a href="/charter">{@i18n key="Charter"/}</a></p>
+      <p><a href="/privacy-statement">{@i18n key="Privacy Statement"/}</a></p>
+      <p><a href="http://github.coderdojo.com">{@i18n key="Contribute"/}</a></p>
       <p class="cd-footer__social-icons">
         <a href="https://twitter.com/coderdojo" target="_blank">
           <span class="fa-stack fa-lg">
@@ -43,6 +43,15 @@
           </span>
         </a>
       </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 col-sm-6">
+      <span class="fa fa-language fa-2x language-picker-icon"></span>{>"common/components/cdgm-lang-bar" /}
+    </div>
+    <div class="col-md-8 col-sm-6">
+      <a href="https://crowdin.com/project/zen-community-platform" class="translate-link">{@i18n key="Help us translate"/}</a>
     </div>
   </div>
 </footer>
