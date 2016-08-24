@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-xs-12">
           <div cd-banner-background class="row"  ng-enter="noop()">
-            <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" alt="{{ dojo.name }}"
+            <div cd-rounded-image src="{{ dojoImageUrl }}" src-id="{{ dojo.id }}" alt="{{ dojo.name }}"
             src-fallback="/img/avatars/dojo-default-logo.png"
             class="col-md-3 hidden-xs" edit="true" upload="upload"></div>
             <div class="form-inline cd-dojo-detail__dojo-name cd-dojo-form__dojo-name">

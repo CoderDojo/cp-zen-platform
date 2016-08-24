@@ -13,7 +13,7 @@
               <p>{@i18n key="To get started, please fill in the following registration form."/}</p>
               <cd-register-profile ng-if="wizardCurrentStep === 'Complete Profile'"></cd-register-profile>
               <div class="row">
-                <button class="col-xs-12 col-sm-6 col-lg-6 btn btn-primary cd-wizard-submit" ng-click="submit()">{@i18n key="Register"/}</button>
+                <button class="col-xs-12 col-sm-offset-6 col-sm-3 btn btn-primary cd-wizard-submit" ng-click="submit()">{@i18n key="Register"/}</button>
               </div>
           </wz-step>
           <wz-step class="start-dojo-wizard-step" canexit="championApplicationSubmitted" canenter="preventEnterChampionRegistration" wz-title='Champion Registration'>

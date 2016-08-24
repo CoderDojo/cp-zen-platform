@@ -39,7 +39,7 @@
         <textarea class="form-control" rows="5" form="createDojoForm" required required-message="'{@i18n key="Address is Empty"/}'" ng-model="dojo.address1" name="dojoAddress1" id="dojoAddress1" placeholder="{@i18n key="Enter street level address"/}" ng-change="updateLocalStorage('dojoListing','address1', dojo.address1)"
           uib-popover="{@i18n key="Address of the Dojo (e.g. LIT Downtown Centre)"/}" popover-trigger="focus" ></textarea>
 
-          <button ng-click="getLocationFromAddress(dojo)" class="btn btn-primary pull-right">
+          <button ng-click="getLocationFromAddress(dojo)" class="btn btn-primary pull-right" type="button">
             <i class="fa fa-map-marker" title="{@i18n key="Get location from address"/}"></i>
             {@i18n key="Get location from address"/}
           </button>
