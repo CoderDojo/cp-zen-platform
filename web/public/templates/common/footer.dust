@@ -36,7 +36,13 @@
             <i class="fa fa-google-plus fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
           </span>
         </a>
-        <a href="#">
+        <a href="https://www.linkedin.com/company/coderdojo" target="_blank">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
+            <i class="fa fa-linkedin fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
+          </span>
+        </a>
+        <a href="https://coderdojo.com/contact/">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
             <i class="fa fa-envelope fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
