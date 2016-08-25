@@ -6,17 +6,14 @@
     <a title="LinkedIn" ng-if="cdSN.linkedin" ng-href="{{ cdSN.linkedin}}"><div class="fa fa-linkedin"></div></a>
     <a title="Twitter" ng-if="cdSN.twitter" ng-href="{{ cdSN.twitter}}"><div class="fa fa-twitter"></div></a>
     <a title="Facebook" ng-if="cdSN.facebook" ng-href="{{ cdSN.facebook}}"><div class="fa fa-facebook"></div></a>
-    <div class="cd-social-network__slider-btn pull-right">
+    <div ng-if="cdSN.email" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn--visible': cdSN.emailVisible}">
       <button title="email" ng-if="cdSN.email" ng-click="cdSN.expand($event)"
-        class="btn btn-sm"><div class="fa fa-envelope"></div></button>
-      <span ng-bind="::cdSN.email" class="cd-social-network__slider-btn__data"
-        ng-class="{'cd-social-network__slider-btn__data--visible': cdSN.emailVisible}"></span>
+        class="fa fa-envelope"></button>
+      <span ng-bind="::cdSN.email" class="cd-social-network__slider-btn__data"></span>
     </div>
-    <div class="cd-social-network__slider-btn pull-right">
-      <button title="phone" ng-if="cdSN.phone" ng-click="cdSN.expand($event)"
-        class="btn btn-sm"><div class="fa fa-phone"></div></button>
-      <span ng-bind="::cdSN.phone" class="cd-social-network__slider-btn__data"
-        ng-class="{'cd-social-network__slider-btn__data--visible': cdSN.phoneVisible}"></span>
+    <div ng-if="cdSN.phone" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn__data--visible': cdSN.phoneVisible}">
+      <button title="phone" ng-if="cdSN.phone" ng-click="cdSN.expand($event)" class="fa fa-phone"></button>
+      <span ng-bind="::cdSN.phone" class="cd-social-network__slider-btn__data"></span>
     </div>
   </div>
 </div>
