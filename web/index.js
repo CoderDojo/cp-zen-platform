@@ -30,7 +30,7 @@ require('./lib/dust-loadjs.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
-var host = process.env.HOSTNAME || '127.0.0.1:8000';
+var host = process.env.HOSTNAME || '127.0.0.1';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
 
@@ -50,7 +50,7 @@ server.connection({
   // would be sent for 200 when a 304 (Not Modified) is sent.
   routes: {
     cache: { statuses: [200,304] },
-    cors: { origin: [ hostWithPort, 'https://changex.org', 'https://coderdojo.com' ], credentials: true }
+    cors: { origin: [ hostWithPort, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'], credentials: true }
   }
 });
 
@@ -75,7 +75,7 @@ server.register(vision, function (err) {
   checkHapiPluginError('vision')(err);
   server.views({
     engines: { dust: require('hapi-dust') },
-    path: path.join(__dirname, './public/templates'),
+    path: [path.join(__dirname, './public/templates'), path.join(__dirname, './public/js/')] ,
     partialsPath: path.join(__dirname, './public/templates')
   });
 });
@@ -189,36 +189,22 @@ server.register(scooter, function (err) {
 
   server.register({ register: blankie, options: {
     childSrc: "'none'",
-    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://s3.amazonaws.com/",
+    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: *",
+    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",
     reflectedXss: 'block',
-    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://www.google-analytics.com http://www.googletagmanager.com https://www.googletagmanager.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com http://cdn.optimizely.com/js/3847550948.js http://www.googleadservices.com/pagead/conversion.js",
+    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://www.google-analytics.com http://www.googletagmanager.com https://www.googletagmanager.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com http://cdn.optimizely.com/js/3847550948.js http://www.googleadservices.com/pagead/conversion.js ",
     styleSrc: "'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com"
   }}, checkHapiPluginError('blankie'));
 });
 
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
-
-
-if (process.env.UIDEBUG === 'true') {
-  // Serve CSS files.
-  server.register({
-    register: require('hapi-less'),
-    options: {
-      home: path.join(__dirname, './public/css'),
-      route: '/dist/css/{filename*}',
-      config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
-      less: { compress: true }
-    }
-  }, checkHapiPluginError('hapi-less'));
-}
 
 if (process.env.HAPI_DEBUG === 'true') {
   var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';

@@ -1,0 +1,89 @@
+<div>
+  <div class="row cd-input-row" ng-enter="noop()">
+    <h3 class="cd-section-header"><a id="status"></a><a href="#status">{@i18n key="Status Messages"/}</a></h3>
+    <div class="form-group">
+      <label class="col-lg-4 cd-form-label1 with-checkbox">
+        <span>{@i18n key="Need Mentors"/}</span>
+      </label>
+      <div class="col-lg-8">
+        <div class="checkbox cd-checkbox checkbox-primary">
+          <input type="checkbox"
+                ng-model="dojo.needMentors"
+                id="needMentorsCheckbox"
+                ng-true-value="1"
+                ng-false-value="0"
+                ng-change="updateLocalStorage('dojoListing','needMentors', dojo.needMentors)"
+              >
+          <label class="cd-checkbox-label1" for="needMentorsCheckbox"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label class="col-lg-4 cd-form-label1">{@i18n key="Current Stage"/}</label>
+      <div class="col-lg-8">
+        <div ng-repeat="dojoStage in dojoStages" class="radio radio-primary">
+          <input type="radio" name="currentStage" ng-model="dojo.stage" id="{{ dojoStage.value + 'Radio'}}" value="{{ dojoStage.value }}"  ng-change="updateLocalStorage('dojoListing','stage', dojo.stage)">
+          <label for="{{ dojoStage.value + 'Radio' }}" class="awesome-label">{{ dojoStage.label }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label for="dojoName" class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Private"/}</label>
+      <div class="col-lg-8">
+        <div class="checkbox cd-checkbox checkbox-primary"
+          popover-trigger="focus"
+          uib-popover=" {@i18n key="Please only select if your Dojo will be accessible exclusively to attendees from within your organisation, e.g. schools/universities/children of organisation's employees/etc."/}"
+          >
+          <input type="checkbox"
+                ng-model="dojo.private"
+                id="privateCheckbox"
+                ng-true-value="1"
+                ng-false-value="0"
+                ng-change="updateLocalStorage('dojoListing','private', dojo.private)"
+                >
+          <label class="cd-checkbox-label1" for="privateCheckbox"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row cd-input-row" ng-show="isCDFAdmin">
+    <div class="form-group">
+        <label class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Tao verified"/}</label>
+        <div class="col-lg-8">
+          <div class="checkbox cd-checkbox checkbox-primary">
+            <input type="checkbox"
+                  ng-model="dojo.taoVerified"
+                  id="taoVerifiedCheckbox"
+                  ng-true-value="1"
+                  ng-false-value="0"
+                  ng-change="updateLocalStorage('dojoListing','taoVerified', dojo.taoVerified)"
+                >
+                <label class="cd-checkbox-label1" for="taoVerified"></label>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label for="dojoSupporterImage" class="col-lg-4 with-info-btn cd-form-label1">
+        <span>{@i18n key="Supporters Image URL"/}</span>
+      </label>
+      <div class="col-lg-8">
+        <input type="url" class="form-control" form="createDojoForm" ng-model="dojo.supporterImage" name="dojoSupporterImage" id="dojoSupporterImage" placeholder="{@i18n key="Enter supporters image URL"/}"
+         ng-change="updateLocalStorage('dojoListing','supporterImage', dojo.supporterImage)"
+         uib-popover="{@i18n key="If you have a Dojo supporter(s), if they are providing space/wifi/pizza and would like to show it, enter URL to a supporter image here, please make sure it's 570px in width"/}"
+         popover-trigger="focus">
+        <div class="cd-tooltip">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

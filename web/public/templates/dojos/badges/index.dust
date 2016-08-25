@@ -32,17 +32,17 @@
     </uib-tabset>
   </div>
   <div class="row">
-    <div ng-show="user" class="input-group claim-badge-input-container">
-      <div class="col-lg-6 col-lg-offset-3">
+    <div ng-show="user" class="claim-badge-input-container">
+      <div class="col-md-6 col-md-offset-3">
         {@i18n key="If you have already received a badge, please enter your Claim Code below!"/}
-        <form id="previewBadgeForm" novalidate angular-validator angular-validator-submit="previewBadge(badgeClaimNumber)" name="previewBadgeForm">
+        <form class="input-group" id="previewBadgeForm" novalidate angular-validator angular-validator-submit="previewBadge(badgeClaimNumber)" name="previewBadgeForm">
           <span class="input-group-btn">
             <input type="text" required class="claim-badge-input form-control" ng-model="badgeClaimNumber" placeholder="{@i18n key="Enter Badge Claim Number"/}" name="badgeClaimNumber" id="badgeClaimNumber">
             <button class="btn btn-success" type="submit">{@i18n key="Go"/}</button>
           </span>
         </form>
         <div class="row">
-          <div class="col-lg-8 col-lg-offset-2 margin-top-25" ng-slide-down="showBadgePreview" duration="0.8">
+          <div class="col-md-8 col-md-offset-2 margin-top-25" ng-slide-down="showBadgePreview" duration="0.8">
             <div class="preview-badge-container">
               <img ng-src="{{ previewBadgeData.imageUrl }}" class="preview-badge-thumbnail">
               <p class="preview-badge-name"><b>{{ previewBadgeData.name }}</b></p>

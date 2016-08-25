@@ -1,0 +1,14 @@
+<div class="cd-join-dojo">
+  <div ng-if="!dojoMember && userMemberCheckComplete" class="cd-join-dojo__join-dojo">
+    <button class="btn btn-primary" ng-hide="isInviteExisting() || dojo.private" type="button" cd-chose-role>{@i18n key="Join Dojo"/}</button>
+    <div class="col-lg-12" ng-show="isInviteExisting()">
+      <span>{@i18n key="Request to join sent!"/}</span>
+    </div>
+  </div>
+  <div ng-if="canLeave()" class="cd-join-dojo__leave-dojo">
+    <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
+  </div>
+  <div ng-if="loggedOut" class="cd-join-dojo__join-dojo">
+    <button class="btn btn-primary" ui-sref="register-account.user">{@i18n key="Join Dojo"/}</button>
+  </div>
+</div>

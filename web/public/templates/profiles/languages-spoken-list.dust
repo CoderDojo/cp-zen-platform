@@ -1,8 +1,8 @@
-<div class="profile-section">
-  <legend class="legend-color-3-border">{@i18n key="Languages Spoken"/}</legend>
+<div class="profile-section cd-language-spoken">
+  <h3>{@i18n key="Languages Spoken"/}</h3>
   <div>
     <ul ng-repeat="languageSpoken in profile.widget.languagesSpoken">
-      <li>{{ languageSpoken }}</li>      
+      <li>{{ languageSpoken }}</li>
     </ul>
   </div>
 </div>

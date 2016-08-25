@@ -1,21 +1,6 @@
-<div ng-if="!editMode && !publicChampion">
-<div class="alert alert-info" ng-if="parentProfile && profile.ownProfileFlag">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
-    <a ng-click="publicProfile()">Click to view your public profile</a>
-  </div>
-  <div class="alert alert-info" ng-if="!parentProfile && (profile.ownProfileFlag  || profile.myChild)">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
-    <a ng-click="publicProfile()">Click to view your public profile</a>
-  </div>
-</div>
-<div ng-if="editMode && !publicChampion">
-  <div class="alert alert-info" ng-if="parentProfile" ng-show="initialForm()">
-    {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only."/}
-  </div>
-  <div class="alert alert-info" ng-if="!parentProfile" ng-show="initialForm()">
-    {@i18n key="Not all information entered on your profile is viewable. You can choose to hide certain information by ticking the hide buttons at the bottom of the page."/}
-  </div>
-  <legend class="legend-color-1-border">{@i18n key="Your Details"/}</legend>
+
+<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
+  <h3 class="cd-section-header"><a id="details"></a><a href="#details">{@i18n key="Your Details"/}</a></h3>
   <div class="panel-body">
     <div>
       <div ng-if="!profile.ownProfileFlag && !profile.myChild">
@@ -23,7 +8,6 @@
         <p ng-if="profile.alias">{@i18n key="Alias"/}: {{ profile.alias }}</p>
         <p ng-if="profile.notes">{{ profile.notes }}</p>
       </div>
-      <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild || parentProfile">
 
         <div class="form-group" ng-enter="noop()">
           <label for="fullname" class="col-sm-4 control-label">{@i18n key="Name"/}* </label>
@@ -85,7 +69,12 @@
             <textarea rows="5" name="address"  ng-required="hasAccess(profile.userTypes, ['champion'])" required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
           </div>
         </div>
+      </div>
+    </div>
 
+    <h3 class="cd-section-header"><a id="contact"></a><a  href="#contact">{@i18n key="Contact"/}</a></h3>
+    <div class="panel-body">
+      <div>
         <div class="form-group" ng-enter="noop()">
           <label for="email" class="col-sm-4 control-label">{@i18n key="Email"/}<span ng-if="isEmailRequired()">*</span></label>
           <div class="col-sm-8">
@@ -113,11 +102,16 @@
             <input type="text" class="form-control" id="twitter" placeholder="{@i18n key="e.g. twitter.com/@CoderDojo"/}" ng-model="profile.twitter">
           </div>
         </div>
+      </div>
+    </div>
 
+    <h3 class="cd-section-header"><a id="about"></a><a href="#about">{@i18n key="About you"/}</a></h3>
+    <div class="panel-body">
+      <div>
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
-          <label for="notes" class="col-sm-4 control-label">{@i18n key="Notes"/} </label>
+          <label for="notes" class="col-sm-4 control-label">{@i18n key="Bio"/} </label>
           <div class="col-sm-8">
-            <textarea class="form-control"  ng-model="profile.notes" placeholder="{@i18n key="Notes"/}" rows="3"></textarea>
+            <textarea class="form-control"  ng-model="profile.notes" placeholder="{@i18n key="Bio"/}" rows="3"></textarea>
           </div>
         </div>
 
@@ -180,7 +174,7 @@
           </div>
         </div>
 
-        <legend ng-if="abilityToAddChildren()" ng-show="afterForm()" class="legend-color-1-border">{@i18n key="Got a child? Add them below"/}</legend>
+        <h4 ng-if="abilityToAddChildren()" ng-show="afterForm()" >{@i18n key="Got a child? Add them below"/}</h4>
         <div ng-show="afterForm()">
           <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()" ng-show="profile.children.length > 0">
             <span class="icon-group">Remove child</span>
@@ -282,7 +276,6 @@
 
         <br>
         <button type="submit" class="btn btn-primary pull-right" ng-click="scrollToInvalid(generalInfoForm)">{@i18n key="Save"/}</button>
-      </form>
     </div>
   </div>
-</div>
+</form>

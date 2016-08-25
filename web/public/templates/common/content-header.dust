@@ -26,7 +26,7 @@
           {@i18n key="Find a Dojo"/}</span></a></li>
         <li><a ng-click="goTo('login')" ><span ng-class="{'cd-active-tab': isSelected('login')}" class="cd-header-button cd-color-2">
           {@i18n key="Login"/}</span></a></li>
-        <li><a ng-click="goTo('register-account')"><span ng-class="{'cd-active-tab': isSelected('register')}" class="cd-header-button cd-color-3">
+        <li><a ng-click="goTo('register-account.user')"><span ng-class="{'cd-active-tab': isSelected('register')}" class="cd-header-button cd-color-3">
           {@i18n key="Register"/}</span></a></li>
         <li><a data-toggle="dropdown"><span class="cd-header-button cd-color-4">
           {@i18n key="Forum"/}</span>

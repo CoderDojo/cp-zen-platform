@@ -1,0 +1,52 @@
+<div>
+  <h3 class="cd-section-header"><a id="activity"></a><a href="#activity" >{@i18n key="Activity"/}</a></h3>
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label for="dojoNotes" class="col-lg-4 cd-form-label1">{@i18n key="Notes"/}</label>
+      <div class="col-lg-8">
+        <textarea ng-if="editorOptions" ckeditor="editorOptions" ng-model="dojo.notes" id="dojoNotes" class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label for="dojoTimes" class="col-lg-4 cd-form-label1">
+        <span>{@i18n key="Times"/}*</span>
+      </label>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.time" name="dojoTimes" id="dojoTimes"
+        uib-popover="{@i18n key="State whether its every week or on a certain day (Eg. 'Every Friday, 5.30pm - 8pm' or 'Saturday 25th, 12pm - 3pm')"/}"
+        popover-trigger="focus"
+        required required-message="'{@i18n key="Times is Empty"/}'" placeholder="{@i18n key="e.g. Saturdays, monthly, 9-11am"/}" ng-change="updateLocalStorage('dojoListing','time', dojo.time)">
+      </div>
+    </div>
+  </div>
+  <div class="row cd-input-row" ng-enter="noop()">
+    <div class="form-group">
+      <label for="attendees" class="col-lg-4 cd-form-label1">
+        <span>{@i18n key="Expected Attendees"/}</span>
+      </label>
+      <div class="col-lg-8">
+        <input type="number" class="form-control" form="createDojoForm" ng-model="dojo.expectedAttendees" name="expectedAttendees" id="expectedAttendees"
+          placeholder="{@i18n key="e.g. 10"/}" ng-change="updateLocalStorage('dojoListing','expectedAttendees', dojo.expectedAttendees)"
+          uib-popover="{@i18n key="Please fill out the amount of expected attendees you think you will have attending your Dojo per session"/}" popover-trigger="focus">
+      </div>
+    </div>
+  </div>
+  <div class="row cd-input-row" ng-show="isCDFAdmin">
+    <div class="form-group">
+      <label for="founder" class="col-lg-4 cd-form-label1">{@i18n key="Founder"/}</label>
+      <div class="col-lg-8">
+        <input name="founder" class="form-control col-lg-6" disabled type="text" ng-model="founder.name"><span ng-click="toggleUserSelect($event)"><a>{@i18n key="Edit"/}</a></span>
+        <ui-select ng-hide="hideUserSelect"  ng-model="founder" ng-disabled="false" on-select="setFounder($item)">
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Search by user email"/}">{{ $select.selected.email  }}</ui-select-match>
+          <ui-select-choices repeat="user in users"
+              refresh="getUsersByEmails($select.search)"
+              refresh-delay="500">
+            <span ng-bind-html="user.email | highlight: $select.search"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+  </div>
+</div>

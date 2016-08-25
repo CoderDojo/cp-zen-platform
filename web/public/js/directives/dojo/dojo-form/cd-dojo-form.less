@@ -1,0 +1,69 @@
+.cd-dojo-form {
+  &__dojo-name {
+    input.form-control {
+      margin-left: 1em;
+      width: 80%;
+    }
+  }
+  ng-include {
+    &.ng-enter.ng-enter-active,
+    &.ng-move.ng-move-active {
+      opacity: 0;
+      animation: 0.5s enter_animation;
+    }
+  }
+  @keyframes enter_animation {
+    from { opacity:0; }
+    to { opacity:1; }
+  }
+}
+
+.cd-create-dojo-container {
+  padding: 0;
+  background-color: @cd-white;
+
+  .pre-game-warning {
+    background-color: #FBF9E4;
+    width: 550px;
+    padding: 10px;
+    border: 1px solid #FBEED5;
+    border-radius: 5px;
+    margin-top: 15px;
+
+    span {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    p {
+      padding-top: 0;
+      color: #C09853;
+    }
+  }
+
+  .setup-dojo-icons {
+    position: relative;
+    display: inline-block;
+    transform: translateY(25%);
+
+    .tooltip {
+        .tooltip-inner {
+          width: 30em;
+        }
+    }
+
+    .setup-dojo-info-btn {
+      font-size: 2em;
+      margin-left: 10px;
+      vertical-align: 6%;
+    }
+
+    .setup-dojo-tao-btn {
+      background: url("../../img/cdtao.png") no-repeat right center;
+      margin-left: 10px;
+      width: 51px;
+      height: 24px;
+      display: inline-block;
+    }
+  }
+}

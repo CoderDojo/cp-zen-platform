@@ -59,5 +59,6 @@
   "./web/public/components/angular-socialshare/lib/angular-socialshare.js",
   "./web/public/components/ngGeolocation/ngGeolocation.min.js",
   "./web/public/components/dustjs-linkedin/dist/dust-core.min.js",
-  "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js"
+  "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js",
+  "./web/public/components/cd-common/dist/cd-common.min.js"
 ]

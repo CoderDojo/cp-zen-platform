@@ -1,0 +1,45 @@
+.cd-profile{
+  background-color: @cd-white;
+  @media (min-width: @screen-xs-max){
+    &__username {
+      position: absolute;
+      bottom: 30%;
+      left: 30%;
+    }
+  }
+  &__contact {
+    .sidebar-contact()
+  }
+  &__username, &__alias > a {
+    color: @cd-white;
+  }
+  .cd-programming-languages {
+    li {
+      margin-bottom: 1em;
+    }
+  }
+  .cd-banner-background__inner {
+    .cd-social-network {
+      width: inherit;
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      padding: 0;
+      b {
+        visibility: hidden;
+      }
+      a {
+        display: block;
+        background-color: @cd-white;
+        padding: 0.5em;
+        margin-bottom: 0.2em;
+        .fa {
+          margin-left: 0.5em;
+        }
+      }
+    }
+  }
+  .profile-section {
+    padding-bottom: 2em;
+  }
+}

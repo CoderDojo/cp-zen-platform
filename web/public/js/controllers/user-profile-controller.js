@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout) {
+  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils) {
 
   $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
   if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
@@ -27,6 +27,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.editMode = false;
   $scope.publicMode = false;
   $scope.publicChampion = false;
+  $scope.loggedInUserIsMemberOfDojoChampion = false;
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
@@ -58,7 +59,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.upload = function (file) {
     if ($scope.profile.id && file) {
-      Upload.upload({
+      return Upload.upload({
         url: '/api/2.0/profiles/change-avatar',
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -68,19 +69,15 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       }).progress(function (evt) {
       }).success(function (data, status, headers, config) {
         if(data.ok === false) return alertService.showError($translate.instant(data.why));
-        cdUsersService.getAvatar($scope.profile.id, function (response) {
-          $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-        })
       }).error(function (data, status, headers, config) {
         alertService.showError($translate.instant('There was an error uploading your profile picture.'));
+      })
+      .then(function(){
+        return '/api/2.0/profiles/' + $scope.profile.id + '/avatar_img';
       });
     }
   };
 
-  $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
-  $scope.badgeInfo = {};
-  $scope.badgeInfoIsCollapsed = {};
-  var lastClicked = {};
 
   function getHiddenFields(hiddenFields, userTypes){
     var retHiddenFields = [];
@@ -96,13 +93,18 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     return retHiddenFields;
   }
 
+  $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
+  $scope.badgeInfo = {};
+  $scope.badgeInfoIsCollapsed = {};
+  var lastClicked = {};
   $scope.hasAccess = utils.hasAccess;
-
+  // $scope.avatar = cdUsersService.getAvatar.bind(profile.id);
   if(profile.data.dob) profile.data.formattedDateOfBirth = moment(profile.data.dob).format('DD MMMM YYYY');
   $scope.highestUserType = getHighestUserType(profile.data.userTypes);
   var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
     return initUserType.name === $scope.highestUserType;
   });
+  $scope.defaultAvatar = userUtils.defaultAvatar($scope.highestUserType);
 
   if(userTypeFound) {
     switch(userTypeFound.title) {
@@ -151,12 +153,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
-
-  cdUsersService.getAvatar($scope.profile.id, function(response){
-    if(!_.isEmpty(response)) {
-      $scope.profile.avatar = 'data:' + response.imageInfo.type + ';base64,' + response.imageData;
-    }
-  });
+  $scope.canEdit = $scope.profile.ownProfileFlag || $scope.profile.myChild;
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
@@ -224,6 +221,14 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }, function (err) {
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
+
+    cdUsersService.loadDojoAdminsForUserPromise(loggedInUser.data.id).then(
+      function(champions){
+        $scope.loggedInUserIsMemberOfDojoChampion = !!(_.find(champions, function (championForUser) {
+          return championForUser.id === profileUserId;
+        }));
+      }
+    );
   }
 
 
@@ -487,6 +492,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $scope.publicChampion = !$scope.publicChampion;
     }
   }
+  if ($state.params.public) {
+    $scope.publicProfile();
+  }
 
   $scope.viewDojo = function(dojo) {
     var urlSlugArray = dojo.urlSlug.split('/');
@@ -529,6 +537,29 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         return false;
     }
   }
+
+  $scope.areChildrenVisible = function () {
+    if($state.current.name === 'add-child') return true;
+    var highestUserType = getHighestUserType(profile.data.userTypes);
+    switch (highestUserType) {
+      case 'champion':
+      case 'mentor':
+      case 'parent-guardian':
+        if($scope.profile.ownProfileFlag) return true;
+        if(loggedInUserIsDojoAdmin()) return true;
+        if(loggedInUserIsChild()) return true;
+        return false; //Always private
+      case 'attendee-o13':
+        if(loggedInUserIsParent()) return true;
+        return false;
+      case 'attendee-u13':
+        if(loggedInUserIsParent()) return true;
+        return false; //Always private
+      default:
+        return false;
+    }
+  }
+
 
   function loggedInUserIsParent() {
     if(!loggedInUser.data) return false;
@@ -711,4 +742,4 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', 'userUtils', cdUserProfileCtrl]);

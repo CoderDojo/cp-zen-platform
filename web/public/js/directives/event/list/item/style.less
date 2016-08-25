@@ -1,0 +1,45 @@
+.cd-event-list{
+  .cd-event-list-item {
+    margin-bottom: 2em;
+    box-shadow: @cd-box-shadow;
+
+    &__link {
+      padding-bottom: 5%;
+      justify-content: flex-end;
+      align-items: center;
+      display: flex;
+      height: inherit;
+    }
+    cd-share-event {
+      display: inline-block;
+      margin-top: 1em;
+      ul {
+        position: absolute;
+        right: 0;
+        top: 3em;
+        z-index: 1;
+      }
+    }
+  }
+
+  & .cd-event-list-item:first-of-type {
+    margin-top: 1em;
+  }
+
+  .cd-date {
+    background-color: @cd-light-blue;
+    color: @cd-white;
+
+    &__content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      @media(max-width: @screen-xs-max){
+        padding: 2em;
+      }
+      &__date {
+      }
+    }
+  }
+
+}

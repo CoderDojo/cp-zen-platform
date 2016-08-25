@@ -90,13 +90,13 @@
 
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
-	  $scope.ticketTypes = ticketTypes.data || [];
+    $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
 
     _.each($scope.ticketTypes, function (ticketType, index) {
@@ -137,12 +137,10 @@
     $scope.hasAccess = true;
 
     //description editor
-    $scope.editorOptions = {
-      lanaguage: 'en',
-      readOnly: $scope.pastEvent,
-      height: '100px'
-    };
-
+    $scope.editorOptions = utilsService.getCKEditorConfig({
+      height: '100px',
+      readOnly: $scope.pastEvent
+    });
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
@@ -300,10 +298,18 @@
       session.tickets.push(ticket);
     };
 
+    $scope.lastTicket = function (session) {
+      return session.tickets.length === 1;
+    }
+
     $scope.removeTicket = function ($index, session) {
       if(session.tickets.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one ticket.'));
       return session.tickets.splice($index, 1);
     };
+
+    $scope.lastSession = function () {
+      return $scope.eventInfo.sessions.length === 1;
+    }
 
     $scope.removeSession = function ($index) {
       if($scope.eventInfo.sessions.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one session.'));
@@ -339,7 +345,7 @@
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
-        var isPastEvent = isEventInPast({startTime : firstDate});
+        var isPastEvent = eventUtils.isEventInPast({startTime : firstDate});
 
         _.defaults($scope.eventInfo, event);
         //TODO: when lodash will be updated, use defaultsDeep
@@ -746,7 +752,7 @@
 
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
-        $scope.pastEvent = isEventInPast(_.last(event.dates));
+        $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
 
         done(null, event);
       }, done);
@@ -802,14 +808,6 @@
       });
 
       return done();
-    }
-
-    function isEventInPast(dateObj) {
-      var now = moment.utc();
-      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
-      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
-
-      return now.isAfter(start);
     }
 
     if ($stateParams.eventId) {
@@ -872,6 +870,7 @@
       'utilsService',
       'ticketTypes',
       'currentUser',
+      'eventUtils',
       dojoEventFormCtrl
     ]);
 })();

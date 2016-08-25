@@ -1,0 +1,44 @@
+<div class="row cd-login">
+  <span spinner-key="login-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+  <div class="col-sm-offset-2 col-sm-8">
+    <div id="main">
+      <form class="login-form" role="form" name="loginForm">
+        <div class="cd-title">{@i18n key="Sign in"/}</div>
+        <div class="row">
+          <div class="form-group col-xs-12">
+            <div class="row">
+              <div class="col-sm-offset-2 col-sm-8">
+                <input type="email" class="form-control" required ng-model="login.email" placeholder="{@i18n key="Email"/}" name="email">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12">
+            <div class="row">
+              <div class="col-sm-offset-2 col-sm-8">
+                <input type="password" class="form-control" required ng-model="login.password" autocomplete="off" placeholder="{@i18n key="Password"/}" name="password">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row cd-info-row" ng-show="errorMessage">
+          <span class="col-sm-offset-2 col-sm-6 help-block cd-msg-error">{{ errorMessage }}</span>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-sm-offset-2 col-sm-3">
+            <input class="btn btn-primary btn-block" ng-click="doLogin()" type="submit" value="{@i18n key="Login" /}">
+          </div>
+          <div class="form-group col-xs-12 col-sm-offset-2 col-sm-3">
+            <input class="btn btn-secondary btn-block" ui-sref="register-account.user({referer: referer})" value="{@i18n key="Register" /}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <a class="col-sm-offset-2 col-sm-6 pointer" ui-sref="reset({referer: referer})">{@i18n key="Forgot password" /}</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

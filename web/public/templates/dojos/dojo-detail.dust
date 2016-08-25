@@ -1,116 +1,122 @@
-<div class="cd-dashboard cd-color-3-underline">
-  <div class="dojo-list-dashboard">
-    <div class="alert alert-info" ng-show="showBanner()">
+<div class="cd-dashboard cd-dojo-detail row">
+  <div class="dojo-list-dashboard col-xs-12">
+    <!-- <div class="alert alert-info" ng-show="showBanner()">
       <strong>{@i18n key="Your profile has now been created."/}</strong><br />
       {@i18n key="You can now sign up to the Dojo below and book your ticket."/}
-    </div>
+    </div> -->
     <span spinner-key="dojo-detail-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="row">
-      <div class="dojo-detail">
-        <div class="col-xs-12 col-lg-6">
-          <legend>
-            <b ng-bind-html="dojo.name"></b>
-            <span ng-if="dojo.verified === 1" class="verification-icon"><span class="cd-success-text glyphicon glyphicon-ok-sign"></span> {@i18n key=" Verified!"/}</span>
-            <span ng-if="dojo.verified != 1" class="verification-icon"><span class="cd-warning-text glyphicon glyphicon-remove-sign"></span> {@i18n key=" Not verified"/}</span>
-          </legend>
-          <div class="alert alert-danger" ng-if="dojo.private">
-            <strong>{@i18n key="Private Dojo"/}:</strong> {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}
-          </div>
-          <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 4" role="alert">
-            {@i18n key="Uh-oh! Unfortunately this Dojo is no longer active. If you would like to set up a new Dojo at this location, please email us at info@coderdojo.com"/}
-            <span uib-tooltip-html="{@i18n key="{{ checkboxInput.infoText }}"/}" ng-show="checkboxInput.infoIcon===true" class="info-button fa fa-info-circle  setup-dojo-info-btn" tooltip-trigger="mouseover" tooltip-animation="true"></span>
-          </div>
-          <table class="table" style="margin-left: 30px; margin-bottom: 10px">
-            <tbody>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Time"/}</b></td>
-                <td>{{ dojo.time }}</td>
-              </tr>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Location"/}</b></td>
-                <td ng-if="dojo.address1" ng-bind-html="dojo.address1">, <span ng-if="dojo.address2" ng-bind-html="dojo.address2"></span></td>
-              </tr>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="CityTown"/}</b></td>
-                <td ng-if="dojo.place" ng-init="dojo.place.name = dojo.place.name || dojo.place.toponymName || dojo.place.nameWithHierarchy" ng-bind-html="dojo.place.name"></td>
-              </tr>
-              <tr>
-                <td class="col-xs-2"><b>{@i18n key="Country"/}</b></td>
-                <td ng-bind-html="dojo.countryName"></td>
-              </tr>
-              <tr class="fullscreen-only">
-                <td class="col-xs-2"><b>{@i18n key="Notes"/}</b></td>
-                <td><div ng-bind-html="dojo.notes"></div></td>
-              </tr>
-              <tr ng-if="dojo.taoVerified === 1" class="fullscreen-only">
-                <td class="col-xs-2"><b>{@i18n key="Tao verified"/}</b></td>
-                <td class="text-center"><img src="/img/taobadge.png" alt="{@i18n key="Tao verified"/}" /></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="mobile-only row" style="margin-left: 40px">
-            <b>{@i18n key="Notes"/}</b>
-            <div class="row" ng-bind-html="dojo.notes"></div>
+      <div class="col-xs-12">
+        <div cd-banner-background class="row">
+          <div class="row">
+            <div class="pull-right">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.verified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
+                <i class="fa" ng-class="dojo.verified === 1? 'fa-check': 'fa-exclamation'"
+                  ng-attr-title="{{ dojo.verified === 1?'{@i18n key=" Verified!"/}':'{@i18n key=" Not verified"/}' }}"></i>
+              </div>
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.private === true? 'cd-dojo-detail__ribbon--info': 'cd-dojo-detail__ribbon--success'">
+                <i class="fa" ng-class="dojo.private === true? 'fa-lock': 'fa-child'"
+                  ng-attr-title="{{ dojo.private === false?'{@i18n key="Public Dojo"/}':'{@i18n key="Private Dojo"/} {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}'}}"></i>
+              </div>
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
+                <img src="/img/cdtao.png" class="img-responsive"
+                ng-attr-alt="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"
+                ng-attr-title="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"/>
+              </div>
+            </div>
+            <div cd-dojo-actions is-dojo-admin="isDojoAdmin" dojo="dojo"></div>
+            <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}" class="col-md-3 hidden-xs"></div>
+            <div class="col-md-6 cd-dojo-detail__dojo-name">
+              <h2 ng-bind="::dojo.name"></h2>
+              <h5 ng-if="dojo.website" class="cd-dojo-detail__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
+            </div>
+            <cd-join-dojo></cd-join-dojo>
           </div>
         </div>
-
-        <div class="dojo-detail-sidebar col-xs-12 col-lg-6">
-          <div class="widget">
-            <legend>{@i18n key="Contact"/}</legend>
-            <div class="contact">
-              <table class="table">
-                <tbody>
-                  <tr ng-if="dojo.email && dojo.stage.value != 4">
-                    <td><b>{@i18n key="Email"/}</b></td>
-                    <td><a href="mailto:{{ dojo.email }}">{{ dojo.email }}</a></td>
-                  </tr>
-                  <tr ng-if="dojo.twitter">
-                    <td><b>{@i18n key="Twitter"/}</b></td>
-                    <td><a target="_blank" href="http://twitter.com/{{ dojo.twitter }}">{{ dojo.twitter }}</a></td>
-                  </tr>
-                  <tr ng-if="dojo.website">
-                    <td><b>{@i18n key="Website"/}</b></td>
-                    <td><a target="_blank" href="{{ dojo.website }}">{{ dojo.website }}</a></td>
-                  </tr>
-                  <tr ng-if="dojo.google_group">
-                    <td><b>{@i18n key="Google Group"/}</b></td>
-                    <td><a target="_blank" href="{{ dojo.google_group }}">{{ dojo.google_group }}</a></td>
-                  </tr>
-                </tbody>
-              </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="col-xs-12 col-md-3 cd-dojo-detail__contact">
+          <div class="row">
+            <div ng-if="dojo.email" class="col-xs-12">
+              <b><i class="fa fa-envelope"></i>{@i18n key="Email"/}</b>
+              <div><a href="mailto:{{ dojo.email }}" ng-bind="::dojo.email"><i class="fa fa-email"></i></a></div>
             </div>
-            <div class="alert alert-warning text-center" ng-show="dojo.needMentors" role="alert">
-              {@i18n key="We need mentors!"/}
-              <span tooltip-trigger="focus" tooltip-placement="right" uib-tooltip-html="needMentorsTooltip" class="tooltipfocus info-button fa fa-info-circle ng-scope" tooltip-animation="true" tabindex="1"></span>
-            </div>
-            <span class="help-block"></span>
-            <div class="alert alert-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
-            <div class="alert alert-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
-            <div class="alert alert-danger text-center" ng-if="dojo.stage.value === 3" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
           </div>
-          <a name="events"></a>
-          <span class="alert alert-info text-center" ng-if="dojo.stage.value === 2" role="alert">{@i18n key="Booking is required to attend this Dojo. Please contact the Dojo administrator if no events are listed."/}</span>
-          <cd-dojo-events-list dojo-id="{{ dojo.id }}" dojo-stage="{{ dojo.stage.value }}"></cd-dojo-events-list>
-          <cd-join-dojo></cd-join-dojo>
+          <div class="row" ng-if="dojo.stage.value != 2 || dojo.needMentors">
+            <div class="col-xs-12">
+              <b><i class="fa fa-flag"></i>{@i18n key="Status"/}</b>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="label label-info text-center" ng-if="dojo.needMentors" role="alert">{@i18n key="We need mentors!"/}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="label label-warning text-center" ng-if="dojo.stage.value === 0" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="label label-success text-center" ng-if="dojo.stage.value === 1" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="label label-danger text-center" ng-if="dojo.stage.value === 3" role="alert">{@i18n key="{{ dojo.stage.label }}"/}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <b><i class="fa fa-clock-o"></i>{@i18n key="Time"/}</b>
+              <div ng-bind="::dojo.time"></div>
+            </div>
+          </div>
+          <div cd-social-network twitter="dojo.twitter" google="dojo.google_group" class="row"></div>
+        </div>
+        <div class="col-xs-12 col-md-9">
+          <div class="row ">
+            <div class="col-xs-12 col-md-9">
+              <p>
+                <b>{@i18n key="Location"/}</b>:&nbsp;
+                <div ng-if="dojo.address1">{{ dojo.address1 }},</div>
+                <div ng-if="dojo.address2" ng-bind-html="::dojo.address2"></div>
+                <div ng-if="dojo.place" ng-init="dojo.place.name = dojo.place.name || dojo.place.toponymName || dojo.place.nameWithHierarchy" ng-bind="::dojo.place.name"></div>
+                <div ng-bind="::dojo.countryName"></div>
+              </p>
+            </div>
+            <div class="col-xs-12 col-md-3">
+              <a class="btn btn-secondary btn-block" href="#googleMap"><i class="fa fa-location-arrow"></i>{@i18n key="Locate the Dojo"/}</a>
+            </div>
+          </div>
+          <div class="row cd-dojo-detail__notes" cd-expandable-container="200" >
+            <!-- <h3 class="cd-section-header"><a href="#notes" id="notes">{@i18n key="Notes"/}</a></h3> -->
+            <div class="col-xs-12 cd-expandable-block" ng-bind-html="dojo.notes"></div>
+            <a cd-expander class="text-center col-xs-12"></a>
+          </div>
+        </div>
+        <cd-dojo-events-list dojo-id="{{ dojo.id }}" dojo-stage="{{ dojo.stage.value }}" class="col-xs-12">
+          <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+            <div class="label label-info" ng-if="dojo.stage.value === 2" role="alert">
+              {@i18n key="Booking is required to attend this Dojo. Please contact the Dojo administrator if no events are listed."/}
+            </div>
+          </div>
+        </cd-dojo-events-list>
+        <div ng-if="mapLoaded" class="col-xs-12">
           <p ng-if="!dojo.coordinates"><strong>{@i18n key="This dojo has no coordinates."/}</strong></p>
-          <section ng-if="mapLoaded" id="map">
-            <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
-            <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
-          </section>
+          <div ng-repeat="marker in markers" ui-map-marker="markers[$index]"></div>
+          <div id="googleMap" ui-map="model.map" ui-options="mapOptions" class="map-canvas"></div>
         </div>
-        <div class="col-xs-12 col-lg-6 clear pull-left">
-            <div ng-if="dojo.supporterImage">
-            <legend>{@i18n key="Dojo Supported By"/}</legend>
+        <div class="col-xs-12">
+          <div ng-if="dojo.supporterImage">
+            <h3 class="text-center cd-section-header">
+              <a id="supporter"></a><a href="#supporter">{@i18n key="Dojo Supported By"/}</a></h3>
             <img ng-src="{{ dojo.supporterImage }}">
           </div>
         </div>
-        <div class="col-xs-12 col-lg-6 dojo-detail-sidebar">
-            <span class="help-block"></span>
-            <div ng-if="dojoMember && !dojoOwner && userMemberCheckComplete" class="widget pull-left">
-              <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
-            </div>
-          </div>
       </div>
     </div>
   </div>
-</div>

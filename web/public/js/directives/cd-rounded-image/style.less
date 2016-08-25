@@ -1,0 +1,75 @@
+.cd-rounded-image{
+  &__img {
+    border-radius: 100% !important;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    object-fit: cover;
+    min-height: 200px;
+    min-width: 200px;
+
+    &--full-width {
+      width: 100%;
+      border-radius: none;
+      .fa.--middle {
+        display: none;
+      }
+    }
+  }
+  &__rounded {
+    border-radius: 100% !important;
+    background-color: @cd-green;
+    font-size: @font-size-h1;
+    padding: 1em;
+    &::before {
+      position: absolute;
+      top: 0.5em;
+      left: 0.6em;
+    }
+  }
+  &--bottom.fa {
+    margin-left: 80%;
+  }
+  &--hover-upload{
+    position: absolute;
+    cursor: pointer;
+    .cd-rounded-image__img{
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .fa {
+      color: @cd-white;
+      &.cd-rounded-image--middle {
+        position: absolute;
+        //  50% minus the font-size/width of the icon
+        top: 41%;
+        right: 41%;
+        font-size: @font-size-h1;
+      }
+      &.cd-rounded-image--right-side {
+        right: 1em;
+        position: absolute;
+        margin-left: 100%;
+        top: 0%;
+        height: 1em;
+        width: 1em;
+        font-size: @font-size-h3;
+      }
+    }
+    &:hover {
+
+      .fa{
+        &.cd-rounded-image--middle {
+          display: none;
+        }
+        &.cd-rounded-image--right-side {
+          display: block;
+        }
+      }
+    }
+  }
+}
+div[cd-rounded-image] {
+  z-index: 1;
+  margin-top: 2em;
+}

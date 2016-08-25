@@ -39,12 +39,14 @@
       }, function (err) {
         dfd.reject(err);
       });
-    } else if($stateParams.dojoId && _.isNumber(parseInt($stateParams.dojoId))) {
-      cdDojoService.load({id: parseInt($stateParams.dojoId)},
-      function (data) {
-        dfd.resolve(data);
-      }, function (err) {
-        dfd.reject(err);
+    } else if( ($stateParams.dojoId && !_.isNumber($stateParams.dojoId) ) ||
+      ($stateParams.id && !_.isNumber($stateParams.dojoId) ) ) {
+        var id = $stateParams.dojoId || $stateParams.id;
+        cdDojoService.load(id,
+        function (data) {
+          dfd.resolve(data);
+        }, function (err) {
+          dfd.reject(err);
       });
     } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
@@ -77,7 +79,7 @@
       return auth.get_loggedin_user_promise().then(function (currentUser) {
         if(currentUser){
           return cdUsersService.userProfileDataPromise({userId: currentUser.id}).then(winCb, failCb);
-        }else {
+        } else {
           winCb(void 0);
         }
       }, failCb);
@@ -90,7 +92,11 @@
     },
     usersDojos: function(auth, cdDojoService){
       return auth.get_loggedin_user_promise().then(function (currentUser) {
-        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        if(currentUser){
+          return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
       }, failCb);
     },
     hiddenFields: function(cdUsersService){
@@ -158,16 +164,34 @@
         })
         .state("login", {
           url: "/login?referer",
-          templateUrl: '/templates/login',
+          template: '<cd-login></cd-login>',
           controller: 'login',
           params: {
             referer: null,
             pageTitle: 'Login'
           }
         })
+        .state("logout", {
+          url: "/logout?referer",
+          template: '<span us-spinner="{radius:30, width:8, length: 16}"></span>',
+          controller: 'logout',
+          params: {
+            referer: null,
+            pageTitle: 'Logout'
+          }
+        })
+        .state("reset", {
+          url: "/reset?referer",
+          template: '<cd-reset></cd-reset>',
+          controller: 'login',
+          params: {
+            referer: null,
+            pageTitle: 'Password Reset'
+          }
+        })
         .state("reset-password", {
           url: "/reset_password/:token",
-          templateUrl: '/templates/reset_password',
+          template: '<cd-reset-password></cd-reset-password>',
           controller: 'login',
           params: {
             pageTitle: 'Reset Password'
@@ -175,13 +199,27 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
+          template: '<cd-register></cd-register>',
+          abstract: true,
           params: {
             referer:null,
             userType:null,
             pageTitle: 'Register'
           },
           controller: 'login'
+        })
+        .state("register-account.user", {
+          url: "/user",
+          template: '<cd-register-user></cd-register-user>',
+          params: {
+            referer:null,
+          }
+        })
+        .state("register-account.profile", {
+          url: "/profile",
+          template: '<cd-register-profile></cd-register-profile>',
+          params: {
+          }
         })
         .state("stats", {
           url: "/stats",
@@ -298,6 +336,7 @@
           parent: 'dashboard',
           templateUrl: '/dojos/template/edit-dojo',
           resolve: {
+            dojo: resolveDojo,
             gmap: gmap,
             currentUser: resolves.loggedInUser
           },
@@ -337,7 +376,7 @@
         .state("create-dojo-event", {
           url: "/dojo/:dojoId/event-form",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,
@@ -351,7 +390,7 @@
         .state("edit-dojo-event", {
           url: "/dojo/:dojoId/event-form/:eventId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,
@@ -364,13 +403,15 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          parent: 'dashboard',
-          templateUrl: '/dojos/template/events/details',
-          controller: function($scope, dojo, event, sessions, profile){
+          template: '<cd-event-detail></cd-event-detail>',
+          controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
             $scope.sessions = sessions.data;
-            $scope.profile = profile.data;
+            if (profile){
+              $scope.profile = profile.data;
+            }
+            $scope.currentUser = currentUser;
           },
           params: {
             pageTitle: 'Event details'
@@ -379,7 +420,8 @@
             profile: resolves.ownProfile,
             dojo: resolveDojo,
             sessions: resolves.sessions,
-            event: resolves.event
+            event: resolves.event,
+            currentUser: resolves.loggedInUser
           },
           ncyBreadcrumb: {
             label: '{{EventDetailsPageTitle}}'
@@ -400,7 +442,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<cd-event-detail></cd-event-detail>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -428,7 +470,7 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<div class="cd-event-list col-xs-12"><cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event"></cd-event-list-item></div>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -558,7 +600,7 @@
         .state('add-child',{
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/user-profile',
+          templateUrl: '/directives/tpl/user/cd-profile/edit',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
@@ -599,11 +641,11 @@
             showBannerMessage: null,
             referer: null
           },
-          templateUrl: '/dojos/template/user-profile'
+          templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
         .state("user-profile", {
-          url: "/profile/:userId",
-          templateUrl: '/dojos/template/user-profile',
+          url: "/profile/:userId?public",
+          templateUrl: '/directives/tpl/user/cd-profile/view',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
@@ -668,6 +710,7 @@
           }
         });
       $urlRouterProvider.when('', '/');
+      $urlRouterProvider.when('/register', '/register/user');
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');
@@ -726,6 +769,14 @@
     }])
     .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
+    }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
+      ]);
     }])
     .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
       var doc = $window.document;

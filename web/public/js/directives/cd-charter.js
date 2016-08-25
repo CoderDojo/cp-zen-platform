@@ -4,15 +4,12 @@
 function cdCharter(){
     return {
       restrict: 'E',
-      templateUrl: '/charter/template/index',
-      link: function (scope, element, attrs) { 
-       
-      }
+      templateUrl: '/charter/template/index'
     }
   }
 
 angular
     .module('cpZenPlatform')
     .directive('cdCharter', cdCharter)
- 
+
 }());

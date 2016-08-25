@@ -1,8 +1,3 @@
-
-* {
-  border-radius: 0 !important;
-}
-
 legend {
   line-height: 40px;
   border-bottom: 3px solid black;
@@ -19,26 +14,26 @@ legend::after {
 }
 
 body {
-	background: white;
-  font-family: "latoregular", Arial, Helvetica, sans-serif;
+	background: @background-color;
+  font-family: Lato, Arial, Helvetica, sans-serif;
 }
 
 p {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 h1 {
-	font-size: 28px;
-	font-weight: bold;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 h2 {
-	font-size: 24px;
-	font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 ul {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .dropdown-menu > li > a {
@@ -57,61 +52,31 @@ ul {
   margin-top: 10px;
 }
 
-.cp-login {
-
-  .cd-input-row {
-    margin: 25px 0;
-  }
-
-  .cd-info-row {
-    margin: 0;
-
-    span {
-
-      &.cd-msg-info {
-        color: @cd-blue;
-      }
-
-      &.cd-msg-warn {
-        color: @cd-orange;
-      }
-
-      &.cd-msg-error {
-        color: @cd-red;
-      }
-    }
-  }
-
-  .cd-btn-row {
-    margin: 15px 0;
-  }
-
-  .cd-link-row {
-    margin: 5px 0;
-  }
-
-  .alert-info {
-    margin: 0;
-    margin-top: 15px;
-  }
-}
-
 label {
-	display: inline-block;
-	font-size: 14px;
-	text-align: left;
+  display: inline-block;
+  font-size: 14px;
+  text-align: left;
 }
 
 .main-container {
     padding: 46px 100px 0 100px;
 }
 
+.anchor-jump() {
+  display: block;
+  position: relative;
+  top: -140px;
+}
+
+h1, h2, h3, h4, h5, h6, .cd-section-header{
+  a[id] {
+    .anchor-jump();
+  }
+}
+
+
 .cd-dashboard {
 	background: white;
-	padding: 0 20px;
-	width: 100%;
-	margin: 0 auto;
-	margin-top: 10px;
 
   a {
     color: #315169;
@@ -199,32 +164,6 @@ label {
   }
 }
 
-.event-form {
-  h3.inline{
-    display: inline;
-  }
-  .checkbox {
-    padding-left: 7px;
-
-    label {
-      padding-left: 10px;
-    }
-  }
-
-  .radio {
-    padding-left: 1.5em;
-  }
-
-  .session-expand-button {
-    margin-right: 1em;
-    margin: 0.5em 1em 0.5em 0em;
-  }
-
-  .session-name-container {
-    padding-left: 0;
-  }
-}
-
 .clear {
   clear: both;
 }
@@ -239,16 +178,16 @@ label {
 }
 
 .cd-text-heading1 {
-	color: black;
-	font-size: 20px;
+  color: black;
+  font-size: 20px;
 }
 
 .cd-border-bottom {
-	padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 #cd-charter-text {
-	width: 75%;
+  width: 75%;
   min-width: 275px;
   margin: auto;
 
@@ -267,55 +206,6 @@ label {
         font-size: 13px;
         color: black;
       }
-    }
-  }
-}
-
-.cd-create-dojo-container {
-  padding: 0;
-
-  .pre-game-warning {
-    background-color: #FBF9E4;
-    width: 550px;
-    padding: 10px;
-    border: 1px solid #FBEED5;
-    border-radius: 5px;
-    margin-top: 15px;
-
-    span {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    p {
-      padding-top: 0;
-      color: #C09853;
-    }
-  }
-
-  .setup-dojo-icons {
-    position: relative;
-    display: inline-block;
-    transform: translateY(25%);
-
-    .tooltip {
-        .tooltip-inner {
-          width: 30em;
-        }
-    }
-
-    .setup-dojo-info-btn {
-      font-size: 2em;
-      margin-left: 10px;
-      vertical-align: 6%;
-    }
-
-    .setup-dojo-tao-btn {
-      background: url("../../img/cdtao.png") no-repeat right center;
-      margin-left: 10px;
-      width: 51px;
-      height: 24px;
-      display: inline-block;
     }
   }
 }
@@ -509,7 +399,6 @@ label {
 
   .events-body {
     padding: 15px;
-    border-bottom: 2px solid #ccc;
 
     h4 {
       color:@cd-body-color-3;
@@ -610,6 +499,7 @@ label {
 }
 
 .cd-badges-dashboard {
+  .main-content-padding;
 
   .nav-tabs.nav-justified>.active>a {
     color: @cd-orange;
@@ -634,6 +524,16 @@ label {
     display: inline;
     width: 74%;
   }
+
+  .claim-badge-input-container {
+    margin: 35px;
+    text-align: center;
+  }
+}
+
+.cd-section-header, .__cd-section-header {
+  border-bottom: @cd-very-light-gray 2px solid;
+  margin-top: 2em;
 }
 
 .user-registration, .cd-dojo-main, .cd-charter {
@@ -650,35 +550,6 @@ label {
     margin: 20px 0;
   }
 
-  .cd-section-header {
-    margin: 30px 0;
-    font-size: 16px;
-  }
-
-  .cd-input-row {
-    margin: 20px 0;
-
-    .cd-form-label1 {
-      text-align: right;
-      padding-top: 5px;
-
-      &.with-info-btn {
-
-        .cd-info-btn {
-          display: inline-block;
-          padding-left: 10px;
-          float: none;
-          text-decoration: none;
-          color: inherit;
-        }
-      }
-
-      &.with-checkbox {
-        padding-top: 8px;
-      }
-    }
-  }
-
   .register-tooltip {
     font-size: 30px;
     margin-top: 3px;
@@ -692,10 +563,6 @@ label {
   .dob-picker {
     padding-right: 15px;
     padding-left: 15px;
-  }
-
-  .form-group {
-    margin: 0;
   }
 
   textarea {
@@ -742,10 +609,6 @@ label {
       color: @cd-orange;
       text-decoration: none;
     }
-  }
-
-  .cd-wizard-submit {
-    margin-top: 30px;
   }
 
   label.validationMessage {
@@ -805,26 +668,9 @@ label {
       padding-left: 0;
     }
   }
-
-  #user-registration-form {
-
-    label.validationMessage {
-      text-align: left;
-      width: auto;
-    }
-
-    .cd-wizard-submit {
-      margin-top: 0;
-      float: left;
-    }
-  }
 }
 
 .cd-dojo-main {
-
-  .cd-input-row {
-    margin: 20px 0 35px;
-  }
 
   .cd-checkbox {
     margin-bottom: 0;
@@ -882,7 +728,6 @@ label {
 
   .form-control, .btn {
     font-size: 13px;
-    border-radius: 0;
   }
 
   select {
@@ -995,148 +840,6 @@ img.badge-thumbnail {
   background-color: #FF851B;
 }
 
-/* we want color schema in body to be different than color schema in header */
-html body .cd-dashboard .cd-color-1 {
-  background-color: @cd-body-color-1;
-}
-
-html body .cd-dashboard .cd-color-2 {
-  background-color: @cd-body-color-2;
-}
-
-html body .cd-dashboard .cd-color-3 {
-  background-color: @cd-body-color-3;
-}
-
-html body .cd-dashboard .cd-color-4 {
-  background-color: @cd-body-color-4;
-}
-
-html body .cd-dashboard .cd-color-5 {
-  background-color: @cd-body-color-5;
-}
-
-html body .cd-dashboard .cd-color-6 {
-  background-color: @cd-body-color-6;
-}
-
-.cd-color-1-underline {
-
-  legend {
-    border-color: @cd-body-color-1 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-1 !important;
-  }
-}
-
-.cd-color-2-underline {
-
-  legend {
-    border-color: @cd-body-color-2 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-2 !important;
-  }
-}
-
-.cd-color-3-underline {
-
-  legend {
-    border-color: @cd-body-color-3 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-3 !important;
-  }
-}
-
-.cd-color-4-underline {
-
-  legend {
-    border-color: @cd-body-color-4 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-4 !important;
-  }
-}
-
-.cd-color-5-underline {
-
-  legend {
-    border-color: @cd-body-color-5 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-5 !important;
-  }
-}
-
-.cd-color-6-underline {
-
-  legend {
-    border-color: @cd-body-color-6 !important;
-  }
-
-  legend::after {
-    background-color: @cd-body-color-6 !important;
-  }
-}
-
-.legend-color-1-border{
-  border-color: @cd-body-color-1 !important;
-
-  &::after{
-    background-color: @cd-body-color-1 !important;
-  }
-}
-
-.legend-color-2-border{
-  border-color: @cd-body-color-2 !important;
-
-  &::after{
-    background-color: @cd-body-color-2 !important;
-  }
-}
-
-.legend-color-3-border{
-  border-color: @cd-body-color-3 !important;
-
-  &::after{
-    background-color: @cd-body-color-3 !important;
-  }
-}
-
-.legend-color-4-border{
-  border-color: @cd-body-color-4 !important;
-
-  &::after{
-    background-color: @cd-body-color-4 !important;
-  }
-}
-
-.legend-color-5-border{
-  border-color: @cd-body-color-5 !important;
-
-  &::after{
-    background-color: @cd-body-color-5 !important;
-  }
-}
-
-.legend-color-6-border{
-  border-color: @cd-body-color-6 !important;
-
-  &::after{
-    background-color: @cd-body-color-6 !important;
-  }
-}
-
-.btn-primary {
-  background-color: @cd-body-color-5;
-}
 
 .cd-accordian {
   margin: 3% 0%;
@@ -1151,7 +854,7 @@ html body .cd-dashboard .cd-color-6 {
     padding-bottom: 15px;
     height: auto;
     overflow: auto;
-
+    
     h4 {
       display: inline-block;
       width: 85%;
@@ -1214,10 +917,6 @@ html body .cd-dashboard .cd-color-6 {
 
 .claim-badge-input {
   text-align: center;
-}
-
-.claim-badge-input-container {
-  margin: 25px;
 }
 
 .preview-badge-container {
@@ -1320,15 +1019,6 @@ img.dojo-thumbnail {
 }
 
 /* ---------------------------- date picker styling --------------------- */
-
-.btn-success {
-  background-color: @cd-green;
-}
-
-.btn-danger {
-  background-color: @cd-red;
-}
-
 .btn-info{
   background-color: @cd-light-blue;
 
@@ -1341,10 +1031,6 @@ img.dojo-thumbnail {
   }
 }
 /* -------------------------- end date picker styling --------------------- */
-
-.profile-section {
-  margin-bottom: 60px;
-}
 
 #ninjaProfileBlock {
 
@@ -1385,6 +1071,7 @@ img.dojo-thumbnail {
 span.tooltipfocus {
   outline: none;
   cursor: pointer;
+  margin-right: 1em;
 }
 
 .badge-information {
@@ -1397,7 +1084,7 @@ span.tooltipfocus {
 }
 
 .color-red {
-  color: red;
+  color: @cd-red;
 }
 
 .custom-remove-icon {
@@ -1436,10 +1123,6 @@ span.tooltipfocus {
   font-weight: 400;
   line-height: 1.42857143;
   padding: 6px 12px;
-}
-
-.color-red {
-  color: red;
 }
 
 .text-truncate {
@@ -1997,4 +1680,28 @@ span.applications-banner {
     12em 22em,
     13em 22em,
     14em 22em;
+}
+// Classes made to fix padding should eventually be moved for coresponding dierectives
+.main-content-padding {
+  padding: 0 32px;
+}
+.my-dojos {
+  .main-content-padding;
+}
+
+.dojo-users {
+  .main-content-padding;
+}
+
+.manage-event {
+  .main-content-padding;
+}
+
+.manage-event-applicants {
+  .main-content-padding;
+  padding-top: 10px;
+}
+
+.event-display {
+  .main-content-padding;
 }
