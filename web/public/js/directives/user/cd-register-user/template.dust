@@ -1,4 +1,4 @@
-<form id="signUpForm" name="signUpForm" novalidate angular-validator angular-validator-submit="next()">
+<form id="signUpForm" name="signUpForm" novalidate angular-validator angular-validator-submit="next(signUpForm)">
   <div class="row" ng-enter="noop()">
     <div class="col-sm-offset-2 col-sm-8 col-xs-12">
       <input type="text" class="form-control form-group" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="formData.user.name" placeholder="{@i18n key="Name"/}">

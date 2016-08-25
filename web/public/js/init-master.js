@@ -770,6 +770,14 @@
     .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
+      ]);
+    }])
     .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
