@@ -22,7 +22,7 @@ msgid "No"
 msgstr "No"
 
 msgid "Loading ..."
-msgid "Loading ..."
+msgstr "Loading ..."
 
 msgid "Register a Dojo"
 msgstr "Register a Dojo"
