@@ -21,7 +21,7 @@
               </div>
             </div>
           </div>
-          <div cd-claim-badge ng-if="editMode"></div>
+          <div cd-claim-badge-button ng-if="editMode"></div>
         </div>
       </uib-tab>
     </uib-tabset>

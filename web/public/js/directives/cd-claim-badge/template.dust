@@ -1,3 +1,25 @@
-<div class="cd-claim-badge">
-  <div class="h4">{@i18n key="Claim Now"/}</div>
+<div class="row claim-badge">
+  <h3>{@i18n key="How to claim reward"/}</h3>
+  <p>{@i18n key="Claiming a badge is easy: once a Dojo Champion has awarded you a badge, you will receive an email. Click on the link in the email to claim your badge!"/}</p>
+  <p>{@i18n key="If you have already received a badge, please enter your Claim Code below!"/}</p>
+  <div class="col-md-6 col-md-offset-3">
+    <form ng-disable="!user" class="input-group" id="previewBadgeForm" novalidate angular-validator angular-validator-submit="previewBadge(badgeClaimNumber)" name="previewBadgeForm">
+      <span ng-disable="!user" class="input-group-btn">
+        <input type="text" required class="claim-badge-input form-control" ng-model="badgeClaimNumber" placeholder="{@i18n key="Enter Badge Claim Number"/}" name="badgeClaimNumber" id="badgeClaimNumber">
+        <button class="btn btn-success" type="submit">{@i18n key="Go"/}</button>
+      </span>
+    </form>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 margin-top-25" ng-slide-down="showBadgePreview" duration="0.8">
+        <div class="preview-badge-container">
+          <img ng-src="{{ previewBadgeData.imageUrl }}" class="preview-badge-thumbnail">
+          <p class="preview-badge-name"><b>{{ previewBadgeData.name }}</b></p>
+          <p class="preview-badge-description">{{ previewBadgeData.strapline }}</p>
+          <div ng-dropdown-multiselect="" class="childSelect" ng-if="user && profile.children" options="profile.children" selected-model="claimerIds" extra-settings="claimerDropdownSettings"></div>
+          <button ng-click="claimBadge()" class="btn btn-warning btn-block" ng-class="{'inline-select':profile.children}">{@i18n key="Claim Now"/}</button>
+          <button ng-click="hideBadgePreview()" class="btn btn-primary btn-block">{@i18n key="Cancel"/}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

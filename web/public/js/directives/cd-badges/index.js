@@ -1,15 +1,15 @@
 ;(function() {
   'use strict';
 
-function cdClaimBadge(){
+function cdBadges(){
     return {
       restrict: 'EA',
       replace: true,
-      templateUrl: '/directives/tpl/cd-claim-badge',
+      templateUrl: '/directives/tpl/cd-badges',
     }
   }
 
 angular
     .module('cpZenPlatform')
-    .directive('cdClaimBadge', cdClaimBadge)
+    .directive('cdBadges', cdBadges)
 }());
