@@ -1,4 +1,4 @@
-<span ng-show="cdExpander.cdExpandableContainer.shouldDisplay">
+<span ng-show="cdExpander.cdExpandableContainer.shouldDisplay" ng-click="cdExpander.cdExpandableContainer.toggleExpanded()">
   <span ng-show="cdExpander.expanded">{@i18n key="View less"/}</span>
   <span ng-show="!cdExpander.expanded">{@i18n key="View more"/}</span>
 </span>

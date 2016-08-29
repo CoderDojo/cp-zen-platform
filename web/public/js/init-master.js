@@ -105,8 +105,26 @@
     championsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
+    championsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadChampionsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
+    },
     parentsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    parentsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadParentsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
     },
     badgeCategories: function(cdBadgesService) {
       return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
@@ -118,6 +136,15 @@
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    dojoAdminsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadDojoAdminsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
     },
     ticketTypes: function (cdEventsService) {
       return cdEventsService.ticketTypesPromise().then(winCb, failCb);
@@ -643,6 +670,26 @@
           },
           templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
+        .state("my-profile", {
+          url: '/profile?public',
+          templateUrl: '/directives/tpl/user/cd-profile/view',
+          resolve: {
+            profile: resolves.ownProfile,
+            loggedInUser: resolves.loggedInUser,
+            hiddenFields: resolves.hiddenFields,
+            agreement: resolves.agreement ,
+            championsForUser: resolves.championsForLoggedInUser,
+            parentsForUser: resolves.parentsForLoggedInUser,
+            badgeCategories: resolves.badgeCategories,
+            dojoAdminsForUser: resolves.dojoAdminsForLoggedInUser,
+            usersDojos: resolves.usersDojos,
+            initUserTypes: resolves.initUserTypes
+          },
+          controller: 'user-profile-controller',
+          params: {
+            pageTitle: 'Profile'
+          }
+        })
         .state("user-profile", {
           url: "/profile/:userId?public",
           templateUrl: '/directives/tpl/user/cd-profile/view',
@@ -769,6 +816,14 @@
     }])
     .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
+    }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
+      ]);
     }])
     .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
       var doc = $window.document;

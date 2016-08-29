@@ -28,6 +28,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
   $scope.hideUserSelect = true;
   $scope.changedLocation = false;
   $scope.disableDojoCountryChange = false;
+  $scope.dojoImageUrl = $scope.dojoImageUrl || 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/';
 
   $scope.isCDFAdmin = currentUser && currentUser.data && _.includes(currentUser.data.roles, 'cdf-admin');
 

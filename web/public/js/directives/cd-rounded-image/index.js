@@ -22,7 +22,7 @@ function cdRoundedImage(){
       templateUrl: '/directives/tpl/cd-rounded-image',
       controller: ['$scope', 'atomicNotifyService', '$translate', '$http', function ($scope, atomicNotifyService, $translate, $http) {
         this.srcFallback = $scope.srcFallback || 'https://placekitten.com/g/400/400';
-        this.src = $scope.src ? $scope.src : this.fallbackSrc;
+        this.src = $scope.src ? $scope.src : this.srcFallback;
         this.size = $scope.size? $scope.size : '200px';
         this.edit = $scope.edit ? $scope.edit : false;
         this.fullWidth = false;

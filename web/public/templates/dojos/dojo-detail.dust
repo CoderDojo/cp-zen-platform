@@ -14,12 +14,12 @@
                 <i class="fa" ng-class="dojo.verified === 1? 'fa-check': 'fa-exclamation'"
                   ng-attr-title="{{ dojo.verified === 1?'{@i18n key=" Verified!"/}':'{@i18n key=" Not verified"/}' }}"></i>
               </div>
-              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.private === true? 'cd-dojo-detail__ribbon--info': 'cd-dojo-detail__ribbon--success'">
-                <i class="fa" ng-class="dojo.private === true? 'fa-lock': 'fa-child'"
-                  ng-attr-title="{{ dojo.private === false?'{@i18n key="Public Dojo"/}':'{@i18n key="Private Dojo"/} {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}'}}"></i>
+              <div class="cd-dojo-detail__ribbon--vertical-right cd-color-white" ng-class="dojo.private === 1? 'cd-bg-red-70': 'cd-bg-green'">
+                <i class="fa" ng-class="dojo.private === 1? 'fa-lock': 'fa-child'"
+                  ng-attr-title="{{ dojo.private === 0?'{@i18n key="Public Dojo"/}':'{@i18n key="Private Dojo"/} {@i18n key="This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo."/}'}}"></i>
               </div>
               <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
-                <img src="/img/cdtao.png" class="img-responsive"
+                <img src="/img/tao.svg" class="img-responsive"
                 ng-attr-alt="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"
                 ng-attr-title="{{ dojo.taoVerified === 1?'{@i18n key="Tao verified"/}':'{@i18n key="Tao unverified"/}' }}"/>
               </div>

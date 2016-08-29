@@ -26,7 +26,6 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   $scope.formData = {};
   $scope.userFormData = {};
   $scope.signUpForm = {};
-  var signUpForm = {};
 
   $scope.recap = {publicKey: '6Lc--SQTAAAAAGifz--Vwm5rflsgbUvtO5k4C8In'};
   setupGoogleMap();
@@ -89,7 +88,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           initStep(2);
           return;
         }
-        currentStepInt = uncompletedDojoLead.currentStep;
+        // There is a desync between saved step and front-end step, as we splitted profile/user reg
+        currentStepInt = uncompletedDojoLead.currentStep + 1;
       }
 
       if (currentStepInt === 4) {
@@ -126,7 +126,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       } else {
         cdAgreementsService.loadUserAgreement(user.id, function (response) {
           if (response && response.id) {
-            initStep(uncompletedDojoLead.currentStep);
+            initStep(currentStepInt);
           } else {
             initStep(2, 'charter');
           }
@@ -149,16 +149,22 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   function initStep (step, subStep) {
     switch(step) {
       case 0:
+      case 1:
+        //  We don't create an user before he actually filled step1; hence state is not saved and we start over again
         setupStep1();
         break;
-      case 1:
-        setupStep2(subStep);
-        break;
       case 2:
-        setupStep3();
+        setupStep3(subStep);
         break;
       case 3:
         setupStep4();
+        break;
+      case 4:
+        setupStep5();
+        break;
+      default:
+        // You never know
+        initStep(step-1);
         break;
     }
   }
@@ -175,45 +181,47 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     }
 
   $scope.preventEnterChampionRegistration = function () {
-      if(currentStepInt < 1) return false;
-      if(WizardHandler.wizard().currentStepNumber() > 1 ) setupStep2("dontShowCharter", true);
+      if(currentStepInt < 2) return false;
+      if(WizardHandler.wizard().currentStepNumber() > 2 ) setupStep3("dontShowCharter", true);
       return true;
     }
 
   $scope.preventEnterSetupDojo = function () {
-      if(currentStepInt < 2) return false;
-      if(WizardHandler.wizard().currentStepNumber() > 2 ) setupStep3(true);
+      if(currentStepInt < 3) return false;
+      if(WizardHandler.wizard().currentStepNumber() > 3 ) setupStep4(true);
       return true;
     }
 
   $scope.preventEnterDojoListing = function () {
-      if(currentStepInt < 3) return false;
-      if(WizardHandler.wizard().currentStepNumber() >= 3 ) setupStep4(true);
+      if(currentStepInt < 4) return false;
+      if(WizardHandler.wizard().currentStepNumber() >= 4 ) setupStep5(true);
 
       return true;
     }
 
   $scope.accountSuccessfullyRegistered = function () {
-    if(currentStepInt > 0) return true;
+    if(currentStepInt > 1) return true;
     return false;
   }
 
   $scope.userSuccessfullyRegistered = function () {
-    if(currentStepInt > 0 || $scope.signUpForm.$valid) return true;
+    if(currentStepInt > 0 || $scope.signUpForm && $scope.signUpForm.$valid) {
+      return true;
+    }
     return false;
   }
 
   $scope.championApplicationSubmitted = function () {
-      if(currentStepInt > 1) return true;
-      if(WizardHandler.wizard().currentStepNumber() > 1) {
-        setupStep3(true);
+      if(currentStepInt >= 3) return true;
+      if(WizardHandler.wizard().currentStepNumber() >= 3) {
+        setupStep4(true);
         return true;
       }
       return false;
     }
 
   $scope.dojoSetup = function () {
-    if(currentStepInt > 2) return true;
+    if(currentStepInt > 3) return true;
     return false;
   }
 
@@ -232,8 +240,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
   }
 
   $scope.disabled = true;
-  $scope.next = function () {
+  $scope.next = function (form) {
     $scope.disabled = false;
+    //  This is a pure hack to escape the scope issue, i'm sorry for the next guy. (G.F.)
+    $scope.signUpForm = form;
     WizardHandler.wizard().next();
   }
 
@@ -248,10 +258,15 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.onStartDojoWizard = true;
     $scope.stepFinishedLoading = true;
   }
-  //--
-
   //--Step Two:
-  function setupStep2(subStep, wizardRedirect) {
+  function setupStep2() {
+    currentStepInt = 1;
+    WizardHandler.wizard().goTo(1);
+    $scope.stepFinishedLoading = true;
+  }
+
+  //--Step Three:
+  function setupStep3(subStep, wizardRedirect) {
     var step2UpdateFlag;
     var savedDojoLead;
     $scope.champion = {};
@@ -270,7 +285,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.hideIndicators = false;
     $scope.stepTwoShowGmap = true;
 
-    currentStepInt = 1;
+    currentStepInt = 2;
 
     $scope.showCharterAgreement = function () {
       $scope.showCharterAgreementFlag = false;
@@ -369,15 +384,15 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           dojoLead.application.championDetails = champion;
           dojoLead.userId = currentUser.id;
           dojoLead.email = currentUser.email;
-          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep);
           dojoLead.completed = false;
           if(step2UpdateFlag) {
             if(savedDojoLead && savedDojoLead.application) {
               savedDojoLead.application.championDetails = champion;
-              savedDojoLead.currentStep = 2;
+              savedDojoLead.currentStep = 3;
               cdDojoService.saveDojoLead(savedDojoLead, function(response) {
                 deleteLocalStorage('championDetails');
-                setupStep3();
+                setupStep4();
               }, failSave);
             } else {
               alertService.showError($translate.instant('Error updating champion details.'));
@@ -407,7 +422,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       agreementObj.agreementVersion = 2; //This is hardcoded for now; we don't have a way of changing the charter just yet.
 
       cdAgreementsService.save(agreementObj, function (response) {
-        setupStep3();
+        // setupStep4();
+        WizardHandler.wizard().next();
       },failSave);
     }
 
@@ -462,19 +478,19 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     ];
 
     if(!wizardRedirect) {
-      WizardHandler.wizard().goTo(1, true);
+      WizardHandler.wizard().goTo(2, true);
     }
     $scope.stepFinishedLoading = true;
   }
   //--
 
   //--Step Three:
-  function setupStep3(wizardRedirect) {
+  function setupStep4(wizardRedirect) {
     var savedDojoLead = {};
     if(!$scope.setupDojo) $scope.setupDojo = {};
     $scope.buttonText = $translate.instant("Save Dojo Setup");
     $scope.hideIndicators = false;
-    currentStepInt = 2;
+    currentStepInt = 3;
     auth.get_loggedin_user(function (user) {
       currentUser = user;
       if (currentUser) {
@@ -534,10 +550,10 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       var win = function () {
         if(savedDojoLead.application) {
           savedDojoLead.application.setupYourDojo = setupDojo;
-          savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+          savedDojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep);
           cdDojoService.saveDojoLead(savedDojoLead, function(response) {
             deleteLocalStorage('setupYourDojo');
-            setupStep4();
+            setupStep5();
           }, failSave);
         } else {
           failSave();
@@ -557,7 +573,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     if(!wizardRedirect) {
-      WizardHandler.wizard().goTo(2, true);
+      WizardHandler.wizard().goTo(3, true);
     }
     $scope.stepFinishedLoading = true;
   }
@@ -582,13 +598,13 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     }
 
   //--Step Four:
-  function setupStep4(wizardRedirect) {
+  function setupStep5(wizardRedirect) {
     $scope.hideIndicators = false;
     $scope.buttonText = $translate.instant("Create Dojo");
 
     $scope.stepFourShowGmap = true;
 
-    currentStepInt = 3;
+    currentStepInt = 4;
 
     auth.get_loggedin_user(function(user) {
       currentUser = user;
@@ -690,7 +706,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
           cdDojoService.loadUserDojoLead(currentUser.id, function(response) {
             var dojoLead = response;
             dojoLead.application.dojoListing = dojo;
-            dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep) + 1;
+            dojoLead.currentStep = stepNames.indexOf($scope.wizardCurrentStep);
             cdDojoService.saveDojoLead(dojoLead, function (response) {
               dojo.dojoLeadId = response.id;
               dojo.emailSubject = 'A Google email account has been created for your Dojo';
@@ -715,7 +731,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     };
 
     if(!wizardRedirect) {
-      WizardHandler.wizard().goTo(3, true);
+      WizardHandler.wizard().goTo(4, true);
     }
     $scope.stepFinishedLoading = true;
   }
