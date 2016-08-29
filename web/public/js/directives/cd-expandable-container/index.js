@@ -6,6 +6,8 @@ function cdExpandableContainer(){
       restrict: 'EA',
       controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout){
         var cdExpandableContainer = this;
+        var expandableBlock = angular.element($element.find('.cd-expandable-block'));
+
         this.expanded = false;
         this.shouldDisplay = false;
         var wheightWatcherRunning = false;
@@ -15,6 +17,10 @@ function cdExpandableContainer(){
             requestAnimationFrame(function () {
               if ($element.find('.cd-expandable-block')[0].scrollHeight > cdExpandableContainer.initialHeight) {
                 cdExpandableContainer.shouldDisplay = true;
+                expandableBlock.addClass('cd-expandable-block--expandable');
+              } else {
+                cdExpandableContainer.shouldDisplay = false;
+                expandableBlock.removeClass('cd-expandable-block--expandable');
               }
               wheightWatcherRunning = false;
             });
@@ -25,7 +31,6 @@ function cdExpandableContainer(){
         })
 
         this.toggleExpanded = function () {
-          var expandableBlock = angular.element($element.find('.cd-expandable-block'));
           cdExpandableContainer.expanded = !cdExpandableContainer.expanded;
           if (cdExpandableContainer.expanded) {
             expandableBlock.css('max-height', expandableBlock[0].scrollHeight);
