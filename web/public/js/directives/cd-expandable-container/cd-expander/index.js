@@ -18,12 +18,6 @@ function cdExpander(){
           watcher();
         })
       },
-      link: function (scope, element, attrs, controller) {
-        var cdExpandableContainer = controller;
-        element.on('click', function(){
-          cdExpandableContainer.toggleExpanded()
-        })
-      },
       controllerAs: 'cdExpander'
     };
   }

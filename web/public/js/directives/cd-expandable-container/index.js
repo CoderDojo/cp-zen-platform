@@ -4,15 +4,20 @@
 function cdExpandableContainer(){
     return {
       restrict: 'EA',
-      controller: ['$scope', '$element', function($scope, $element){
+      controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout){
         var cdExpandableContainer = this;
         this.expanded = false;
         this.shouldDisplay = false;
+        var wheightWatcherRunning = false;
         var wheightWatcher = $scope.$watch( function() {return $element.find('.cd-expandable-block')[0].scrollHeight;}, function(newHeight){
-          if (newHeight) {
-            if ($element.find('.cd-expandable-block')[0].scrollHeight > cdExpandableContainer.initialHeight) {
-              cdExpandableContainer.shouldDisplay = true;
-            }
+          if (!wheightWatcherRunning) {
+            wheightWatcherRunning = true;
+            requestAnimationFrame(function () {
+              if ($element.find('.cd-expandable-block')[0].scrollHeight > cdExpandableContainer.initialHeight) {
+                cdExpandableContainer.shouldDisplay = true;
+              }
+              wheightWatcherRunning = false;
+            });
           }
         });
         $scope.$on('$destroy', function(){
@@ -21,12 +26,19 @@ function cdExpandableContainer(){
 
         this.toggleExpanded = function () {
           var expandableBlock = angular.element($element.find('.cd-expandable-block'));
-          expandableBlock.toggleClass('cd-expandable-block--expanded');
           cdExpandableContainer.expanded = !cdExpandableContainer.expanded;
           if (cdExpandableContainer.expanded) {
             expandableBlock.css('max-height', expandableBlock[0].scrollHeight);
+            $timeout(function () {
+              expandableBlock.css('max-height', 'inherit');
+              expandableBlock.addClass('cd-expandable-block--expanded');
+            }, 200)
           } else {
-            expandableBlock.css('max-height', cdExpandableContainer.extendedHeight);
+            expandableBlock.css('max-height', expandableBlock[0].scrollHeight);
+            expandableBlock.removeClass('cd-expandable-block--expanded');
+            requestAnimationFrame(function () {
+              expandableBlock.css('max-height', cdExpandableContainer.extendedHeight);
+            });
           }
         }
       }],
