@@ -29,19 +29,25 @@
     position: relative;
     box-shadow: -2px 2px 7px rgba(0,0,0,.4);
     &--vertical-right {
-      @width: .5em;
-      @height: 1em;
       clear: none;
       float: right;
       margin: -2px 10px 0 0;
-      padding: @height @width;
       text-align: center;
-      width: (5 * @width);
+      width: 2.5em;
+      height: 3.5em;
+      line-height: 3.5em;
+
+      > img {
+        margin: 0.5em 0;
+      }
+
       @media (max-width: @screen-sm-min) {
-        @width: .25em;
-        @height: .5em;
-        padding: @height @width;
-        width: (10 * @width);
+        height: 2.5em;
+        line-height: 2.5em;
+
+        > img {
+          margin: 0;
+        }
       }
     }
     &--success {
