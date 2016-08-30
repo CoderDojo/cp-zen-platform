@@ -30,4 +30,5 @@
     </div>
   </div>
   <div cd-social-network twitter="profile.twitter" facebook="profile.facebook" linkedin="profile.linkedin" class="row"></div>
+  <cd-connect-lms ng-if="false"></cd-connect-lms>
 </div>

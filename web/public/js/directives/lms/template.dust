@@ -1,0 +1,7 @@
+<div class="col-xs-12 text-center">
+  <h4 ng-if="getVisibility()">{@i18n key="By clicking this button, you allow us to share basic information with this provider (email, name, user type)"/}</h4>
+  <div class="row btn-row">
+    <button class="btn btn-primary" ng-click="getLoginURL()" ng-if="getVisibility()">{@i18n key="Access our e-learning module"/}</button>
+  </div>
+  <p>{@i18n key="Only modules for mentors and champions are available at the moment, come back later on to discover more!"/}</p>
+</div>
