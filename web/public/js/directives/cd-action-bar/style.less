@@ -1,0 +1,79 @@
+.cd-action-bar {
+
+  @keyframes bounceInUp {
+    from, 30%, 60%, 70%, 90%, to {
+      animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+
+    from {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+
+    30% {
+      opacity: 1;
+      transform: translate3d(0, -15px, 0);
+    }
+
+    45% {
+      transform: translate3d(0, 10px, 0);
+    }
+
+    60% {
+      transform: translate3d(0, -5px, 0);
+    }
+
+    70% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slideOutDown {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: @cd-blue;
+  height: 40px;
+  z-index: 5000;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  transform: translateY(100%);
+  animation-fill-mode: both;
+  padding-bottom: 40px;
+  margin-bottom: -40px;
+  box-sizing: content-box;
+
+  &-spacer {
+    flex: 1;
+  }
+
+  &[data-open=true] {
+    animation-duration: .75s;
+    animation-name: bounceInUp;
+  }
+
+  &[data-open=false] {
+    animation-duration: .2s;
+    animation-name: slideOutDown;
+  }
+
+  @media screen and (max-width: 1340px) and (min-width: 769px) {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
