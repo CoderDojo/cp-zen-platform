@@ -7,18 +7,9 @@
       <uib-tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container">
           <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
-            <span class="help-block"></span>
             <div class="badge-container" ng-repeat="badge in badgesData">
-              <img ng-click="showBadgeInfo(tag, badge)" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
+              <img uib-popover-template="'/directives/tpl/cd-badges/info'" popover-trigger="outsideClick" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
               <p class="badge-name"><b>{{ badge.name }}</b></p>
-            </div>
-            <div ng-show="badgeInfoIsCollapsed[tag]">
-              <div class="well">
-                <p><b>{@i18n key="Name"/}:</b> {{ badgeInfo[tag].name }}</p>
-                <p><b>{@i18n key="Short Description"/}:</b> {{ badgeInfo[tag].strapline }}</p>
-                <p><b>{@i18n key="Date Awarded"/}:</b> {{ badgeInfo[tag].formattedDateAccepted }}</p>
-                <p ng-if="badgeInfo[tag].evidenceType"><b>{@i18n key="Proof"/}:</b> {{ badgeInfo[tag].evidenceType }}</p>
-              </div>
             </div>
           </div>
           <div cd-claim-badge-button ng-if="editMode"></div>

@@ -10,21 +10,27 @@
 
   .badge-container {
     text-align: center;
-    margin: 0 25px;
+    padding: 0 25px;
+    flex: 1;
 
     .badge-thumbnail {
       width: 100px;
     }
   }
 
-  .badge-category-block {
+  .badge-category-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 
-    .badge-tag-block {
-      display: flex;
-      flex-wrap: wrap;
+    .badge-tag-container {
+      flex: 1;
+
+      .badge-tag-block {
+        text-align: center;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
     }
   }
 }

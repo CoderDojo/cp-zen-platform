@@ -1,21 +1,13 @@
 <div class="row badge-list">
   <div ng-repeat="category in categories" class="badge-category-heading" heading="{{ prepareHeading(category) }}" ng-click="categorySelected()">
-    <div class="badges-category-container">
-      <h2>{{ prepareHeading(category) }}</h2>
-      <div class="badge-category-block">
-        <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
+    <h2>{{ prepareHeading(category) }}</h2>
+    <div class="badge-category-container">
+        <div ng-repeat="(tag, badgesData) in badges[category]" class="badge-tag-container">
           <h3>{{ prepareHeading(tag) }}</h3>
           <div class="badge-tag-block">
             <div class="badge-container" ng-repeat="badge in badgesData">
-              <img ng-click="showBadgeInfo(tag, badge)" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
+              <img uib-popover="{{ badge.strapline }}" popover-trigger="outsideClick" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
               <p class="badge-name"><b>{{ badge.name }}</b></p>
-            </div>
-          </div>
-          <div ng-show="badgeInfoIsCollapsed[tag]" class="badge-information">
-            <div class="well">
-              <p><b>{@i18n key="Name"/}:</b> {{ badgeInfo[tag].name }}</p>
-              <p><b>{@i18n key="Short Description"/}:</b> {{ badgeInfo[tag].strapline }}</p>
-            </div>
           </div>
         </div>
       </div>
