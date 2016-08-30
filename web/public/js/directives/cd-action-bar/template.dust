@@ -1,0 +1,3 @@
+<div class="cd-action-bar" data-open="{{ $ctrl.open }}" ng-transclude>
+
+</div>
