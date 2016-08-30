@@ -3,11 +3,9 @@
 
 angular
     .module('cpZenPlatform')
-    .directive('cdConnectLms', function () {
+    .directive('cdLms', function () {
       return {  restrict: 'AE',
-        template: '<div class="panel panel-default" ng-show="getVisibility()">'+
-        '<button ng-click="getLoginURL()" class="btn btn-default btn-block">{{ lmsLink }}</button>'+
-        '</div>',
+        templateUrl: '/directives/tpl/lms',
         controller: ['$scope', 'auth', 'cdDojoService', 'cdLMSService', 'cdUsersService',
          '$window', '$translate', 'alertService',
         function ($scope, auth, cdDojoService, cdLMSService, cdUsersService,
@@ -15,7 +13,6 @@ angular
           $scope.allowed = false;
           var user = {};
           var userTypes = [];
-          $scope.lmsLink = $translate.instant('Access our e-learning module');
           $scope.lmsVisibility = false;
 
           $scope.getVisibility = function () {
@@ -57,20 +54,10 @@ angular
           };
 
           $scope.getLoginURL = function () {
-            cdLMSService.getLoginURL({}, callback);
+            cdLMSService.getLoginURL({approval: true}, callback);
 
             function callback (link) {
-              if (link.approvalRequired){
-                alertService.confirm(
-                  $translate.instant('By using this functionality, you allow us to share basic information with this provider (email, name, user type)\n Do you agree?'),
-                  function (response) {
-                    if(response === true) {
-                      cdLMSService.getLoginURL({approval: true}, callback);
-                    }
-                });
-              } else if(link.url){
-                $window.location.href = link.url;
-              }
+              $window.location.href = link.url;
             }
           };
         }]

@@ -3035,8 +3035,17 @@ msgstr " and see what we are working on, as well as the latest features for Zen.
 msgid "Access our e-learning module"
 msgstr "Access our e-learning module"
 
-msgid "By using this functionality, you allow us to share basic information with this provider (email, name, user type)\n Do you agree?"
-msgstr "By using this functionality, you allow us to share basic information with this provider (email, name, user type)\n Do you agree?"
+msgid "By using this functionality, you allow us to share basic information with this provider (email, name, user type)"
+msgstr "By using this functionality, you allow us to share basic information with this provider (email, name, user type)"
+
+msgid "By clicking this button, you allow us to share basic information with this provider (email, name, user type)"
+msgstr "By clicking this button, you allow us to share basic information with this provider (email, name, user type)"
+
+msgid "Only modules for mentors and champions are available at the moment, come back later on to discover more!"
+msgstr "Only modules for mentors and champions are available at the moment, come back later on to discover more!"
+
+msgid "Do you agree?"
+msgstr "Do you agree?"
 
 msgid "A new dojo has been created"
 msgstr "A new dojo has been created!"

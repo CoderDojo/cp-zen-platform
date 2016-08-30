@@ -690,6 +690,24 @@
             pageTitle: 'Profile'
           }
         })
+        .state("connect-lms", {
+          url: '/profile/lms',
+          parent: 'dashboard',
+          template: '<cd-lms class="row"></cd-lms>',
+          resolve: {
+            profile: resolves.ownProfile,
+            loggedInUser: resolves.loggedInUser,
+            initUserTypes: resolves.initUserTypes
+          },
+          controller: function ($scope, profile, loggedInUser, initUserTypes) {
+            $scope.profile = profile;
+            $scope.loggedInUser = loggedInUser;
+            $scope.initUserTypes = initUserTypes;
+          },
+          params: {
+            pageTitle: 'Access our e-learning modules'
+          }
+        })
         .state("user-profile", {
           url: "/profile/:userId?public",
           templateUrl: '/directives/tpl/user/cd-profile/view',
