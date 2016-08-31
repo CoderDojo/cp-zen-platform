@@ -2,6 +2,7 @@
   "./web/public/components/async/dist/async.min.js",
   "./web/public/components/lodash/dist/lodash.min.js",
   "./web/public/components/jquery/dist/jquery.min.js",
+  "./web/public/components/jquery.inview/jquery.inview.min.js",
   "./web/public/components/angular/angular.js",
   "./web/public/components/angular-cookies/angular-cookies.min.js",
   "./web/public/components/bootstrap/dist/js/bootstrap.min.js",
