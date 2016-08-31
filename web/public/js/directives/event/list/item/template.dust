@@ -13,11 +13,17 @@
     <cd-share-event share-event="cdELI.event" class="pull-right cd-share-event" ng-if="!cdELI.isEmbedded"></cd-share-event>
     <div ng-switch="cdELI.event.type">
       <p ng-switch-when="recurring">
-        <b>{@i18n key="Dates"/}</b>:
-        <span ng-repeat="eventDate in cdELI.event.formattedDates">
-          {{ eventDate }}
-        </span>
+        <div>
+          <div class="cd-date__date h3" ng-bind="::cdELI.event.formattedDate"></div>
+          <i class="fa fa-chevron-down pull-right" title="expand dates" ng-click="cdELI.datesExpanded = !cdELI.datesExpanded"></i>
+          <div class="cd-date__date h5">
+            {@i18n key="From"/} <span ng-bind="::cdELI.event.startDate | date : 'mediumDate'"></span>
+          </div>
+        </div>
       </p>
+      <ul ng-repeat="eventDate in cdELI.event.formattedDates" ng-show="cdELI.datesExpanded" class="list-unstyled">
+        <li> {{ eventDate }} </li>
+      </ul>
       <div ng-switch-default>
         <div class="cd-date__date h3" ng-bind="::cdELI.event.startDate | date : 'mediumDate'"></div>
         <div class="cd-date__date h3" ng-bind="::cdELI.event.endDate | date : 'shortTime'"></div>

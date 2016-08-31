@@ -16,6 +16,7 @@ angular
             cdELI.isEmbedded = embedder.isEmbedded();
             cdELI.event.isPast = eventUtils.isEventInPast(_.last(cdELI.event.dates));
             cdELI.event = eventUtils.getFormattedDates(cdELI.event);
+            cdELI.datesExpanded = false;
             cdELI.goTo = function() {
               embedder.redirectWrapper( function(){
                 $state.go('dojo-event-details', {dojoId: cdELI.event.dojoId, eventId: cdELI.event.id});

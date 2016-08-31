@@ -36,6 +36,8 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
           $translate.instant('on') + " " + $translate.instant(event.day) + " " +
           $translate.instant('at') + " " + event.time;
       }
+      event.startDate = _.first(event.formattedDates);
+      event.endDate = _.last(event.formattedDates);
     } else {
       //One-off event
       event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
