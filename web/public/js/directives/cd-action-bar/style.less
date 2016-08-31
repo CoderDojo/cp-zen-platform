@@ -41,11 +41,6 @@
       transform: translateY(100%);
     }
   }
-
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background: @cd-blue;
   height: 40px;
   z-index: 5000;
@@ -58,7 +53,20 @@
   margin-bottom: -40px;
   box-sizing: content-box;
 
-  &-spacer {
+  &--fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto -40px auto;
+
+    @media screen and (max-width: 1340px) and (min-width: 769px) {
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+  }
+
+  &__spacer {
     flex: 1;
   }
 
@@ -72,8 +80,8 @@
     animation-name: slideOutDown;
   }
 
-  @media screen and (max-width: 1340px) and (min-width: 769px) {
-    margin-left: 30px;
-    margin-right: 30px;
+  &__wrapper {
+    height: 40px;
+    margin: 0 -16px -16px -16px;
   }
 }
