@@ -1,4 +1,4 @@
-<div uib-dropdown is-open="status.isopen" ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions hidden-xs hidden-sm">
+<div uib-dropdown is-open="status.isopen" ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions">
   <button id="cd-dojo-action" type="button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
     <i class="fa fa-gear"></i> <span class="caret"></span>
   </button>

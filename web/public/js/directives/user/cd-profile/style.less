@@ -25,8 +25,11 @@
       right: 0;
       z-index: 1;
       padding: 0;
-      b {
+      b.title {
         visibility: hidden;
+        @media (max-width: @screen-sm-min) {
+          display: none;
+        }
       }
       a {
         display: block;
