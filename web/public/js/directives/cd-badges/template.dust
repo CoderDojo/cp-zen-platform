@@ -1,0 +1,12 @@
+<div class="cd-dashboard cd-badges-dashboard">
+  <div class="row badge-info">
+    <h2>{@i18n key="Badges"/}</h2>
+    <div class="alert alert-info" ng-if="isDojoAdmin">
+      <p>{@i18n key="If you'd like to award a badge, please visit the manage users section on:"/} <a ui-sref="my-dojos">{@i18n key="My Dojos"/}</a></p>
+    </div>
+    <p>{@i18n key="CoderDojo participants can receive badges as a recognition of their developing skills or their participation in the CoderDojo community. Examples include badges for JavaScript programming, for attending ten Dojos, or for being a Mentor."/}</p>
+    <p>{@i18n key="Badges are awarded by Dojo Champions, for most things, or by the CoderDojo Foundation in the case of events like Coolest Projects."/}</p>
+  </div>
+  <cd-claim-badge></cd-claim-badge>
+  <cd-list-badges></cd-list-badges>
+</div>

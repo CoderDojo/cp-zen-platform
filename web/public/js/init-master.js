@@ -731,7 +731,7 @@
         .state('badges-dashboard', {
           url:'/badges',
           controller:'badges-dashboard-controller',
-          templateUrl: '/dojos/template/badges/index',
+          template: '<cd-badges></cd-badges>',
           params: {
             pageTitle: 'Badges',
           }

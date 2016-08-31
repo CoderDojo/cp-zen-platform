@@ -1,5 +1,5 @@
  'use strict';
-function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService, cdUsersService) {
+function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService, cdUsersService) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -18,6 +18,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
 
   auth.instance(function (data) {
     $scope.user = data.user;
+    $scope.loggedIn = !!$scope.user;
     $scope.isDojoAdmin = false;
 
     if(data.user) {
@@ -84,31 +85,20 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
     return heading.replace(/-/g, ' ').replace(/\w\S*/g, function(str){return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();}); // capitalize first letter of each word
   };
 
-  $scope.showBadgeInfo = function (tag, badge) {
-    if(lastClicked[tag] !== badge.id && $scope.badgeInfoIsCollapsed[tag]) {
-      $scope.badgeInfo[tag] = badge;
-    } else {
-      $scope.badgeInfo[tag] = badge;
-      $scope.badgeInfoIsCollapsed[tag] = !$scope.badgeInfoIsCollapsed[tag];
-    }
-    lastClicked[tag] = badge.id;
-  };
-
-  $scope.categorySelected = function () {
-    lastClicked = {};
-    $scope.badgeInfoIsCollapsed = {};
-  };
-
   $scope.previewBadge = function (badgeClaimNumber) {
-    cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
-      if(response.error) return alertService.showError(errorMsg);
-      if(_.isEmpty(response)) {
-        $scope.hideBadgePreview();
-        return alertService.showAlert($translate.instant('Invalid Badge Claim Number.'));
-      }
-      $scope.previewBadgeData = response.badge;
-      $scope.showBadgePreview = true;
-    });
+    if(!$scope.loggedIn) {
+      $state.go('login', {referer: $location.url()});
+    } else {
+      cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
+        if(response.error) return alertService.showError(errorMsg);
+        if(_.isEmpty(response)) {
+          $scope.hideBadgePreview();
+          return alertService.showAlert($translate.instant('Invalid Badge Claim Number.'));
+        }
+        $scope.previewBadgeData = response.badge;
+        $scope.showBadgePreview = true;
+      });
+    }
   };
 
   $scope.hideBadgePreview = function () {
@@ -134,8 +124,7 @@ function cdBadgesDashboardCtrl($scope, cdBadgesService, utilsService, alertServi
       return alertService.showAlert($translate.instant('You have successfully claimed a badge. It is now visible on your profile page.'));
     }
   };
-
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', 'cdUsersService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', '$state', '$location', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', 'cdUsersService', cdBadgesDashboardCtrl]);

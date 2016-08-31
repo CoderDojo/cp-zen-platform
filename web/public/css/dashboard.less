@@ -498,39 +498,6 @@ h1, h2, h3, h4, h5, h6, .cd-section-header{
   background-size: 18px 18px;
 }
 
-.cd-badges-dashboard {
-  .main-content-padding;
-
-  .nav-tabs.nav-justified>.active>a {
-    color: @cd-orange;
-    border: 1px solid @cd-orange;
-    border-bottom-color: @cd-white;
-  }
-
-  input.has-error {
-    border: 1px solid @cd-red;
-  }
-
-  label.validationMessage {
-    color: @cd-red;
-    margin-left: 10px;
-  }
-
-  div.childSelect {
-    display: inline-block;
-  }
-
-  button.inline-select {
-    display: inline;
-    width: 74%;
-  }
-
-  .claim-badge-input-container {
-    margin: 35px;
-    text-align: center;
-  }
-}
-
 .cd-section-header, .__cd-section-header {
   border-bottom: @cd-very-light-gray 2px solid;
   margin-top: 2em;
@@ -810,26 +777,27 @@ div.parent-list ul {
   padding-top: 10px;
 }
 
-div.badges-category-container {
-  margin-top: 20px;
-}
+.profile-section {
+  .badges-category-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
 
-div.badges-tag-container {
-  margin-top:20px;
-}
+  .badges-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 24px;
 
-div.badge-container {
-  width: 150px;
-  height: 150px;
-  margin: 25px;
-  margin-top: 0;
-  display: inline-block;
-  text-align: center;
-  float: left;
-}
+    .badge-container {
+      margin: 0 24px;
+      text-align: center;
+    }
 
-img.badge-thumbnail {
-  width: 150px;
+    .badge-thumbnail {
+      width: 150px;
+    }
+  }
 }
 
 .five-percent-width {
@@ -913,31 +881,6 @@ img.badge-thumbnail {
 
 .font-13 {
   font-size: 13px;
-}
-
-.claim-badge-input {
-  text-align: center;
-}
-
-.preview-badge-container {
-  width: 300px;
-  margin-top: 25px;
-}
-
-.preview-badge-thumbnail {
-  width: 300px;
-}
-
-.preview-badge-name {
-  font-size: 18px;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.preview-badge-description {
-  font-size: 16px;
-  text-align: center;
-  margin-top: 20px;
 }
 
 #generalInfoForm {
