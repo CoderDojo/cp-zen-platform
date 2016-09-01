@@ -8,6 +8,21 @@
       min-width: 208px;
       max-width: 208px;
       padding: 16px 32px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: none;
+
+        .cd-picture-grid__picture {
+          box-shadow: 0 0 0 10px @cd-purple, 0 0 0 0 @cd-blue;
+        }
+      }
+
+      &--selected, &--selected:hover {
+        .cd-picture-grid__picture {
+          box-shadow: 0 0 0 0 @cd-purple, 0 0 0 10px @cd-blue;
+        }
+      }
     }
 
     &__picture {
@@ -16,6 +31,7 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      transition: box-shadow 0.2s ease-in-out;
     }
 
     &__caption {
