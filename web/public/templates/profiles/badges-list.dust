@@ -6,9 +6,9 @@
     <uib-tabset justified="true">
       <uib-tab ng-repeat="category in categories" heading="{{ capitalizeFirstLetter(category) }}" ng-click="categorySelected()">
         <div class="badges-category-container row">
-          <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container col-xs-6 col-sm-4">
+          <div ng-repeat="(tag, badgesData) in badges[category]" class="badges-tag-container">
             <div class="badge-container" ng-repeat="badge in badgesData">
-              <img uib-popover-template="'/directives/tpl/cd-badges/info'" popover-trigger="outsideClick" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail img-responsive pointer">
+              <img uib-popover-template="'/directives/tpl/cd-badges/info'" popover-trigger="outsideClick" ng-src="{{ badge.imageUrl }}" class="badge-thumbnail pointer">
               <p class="badge-name"><b>{{ badge.name }}</b></p>
             </div>
           </div>

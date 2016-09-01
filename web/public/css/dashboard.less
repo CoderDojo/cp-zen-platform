@@ -782,16 +782,22 @@ div.parent-list ul {
     display: flex;
     flex-wrap: wrap;
     margin-top: 24px;
+    justify-content: space-around;
   }
 
   .badges-tag-container {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 24px;
 
     .badge-container {
       margin: 0 24px;
       text-align: center;
+      flex: 1;
+
+      .badge-thumbnail {
+        max-width: 100px;
+        max-height: 100px;
+      }
     }
   }
 }
