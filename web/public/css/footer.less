@@ -1,17 +1,23 @@
-#footer .language-picker {
-  background: none;
-  color: @cd-white;
-  background: @cd-dark-grey;
-  border: none;
-  vertical-align: middle;
-  &-icon {
+#footer {
+  position: relative;
+  z-index: 6000;
+
+  .language-picker {
+    background: none;
+    color: @cd-white;
+    background: @cd-dark-grey;
+    border: none;
     vertical-align: middle;
+    &-icon {
+      vertical-align: middle;
+    }
   }
-}
-#footer a.translate-link {
-  text-decoration: none;
-  line-height: 24px;
-  font-size: 16px;
-  display: block;
-  text-align: right;
+
+  a.translate-link {
+    text-decoration: none;
+    line-height: 24px;
+    font-size: 16px;
+    display: block;
+    text-align: right;
+  }
 }
