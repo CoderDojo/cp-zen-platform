@@ -1389,6 +1389,9 @@ msgstr "Every"
 msgid "From"
 msgstr "From"
 
+msgid "Next date:"
+msgstr "Next date:"
+
 msgid "Close"
 msgstr "Close"
 
