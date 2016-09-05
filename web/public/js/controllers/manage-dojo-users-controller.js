@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService) {
+  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService, $timeout) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -354,10 +354,21 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   $scope.userListDownloadLink = function () {
     cdDojoService.exportDojoUsers(dojoId, function (response) {
+      //  TODO: export as a directive, it modifies the DOM
       var downloadLink = angular.element('<a></a>');
       var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
-      downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-      window.open(downloadLink[0]);
+      var urlFactory = window.URL || window.webkitURL;
+      var tempFile = urlFactory.createObjectURL(csv);
+      downloadLink.attr('href', tempFile);
+      downloadLink.attr('download', dojoId +'.csv');
+      // Ok, that's sad.
+      document.body.appendChild(downloadLink[0]);
+
+      downloadLink[0].click();
+      $timeout(function(){
+       document.body.removeChild(downloadLink[0]);
+       urlFactory.revokeObjectURL(tempFile);
+      }, 0);
     });
   };
 
@@ -434,4 +445,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout', cdManageDojoUsersCtrl]);
