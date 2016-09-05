@@ -68,13 +68,21 @@
     }
 
     /* ninja is defined as a key in many areas, keep it for backward compatibility */
-    $scope.ticketTypes = [
-      {name: 'ninja', title: $translate.instant('Youth')},
-      {name: 'parent-guardian', title: $translate.instant('Parent/guardian')},
-      {name: 'mentor', title: $translate.instant('Mentor')},
-      {name: 'other', title: $translate.instant('Other')}
-    ];
+    // Used for translating ticket types in the table. Better than looping through an array each time to find matching translations
+    $scope.ticketTypesTranslations = {
+      ninja: $translate.instant('Youth'),
+      'parent-guardian': $translate.instant('Parent/guardian'),
+      mentor: $translate.instant('Mentor'),
+      other: $translate.instant('Other')
+    };
 
+    // Used for the filtering of ticket types, as we require an array of objects for that.
+    $scope.ticketTypes = [
+      {name: 'ninja', title: $scope.ticketTypesTranslations.ninja},
+      {name: 'parent-guardian', title: $scope.ticketTypesTranslations['parent-guardian']},
+      {name: 'mentor', title: $scope.ticketTypesTranslations.mentor},
+      {name: 'other', title: $scope.ticketTypesTranslations.other}
+    ];
 
     event.listDownloadLink = function (status) {
       cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
