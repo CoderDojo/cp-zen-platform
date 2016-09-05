@@ -30,7 +30,7 @@
         <div class="col-md-2">
           <ui-select name="ticketTypeFilter" ng-model="filter.ticketType" ng-change="filterApplications(session.id)" >
             <ui-select-match allow-clear="true" placeholder="{@i18n key="Select ticket type..."/}">{{ $select.selected.title }}</ui-select-match>
-              <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes | filter: { label: $select.search }">
+              <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes | filter: {title: $select.search}">
                 <span ng-bind-html="ticketType.title | highlight: $select.search"></span>
               </ui-select-choices>
           </ui-select>
@@ -74,7 +74,7 @@
             <tr ng-repeat="application in applications">
               <td><a ui-sref="user-profile({userId: application.userId})">{{ application.name }}</a></td>
               <td> {{ application.ticketName }}</td>
-              <td> {{ application.ticketType }}</td>
+              <td> {{ ticketTypesTranslations[application.ticketType] }}</td>
               <td> {{ application.dateApplied }}</td>
               <td><span ng-if="application.age">{{ application.age }}</span></td>
               <td><ul><li ng-repeat="parent in application.parents"><a ui-sref="user-profile({userId: parent.id})">{{ parent.name }}</a></li></ul></td>
