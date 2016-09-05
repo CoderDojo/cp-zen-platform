@@ -116,7 +116,7 @@
           </tbody>
         </table>
         <div class="row">
-          <div class="col-md-10 text-center" ng-if="events.length > 0">
+          <div class="col-md-10 text-center" ng-if="applications.length > 0">
             <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged(session.id)" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
               class="pagination-sm"
               first-text="{@i18n key="First" /}"
