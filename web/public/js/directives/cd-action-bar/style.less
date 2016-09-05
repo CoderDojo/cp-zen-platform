@@ -45,7 +45,7 @@
   background: @cd-blue;
   height: 40px;
   z-index: 5000;
-  max-width: 1280px;
+  max-width: @screen-cd-breakpoint-lg;
   margin: 0 auto;
   display: flex;
   transform: translateY(100%);
@@ -61,7 +61,7 @@
     left: 0;
     margin: 0 auto -40px auto;
 
-    @media screen and (max-width: 1340px) and (min-width: 769px) {
+    @media screen and (max-width: @screen-cd-breakpoint-lg + 60) and (min-width: 769px) {
       margin-left: 30px;
       margin-right: 30px;
     }

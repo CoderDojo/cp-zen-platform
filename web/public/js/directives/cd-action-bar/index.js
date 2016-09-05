@@ -28,6 +28,7 @@
             }
           });
         };
+
         ctrl.$onDestroy = function () {
           $('#footer').off('inview');
         };
