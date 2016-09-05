@@ -8,7 +8,12 @@
       <cd-share-event share-event="event"></cd-share-event>
       <span class="cd-event-detail__date col-xs-12">
         <i class="fa fa-clock-o"></i>
-        <h3><span ng-bind="::event.formattedDate"></span></h3>
+        <h3 ng-if="event.type === 'one-off'"><span ng-bind="::event.formattedDate"></span></h3>
+        <span ng-if="event.type === 'recurring'">
+          <h3><span ng-bind="::event.nextDate"></span></h3>
+          <span class="h3" ng-bind="::event.time"></span>
+          <p>(<i ng-bind="::event.formattedDate"></i>)</p>
+        </span>
       </span>
     </div>
     <div class="row">

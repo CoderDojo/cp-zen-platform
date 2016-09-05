@@ -7,9 +7,16 @@ angular
         return {
           restrict: 'AE',
           templateUrl: '/directives/tpl/event/detail',
-          controller: ['$scope', 'cdEventsService', 'cdUsersService', '$translate', '$window', function($scope, cdEventsService, cdUsersService, $translate, $window) {
+          controller: ['$scope', 'cdEventsService', 'cdUsersService', '$translate', '$window', 'eventUtils',
+          function($scope, cdEventsService, cdUsersService, $translate, $window, eventUtils) {
             $scope.event.sessions = $scope.sessions;
-            $scope.event.formattedDate = moment.utc(_.head($scope.event.dates).startTime).format('Do MMMM YY');
+            $scope.event.isPast = eventUtils.isEventInPast(_.last($scope.event.dates));
+            $scope.event = eventUtils.getFormattedDates($scope.event);
+            if (!$scope.event.isPast && $scope.event.type === 'recurring') {
+              $scope.event.upcomingDates = eventUtils.getNextDates($scope.event.dates, $scope.event.formattedDates);
+              $scope.event.nextDate = moment.utc(_.first($scope.event.upcomingDates).startTime).format('Do MMMM YY');
+            }
+
             $scope.eventUserSelection = {};
             $scope.currentUser = {};
             var isParent = false;
