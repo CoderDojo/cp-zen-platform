@@ -2,7 +2,7 @@
 
 angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($translate){
   var eventUtils = {};
-  eventUtils.isEventInPast = function(dateObj){
+  eventUtils.isEventInPast = function (dateObj) {
     var now = moment.utc();
     var eventUtcOffset = moment(dateObj.startTime).utcOffset();
     var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
@@ -10,7 +10,25 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
     return now.isAfter(start);
   }
 
-  eventUtils.getFormattedDates = function(event) {
+  eventUtils.getNextDates = function (dates, formattedDates) {
+    var nextDateIndex = void 0;
+    var eventIndex = 0;
+    while (eventIndex < dates.length && _.isUndefined(nextDateIndex)) {
+      var date = dates[eventIndex];
+      if (!eventUtils.isEventInPast(date)) {
+        nextDateIndex = eventIndex;
+      }
+      eventIndex +=1;
+    }
+
+    if (nextDateIndex >= 0 && formattedDates) {
+      return formattedDates.slice(nextDateIndex);
+    }
+    // Congrats, you called this function upon an past event
+    return [];
+  }
+
+  eventUtils.getFormattedDates = function (event) {
     var utcOffset = moment().utcOffset();
 
     var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
