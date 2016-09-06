@@ -25,7 +25,7 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
       return formattedDates.slice(nextDateIndex);
     }
     // Congrats, you called this function upon an past event
-    return false;
+    return [];
   }
 
   eventUtils.getFormattedDates = function (event) {
