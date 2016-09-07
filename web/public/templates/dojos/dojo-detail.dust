@@ -114,7 +114,7 @@
           <div ng-if="dojo.supporterImage">
             <h3 class="text-center cd-section-header">
               <a id="supporter"></a><a href="#supporter">{@i18n key="Dojo Supported By"/}</a></h3>
-            <img ng-src="{{ dojo.supporterImage }}">
+            <img ng-src="{{ dojo.supporterImage }}" class="img-responsive">
           </div>
         </div>
       </div>
