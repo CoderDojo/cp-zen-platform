@@ -259,7 +259,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if(hasPermission) {
 
         var updatedUserTypes = _.chain(angular.copy(user.frontEndTypes))
-          .pluck('text')
+          .map('text')
           .map(function (userType) {
             userType = userType.replace(/-/g, ' ');
             var initUserTypeFound = _.find(initUserTypes.data, function (initUserType) {
