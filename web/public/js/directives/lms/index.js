@@ -41,7 +41,7 @@ angular
             cdDojoService.getUsersDojos({userId: user.id}, function (userDojos) {
               if (!_.isEmpty(userDojos)) {
                 _.each(userDojos, function (userDojo) {
-                  userTypes = _.union(userDojo.userType, userTypes);
+                  userTypes = _.union(userDojo.userTypes, userTypes);
                 });
               }
               var allowed = ['champion', 'mentor'];
