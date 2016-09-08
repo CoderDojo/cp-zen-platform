@@ -1,0 +1,8 @@
+<div class="cdf-polls">
+  <cdf-poll-setup ng-repeat="poll in cdfP.polls" poll="poll"></cdf-poll-setup>
+  <div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-primary pull-right" ng-click="cdfP.new()">{@i18n key="New Poll"/}</button>
+    </div>
+  </div>
+</div>
