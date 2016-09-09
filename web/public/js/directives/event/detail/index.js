@@ -19,16 +19,16 @@ angular
 
             $scope.eventUserSelection = {};
             $scope.currentUser = {};
-            var isParent = false;
+            var isAdult = true;
             $scope.dojoId = $scope.dojo ? $scope.dojo.id : $scope.event.dojoId;
             if($scope.profile && $scope.dojoId){
               $scope.currentUser = $scope.profile.user;
               $scope.currentUser.profileId = $scope.profile.id;
-              if(_.includes($scope.profile.userTypes, 'parent-guardian') || _.includes($scope.profile.roles, 'cdf-admin')) isParent = true;
+              if(_.includes($scope.profile.userTypes, 'attendee-o13') || _.includes($scope.profile.userTypes, 'attendee-u13')) isAdult = false;
               if(!$scope.eventUserSelection[$scope.dojoId]) $scope.eventUserSelection[$scope.dojoId] = [];
               $scope.eventUserSelection[$scope.dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
               $scope.eventUserSelection[$scope.dojoId] = _.uniq($scope.eventUserSelection[$scope.dojoId], function (user) { return user.userId; });
-              if(isParent) {
+              if (isAdult) {
                 cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
                   _.each(ninjas, function (ninja) {
                     $scope.eventUserSelection[$scope.dojoId].push({userId: ninja.userId, title: ninja.name});
