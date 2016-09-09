@@ -9,7 +9,6 @@
     $scope.applyData = {};
     $scope.isMember = false;
     $scope.eventUserSelection = {};
-    var isParent = false;
 
     auth.get_loggedin_user(function (user) {
       $scope.currentUser = user;
@@ -18,18 +17,15 @@
         if(!_.isEmpty(response)) {
           $scope.isMember = true;
 
-          if(_.includes(response[0].userTypes, 'parent-guardian') || _.includes($scope.currentUser.roles, 'cdf-admin')) isParent = true;
           if(!$scope.eventUserSelection[dojoId]) $scope.eventUserSelection[dojoId] = [];
           $scope.eventUserSelection[dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
           $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
-          if(isParent) {
-            cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
-              _.each(ninjas, function (ninja) {
-                $scope.eventUserSelection[dojoId].push({userId: ninja.userId, title: ninja.name});
-                $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
-              });
+          cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
+            _.each(ninjas, function (ninja) {
+              $scope.eventUserSelection[dojoId].push({userId: ninja.userId, title: ninja.name});
+              $scope.eventUserSelection[dojoId] = _.uniq($scope.eventUserSelection[dojoId], function (user) { return user.userId; });
             });
-          }
+          });
 
           $scope.loadPage($scope.filter, true);
         } else {
