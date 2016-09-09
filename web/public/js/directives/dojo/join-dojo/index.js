@@ -33,7 +33,7 @@ angular
               },
               image: userUtils.defaultAvatar('parent-guardian'),
               approvalRequired: false,
-              text: $translate.instant('Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!'),
+              text: $translate.instant('Parent/Guardian - Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors.'),
               class: 'cd-parent'
             };
             $scope.roles = [
@@ -44,7 +44,7 @@ angular
                 },
                 approvalRequired: true,
                 image: userUtils.defaultAvatar('mentor'),
-                text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+                text: $translate.instant('Mentor/Volunteer - Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!'),
                 class: 'cd-volunteer'
               },
               {
@@ -54,7 +54,7 @@ angular
                 },
                 approvalRequired: true,
                 image: userUtils.defaultAvatar('champion'),
-                text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+                text: $translate.instant('Champion - CoderDojo Champions are those who take the lead in organising a Dojo and ensure each session runs smoothly. Champions can be one person or it can be a few people who Co-Champion a Dojo to share the work. Champions should join their Dojo on Zen to set up events, award badges and to contribute to the CoderDojo Forums.'),
                 class: 'cd-champion'
               }];
 
