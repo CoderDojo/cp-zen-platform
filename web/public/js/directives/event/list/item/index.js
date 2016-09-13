@@ -18,7 +18,7 @@ angular
             cdELI.event = eventUtils.getFormattedDates(cdELI.event);
             if (!cdELI.event.isPast && cdELI.event.type === 'recurring') {
               cdELI.event.upcomingDates = eventUtils.getNextDates(cdELI.event.dates, cdELI.event.formattedDates);
-              cdELI.event.nextDate = moment.utc(_.first(cdELI.event.upcomingDates).startTime).format('Do MMMM YY');
+              cdELI.event.nextDate = _.first(cdELI.event.upcomingDates);
             }
             cdELI.datesExpanded = false;
             cdELI.goTo = function() {
