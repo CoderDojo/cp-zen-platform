@@ -95,17 +95,23 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
+//  TODO: merge onPreResponses cause they conflict
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
 
+  if (status === 400) {
+    request.log(['error', '400'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.data.details}, Date.now());
+  }
   // if it's an api call, continue as normal..
   if (request.url.path.indexOf('/api/2.0') === 0) {
     return reply.continue();
   }
+
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
+  request.log(['error', '40x'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -119,11 +125,11 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
+  request.log(['error', '50x'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   // Display full error message if not in production environment.
   if (env !== 'production') {
     return reply.continue();
   }
-
   // Otherwise, give a generic error reply to hide errors in production.
   debug('onPreResponse', 'showing 500 errors page');
   return reply.view('errors/500', request.locals);
@@ -206,18 +212,31 @@ server.register(scooter, function (err) {
 
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
-if (process.env.HAPI_DEBUG === 'true') {
-  var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
   var goodOptions = {
     opsInterval: 1000,
     requestPayload:true,
     responsePayload:true,
-    reporters: [{
+    reporters: []
+  };
+  if (process.env.HAPI_DEBUG) {
+    var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+    goodOptions.reporters.push({
       reporter: require('good-file'),
       events: { log: '*', response: '*' },
       config: goodLogFile
-    }]
-  };
+    });
+  }
+  if (process.env.LOGENTRIES_ENABLED === 'true' && process.env.LOGENTRIES_TOKEN) {
+    goodOptions.reporters.push({
+      reporter: require('good-http'),
+      events: { error: '*', request: '*'},
+      config: {
+        endpoint: 'https://webhook.logentries.com/noformat/logs/' + process.env.LOGENTRIES_TOKEN,
+        threshold: 0
+      }
+    });
+  }
 
   server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
 }
