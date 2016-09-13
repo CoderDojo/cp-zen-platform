@@ -70,6 +70,7 @@
           event.for = $translate.instant(userType);
           events.push(event);
         });
+        events.sort(eventUtils.nextDateComparator);
         $scope.events = events;
         cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
           $scope.totalItems = result.length;
