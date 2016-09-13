@@ -1,0 +1,13 @@
+<div class="row cd-poll-counter">
+  <div class="col-xs-12 col-sm-6 cd-life-bar">
+    <ul class="list-unstyled list-inline">
+      <li ng-repeat="heart2 in lifebar.full"><img src="/img/icons/pix-heart.png"></img></li>
+      <li ng-repeat="heart2 in lifebar.empty"><img src="/img/icons/pix-heart-cold.png"></img></li>
+    </ul>
+    <!-- <small>{{ participationLevel.label}}</small> -->
+  </div>
+  <div class="poll-counter col-xs-12 col-sm-6 text-center">
+    <div class="poll-values"></div>
+    <div>{{ label }}</div>
+  </div>
+</div>

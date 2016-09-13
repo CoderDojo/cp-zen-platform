@@ -5,14 +5,8 @@
 function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $timeout){
     return {
       restrict: 'E',
-      template: '<div class="poll-map row">'+
-        '<section ng-if="mapLoaded" id="map">'+
-        '<div ui-map-info-window="model.markerInfoWindow">'+
-          '<h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojoName }}</a></h3>'+
-        '</div>'+
-        '<div ng-repeat="marker in markers" ui-map-marker="markers[$index]" ui-event="{\'map-click\': \'openMarkerInfo(marker)\'}"></div>'+
-        '<div id="googleMap" ui-map="model.map" ui-event="{\'map-dragend\':\'mapDragEnd()\', \'map-zoom_changed\':\'mapZoomChanged()\'}" ui-options="mapOptions" class="map-canvas"></div>'+
-      '</section></div>',
+      templateUrl: '/directives/tpl/poll/map',
+      transclude: true,
       controller: function($scope){
         $scope.markers = [];
         $scope.model = {};

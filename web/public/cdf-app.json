@@ -1,0 +1,4 @@
+[
+  "./web/public/js/**/*cdf*/**/*.js",
+  "./web/public/js/init-cdf.js"
+]

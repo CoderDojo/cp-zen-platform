@@ -6,6 +6,7 @@ var controller = module.exports = [
     path: '/embedded/event/{eventId}',
     config: {
       handler: function (request, reply) {
+        console.log('embedded');
         reply.view('embedded', request.locals);
       },
       plugins: {
@@ -22,6 +23,7 @@ var controller = module.exports = [
     path: '/embedded/dojos-map/lat/{lat}/lon/{lon}',
     config: {
       handler: function (request, reply) {
+        console.log('embedded');
         reply.view('embedded', request.locals);
       },
       plugins: {

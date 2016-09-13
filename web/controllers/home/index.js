@@ -5,6 +5,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
+      console.log('rootHandler');
       reply.view('index', request.locals);
     }
   },
@@ -13,6 +14,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/login',
     handler: function (request, reply) {
+      console.log('loginHandler');
       reply.view('index', request.locals);
     }
   },

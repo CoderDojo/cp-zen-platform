@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
-        <form ng-if="cdfPS.poll.responses.length === 0" ng-submit="cdfP.save(cdfPS.poll)" >
+        <form ng-if="cdfPS.poll.responses.length === 0" ng-submit="cdfPS.save(cdfPS.poll)" >
           <div class="form-group">
             <input type="text" class="form-control" ng-model="cdfPS.poll.question" placeholder="{@i18n key="My question"/}"></input>
           </div>
@@ -25,7 +25,7 @@
             <input type="text" class="form-control" ng-model="cdfPS.poll.valueUnity" placeholder="{@i18n key="My unit"/}"></input>
             <input type="number" class="form-control" ng-model="cdfPS.poll.maxAnswers" placeholder="{@i18n key="Max answers"/}"></input>
           </div>
-          <div class="cd-poll-item__datepicker">
+          <div class="cd-poll-setup__datepicker">
             <input name="endDate" type="date" uib-datepicker ng-model="cdfPS.poll.endDate"
               ng-required="true" ng-readonly="true" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
               class="form-control" />
@@ -34,13 +34,20 @@
         </form>
       </div>
       <div class="col-xs-12 col-md-6">
-        <form class="form-group input-group" ng-submit="sendEmail()">
-          <input type="email" ng-model="cdfP.testEmail" class="form-control"></input>
+        <form class="form-group input-group" ng-submit="cdfPS.sendEmail()">
+          <input type="email" ng-model="cdfPS.testEmail" class="form-control"></input>
           <span class="input-group-btn">
-            <button class="btn btn-primary" ng-click="cdfP.new()">{@i18n key="Test email"/}</button>
+            <button class="btn btn-primary" type="submit">{@i18n key="Test email"/}</button>
           </span>
         </form>
-        <a ui-sref="cdf-poll-results({pollId: cdfPS.poll.id, results: cdfPS.poll.responses})">{@i18n key="Poll results"/}</a>
+        <a ui-sref="poll-results({pollId: cdfPS.poll.id, results: cdfPS.poll.responses})">{@i18n key="Poll results"/}</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <form class="form-group input-group" ng-submit="cdfPS.startCampaign()" >
+          <button class="btn btn-primary" type="submit" ng-disabled="cdfPS.poll.startedAt">{@i18n key="Start campaign"/}</button>
+        </form>
       </div>
     </div>
   </div>

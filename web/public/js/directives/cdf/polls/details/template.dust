@@ -1,4 +1,4 @@
-<cdf-poll-setup poll="cdfPD.poll" count="cdfPD.poll.count">
+<cdf-poll-setup poll="cdfPD.poll">
 </cdf-poll-setup>
-<cdf-poll-results results="cdfPD.poll.responses" formatted-count="cdfPD.poll.formattedCount">
+<cdf-poll-results results="cdfPD.poll.responses" formatted-count="cdfPD.poll.formattedCount" poll="cdfPD.poll">
 </cdf-poll-results>

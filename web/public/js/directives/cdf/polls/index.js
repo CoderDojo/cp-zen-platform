@@ -42,17 +42,6 @@ var cdfPolls = {
         responses: []
       });
     }
-    cdfP.save = function (poll) {
-      if (poll.responses.length === 0){
-        var toSave = _.clone(poll);
-        delete toSave.responses;
-        delete toSave.$$hashKey;
-        cdPollService.saveSetup(toSave)
-        .then(function(savedPoll){
-          poll = savedPoll.data;
-        });
-      }
-    }
   }],
   controllerAs: 'cdfP'
 };

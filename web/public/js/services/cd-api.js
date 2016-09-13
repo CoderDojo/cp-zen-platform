@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
-  var baseUrl = 'api/2.0/';
+  var baseUrl = '/api/2.0/';
   return {
     baseUrl: baseUrl,
     post: function(url, params, resolve, reject) {
@@ -46,7 +46,11 @@ angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
 
   function wrapCbPromise (fn, resolve, reject) {
     if (resolve)
-    fn().then(function(data){resolve(data)}, reject);
+    fn()
+    .then(function(response){
+      var data = response.data && response.headers && response.config? response.data: response;
+      return resolve(data);
+    }, reject);
     else
       return fn();
   }

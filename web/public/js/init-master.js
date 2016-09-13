@@ -314,27 +314,6 @@
             pageTitle: 'Dojo List'
           }
         })
-        .state("cdf", {
-          url: "/cdf",
-          parent: 'dashboard',
-          abstract: true,
-          template: '<ui-view></ui-view>'
-        })
-          .state("cdf-login", {
-            url: "/login",
-            parent: 'cdf',
-            template: '<cd-login></cd-login>'
-          })
-          .state("cdf-polls", {
-            url: "/polls",
-            parent: 'cdf',
-            template: '<cdf-polls></cdf-polls>'
-          })
-          .state("cdf-poll-results", {
-            url: "/polls/:pollId/results",
-            parent: 'cdf',
-            template: '<cdf-poll-details></cdf-poll-details>',
-          })
         .state("manage-dojos", {
           url: "/manage-dojos",
           parent: 'dashboard',
@@ -768,8 +747,10 @@
         })
         .state('poll-stats', {
           url:'/poll/:pollId',
-          controller: 'poll-controller',
-          templateUrl: '/dojos/template/poll-stats',
+          template: '<cd-poll></cd-poll>',
+          controller: function($scope, gmap){
+            $scope.gmap = gmap;
+          },
           params: {
             pageTitle: 'Poll stats',
           },
@@ -779,8 +760,10 @@
         })
         .state('fill-poll', {
           url:'/poll/:pollId/dojo/:dojoId',
-          controller: 'poll-controller',
-          templateUrl: '/dojos/template/fill-poll',
+          template: '<cd-poll></cd-poll>',
+          controller: function($scope, gmap){
+            $scope.gmap = gmap;
+          },
           params: {
             pageTitle: 'Poll',
           },

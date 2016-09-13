@@ -1,8 +1,0 @@
-<div class="cd-color-4-underline row">
-  <legend>{{ title }}</legend>
-  <cd-poll-form question="question" poll="poll" dojo-id="dojoId"></cd-poll-form>
-
-  <cd-poll-counter poll-id="pollId" label="label"></cd-poll-counter>
-
-  <cd-poll-map></cd-poll-map>
-</div>

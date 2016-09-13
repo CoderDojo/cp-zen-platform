@@ -1,0 +1,9 @@
+<div class="cd-poll-map row">
+  <section ng-if="mapLoaded" id="map">
+    <div ui-map-info-window="model.markerInfoWindow">
+      <h3><a class="pointer" ng-click="getDojo(currentMarker)">{{ currentMarker.dojoName }}</a></h3>
+    </div>
+    <div ng-transclude class="col-xs-12"></div>
+    <div id="googleMap" ui-map="model.map" ui-event="{\'map-zoom_changed\':\'mapZoomChanged()\'}" ui-options="mapOptions" class="map-canvas"></div>
+  </section>
+</div>

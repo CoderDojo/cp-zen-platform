@@ -168,8 +168,6 @@
       // from countries service
       listCountries: function(win, fail){
         return cdApi.get('countries', function (countries) {
-          // Convert to array (and ensure array exists).
-          countries = _.map(countries[0]);
           // Sort based on browser/OS's locale.
           countries.sort(function (a, b){
             var c = a.countryName.localeCompare(b.countryName);

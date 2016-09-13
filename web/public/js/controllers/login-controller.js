@@ -194,6 +194,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       function(data){
         if(data.ok) {
           $cookieStore.remove('recommendedPracticesAlertShown');
+          // User Login
           if ($scope.redirect) {
             $window.location.href = $scope.redirect;
           } else {

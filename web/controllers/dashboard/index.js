@@ -7,6 +7,7 @@ var controller = module.exports = [{
   path: '/dashboard/{followin*}',
   config: { cache: { expiresIn: cacheTimes.medium } },
   handler: function (request, reply) {
+    console.log('dashboardHandler');
     reply.view('index', request.locals);
   }
 

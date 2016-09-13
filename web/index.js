@@ -130,8 +130,7 @@ server.ext('onPreResponse', function (request, reply) {
 });
 
 // TODO - cache!
-function getUser (request, cb) {
-  var token = request.state['seneca-login'];
+function getUser (request, token, cb) {
   if (token) {
     request.seneca.act({role: 'user', cmd:'auth', token: token}, function (err, resp) {
       if (err) return cb(err);
@@ -151,15 +150,18 @@ server.ext('onPostAuth', function (request, reply) {
   var profileUrl = '/dashboard/profile';
   var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
 
-  getUser(request, function (err, user) {
+  var token = request.state['seneca-login'];
+  var referer = encodeURIComponent(url);
+
+  getUser(request, token, function (err, user) {
     if (err) {
       console.error(err);
       return reply.continue();
     }
     debug('onPostAuth', 'user:', user);
     request.user = user;
-
-    if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user) {
+    console.log('User:', request.user);
+    if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user && !_.contains(url, '/cdf/')) {
       // Not logged in, redirect to dojo-detail if trying to see dojo detail
       if (/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(url)){
         debug('onPostAuth', 'redirecting to dojo detail');
@@ -167,8 +169,17 @@ server.ext('onPostAuth', function (request, reply) {
       } else {
         // Otherwise, redirect to /login with referer parameter
         debug('onPostAuth', 'redirecting to /login with referer', url);
-        var referer = encodeURIComponent(url);
         return reply.redirect('/login?referer=' + url);
+      }
+    } else {
+      if (_.contains(url, '/cdf/') && !request.user && !_.contains(url, '/login')) {
+        // Redirect to /login with referer parameter
+        debug('onPostAuth', 'redirecting to /login with referer', url);
+        console.log('redir to', url);
+        return reply.redirect('/cdf/login?referer=' + url);
+      } else {
+        reply.state('seneca-login', request.state['seneca-login'], { ttl: null });
+        return reply.continue();
       }
     }
 

@@ -9,13 +9,7 @@ function cdPollForm($compile, cdPollService, atomicNotifyService, $state, $trans
         dojoId: '='
       },
       restrict: 'E',
-      template: '<form id="pollForm" name="pollForm" role="form"'+
-          'novalidate angular-validator angular-validator-submit="save()"'+
-          'class="row form-group form-inline full-width">'+
-            '<label for="answer" class="col-xs-6 col-md-5">{{ question }}</label>'+
-            '<input type="number" ng-model="answer" name="answer" class="form-control col-xs-12 col-sm-6 col-md-3"/>'+
-            '<button class="col-xs-12 col-md-4 btn btn-primary cd-wizard-submit" type="submit">{{ buttonText }}</button>'+
-          '</form>',
+      templateUrl: '/directives/tpl/poll/form',
       controller: function($scope){
         $scope.buttonText = $translate.instant('Submit!');
         $scope.answer = 0;
