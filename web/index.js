@@ -101,7 +101,7 @@ server.ext('onPreResponse', function (request, reply) {
   var status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
 
   if (status === 400) {
-    request.log(['error', '400'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.data.details}, Date.now());
+    request.log(['error', '400'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.data.details}, Date.now());
   }
   // if it's an api call, continue as normal..
   if (request.url.path.indexOf('/api/2.0') === 0) {
@@ -111,7 +111,7 @@ server.ext('onPreResponse', function (request, reply) {
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
-  request.log(['error', '40x'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '40x'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -125,7 +125,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
-  request.log(['error', '50x'], {payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '50x'], {status: bodyStatus || headerStatus , payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   // Display full error message if not in production environment.
   if (env !== 'production') {
     return reply.continue();
