@@ -859,6 +859,18 @@
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
 
+      // Override $translate.instant so it falls back to en_US, then the original key when no result
+      var originalTranslateInstant = $translate.instant;
+      $translate.instant = function (key) {
+        var translation = originalTranslateInstant.apply($translate, arguments);
+        if (!translation) {
+          var args = Array.prototype.slice.apply(arguments); // Needed so we can modify the arguments
+          args[3] = 'en_US'; // The forceLanguage argument
+          translation = originalTranslateInstant.apply($translate, args);
+        }
+        return translation || key;
+      };
+
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete') && toState.parent === 'dashboard' ) {
           if(toState.name !== 'edit-user-profile') {
