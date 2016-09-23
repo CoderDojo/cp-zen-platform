@@ -75,19 +75,19 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     var overallDefault = '/img/avatars/avatar.png';
     var defaults = {
       'attendee-o13': {
-        default: '/img/avatars/ninja-o13.png',
+        default: '/img/avatars/ninja.png',
         'Female': ['/img/avatars/kid-f.png', '/img/avatars/kid-f2.png'],
         'Male': ['/img/avatars/kid-m.png', '/img/avatars/kid-m2.png', '/img/avatars/kid-m3.png']
       },
       'attendee-u13':{
-        default: '/img/avatars/ninja-u13.png',
+        default: '/img/avatars/ninja.png',
         'Female': ['/img/avatars/kid-f.png', '/img/avatars/kid-f2.png'],
         'Male': ['/img/avatars/kid-m.png', '/img/avatars/kid-m2.png', '/img/avatars/kid-m3.png']
       },
       'adult': {
         default: '/img/avatars/avatar.png',
         'Female': ['/img/avatars/adult-f.png', '/img/avatars/adult-f2.png', '/img/avatars/adult-f3.png', '/img/avatars/adult-f4.png', '/img/avatars/adult-f5.png'],
-        'Male': ['/img/avatars/adult-m.png', '/img/avatars/adult-m2.png', '/img/avatars/adult-m3.png']
+        'Male': ['/img/avatars/adult-m.png', '/img/avatars/adult-m2.png']
       }
     };
     var avatar = void 0;
