@@ -1,0 +1,10 @@
+<div style="padding: 6px;width: 320px;">
+  <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
+    <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
+    <ui-select-choices repeat="badge in badges">
+      <span ng-bind-html="badge.name"></span>
+    </ui-select-choices>
+  </ui-select>
+  <span class="help-block"></span>
+  <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
+</div>

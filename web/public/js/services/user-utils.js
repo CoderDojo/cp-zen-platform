@@ -105,5 +105,22 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     return  avatar || overallDefault;
   }
 
+  userUtils.getTitleForUserTypes = function (userTypes) {
+    var title = [];
+    if (_.includes(userTypes, 'attendee-u13')) {
+      title.push($translate.instant('Ninja (Under 13)'));
+    } else if (_.includes(userTypes, 'attendee-o13')) {
+      title.push($translate.instant('Ninja (Over 13)'));
+    }
+    if (_.includes(userTypes, 'champion')) {
+      title.push($translate.instant('Champion'));
+    } else if (_.includes(userTypes, 'mentor')) {
+      title.push($translate.instant('Volunteer/Mentor'));
+    } else if (title.length === 0) {
+      title.push($translate.instant('Parent/Guardian'));
+    }
+    return title.join(' ');
+  }
+
   return userUtils;
 }]);

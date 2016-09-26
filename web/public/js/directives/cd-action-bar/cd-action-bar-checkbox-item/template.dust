@@ -1,0 +1,4 @@
+<label class="cd-action-bar-checkbox-item" ng-click="$ctrl.handleChange($event)">
+  <input class="cd-action-bar-checkbox-item__checkbox" type="checkbox" ng-model="$ctrl.model" />
+  <span>{{ $ctrl.title }}</span>
+</a>

@@ -1,0 +1,22 @@
+<div class="cd-join-dojo-modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h2 class="modal-title">{{ cdCR.title }}</h2>
+    <i ng-if="cdCR.subTitle">{{ cdCR.subTitle }}</i>
+  </div>
+  <div class="modal-body">
+   <div class="flex-row row">
+       <div ng-repeat="role in cdCR.roles" ng-class="cdCR.class" class="cd-join-dojo-modal__choice">
+          <div cd-rounded-image src="{{ role.image }}"  alt="{{ role.name }}" size="100" ></div>
+          <h3 ng-class="role.class" class="cd-join-dojo-modal__role">{{ role.name }}</h3>
+          <p>
+            {{ role.text }}
+          </p>
+          <div class="row cd-input-row">
+            <button ng-disabled="cdCR.loading" ng-click="cdCR.select(role)" class="btn btn-primary">{{ role.buttonText }}</button>
+          </div>
+       </div>
+   </div>
+  </div>
+  <span ng-show="cdCR.loading" spinner-key="my-dojos-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+</div>

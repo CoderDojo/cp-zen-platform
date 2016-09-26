@@ -89,7 +89,7 @@
                   </ui-select-choices>
                 </ui-select>
                 <span class="help-block"></span>
-                <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
+                <button ng-show="awardBadgeButtonModel[selectedItems[0].userData.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
               </div>
             </td>
 
@@ -99,6 +99,25 @@
       </table>
     </div>
   </div>
+  <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
+  <cd-action-bar ng-if="actions" open="showActionBar">
+    <cd-action-bar-popup-item ng-show="awardBadgeAction.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always">
+      <div style="padding: 6px;width: 320px;">
+        <ui-select ng-model="badgeSelection.selectedBadge" on-select="badgeSelected(badgeSelection.selectedBadge)">
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
+          <ui-select-choices repeat="badge in badges" position="up">
+            <span ng-bind-html="badge.name"></span>
+          </ui-select-choices>
+        </ui-select>
+        <span class="help-block"></span>
+        <button ng-disabled="!awardBadgeButtonEnabled" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ selectedItems[0].userData.name }}" ng-bootbox-confirm-action="awardBadge(badgeSelection.selectedBadge)" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
+      </div>
+    </cd-action-bar-popup-item>
+    <span ng-repeat="action in actions" ng-switch on="action.type">
+      <cd-action-bar-checkbox-item ng-switch-when="checkbox" ng-show="action.ngShow()" title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
+      <cd-action-bar-item ng-switch-default ng-show="action.ngShow()" ng-click="action.ngClick($event)" icon="{{ action.icon }}" title="{{ action.title }}" href="{{ action.ngHref() }}" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-item>
+    </span>
+  </cd-action-bar>
   <div class="row">
     <div class="col-md-12 text-center">
       <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>

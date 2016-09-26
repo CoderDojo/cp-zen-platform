@@ -1,49 +1,99 @@
 .cd-picture-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
+  &__item {
+    flex: 1;
+    min-width: 208px;
+    max-width: 208px;
+    padding: 16px 32px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+
+      .cd-picture-grid__picture {
+        box-shadow: 0 0 0 10px @cd-purple, 0 0 0 0 @cd-blue;
+      }
+    }
+
+    &--selected, &--selected:hover {
+      .cd-picture-grid__picture {
+        box-shadow: 0 0 0 0 @cd-purple, 0 0 0 10px @cd-blue;
+      }
+    }
+  }
+
+  &__picture {
+    border-radius: 100%;
+    padding-top: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  &__caption {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: @screen-xs-max) {
     &__item {
-      flex: 1;
-      min-width: 208px;
-      max-width: 208px;
-      padding: 16px 32px;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: none;
-
-        .cd-picture-grid__picture {
-          box-shadow: 0 0 0 10px @cd-purple, 0 0 0 0 @cd-blue;
-        }
-      }
-
-      &--selected, &--selected:hover {
-        .cd-picture-grid__picture {
-          box-shadow: 0 0 0 0 @cd-purple, 0 0 0 10px @cd-blue;
-        }
-      }
+      min-width: 144px;
+      max-width: 144px;
     }
+  }
 
-    &__picture {
-      border-radius: 100%;
-      padding-top: 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      transition: box-shadow 0.2s ease-in-out;
-    }
-
-    &__caption {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 16px;
-    }
-
-    @media screen and (max-width: @screen-xs-max) {
+  &--wide-card {
+    .cd-picture-grid {
       &__item {
-        min-width: 144px;
-        max-width: 144px;
+        display: flex;
+        padding: 16px;
+        min-width: 368px;
+        max-width: 368px;
+        transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-radius: 6px;
+        align-items: center;
+
+        &:hover {
+          background: @cd-purple-20;
+          box-shadow: 0 0 3px 3px @cd-purple-20;
+        }
+
+        &--selected, &--selected:hover {
+          background: @cd-blue-20;
+          box-shadow: 0 0 3px 3px @cd-blue-20;
+        }
+
+        @media screen and (max-width: @screen-xs-max) {
+          min-width: 300px;
+          max-width: 300px;
+        }
+      }
+
+      &__picture {
+        padding: 0;
+        width: 80px;
+        height: 80px;
+      }
+
+      &__info {
+        flex: 1;
+        padding-left: 32px;
+      }
+
+      &__caption {
+        margin: 6px 0;
+        text-align: left;
+      }
+
+      &__sub-caption {
+        margin: 6px 0;
+        color: @cd-grey;
       }
     }
+  }
 }
