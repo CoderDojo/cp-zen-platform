@@ -2702,8 +2702,8 @@ msgstr "CoderDojo Champions are those who take the lead in organising a Dojo and
 msgid "Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!"
 msgstr "Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!"
 
-msgid "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo Cool."
-msgstr "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo Cool."
+msgid "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life."
+msgstr "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life."
 
 msgid "Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors."
 msgstr "Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors."
@@ -2711,8 +2711,8 @@ msgstr "Parents/Guardians are super important in the CoderDojo journey as they e
 msgid "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
 msgstr "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
 
-msgid "If you join the Dojo you will receive event updates from the Dojo and some newsletters from CoderDojo HQ! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
-msgstr "If you join the Dojo you will receive event updates from the Dojo and some newsletters from CoderDojo HQ! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
+msgid "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
+msgstr "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
 
 msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."

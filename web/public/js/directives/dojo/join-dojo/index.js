@@ -23,7 +23,7 @@ angular
               },
               image: userUtils.defaultAvatar('attendee-o13'),
               approvalRequired: false,
-              text: $translate.instant('Attendees at CoderDojo are young people under 18 who attend and make CoderDojo Cool.'),
+              text: $translate.instant('Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life.'),
               class: 'cd-ninja'
             };
             $scope.parentRole = {
