@@ -20,8 +20,19 @@ if (process.env.UIDEBUG === 'true') {
 
 dust.helpers.loadJS = function (chunk, context, bodies, params) {
   var scriptTags = '';
+  var conf;
+  var js = 'window.zenConf = {};';
+  if (process.env.NODE_ENV === 'production'){
+    conf = require('../config/web-production.js');
+  } else {
+    conf = require('../config/web-development.js');
+  }
+  for (var variable in conf) {
+    js += 'window.zenConf.' + variable + ' = \'' + conf[variable] +'\';';
+  }
   for (var i = 0; i < scripts.length; i++) {
     scriptTags += '<script src="' + scripts[i] + '"></script>';
   }
+  scriptTags += '<script>' + js + '</script>';
   return chunk.write(scriptTags);
 };

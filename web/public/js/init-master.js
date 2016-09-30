@@ -837,30 +837,34 @@
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     }])
     .config(['AnalyticsProvider', '$provide', function(AnalyticsProvider, $provide){
-      AnalyticsProvider.setAccount({
-        tracker: 'UA-25136319-2',
-      });
-      AnalyticsProvider.setDomainName('none');
-      AnalyticsProvider.trackUrlParams(true);
-      AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+      //check if exists or exclude (eg: running tests)
+      if (window.zenConf && window.zenConf.googleAnalytics) {
+        AnalyticsProvider.setAccount({
+          tracker: window.zenConf.googleAnalytics,
+        });
+        AnalyticsProvider.setDomainName('none');
+        AnalyticsProvider.trackUrlParams(true);
+        AnalyticsProvider.setPageEvent('$stateChangeSuccess');
 
-      $provide.decorator('ngClickDirective', ['$delegate','Analytics', '$state',
-       function ($delegate, Analytics, $state) {
-        var originalCompile = $delegate[0].compile;
-        $delegate[0].compile = function() {
-          var originalLink = originalCompile.apply(this, arguments);
-          var action = 'click';
-          return function postLink(scope, element, attr) {
-            element.bind(action, {attrs: attr}, function(event) {
-              var data = !_.isUndefined(event.data.attrs['aria-label']) ? event.data.attrs['aria-label'] :
-                !_.isEmpty(event.target.name) ? event.target.name : $(event.target.lastChild).text();
-              Analytics.trackEvent($state.current.name, action, data);
-            });
-            return originalLink.apply(this, arguments);
+        $provide.decorator('ngClickDirective', ['$delegate','Analytics', '$state',
+         function ($delegate, Analytics, $state) {
+          var originalCompile = $delegate[0].compile;
+          $delegate[0].compile = function() {
+            var originalLink = originalCompile.apply(this, arguments);
+            var action = 'click';
+            return function postLink(scope, element, attr) {
+              element.bind(action, {attrs: attr}, function(event) {
+                var data = !_.isUndefined(event.data.attrs['data-name'])? event.data.attrs['data-name']:
+                  !_.isUndefined(event.data.attrs['aria-label']) ? event.data.attrs['aria-label'] :
+                  !_.isEmpty(event.target.name) ? event.target.name : $(event.target.lastChild).text();
+                Analytics.trackEvent($state.current.name, action, data);
+              });
+              return originalLink.apply(this, arguments);
+            };
           };
-        };
-        return $delegate;
-      }]);
+          return $delegate;
+        }]);
+      }
     }])
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
       $sceDelegateProvider.resourceUrlWhitelist([
