@@ -3,10 +3,12 @@
 
 function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate, currentUser, dojoUtils) {
 
+  $scope.needMentorsTooltip = '<a href="http://kata.coderdojo.com/wiki/Mentor_Guide" target="_blank">' + $translate.instant('Find out more about becoming a CoderDojo mentor') + '</a>';
   $scope.dojo = dojo;
   $scope.model = {};
   $scope.markers = [];
   $scope.currentUser = currentUser.data;
+  $scope.isDojoAdmin = false;
   var latitude, longitude;
 
   if(!_.isEmpty($scope.currentUser)) {
@@ -14,7 +16,7 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
       return $state.go('error-404-no-headers');
     }
 
-    if(!dojo.verified && dojo.creator !== $scope.currentUser.id && !_.contains($scope.currentUser.roles, 'cdf-admin')){
+    if(!dojo.verified && dojo.creator !== $scope.currentUser.id && !_.includes($scope.currentUser.roles, 'cdf-admin')){
       return $state.go('error-404-no-headers');
     }
 
@@ -28,6 +30,14 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
       return { value: item.value, label: $translate.instant(item.label) };
     });
     $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
+  });
+
+  dojoUtils.canUpdateDojo(currentUser, dojo.id)
+  .then(function(){
+    $scope.isDojoAdmin = true;
+  })
+  .catch(function(){
+    $scope.isDojoAdmin = false;
   });
 
   $scope.$watch('model.map', function(map){

@@ -88,15 +88,15 @@
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
-  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $modal, cdEventsService,
+  function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
     $scope.today = moment.utc().toDate();
-	  $scope.ticketTypes = ticketTypes.data || [];
+    $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
 
     _.each($scope.ticketTypes, function (ticketType, index) {
@@ -137,22 +137,17 @@
     $scope.hasAccess = true;
 
     //description editor
-    $scope.editorOptions = {
-      lanaguage: 'en',
-      readOnly: $scope.pastEvent,
-      height: '100px'
-    };
-
+    $scope.editorOptions = utilsService.getCKEditorConfig({
+      height: '100px',
+      readOnly: $scope.pastEvent
+    });
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
-      $scope.eventInfo.startTime = $scope.eventInfo.fixedStartDateTime;
-      $scope.eventInfo.endTime = fixEventDates($scope.eventInfo.fixedStartDateTime, $scope.eventInfo.fixedEndDateTime);
     });
 
     $scope.$watch('eventInfo.toDate', function (toDate) {
       $scope.eventInfo.fixedEndDateTime = fixEventDates(toDate, $scope.eventInfo.fixedEndDateTime);
-      $scope.eventInfo.endTime = $scope.eventInfo.fixedEndDateTime;
     });
 
     $scope.$watch('eventInfo.startTime', function (startTime) {
@@ -303,10 +298,18 @@
       session.tickets.push(ticket);
     };
 
+    $scope.lastTicket = function (session) {
+      return session.tickets.length === 1;
+    }
+
     $scope.removeTicket = function ($index, session) {
       if(session.tickets.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one ticket.'));
       return session.tickets.splice($index, 1);
     };
+
+    $scope.lastSession = function () {
+      return $scope.eventInfo.sessions.length === 1;
+    }
 
     $scope.removeSession = function ($index) {
       if($scope.eventInfo.sessions.length === 1) return alertService.showAlert($translate.instant('Your event must contain at least one session.'));
@@ -336,13 +339,13 @@
     $scope.copyEvent = function(event){
       cdEventsService.load(event.id, function(event){
         var utcOffset = moment().utcOffset();
-        var firstDate = moment(_.first(event.dates).startTime).subtract(utcOffset, 'minutes');
+        var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
         var now = moment().utc();
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
-        var isPastEvent = isEventInPast({startTime : firstDate});
+        var isPastEvent = eventUtils.isEventInPast({startTime : firstDate});
 
         _.defaults($scope.eventInfo, event);
         //TODO: when lodash will be updated, use defaultsDeep
@@ -431,7 +434,7 @@
       }
 
       function showInviteDojoMembersModal(eventUserSelection, done) {
-        var inviteDojoMembersModalInstance = $modal.open({
+        var inviteDojoMembersModalInstance = $uibModal.open({
           animation: true,
           templateUrl: '/dojos/template/events/session-invite',
           controller: 'session-invite-modal-controller',
@@ -727,7 +730,7 @@
       $scope.eventInfo.prefillAddress = false;
       $scope.isEditMode = true;
       cdEventsService.load(eventId, function(event) {
-        var startTime = _.first(event.dates).startTime || moment.utc().toISOString();
+        var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var utcOffset = moment().utcOffset();
@@ -739,7 +742,7 @@
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
         event.toDate = new Date(lastEventOcurrance.replace(/-/g, '\/').replace(/T.+/, ''));
 
-        var eventDay =  moment.utc(_.first(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
+        var eventDay =  moment.utc(_.head(event.dates).startTime, 'YYYY-MM-DD HH:mm:ss').format('dddd');
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
@@ -748,8 +751,8 @@
         $scope.eventInfo.fixedEndDateTime = event.endTime;
 
         $scope.eventInfo = _.assign($scope.eventInfo, event);
-        $scope.eventInfo.userType = _.where($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
-        $scope.pastEvent = isEventInPast(_.last(event.dates));
+        $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
+        $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
 
         done(null, event);
       }, done);
@@ -796,7 +799,7 @@
 
 
       $scope.$watch('eventInfo.sessions', function (sessions) {
-        sessions = _.without(sessions, _.findWhere(sessions, {name: null}))
+        sessions = _.without(sessions, _.find(sessions, {name: null}))
         if(!_.isEmpty(sessions)) $scope.updateLocalStorage('sessions', sessions);
       }, true);
 
@@ -805,14 +808,6 @@
       });
 
       return done();
-    }
-
-    function isEventInPast(dateObj) {
-      var now = moment.utc();
-      var eventUtcOffset = moment(dateObj.startTime).utcOffset();
-      var start = moment.utc(dateObj.startTime).subtract(eventUtcOffset, 'minutes');
-
-      return now.isAfter(start);
     }
 
     if ($stateParams.eventId) {
@@ -863,7 +858,7 @@
       '$state',
       '$sce',
       '$localStorage',
-      '$modal',
+      '$uibModal',
       'cdEventsService',
       'cdDojoService',
       'cdUsersService',
@@ -875,6 +870,7 @@
       'utilsService',
       'ticketTypes',
       'currentUser',
+      'eventUtils',
       dojoEventFormCtrl
     ]);
 })();

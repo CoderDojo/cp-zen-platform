@@ -1,5 +1,5 @@
 'use strict';
-  function cdDojoService($q, cdApi, $http){
+  function cdDojoService($q, cdApi, $http, Upload){
     function topfail(err){
       console.log(err);
     }
@@ -38,6 +38,23 @@
         else {
           cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
         }
+      },
+      uploadAvatar: function (dojoId, file){
+        return Upload.upload({
+          url: cdApi.baseUrl + 'dojos/' + dojoId + '/avatar',
+          data: {file: file}
+        });
+      },
+      // We should probably do that on the backend to avoid logging to console, srsly
+      getAvatar: function(dojoId) {
+        var bucketUrl = 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/' + dojoId;
+        return $http.head('https://s3-eu-west-1.amazonaws.com/zen-dojo-images/' + dojoId).then(function successCallback(response) {
+          //Nothing to do, it all works as expected, the image is stored online
+          return bucketUrl;
+        }, function errorCallback(response) {
+          //File doesn't exists, we should fallback
+          return $q.resolve('/img/avatars/dojo-default-logo.png');
+        });
       },
       setDojo: function(dojo, win, fail) {
         currentDojo = dojo;
@@ -176,5 +193,5 @@
     };
   }
 angular.module('cpZenPlatform')
-  .service('cdDojoService', ['$q', 'cdApi', '$http', cdDojoService])
+  .service('cdDojoService', ['$q', 'cdApi', '$http', 'Upload', cdDojoService])
 ;

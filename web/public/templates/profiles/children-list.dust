@@ -1,14 +1,9 @@
-<div id="ninjaProfileBlock" class="profile-section" ng-show="initialForm()">
-  <a name="youths"></a>
-  <legend class="legend-color-3-border">{@i18n key="Youths"/}</legend>
-  <div class="col-xs-12" ng-show="initialForm()">
-    <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Youth over 13"/}</button>
-    <button ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
-    <button ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
-  </div>
-  <div class="col-xs-12">
-    <ul ng-repeat="child in profile.resolvedChildren">
-      <li><a ui-sref="user-profile({userId: child.userId})">{{ child.name }}</a></li>
-    </ul>
+<div class="profile-section" ng-show="initialForm() && areChildrenVisible()">
+  <h3 class="cd-section-header"><a id="youths"></a><a href="#youths">{@i18n key="Youths"/}</a></h3>
+  <cd-picture-grid items="profile.resolvedChildren" class="col-xs-12" ng-if="profile.resolvedChildren.length > 0"></cd-picture-grid>
+  <div ng-if="hasAccess(profile.userTypes, ['parent-guardian', 'champion', 'mentor']) && editMode " class="clearfix">
+    <button ng-click="toggleInviteNinjaPopover()" ng-if="editMode && !publicChampion && (loggedInUser.id === profile.userId)" popover-toggle="inviteNinjaPopover.show" uib-popover-template="'{{ inviteNinjaPopover.templateUrl }}'" popover-placement="{{ inviteNinjaPopover.placement }}" popover-title="{{ inviteNinjaPopover.title }}" class="btn btn-sm btn-primary panel-heading-button pull-right">{@i18n key="Invite Youth over 13"/}</button>
+    <button ng-show="initialForm()" ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-left" ui-sref="add-child({userType: 'attendee-u13', parentId: profile.userId})">{@i18n key="Add Youth under 13"/}</button>
+    <button ng-show="initialForm()" ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
   </div>
 </div>

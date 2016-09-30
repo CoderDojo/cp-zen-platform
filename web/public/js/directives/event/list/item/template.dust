@@ -1,0 +1,41 @@
+<div class="col-sm-7">
+  <h5 class="h3" ng-bind="::cdELI.event.name"></h5>
+  <div> {@i18n key="Location"/}
+    <p ng-bind="::cdELI.event.address"></p>
+    <p ng-bind="::cdELI.event.city.nameWithHierarchy"></p>
+  </div>
+  <div ng-bind-html="::cdELI.event.description">
+  </div>
+</div>
+
+<div class="col-sm-5 cd-date">
+  <div class="cd-date__content">
+    <cd-share-event share-event="cdELI.event" class="pull-right cd-share-event" ng-if="!cdELI.isEmbedded"></cd-share-event>
+    <div ng-switch="cdELI.event.type">
+      <div class="cd-date__content__date" ng-switch-when="recurring">
+        <div ng-click="cdELI.datesExpanded = !cdELI.datesExpanded">
+          <div class="h3" ng-bind="::cdELI.event.formattedDate"></div>
+          <i class="fa fa-chevron-down pull-right" title="expand dates"
+             ng-class="cdELI.datesExpanded? 'fa-chevron-up': 'fa-chevron-down'"></i>
+          <div class="h5">
+            {@i18n key="Next date:"/} <span ng-bind="::cdELI.event.nextDate | date : 'mediumDate'"></span>
+          </div>
+          <ul ng-show="cdELI.datesExpanded"  class="list-unstyled">
+            <li ng-repeat="eventDate in cdELI.event.upcomingDates"> {{ eventDate }} </li>
+          </ul>
+        </div>
+      </div>
+      <div ng-switch-default>
+        <div class="cd-date__date h3" ng-bind="::cdELI.event.startDate | date : 'mediumDate'"></div>
+        <div class="cd-date__date h3"><span ng-bind="::cdELI.event.startDate | date : 'HH:mm'"></span> - <span ng-bind="::cdELI.event.endDate | date : 'HH:mm'"></span></div>
+      </div>
+    </div>
+    <div class="cd-event-list-item__link">
+      <a ng-click="cdELI.goTo()" class="btn btn-warning btn-block btn-main" ng-disabled="cdELI.event.isPast">
+        <span ng-if="!cdELI.event.isPast">{@i18n key="Book"/}</span>
+        <!-- TODO : isFull? <span ng-if="cdELI.event.isFull && !cdELI.event.isPast">{@i18n key="Book"/}</span> -->
+        <span ng-if="cdELI.event.isPast">{@i18n key="Booking closed"/}</span>
+      </a>
+    </div>
+  </div>
+</div>

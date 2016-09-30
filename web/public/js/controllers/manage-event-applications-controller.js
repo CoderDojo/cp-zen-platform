@@ -2,8 +2,12 @@
   'use strict';
   /*global $*/
 
-  function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $modal, alertService, cdEventsService, tableUtils,
-    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event) {
+  function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $uibModal, alertService, cdEventsService, tableUtils,
+    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event, $timeout) {
+
+    $scope.strings = {
+      deleteUserCheckedIn: $translate.instant('User must not be checked in to be deleted')
+    };
 
     var eventId = $stateParams.eventId;
     var dojoId = $stateParams.dojoId;
@@ -64,21 +68,40 @@
     }
 
     /* ninja is defined as a key in many areas, keep it for backward compatibility */
-    $scope.ticketTypes = [
-      {name: 'ninja', title: $translate.instant('Youth')},
-      {name: 'parent-guardian', title: $translate.instant('Parent/guardian')},
-      {name: 'mentor', title: $translate.instant('Mentor')},
-      {name: 'other', title: $translate.instant('Other')}
-    ];
+    // Used for translating ticket types in the table. Better than looping through an array each time to find matching translations
+    $scope.ticketTypesTranslations = {
+      ninja: $translate.instant('Youth'),
+      'parent-guardian': $translate.instant('Parent/guardian'),
+      mentor: $translate.instant('Mentor'),
+      other: $translate.instant('Other')
+    };
 
+    // Used for the filtering of ticket types, as we require an array of objects for that.
+    $scope.ticketTypes = [
+      {name: 'ninja', title: $scope.ticketTypesTranslations.ninja},
+      {name: 'parent-guardian', title: $scope.ticketTypesTranslations['parent-guardian']},
+      {name: 'mentor', title: $scope.ticketTypesTranslations.mentor},
+      {name: 'other', title: $scope.ticketTypesTranslations.other}
+    ];
 
     event.listDownloadLink = function (status) {
       cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
+        //  TODO: export as a directive, it modifies the DOM
+        //  param : name, datasource call (cdEvents.xxx)
         var downloadLink = angular.element('<a></a>');
-        var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
+        var csv = new Blob([response.data], { type: "text/csv;charset=utf-8;" });
+        var urlFactory = window.URL || window.webkitURL;
+        var tempFile = urlFactory.createObjectURL(csv);
+        downloadLink.attr('href', tempFile);
+        downloadLink.attr('download', $scope.event.name + '_' + $translate.instant('Applicants') + moment().format() + '.csv');
+        // Ok, that's sad.
+        document.body.appendChild(downloadLink[0]);
 
-        downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-        window.open(downloadLink[0]);
+        downloadLink[0].click();
+        $timeout(function(){
+         document.body.removeChild(downloadLink[0]);
+         urlFactory.revokeObjectURL(tempFile);
+        }, 0);
       });
     };
     event.guestListDownloadLink = function () {
@@ -91,11 +114,11 @@
       event.listDownloadLink('all');
     };
 
-    var startDateUtcOffset = moment(_.first(event.dates).startTime).utcOffset();
-    var endDateUtcOffset = moment(_.first(event.dates).endTime).utcOffset();
+    var startDateUtcOffset = moment(_.head(event.dates).startTime).utcOffset();
+    var endDateUtcOffset = moment(_.head(event.dates).endTime).utcOffset();
 
-    var startDate = moment.utc(_.first(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
-    var endDate = moment.utc(_.first(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
+    var startDate = moment.utc(_.head(event.dates).startTime).subtract(startDateUtcOffset, 'minutes').toDate();
+    var endDate = moment.utc(_.head(event.dates).endTime).subtract(endDateUtcOffset, 'minutes').toDate();
 
     if(event.type === 'recurring') {
       event.formattedDates = [];
@@ -456,7 +479,7 @@
       }
 
       function showNewApplicantModal(eventUserSelection, done) {
-        var newApplicantModalInstance = $modal.open({
+        var newApplicantModalInstance = $uibModal.open({
           animation: true,
           templateUrl: '/dojos/template/events/session-details',
           controller: 'session-modal-controller',
@@ -516,7 +539,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$modal', 'alertService', 'cdEventsService',
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', manageEventApplicationsCtrl]);
+    .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$uibModal', 'alertService', 'cdEventsService',
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', '$timeout', manageEventApplicationsCtrl]);
 
 })();

@@ -1,0 +1,61 @@
+.cd-dojo-detail {
+  &__contact{
+    .sidebar-contact();
+  }
+
+  @media (min-width: @screen-xs-max){
+    &__dojo-name {
+      position: absolute;
+      bottom: 30%;
+      left: 30%;
+    }
+  }
+
+  &__dojo-website {
+    .fa {
+      color: @cd-gray;
+    }
+  }
+  &__dojo-name, &__dojo-website > a {
+    color: @cd-white;
+    z-index: 100;
+  }
+
+  &__ribbon {
+    z-index: 5;
+    float: left;
+    clear: left;
+    position: relative;
+    &--vertical-right {
+      clear: none;
+      float: right;
+      margin: 0px 10px 0 0;
+      text-align: center;
+      width: 2.5em;
+      height: 3.5em;
+      line-height: 3.5em;
+      box-shadow: @cd-box-shadow;
+
+      > img {
+        margin: 0.5em 0;
+      }
+
+      @media (max-width: @screen-sm-min) {
+        height: 2.5em;
+        line-height: 2.5em;
+
+        > img {
+          margin: 0;
+        }
+      }
+    }
+    &--success {
+      background-color: @state-success-bg;
+      color: @state-success-text;
+    }
+    &--info {
+      background-color: @cd-light-gray;
+      color: @state-info-text;
+    }
+  }
+}

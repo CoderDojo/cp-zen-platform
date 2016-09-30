@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function cdSessionModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
+  function cdSessionModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService, dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
     $scope.dojoId = dojoId;
     $scope.session = angular.copy(session);
     $scope.sessionQuantities = _.range(2);
@@ -41,7 +41,7 @@
     });
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.updateTickets = function (quantity, ticket) {
@@ -51,7 +51,7 @@
 
     $scope.goToProfile = function () {
       $state.go('user-profile', {userId: currentUser.id});
-      $modalInstance.dismiss();
+      $uibModalInstance.dismiss();
     };
 
     $scope.applyForEvent = function (sessionApplication) {
@@ -78,10 +78,10 @@
       };
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
-        $modalInstance.close(response);
+        $uibModalInstance.close(response);
       }, function (err) {
         usSpinnerService.stop('dojo-session-spinner');
-        $modalInstance.close(err);
+        $uibModalInstance.close(err);
         console.error(err);
       });
     };
@@ -96,6 +96,6 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$modalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
 
 })();

@@ -1,0 +1,67 @@
+.cd-register {
+
+  #form-container {
+    margin-bottom:20px;
+  }
+
+  #form-container .page-header {
+    margin:0;
+    padding:30px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+  }
+
+  #status-buttons a {
+    color: #fff;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  #status-buttons a:hover {
+    text-decoration: none;
+  }
+  #status-buttons span {
+    background-color: #fff;
+    color: #000;
+    display: block;
+    height: 30px;
+    margin: 0 auto 10px;
+    padding-top: 5px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid #000;
+  }
+
+  #status-buttons a.active span {
+    background: @cd-green;
+    color: #fff;
+    border: none;
+  }
+
+  .wrapper {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row-reverse;
+  }
+
+  .form-views {
+    min-width: 100%;
+  }
+
+  .form-views.ng-animate {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .form-views:nth-child(2) {
+    transform: translateX(100%);
+  }
+
+  .form-views.ng-enter, .form-views.ng-leave {
+    transform: translateX(100%);
+  }
+
+  .form-views.ng-enter-active, .form-views.ng-leave-active {
+    transform: translateX(0);
+  }
+}

@@ -5,22 +5,12 @@ var dust = require('dustjs-linkedin');
 var po2json = require('po2json');
 var Jed = require('jed');
 var fs = require('fs');
-var translators = {};
-
-function getTranslator(locale) {
-  if (!translators[locale]) {
-    if (!fs.existsSync(path.join(__dirname, '../locale/', locale, 'messages.po'))) {
-      locale = 'en_US';
-    }
-    var podata = po2json.parseFileSync(path.join(__dirname, '../locale/', locale, 'messages.po'), {
-      format: 'jed',
-      domain: 'coder-dojo-platform'
-    });
-    translators[locale] = new Jed(podata);
-  }
-
-  return translators[locale];
-}
+var I18NHelper = require('cp-i18n-lib');
+var i18nHelper = new I18NHelper({
+  poFilePath: path.resolve('web/locale/'),
+  poFileName: 'messages.po',
+  domain: 'coder-dojo-platform'
+});
 
 dust.helpers.i18n = function (chunk, context, bodies, params) {
   var defaultLanguage = 'en_US';
@@ -31,13 +21,18 @@ dust.helpers.i18n = function (chunk, context, bodies, params) {
       || (context.stack && context.stack.tail && context.stack.tail.tail && context.stack.tail.tail.head && context.stack.tail.tail.head.context && context.stack.tail.tail.head.context.locality)
       || defaultLanguage;
 
-  var translation = getTranslator(locale).translate(params.key);
-  if (params.context) {
-    translation = translation.withContext(params.context);
+  var translation = i18nHelper.getClosestTranslation(locale, params.key);
+  if (translation) {
+    if (params.context) {
+      translation = translation.withContext(params.context);
+    }
+    translation = params.count
+      ? translation.ifPlural(params.count, params.key).fetch(params.count)
+      : translation.fetch();
+  } else {
+    // console.log('Missing translation', params.key); // Uncomment this to track down missing messages.po entries used in templates
+    translation = params.key;
   }
-  translation = params.count
-    ? translation.ifPlural(params.count, params.key).fetch(params.count)
-    : translation.fetch();
 
   return chunk.write(translation);
 };

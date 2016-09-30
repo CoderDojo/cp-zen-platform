@@ -1,0 +1,53 @@
+<form id="signUpForm" name="signUpForm" novalidate angular-validator angular-validator-submit="next(signUpForm)">
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+      <input type="text" class="form-control form-group" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="formData.user.name" placeholder="{@i18n key="Name"/}">
+    </div>
+  </div>
+
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+      <input type="text" class="form-control form-group" name="surname" required required-message="'{@i18n key="Name is empty"/}'" ng-model="formData.user.lastName" placeholder="{@i18n key="Surname"/}">
+    </div>
+  </div>
+
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+      <input type="email" class="form-control form-group" name="emailAddress"  required required-message="'{@i18n key="Email is empty"/}'" ng-model="formData.user.email" placeholder="{@i18n key="Email"/}">
+    </div>
+  </div>
+
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+      <input type="password" class="form-control form-group" name="password" ng-model="formData.user.password" autocomplete="off" required required-message="'{@i18n key="Password is empty"/}'" validator="validatePassword(formData.user.password, formData.user.email)" invalid-message="invalidPasswordMessage" placeholder="{@i18n key="Password"/}">
+    </div>
+  </div>
+
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+      <input type="password" class="form-control form-group" name="passConfirmField" ng-model="formData.passwordConfirm" autocomplete="off" required required-message="'{@i18n key="Confirm Password is empty"/}'" validator="matchesPassword(formData.user.password, formData.passwordConfirm)" invalid-message="invalidConfirmPasswordMessage" placeholder="{@i18n key="Confirm password"/}">
+    </div>
+  </div>
+
+  <div class="row" ng-enter="noop()">
+    <div class="col-sm-offset-2 col-sm-6">
+      <div class="checkbox cd-checkbox checkbox-primary">
+        <input type="checkbox" title="{@i18n key="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."/}" ng-model="formData.user.mailingList" id="mailingListCheckbox">
+        <label for="mailingListCheckbox">{@i18n key="Join Mailing List"/}</label>
+      </div>
+
+      <div class="checkbox cd-checkbox checkbox-primary">
+        <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="formData.user.termsConditionsAccepted" required required-message="'{@i18n key="You must accept the Terms and Conditions"/}'" id="termsAndConditionsCheckbox">
+        <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the"/}
+          <a ui-sref="terms-and-conditions" target="_blank"><b>{@i18n key="Terms and Conditions here"/}</b></a>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row cd-btn-row">
+    <div class="form-group col-xs-12 col-sm-offset-2 col-sm-3">
+      <button class="btn btn-primary btn-block cd-wizard-submit" type="submit">{@i18n key="Next"/}</button>
+    </div>
+  </div>
+</form>

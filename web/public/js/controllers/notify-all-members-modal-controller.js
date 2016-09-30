@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function cdNotifyAllMembersModalCtrl ($scope, $modalInstance, $translate, dojoId, events, cdDojoService, usSpinnerService, alertService) {
+  function cdNotifyAllMembersModalCtrl ($scope, $uibModalInstance, $translate, dojoId, events, cdDojoService, usSpinnerService, alertService) {
     $scope.dojoId = dojoId;
     $scope.events = events;
     $scope.selectedEvent = {
@@ -17,7 +17,7 @@
         var selectedEventId = $scope.selectedEvent.value.id
         cdDojoService.notifyAllMembers({dojoId: dojoId, eventId: selectedEventId, emailSubject: 'Tickets Now Available for %1$s'}, function (response) {
           usSpinnerService.stop('notify-all-members-spinner');
-          $modalInstance.dismiss('success')
+          $uibModalInstance.dismiss('success')
         }, function (err) {
           usSpinnerService.stop('notify-all-members-spinner');
           alertService.showError(
@@ -29,11 +29,11 @@
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
   }
 
   angular.module('cpZenPlatform')
     .controller('notify-all-members-modal-controller',
-      ['$scope', '$modalInstance', '$translate', 'dojoId', 'events', 'cdDojoService', 'usSpinnerService', 'alertService', cdNotifyAllMembersModalCtrl]);
+      ['$scope', '$uibModalInstance', '$translate', 'dojoId', 'events', 'cdDojoService', 'usSpinnerService', 'alertService', cdNotifyAllMembersModalCtrl]);
 })();

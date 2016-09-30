@@ -1,18 +1,141 @@
-
-<header id="header" ng-controller="login">
-  <div ng-controller="header">
-    <div class="navbar navbar-global" role="navigation">
-      {>"common/global-menu" /}
+<header class="header">
+  <div class="cd-menu cd-menu__desktop-nav">
+    <div class="cd-menu__first-row">
+      <a href="/">
+        <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
+      </a>
+      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">Donate</a>
+      <form class="cd-menu__search" role="search" action="https://coderdojo.com/">
+        <input class="cd-menu__search-input" type="text" placeholder="Search..." name="s" />
+        <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
+      </form>
+      <div class="cd-menu__flex-spacer"></div>
+      <div class="cd-menu__account">
+        <a href="/register/user">{@i18n key="Register"/}</a>
+        <a href="/login">{@i18n key="Login"/}</a>
+      </div>
+      <div class="cd-menu__profile">
+        <div class="cd-menu__profile-pic"></div>
+        <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
+        <i class="cd-menu__sub-menu-icon fa fa-chevron-down"></i>
+        <ul class="cd-menu__profile-menu">
+          <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
+          <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
+          <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
+          <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+          <li class="cd-menu__cdf-admin-link"><a href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+          <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
+        </ul>
+      </div>
     </div>
-    <div ng-if="userIsCDFAdmin()" class="navbar navbar-admin">
-      {>"common/admin-menu" /}
-    </div>
-    <div ng-controller="header" class="navbar navbar-default navbar-main">
-      {>"common/content-header" /}
-    </div>
-    <div class="text-center col-xs-12"></div>
+    <ul class="cd-menu__second-row">
+      <li><a href="https://coderdojo.com/about/">{@i18n key="About"/}</a></li>
+      <li><a href="https://coderdojo.com/attend-a-dojo/">{@i18n key="Attend a Dojo"/}</a></li>
+      <li><a href="https://coderdojo.com/volunteer/">{@i18n key="Volunteer"/}</a></li>
+      <li><a href="https://coderdojo.com/start-a-dojo/">{@i18n key="Create a Dojo"/}</a></li>
+      <li><a href="https://coderdojo.com/resources/">{@i18n key="Resources"/}</a></li>
+      <li><a href="https://coderdojo.com/news/">{@i18n key="News"/}</a></li>
+      <li class="cd-menu__dropdown">
+        <span>
+          {@i18n key="Community"/}
+          <i class="cd-menu__dropdown-icon fa fa-chevron-down"></i>
+          <ul>
+            <li><a href="/badges">{@i18n key="Badges"/}</a></li>
+            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
+            <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+          </ul>
+        </span>
+      </li>
+    </ul>
   </div>
-  <alert-banner></alert-banner>
+  <div class="cd-menu__mobile-nav-bar">
+    <button type="button" class="cd-menu__hamburger" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">{@i18n key="Toggle navigation"/}</span>
+      <span class="cd-menu__hamburger-bar"></span>
+      <span class="cd-menu__hamburger-bar"></span>
+      <span class="cd-menu__hamburger-bar"></span>
+    </button>
+    <a href="/">
+      <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" style="padding-left: 5px;" />
+    </a>
+  </div>
+  <div class="cd-menu__scrim"></div>
+  <nav id="cd-menu__sliding-menu-primary" class="cd-menu__sliding-menu" data-toggle="closed">
+    <div class="cd-menu__close-row">
+      <span class="cd-menu__close-button">&times;</span>
+    </div>
+    <div class="cd-menu__content">
+      <div class="cd-menu__content-block cd-menu__search">
+        <input class="cd-menu__search-input" type="text" placeholder="Search...">
+        <button class="cd-menu__search-button" type="button"><span class="fa fa-search fa-2x"></span></button>
+      </div>
+      <div class="cd-menu__content-block cd-menu__account">
+        <a href="/register/user">{@i18n key="Register"/}</a>
+        <a href="/login">{@i18n key="Login"/}</a>
+      </div>
+      <ul class="cd-menu__content-block">
+        <li class="cd-menu__profile">
+          <span>
+            <div class="cd-menu__profile-pic"></div>
+            <span class="cd-menu__profile-name">{@i18n key="My Account"/}</span>
+            <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
+          </span>
+          <div class="cd-menu__sliding-menu cd-menu__sliding-menu-secondary" data-toggle="closed">
+            <div class="cd-menu__close-row cd-bg-alt-white">
+              <span class="cd-menu__back-button fa fa-chevron-left fa-lg"></span>
+              <span class="cd-menu__close-button">&times;</span>
+            </div>
+            <div class="cd-menu__content">
+              <div class="cd-menu__content-block cd-menu__profile-header">
+                <div class="cd-menu__profile-pic"></div>
+                <span class="cd-menu__profile-name"></span>
+              </div>
+              <ul class="cd-menu__content-block cd-menu__profile-menu">
+                <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
+                <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
+                <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
+                <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
+                <li class="cd-menu__cdf-admin-link"><a href="/dashboard/stats">{@i18n key="Stats"/}</a></li>
+                <li><a class="cd-menu__referer-link" href="/logout">{@i18n key="Logout"/}</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li><a href="https://coderdojo.com/about/">{@i18n key="About"/}</a></li>
+        <li><a href="https://coderdojo.com/attend-a-dojo/">{@i18n key="Attend a Dojo"/}</a></li>
+        <li><a href="https://coderdojo.com/volunteer/">{@i18n key="Volunteer"/}</a></li>
+        <li><a href="https://coderdojo.com/start-a-dojo/">{@i18n key="Create a Dojo"/}</a></li>
+        <li><a href="https://coderdojo.com/resources/">{@i18n key="Resources"/}</a></li>
+        <li><a href="https://coderdojo.com/news/">{@i18n key="News"/}</a></li>
+        <li>
+          <span>
+            {@i18n key="Community"/}
+            <i class="cd-menu__sub-menu-icon fa fa-chevron-right"></i>
+          </span>
+          <div class="cd-menu__sliding-menu cd-menu__sliding-menu-secondary" data-toggle="closed">
+            <div class="cd-menu__close-row">
+              <span class="cd-menu__back-button fa fa-chevron-left fa-lg"></span>
+              <span class="cd-menu__close-button">&times;</span>
+            </div>
+            <div class="cd-menu__content">
+              <div class="cd-menu__content-block cd-menu__header">
+                <span>{@i18n key="Community"/}</span>
+              </div>
+              <ul class="cd-menu__content-block">
+                <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
+            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
+            <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li><a href="https://coderdojo.com/donate/">{@i18n key="Donate"/}</a></li>
+      </ul>
+    </div>
+  </nav>
   <ng-atomic-notify></ng-atomic-notify>
 </header>
-

@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('dojoUtils', function($location, $translate, $state, $rootScope, cdDojoService, cdUsersService, auth, usSpinnerService, alertService){
+angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate', '$state', '$rootScope',
+  'cdDojoService', 'cdUsersService', 'auth', 'usSpinnerService', 'alertService', '$q',
+  function($location, $translate, $state, $rootScope,
+    cdDojoService, cdUsersService, auth, usSpinnerService, alertService, $q){
   var dojoUtils = {};
 
   var approvalRequired = ['mentor', 'champion'];
@@ -20,7 +23,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
         var query = {userId:user.id, dojoId:dojoId};
         cdDojoService.getUsersDojos(query, function (response) {
           if(_.isEmpty(response)) {
-            if(_.contains(approvalRequired, userType)) {
+            if(_.includes(approvalRequired, userType)) {
               cdDojoService.requestInvite(data, function (response) {
                 usSpinnerService.stop('dojo-detail-spinner');
                 if(!response.error) {
@@ -46,7 +49,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
         });
       }, function () {
         //Not logged in
-        $state.go('register-account', {referer:$location.url(), userType: userType});
+        $state.go('register-account.user', {referer:$location.url(), userType: userType});
       });
     }
   };
@@ -57,5 +60,34 @@ angular.module('cpZenPlatform').factory('dojoUtils', function($location, $transl
       return "/dojo/" + urlSlug;
     }
   }
+
+  dojoUtils.canUpdateDojo = function(user, dojoId) {
+    var deferred = $q.defer();
+    if(user.data && !_.isEmpty(user.data)){
+      var query = {userId: user.data.id, dojoId: dojoId};
+      var isCDFAdmin = _.includes(user.data.roles, 'cdf-admin');
+      if (isCDFAdmin) {
+        deferred.resolve(isCDFAdmin);
+      } else {
+        cdDojoService.getUsersDojos(query, function (userDojo) {
+          if(!userDojo || userDojo.length < 1){ return deferred.reject(); }
+
+          var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
+            return userPermission.name === 'dojo-admin';
+          });
+          if(!_.isEmpty(isDojoAdmin) && !_.isUndefined(isDojoAdmin)){
+            deferred.resolve(true);
+          }else {
+            deferred.reject(false);
+          }
+        }, function (err) {
+          deferred.reject(err);
+        });
+      }
+    } else {
+      deferred.reject();
+    }
+    return deferred.promise;
+  }
   return dojoUtils;
-});
+}]);

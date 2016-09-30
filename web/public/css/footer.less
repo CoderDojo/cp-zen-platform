@@ -1,67 +1,23 @@
 #footer {
-  border-top: solid 1px #e5e5e5;
-  margin-top: 3em;
-  margin-bottom: 5em;
   position: relative;
-  line-height: 0px;
-  padding-top: 2em;
-}
-.footer-column {
-  line-height: normal;
-  display: inline-block;
-  margin: 0 auto;
-}
-.cdf-address {
-  text-align: left;
-  display: inline-block;
-  padding-top: 15px;
-  font-size: 15px;
-  margin-right: 13%;
-  margin-left: 55px;
-}
-.footer-column ul li{
-  list-style-type: none;
-}
-.footer-left-column {
-  float: left;
-}
-.footer-center-column {
-  padding-top: 10px;
-  float: right;
-}
-.cdf-info, .cp-info{
-  font-size: 15px;
-}
-.footer-right-column {
-  padding-top: 10px;
-  text-align: center;
-}
-.media-img {
-  display: inline-block;
-  background-repeat: no-repeat;
-  width: 36px;
-  height: 36px;
-  margin: 0 15px 0 15px;
-}
-.flickr {
-  background: url("../../img/flickr.png");
-}
-.google {
-  background: url("../../img/gplus.png");
-}
-.linkedin {
-  background: url("../../img/linkedin.png");
-}
-.facebook {
-  background: url("../../img/fb.png");
-}
-.twitter {
-  background: url("../../img/twitter.png");
-}
-.cd-logo-small {
-  background-image: url("../../img/logo.png");
-  background-repeat: no-repeat;
-  height: 4em;
-  width: 55%;
-  background-size: contain;
+  z-index: 501;
+
+  .language-picker {
+    background: none;
+    color: @cd-white;
+    background: @cd-dark-grey;
+    border: none;
+    vertical-align: middle;
+    &-icon {
+      vertical-align: middle;
+    }
+  }
+
+  a.translate-link {
+    text-decoration: none;
+    line-height: 24px;
+    font-size: 16px;
+    display: block;
+    text-align: right;
+  }
 }

@@ -1,0 +1,4 @@
+<a class="cd-action-bar-item" ng-href="{{ $ctrl.href }}" ng-click="$ctrl.handleClick($event)">
+  <i class="fa fa-{{ $ctrl.icon }}"></i>
+  <span class="hidden-xs">{{ $ctrl.title }}</span>
+</a>

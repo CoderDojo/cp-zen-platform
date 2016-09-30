@@ -26,7 +26,6 @@
     'vcRecaptcha',
     'ngFileUpload',
     'ng-slide-down',
-    'popoverToggle',
     'atomic-notify',
     'internationalPhoneNumber',
     'ngIdle',
@@ -36,6 +35,7 @@
     '720kb.socialshare',
     'ngGeolocation',
     'angular-google-analytics',
-    'ngAria'
+    'ngAria',
+    'ngAnimate'
   ]);
 })();

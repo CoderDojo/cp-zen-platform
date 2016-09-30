@@ -1,0 +1,34 @@
+<div ng-if="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock()" class="cd-profile__contact">
+
+  <div class="row">
+    <div ng-if="profile.formattedDateOfBirth" class="col-xs-12">
+      <b><i class="fa fa-calendar"></i>{@i18n key="Date of Birth"/}</b>
+      <div ng-bind="::profile.formattedDateOfBirth"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" ng-if="profile.gender">
+      <b><i class="fa fa-genderless"></i>{@i18n key="Gender"/}</b>
+      <div ng-bind="::profile.gender"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" ng-if="profile.place.nameWithHierarchy || profile.country.countryName">
+      <b><i class="fa fa-location-arrow"></i>{@i18n key="Address"/}</b>
+      <div>
+        <span ng-bind="::profile.place.nameWithHierarchy"></span> &nbsp;
+        <span ng-bind="::profile.country.countryName"></span>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-if="!hideProfileBlock('languagesSpoken') && hasAccess(profile.userTypes, ['mentor', 'champion']) && profile.widget.languagesSpoken.length > 0">
+    <div class="col-xs-12">
+      <b><i class="fa fa-language"></i>{@i18n key="Languages Spoken"/}</b>
+      <ul ng-repeat="languageSpoken in profile.widget.languagesSpoken" class="list-unstyled">
+        <li>{{ languageSpoken }}</li>
+      </ul>
+    </div>
+  </div>
+  <div cd-social-network twitter="profile.twitter" facebook="profile.facebook" linkedin="profile.linkedin" class="row"></div>
+  <cd-connect-lms ng-if="false"></cd-connect-lms>
+</div>

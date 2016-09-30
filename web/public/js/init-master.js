@@ -39,12 +39,14 @@
       }, function (err) {
         dfd.reject(err);
       });
-    } else if($stateParams.dojoId && _.isNumber(parseInt($stateParams.dojoId))) {
-      cdDojoService.load({id: parseInt($stateParams.dojoId)},
-      function (data) {
-        dfd.resolve(data);
-      }, function (err) {
-        dfd.reject(err);
+    } else if( ($stateParams.dojoId && !_.isNumber($stateParams.dojoId) ) ||
+      ($stateParams.id && !_.isNumber($stateParams.dojoId) ) ) {
+        var id = $stateParams.dojoId || $stateParams.id;
+        cdDojoService.load(id,
+        function (data) {
+          dfd.resolve(data);
+        }, function (err) {
+          dfd.reject(err);
       });
     } else if($stateParams.country && $stateParams.path && _.isString($stateParams.country) && _.isString($stateParams.path)) {
       cdDojoService.find({
@@ -77,7 +79,7 @@
       return auth.get_loggedin_user_promise().then(function (currentUser) {
         if(currentUser){
           return cdUsersService.userProfileDataPromise({userId: currentUser.id}).then(winCb, failCb);
-        }else {
+        } else {
           winCb(void 0);
         }
       }, failCb);
@@ -90,7 +92,11 @@
     },
     usersDojos: function(auth, cdDojoService){
       return auth.get_loggedin_user_promise().then(function (currentUser) {
-        return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        if(currentUser){
+          return cdDojoService.getUsersDojosPromise({userId: currentUser.id}).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
       }, failCb);
     },
     hiddenFields: function(cdUsersService){
@@ -99,8 +105,26 @@
     championsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
     },
+    championsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadChampionsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
+    },
     parentsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    parentsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadParentsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
     },
     badgeCategories: function(cdBadgesService) {
       return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
@@ -112,6 +136,15 @@
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
       return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    },
+    dojoAdminsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
+      return auth.get_loggedin_user_promise().then(function (currentUser) {
+        if(currentUser){
+          return cdUsersService.loadDojoAdminsForUserPromise(currentUser.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
+      }, failCb);
     },
     ticketTypes: function (cdEventsService) {
       return cdEventsService.ticketTypesPromise().then(winCb, failCb);
@@ -159,16 +192,34 @@
         })
         .state("login", {
           url: "/login?referer",
-          templateUrl: '/templates/login',
+          template: '<cd-login></cd-login>',
           controller: 'login',
           params: {
             referer: null,
             pageTitle: 'Login'
           }
         })
+        .state("logout", {
+          url: "/logout?referer",
+          template: '<span us-spinner="{radius:30, width:8, length: 16}"></span>',
+          controller: 'logout',
+          params: {
+            referer: null,
+            pageTitle: 'Logout'
+          }
+        })
+        .state("reset", {
+          url: "/reset?referer",
+          template: '<cd-reset></cd-reset>',
+          controller: 'login',
+          params: {
+            referer: null,
+            pageTitle: 'Password Reset'
+          }
+        })
         .state("reset-password", {
           url: "/reset_password/:token",
-          templateUrl: '/templates/reset_password',
+          template: '<cd-reset-password></cd-reset-password>',
           controller: 'login',
           params: {
             pageTitle: 'Reset Password'
@@ -176,13 +227,27 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          templateUrl: '/dojos/template/start-dojo-wizard/step-one-register',
+          template: '<cd-register></cd-register>',
+          abstract: true,
           params: {
             referer:null,
             userType:null,
             pageTitle: 'Register'
           },
           controller: 'login'
+        })
+        .state("register-account.user", {
+          url: "/user",
+          template: '<cd-register-user></cd-register-user>',
+          params: {
+            referer:null,
+          }
+        })
+        .state("register-account.profile", {
+          url: "/profile",
+          template: '<cd-register-profile></cd-register-profile>',
+          params: {
+          }
         })
         .state("stats", {
           url: "/stats",
@@ -299,6 +364,7 @@
           parent: 'dashboard',
           templateUrl: '/dojos/template/edit-dojo',
           resolve: {
+            dojo: resolveDojo,
             gmap: gmap,
             currentUser: resolves.loggedInUser
           },
@@ -338,7 +404,7 @@
         .state("create-dojo-event", {
           url: "/dojo/:dojoId/event-form",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,
@@ -352,7 +418,7 @@
         .state("edit-dojo-event", {
           url: "/dojo/:dojoId/event-form/:eventId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/dojo-event-form',
+          template: '<cd-create-event></cd-create-event>',
           resolve: {
             gmap: gmap,
             ticketTypes: resolves.ticketTypes,
@@ -365,13 +431,15 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          parent: 'dashboard',
-          templateUrl: '/dojos/template/events/details',
-          controller: function($scope, dojo, event, sessions, profile){
+          template: '<cd-event-detail></cd-event-detail>',
+          controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
             $scope.sessions = sessions.data;
-            $scope.profile = profile.data;
+            if (profile){
+              $scope.profile = profile.data;
+            }
+            $scope.currentUser = currentUser;
           },
           params: {
             pageTitle: 'Event details'
@@ -380,7 +448,8 @@
             profile: resolves.ownProfile,
             dojo: resolveDojo,
             sessions: resolves.sessions,
-            event: resolves.event
+            event: resolves.event,
+            currentUser: resolves.loggedInUser
           },
           ncyBreadcrumb: {
             label: '{{EventDetailsPageTitle}}'
@@ -401,7 +470,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<cd-event-detail></cd-event-detail>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -429,7 +498,7 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          templateUrl: '/dojos/template/events/details',
+          template: '<div class="cd-event-list col-xs-12"><cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event"></cd-event-list-item></div>',
           controller: function($scope, event, sessions, profile){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -559,7 +628,7 @@
         .state('add-child',{
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/user-profile',
+          templateUrl: '/directives/tpl/user/cd-profile/edit',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
@@ -600,11 +669,49 @@
             showBannerMessage: null,
             referer: null
           },
-          templateUrl: '/dojos/template/user-profile'
+          templateUrl: '/directives/tpl/user/cd-profile/edit'
+        })
+        .state("my-profile", {
+          url: '/profile?public',
+          templateUrl: '/directives/tpl/user/cd-profile/view',
+          resolve: {
+            profile: resolves.ownProfile,
+            loggedInUser: resolves.loggedInUser,
+            hiddenFields: resolves.hiddenFields,
+            agreement: resolves.agreement ,
+            championsForUser: resolves.championsForLoggedInUser,
+            parentsForUser: resolves.parentsForLoggedInUser,
+            badgeCategories: resolves.badgeCategories,
+            dojoAdminsForUser: resolves.dojoAdminsForLoggedInUser,
+            usersDojos: resolves.usersDojos,
+            initUserTypes: resolves.initUserTypes
+          },
+          controller: 'user-profile-controller',
+          params: {
+            pageTitle: 'Profile'
+          }
+        })
+        .state("connect-lms", {
+          url: '/profile/lms',
+          parent: 'dashboard',
+          template: '<cd-lms class="row"></cd-lms>',
+          resolve: {
+            profile: resolves.ownProfile,
+            loggedInUser: resolves.loggedInUser,
+            initUserTypes: resolves.initUserTypes
+          },
+          controller: function ($scope, profile, loggedInUser, initUserTypes) {
+            $scope.profile = profile;
+            $scope.loggedInUser = loggedInUser;
+            $scope.initUserTypes = initUserTypes;
+          },
+          params: {
+            pageTitle: 'Access our e-learning modules'
+          }
         })
         .state("user-profile", {
-          url: "/profile/:userId",
-          templateUrl: '/dojos/template/user-profile',
+          url: "/profile/:userId?public",
+          templateUrl: '/directives/tpl/user/cd-profile/view',
           resolve: {
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
@@ -625,7 +732,7 @@
         .state('badges-dashboard', {
           url:'/badges',
           controller:'badges-dashboard-controller',
-          templateUrl: '/dojos/template/badges/index',
+          template: '<cd-badges></cd-badges>',
           params: {
             pageTitle: 'Badges',
           }
@@ -669,6 +776,7 @@
           }
         });
       $urlRouterProvider.when('', '/');
+      $urlRouterProvider.when('/register', '/register/user');
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');
@@ -680,9 +788,12 @@
           }
       });
     }])
-    .config(['paginationConfig', function(paginationConfig) {
-      paginationConfig.maxSize = 5;
-      paginationConfig.rotate = false;
+    .config(['uibPaginationConfig', function(uibPaginationConfig) {
+      uibPaginationConfig.maxSize = 5;
+      uibPaginationConfig.rotate = false;
+    }])
+    .config(['ipnConfig', function (ipnConfig) {
+      ipnConfig.nationalMode = false;
     }])
     .factory('authHttpResponseInterceptor', ['$q', '$window',
       function($q, $window) {
@@ -751,6 +862,14 @@
         return $delegate;
       }]);
     }])
+    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+      $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
+      ]);
+    }])
     .run(['$window', '$cookieStore', 'tmhDynamicLocale', 'Analytics', function ($window, $cookieStore, tmhDynamicLocale, Analytics) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
@@ -766,6 +885,18 @@
     }])
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
+
+      // Override $translate.instant so it falls back to en_US, then the original key when no result
+      var originalTranslateInstant = $translate.instant;
+      $translate.instant = function (key) {
+        var translation = originalTranslateInstant.apply($translate, arguments);
+        if (!translation) {
+          var args = Array.prototype.slice.apply(arguments); // Needed so we can modify the arguments
+          args[3] = 'en_US'; // The forceLanguage argument
+          translation = originalTranslateInstant.apply($translate, args);
+        }
+        return translation || key;
+      };
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete') && toState.parent === 'dashboard' ) {
@@ -838,7 +969,7 @@
     .run(['Idle', function (Idle){
       Idle.watch();
     }])
-    .controller('cdDashboardCtrl', ['$scope', '$modal', '$cookieStore', '$window', 'Idle', 'auth', function ($scope, $modal, $cookieStore, $window, Idle, auth) {
+    .controller('cdDashboardCtrl', ['$scope', '$uibModal', '$cookieStore', '$window', 'Idle', 'auth', function ($scope, $uibModal, $cookieStore, $window, Idle, auth) {
       $scope.$on('IdleTimeout', function() {
         //session timeout
         $cookieStore.remove('verifyProfileComplete');

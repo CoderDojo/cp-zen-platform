@@ -84,6 +84,7 @@
             <th>{@i18n key="User"/}</th>
             <th>{@i18n key="Application"/}</th>
             <th>{@i18n key="Edit"/}</th>
+            <th><span ng-click="toggleSort($event, 'verifiedAt')" ng-class="getSortClass(sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}</th>
             <th>{@i18n key="Verified"/}</th>
             <th>{@i18n key="Delete"/}</th>
           </tr>
@@ -105,6 +106,7 @@
             </td>
             <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
             <td><button class="btn btn-link" ng-if="!dojo.deleted || dojo.deleted===0" ng-click="editDojo(dojo)">{@i18n key="Edit"/}</button></td>
+            <td><span ng-if="dojo.verified === 1">{{ dojo.verifiedAt | date:'yyyy/MM/dd' }}</span></td>
             <td>
             <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
               <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="pushChangedDojo(dojo)">
@@ -132,14 +134,14 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"
+      <uib-pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage"
                   ng-model="pageNo"
                   first-text="{@i18n key="First" /}"
                   previous-text="{@i18n key="Previous" /}"
                   next-text="{@i18n key="Next" /}"
                   last-text="{@i18n key="Last" /}"
                   class="pagination-sm"
-                  boundary-links="true"></pagination>
+                  boundary-links="true"></uib-pagination>
     </div>
   </div>
 </div>

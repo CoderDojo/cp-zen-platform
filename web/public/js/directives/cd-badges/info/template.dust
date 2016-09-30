@@ -1,0 +1,5 @@
+<div>
+  <p><b>{@i18n key="Short Description"/}:</b> {{ badge.strapline }}</p>
+  <p><b>{@i18n key="Date Awarded"/}:</b> {{ badge.formattedDateAccepted }}</p>
+  <p ng-if="badge.evidenceType"><b>{@i18n key="Proof"/}:</b> {{ badge.evidenceType }}</p>
+</div>

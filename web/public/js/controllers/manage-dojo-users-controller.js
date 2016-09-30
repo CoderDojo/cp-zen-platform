@@ -1,7 +1,7 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService) {
+  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService, $timeout) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -28,6 +28,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   var user = currentUser.data;
   $scope.currentUser = user;
+  $scope.isCDFAdmin = _.includes($scope.currentUser.roles, 'cdf-admin');
   //Show 404 if current user has no permission to view this page
   cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0, dojoId: dojoId}, function (usersDojos) {
     var userDojo = usersDojos[0];
@@ -38,7 +39,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       });
     }
 
-    if(!userDojo || !isDojoAdmin) return $state.go('error-404-no-headers');
+    if(!$scope.isCDFAdmin && (!userDojo || !isDojoAdmin) ) return $state.go('error-404-no-headers');
     $scope.loadPage(true);
   });
 
@@ -63,7 +64,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: 1};
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, $scope.filterQuery, $scope.queryModel.sort);
     $scope.pagination.pageNo = loadPageData.pageNo;
-    $scope.myDojos = [];
+    $scope.users = [];
     var users;
 
     async.series([
@@ -85,19 +86,23 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
     function getInviteUserTypes(done) {
       cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId, deleted: 0}, function (usersDojos) {
-        if(!usersDojos || usersDojos.length < 1){
+        if(!$scope.isCDFAdmin && (!usersDojos || usersDojos.length < 1)){
           $state.go('my-dojos');
           return done();
         }
-        var userDojo = usersDojos[0];
-        user.userTypes = userDojo.userTypes;
+        var mainUserType = void 0;
         var inviteUserTypes = angular.copy(initUserTypes.data);
-        var mainUserType = permissionService.getUserType(user.userTypes);
-
+        if (usersDojos.length){
+          var userDojo = usersDojos[0];
+          user.userTypes = userDojo.userTypes;
+          mainUserType = permissionService.getUserType(user.userTypes);
+        }else if($scope.isCDFAdmin){
+          mainUserType = 'champion';
+        }
         //TODO: permissionService should handle that check when every user capabilities will be defined
         var allowedUserTypes = permissionService.getAllowedUserTypes(mainUserType, mainUserType === 'attendee-u13');
         $scope.userTypes = _.filter(inviteUserTypes, function(inviteUserType){
-          return _.contains(allowedUserTypes, inviteUserType.name);
+          return _.includes(allowedUserTypes, inviteUserType.name);
         });
 
         cdDojoService.getUserPermissions(function (response) {
@@ -126,7 +131,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         $scope.pagination.totalItems = response.length;
         response = response.response;
         _.each(response, function (user) {
-          var thisUsersDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+          var thisUsersDojoLink = _.find(usersDojosLink, {userId:user.id});
           user.types = thisUsersDojoLink.userTypes;
           user.frontEndTypes = _.map(thisUsersDojoLink.userTypes, function (userType) {
             var userTypeFound = _.find(initUserTypes.data, function (initUserType) {
@@ -135,7 +140,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
             return $translate.instant(userTypeFound.title);
           });
           user.permissions = thisUsersDojoLink.userPermissions;
-          user.isMentor = _.contains(user.types, 'mentor');
+          user.isMentor = _.includes(user.types, 'mentor');
           user.isDojoOwner = thisUsersDojoLink.owner === 1;
           user.backgroundChecked = thisUsersDojoLink.backgroundChecked;
           user.userDojoId = thisUsersDojoLink.id;
@@ -184,13 +189,13 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if (hasPermission) {
         var query = {dojoId:dojoId};
         delete permission.$$hashKey;
-        var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+        var userDojoLink = _.find(usersDojosLink, {userId:user.id});
         if($scope.userPermissionsModel[user.id][permission.name]) {
           //Add to user permissions
           if(!userDojoLink.userPermissions) userDojoLink.userPermissions = [];
           userDojoLink.userPermissions.push(permission);
           //Save to db
-          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.map(userDojoLink.userTypes, 'text');
           cdDojoService.saveUsersDojos(userDojoLink, function (response) {
             if(response.error) {
               alertService.showError($translate.instant(response.error));
@@ -206,9 +211,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           });
         } else {
           //Remove from user permissions
-          user.permissions = _.without(user.permissions, _.findWhere(user.permissions, {name: permission.name}));
+          user.permissions = _.without(user.permissions, _.find(user.permissions, {name: permission.name}));
           userDojoLink.userPermissions = user.permissions;
-          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.pluck(userDojoLink.userTypes, 'text');
+          if(userDojoLink.userTypes[0] && userDojoLink.userTypes[0].text) userDojoLink.userTypes = _.map(userDojoLink.userTypes, 'text');
           //Save to db
           cdDojoService.saveUsersDojos(userDojoLink, function (response) {
             if(response.error)  {
@@ -254,7 +259,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if(hasPermission) {
 
         var updatedUserTypes = _.chain(angular.copy(user.frontEndTypes))
-          .pluck('text')
+          .map('text')
           .map(function (userType) {
             userType = userType.replace(/-/g, ' ');
             var initUserTypeFound = _.find(initUserTypes.data, function (initUserType) {
@@ -264,7 +269,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           })
           .value();
 
-        var userDojoLink = _.findWhere(usersDojosLink, {userId:user.id});
+        var userDojoLink = _.find(usersDojosLink, {userId:user.id});
         if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
         userDojoLink.userTypes = updatedUserTypes;
         cdDojoService.saveUsersDojos(userDojoLink, function (response) {
@@ -298,12 +303,14 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         var isDojoAdmin;
         cdDojoService.getUsersDojos(query, function (response) {
           var userDojo = response[0];
-          isChampion   = _.contains(userDojo.userTypes, 'champion');
-          isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
-                          return userPermission.name === 'dojo-admin';
-                        });
-          if(isDojoAdmin) $scope.isDojoAdmin = true;
-          if(isChampion && isDojoAdmin) return resolve(true);
+          if(userDojo){
+            isChampion   = _.includes(userDojo.userTypes, 'champion');
+            isDojoAdmin  = _.find(userDojo.userPermissions, function(userPermission) {
+              return userPermission.name === 'dojo-admin';
+            });
+            if(isDojoAdmin) $scope.isDojoAdmin = true;
+          }
+          if(isChampion && isDojoAdmin || $scope.isCDFAdmin) return resolve(true);
           return resolve(false);
         }, function (err) {
           alertService.showError($translate.instant('Error loading user dojo entity') + ' <br /> ' +
@@ -347,10 +354,21 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   $scope.userListDownloadLink = function () {
     cdDojoService.exportDojoUsers(dojoId, function (response) {
+      //  TODO: export as a directive, it modifies the DOM
       var downloadLink = angular.element('<a></a>');
       var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
-      downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-      window.open(downloadLink[0]);
+      var urlFactory = window.URL || window.webkitURL;
+      var tempFile = urlFactory.createObjectURL(csv);
+      downloadLink.attr('href', tempFile);
+      downloadLink.attr('download', dojoId +'.csv');
+      // Ok, that's sad.
+      document.body.appendChild(downloadLink[0]);
+
+      downloadLink[0].click();
+      $timeout(function(){
+       document.body.removeChild(downloadLink[0]);
+       urlFactory.revokeObjectURL(tempFile);
+      }, 0);
     });
   };
 
@@ -427,4 +445,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout', cdManageDojoUsersCtrl]);

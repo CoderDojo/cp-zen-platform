@@ -1,112 +1,107 @@
-<div ncy-breadcrumb></div>
-<legend>{@i18n key="Manage Dojo Users"/}</legend>
-<span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
-<div class="row">
-  <button type="button" class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()">{@i18n key="Export User List"/}</button>
-	<form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm" class="col-xs-12 col-md-10">
-  	<div class="form-group">
-	    <div class="col-lg-3">
-	      <input type="email" required required-message="'{@i18n key="Email is empty"/}'" placeholder="{@i18n key="Enter Email"/}" class="form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
-	    </div>
-      <div class="col-lg-3" ng-class="{'has-error': inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required}">
-        <ui-select name="inviteUserType" ng-model="invite.userType" required>
-          <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected.title  }}</ui-select-match>
-          <ui-select-choices repeat="userType in userTypes">
-            <span ng-bind-html="userType.title"></span>
-          </ui-select-choices>
-        </ui-select>
-        <label class="control-label has-error validationMessage"
-               ng-show="inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required">{@i18n key="Select an option"/}</label>
+<div class="dojo-users">
+  <legend>{@i18n key="Manage Dojo Users"/}</legend>
+  <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+  <div class="row">
+    <button type="button" class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()">{@i18n key="Export User List"/}</button>
+    <form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm" class="col-xs-12 col-md-10">
+      <div class="form-group">
+        <div class="col-md-3">
+          <input type="email" required required-message="'{@i18n key="Email is empty"/}'" placeholder="{@i18n key="Enter Email"/}" class="form-group form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
+        </div>
+        <div class="col-md-5 form-group" ng-class="{'has-error': inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required}">
+          <ui-select name="inviteUserType" ng-model="invite.userType" required>
+            <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected.title  }}</ui-select-match>
+            <ui-select-choices repeat="userType in userTypes">
+              <span ng-bind-html="userType.title"></span>
+            </ui-select-choices>
+          </ui-select>
+          <label class="control-label has-error validationMessage"
+                 ng-show="inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required">{@i18n key="Select an option"/}</label>
+        </div>
+        <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
       </div>
-      <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
+
+    </form>
+    <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm" class="col-xs-12 col-md-10">
+      <div class="form-group">
+        <div class="col-md-3">
+          <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control form-group" name="filterUserName" ng-model="filter.name" id="filterUserName">
+        </div>
+        <div class="col-md-5 form-group">
+          <ui-select name="filterUserType" ng-model="filter.userType">
+            <ui-select-match allow-clear="true" placeholder="{@i18n key="Filter Users by type..."/}">{{ $select.selected.title  }}</ui-select-match>
+            <ui-select-choices repeat="userType in filterUserTypes">
+              <span ng-bind-html="userType.title"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
+      </div>
+    </form>
+    <div class="col-md-12 table-responsive">
+      <table id="manageDojoUsers" class="table cd-grid-table">
+        <thead>
+          <tr>
+            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(queryModel.sort.name)">&nbsp;</span>{@i18n key="Name"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(queryModel.sort.email)">&nbsp;</span>{@i18n key="Email"/}</th>
+            <th class="five-percent-width">{@i18n key="Profile"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
+            <th ng-if="isDojoAdmin" class="five-percent-width">{@i18n key="Events Attended"/}</th>
+            <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
+            <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users">
+            <td>{{ user.name }}</td>
+            <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
+            <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View"/}</a></td>
+            <td ng-if="canUpdateUserPermissions">
+
+              <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.frontEndTypes"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
+
+              <div ng-if="user.isMentor" class="checkbox checkbox-success">
+                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
+                <label for="background-check-{{ user.id }}" class="font-13">
+                  {@i18n key="Background Checked"/}
+                </label>
+              </div>
+
+            </td>
+            <td ng-if="canUpdateUserPermissions">
+              <div class="checkbox" ng-repeat="userPermission in userPermissions">
+                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-model="userPermissionsModel[user.id][userPermission.name]" ng-click="updateUserPermissions(user, userPermission)">
+                <label for="{{ userPermission.name }}-{{ user.id }}">
+                    {{ userPermission.title }}
+                </label>
+              </div>
+            </td>
+
+            <td ng-if="isDojoAdmin">{{ user.eventsAttended || 0 }}</td>
+
+            <td ng-if="isDojoAdmin">
+              <div ng-if="currentUser.id !== user.id">
+                <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
+                  <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
+                  <ui-select-choices repeat="badge in badges">
+                    <span ng-bind-html="badge.name"></span>
+                  </ui-select-choices>
+                </ui-select>
+                <span class="help-block"></span>
+                <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
+              </div>
+            </td>
+
+            <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this user from your Dojo?" /}" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-  </form>
-  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm" class="col-xs-12 col-md-10">
-    <div class="form-group">
-      <div class="col-lg-3">
-        <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control" name="filterUserName" ng-model="filter.name" id="filterUserName">
-      </div>
-      <div class="col-lg-3">
-        <ui-select name="filterUserType" ng-model="filter.userType">
-          <ui-select-match allow-clear="true" placeholder="{@i18n key="Filter Users by type..."/}">{{ $select.selected.title  }}</ui-select-match>
-          <ui-select-choices repeat="userType in filterUserTypes">
-            <span ng-bind-html="userType.title"></span>
-          </ui-select-choices>
-        </ui-select>
-      </div>
-      <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
-    </div>
-  </form>
-  <div class="col-md-12 table-responsive">
-    <table id="manageDojoUsers" class="table cd-grid-table">
-      <thead>
-        <tr>
-          <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(queryModel.sort.name)">&nbsp;</span>{@i18n key="Name"/}</th>
-          <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(queryModel.sort.email)">&nbsp;</span>{@i18n key="Email"/}</th>
-          <th class="five-percent-width">{@i18n key="Profile"/}</th>
-          <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
-          <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
-          <th ng-if="isDojoAdmin" class="five-percent-width">{@i18n key="Events Attended"/}</th>
-          <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
-          <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="user in users">
-          <td>{{ user.name }}</td>
-          <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
-          <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View"/}</a></td>
-          <td ng-if="canUpdateUserPermissions">
-
-            <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.frontEndTypes"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
-
-            <div ng-if="user.isMentor" class="checkbox checkbox-success">
-              <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
-              <label for="background-check-{{ user.id }}" class="font-13">
-                {@i18n key="Background Checked"/}
-              </label>
-            </div>
-
-          </td>
-          <td ng-if="canUpdateUserPermissions">
-            <div class="checkbox" ng-repeat="userPermission in userPermissions">
-              <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-model="userPermissionsModel[user.id][userPermission.name]" ng-click="updateUserPermissions(user, userPermission)">
-              <label for="{{ userPermission.name }}-{{ user.id }}">
-                  {{ userPermission.title }}
-              </label>
-            </div>
-          </td>
-
-          <td ng-if="isDojoAdmin">{{ user.eventsAttended || 0 }}</td>
-
-          <td ng-if="isDojoAdmin">
-            <div ng-if="currentUser.id !== user.id">
-              <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
-                <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
-                <ui-select-choices repeat="badge in badges">
-                  <span ng-bind-html="badge.name"></span>
-                </ui-select-choices>
-              </ui-select>
-              <span class="help-block"></span>
-              <button ng-show="awardBadgeButtonModel[user.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
-            </div>
-          </td>
-
-          <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this user from your Dojo?" /}" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-12 text-center">
-    <pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo"
-                class="pagination-sm"
-                first-text="{@i18n key="First" /}"
-                previous-text="{@i18n key="Previous" /}"
-                next-text="{@i18n key="Next" /}"
-                last-text="{@i18n key="Last" /}"
-                boundary-links="true"></pagination>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>
+    </div>
   </div>
 </div>

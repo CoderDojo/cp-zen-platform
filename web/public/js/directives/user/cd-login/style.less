@@ -1,0 +1,45 @@
+.cd-login {
+  padding-top: 10px;
+
+  .cd-title {
+    margin: 10px 5px;
+    color: #7b7676;
+    text-align: center;
+  }
+
+  .cd-btn-row {
+		padding-left: 30px;
+		padding-right: 30px;
+		@media (min-width: @screen-xs-min) {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+	}
+
+  .cd-link-row {
+    margin: 5px 0;
+  }
+
+  .alert-info {
+    margin: 0;
+    margin-top: 15px;
+  }
+
+  .cd-info-row {
+    margin: 0;
+
+    span {
+      &.cd-msg-info {
+        color: @cd-blue;
+      }
+
+      &.cd-msg-warn {
+        color: @cd-orange;
+      }
+
+      &.cd-msg-error {
+        color: @cd-red;
+      }
+    }
+  }
+}

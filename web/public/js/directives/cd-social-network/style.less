@@ -1,0 +1,52 @@
+/* Credits to https://codepen.io/elishaterada/pen/tGokD */
+.cd-social-network {
+  overflow: hidden;
+  .title .fa{
+    color: @cd-black;
+    padding: 0;
+  }
+  .fa {
+    color: white;
+    padding: 1em;
+  }
+  .fa-envelope, .fa-phone {
+    color: black;
+  }
+  .fa-facebook {
+    border-radius: 100%;
+    background-color: #3b5998;
+  }
+  .fa-twitter {
+    border-radius: 100%;
+    background-color: #55acee;
+  }
+  .fa-flickr {
+    border-radius: 100%;
+    background-color: #ff0084;
+  }
+  .fa-google {
+    border-radius: 100%;
+    background-color: #4285f4;
+  }
+  .fa-linkedin {
+    border-radius: 100%;
+    background-color: #0976b4;
+  }
+
+  &__slider-btn {
+    display: block;
+    clear: both;
+    margin-bottom: 0.5em;
+    background-color: @cd-white;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    &__data {
+      padding-right: 0.5em;
+      padding-left: 0.5em;
+    }
+    transform: translateX(calc(~'100% - 45px'));
+    &--visible {
+      transform: translateX(0);
+    }
+  }
+}

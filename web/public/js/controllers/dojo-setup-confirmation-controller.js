@@ -1,15 +1,15 @@
 'use strict';
 
-function dojoSetupConfirmationCtrl($scope, $modalInstance){
+function dojoSetupConfirmationCtrl($scope, $uibModalInstance){
   $scope.ok = function () {
-    $modalInstance.close(true);
+    $uibModalInstance.close(true);
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $uibModalInstance.dismiss('cancel');
   };
 
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojoSetupConfirmationCtrl', ['$scope', '$modalInstance', dojoSetupConfirmationCtrl]);
+  .controller('dojoSetupConfirmationCtrl', ['$scope', '$uibModalInstance', dojoSetupConfirmationCtrl]);

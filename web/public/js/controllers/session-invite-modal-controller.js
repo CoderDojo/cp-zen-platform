@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function cdSessionInviteModalCtrl($scope, $modalInstance, $translate, $state, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService, currentUser) {
+  function cdSessionInviteModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService, dojoId, session, event, eventUserSelection, usSpinnerService, currentUser) {
     $scope.dojoId = dojoId;
     $scope.session = session;
     $scope.event = event;
@@ -9,9 +9,9 @@
     $scope.currentUser = currentUser;
 
     $scope.inviteSettings = {
-      displayProp: 'title', 
-      buttonClasses: 'btn btn-primary btn-block', 
-      showCheckAll: true, 
+      displayProp: 'title',
+      buttonClasses: 'btn btn-primary btn-block',
+      showCheckAll: true,
       showUncheckAll: true,
       idProp: 'userId',
       externalIdProp: 'userId',
@@ -25,17 +25,17 @@
     });
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.buildInvites = function (invite) {
       session.invites = invite;
-      $modalInstance.close({ok: true});
+      $uibModalInstance.close({ok: true});
     };
 
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-invite-modal-controller', ['$scope', '$modalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', 'currentUser', cdSessionInviteModalCtrl]);
+    .controller('session-invite-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'eventUserSelection', 'usSpinnerService', 'currentUser', cdSessionInviteModalCtrl]);
 
 })();

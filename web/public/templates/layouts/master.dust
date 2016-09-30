@@ -22,10 +22,10 @@
         }
     </style>
 
+    <!-- Lato font -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,400" type="text/css">
 
     <!-- Bootstrap core CSS -->
-    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/components/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/components/angular-loading/angular-loading.css" rel="stylesheet">
 
     <!-- Angular UI Select -->
@@ -58,8 +58,12 @@
     <!-- Angular Tooltips -->
     <link rel="stylesheet" type="text/css" href="/components/angular-tooltips/dist/angular-tooltips.min.css">
 
+    <!-- CoderDojo Menu -->
+    <link rel="stylesheet" type="text/css" href="/components/cd-common/dist/cd-common.min.css">
+
     <!-- Custom styles for this template -->
     <link href="/dist/css/app.css" rel="stylesheet">
+
     <base href="/" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -78,6 +82,11 @@
     <!-- This needs to be separate as it loads a config files relative to itself -->
     <script src="/components/ckeditor/ckeditor.js"></script>
     {@loadJS /}
+    <script type="text/javascript">
+      window.cdMenu({
+        zenBase: '/'
+      });
+    </script>
 </body>
 
 </html>

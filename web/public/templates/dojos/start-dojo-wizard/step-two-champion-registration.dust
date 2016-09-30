@@ -35,7 +35,7 @@
           <div class="form-group has-feedback">
             <label for="dateOfBirth" class="col-lg-4 cd-form-label1">{@i18n key="Date of Birth"/}*</label>
             <div class="input-group col-lg-8 dob-picker">
-              <input type="text" class="form-control" readonly datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="champion.dateOfBirth" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="picker.opened" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}" ng-click="open($event)" ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)" />
+              <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="champion.dateOfBirth" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="picker.opened" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}" ng-click="open($event)" ng-change="updateLocalStorage('championDetails','dateOfBirth',champion.dateOfBirth)" />
               <span class="input-group-btn" ng-class="{'topValign':createChampionForm.$submitted && createChampionForm.dateOfBirth.$error.required}">
                 <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
@@ -147,7 +147,7 @@
           <div class="form-group">
             <label for="twitter" class="col-lg-4 cd-form-label1">{@i18n key="Twitter"/}</label>
               <div class="col-lg-8">
-                <input type="text" ng-enter="noop()" tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
+                <input type="text" ng-enter="noop()" uib-tooltip="{@i18n key="If you wish please provide a link to your Twitter page."/}" ng-model="champion.twitter" class="form-control" name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('championDetails','twitter',champion.twitter)">
               </div>
           </div>
         </div>
@@ -156,7 +156,7 @@
           <div class="form-group">
             <label for="linkedIn" class="col-lg-4 cd-form-label1">{@i18n key="LinkedIn"/}</label>
               <div class="col-lg-8">
-                <input type="url" ng-enter="noop()" http-prefix tooltip="{@i18n key="If you wish please provide a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
+                <input type="url" ng-enter="noop()" http-prefix uib-tooltip="{@i18n key="If you wish please provide a link to your LinkedIn page."/}" ng-model="champion.linkedIn" class="form-control" name="linkedIn" id="linkedIn" placeholder="{@i18n key="Enter your full linked in url"/}" ng-change="updateLocalStorage('championDetails','linkedIn',champion.linkedIn)">
               </div>
           </div>
         </div>

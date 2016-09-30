@@ -1,0 +1,24 @@
+<span spinner-key="apply-for-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
+<div class="cd-event-apply row">
+  <div class="col-xs-12">
+    <h4>{@i18n key="Sessions/rooms:"/}</h4>
+  </div>
+  <div class="col-xs-12">
+    <div class="row flex-row cd-event-apply__session" ng-repeat="session in event.sessions">
+      <div class="col-xs-12 col-sm-8">
+        <div class="h4" ng-bind="::session.name"></div>
+        <p ng-bind-html="::session.description">{@i18n key="No description available"/}</p>
+        <div class="row">
+          <div class="col-xs-12 col-md-6" ng-repeat="ticket in session.tickets">
+            <p ng-bind="::ticket.name"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 cd-event-apply__apply-column">
+        <!-- TODO: remove this popup and add a button/ticket ?-->
+        <button class="btn btn-block btn-secondary" ng-click="showSessionDetails(session)" ng-if="!event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Book"/}</a>
+        <button class="btn btn-block btn-secondary disabled" ng-if="event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Booking closed"/}</a>
+      </div>
+    </div>
+  </div>
+</div>

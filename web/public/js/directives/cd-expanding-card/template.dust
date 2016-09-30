@@ -1,0 +1,19 @@
+<div class="cd-expanding-card" data-expanded="{{ $ctrl.expanded }}" ng-click="$ctrl.expand($event)">
+  <div class="cd-expanding-card__hero-image">
+  </div>
+  <div class="cd-expanding-card__info">
+    <img ng-if="$ctrl.roundImage" class="cd-expanding-card__round-image" src="{{ $ctrl.roundImage }}" />
+    <div class="cd-expanding-card__header">
+      <h1>
+        {{ $ctrl.mainTitle }}
+      </h1>
+      <h2>
+        <span class="cd-expanding-card__sub-title-1">{{ $ctrl.subTitle1 }}</span><span class="cd-expanding-card__sub-title-2">{{ $ctrl.subTitle2 }}</span>
+      </h2>
+    </div>
+  </div>
+  <div class="cd-expanding-card__card-content">
+    <div class="cd-expanding-card__card-content-size-wrapper" ng-transclude></div>
+  </div>
+  <span class="cd-expanding-card__expand-button fa fa-chevron-down fa-2x" ng-click="$ctrl.collapse($event)"></span>
+</div>

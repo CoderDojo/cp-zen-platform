@@ -1,5 +1,4 @@
 <span spinner-key="user-events-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
-
 <div class="cd-dashboard cd-color-4-underline events-display">
   <div ng-if="isTicketingAdmin" class="alert bg-warning">
     <h5>{@i18n key="See"/} <a ui-sref="my-dojos"><b>{@i18n key="My Dojos"/}</b></a> {@i18n key="to create an event"/}</h5>

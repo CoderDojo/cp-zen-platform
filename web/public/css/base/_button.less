@@ -1,0 +1,37 @@
+.btn.btn-main {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  &[disabled] {
+    background-color: @cd-very-light-gray;
+    color: @cd-black;
+    cursor: not-allowed;
+  }
+}
+
+.btn {
+  // This is a hack to ensure we have a minimal space when tehre is smme content, but a class should be applied to ensure a real spacing
+  .fa{
+    display: inline;
+    &:after {
+      content: ' '
+    }
+  }
+  // The class to apply to buttons with icons and text
+  &.icon {
+    .fa {
+      margin-right: 1em;
+    }
+  }
+}
+.btn-block-xs {
+  @media (max-width: @screen-xs-max){
+    width: 100%;
+    display: block;
+  }
+}
+
+.btn-row {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}

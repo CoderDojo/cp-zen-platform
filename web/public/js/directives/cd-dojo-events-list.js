@@ -8,12 +8,12 @@ function cdDojoEventsList(){
       scope: {
         dojoId: '@'
       },
-      controller:'dojo-events-list-controller'
+      controller: 'dojo-events-list-controller',
+      transclude: true
     }
   }
 
 angular
     .module('cpZenPlatform')
     .directive('cdDojoEventsList', cdDojoEventsList)
- 
 }());

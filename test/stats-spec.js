@@ -18,10 +18,6 @@ describe('stats-controller', function() {
         expected = fixture.load('countries.json');
     })
 
-    beforeEach(angular.mock.module('ngCookies', function ($provide) {
-        $provide.value("$cookies", function(){});
-    }));
-
     beforeEach(angular.mock.module('cpZenPlatform'));
 
     beforeEach(

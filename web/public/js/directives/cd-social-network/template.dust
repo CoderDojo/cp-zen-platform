@@ -1,0 +1,19 @@
+<div class="col-xs-12 cd-social-network" ng-if="!cdSN.empty">
+  <b class="title"><i class="fa fa-share"></i>{@i18n key="Social"/}</b>
+  <div>
+    <a title="Flickr" ng-if="cdSN.flickr" ng-href="{{ cdSN.flickr}}"><div class="fa-flickr"></div></a>
+    <a title="Google+" ng-if="cdSN.google" ng-href="{{ cdSN.google}}"><div class="fa fa-google"></div></a>
+    <a title="LinkedIn" ng-if="cdSN.linkedin" ng-href="{{ cdSN.linkedin}}"><div class="fa fa-linkedin"></div></a>
+    <a title="Twitter" ng-if="cdSN.twitter" ng-href="{{ cdSN.twitter}}"><div class="fa fa-twitter"></div></a>
+    <a title="Facebook" ng-if="cdSN.facebook" ng-href="{{ cdSN.facebook}}"><div class="fa fa-facebook"></div></a>
+    <div ng-if="cdSN.email" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn--visible': cdSN.emailVisible}">
+      <button title="email" ng-if="cdSN.email" ng-click="cdSN.expand($event)"
+        class="fa fa-envelope"></button>
+      <span ng-bind="::cdSN.email" class="cd-social-network__slider-btn__data"></span>
+    </div>
+    <div ng-if="cdSN.phone" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn__data--visible': cdSN.phoneVisible}">
+      <button title="phone" ng-if="cdSN.phone" ng-click="cdSN.expand($event)" class="fa fa-phone"></button>
+      <span ng-bind="::cdSN.phone" class="cd-social-network__slider-btn__data"></span>
+    </div>
+  </div>
+</div>

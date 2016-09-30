@@ -30,7 +30,7 @@ require('./lib/dust-loadjs.js');
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
 var port = process.env.PORT || 8000
-var host = process.env.HOSTNAME || '127.0.0.1:8000';
+var host = process.env.HOSTNAME || '127.0.0.1';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
 
@@ -50,7 +50,7 @@ server.connection({
   // would be sent for 200 when a 304 (Not Modified) is sent.
   routes: {
     cache: { statuses: [200,304] },
-    cors: { origin: [ hostWithPort, 'https://changex.org', 'https://coderdojo.com' ] }
+    cors: { origin: [ hostWithPort, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'], credentials: true }
   }
 });
 
@@ -75,7 +75,7 @@ server.register(vision, function (err) {
   checkHapiPluginError('vision')(err);
   server.views({
     engines: { dust: require('hapi-dust') },
-    path: path.join(__dirname, './public/templates'),
+    path: [path.join(__dirname, './public/templates'), path.join(__dirname, './public/js/')] ,
     partialsPath: path.join(__dirname, './public/templates')
   });
 });
@@ -95,17 +95,23 @@ server.ext('onPreAuth', function (request, reply) {
   return reply.continue();
 });
 
+//  TODO: merge onPreResponses cause they conflict
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
   var status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
 
+  if (status === 400) {
+    request.log(['error', '400'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.data.details}, Date.now());
+  }
   // if it's an api call, continue as normal..
   if (request.url.path.indexOf('/api/2.0') === 0) {
     return reply.continue();
   }
+
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
+  request.log(['error', '40x'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -119,11 +125,11 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
+  request.log(['error', '50x'], {status: bodyStatus || headerStatus , payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   // Display full error message if not in production environment.
   if (env !== 'production') {
     return reply.continue();
   }
-
   // Otherwise, give a generic error reply to hide errors in production.
   debug('onPreResponse', 'showing 500 errors page');
   return reply.view('errors/500', request.locals);
@@ -189,49 +195,48 @@ server.register(scooter, function (err) {
 
   server.register({ register: blankie, options: {
     childSrc: "'none'",
-    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://s3.amazonaws.com/",
+    connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
     frameSrc: "https://www.google.com",
     frameAncestors: "'none'",
-    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: *",
+    imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",
     mediaSrc: "'none'",
     objectSrc: "'none'",
     reflectedXss: 'block',
-    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://www.google-analytics.com http://www.googletagmanager.com https://www.googletagmanager.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com http://cdn.optimizely.com/js/3847550948.js http://www.googleadservices.com/pagead/conversion.js",
+    scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://www.google-analytics.com http://www.googletagmanager.com https://www.googletagmanager.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com http://cdn.optimizely.com/js/3847550948.js http://www.googleadservices.com/pagead/conversion.js ",
     styleSrc: "'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com"
   }}, checkHapiPluginError('blankie'));
 });
 
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
-
-if (process.env.UIDEBUG === 'true') {
-  // Serve CSS files.
-  server.register({
-    register: require('hapi-less'),
-    options: {
-      home: path.join(__dirname, './public/css'),
-      route: '/dist/css/{filename*}',
-      config: { cache: { privacy: 'public', expiresIn: cacheTimes.short } },
-      less: { compress: true }
-    }
-  }, checkHapiPluginError('hapi-less'));
-}
-
-if (process.env.HAPI_DEBUG === 'true') {
-  var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
   var goodOptions = {
     opsInterval: 1000,
     requestPayload:true,
     responsePayload:true,
-    reporters: [{
+    reporters: []
+  };
+  if (process.env.HAPI_DEBUG) {
+    var goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+    goodOptions.reporters.push({
       reporter: require('good-file'),
       events: { log: '*', response: '*' },
       config: goodLogFile
-    }]
-  };
+    });
+  }
+  if (process.env.LOGENTRIES_ENABLED === 'true' && process.env.LOGENTRIES_TOKEN) {
+    goodOptions.reporters.push({
+      reporter: require('good-http'),
+      events: { error: '*', request: '*'},
+      config: {
+        endpoint: 'https://webhook.logentries.com/noformat/logs/' + process.env.LOGENTRIES_TOKEN,
+        threshold: 0
+      }
+    });
+  }
 
   server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
 }
