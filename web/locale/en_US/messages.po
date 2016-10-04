@@ -2717,6 +2717,9 @@ msgstr "You will be joined to a Dojo as an adult, along with any young people ad
 msgid "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
 msgstr "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
 
+msgid "Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title."
+msgstr "Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title."
+
 msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 

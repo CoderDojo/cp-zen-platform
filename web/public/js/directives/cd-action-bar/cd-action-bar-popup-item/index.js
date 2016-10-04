@@ -6,9 +6,7 @@ angular
     .component('cdActionBarPopupItem', {
       bindings: {
         icon: '@',
-        title: '@',
-        color: '@',
-        include: '@'
+        title: '@'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar/cd-action-bar-popup-item',

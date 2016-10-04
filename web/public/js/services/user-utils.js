@@ -105,20 +105,28 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     return  avatar || overallDefault;
   }
 
-  userUtils.getTitleForUserTypes = function (userTypes) {
+  userUtils.getTitleForUserTypes = function (userTypes, user) {
     var title = [];
-    if (_.includes(userTypes, 'attendee-u13')) {
-      title.push($translate.instant('Ninja (Under 13)'));
-    } else if (_.includes(userTypes, 'attendee-o13')) {
-      title.push($translate.instant('Ninja (Over 13)'));
-    }
+    var age = moment.utc().diff(moment(user.dob), 'years');
+
     if (_.includes(userTypes, 'champion')) {
       title.push($translate.instant('Champion'));
     } else if (_.includes(userTypes, 'mentor')) {
       title.push($translate.instant('Volunteer/Mentor'));
+    }
+
+    if (age < 18 || _.includes(userTypes, 'attendee-u13') || _.includes(userTypes, 'attendee-o13')) {
+      if (title.length === 0) {
+        title.push($translate.instant('Attendee'));
+      } else {
+        // so we have "Youth Mentor" rather than "Attendee Mentor"
+        title.unshift($translate.instant('Youth'))
+      }
+      title.push('(' + age + ')');
     } else if (title.length === 0) {
       title.push($translate.instant('Parent/Guardian'));
     }
+
     return title.join(' ');
   }
 

@@ -38,70 +38,10 @@
         <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
       </div>
     </form>
-    <div class="col-md-12 table-responsive">
-      <table id="manageDojoUsers" class="table cd-grid-table">
-        <thead>
-          <tr>
-            <th class="ten-percent-width"><span ng-click="toggleSort($event, 'name')" ng-class="getSortClass(queryModel.sort.name)">&nbsp;</span>{@i18n key="Name"/}</th>
-            <th ng-if="canUpdateUserPermissions" class="ten-percent-width"><span ng-click="toggleSort($event, 'email')" ng-class="getSortClass(queryModel.sort.email)">&nbsp;</span>{@i18n key="Email"/}</th>
-            <th class="five-percent-width">{@i18n key="Profile"/}</th>
-            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Types"/}</th>
-            <th ng-if="canUpdateUserPermissions" class="ten-percent-width">{@i18n key="User Permissions"/}</th>
-            <th ng-if="isDojoAdmin" class="five-percent-width">{@i18n key="Events Attended"/}</th>
-            <th ng-if="isDojoAdmin" class="ten-percent-width">{@i18n key="Award Badge"/}</th>
-            <th ng-if="canUpdateUserPermissions" class="five-percent-width"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="user in users">
-            <td>{{ user.name }}</td>
-            <td ng-if="canUpdateUserPermissions"><a href="mailto:{{ user.email }}">{{ user.email | characters:20 }}</a></td>
-            <td><a class="pointer" ui-sref="user-profile({userId:user.id})">{@i18n key="View"/}</a></td>
-            <td ng-if="canUpdateUserPermissions">
-
-              <tags-input add-from-autocomplete-only="true" placeholder="{@i18n key="Add a user type"/}" on-tag-added="pushChangedUser(user, 'add', $tag)" on-tag-removed="pushChangedUser(user, 'remove', $tag)" ng-model="user.frontEndTypes"><auto-complete source="loadUserTypes($query)"></auto-complete></tags-input>
-
-              <div ng-if="user.isMentor" class="checkbox checkbox-success">
-                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="background-check-{{ user.id }}" id="background-check-{{ user.id }}" ng-model="user.backgroundChecked" ng-click="updateMentorBackgroundCheck(user)">
-                <label for="background-check-{{ user.id }}" class="font-13">
-                  {@i18n key="Background Checked"/}
-                </label>
-              </div>
-
-            </td>
-            <td ng-if="canUpdateUserPermissions">
-              <div class="checkbox" ng-repeat="userPermission in userPermissions">
-                <input ng-disabled="!canUpdateUserPermissions" type="checkbox" name="{{ userPermission.name }}-{{ user.id }}" id="{{ userPermission.name }}-{{ user.id }}" ng-model="userPermissionsModel[user.id][userPermission.name]" ng-click="updateUserPermissions(user, userPermission)">
-                <label for="{{ userPermission.name }}-{{ user.id }}">
-                    {{ userPermission.title }}
-                </label>
-              </div>
-            </td>
-
-            <td ng-if="isDojoAdmin">{{ user.eventsAttended || 0 }}</td>
-
-            <td ng-if="isDojoAdmin">
-              <div ng-if="currentUser.id !== user.id">
-                <ui-select name="awardBadge-{{ user.id }}" ng-model="badgeModel[user.id]" on-select="badgeSelected(user)">
-                  <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
-                  <ui-select-choices repeat="badge in badges">
-                    <span ng-bind-html="badge.name"></span>
-                  </ui-select-choices>
-                </ui-select>
-                <span class="help-block"></span>
-                <button ng-show="awardBadgeButtonModel[selectedItems[0].userData.id]" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ user.name }}" ng-bootbox-confirm-action="awardBadge(user, badgeModel[user.id])" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
-              </div>
-            </td>
-
-            <td ng-if="canUpdateUserPermissions"><button ng-if="canRemoveUsers && !user.isDojoOwner" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this user from your Dojo?" /}" ng-bootbox-confirm-action="removeUser(user)">{@i18n key="Remove"/}</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
   <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
   <cd-action-bar ng-if="actions" open="showActionBar">
-    <cd-action-bar-popup-item ng-show="awardBadgeAction.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always">
+    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always">
       <div style="padding: 6px;width: 320px;">
         <ui-select ng-model="badgeSelection.selectedBadge" on-select="badgeSelected(badgeSelection.selectedBadge)">
           <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
@@ -113,9 +53,12 @@
         <button ng-disabled="!awardBadgeButtonEnabled" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ selectedItems[0].userData.name }}" ng-bootbox-confirm-action="awardBadge(badgeSelection.selectedBadge)" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
       </div>
     </cd-action-bar-popup-item>
-    <span ng-repeat="action in actions" ng-switch on="action.type">
-      <cd-action-bar-checkbox-item ng-switch-when="checkbox" ng-show="action.ngShow()" title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
-      <cd-action-bar-item ng-switch-default ng-show="action.ngShow()" ng-click="action.ngClick($event)" icon="{{ action.icon }}" title="{{ action.title }}" href="{{ action.ngHref() }}" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-item>
+    <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
+    <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
+    <cd-action-bar-item ng-show="actions.remove.ngShow()" ng-click="actions.remove.ngClick($event)" show-as-action="ifRoom" title="{@i18n key="Remove"/}" icon="minus-circle" color="red"></cd-action-bar-item>
+    <cd-action-bar-checkbox-item ng-show="actions.backgroundCheck.ngShow()" title="{@i18n key="Background Checked"/}" model="actions.backgroundCheck.model()" on-change="actions.backgroundCheck.onChange" show-as-action="never"></cd-action-bar-checkbox-item>
+    <span ng-repeat="action in userPermActions">
+      <cd-action-bar-checkbox-item ng-show="action.ngShow()" title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
     </span>
   </cd-action-bar>
   <div class="row">

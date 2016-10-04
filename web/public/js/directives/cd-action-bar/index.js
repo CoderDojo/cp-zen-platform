@@ -5,8 +5,7 @@
     .module('cpZenPlatform')
     .component('cdActionBar', {
       bindings: {
-        open: '<',
-        actions: '<'
+        open: '<'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar',
@@ -33,21 +32,13 @@
               actionBar.addClass('cd-action-bar--fixed');
             }
           });
-          //updateActions();
-        };
-
-        ctrl.$onChanges = function (changes) {
-          if (changes.actions) {
-            //updateActions();
-          }
         };
 
         ctrl.$onDestroy = function () {
           $footer.off('inview');
           $element.remove();
         };
-      }],
-      bindToController: true
+      }]
     });
 
 }());

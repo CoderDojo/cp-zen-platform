@@ -21,9 +21,7 @@
         gridItems = gridItems || $element.find('.cd-picture-grid__item'); // so we only query the DOM once
         gridItems.removeClass(selectedClass);
         ctrl.selectedItems = [];
-        requestAnimationFrame(function () {
-          ctrl.showActionBar = ctrl.selectedItems && ctrl.selectedItems.length > 0;
-        });
+        ctrl.showActionBar = ctrl.selectedItems && ctrl.selectedItems.length > 0;
       }
 
       ctrl.handleSelection = function (e, item) {
@@ -48,11 +46,6 @@
         e.stopPropagation();
         e.preventDefault();
         callback(ctrl.selectedItems);
-      };
-
-      ctrl.testFunc = function (checked) {
-        console.log('checked', checked);
-        console.log('selectedItems', ctrl.selectedItems);
       };
 
       ctrl.$onChanges = function (changes) {

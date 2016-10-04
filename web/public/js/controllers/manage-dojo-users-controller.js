@@ -2,7 +2,7 @@
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
   cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService,
-  $timeout, $ngBootbox, userUtils, cdChooseRole) {
+  $timeout, $ngBootbox, userUtils, cdChooseRoleModal) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -85,7 +85,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       image: userUtils.defaultAvatar('parent-guardian'),
       approvalRequired: false,
-      text: $translate.instant('Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!'),
+      text: $translate.instant('Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors.'),
       class: 'cd-parent',
       buttonText: $translate.instant('Change Role')
     },
@@ -96,7 +96,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('mentor'),
-      text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+      text: $translate.instant('Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!'),
       class: 'cd-volunteer',
       buttonText: $translate.instant('Change Role')
     },
@@ -107,7 +107,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
-      text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+      text: $translate.instant('CoderDojo Champions are those who take the lead in organising a Dojo and ensure each session runs smoothly. Champions can be one person or it can be a few people who Co-Champion a Dojo to share the work. Champions should join their Dojo on Zen to set up events, award badges and to contribute to the CoderDojo Forums.'),
       class: 'cd-champion',
       buttonText: $translate.instant('Change Role')
     }
@@ -129,7 +129,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('mentor'),
-      text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+      text: $translate.instant('Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title.'),
       class: 'cd-volunteer',
       buttonText: $translate.instant('Change Role')
     },
@@ -140,26 +140,24 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
-      text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
+      text: $translate.instant('Youth Champion Text...'),
       class: 'cd-champion',
       buttonText: $translate.instant('Change Role')
     }
   ];
 
-  $scope.awardBadgeAction = {
-    icon: 'trophy',
-    title: $translate.instant('Award Badge'),
-    ngShow: function () {
-      return $scope.selectedItems.length === 1;
+  $scope.actions = {
+    awardBadge: {
+      ngShow: function () {
+        var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
+        if (user) {
+          return user.id !== $scope.currentUser.id;
+        } else {
+          return false;
+        }
+      }
     },
-    ngInclude: '/dojos/template/badges/award-form',
-    showAsAction: 'always'
-  };
-
-  function updateActions() {
-    $scope.actions = [{
-      icon: 'eye',
-      title: $translate.instant('View Profile'),
+    viewProfile: {
       ngShow: function () {
         return $scope.selectedItems.length === 1;
       },
@@ -170,11 +168,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         } else {
           return null;
         }
-      },
-      showAsAction: 'always'
-    }, {
-      icon: 'exchange',
-      title: $translate.instant('Change Role'),
+      }
+    },
+    changeRole: {
       ngShow: function () {
         return $scope.selectedItems.length === 1;
       },
@@ -185,7 +181,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         if (age < 18) {
           roles = $scope.youthRoles;
         }
-        cdChooseRole({
+        cdChooseRoleModal({
           roles: roles,
           callback: function (role) {
             return $q(function (resolve, reject) {
@@ -207,7 +203,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
                   if (userType && userType.name) {
                     roles.push(userType.name);
                   }
-                  $scope.selectedItems[0].subCaption = userUtils.getTitleForUserTypes([userType.name]);
+                  $scope.selectedItems[0].subCaption = userUtils.getTitleForUserTypes(roles, user);
                   userDojoLink.userTypes = roles;
                   cdDojoService.saveUsersDojos(userDojoLink, function (response) {
                     if(response.error) {
@@ -226,11 +222,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           },
           title: $translate.instant('Change Role')
         });
-      },
-      showAsAction: 'ifRoom'
-    }, {
-      icon: 'minus-circle',
-      title: $translate.instant('Remove'),
+      }
+    },
+    remove: {
       ngClick: function () {
         var user = $scope.selectedItems[0].userData;
         $ngBootbox.confirm($translate.instant('Are you sure you want to remove this user from your Dojo?'))
@@ -240,12 +234,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       ngShow: function () {
         return true;
-      },
-      color: 'red',
-      showAsAction: 'ifRoom'
-    }, {
-      type: 'checkbox',
-      title: $translate.instant('Background Checked'),
+      }
+    },
+    backgroundCheck: {
       model: function () {
         var user = $scope.selectedItems.length > 0 ? $scope.selectedItems[0].userData : null;
         return (user && user.backgroundChecked);
@@ -260,11 +251,14 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           user.backgroundChecked = checked;
           $scope.updateMentorBackgroundCheck(user);
         }
-      },
-      showAsAction: 'never'
-    }];
+      }
+    }
+  };
+
+  function updateActions() {
+    $scope.userPermActions = [];
     $scope.userPermissions.forEach(function (userPermission) {
-      $scope.actions.push({
+      $scope.userPermActions.push({
         type: 'checkbox',
         title: userPermission.title,
         model: function () {
@@ -320,7 +314,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           userData: user,
           picture: '/api/2.0/profiles/' + user.profileId + '/avatar_img',
           caption: user.name,
-          subCaption: userUtils.getTitleForUserTypes(user.types)
+          subCaption: userUtils.getTitleForUserTypes(user.types, user)
         };
       });
       usSpinnerService.stop('manage-dojo-users-spinner');
@@ -687,4 +681,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
     'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout',
-    '$ngBootbox', 'userUtils', 'cdChooseRole', cdManageDojoUsersCtrl]);
+    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', cdManageDojoUsersCtrl]);
