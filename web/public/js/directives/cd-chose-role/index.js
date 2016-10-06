@@ -10,12 +10,11 @@ function cdChoseRole(){
         this.selected = {};
         this.callback = $scope.modalCallback;
         this.class = "col-xs-12 col-md-" + Math.round(12/this.roles.length);
-
         this.submit = function () {
           var modalInstance = $uibModal.open({
               animation: $scope.animationsEnabled,
               templateUrl: '/directives/tpl/dojo/join-dojo/modal',
-              size: 'lg',
+              size: cdCR.roles.length > 1 ? 'lg': 'md',
               controller: function($scope){
                 $scope.select = function(role) {
                   modalInstance.close(role);

@@ -480,8 +480,8 @@ msgstr "Development Community"
 msgid "Events"
 msgstr "Events"
 
-msgid "There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."
-msgstr "There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."
+msgid "There are no events currently listed for this Dojo. Please contact the Dojo to find out about upcoming events."
+msgstr "There are no events currently listed for this Dojo. Please contact the Dojo to find out about upcoming events."
 
 msgid "Word of Mouth"
 msgstr "Word of Mouth"
@@ -2699,17 +2699,23 @@ msgstr "No invites found"
 msgid "How do I choose?"
 msgstr "How do I choose?"
 
-msgid "Champion - A CoderDojo Champion is an individual who spearheads setting up and maintaining a Dojo. Champions do not necessarily have to have the ability to code but possess the skills required to bring together technical mentors and supporters to run a Dojo frequently!"
-msgstr "Champion - A CoderDojo Champion is an individual who spearheads setting up and maintaining a Dojo. Champions do not necessarily have to have the ability to code but possess the skills required to bring together technical mentors and supporters to run a Dojo frequently!"
+msgid "CoderDojo Champions are those who take the lead in organising a Dojo and ensure each session runs smoothly. Champions can be one person or it can be a few people who Co-Champion a Dojo to share the work. Champions should join their Dojo on Zen to set up events, award badges and to contribute to the CoderDojo Forums."
+msgstr "CoderDojo Champions are those who take the lead in organising a Dojo and ensure each session runs smoothly. Champions can be one person or it can be a few people who Co-Champion a Dojo to share the work. Champions should join their Dojo on Zen to set up events, award badges and to contribute to the CoderDojo Forums."
 
-msgid "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
-msgstr "Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!"
+msgid "Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!"
+msgstr "Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!"
 
-msgid "Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
-msgstr "Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account."
+msgid "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life."
+msgstr "Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life."
 
-msgid "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
-msgstr "Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!"
+msgid "Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors."
+msgstr "Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors."
+
+msgid "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
+msgstr "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
+
+msgid "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
+msgstr "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
 
 msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
