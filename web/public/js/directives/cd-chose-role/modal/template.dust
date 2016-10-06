@@ -1,6 +1,6 @@
 <div class="cd-join-dojo-modal">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cdCR.close()"><span aria-hidden="true">&times;</span></button>
     <h2 class="modal-title">{{ cdCR.title }}</h2>
     <i ng-if="cdCR.subTitle">{{ cdCR.subTitle }}</i>
   </div>

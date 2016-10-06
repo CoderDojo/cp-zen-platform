@@ -9,6 +9,7 @@ function cdChooseRoleModal($uibModal, alertService) {
     var callback = options.callback;
     var title = options.title;
     var size = options.size || 'lg';
+    var subTitle = options.subTitle;
 
     var modalInstance = $uibModal.open({
         animation: true,
@@ -19,6 +20,7 @@ function cdChooseRoleModal($uibModal, alertService) {
           cdCR.roles = roles;
           cdCR.class = "col-xs-12 col-md-" + Math.round(12/cdCR.roles.length);
           cdCR.title = title;
+          cdCR.subTitle = subTitle;
 
           this.select = function(role) {
             cdCR.loading = true;

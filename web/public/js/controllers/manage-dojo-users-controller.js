@@ -2,7 +2,7 @@
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
   cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService,
-  $timeout, $ngBootbox, userUtils, cdChooseRoleModal) {
+  $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -85,18 +85,18 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       image: userUtils.defaultAvatar('parent-guardian'),
       approvalRequired: false,
-      text: $translate.instant('Parents/Guardians are super important in the CoderDojo journey as they encourage and inspire CoderDojo Ninjas on a daily basis. Parents should register and join a Dojo so the young people attached to their account can sign up to events and earn badges from their Champions and Mentors.'),
+      text: $translate.instant(translationKeys.PARENT_GUARDIAN_DESCRIPTION),
       class: 'cd-parent',
       buttonText: $translate.instant('Change Role')
     },
     {
       name: 'Volunteer',
       userType: {
-        name:  'mentor'
+        name: 'mentor'
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('mentor'),
-      text: $translate.instant('Volunteers are the driving force behind Dojos around the world. Volunteers do everything from setting up the space, to mentoring during the Dojo, and to ensuring there is cool content for the Ninjas to do at each Dojo! Volunteers should join their Dojo on Zen to get updates on cool content, contribute to the CoderDojo Forums and to help administer the Dojo by awarding badges and setting up events!'),
+      text: $translate.instant(translationKeys.VOLUNTEER_DESCRIPTION),
       class: 'cd-volunteer',
       buttonText: $translate.instant('Change Role')
     },
@@ -107,7 +107,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
-      text: $translate.instant('CoderDojo Champions are those who take the lead in organising a Dojo and ensure each session runs smoothly. Champions can be one person or it can be a few people who Co-Champion a Dojo to share the work. Champions should join their Dojo on Zen to set up events, award badges and to contribute to the CoderDojo Forums.'),
+      text: $translate.instant(translationKeys.CHAMPION_DESCRIPTION),
       class: 'cd-champion',
       buttonText: $translate.instant('Change Role')
     }
@@ -118,7 +118,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       name: 'Attendee',
       image: userUtils.defaultAvatar('ninja'),
       approvalRequired: false,
-      text: $translate.instant('Attendees at CoderDojo are young people under 18 who attend and make CoderDojo cool. Often known as Ninjas, CoderDojo attendees come to the Dojo to have fun and bring their awesome ideas to life.'),
+      text: $translate.instant(translationKeys.ATTENDEE_DESCRIPTION),
       class: 'cd-parent',
       buttonText: $translate.instant('Change Role')
     },
@@ -129,7 +129,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('mentor'),
-      text: $translate.instant('Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title.'),
+      text: $translate.instant(translationKeys.YOUTH_MENTOR_DESCRIPTION),
       class: 'cd-volunteer',
       buttonText: $translate.instant('Change Role')
     },
@@ -140,7 +140,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
-      text: $translate.instant('Youth Champion Text...'),
+      text: $translate.instant(translationKeys.YOUTH_CHAMPION_DESCRIPTION),
       class: 'cd-champion',
       buttonText: $translate.instant('Change Role')
     }
@@ -681,4 +681,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
     'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout',
-    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', cdManageDojoUsersCtrl]);
+    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', 'translationKeys', cdManageDojoUsersCtrl]);

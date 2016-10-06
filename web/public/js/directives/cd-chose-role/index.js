@@ -4,7 +4,7 @@
 function cdChoseRole(){
     return {
       restrict: 'A',
-      controller: ['$scope', 'cdChooseRoleModal', '$translate', function ($scope, cdChooseRoleModal, $translate) {
+      controller: ['$scope', 'cdChooseRoleModal', '$translate', 'translationKeys', function ($scope, cdChooseRoleModal, $translate, translationKeys) {
         var cdCR = this;
 
         this.submit = function () {
@@ -12,10 +12,10 @@ function cdChoseRole(){
             roles: $scope.roles,
             callback: $scope.modalCallback,
             title: $translate.instant('Join Dojo As...'),
-            subTitle: $scope.isAdult
-              ? 'You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too.'
-              : 'If you join the Dojo you will receive event updates from the Dojo! If you aren\'t a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org'
-            size: cdCR.roles.length > 1 ? 'lg': 'md'
+            subTitle: $scope.isAdult ?
+              $translate.instant(translationKeys.JOIN_DOJO_ADULT_SUBTITLE) :
+              $translate.instant(translationKeys.JOIN_DOJO_YOUTH_SUBTITLE),
+            size: $scope.roles.length > 1 ? 'lg': 'md'
           });
         }
       }],
