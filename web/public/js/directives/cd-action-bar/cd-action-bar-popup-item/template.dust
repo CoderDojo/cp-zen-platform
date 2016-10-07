@@ -1,0 +1,8 @@
+<span class="cd-action-bar-popup-item" ng-class="{'cd-action-bar-popup-item--active': $ctrl.showPopup === true}">
+  <div class="cd-action-bar-popup-item__toggle" ng-click="$ctrl.handleClick($event)">
+    <i class="fa fa-{{ $ctrl.icon }}"></i>
+    <span class="hidden-xs">{{ $ctrl.title }}</span>
+  </div>
+  <div class="cd-action-bar-popup-item__popup" ng-transclude></div>
+</span>
+<div class="cd-action-bar-popup-item__popup cd-action-bar-popup-item__popup--mobile" ng-transclude></div>

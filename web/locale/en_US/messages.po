@@ -57,6 +57,12 @@ msgstr "Name is empty"
 msgid "Name"
 msgstr "Name"
 
+msgid "Surname"
+msgstr "Surname"
+
+msgid "Surname is empty"
+msgstr "Surname is empty"
+
 msgid "Email is empty"
 msgstr "Email is empty"
 
@@ -510,6 +516,9 @@ msgstr "All Dojos are independent, autonomous, community groups set up to inspir
 msgid "We commit to inspiring and supporting young people to learn how to create technology"
 msgstr "We commit to inspiring and supporting young people to learn how to create technology"
 
+msgid "We commit to inspiring and supporting young people to learn how to create technology"
+msgstr "We commit to inspiring and supporting young people to learn how to create technology"
+
 msgid "We commit to the highest possible standards of child protection in our jurisdiction"
 msgstr "We commit to the highest possible standards of child protection in our jurisdiction"
 
@@ -606,6 +615,9 @@ msgstr "Next"
 msgid "Dojo Menu"
 msgstr "Dojo Menu"
 
+msgid "Events"
+msgstr "Events"
+
 msgid "Forum"
 msgstr "Forum"
 
@@ -671,6 +683,15 @@ msgstr "Join"
 
 msgid "Send Request"
 msgstr "Send Request"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Dojo Email"
+msgstr "Dojo Email"
 
 msgid "Website"
 msgstr "Website"
@@ -966,8 +987,14 @@ msgstr "You must be over 18 years old..."
 msgid "Please include country code..."
 msgstr "Please include country code..."
 
+msgid "Address"
+msgstr "Address"
+
 msgid "Enter your street level address..."
 msgstr "Enter your street level address..."
+
+msgid "Address is empty"
+msgstr "Address is empty"
 
 msgid "Technical Experience"
 msgstr "Technical Experience"
@@ -1245,6 +1272,9 @@ msgstr "Newspaper/Magazine"
 msgid "Radio"
 msgstr "Radio"
 
+msgid "Family/Friends"
+msgstr "Family/Friends"
+
 msgid "Error loading profile"
 msgstr "Error loading profile:"
 
@@ -1322,6 +1352,9 @@ msgstr "Type"
 
 msgid "For"
 msgstr "For"
+
+msgid "Name"
+msgstr "Name"
 
 msgid "Capacity"
 msgstr "Capacity"
@@ -1707,6 +1740,9 @@ msgstr "Add Youth over 13"
 msgid "This profile is private"
 msgstr "This profile is private"
 
+msgid "We need mentors!"
+msgstr "We need mentors!"
+
 msgid "Find out more about becoming a CoderDojo mentor"
 msgstr "Find out more about becoming a CoderDojo mentor"
 
@@ -1740,8 +1776,14 @@ msgstr "An error has occured verifying the charter agreement."
 msgid "error.general"
 msgstr "There was an error on this page. Our technical staff have been notified"
 
+msgid "Gather your Team"
+msgstr "Gather your Team"
+
 msgid "Find a Venue"
 msgstr "Find a Venue"
+
+msgid "Plan your Dojo"
+msgstr "Plan your Dojo"
 
 msgid "Promote your Dojo"
 msgstr "Promote your Dojo"
@@ -1857,8 +1899,14 @@ msgstr "Optionally describe how this was achieved."
 msgid "Data Protection: Our Dojo only uses data provided for the intended purpose. abides by data protection regulations in our jurisdiction."
 msgstr "Data Protection: Our Dojo only uses data provided for the intended purpose. abides by data protection regulations in our jurisdiction."
 
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
+
 msgid "Diversity among our attendees is respected"
 msgstr "Diversity among our attendees is respected"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
 
 msgid "We will work to help engage with and improve the greater CoderDojo movement by"
 msgstr "We will work to help engage with and improve the greater CoderDojo movement by"
@@ -1871,6 +1919,9 @@ msgstr "Contributing to Kata, the community knowledge base at kata.coderdojo.com
 
 msgid "Connecting with local and international Dojos to share insights and supports"
 msgstr "Connecting with local and international Dojos to share insights and supports"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
 
 msgid "Admin permissions cannot be removed from a Dojo owner."
 msgstr "Admin permissions cannot be removed from a Dojo owner."
@@ -2071,6 +2122,15 @@ msgstr "Invitation was sent successfully."
 msgid "An error has occurred while sending invitation"
 msgstr "An error has occurred while sending invitation"
 
+msgid "We will work to embody the CoderDojo ethos"
+msgstr "We will work to embody the CoderDojo ethos"
+
+msgid "All mentors and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
+msgstr "All mentors and young people are aware of online safety best practices and we only allow age appropriate content at our Dojo"
+
+msgid "Optionally describe how this was achieved."
+msgstr "Optionally describe how this was achieved."
+
 msgid "Our Dojo abides by data protection regulations in our jurisdiction"
 msgstr "Our Dojo abides by data protection regulations in our jurisdiction"
 
@@ -2079,6 +2139,15 @@ msgstr "Inclusion is a fundamental principle of CoderDojo, <a href=\"http://kata
 
 msgid "Our Dojo will work to engage with and improve the greater CoderDojo movement by:"
 msgstr "Our Dojo will work to engage with and improve the greater CoderDojo movement by:"
+
+msgid "Communicating with the CoderDojo Foundation"
+msgstr "Communicating with the CoderDojo Foundation"
+
+msgid "Contributing to Kata, the community knowledge base at kata.coderdojo.com"
+msgstr "Contributing to Kata, the community knowledge base at kata.coderdojo.com"
+
+msgid "Connecting with local and international Dojos to share insights and supports"
+msgstr "Connecting with local and international Dojos to share insights and supports"
 
 msgid "This dojo has no coordinates."
 msgstr "This dojo has no coordinates."
@@ -2142,6 +2211,9 @@ msgstr "Welcome New CoderDojo Champion!"
 
 msgid "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
 msgstr "The first step towards setting up a Dojo in your area is filling out the form below and giving us a little more information about yourself."
+
+msgid "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
+msgstr "The purpose of us gathering this information is so we can tailor support to you as your start your Dojo journey!"
 
 msgid "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
 msgstr "If you wish to learn more about the process of starting a CoderDojo in your area before completing this form please see Kata, the CoderDojo Community Knowledge Base."
@@ -2271,6 +2343,9 @@ msgstr "Please let us know how you heard about CoderDojo"
 
 msgid "Please specify how you heard about CoderDojo"
 msgstr "Please specify how you heard about CoderDojo"
+
+msgid "No Dojos match your search query."
+msgstr "No Dojos match your search query."
 
 msgid "Private Dojo"
 msgstr "Private Dojo"
@@ -2545,6 +2620,9 @@ msgstr "My Events"
 msgid "Review Champion Application"
 msgstr "Review Champion Application"
 
+msgid "Manage Dojo Users"
+msgstr "Manage Dojo Users"
+
 msgid "Setup Dojo"
 msgstr "Setup Dojo"
 
@@ -2714,8 +2792,14 @@ msgstr "Parents/Guardians are super important in the CoderDojo journey as they e
 msgid "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
 msgstr "You will be joined to a Dojo as an adult, along with any young people added to your profile. We would like to know if you have any volunteering role in the Dojo too."
 
-msgid "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
-msgstr "If you join the Dojo you will receive event updates from the Dojo! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with info@coderdojo.org"
+msgid "If you join the Dojo you will receive event updates from the Dojo and some newsletters from CoderDojo HQ! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with the Dojo directly."
+msgstr "If you join the Dojo you will receive event updates from the Dojo and some newsletters from CoderDojo HQ! If you aren't a Dojo attendee and want to join as a volunteer or Champion please get in touch with the Dojo directly."
+
+msgid "Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title."
+msgstr "Youths can be mentors too! If one of your Ninjas is regularly helping out others in your Dojo, give them recognition by giving them the Youth Volunteer title."
+
+msgid "These young people are trailblazers who set an example and inspire other young people by organising and leading their local club. Young people should participate in the Dojo they Champion, meaning that Youth Champions improve their coding skills too!"
+msgstr "These young people are trailblazers who set an example and inspire other young people by organising and leading their local club. Young people should participate in the Dojo they Champion, meaning that Youth Champions improve their coding skills too!"
 
 msgid "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
 msgstr "Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."
@@ -3061,3 +3145,6 @@ msgstr "A new dojo has been created!"
 
 msgid "You have been invited to a Dojo session"
 msgstr "You have been invited to a Dojo session"
+
+msgid "Change Role"
+msgstr "Change Role"

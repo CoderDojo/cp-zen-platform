@@ -5,7 +5,9 @@
     bindings: {
       items: '<',
       actions: '<',
-      multipleSelection: '<'
+      multipleSelection: '<',
+      selectedItems: '=?',
+      wideCard: '<'
     },
     templateUrl: '/directives/tpl/cd-picture-grid',
     controller: function ($element) {
@@ -19,19 +21,20 @@
         gridItems = gridItems || $element.find('.cd-picture-grid__item'); // so we only query the DOM once
         gridItems.removeClass(selectedClass);
         ctrl.selectedItems = [];
+        ctrl.showActionBar = ctrl.selectedItems && ctrl.selectedItems.length > 0;
       }
 
       ctrl.handleSelection = function (e, item) {
         if (ctrl.actions) {
           e.preventDefault();
           var $el = $(e.currentTarget);
-          if (ctrl.multipleSelection !== true && ctrl.selectedItems.length > 0) {
-            clearSelection();
-          }
           if ($el.hasClass(selectedClass)) {
             $el.removeClass(selectedClass);
             ctrl.selectedItems.splice(ctrl.selectedItems.indexOf(item), 1);
           } else {
+            if (ctrl.multipleSelection !== true && ctrl.selectedItems.length > 0) {
+              clearSelection();
+            }
             $el.addClass(selectedClass);
             ctrl.selectedItems.push(item);
           }
@@ -39,11 +42,19 @@
         }
       };
 
-      ctrl.onChanges = function (changes) {
+      ctrl.handleCheckboxChange = function(e, callback) {
+        e.stopPropagation();
+        e.preventDefault();
+        callback(ctrl.selectedItems);
+      };
+
+      ctrl.$onChanges = function (changes) {
         if (changes.items) {
+          gridItems = undefined;
           clearSelection();
         }
       };
-    }
+    },
+    transclude: true
   });
 })();

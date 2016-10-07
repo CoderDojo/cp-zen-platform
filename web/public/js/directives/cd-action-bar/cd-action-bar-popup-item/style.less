@@ -1,0 +1,67 @@
+.cd-action-bar-popup-item {
+    display: inline-block;
+    position: relative;
+
+    &__toggle {
+      padding: 12px 12px 52px 12px;
+      cursor: pointer;
+      color: @cd-white;
+      transition: background 0.2s ease-out;
+      line-height: 20px;
+      margin-bottom: -40px;
+    }
+
+    &--active &__toggle, &__toggle:hover, &__toggle:active {
+      color: @cd-white;
+      text-decoration: none;
+      background: @cd-blue-90;
+    }
+
+    .fa {
+      margin: 0 6px 0 0;
+    }
+
+    &__popup {
+      position: absolute;
+      z-index: -1;
+      right: 0;
+      bottom: 100%;
+      background: @cd-blue-90;
+      transform-origin: bottom right;
+      transform: translateY(100%) scale(0);
+      opacity: 0;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      padding: 6px;
+      // TODO: Have this configurable in some way. Maybe sm, md and lg or something...
+      width: 320px;
+
+      @media (max-width: @screen-xs-max) {
+        display: none;
+      }
+
+      &--mobile {
+        display: none;
+        left: 0;
+        width: 100%;
+
+        @media (max-width: @screen-xs-max) {
+          display: block;
+        }
+      }
+
+      > * {
+        // Center the contents
+        margin: 0 auto;
+      }
+    }
+
+    &--active &__popup, &--active + &__popup--mobile {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+.cd-action-bar__overflow-menu .cd-action-bar-popup-item {
+  display: block;
+  padding: 6px 12px;
+}

@@ -18,8 +18,13 @@
         // This does rely on an implementation detail in jquery.inview, so be wary when updating the plugin
         $footer.data('inview', true);
 
+        ctrl.overflowOpen = false;
+        ctrl.showOverflowButton = false;
+
         ctrl.$onInit = function () {
           var actionBar = $element.find('.cd-action-bar');
+          $element.detach();
+          $element.appendTo('.cd-menu__content-container');
           $footer.on('inview', function (event, isInView) {
             if (isInView) {
               actionBar.removeClass('cd-action-bar--fixed');
@@ -30,7 +35,8 @@
         };
 
         ctrl.$onDestroy = function () {
-          $('#footer').off('inview');
+          $footer.off('inview');
+          $element.remove();
         };
       }]
     });
