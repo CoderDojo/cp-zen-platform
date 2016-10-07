@@ -42,7 +42,7 @@
   <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
   <cd-action-bar ng-if="actions" open="showActionBar">
     <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always">
-      <div style="padding: 6px;width: 320px;">
+      <div>
         <ui-select ng-model="badgeSelection.selectedBadge" on-select="badgeSelected(badgeSelection.selectedBadge)">
           <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
           <ui-select-choices repeat="badge in badges" position="up">

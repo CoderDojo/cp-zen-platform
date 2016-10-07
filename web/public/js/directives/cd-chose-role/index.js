@@ -11,7 +11,7 @@ function cdChoseRole(){
           cdChooseRoleModal({
             roles: $scope.roles,
             callback: $scope.modalCallback,
-            title: $translate.instant('Join Dojo As...'),
+            title: $translate.instant(translationKeys.JOIN_DOJO_AS),
             subTitle: $scope.isAdult ?
               $translate.instant(translationKeys.JOIN_DOJO_ADULT_SUBTITLE) :
               $translate.instant(translationKeys.JOIN_DOJO_YOUTH_SUBTITLE),

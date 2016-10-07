@@ -77,6 +77,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.showActionBar = newValue > 0;
   });
 
+  // TODO: Centralise for use between this and join dojo
   $scope.adultRoles = [
     {
       name: 'Parent/Guardian',
@@ -87,7 +88,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       approvalRequired: false,
       text: $translate.instant(translationKeys.PARENT_GUARDIAN_DESCRIPTION),
       class: 'cd-parent',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     },
     {
       name: 'Volunteer',
@@ -98,7 +99,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       image: userUtils.defaultAvatar('mentor'),
       text: $translate.instant(translationKeys.VOLUNTEER_DESCRIPTION),
       class: 'cd-volunteer',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     },
     {
       name: 'Champion',
@@ -109,7 +110,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       image: userUtils.defaultAvatar('champion'),
       text: $translate.instant(translationKeys.CHAMPION_DESCRIPTION),
       class: 'cd-champion',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     }
   ];
 
@@ -120,7 +121,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       approvalRequired: false,
       text: $translate.instant(translationKeys.ATTENDEE_DESCRIPTION),
       class: 'cd-parent',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     },
     {
       name: 'Youth Volunteer',
@@ -131,7 +132,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       image: userUtils.defaultAvatar('mentor'),
       text: $translate.instant(translationKeys.YOUTH_MENTOR_DESCRIPTION),
       class: 'cd-volunteer',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     },
     {
       name: 'Youth Champion',
@@ -142,7 +143,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       image: userUtils.defaultAvatar('champion'),
       text: $translate.instant(translationKeys.YOUTH_CHAMPION_DESCRIPTION),
       class: 'cd-champion',
-      buttonText: $translate.instant('Change Role')
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
     }
   ];
 
@@ -163,10 +164,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       ngHref: function () {
         var users = $scope.selectedItems;
+        // Need to check as ngHref is called before selection, so $scope.selectedItems[0] can be undefined
         if (users.length === 1) {
-          return '/profile/' + users[0].userData.id;
-        } else {
-          return null;
+          return '/profile/' + $scope.selectedItems[0].userData.id;
         }
       }
     },
@@ -176,7 +176,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       },
       ngClick: function () {
         var user = $scope.selectedItems[0].userData;
-        var age = moment.utc().diff(moment(user.dob), 'years');
+        var age = userUtils.getAge(user.dob);
         var roles = $scope.adultRoles;
         if (age < 18) {
           roles = $scope.youthRoles;
@@ -220,7 +220,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
               });
             });
           },
-          title: $translate.instant('Change Role')
+          title: $translate.instant(translationKeys.CHANGE_ROLE)
         });
       }
     },

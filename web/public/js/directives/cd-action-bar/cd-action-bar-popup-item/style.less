@@ -31,10 +31,31 @@
       transform: translateY(100%) scale(0);
       opacity: 0;
       transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-      min-width: 100%;
+      padding: 6px;
+      // TODO: Have this configurable in some way. Maybe sm, md and lg or something...
+      width: 320px;
+
+      @media (max-width: @screen-xs-max) {
+        display: none;
+      }
+
+      &--mobile {
+        display: none;
+        left: 0;
+        width: 100%;
+
+        @media (max-width: @screen-xs-max) {
+          display: block;
+        }
+      }
+
+      > * {
+        // Center the contents
+        margin: 0 auto;
+      }
     }
 
-    &--active &__popup {
+    &--active &__popup, &--active + &__popup--mobile {
       opacity: 1;
       transform: translateY(0);
     }

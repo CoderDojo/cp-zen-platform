@@ -5,3 +5,4 @@
   </div>
   <div class="cd-action-bar-popup-item__popup" ng-transclude></div>
 </span>
+<div class="cd-action-bar-popup-item__popup cd-action-bar-popup-item__popup--mobile" ng-transclude></div>

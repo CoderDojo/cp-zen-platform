@@ -5,11 +5,9 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
 
   var approvalRequired = ['mentor', 'champion'];
 
-  function getAge(birthDate) {
-    var today = new Date();
-    var age = today.getFullYear() - birthDate.getFullYear();
-    return age;
-  }
+  userUtils.getAge = function (birthDate) {
+    return moment.utc().diff(moment(birthDate), 'years');
+  };
 
   userUtils.doRegister = function (userFormData) {
     if(!userFormData.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
@@ -24,9 +22,9 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     userFormData.user['g-recaptcha-response'] = userFormData.recaptchaResponse;
     userFormData.user.emailSubject = 'Welcome to Zen, the CoderDojo community platform.';
 
-    if (getAge(userFormData.profile.dob) >= 18) {
+    if (this.getAge(userFormData.profile.dob) >= 18) {
       userFormData.user.initUserType = {'title':'Parent/Guardian','name':'parent-guardian'};
-    } else if (getAge(userFormData.profile.dob) >= 13) {
+    } else if (this.getAge(userFormData.profile.dob) >= 13) {
       userFormData.user.initUserType = {'title':'Youth Over 13','name':'attendee-o13'};
     } else {
       return alertService.showError($translate.instant('Sorry only users over 13 can signup, but your parent or guardian can sign up and create you an account'));
@@ -107,7 +105,7 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
 
   userUtils.getTitleForUserTypes = function (userTypes, user) {
     var title = [];
-    var age = moment.utc().diff(moment(user.dob), 'years');
+    var age = this.getAge(user.dob);
 
     if (_.includes(userTypes, 'champion')) {
       title.push($translate.instant('Champion'));

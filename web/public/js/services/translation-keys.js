@@ -422,7 +422,7 @@ angular.module('cpZenPlatform')
       "Error leaving Dojo": "Error leaving Dojo",
       "Are you sure you want to leave this Dojo?": "Are you sure you want to leave this Dojo?",
       "Leave Dojo": "Leave Dojo",
-      "Join Dojo as...": "Join Dojo as...",
+      JOIN_DOJO_AS: "Join Dojo as...",
       "Dojo Admin": "Dojo Admin",
       "Forum Admin": "Forum Admin",
       "Ticketing Admin": "Ticketing Admin",
@@ -1021,6 +1021,7 @@ angular.module('cpZenPlatform')
       "Only modules for mentors and champions are available at the moment, come back later on to discover more!": "Only modules for mentors and champions are available at the moment, come back later on to discover more!",
       "Do you agree?": "Do you agree?",
       "A new dojo has been created": "A new dojo has been created!",
-      "You have been invited to a Dojo session": "You have been invited to a Dojo session"
+      "You have been invited to a Dojo session": "You have been invited to a Dojo session",
+      CHANGE_ROLE: "Change Role"
     };
   });

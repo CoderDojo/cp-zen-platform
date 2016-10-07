@@ -3145,3 +3145,6 @@ msgstr "A new dojo has been created!"
 
 msgid "You have been invited to a Dojo session"
 msgstr "You have been invited to a Dojo session"
+
+msgid "Change Role"
+msgstr "Change Role"
