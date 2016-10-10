@@ -30,9 +30,9 @@ dust.helpers.loadJS = function (chunk, context, bodies, params) {
   for (var variable in conf) {
     js += 'window.zenConf.' + variable + ' = \'' + conf[variable] +'\';';
   }
+  scriptTags = '<script>' + js + '</script>';
   for (var i = 0; i < scripts.length; i++) {
     scriptTags += '<script src="' + scripts[i] + '"></script>';
   }
-  scriptTags += '<script>' + js + '</script>';
   return chunk.write(scriptTags);
 };
