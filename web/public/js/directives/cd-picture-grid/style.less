@@ -4,7 +4,7 @@
   justify-content: center;
 
   &__item {
-    flex: 1;
+    flex: 1 1 208px;
     // TODO: Base off variables so changes in page width will apply down to these.
     min-width: 208px;
     max-width: 208px;
@@ -45,6 +45,7 @@
     &__item {
       min-width: 144px;
       max-width: 144px;
+      flex: 1 1 144px;
     }
   }
 
@@ -55,6 +56,7 @@
         padding: 16px;
         min-width: 368px;
         max-width: 368px;
+        flex: 1 1 368px;
         transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         border-radius: 6px;
         align-items: center;
@@ -72,6 +74,7 @@
         @media screen and (max-width: @screen-xs-max) {
           min-width: 300px;
           max-width: 300px;
+          flex: 1 1 300px;
         }
       }
 
