@@ -2479,6 +2479,11 @@ msgstr "Myself"
 msgid "Apply for"
 msgstr "Apply for"
 
+msgid "Tickets left"
+msgstr "Tickets left"
+
+msgid "Apply for"
+msgstr "Apply for"
 msgid "Export to CSV"
 msgstr "Export to CSV"
 
