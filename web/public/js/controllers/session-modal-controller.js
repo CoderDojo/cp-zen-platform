@@ -2,7 +2,7 @@
   'use strict';
 
   function cdSessionModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService,
-   dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
+   dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer, cdDojoService) {
     $scope.dojoId = dojoId;
     $scope.session = angular.copy(session);
     $scope.sessionQuantities = _.range(2);
@@ -37,13 +37,21 @@
       $scope.sessionApplication.tickets[ticketId] = [];
     });
 
-    _.each(_.keys($scope.session.tickets), function(ticketId) {
-      var ticket = $scope.session.tickets[ticketId];
-      $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
-      var settings = _.clone($scope.applyForSettings);
-      settings.selectionLimit = ticket.remaining;
-      $scope.selectSettings[ticket.id] = settings;
-    });
+    cdDojoService.getUsersDojos({userId: $scope.currentUser.id, dojoId: $scope.dojoId}, function(userDojos){
+      var userDojo = userDojos[0];
+      $scope.canOverBook = _.find(userDojo.userPermissions, {name: 'dojo-admin'}) || _.find(userDojo.userPermissions, {name: 'ticketing-admin'});
+      _.each(_.keys($scope.session.tickets), function (ticketId) {
+        var ticket = $scope.session.tickets[ticketId];
+        $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
+
+        var settings = _.clone($scope.applyForSettings);
+        // Dojo admin can overbook an event
+        if (!$scope.canOverBook) {
+          settings.selectionLimit = ticket.remaining;
+        }
+        $scope.selectSettings[ticket.id] = settings;
+      });
+    })
 
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
@@ -106,6 +114,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService',
+     'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', 'cdDojoService', cdSessionModalCtrl]);
 
 })();

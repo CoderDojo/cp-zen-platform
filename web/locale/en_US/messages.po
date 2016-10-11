@@ -2473,6 +2473,9 @@ msgstr "Apply now"
 msgid "You have already applied for this session"
 msgstr "You have already applied for this session"
 
+msgid "You may book additional attendees however this will exceed your ticket quantity"
+msgstr "You may book additional attendees however this will exceed your ticket quantity"
+
 msgid "Myself"
 msgstr "Myself"
 
@@ -2482,8 +2485,6 @@ msgstr "Apply for"
 msgid "Tickets left"
 msgstr "Tickets left"
 
-msgid "Apply for"
-msgstr "Apply for"
 msgid "Export to CSV"
 msgstr "Export to CSV"
 
