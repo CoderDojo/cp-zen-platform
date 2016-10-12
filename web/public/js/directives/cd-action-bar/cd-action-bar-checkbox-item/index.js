@@ -16,11 +16,9 @@ angular
         var ctrl = this;
 
         ctrl.handleChange = function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-          ctrl.model = !ctrl.model;
           ctrl.onChange(ctrl.model);
         };
+
       }
     });
 
