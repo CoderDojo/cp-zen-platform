@@ -51,8 +51,10 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
   eventUtils.getFormattedDates = function (event) {
     var utcOffset = moment().utcOffset();
 
-    var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-    var endDate = moment.utc(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+    var mStartDate = moment.utc(_.head(event.dates).startTime);
+    var mEndDate = moment.utc(_.head(event.dates).endTime);
+    var startDate = mStartDate.subtract(mStartDate.utcOffset(), 'minutes').toDate();
+    var endDate = mEndDate.subtract(mEndDate.utcOffset(), 'minutes').toDate();
 
     if(event.type === 'recurring') {
       event.formattedDates = [];

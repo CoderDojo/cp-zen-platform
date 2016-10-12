@@ -14,7 +14,7 @@ angular
             $scope.event = eventUtils.getFormattedDates($scope.event);
             if (!$scope.event.isPast && $scope.event.type === 'recurring') {
               $scope.event.upcomingDates = eventUtils.getNextDates($scope.event.dates, $scope.event.formattedDates);
-              $scope.event.nextDate = moment.utc(_.first($scope.event.upcomingDates).startTime).format('Do MMMM YY');
+              $scope.event.nextDate = _.first($scope.event.upcomingDates);
             }
 
             $scope.eventUserSelection = {};
