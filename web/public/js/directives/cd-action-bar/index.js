@@ -5,7 +5,8 @@
     .module('cpZenPlatform')
     .component('cdActionBar', {
       bindings: {
-        open: '<'
+        open: '<',
+        forceFixed: '<'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar',
@@ -21,15 +22,21 @@
         ctrl.overflowOpen = false;
         ctrl.showOverflowButton = false;
 
+        var actionBar;
+
         ctrl.$onInit = function () {
-          var actionBar = $element.find('.cd-action-bar');
+          actionBar = $element.find('.cd-action-bar');
           $element.detach();
           $element.appendTo('.cd-menu__content-container');
           $footer.on('inview', function (event, isInView) {
             if (isInView) {
-              actionBar.removeClass('cd-action-bar--fixed');
+              if (!ctrl.forceFixed) {
+                actionBar.removeClass('cd-action-bar--fixed');
+              }
+              ctrl.fixed = false;
             } else {
               actionBar.addClass('cd-action-bar--fixed');
+              ctrl.fixed = true;
             }
           });
         };
@@ -38,6 +45,16 @@
           $footer.off('inview');
           $element.remove();
         };
+
+        ctrl.$onChanges = function (changes) {
+          if (changes.forceFixed) {
+            if (changes.forceFixed.currentValue === true) {
+              actionBar.addClass('cd-action-bar--fixed');
+            } else if (changes.forceFixed.currentValue === false && ctrl.fixed === false) {
+              actionBar.removeClass('cd-action-bar--fixed');
+            }
+          }
+        }
       }]
     });
 

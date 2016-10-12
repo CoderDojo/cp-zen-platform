@@ -22,11 +22,13 @@
     }
 
     &__popup {
+      display: none;
       position: absolute;
       z-index: -1;
       right: 0;
       bottom: 100%;
       background: @cd-blue-90;
+      color: #fff;
       transform-origin: bottom right;
       transform: translateY(100%) scale(0);
       opacity: 0;
@@ -35,18 +37,27 @@
       // TODO: Have this configurable in some way. Maybe sm, md and lg or something...
       width: 320px;
 
-      @media (max-width: @screen-xs-max) {
-        display: none;
-      }
-
-      &--mobile {
-        display: none;
-        left: 0;
-        width: 100%;
+      &--visible {
+        display: block;
 
         @media (max-width: @screen-xs-max) {
-          display: block;
+          display: none;
         }
+      }
+    }
+
+    &__full-width-popup {
+      display: none;
+      left: 0;
+      width: 100%;
+      max-height: calc(~'100vh - 40px');
+
+      &--visible {
+        display: block;
+      }
+
+      @media (max-width: @screen-xs-max) {
+        display: block;
       }
 
       > * {
@@ -55,7 +66,7 @@
       }
     }
 
-    &--active &__popup, &--active + &__popup--mobile {
+    &--active &__popup, &--active + &__full-width-popup {
       opacity: 1;
       transform: translateY(0);
     }

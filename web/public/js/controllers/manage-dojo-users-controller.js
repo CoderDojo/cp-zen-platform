@@ -22,6 +22,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.queryModel = {};
   $scope.pagination = {itemsPerPage: 30};
   $scope.badgeSelection = {};
+  $scope.actionBarConfig = {
+    forceFixed: false
+  };
 
   initUserTypes.data = _.map(initUserTypes.data, function(userType){
     userType.title = $translate.instant(userType.title);

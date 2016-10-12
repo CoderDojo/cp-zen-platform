@@ -1,0 +1,26 @@
+<div class="cd-award-badge">
+  <h1>{{ $ctrl.selectedBadge.name || '{@i18n key="Select a badge to award"/}' }}</h1>
+  <div ng-show="!!$ctrl.selectedBadge">
+    <div class="cd-award-badge__description">
+      <div class="cd-award-badge__description-image hidden-xs">
+        <img ng-src="{{ $ctrl.selectedBadge.imageUrl }}" />
+      </div>
+      <div class="cd-award-badge__description-text">
+        <p ng-repeat="criteria in $ctrl.selectedBadge.criteria" ng-bind-html="criteria.description | linky"></p>
+      </div>
+    </div>
+    <h4>{@i18n key="Evidence of meeting criteria (required)"/}</h4>
+    <textarea class="form-control cd-award-badge__evidence" rows="6" placeholder="{@i18n key="e.g. URL of a project, completion of a relevant Sushi Card, description of a project meeting criteria, etc."/}" ng-model="$ctrl.evidence" ng-change="$ctrl.evidenceChanged()"></textarea>
+  </div>
+  <div class="cd-award-badge__selection">
+    <div class="cd-award-badge__selection-select">
+      <ui-select ng-model="$ctrl.selectedBadge" on-select="$ctrl.badgeSelected()">
+        <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
+        <ui-select-choices repeat="badge in $ctrl.badges" position="up">
+          <span ng-bind-html="badge.name"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <button class="btn btn-warning btn-award-badge btn-block cd-award-badge__selection-button" ng-disabled="!$ctrl.awardBadgeButtonEnabled" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ $ctrl.user.name }}" ng-bootbox-confirm-action="$ctrl.awardBadge($ctrl.selectedBadge)">{@i18n key="Award Badge"/}</button>
+  </div>
+</div>

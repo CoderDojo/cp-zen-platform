@@ -1,0 +1,11 @@
+<div class="cd-badge-cert">
+  <h2>{{ $ctrl.badge.name }}</h2>
+  <div class="cd-badge-cert__info">
+    <div class="cd-badge-cert__image">
+      <img ng-src="{{ $ctrl.badge.imageUrl }}" />
+    </div>
+    <p class="cd-badge-cert__description" ng-bind-html="$ctrl.badge.consumerDescription | linky"></p>
+  </div>
+  <h3>{@i18n key="Evidence"/}</h3>
+  <p class="cd-badge-cert__evidence" ng-if="$ctrl.badge.assertion.evidence" ng-bind-html="$ctrl.badge.assertion.evidence | linky"></p>
+</div>

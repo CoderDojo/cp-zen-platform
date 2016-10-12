@@ -3,6 +3,6 @@
     <i class="fa fa-{{ $ctrl.icon }}"></i>
     <span class="hidden-xs">{{ $ctrl.title }}</span>
   </div>
-  <div class="cd-action-bar-popup-item__popup" ng-transclude></div>
+  <div class="cd-action-bar-popup-item__popup" ng-class="{'cd-action-bar-popup-item__popup--visible': $ctrl.size !== 'full-width'}" ng-transclude></div>
 </span>
-<div class="cd-action-bar-popup-item__popup cd-action-bar-popup-item__popup--mobile" ng-transclude></div>
+<div class="cd-action-bar-popup-item__popup cd-action-bar-popup-item__full-width-popup" ng-class="{'cd-action-bar-popup-item__full-width-popup--visible': $ctrl.size === 'full-width'}" ng-transclude></div>

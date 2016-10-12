@@ -40,18 +40,9 @@
     </form>
   </div>
   <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
-  <cd-action-bar ng-if="actions" open="showActionBar">
-    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always">
-      <div>
-        <ui-select ng-model="badgeSelection.selectedBadge" on-select="badgeSelected(badgeSelection.selectedBadge)">
-          <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
-          <ui-select-choices repeat="badge in badges" position="up">
-            <span ng-bind-html="badge.name"></span>
-          </ui-select-choices>
-        </ui-select>
-        <span class="help-block"></span>
-        <button ng-disabled="!awardBadgeButtonEnabled" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ selectedItems[0].userData.name }}" ng-bootbox-confirm-action="awardBadge(badgeSelection.selectedBadge)" class="btn btn-warning btn-award-badge btn-block">{@i18n key="Award Badge"/}</button>
-      </div>
+  <cd-action-bar ng-if="actions" open="showActionBar" force-fixed="actionBarConfig.forceFixed">
+    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always" size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
+      <cd-award-badge user="selectedItems[0].userData" badgeSelection="badgeSelection"></cd-award-badge>
     </cd-action-bar-popup-item>
     <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
     <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
