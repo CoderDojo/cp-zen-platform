@@ -11,6 +11,8 @@
       dependencies = require('./web/public/dependencies.json'),
       app = require('./web/public/app.json'),
       less = require('gulp-less'),
+      qdom = require('gulp-qdom'),
+      tap = require('gulp-tap'),
       del = require('del');
   var lessFiles = [ relativePath('./web/public/css/app.less'), relativePath('./web/public/js/directives/**/*.less')];
   function relativePath(paths) {
@@ -51,6 +53,37 @@
         breakOnError: true
       }));
   });
+
+  gulp.task('validateHTML', function () {
+    var currentFile = void 0;
+    var errors = {};
+    return gulp.src(relativePath(['./web/public/**/*.dust']))
+    .pipe(tap(function(file, t) {
+        currentFile = file.path;
+     }))
+    .pipe(qdom(function($){
+      var clickables = $("button, *[ng-click], *.btn");
+       for(var clickableIndex = 0; clickableIndex < clickables.length; clickableIndex ++) {
+        var clickable = $(clickables[clickableIndex]);
+        console.log(clickable);
+        if (!errors[currentFile]) errors[currentFile] = [];
+        if (clickable['aria-label'] !== ''){
+          errors[currentFile].push(clickable[0].name + ' ' + clickable.text() + ' should have an aria-label');
+        }
+        if (clickable['data-name'] !== ''){
+          errors[currentFile].push(clickable[0].name + ' ' + clickable.text() + ' should have an data-name for analytics');
+        }
+      }
+    }))
+    .on('end', function(){
+      for (var fileName in errors) {
+        console.warn('in '+ fileName);
+        for (var i = 0; i < errors[fileName].length; i++){
+          console.warn(errors[fileName][i]);
+        }
+      }
+     })
+  })
 
   gulp.task('build-dependencies', ['clean'], function () {
     return gulp.src(relativePath(dependencies))
