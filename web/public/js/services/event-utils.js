@@ -53,8 +53,8 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
 
     var mStartDate = moment.utc(_.head(event.dates).startTime);
     var mEndDate = moment.utc(_.head(event.dates).endTime);
-    var startDate = mStartDate.subtract(mStartDate.utcOffset(), 'minutes').toDate();
-    var endDate = mEndDate.subtract(mEndDate.utcOffset(), 'minutes').toDate();
+    var startDate = mStartDate.subtract(mStartDate.utcOffset(), 'minutes');
+    var endDate = mEndDate.subtract(mEndDate.utcOffset(), 'minutes');
 
     if(event.type === 'recurring') {
       event.formattedDates = [];
@@ -62,8 +62,8 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
         event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YYYY'));
       });
 
-      event.day = moment(startDate).format('dddd');
-      event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+      event.day = mStartDate.format('dddd');
+      event.time = mStartDate.format('HH:mm') + ' - ' + mEndDate.format('HH:mm');
 
       if(event.recurringType === 'weekly') {
         event.formattedRecurringType = $translate.instant('Weekly');
@@ -80,11 +80,14 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
       event.endDate = _.last(event.formattedDates);
     } else {
       //One-off event
-      event.formattedDate = moment(startDate).format('Do MMMM YYYY') + ', ' +
-        moment(startDate).format('HH:mm') +  ' - ' +
-        moment(endDate).format('HH:mm');
-      event.startDate = startDate;
-      event.endDate = endDate;
+      event.formattedStartDate = mStartDate.format('Do MMMM YYYY');
+      event.formattedStartTime = mStartDate.format('HH:mm');
+      event.formattedEndTime = mEndDate.format('HH:mm');
+      event.formattedDate = event.formattedStartDate + ', ' +
+        event.formattedStartTime + ' - ' +
+        event.formattedEndTime
+      event.startDate = startDate.toDate();
+      event.endDate = endDate.toDate();
     }
     return event;
   }
