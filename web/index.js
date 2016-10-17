@@ -103,9 +103,21 @@ server.ext('onPreResponse', function (request, reply) {
   if (request.url.path.indexOf('/api/2.0') === 0) {
     return reply.continue();
   }
+
+  // Hapi-auth redirect on failure for cdf portal
+  // Others routes are handled by the default redirect of auth-cookie
+  // Or should not be handled (403 permissions)
+  if (status === 403) {
+    var cdfPath = _.isEqual(request.route.settings.auth.scope, ['cdf-admin']);
+    if (cdfPath) {
+      return reply.redirect('/cdf/login?next=' + request.url.path);
+    }
+  }
+
   if (status !== 404 && status !== 401) {
     return reply.continue();
   }
+
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -129,6 +141,37 @@ server.ext('onPreResponse', function (request, reply) {
   return reply.view('errors/500', request.locals);
 });
 
+server.register(require('hapi-auth-cookie'), function (err) {
+    server.auth.strategy('seneca-login', 'cookie', {
+        password: 'SecretsNeverLastLong' || process.env.COOKIE_SECRET,
+        cookie: 'seneca-login',
+        // // TODO - what's the ttl on the express cookie??
+        ttl: 2 * 24 * 60 * 60 * 1000,     // two days
+        path: '/',
+        appendNext: true, // Redirect is not set here, but relative to the routes
+        isSecure: false,
+        validateFunc: function (request, session, callback) {
+          var token = session.token;
+          var cdfPath = _.isEqual(request.route.settings.auth.scope, ['cdf-admin']);
+          getUser(request, token, function (err, logged) {
+            if (logged) {
+              request.user = logged;
+              // Allows to use the seneca-cdf-login token to browse normal zen, but not the other way around
+              if (logged.user.roles.indexOf('cdf-admin') > -1 &&
+               cdfPath && session.target === 'cdf'){
+                return callback(null, true, {scope: 'cdf-admin'});
+              } else {
+                return callback(null, true, {scope: 'basic-user'}); // They're a `user`
+              }
+            } else {
+              return callback(null, false);
+            }
+          });
+        }
+    });
+})
+
+
 // TODO - cache!
 function getUser (request, token, cb) {
   if (token) {
@@ -143,55 +186,6 @@ function getUser (request, token, cb) {
     setImmediate(cb);
   }
 };
-
-server.ext('onPostAuth', function (request, reply) {
-  debug('onPostAuth', request.url.path, 'login:', request.state['seneca-login']);
-  var url = request.url.path;
-  var profileUrl = '/dashboard/profile';
-  var restrictedRoutesWhenLoggedIn = ['/', '/register', '/login'];
-
-  var token = request.state['seneca-login'];
-  var referer = encodeURIComponent(url);
-
-  getUser(request, token, function (err, user) {
-    if (err) {
-      console.error(err);
-      return reply.continue();
-    }
-    debug('onPostAuth', 'user:', user);
-    request.user = user;
-    console.log('User:', request.user);
-    if (_.contains(url, '/dashboard') && !_.contains(url, '/login') && !request.user && !_.contains(url, '/cdf/')) {
-      // Not logged in, redirect to dojo-detail if trying to see dojo detail
-      if (/\/dashboard\/dojo\/[a-zA-Z]{2}\//.test(url)){
-        debug('onPostAuth', 'redirecting to dojo detail');
-        return reply.redirect(url.replace('dashboard/',''))
-      } else {
-        // Otherwise, redirect to /login with referer parameter
-        debug('onPostAuth', 'redirecting to /login with referer', url);
-        return reply.redirect('/login?referer=' + url);
-      }
-    } else {
-      if (_.contains(url, '/cdf/') && !request.user && !_.contains(url, '/login')) {
-        // Redirect to /login with referer parameter
-        debug('onPostAuth', 'redirecting to /login with referer', url);
-        console.log('redir to', url);
-        return reply.redirect('/cdf/login?referer=' + url);
-      } else {
-        reply.state('seneca-login', request.state['seneca-login'], { ttl: null });
-        return reply.continue();
-      }
-    }
-
-    if (_.contains(restrictedRoutesWhenLoggedIn, url) && request.user) {
-      debug('onPostAuth', 'url has restricted routes:', url, 'redirecting to /dojo-list');
-      return reply.redirect('/dashboard/dojo-list');
-    }
-
-    debug('onPostAuth', 'continuing');
-    return reply.continue();
-  });
-});
 
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 
@@ -303,12 +297,6 @@ var locality = function(request) {
 }
 
 server.method('locality', locality, {});
-
-// TODO - what's the ttl on the express cookie??
-server.state('seneca-login', {
-  ttl: 2 * 24 * 60 * 60 * 1000,     // two days
-  path: '/'
-});
 
 // This can be turned off in production if needs be
 var noSwagger = process.env.NO_SWAGGER === 'true';

@@ -2,7 +2,7 @@
   <div class="col-xs-12 cd-gameboy">
     <div class="col-xs-12 cd-gameboy_screen">
       <cd-poll-counter poll-id="pollId" label="label"></cd-poll-counter>
-      <cd-poll-map >
+      <cd-poll-map>
         <cd-poll-form question="question" poll="poll" dojo-id="dojoId" ng-if="dojoId"></cd-poll-form>
       </cd-poll-map>
 

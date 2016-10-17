@@ -1,5 +1,5 @@
 <cd-expanding-card main-title="{{ cdfPS.poll.question }}"
-  sub-title1="{{ cdfPS.poll.responses.length }}" sub-title2="{{ cdfPS.poll.formattedCount }}" class="row">
+  sub-title1="{{ cdfPS.poll.result }}" sub-title2="{{ cdfPS.poll.formattedCount }}" class="row">
   <div class="cdf-poll.item">
     <div class="row">
       <!--  that's partly wrong, the condition should be the sent email instead of the received response
@@ -7,8 +7,10 @@
       <div ng-if="cdfPS.poll.responses.length > 0" class="col-xs-12 col-md-6">
         <div>
           <i class="fa fa-exclamation-triangle"></i>
+          {@i18n key="Started on"/}{{ cdFPS.poll.startedAt }}  - {@i18n key="End date"/} {{ cdFPS.poll.endDate }}
           {@i18n key="You cannot edit a poll once it started"/}
         </div>
+
         <div class="form-inline form-group">
           <label>{@i18n key="My unit"/} <input readonly="" class="form-control" disabled="disabled" ng-model="cdfPS.poll.valueUnity"></input></label>
         </div>
@@ -17,17 +19,19 @@
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
-        <form ng-if="cdfPS.poll.responses.length === 0" ng-submit="cdfPS.save(cdfPS.poll)" >
+        <form ng-if="cdfPS.poll.responses.length === 0" ng-submit="cdfPS.save()" >
           <div class="form-group">
-            <input type="text" class="form-control" ng-model="cdfPS.poll.question" placeholder="{@i18n key="My question"/}"></input>
+            <label>{@i18n key="My question"/} <input type="text" class="form-control" ng-model="cdfPS.poll.question" placeholder="{@i18n key="My question"/}"></input></label>
           </div>
           <div class="form-group form-inline">
-            <input type="text" class="form-control" ng-model="cdfPS.poll.valueUnity" placeholder="{@i18n key="My unit"/}"></input>
-            <input type="number" class="form-control" ng-model="cdfPS.poll.maxAnswers" placeholder="{@i18n key="Max answers"/}"></input>
+            <label>{@i18n key="My unit"/} <input type="text" class="form-control" ng-model="cdfPS.poll.valueUnity" placeholder="{@i18n key="My unit"/}"></input></label>
+            <label>{@i18n key="Max answers"/} <input type="number" class="form-control" ng-model="cdfPS.poll.maxAnswers" placeholder="{@i18n key="Max answers"/}"></input></label>
           </div>
           <div class="cd-poll-setup__datepicker">
-            <input name="endDate" type="date" uib-datepicker ng-model="cdfPS.poll.endDate"
-              ng-required="true" ng-readonly="true" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
+            <label>{@i18n key="End date"/}</label>
+            <input uib-datepicker ng-model="cdfPS.poll.endDate"
+              ng-required="true" ng-readonly="true" current-text="{@i18n key="Today"/}"
+              clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
               class="form-control" />
           </div>
           <button class="button btn-secondary pull-right" type="submit">{@i18n key="Save"/}</button>

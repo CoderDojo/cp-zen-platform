@@ -16,18 +16,20 @@ var cdfPolls = {
       return;
     })
     .then(function(){
-      return $q.all((function(){
+      return $q.all((function () {
         var promises = [];
-        _.each(cdfP.polls, function(poll, index){
+        _.each(cdfP.polls, function (poll, index) {
           var promise = cdPollService.getResults({pollId: poll.id})
-          .then(function(response){
+          .then(function (response) {
             cdfP.polls[index].responses = response.data;
           })
-          .then(function(){
+          .then(function () {
             return cdPollService.count(poll.id)
-            .then(function(response){
-              poll.count = response.data.count;
-              poll.formattedCount = (poll.count || 0) + ' ' + $translate.instant('participations')
+            .then(function (response) {
+              cdfP.polls[index].endDate = poll.endDate ? new Date(poll.endDate) : new Date();
+              cdfP.polls[index].result = response.data.sum;
+              cdfP.polls[index].count = response.data.count;
+              cdfP.polls[index].formattedCount = (poll.count || 0) + ' ' + $translate.instant('participations')
             });
           })
           promises.push(promise);
@@ -39,7 +41,8 @@ var cdfPolls = {
       cdfP.polls.push({
         question: "How many fucks do you give?",
         maxAnswers: 1,
-        responses: []
+        responses: [],
+        endDate: new Date()
       });
     }
   }],

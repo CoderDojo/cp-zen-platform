@@ -7,11 +7,12 @@ var cdfLogin = function(){
     restrict: 'E',
     templateUrl: '/directives/tpl/user/cd-login',
     controller: ['$scope', 'auth', '$window', '$translate', '$state', function ($scope, auth, $window, $translate, $state) {
-      $scope.noop = angular.noop
-      $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
+      $scope.noop = angular.noop;
+      var refererUrl = $state.params.referer || $state.params.next;
+      $scope.referer = refererUrl ? decodeURIComponent(refererUrl) : refererUrl;
       $scope.login = {};
 
-      $scope.doLogin = function() {
+      $scope.doLogin = function () {
         $scope.message = '';
         $scope.errorMessage = '';
 
@@ -19,22 +20,22 @@ var cdfLogin = function(){
           return;
         }
 
-        auth.login($scope.login,
-          function(data){
-            if(data.ok) {
+        auth.cdfLogin($scope.login,
+          function (data) {
+            if (data.ok) {
               // User Login
               var user = data.user;
-              if(_.includes(user.roles, 'cdf-admin')){
-                if (!$scope.referer) {
+              if (_.includes(user.roles, 'cdf-admin')) {
+                if (!$scope.referer && !$scope.next) {
                   //  TODO: dashboard for cdf
-                  $scope.referer = '/cdf/polls';
+                  $scope.referer = $state.href('polls');
                 }
-                $window.location.href = $scope.referer;
+                $window.location.href = $scope.referer || $scope.next;
               }
             }
           },
           function(){
-            // Silence is golden
+            // Near silence is golden
             $scope.errorMessage = $translate.instant('Invalid email or password');
           }
         );

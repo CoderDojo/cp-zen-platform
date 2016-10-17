@@ -13,31 +13,32 @@ var cdfPollSetup = {
 
     cdfPS.sendEmail = function ( ) {
       cdPollService.sendTestEmail(cdfPS.testEmail, cdfPS.poll.id)
-      .then( function () {
+      .then(function () {
         atomicNotifyService.info($translate.instant('Your email has been sent successfuly'));
       })
-      .catch( function (err) {
+      .catch(function (err) {
         atomicNotifyService.info($translate.instant('Something wrong happended when sending the email :') + err);
       });
     }
 
     cdfPS.startCampaign = function ( ) {
       cdPollService.startCampaign(cdfPS.poll.id)
-      .then( function () {
+      .then(function () {
         atomicNotifyService.info($translate.instant('Your poll started successfuly'));
       })
-      .catch( function (err) {
+      .catch(function (err) {
         atomicNotifyService.info($translate.instant('Something wrong happended when starting your poll :') + err);
       });
     }
 
-    cdfPS.save = function (poll) {
-      if (poll.responses.length === 0){
-        var toSave = _.clone(poll);
-        toSave = _.pick(toSave, ['question', 'valueUnity', 'maxAnswers', 'endDate']);
+    cdfPS.save = function () {
+      if (cdfPS.poll.responses.length === 0){
+        var toSave = _.clone(cdfPS.poll);
+        toSave = _.pick(toSave, ['id', 'question', 'valueUnity', 'maxAnswers', 'endDate']);
         cdPollService.saveSetup(toSave)
-        .then(function(savedPoll){
-          poll = savedPoll.data;
+        .then(function (savedPoll) {
+          cdfPS.poll.id = savedPoll.data.id;
+          atomicNotifyService.info($translate.instant('Poll saved'));
         });
       }
     }

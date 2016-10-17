@@ -26,6 +26,7 @@ var cdfPollDetails = {
     cdfPD.getCount = function (){
       return cdPollService.count(cdfPD.pollId)
       .then(function(response){
+        cdfPD.poll.result = response.data.sum;
         cdfPD.poll.count = response.data.count;
         cdfPD.poll.formattedCount = (cdfPD.poll.count || 0) + ' ' + $translate.instant('participations');
       });

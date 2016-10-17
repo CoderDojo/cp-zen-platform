@@ -8,8 +8,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService,
   usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, WizardHandler, userUtils) {
 
-  $scope.noop = angular.noop
-  $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
+  $scope.noop = angular.noop;
+  var refererUrl = $state.params.referer || $state.params.next;
+  $scope.referer = refererUrl ? decodeURIComponent(refererUrl) : refererUrl;
 
   if ($location.search().redirect) {
     $scope.redirect = $location.search().redirect;

@@ -131,7 +131,11 @@
     },
     agreement: function(cdAgreementsService, $stateParams, $window, auth){
       return auth.get_loggedin_user_promise().then(function (user) {
-        return cdAgreementsService.loadUserAgreementPromise(user.id).then(winCb, failCb);
+        if (user) {
+          return cdAgreementsService.loadUserAgreementPromise(user.id).then(winCb, failCb);
+        } else {
+          winCb(void 0);
+        }
       });
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService) {
@@ -190,11 +194,12 @@
           abstract: true
         })
         .state("login", {
-          url: "/login?referer",
+          url: "/login?referer&next",
           template: '<cd-login></cd-login>',
           controller: 'login',
           params: {
             referer: null,
+            next: null,
             pageTitle: 'Login'
           }
         })

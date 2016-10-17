@@ -127,8 +127,8 @@
       return cdEventsService.searchSessionsPromise({eventId: $stateParams.eventId, status: 'active'}).then(winCb, failCb);
     },
     isSessionValid: function(auth){
-      return auth.get_loggedin_user_promise().then(function (user) {
-        if (_.contains(user.roles, 'cdf-admin')) {
+      return auth.get_cdf_loggedin_user_promise().then(function (user) {
+        if (user && _.includes(user.roles, 'cdf-admin')) {
           return true;
         }
         return false;
@@ -155,61 +155,48 @@
           url: "/",
           params: {
             pageTitle: 'Home'
-          },
-          controller: function(auth, $state) {
-            // force re-auth
-            auth.logout(function(){
-              $state.go('login');
-            });
           }
         })
         .state("login", {
-          url: "/login?referer",
+          url: "/login?referer&next",
           template: '<cdf-login></cdf-login>',
           params: {
             referer: null,
+            next: null,
             pageTitle: 'Login'
-          },
+          }
+        })
+        .state("dashboard", {
+          url: "/dashboard",
+          abstract: 'true',
+          template: '<ui-view></ui-view>',
           resolve: {
             isSessionValid: resolves.isSessionValid
-          }
-
+          },
+          controller: ['isSessionValid', '$state', function(isSessionValid, $state) {
+            if (!isSessionValid) {
+              $state.go('login');
+            }
+          }]
         })
         .state("stats", {
+          parent: 'dashboard',
           url: "/stats",
           templateUrl: '/dojos/template/stats',
           params: {
             pageTitle: 'Stats'
           },
           controller: 'stats-controller',
-          resolve: {
-            isSessionValid: resolves.isSessionValid
-          }
-        })
-        .state("review-champion-application", {
-          url: "/champion-applications/:id",
-          templateUrl: '/champion/template/review-application',
-          params: {
-            pageTitle: 'Review Champion Application'
-          },
-          controller: 'review-champion-application-controller',
-          resolve: {
-            isSessionValid: resolves.isSessionValid
-          }
         })
         .state("polls", {
+          parent: 'dashboard',
           url: "/polls",
           template: '<cdf-polls></cdf-polls>',
-          resolve: {
-            isSessionValid: resolves.isSessionValid
-          }
         })
         .state("poll-results", {
+          parent: 'dashboard',
           url: "/polls/:pollId/results",
           template: '<cdf-poll-details></cdf-poll-details>',
-          resolve: {
-            isSessionValid: resolves.isSessionValid
-          }
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise(function ($injector, $location) {
