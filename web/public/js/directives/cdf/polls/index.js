@@ -39,7 +39,7 @@ var cdfPolls = {
     });
     cdfP.new = function ( ) {
       cdfP.polls.push({
-        question: "How many fucks do you give?",
+        question: "",
         maxAnswers: 1,
         responses: [],
         endDate: new Date()

@@ -32,7 +32,7 @@ var cdfPollSetup = {
     }
 
     cdfPS.save = function () {
-      if (cdfPS.poll.responses.length === 0){
+      if (!cdfPS.poll.startedAt) {
         var toSave = _.clone(cdfPS.poll);
         toSave = _.pick(toSave, ['id', 'question', 'valueUnity', 'maxAnswers', 'endDate']);
         cdPollService.saveSetup(toSave)

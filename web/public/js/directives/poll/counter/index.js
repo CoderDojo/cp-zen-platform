@@ -18,7 +18,7 @@ function cdPollCounter($compile, cdPollService, $interval){
         $scope.lifebar = {};
         $scope.lifebar.full = $scope.lifebar.empty = [];
         var getRange = function (from, to ){
-          return _.range(from/10, to/10);
+          return _.range(Math.round(from / 10) * 10 , Math.round(to / 10) * 10, 10);
         }
         $interval(function(){
           getLastCount();
