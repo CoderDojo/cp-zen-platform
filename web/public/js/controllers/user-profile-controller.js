@@ -2,7 +2,7 @@
 
 'use strict';
 
-function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
+function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService, $log,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
   agreement ,championsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils, $uibModal) {
@@ -186,8 +186,19 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.loggedInUser = loggedInUser.data;
 
-  $scope.loadProgrammmingLanguagesTags = function(query) {
+  $scope.loadProgrammmingLanguagesTags = function() {
     return cdProgrammingLanguagesService.get();
+  };
+
+
+  $scope.imageByLanguage = function(languages){
+    cdProgrammingLanguagesService.get(languages,
+      function (responseData) {
+        $log.info(responseData);
+//        $scope.profile.programmingLanguagesImageUrl.push(responseData[0]);
+    }, function () {
+      $log.error("error when get data")
+    });
   };
 
   $scope.inviteParent = function(data){
@@ -218,6 +229,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     $scope.profile.widget = {};
     $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
     $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken);
+
+    // set image url for each languages
+    $scope.profile.programmingLanguagesImageUrl = [];
+    _.forEach($scope.profile.programmingLanguages, $scope.imageByLanguage);
   }
 
 
