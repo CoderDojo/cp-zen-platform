@@ -6,7 +6,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils) {
 
   $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
-  if(profile.err || loggedInUser.err || usersDojos.err || hiddenFields.err || agreement.err){
+  if(profile.err || loggedInUser.err || (usersDojos && usersDojos.err) || (hiddenFields && hiddenFields.err) || (agreement && agreement.err)){
     alertService.showError($translate.instant('error.general'));
     return;
   }

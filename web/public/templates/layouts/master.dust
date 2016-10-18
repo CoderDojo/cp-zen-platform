@@ -81,7 +81,7 @@
 
     <!-- This needs to be separate as it loads a config files relative to itself -->
     <script src="/components/ckeditor/ckeditor.js"></script>
-    {@loadJS /}
+    {@loadJS src="/dist/app.js" /}
     <script type="text/javascript">
       window.cdMenu({
         zenBase: '/'

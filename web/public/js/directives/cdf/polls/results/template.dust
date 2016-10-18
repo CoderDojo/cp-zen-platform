@@ -1,0 +1,66 @@
+<cd-expanding-card main-title="{@i18n key="Results"/}" sub-title1="{{ cdfPR.formattedCount }}" start-expanded="true" class="row">
+  <form class="form-group row" ng-submit="cdfPR.create(cdfPR.newResult)">
+    <div class="col-xs-12 col-sm-8">
+      <ui-select ng-model="cdfPR.newResult.dojo" >
+        <ui-select-match allow-clear="true" placeholder="{@i18n key="Search by dojo name"/}">{{ $select.selected.name }}</ui-select-match>
+        <ui-select-choices repeat="dojo in cdfPR.rawDojoList | filter: $select.search | limitTo: 20 ">
+          <div ng-bind-html="dojo.name | highlight: $select.search"></div>
+          <small>
+            email: {{ dojo.email }}
+          </small>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <input type="text" name="filter" ng-model="cdfPR.newResult.value" class="form-control" placeholder="{@i18n key="Poll result"/}"></input>
+    </div>
+    <div class="col-xs-12">
+      <button type="submit" class="btn btn-primary pull-right"> {@i18n key="Save"/}</button>
+    </div>
+  </form>
+
+  <form class="form-group row">
+    <div class="col-xs-12">
+      <div class="input-group">
+        <input type="text" name="filter" ng-model="cdfPR.filter.dojoName" class="form-control"></input>
+        <span class="input-group-btn">
+          <btn class="btn btn-default"><i class="fa fa-search"></i></btn>
+        </span>
+      </div>
+    </div>
+  </form>
+  <div>
+    <span class="h4">{@i18n key="Stats"/}</span>
+    <ul class="list-unstyled list-inline ">
+      <li ng-repeat="provider in cdfPR.providers"><a ng-href="{{ provider.url }}">{{ provider.name }}</a></li>
+    </span>
+  </div>
+  <uib-tabset active="active">
+   <uib-tab index="0">
+     <uib-tab-heading>
+       Responses
+     </uib-tab-heading>
+     <div ng-repeat="result in cdfPR.results | filter: cdfPR.filter | orderBy: 'dojoName' track by result.id " class="cd-result col-xs-12 col-md-6">
+       <div class="form-group row">
+         <div class="col-xs-6">
+           {{ result.dojoName }}
+           <div class="h6">
+             {{ result.createdAt | date: 'medium'}}
+           </div>
+         </div>
+         <div class="input-group col-xs-6 col-md-5">
+           <!-- TODO : handle the input based upon the responseType -->
+           <input type="text" name="filter" ng-model="result.value" class="form-control"></input>
+           <span class="input-group-btn">
+             <button class="btn btn-default" type="button" ng-click="cdfPR.save(result)"><i class="fa fa-save"></i></button>
+             <button class="btn btn-default" type="button" ng-click="cdfPR.sendEmail(result)"><i class="fa fa-envelope"></i></button>
+             <button class="btn btn-default" type="button" ng-click="cdfPR.remove(result, $index)"><i class="fa fa-times text-danger"></i></button>
+           </span>
+         </div>
+       </div>
+     </div>
+   </uib-tab>
+ </uib-tabset>
+
+
+</cd-expanding-card>

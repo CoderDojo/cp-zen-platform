@@ -1,4 +1,5 @@
 'use strict';
+var auth = require('../../../lib/authentications');
 
 var controller = module.exports = [
   {
@@ -110,6 +111,14 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/accept_dojo_user_invitation/{dojoId}/{userInviteToken}',
+    config: {
+      auth: auth.basicUser,
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/login'
+        }
+      }
+    },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
@@ -118,6 +127,14 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/accept_dojo_user_request/{userId}/{userInviteToken}',
+    config: {
+      auth: auth.basicUser,
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/login'
+        }
+      }
+    },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
@@ -126,6 +143,14 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}',
+    config: {
+      auth: auth.basicUser,
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/login'
+        }
+      }
+    },
     handler: function (request, reply){
       reply.view('index', request.locals);
     }
@@ -142,6 +167,14 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/reset_password/{token}',
+    config: {
+      auth: auth.basicUser,
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/login'
+        }
+      }
+    },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }

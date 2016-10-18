@@ -1,0 +1,30 @@
+.poll-counter{
+  input{
+    width: 40px;
+    &:extend(.h1);
+    font-size: 1.4em;
+    margin: 0px 10px;
+    padding: 10px;
+    background-color: @cd-white;
+  }
+  margin-bottom: 0.5em;
+}
+.cd-poll-counter {
+  background-color: @cd-very-light-grey;
+  padding-top: 0.5em;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 3%;
+  font-family: 'Press Start 2P';
+  .cd-life-bar {
+    ul {
+      margin-top: 5%;
+      @media (max-width: @screen-sm-max){
+        text-align: center;
+      }
+    }
+    img {
+      width: 30px;
+      height: auto;
+    }
+  }
+}

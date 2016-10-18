@@ -10,20 +10,29 @@
       KarmaServer = require('karma').Server,
       dependencies = require('./web/public/dependencies.json'),
       app = require('./web/public/app.json'),
+      cdfApp = require('./web/public/cdf-app.json'),
       less = require('gulp-less'),
       qdom = require('gulp-qdom'),
       tap = require('gulp-tap'),
       del = require('del');
   var lessFiles = [ relativePath('./web/public/css/app.less'), relativePath('./web/public/js/directives/**/*.less')];
   function relativePath(paths) {
+    var buildPath = function (depPath) {
+      var excluded = depPath[0] === '!';
+      if (excluded) depPath = depPath.substring(1);
+      depPath = path.join(__dirname, depPath);
+      return excluded ? '!' + depPath : depPath;
+    }
+
     if (paths.constructor === [].constructor) {
       for (var i = 0; i < paths.length; i++) {
-        paths[i] = path.join(__dirname, paths[i]);
+        paths[i] = buildPath(paths[i]);
       }
       return paths;
     } else {
-      return path.join(__dirname, paths);
+      return buildPath(paths);
     }
+
   }
 
   gulp.task('clean', function () {
@@ -103,15 +112,38 @@
       .pipe(gulp.dest(relativePath('./web/public/dist/css/')))
   });
 
-  gulp.task('build', ['clean', 'jshint', 'build-less', 'build-dependencies'], function () {
-    return gulp.src(relativePath(app))
+  gulp.task('build-cdf', ['build'], function () {
+    var _app = Array.from(app);
+    //Remove original init-master
+    for (var appIndex in _app) {
+      if (_app[appIndex].indexOf('init-master') > -1) {
+        _app.splice(appIndex, 1);
+      }
+    }
+    //Append cdf sources
+    for (var index in cdfApp) {
+        _app.push(cdfApp[index]);
+    }
+    return gulp.src(relativePath(_app))
       .pipe(ngAnnotate())
-      .pipe(concat('app.js'))
+      .pipe(concat('cdf-app.js'))
       //.pipe(uglify()) // Commented out until we figure it out why it's breaking
       .pipe(gulp.dest(relativePath('./web/public/dist/')));
   });
 
-  gulp.task('test', ['semistandard', 'build'], function (done) {
+  gulp.task('build', ['clean', 'jshint', 'build-less', 'build-dependencies'], function () {
+    var _app = Array.from(app);
+    for (var index in cdfApp) {
+      _app.push('!' + cdfApp[index]);
+    }
+    return gulp.src(relativePath(_app))
+      .pipe(ngAnnotate())
+      .pipe(concat('app.js'))
+      // .pipe(uglify()) // Commented out until we figure it out why it's breaking
+      .pipe(gulp.dest(relativePath('./web/public/dist/')));
+  });
+
+  gulp.task('test', ['semistandard', 'build', 'build-cdf'], function (done) {
     new KarmaServer({
       configFile: __dirname + '/karma.conf.js',
       singleRun: true

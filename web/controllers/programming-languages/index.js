@@ -7,7 +7,6 @@ module.exports = [{
   path: '/programming-languages',
   handler: function (request, reply) {
     if(programmingLanguages.length < 1){
-      console.log("error");
       return reply({ error: 'List is empty'}).code(404);
     }
 

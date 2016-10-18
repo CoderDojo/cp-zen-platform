@@ -7,13 +7,13 @@
 
     return {
       load: function(id, win, fail) {
-        cdApi.get('dojos/' + id, win, fail || topfail);
+        return cdApi.get('dojos/' + id, win, fail || topfail);
       },
       find: function(query, win, fail) {
-        cdApi.post('dojos/find', {query:query}, win, fail || topfail);
+        return cdApi.post('dojos/find', {query:query}, win, fail || topfail);
       },
       list: function(query, win, fail){
-        cdApi.post('dojos', {query:query}, win, fail || topfail);
+        return cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
       myDojos: function (search, win, fail) {
         return $q(function(resolve, reject) {
@@ -33,10 +33,10 @@
       save: function(dojo, win, fail) {
         dojo = angular.copy(dojo);
         if (dojo.id) {
-          cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
+          return cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
         }
         else {
-          cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
+          return cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
         }
       },
       uploadAvatar: function (dojoId, file){
@@ -66,10 +66,10 @@
         return currentDojo;
       },
       delete: function(id, win, fail) {
-        cdApi.delete('dojos/' + id, win, fail);
+        return cdApi.delete('dojos/' + id, win, fail);
       },
       dojosByCountry: function(query, win, fail) {
-        cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
+        return cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
       },
       bulkUpdate: function(dojos) {
         return $q(function(resolve, reject) {
@@ -82,7 +82,7 @@
         });
       },
       getStats: function(win, fail){
-        cdApi.post('dojos/stats', {}, win,  fail || topfail);
+        return cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
       saveDojoLead: function(dojoLead, win, fail) {
         if(dojoLead.id) {
@@ -92,16 +92,16 @@
         }
       },
       loadUserDojoLead: function(userId, win, fail) {
-        cdApi.get('dojos/user-dojo-lead/' + userId, win, fail || topfail);
+        return cdApi.get('dojos/user-dojo-lead/' + userId, win, fail || topfail);
       },
       loadDojoLead: function(id, win, fail) {
-        cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
+        return cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
       },
       loadSetupDojoSteps: function(win, fail) {
-        cdApi.get('dojos/setup-steps', win, fail || topfail);
+        return cdApi.get('dojos/setup-steps', win, fail || topfail);
       },
       getUsersDojos: function(query, win, fail) {
-        cdApi.post('dojos/users', {query: query}, win, fail || topfail);
+        return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
       searchDojoLeads: function(query) {
         return $q(function(resolve, reject) {
@@ -114,46 +114,46 @@
         return deferred.promise;
       },
       loadDojoUsers: function(query, win, fail) {
-        cdApi.post('dojos/load-dojo-users', {query: query}, win, fail || topfail);
+        return cdApi.post('dojos/load-dojo-users', {query: query}, win, fail || topfail);
       },
       exportDojoUsers: function(dojoId, win, fail) {
-        cdApi.get('dojos/export-users/' + dojoId, win, fail || topfail);
+        return cdApi.get('dojos/export-users/' + dojoId, win, fail || topfail);
       },
       generateUserInviteToken: function(data, win, fail) {
-        cdApi.post('dojos/generate-user-invite-token', data, win, fail || topfail);
+        return cdApi.post('dojos/generate-user-invite-token', data, win, fail || topfail);
       },
       acceptUserInvite: function(data, win, fail) {
-        cdApi.post('dojos/accept-user-invite', { data: data }, win, fail || topfail);
+        return cdApi.post('dojos/accept-user-invite', { data: data }, win, fail || topfail);
       },
       requestInvite: function (data, win, fail) {
-        cdApi.post('dojos/request-user-invite', { data: data }, win, fail || topfail);
+        return cdApi.post('dojos/request-user-invite', { data: data }, win, fail || topfail);
       },
       acceptUserRequest: function(data, win, fail) {
-        cdApi.post('dojos/accept-user-request', { data: data }, win, fail || topfail);
+        return cdApi.post('dojos/accept-user-request', { data: data }, win, fail || topfail);
       },
       dojosForUser: function(userId, win, fail) {
-        cdApi.get('dojos/dojos-for-user/' + userId, win, fail || topfail);
+        return cdApi.get('dojos/dojos-for-user/' + userId, win, fail || topfail);
       },
       saveUsersDojos: function(userDojo, win, fail) {
-        cdApi.post('dojos/save-usersdojos', {userDojo: userDojo}, win, fail || topfail);
+        return cdApi.post('dojos/save-usersdojos', {userDojo: userDojo}, win, fail || topfail);
       },
       removeUsersDojosLink: function(data, win, fail) {
-        cdApi.post('dojos/remove-usersdojos/' + data.userId + '/' + data.dojoId, {data: data}, win, fail || topfail);
+        return cdApi.post('dojos/remove-usersdojos/' + data.userId + '/' + data.dojoId, {data: data}, win, fail || topfail);
       },
       getUserPermissions: function(win, fail) {
-        cdApi.get('dojos/user-permissions', win, fail || topfail);
+        return cdApi.get('dojos/user-permissions', win, fail || topfail);
       },
       getUserTypes: function(win, fail) {
-        cdApi.get('dojos/user-types', win, fail || topfail);
+        return cdApi.get('dojos/user-types', win, fail || topfail);
       },
       uncompletedDojos: function(win, fail){
-        cdApi.get('dojos/uncompleted', win, fail || topfail);
+        return cdApi.get('dojos/uncompleted', win, fail || topfail);
       },
       getDojoConfig: function(win, fail) {
-        cdApi.get('dojos/config', win, fail || topfail);
+        return cdApi.get('dojos/config', win, fail || topfail);
       },
       updateFounder: function(founder, win, fail) {
-        cdApi.post('dojos/update-founder', {founder: founder},  win, fail || topfail);
+        return cdApi.post('dojos/update-founder', {founder: founder},  win, fail || topfail);
       },
       searchNearestDojos: function(query) {
         var deferred = $q.defer();
@@ -167,9 +167,7 @@
       },
       // from countries service
       listCountries: function(win, fail){
-        cdApi.get('countries', function (countries) {
-          // Convert to array (and ensure array exists).
-          countries = _.map(countries);
+        return cdApi.get('countries', function (countries) {
           // Sort based on browser/OS's locale.
           countries.sort(function (a, b){
             var c = a.countryName.localeCompare(b.countryName);
@@ -179,16 +177,16 @@
         }, fail || topfail);
       },
       listPlaces: function(search, win, fail) {
-        cdApi.post('countries/places', {search: search}, win, fail || topfail);
+        return cdApi.post('countries/places', {search: search}, win, fail || topfail);
       },
       loadCountriesLatLongData: function(win, fail) {
-        cdApi.get('countries/lat-long', win, fail || topfail);
+        return cdApi.get('countries/lat-long', win, fail || topfail);
       },
       getContinentCodes: function(win, fail){
-        cdApi.get('countries/continents/codes', win, fail || topfail);
+        return cdApi.get('countries/continents/codes', win, fail || topfail);
       },
       notifyAllMembers: function (data, win, fail) {
-        cdApi.post('dojos/notify-all-members', { data: data }, win, fail || topfail);
+        return cdApi.post('dojos/notify-all-members', { data: data }, win, fail || topfail);
       },
     };
   }

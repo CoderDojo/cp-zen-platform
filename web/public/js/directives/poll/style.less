@@ -1,0 +1,84 @@
+.cd-gameboy-container{
+  border-radius: 2%;
+  background-color: @cd-light-grey;
+  box-shadow: inset -5px -5px rgba(0, 0, 0, 0.3), inset 5px 5px fade(@cd-very-light-grey, 30%);
+
+  .cd-gameboy {
+    margin-top: 1.5em;
+    &_screen {
+    }
+  }
+  .cd-gameboy_controls {
+    padding: 5% 10%;
+    position: relative;
+    &_arrows {
+      // Seen as a top arrow
+      @arrow-width: 30px;
+      @arrow-height: 36px;
+      @arrow-offset: (@arrow-height + @arrow-width);
+      & > * {
+        box-shadow: inset -2px -2px rgba(0, 0, 0, 0.5), inset 0px 0px fade(@cd-very-light-grey, 30%);
+        position: absolute;
+        border: none;
+      }
+      &--top, &--down {
+        left: @arrow-height;
+        height: @arrow-height;
+        width: @arrow-width;
+        padding: 2px;
+      }
+      &--left, &--right {
+        top: @arrow-height;
+        height: @arrow-width;
+        width: @arrow-height;
+      }
+      &--top {
+        top: 0px;
+      }
+      &--down {
+        top: @arrow-offset;
+      }
+      &--left {
+        left: 0px;
+      }
+      &--right {
+        left: @arrow-offset;
+      }
+    }
+    &_button {
+      box-shadow: inset -2px -2px rgba(0, 0, 0, 0.3), inset 2px 2px fade(@cd-very-light-grey, 30%);
+      border-radius: 100%;
+      background-color: @cd-blue;
+      color: @cd-white;
+      width: auto;
+      height: auto;
+      @media (min-width: @screen-sm-min) {
+        width: 55px;
+        height: 55px;
+      }
+      &:first-of-type {
+        margin-bottom: 50px;
+      }
+      &:last-of-type{
+        margin-top: 60px;
+      }
+    }
+    &_settings {
+      & > button {
+        position: absolute;
+        top: 90px;
+        height: 1em;
+        color: @cd-gray;
+        width: 10px;
+        border: none;
+        box-shadow: inset -2px -2px rgba(0, 0, 0, 0.5), inset 0px 0px fade(@cd-very-light-grey, 30%);
+        &:first-of-type {
+          left: 30px;
+        }
+        &:last-of-type {
+          right: 30px;
+        }
+      }
+    }
+  }
+}

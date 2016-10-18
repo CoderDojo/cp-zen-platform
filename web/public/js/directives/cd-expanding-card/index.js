@@ -19,9 +19,6 @@
       if (ctrl.startExpanded === 'true') {
         ctrl.expanded = 'expanded';
         content.css('height', 'auto');
-        requestAnimationFrame(function () {
-          content.css('height', contentWrapper.outerHeight() + 'px');
-        });
       } else {
         ctrl.expanded = 'collapsed';
       }

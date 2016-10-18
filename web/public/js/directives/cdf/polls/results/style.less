@@ -1,0 +1,11 @@
+.cd-result {
+  transition: opacity 300ms linear;
+  &.ng-enter,
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+  &.ng-leave,
+  &.ng-enter.ng-enter-active {
+    opacity: 1;
+  }
+}

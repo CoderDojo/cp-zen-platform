@@ -40,6 +40,7 @@
     "good-file": "5.0.1",
     "good-http": "5.0.x",
     "hapi": "10.4.1",
+    "hapi-auth-cookie": "^3.1.0",
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
     "hapi-swagger": "2.2.0",
