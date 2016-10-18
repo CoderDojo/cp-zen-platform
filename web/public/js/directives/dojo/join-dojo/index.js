@@ -8,23 +8,24 @@ angular
           templateUrl: '/directives/tpl/dojo/join-dojo',
           controller:
           ['$scope', 'cdDojoService', '$translate', 'cdUsersService', 'auth',
-           'usSpinnerService', '$state', 'alertService', '$location', '$uibModal', 'atomicNotifyService', 'userUtils',
+           '$state', 'alertService', '$location', 'atomicNotifyService', 'userUtils', '$q', 'translationKeys',
            function($scope, cdDojoService, $translate, cdUsersService, auth,
-             usSpinnerService, $state, alertService, $location, $uibModal, atomicNotifyService, userUtils ) {
+             $state, alertService, $location, atomicNotifyService, userUtils, $q, translationKeys) {
             $scope.dojoMember = false;
             $scope.userMemberCheckComplete = false;
             $scope.requestInvite = $scope.modalData = {};
             $scope.loggedOut = _.isEmpty($scope.currentUser);
             var approvalRequired = ['mentor', 'champion'];
             $scope.ninjaRole = {
-              name: 'Ninja',
+              name: 'Attendee',
               userType: {
                 name:'attendee-o13'
               },
               image: userUtils.defaultAvatar('attendee-o13'),
               approvalRequired: false,
-              text: $translate.instant('Youth Over 13 - A Ninja is a young person who attends their local Dojo! Only Ninjas over 13 can have their own account, Ninjas under 13 must register under their Parent/Guardians account.'),
-              class: 'cd-ninja'
+              text: $translate.instant(translationKeys.ATTENDEE_DESCRIPTION),
+              class: 'cd-ninja',
+              buttonText: $translate.instant('Join Dojo')
             };
             $scope.parentRole = {
               name: 'Parent/Guardian',
@@ -33,8 +34,9 @@ angular
               },
               image: userUtils.defaultAvatar('parent-guardian'),
               approvalRequired: false,
-              text: $translate.instant('Parent/Guardian - Parents/kids are super important in CoderDojo as they encourage and inspire CoderDojo Ninjas on a daily basis! Parents can sign up on the platform to register their kids (both aged under 13 and over 13) for their Local Dojos events and so their kids can earn badges for their profile!'),
-              class: 'cd-parent'
+              text: $translate.instant(translationKeys.PARENT_GUARDIAN_DESCRIPTION),
+              class: 'cd-parent',
+              buttonText: $translate.instant('Join Dojo')
             };
             $scope.roles = [
               {
@@ -44,8 +46,9 @@ angular
                 },
                 approvalRequired: true,
                 image: userUtils.defaultAvatar('mentor'),
-                text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
-                class: 'cd-volunteer'
+                text: $translate.instant(translationKeys.VOLUNTEER_DESCRIPTION),
+                class: 'cd-volunteer',
+                buttonText: $translate.instant('Send Request')
               },
               {
                 name: 'Champion',
@@ -54,8 +57,9 @@ angular
                 },
                 approvalRequired: true,
                 image: userUtils.defaultAvatar('champion'),
-                text: $translate.instant('Mentor/Volunteer - these volunteers power their local Dojos with their technical and organisational skills and inspire the next generation of coders, entrepreneurs and innovators!'),
-                class: 'cd-champion'
+                text: $translate.instant(translationKeys.CHAMPION_DESCRIPTION),
+                class: 'cd-champion',
+                buttonText: $translate.instant('Send Request')
               }];
 
             if (!$scope.loggedOut) {
@@ -111,71 +115,70 @@ angular
 
             function filterPossibleRoles(){
               var userType = JSON.parse($scope.currentUser.initUserType);
-              if (userType.name === 'parent-guardian' ||
-                userType.name === 'mentor' || userType.name === 'champion') // Legacy userTypes
+              $scope.isAdult = userType.name === 'parent-guardian' ||
+                userType.name === 'mentor' || userType.name === 'champion';
+              if ($scope.isAdult) // Legacy userTypes
               {
                 $scope.roles.unshift($scope.parentRole);
               } else {
-                $scope.roles.unshift($scope.ninjaRole);
+                $scope.roles = [$scope.ninjaRole];
               }
             }
 
 
-            $scope.requestToJoin = $scope.modalCallback = function (requestInvite) {
-              if(!$scope.requestInvite.userType) {
-                $scope.requestInvite.validate="false";
-                return
-              } else {
-                var userType = requestInvite.userType.name;
+            $scope.requestToJoin = $scope.modalCallback = function (role) {
+              return $q(function (resolve, reject) {
+                if(!role.userType) {
+                  $scope.requestInvite.validate="false";
+                  return
+                } else {
+                  var userType = role.userType.name;
 
-                auth.get_loggedin_user(function (user) {
-                  usSpinnerService.spin('dojo-detail-spinner');
-                  var data = {user:user, dojoId: dojoId, userType: userType, emailSubject: 'New Request to join your Dojo'};
+                  auth.get_loggedin_user(function (user) {
+                    var data = {user:user, dojoId: dojoId, userType: userType, emailSubject: 'New Request to join your Dojo'};
 
-                  if(_.includes(approvalRequired, userType)) {
-                    cdDojoService.requestInvite(data, function (response) {
-                      usSpinnerService.stop('dojo-detail-spinner');
-                      if(!response.error) {
-                        atomicNotifyService.info($translate.instant('Join Request Sent'));
-                        $scope.inviteExists = true;
-                      } else {
-                        alertService.showError($translate.instant(response.error));
-                      }
-                    });
-                  } else {
-                    //Check if user is already a member of this Dojo
-                    var query = {userId:user.id, dojoId: dojoId};
-                    var userDojo = {};
-                    cdDojoService.getUsersDojos(query, function (response) {
-                      if(_.isEmpty(response)) {
-                        //Save
-                        userDojo.owner = 0;
-                        userDojo.userId = user.id;
-                        userDojo.dojoId = dojoId;
-                        userDojo.userTypes = [userType];
-                        cdDojoService.saveUsersDojos(userDojo, function (response) {
-                          usSpinnerService.stop('dojo-detail-spinner');
-                          $state.go($state.current, {}, {reload: true});
-                          atomicNotifyService.info($translate.instant('Successfully Joined Dojo'));
-                        });
-                      } else {
-                        //Update
-                        userDojo = response[0];
-                        if(!userDojo.userTypes) userDojo.userTypes = [];
-                        userDojo.userTypes.push(userType);
-                        cdDojoService.saveUsersDojos(userDojo, function (response) {
-                          usSpinnerService.stop('dojo-detail-spinner');
-                          $state.go($state.current, {}, {reload: true});
-                          atomicNotifyService.info($translate.instant('Successfully Joined Dojo'));
-                        });
-                      }
-                    });
-                  }
-                }, function () {
-                  //Not logged in
-                  $state.go('register-account.user', {referer: $location.url(), userType: userType});
-                });
-              }
+                    if(_.includes(approvalRequired, userType)) {
+                      cdDojoService.requestInvite(data, function (response) {
+                        if(!response.error) {
+                          resolve($translate.instant('Join Request Sent'));
+                          $scope.inviteExists = true;
+                        } else {
+                          reject($translate.instant(response.error));
+                        }
+                      });
+                    } else {
+                      //Check if user is already a member of this Dojo
+                      var query = {userId:user.id, dojoId: dojoId};
+                      var userDojo = {};
+                      cdDojoService.getUsersDojos(query, function (response) {
+                        if(_.isEmpty(response)) {
+                          //Save
+                          userDojo.owner = 0;
+                          userDojo.userId = user.id;
+                          userDojo.dojoId = dojoId;
+                          userDojo.userTypes = [userType];
+                          cdDojoService.saveUsersDojos(userDojo, function (response) {
+                            $state.go($state.current, {}, {reload: true});
+                            resolve($translate.instant('Successfully Joined Dojo'));
+                          });
+                        } else {
+                          //Update
+                          userDojo = response[0];
+                          if(!userDojo.userTypes) userDojo.userTypes = [];
+                          userDojo.userTypes.push(userType);
+                          cdDojoService.saveUsersDojos(userDojo, function (response) {
+                            $state.go($state.current, {}, {reload: true});
+                            resolve($translate.instant('Successfully Joined Dojo'));
+                          });
+                        }
+                      });
+                    }
+                  }, function () {
+                    //Not logged in
+                    $state.go('register-account.user', {referer: $location.url(), userType: userType});
+                  });
+                }
+              });
             };
           }]
         };

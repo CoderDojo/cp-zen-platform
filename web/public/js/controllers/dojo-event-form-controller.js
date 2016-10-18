@@ -4,6 +4,10 @@
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
     endDateTime = moment.utc(endDateTime).add(1, 'days');
+    var startTimeHour = moment(startDateTime.toDate()).hour();
+    var startTimeMin = moment(startDateTime.toDate()).minute();
+    var endTimeHour = moment(endDateTime.toDate()).hour();
+    var endTimeMin = moment(endDateTime.toDate()).minute();
     var currentDate = startDateTime;
     var dates = [];
     var biWeeklyEventSwitch = false;
@@ -12,12 +16,15 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
-      var utcOffset = moment().utcOffset();
-      date.startTime = moment.utc(startDateTime).add(utcOffset, 'minutes').toDate();
-      var mEventDate = moment.utc(startDateTime);
-      var mEventLastDate = moment.utc(endDateTime).add(utcOffset, 'minutes');
-      date.endTime = moment.utc([ mEventDate.get('year'), mEventDate.get('month'), mEventDate.date(),
-        mEventLastDate.get('hour'), mEventLastDate.get('minute'), mEventLastDate.get('second'), mEventLastDate.get('millisecond') ]).toDate();
+      startDateTime = moment(startDateTime);
+      date.startTime = moment.utc([
+        startDateTime.year(), startDateTime.month(), startDateTime.date(),
+        startTimeHour, startTimeMin, 0, 0
+      ]);
+      date.endTime = moment.utc([
+        startDateTime.year(), startDateTime.month(), startDateTime.date(),
+        endTimeHour, endTimeMin, 0, 0
+      ]);
       return date;
     }
 
@@ -733,10 +740,11 @@
         var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
-        var utcOffset = moment().utcOffset();
+        var startUtcOffset = moment(startTime).utcOffset();
+        var endUtcOffset = moment(endTime).utcOffset();
 
-        event.startTime = moment(startTime).subtract(utcOffset, 'minutes').toDate();
-        event.endTime = moment(endTime).subtract(utcOffset, 'minutes').toDate();
+        event.startTime = moment(startTime).subtract(startUtcOffset, 'minutes').toDate();
+        event.endTime = moment(endTime).subtract(endUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = event.startTime;
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();

@@ -44,6 +44,17 @@ function preparePaths (deps, globs) {
 
 dust.helpers.loadJS = function (chunk, context, bodies, params) {
   var scriptTags = '';
+  var conf;
+  var js = 'window.zenConf = {};';
+  if (process.env.NODE_ENV === 'production'){
+    conf = require('../config/web-production.js');
+  } else {
+    conf = require('../config/web-development.js');
+  }
+  for (var variable in conf) {
+    js += 'window.zenConf.' + variable + ' = \'' + conf[variable] +'\';';
+  }
+  scriptTags = '<script>' + js + '</script>';
   var localScripts = params.src.indexOf('cdf') > -1 ? cdfScripts: scripts;
   for (var i = 0; i < localScripts.length; i++) {
     scriptTags += '<script src="' + localScripts[i] + '"></script>';

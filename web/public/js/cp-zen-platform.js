@@ -34,6 +34,8 @@
     '720kb.tooltips',
     '720kb.socialshare',
     'ngGeolocation',
+    'angular-google-analytics',
+    'ngAria',
     'ngAnimate'
   ]);
 })();

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-
+  // TODO : centralize resolve for both init-*
   var resolveDojo = function($q, $stateParams, cdDojoService) {
     var dfd = $q.defer();
     if($stateParams.legacyId && _.isNumber(parseInt($stateParams.legacyId))) {

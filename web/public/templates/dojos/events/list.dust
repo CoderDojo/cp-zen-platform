@@ -4,7 +4,7 @@
     <h3 class="text-center cd-section-header"><a id="events"></a><a name="events" href="#events">{@i18n key="Events"/}</a></h3>
     <div class="row cd-event-list">
       <div class="col-md-12">
-        <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo. You may need to contact this Dojo to find out about upcoming events."/}
+        <p ng-show="events.length === 0">{@i18n key="There are no events currently listed for this Dojo. Please contact the Dojo to find out about upcoming events."/}
         </p>
 
         <div class="row" ng-transclude>

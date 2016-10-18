@@ -1,12 +1,17 @@
+// TODO: Make mixin for action bar items of different types to inherit from
 .cd-action-bar-item {
     display: inline-block;
-    padding: 12px;
+    // Margin bottom (-40px) and padding bottom (52px) here are needed for colored buttons.
+    // We want the color to stretch below the resting position of action bar so when it bounces up, you don't see a gap.
+    margin-bottom: -40px;
+    padding: 12px 12px 52px 12px;
     cursor: pointer;
     color: @cd-white;
     transition: background 0.2s ease-out;
+    line-height: 20px;
 
     .fa {
-      margin: 0 6px;
+      margin: 0 6px 0 0;
     }
 
     &:hover, &:active {
@@ -14,4 +19,17 @@
       text-decoration: none;
       background: @cd-blue-90;
     }
+
+    &--red {
+      background: @cd-red;
+
+      &:hover, &:active {
+        background: @cd-red-90;
+      }
+    }
+}
+
+.cd-action-bar__overflow-menu .cd-action-bar-item {
+  display: block;
+  padding: 6px 12px;
 }

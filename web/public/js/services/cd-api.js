@@ -45,13 +45,14 @@ angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
   };
 
   function wrapCbPromise (fn, resolve, reject) {
-    if (resolve)
-    fn()
-    .then(function(response){
-      var data = response.data && response.headers && response.config? response.data: response;
-      return resolve(data);
-    }, reject);
-    else
+    if (resolve) {
+      fn()
+      .then(function (response) {
+        var data = response.data && response.headers && response.config? response.data: response;
+        return resolve(data);
+      }, reject);
+    } else {
       return fn();
+    }
   }
 }]);

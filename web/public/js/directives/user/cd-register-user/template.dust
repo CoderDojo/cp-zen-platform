@@ -7,7 +7,7 @@
 
   <div class="row" ng-enter="noop()">
     <div class="col-sm-offset-2 col-sm-8 col-xs-12">
-      <input type="text" class="form-control form-group" name="surname" required required-message="'{@i18n key="Name is empty"/}'" ng-model="formData.user.lastName" placeholder="{@i18n key="Surname"/}">
+      <input type="text" class="form-control form-group" name="surname" required required-message="'{@i18n key="Surname is empty"/}'" ng-model="formData.user.lastName" placeholder="{@i18n key="Surname"/}">
     </div>
   </div>
 

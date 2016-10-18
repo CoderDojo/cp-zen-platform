@@ -31,7 +31,15 @@ var cdfPollResults = {
       url: 'https://www.twilio.com/console/sms/logs'
     }];
     cdfPR.$onInit = function () {
-      cdfPR.initResults();
+      if (!cdfPR.results || cdfPR.results.length === 0) {
+       cdfPR.pollId = $stateParams.pollId;
+       return cdfPR.getResults()
+       .then(cdfPR.getDojoList)
+       .then(cdfPR.assignDojoList);
+      } else {
+       return cdfPR.getDojoList()
+       .then(cdfPR.assignDojoList);
+      }
     }
 
     cdfPR.getResults = function () {
@@ -56,18 +64,6 @@ var cdfPollResults = {
      _.each(cdfPR.results, function(result, index){
        cdfPR.results[index].dojoName = cdfPR.dojoList[result.dojoId].name;
      })
-    }
-
-    cdfPR.initResults = function(){
-      if (!cdfPR.results || cdfPR.results.length === 0) {
-       cdfPR.pollId = $stateParams.pollId;
-       return cdfPR.getResults()
-       .then(cdfPR.getDojoList)
-       .then(cdfPR.assignDojoList);
-      } else {
-       return cdfPR.getDojoList()
-       .then(cdfPR.assignDojoList);
-      }
     }
 
     cdfPR.create = function(newResult){

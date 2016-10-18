@@ -257,7 +257,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   }
 
-  $scope.parentProfile = _.includes(profile.data.userTypes, 'parent-guardian');
   $scope.save = function(profile){
     _.each(['http://', 'https://', 'www.'], function(prefix){
       _.each(['linkedin', 'twitter'], function(field){

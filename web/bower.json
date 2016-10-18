@@ -60,9 +60,11 @@
     "angular-tooltips": "1.1.4",
     "google-maps-utility-library-v3": "*",
     "ngGeolocation": ">=0.0.2",
+    "angular-google-analytics": "~1.1.7",
+    "angular-aria": "1.3.x",
     "angular-animate": "1.5.7",
     "angular-touch": "1.5.7",
-    "cd-common": "https://github.com/CoderDojo/cd-common.git#1.1.0",
+    "cd-common": "https://github.com/CoderDojo/cd-common.git#1.1.1",
     "jquery.inview": "https://github.com/protonet/jquery.inview.git#v1.1.2"
   },
   "devDependencies": {

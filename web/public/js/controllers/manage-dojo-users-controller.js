@@ -1,7 +1,8 @@
 'use strict';
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
-  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService) {
+  cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService,
+  $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -19,7 +20,8 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.filter = {};
   $scope.filterUserTypes = [];
   $scope.queryModel = {};
-  $scope.pagination = {itemsPerPage: 10};
+  $scope.pagination = {itemsPerPage: 30};
+  $scope.badgeSelection = {};
 
   initUserTypes.data = _.map(initUserTypes.data, function(userType){
     userType.title = $translate.instant(userType.title);
@@ -60,11 +62,237 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.loadPage(false);
   };
 
+  $scope.selectedItems = [];
+
+  $scope.showActionBar = false;
+
+  $scope.$watch('selectedItems', function (newValue) {
+    $scope.badgeSelection = {};
+    $scope.awardBadgeButtonEnabled = false;
+  });
+
+  $scope.$watch('selectedItems.length', function (newValue) {
+    $scope.badgeSelection = {};
+    $scope.awardBadgeButtonEnabled = false;
+    $scope.showActionBar = newValue > 0;
+  });
+
+  // TODO: Centralise for use between this and join dojo
+  $scope.adultRoles = [
+    {
+      name: 'Parent/Guardian',
+      userType: {
+        name: 'parent-guardian'
+      },
+      image: userUtils.defaultAvatar('parent-guardian'),
+      approvalRequired: false,
+      text: $translate.instant(translationKeys.PARENT_GUARDIAN_DESCRIPTION),
+      class: 'cd-parent',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    },
+    {
+      name: 'Volunteer',
+      userType: {
+        name: 'mentor'
+      },
+      approvalRequired: true,
+      image: userUtils.defaultAvatar('mentor'),
+      text: $translate.instant(translationKeys.VOLUNTEER_DESCRIPTION),
+      class: 'cd-volunteer',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    },
+    {
+      name: 'Champion',
+      userType: {
+        name:  'champion'
+      },
+      approvalRequired: true,
+      image: userUtils.defaultAvatar('champion'),
+      text: $translate.instant(translationKeys.CHAMPION_DESCRIPTION),
+      class: 'cd-champion',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    }
+  ];
+
+  $scope.youthRoles = [
+    {
+      name: 'Attendee',
+      image: userUtils.defaultAvatar('ninja'),
+      approvalRequired: false,
+      text: $translate.instant(translationKeys.ATTENDEE_DESCRIPTION),
+      class: 'cd-parent',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    },
+    {
+      name: 'Youth Volunteer',
+      userType: {
+        name:  'mentor'
+      },
+      approvalRequired: true,
+      image: userUtils.defaultAvatar('mentor'),
+      text: $translate.instant(translationKeys.YOUTH_MENTOR_DESCRIPTION),
+      class: 'cd-volunteer',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    },
+    {
+      name: 'Youth Champion',
+      userType: {
+        name:  'champion'
+      },
+      approvalRequired: true,
+      image: userUtils.defaultAvatar('champion'),
+      text: $translate.instant(translationKeys.YOUTH_CHAMPION_DESCRIPTION),
+      class: 'cd-champion',
+      buttonText: $translate.instant(translationKeys.CHANGE_ROLE)
+    }
+  ];
+
+  $scope.actions = {
+    awardBadge: {
+      ngShow: function () {
+        var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
+        if (user) {
+          return user.id !== $scope.currentUser.id;
+        } else {
+          return false;
+        }
+      }
+    },
+    viewProfile: {
+      ngShow: function () {
+        return $scope.selectedItems.length === 1;
+      },
+      ngHref: function () {
+        var users = $scope.selectedItems;
+        // Need to check as ngHref is called before selection, so $scope.selectedItems[0] can be undefined
+        if (users.length === 1) {
+          return '/profile/' + $scope.selectedItems[0].userData.id;
+        }
+      }
+    },
+    changeRole: {
+      ngShow: function () {
+        return $scope.selectedItems.length === 1;
+      },
+      ngClick: function () {
+        var user = $scope.selectedItems[0].userData;
+        var age = userUtils.getAge(user.dob);
+        var roles = $scope.adultRoles;
+        if (age < 18) {
+          roles = $scope.youthRoles;
+        }
+        cdChooseRoleModal({
+          roles: roles,
+          callback: function (role) {
+            return $q(function (resolve, reject) {
+              var hasPermission = false;
+              var userType = role.userType;
+              canUpdateUser(function (result) {
+                hasPermission = result;
+
+                if(hasPermission) {
+
+                  var userDojoLink = _.find(usersDojosLink, {userId:user.id});
+                  if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
+                  var roles = [];
+                  if (age < 13) {
+                    roles.push('attendee-u13');
+                  } else if (age < 18) {
+                    roles.push('attendee-o13');
+                  }
+                  if (userType && userType.name) {
+                    roles.push(userType.name);
+                  }
+                  $scope.selectedItems[0].subCaption = userUtils.getTitleForUserTypes(roles, user);
+                  userDojoLink.userTypes = roles;
+                  cdDojoService.saveUsersDojos(userDojoLink, function (response) {
+                    if(response.error) {
+                      reject($translate.instant(response.error));
+                    } else {
+                      resolve($translate.instant('User types successfully updated.'));
+                    }
+                  }, function (err) {
+                    reject($translate.instant('Error saving user type') + ' ' + err);
+                  });
+                } else {
+                  reject($translate.instant('You do not have permission to update user types'));
+                }
+              });
+            });
+          },
+          title: $translate.instant(translationKeys.CHANGE_ROLE)
+        });
+      }
+    },
+    remove: {
+      ngClick: function () {
+        var user = $scope.selectedItems[0].userData;
+        $ngBootbox.confirm($translate.instant('Are you sure you want to remove this user from your Dojo?'))
+          .then(function() {
+            $scope.removeUser(user);
+          });
+      },
+      ngShow: function () {
+        return true;
+      }
+    },
+    backgroundCheck: {
+      model: function () {
+        var user = $scope.selectedItems.length > 0 ? $scope.selectedItems[0].userData : null;
+        return (user && user.backgroundChecked);
+      },
+      ngShow: function () {
+        var user = $scope.selectedItems.length > 0 ? $scope.selectedItems[0].userData : null;
+        return (user && user.isMentor && $scope.canUpdateUserPermissions);
+      },
+      onChange: function (checked) {
+        var user = $scope.selectedItems.length > 0 ? $scope.selectedItems[0].userData : null;
+        if (user) {
+          user.backgroundChecked = checked;
+          $scope.updateMentorBackgroundCheck(user);
+        }
+      }
+    }
+  };
+
+  function updateActions() {
+    $scope.userPermActions = [];
+    $scope.userPermissions.forEach(function (userPermission) {
+      $scope.userPermActions.push({
+        type: 'checkbox',
+        title: userPermission.title,
+        model: function () {
+          var users = $scope.selectedItems;
+          if (users.length === 1) {
+            var user = users[0].userData;
+            return $scope.userPermissionsModel[user.id][userPermission.name];
+          }
+        },
+        onChange: function (checked) {
+          var users = $scope.selectedItems;
+          if (users.length === 1) {
+            var user = users[0].userData;
+            $scope.userPermissionsModel[user.id] = $scope.userPermissionsModel[user.id] || {};
+            $scope.userPermissionsModel[user.id][userPermission.name] = checked;
+            $scope.updateUserPermissions(user, userPermission);
+          }
+        },
+        ngShow: function () {
+          return $scope.canUpdateUserPermissions;
+        },
+        showAsAction: 'never'
+      })
+    });
+  }
+  updateActions();
+
+
   $scope.loadPage = function(resetFlag) {
     $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: 1};
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, $scope.filterQuery, $scope.queryModel.sort);
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.users = [];
+    $scope.userGridItems = [];
     var users;
 
     async.series([
@@ -81,6 +309,14 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if(err) console.error(err);
       users = _.compact(users);
       $scope.users = users;
+      $scope.userGridItems = users.map(function (user) {
+        return {
+          userData: user,
+          picture: '/api/2.0/profiles/' + user.profileId + '/avatar_img',
+          caption: user.name,
+          subCaption: userUtils.getTitleForUserTypes(user.types, user)
+        };
+      });
       usSpinnerService.stop('manage-dojo-users-spinner');
     });
 
@@ -107,6 +343,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
         cdDojoService.getUserPermissions(function (response) {
           $scope.userPermissions = response;
+          updateActions();
           return done();
         });
       });
@@ -259,7 +496,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       if(hasPermission) {
 
         var updatedUserTypes = _.chain(angular.copy(user.frontEndTypes))
-          .pluck('text')
+          .map('text')
           .map(function (userType) {
             userType = userType.replace(/-/g, ' ');
             var initUserTypeFound = _.find(initUserTypes.data, function (initUserType) {
@@ -354,10 +591,21 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   $scope.userListDownloadLink = function () {
     cdDojoService.exportDojoUsers(dojoId, function (response) {
+      //  TODO: export as a directive, it modifies the DOM
       var downloadLink = angular.element('<a></a>');
       var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
-      downloadLink.attr('href',(window.URL || window.webkitURL).createObjectURL(csv));
-      window.open(downloadLink[0]);
+      var urlFactory = window.URL || window.webkitURL;
+      var tempFile = urlFactory.createObjectURL(csv);
+      downloadLink.attr('href', tempFile);
+      downloadLink.attr('download', dojoId +'.csv');
+      // Ok, that's sad.
+      document.body.appendChild(downloadLink[0]);
+
+      downloadLink[0].click();
+      $timeout(function(){
+       document.body.removeChild(downloadLink[0]);
+       urlFactory.revokeObjectURL(tempFile);
+      }, 0);
     });
   };
 
@@ -383,18 +631,16 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
   }
 
-  $scope.badgeSelected = function (user) {
-    $scope.awardBadgeButtonModel[user.id] = true;
-    $scope.$watch('badgeModel', function (val) {
-      if(!val[user.id]) $scope.awardBadgeButtonModel[user.id] = false;
-    });
+  $scope.badgeSelected = function (selectedBadge) {
+    $scope.awardBadgeButtonEnabled = !!selectedBadge;
   }
 
-  $scope.awardBadge = function (user, badge) {
+  $scope.awardBadge = function (selectedBadge) {
+    var user = $scope.selectedItems[0].userData;
     usSpinnerService.spin('manage-dojo-users-spinner');
     var applicationData = {
       user: user,
-      badge: badge,
+      badge: selectedBadge,
       emailSubject: 'You have been awarded a new CoderDojo digital badge!'
     };
 
@@ -434,4 +680,5 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
-    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', cdManageDojoUsersCtrl]);
+    'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout',
+    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', 'translationKeys', cdManageDojoUsersCtrl]);

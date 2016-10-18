@@ -25,7 +25,7 @@
     </form>
   </div>
   <div ng-switch-default>
-    <img src="{{ cdRI.src }}" class="cd-rounded-image__img img-responsive" alt="{{ cdRI.alt }}"
+    <img ng-src="{{ cdRI.src }}" class="cd-rounded-image__img img-responsive" alt="{{ cdRI.alt }}"
     aria-describedby="{{ cdRI.alt }}" ng-style="{width: cdRI.size, height: cdRI.size}" ng-show="cdRI.src"></img>
   </div>
 

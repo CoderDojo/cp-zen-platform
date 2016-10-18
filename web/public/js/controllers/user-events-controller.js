@@ -25,12 +25,12 @@
               if(dojoEvents && dojoEvents.events && dojoEvents.events.length > 0) {
                 cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId: dojoEvents.dojo.id}, function (response) {
                   if(!_.isEmpty(response)) {
-                    var isParent = false;
-                    if(_.includes(response[0].userTypes, 'parent-guardian') || _.includes($scope.currentUser.roles, 'cdf-admin')) isParent = true;
+                    var isAdult = true;
+                    if(_.includes(response[0].userTypes, 'attendee-o13') || _.includes(response[0].userTypes, 'attendee-u13')) isAdult = false;
                     if(!$scope.eventUserSelection[dojoEvents.dojo.id]) $scope.eventUserSelection[dojoEvents.dojo.id] = [];
                     $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
                     $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
-                    if(isParent) {
+                    if (isAdult) {
                       cdUsersService.loadNinjasForUser(currentUser.id, function (ninjas) {
                         _.each(ninjas, function (ninja) {
                           $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: ninja.userId, title: ninja.name});

@@ -1,7 +1,8 @@
 (function() {
   'use strict';
 
-  function cdSessionModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService, dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer) {
+  function cdSessionModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService,
+   dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer, cdDojoService) {
     $scope.dojoId = dojoId;
     $scope.session = angular.copy(session);
     $scope.sessionQuantities = _.range(2);
@@ -30,15 +31,27 @@
       sessionId: session.id,
       tickets: {}
     };
+    $scope.selectSettings = {};
 
     _.each(_.keys($scope.applyForModel), function (ticketId) {
       $scope.sessionApplication.tickets[ticketId] = [];
     });
 
-    _.each(_.keys($scope.session.tickets), function(ticketId) {
-      var ticket = $scope.session.tickets[ticketId];
-      $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
-    });
+    cdDojoService.getUsersDojos({userId: $scope.currentUser.id, dojoId: $scope.dojoId}, function(userDojos){
+      var userDojo = userDojos[0];
+      $scope.canOverBook = _.find(userDojo.userPermissions, {name: 'dojo-admin'}) || _.find(userDojo.userPermissions, {name: 'ticketing-admin'});
+      _.each(_.keys($scope.session.tickets), function (ticketId) {
+        var ticket = $scope.session.tickets[ticketId];
+        $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
+
+        var settings = _.clone($scope.applyForSettings);
+        // Dojo admin can overbook an event
+        if (!$scope.canOverBook) {
+          settings.selectionLimit = ticket.remaining;
+        }
+        $scope.selectSettings[ticket.id] = settings;
+      });
+    })
 
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
@@ -48,6 +61,11 @@
       $scope.sessionApplication.tickets.other.push({name: ticket.name, quantity: quantity});
       $scope.sessionApplication.tickets.other = _.uniq($scope.sessionApplication.tickets.other, function (otherTicket) { return otherTicket.name });
     };
+
+    $scope.checkTicketIsntFull = function(ticketId) {
+      var ticket = $scope.session.tickets[ticketId];
+      $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications + $scope.sessionApplication.tickets[ticketId].length;
+    }
 
     $scope.goToProfile = function () {
       $state.go('user-profile', {userId: currentUser.id});
@@ -96,6 +114,7 @@
   }
 
   angular.module('cpZenPlatform')
-    .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService', 'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', cdSessionModalCtrl]);
+    .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService',
+     'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', 'cdDojoService', cdSessionModalCtrl]);
 
 })();

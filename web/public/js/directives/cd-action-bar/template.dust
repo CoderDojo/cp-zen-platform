@@ -1,3 +1,8 @@
 <div class="cd-action-bar__wrapper">
-  <div class="cd-action-bar" data-open="{{ $ctrl.open }}" ng-transclude></div>
+  <div class="cd-action-bar" data-open="{{ $ctrl.open }}">
+    <span class="cd-action-bar__spacer"></span>
+    <span class="cd-action-bar__actions" ng-transclude></span>
+    <span class="cd-action-bar-item fa fa-ellipsis-v" ng-click="$ctrl.overflowOpen = !$ctrl.overflowOpen"></span>
+    <span class="cd-action-bar__overflow-menu" ng-show="$ctrl.overflowOpen" ng-transclude></span>
+  </div>
 </div>

@@ -165,7 +165,8 @@
 
 
   angular.module('cpZenPlatform')
-    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider',
+        function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
       function valToString(val)   { return val !== null ? val.toString() : val; }
       function valFromString(val) { return val !== null ? val.toString() : val; }
@@ -844,6 +845,36 @@
     .config(['tmhDynamicLocaleProvider', function (tmhDynamicLocaleProvider) {
       tmhDynamicLocaleProvider.localeLocationPattern('/components/angular-i18n/angular-locale_{{locale}}.js');
     }])
+    .config(['AnalyticsProvider', '$provide', function(AnalyticsProvider, $provide){
+      //check if exists or exclude (eg: running tests)
+      if (window.zenConf && window.zenConf.googleAnalytics) {
+        AnalyticsProvider.setAccount({
+          tracker: window.zenConf.googleAnalytics,
+        });
+        AnalyticsProvider.setDomainName('none');
+        AnalyticsProvider.trackUrlParams(true);
+        AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+
+        $provide.decorator('ngClickDirective', ['$delegate','Analytics', '$state',
+         function ($delegate, Analytics, $state) {
+          var originalCompile = $delegate[0].compile;
+          $delegate[0].compile = function() {
+            var originalLink = originalCompile.apply(this, arguments);
+            var action = 'click';
+            return function postLink(scope, element, attr) {
+              element.bind(action, {attrs: attr}, function(event) {
+                var data = !_.isUndefined(event.data.attrs['data-name'])? event.data.attrs['data-name']:
+                  !_.isUndefined(event.data.attrs['aria-label']) ? event.data.attrs['aria-label'] :
+                  !_.isEmpty(event.target.name) ? event.target.name : $(event.target.lastChild).text();
+                Analytics.trackEvent($state.current.name, action, data);
+              });
+              return originalLink.apply(this, arguments);
+            };
+          };
+          return $delegate;
+        }]);
+      }
+    }])
     .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
       $sceDelegateProvider.resourceUrlWhitelist([
         // Allow same origin resource loads.
@@ -852,7 +883,7 @@
         'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
       ]);
     }])
-    .run(['$window', '$cookieStore', 'tmhDynamicLocale', function ($window, $cookieStore, tmhDynamicLocale) {
+    .run(['$window', '$cookieStore', 'tmhDynamicLocale', 'Analytics', function ($window, $cookieStore, tmhDynamicLocale, Analytics) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
       var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
@@ -867,6 +898,18 @@
     }])
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
+
+      // Override $translate.instant so it falls back to en_US, then the original key when no result
+      var originalTranslateInstant = $translate.instant;
+      $translate.instant = function (key) {
+        var translation = originalTranslateInstant.apply($translate, arguments);
+        if (!translation) {
+          var args = Array.prototype.slice.apply(arguments); // Needed so we can modify the arguments
+          args[3] = 'en_US'; // The forceLanguage argument
+          translation = originalTranslateInstant.apply($translate, args);
+        }
+        return translation || key;
+      };
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete') && toState.parent === 'dashboard' ) {

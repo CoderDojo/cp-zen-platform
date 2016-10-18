@@ -2,6 +2,21 @@
 
 angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($translate){
   var eventUtils = {};
+
+  eventUtils.nextDateComparator = function (eventA, eventB) {
+    var eventANextDate = eventUtils.getFutureDates(eventA.dates)[0];
+    var eventBNextDate = eventUtils.getFutureDates(eventB.dates)[0];
+    eventANextDate = eventANextDate ? eventANextDate.startTime : null;
+    eventBNextDate = eventBNextDate ? eventBNextDate.startTime : null;
+    if (eventANextDate < eventBNextDate) {
+      return -1;
+    } else if (eventANextDate > eventBNextDate) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   eventUtils.isEventInPast = function (dateObj) {
     var now = moment.utc();
     var eventUtcOffset = moment(dateObj.startTime).utcOffset();
@@ -10,7 +25,7 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
     return now.isAfter(start);
   }
 
-  eventUtils.getNextDates = function (dates, formattedDates) {
+  eventUtils.getFutureDates = function (dates) {
     var nextDateIndex = void 0;
     var eventIndex = 0;
     while (eventIndex < dates.length && _.isUndefined(nextDateIndex)) {
@@ -20,9 +35,14 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
       }
       eventIndex +=1;
     }
+    return dates.slice(nextDateIndex);
+  }
 
-    if (nextDateIndex >= 0 && formattedDates) {
-      return formattedDates.slice(nextDateIndex);
+  eventUtils.getNextDates = function (dates, formattedDates) {
+    var futureDates = this.getFutureDates(dates);
+
+    if (futureDates.length > 0 && formattedDates) {
+      return formattedDates.slice(dates.length - futureDates.length);
     }
     // Congrats, you called this function upon an past event
     return [];
@@ -31,17 +51,19 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
   eventUtils.getFormattedDates = function (event) {
     var utcOffset = moment().utcOffset();
 
-    var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-    var endDate = moment.utc(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
+    var mStartDate = moment.utc(_.head(event.dates).startTime);
+    var mEndDate = moment.utc(_.head(event.dates).endTime);
+    var startDate = mStartDate.subtract(mStartDate.utcOffset(), 'minutes');
+    var endDate = mEndDate.subtract(mEndDate.utcOffset(), 'minutes');
 
     if(event.type === 'recurring') {
       event.formattedDates = [];
       _.each(event.dates, function (eventDate) {
-        event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YY'));
+        event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YYYY'));
       });
 
-      event.day = moment(startDate).format('dddd');
-      event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
+      event.day = mStartDate.format('dddd');
+      event.time = mStartDate.format('HH:mm') + ' - ' + mEndDate.format('HH:mm');
 
       if(event.recurringType === 'weekly') {
         event.formattedRecurringType = $translate.instant('Weekly');
@@ -58,11 +80,14 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
       event.endDate = _.last(event.formattedDates);
     } else {
       //One-off event
-      event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
-        moment(startDate).format('HH:mm') +  ' - ' +
-        moment(endDate).format('HH:mm');
-      event.startDate = startDate;
-      event.endDate = endDate;
+      event.formattedStartDate = mStartDate.format('Do MMMM YYYY');
+      event.formattedStartTime = mStartDate.format('HH:mm');
+      event.formattedEndTime = mEndDate.format('HH:mm');
+      event.formattedDate = event.formattedStartDate + ', ' +
+        event.formattedStartTime + ' - ' +
+        event.formattedEndTime
+      event.startDate = startDate.toDate();
+      event.endDate = endDate.toDate();
     }
     return event;
   }

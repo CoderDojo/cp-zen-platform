@@ -44,7 +44,7 @@ angular
                   userTypes = _.union(userDojo.userTypes, userTypes);
                 });
               }
-              var allowed = ['champion', 'mentor'];
+              var allowed = ['champion', 'mentor', 'parent-guardian'];
               if ((_.intersection(allowed, userTypes)).length > 0) {
                 $scope.lmsVisibility = true;
                 cb();

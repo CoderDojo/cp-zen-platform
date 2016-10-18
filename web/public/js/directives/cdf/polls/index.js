@@ -24,14 +24,14 @@ var cdfPolls = {
             cdfP.polls[index].responses = response.data;
           })
           .then(function () {
-            return cdPollService.count(poll.id)
-            .then(function (response) {
-              cdfP.polls[index].endDate = poll.endDate ? new Date(poll.endDate) : new Date();
-              cdfP.polls[index].result = response.data.sum;
-              cdfP.polls[index].count = response.data.count;
-              cdfP.polls[index].formattedCount = (poll.count || 0) + ' ' + $translate.instant('participations')
-            });
+            return cdPollService.count(poll.id);
           })
+          .then(function (response) {
+            cdfP.polls[index].endDate = poll.endDate ? new Date(poll.endDate) : new Date();
+            cdfP.polls[index].result = response.data.sum;
+            cdfP.polls[index].count = response.data.count;
+            cdfP.polls[index].formattedCount = (poll.count || 0) + ' ' + $translate.instant('participations')
+          });
           promises.push(promise);
         });
         return promises;

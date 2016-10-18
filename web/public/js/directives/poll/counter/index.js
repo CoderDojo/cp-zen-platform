@@ -9,7 +9,7 @@ function cdPollCounter($compile, cdPollService, $interval){
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/poll/counter',
-      controller: function($scope){
+      controller: ['$scope', function($scope){
         $scope.counter = 0;
         cdPollService.getPolledList($scope.pollId)
         .then(function(response){
@@ -38,42 +38,9 @@ function cdPollCounter($compile, cdPollService, $interval){
           $scope.participationRatio = $scope.counter / $scope.max * 100;
           $scope.lifebar.full = getRange(0, $scope.participationRatio);
           $scope.lifebar.empty = getRange($scope.participationRatio, 100);
-          var participationLevels = [
-            {
-              start: 25,
-              name: 'info',
-              label: 'Come on, pass the word to other champions, we can do better :)'
-            }, {
-              start: 50,
-              name: 'success',
-              label: 'Not too bad, keep it going up!'
-            }, {
-              start: 75,
-              name: 'warning',
-              label: 'Great, more than 75% of participation!'
-            }, {
-              start: 90,
-              name: 'danger',
-              label: 'You\'re an incredible community <3'
-            }
-          ];
-
-          $scope.participationLevel = _.find(participationLevels, function (level, index) {
-            if ( index >= participationLevels.length ){
-              return true;
-            }
-            if( $scope.participationRatio >= level.start ){
-              if ($scope.participationRatio >= participationLevels[index +1].level){
-                return false;
-              }
-              return true;
-            } else {
-              return true;
-            }
-          });
         };
         getLastCount();
-      },
+      }],
       link: function (scope, element, attrs) {
         var createCounterCase = function (number, valuesElement) {
           var numberTemplate = '<input type="text" disabled value="'+ number +'"/>';

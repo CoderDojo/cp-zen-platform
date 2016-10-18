@@ -4,31 +4,19 @@
 function cdChoseRole(){
     return {
       restrict: 'A',
-      controller: ['$scope', '$uibModal', function ($scope, $uibModal) {
+      controller: ['$scope', 'cdChooseRoleModal', '$translate', 'translationKeys', function ($scope, cdChooseRoleModal, $translate, translationKeys) {
         var cdCR = this;
-        this.roles = $scope.roles;
-        this.selected = {};
-        this.callback = $scope.modalCallback;
-        this.class = "col-xs-12 col-md-" + Math.round(12/this.roles.length);
 
         this.submit = function () {
-          var modalInstance = $uibModal.open({
-              animation: $scope.animationsEnabled,
-              templateUrl: '/directives/tpl/dojo/join-dojo/modal',
-              size: 'lg',
-              controller: function($scope){
-                $scope.select = function(role) {
-                  modalInstance.close(role);
-                }
-                $scope.close = modalInstance.dismiss;
-              },
-              scope: $scope
-           });
-
-           modalInstance.result.then(function(selectedRole) {
-             $scope.modalData.userType = selectedRole;
-             if (cdCR.callback) cdCR.callback($scope.modalData);
-           });
+          cdChooseRoleModal({
+            roles: $scope.roles,
+            callback: $scope.modalCallback,
+            title: $translate.instant(translationKeys.JOIN_DOJO_AS),
+            subTitle: $scope.isAdult ?
+              $translate.instant(translationKeys.JOIN_DOJO_ADULT_SUBTITLE) :
+              $translate.instant(translationKeys.JOIN_DOJO_YOUTH_SUBTITLE),
+            size: $scope.roles.length > 1 ? 'lg': 'md'
+          });
         }
       }],
       link: function(scope, element) {
