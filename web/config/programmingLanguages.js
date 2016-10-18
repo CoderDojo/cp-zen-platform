@@ -59,37 +59,48 @@ module.exports = [
     'text': 'Go',
     'image': '/img/languages/golang.png'
   },
-  {'text': 'CSS',
+  {
+    'text': 'CSS',
     'image': '/img/languages/css.png'
   },
-  {'text': 'Lua',
+  {
+    'text': 'Lua',
     'image': '/img/languages/lua.png'
   },
-  {'text': 'Bash',
+  {
+    'text': 'Bash',
     'image': '/img/languages/bash.png'
   },
-  {'text': 'Haskell',
+  {
+    'text': 'Haskell',
     'image': '/img/languages/haskell.png'
   },
-  {'text': 'Scala',
+  {
+    'text': 'Scala',
     'image': '/img/languages/scala.png'
   },
-  {'text': 'Objective C',
+  {
+    'text': 'Objective C',
     'image': '/img/languages/objective_c.png'
   },
-  {'text': 'SQL',
+  {
+    'text': 'SQL',
     'image': '/img/languages/sql.png'
   },
-  {'text': 'MySQL',
+  {
+    'text': 'MySQL',
     'image': '/img/languages/mysql.png'
   },
-  {'text': 'Swift',
+  {
+    'text': 'Swift',
     'image': '/img/languages/swift.png'
   },
-  {'text': 'R',
+  {
+    'text': 'R',
     'image': '/img/languages/r.png'
   },
-  {'text': 'Clojure',
+  {
+    'text': 'Clojure',
     'image': '/img/languages/clojure.png'
   }
 ];
