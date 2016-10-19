@@ -821,8 +821,9 @@
         $httpProvider.interceptors.push('authHttpResponseInterceptor');
       }
     ])
-    .config(['$translateProvider',
-      function($translateProvider) {
+    .config(['$translateProvider', '$cookiesProvider',
+      function($translateProvider, $cookiesProvider) {
+        $cookiesProvider.defaults.path = '/';
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitizeParameters')
