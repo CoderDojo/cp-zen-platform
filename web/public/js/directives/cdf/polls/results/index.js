@@ -68,8 +68,9 @@ var cdfPollResults = {
 
     cdfPR.create = function(newResult){
       var result = {
+        pollId: cdfPR.poll.id,
         dojoId: newResult.dojo.id,
-        value: newResult.id
+        value: newResult.value
       };
       cdfPR.save(result)
       .then(function(response){
