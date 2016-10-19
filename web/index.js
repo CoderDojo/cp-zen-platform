@@ -81,7 +81,11 @@ server.register(vision, function (err) {
 });
 
 server.ext('onPreAuth', function (request, reply) {
-  var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, ''))
+  var translateCookie = request.state && request.state.NG_TRANSLATE_LANG_KEY;
+  if (_.isArray(translateCookie)) {
+    translateCookie = translateCookie[0];
+  }
+  var localesFormReq = (translateCookie && translateCookie.replace(/\"/g, ''))
     || request.headers['accept-language'];
 
   var requestLocales = new locale.Locales(localesFormReq);
