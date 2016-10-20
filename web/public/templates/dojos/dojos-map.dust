@@ -1,7 +1,7 @@
 <div class="cd-dashboard cd-color-2-underline">
 
-  <uib-tabset class="dojofind-tabset" justified="true">
-    <uib-tab class="dojofind-tab-heading" heading="{@i18n key="Map"/}">
+  <uib-tabset class="dojofind-tabset" justified="true" active="activeTabIndex">
+    <uib-tab select="loadMap()" class="dojofind-tab-heading" heading="{@i18n key="Map"/}">
       {>"dojos/map-search" /}
     </uib-tab>
     <uib-tab select="loadDojosList()" class="dojofind-tab-heading" heading="{@i18n key="List"/}">

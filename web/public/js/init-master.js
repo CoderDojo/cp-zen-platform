@@ -176,19 +176,20 @@
         is: function () { return true; }
       });
       $stateProvider
-        .state("home", {
-          url: "/?search",
-          templateUrl: '/dojos/template/dojos-map',
-          resolve: {
-            gmap: gmap
-          },
-          params: {
-            bannerType: null,
-            bannerMessage: null,
-            pageTitle: 'Home'
-          },
-          controller: 'dojos-map-controller'
-        })
+          .state("home", {
+            url: "/?search&list",
+            templateUrl: '/dojos/template/dojos-map',
+            resolve: {
+              gmap: gmap
+            },
+            params: {
+              bannerType: null,
+              bannerMessage: null,
+              pageTitle: 'Home'
+            },
+            controller: 'dojos-map-controller',
+            reloadOnSearch: false
+          })
         .state("dashboard", {
           url: "/dashboard",
           template: '<ui-view></ui-view>',
@@ -317,7 +318,8 @@
           templateUrl: '/dojos/template/dojo-list-index',
           controller: 'dojo-list-index-controller',
           params: {
-            pageTitle: 'Dojo List'
+            pageTitle: 'Dojo List',
+            list: 'true'
           }
         })
         .state("manage-dojos", {

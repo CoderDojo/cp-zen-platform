@@ -19,7 +19,9 @@
     <div dw-loading="main" class="col-xs-12 col-lg-7">
       <div id="main">
         <div ng-repeat="(country, dojos) in dojoList">
-          <legend>{{ country }}</legend>
+          <legend>
+            <cd-anchor anchor-text="country"/>
+          </legend>
           <ul ng-repeat="dojo in dojos" ng-hide="{{ dojo.stage === 4 }}">
             <li><a ng-href="{{ getDojoURL(dojo) }}">{{ dojo.name }}</a></li>
           </ul>
