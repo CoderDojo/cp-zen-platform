@@ -130,7 +130,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
   function loadDojosList() {
     // If we aren't on the list page already
     if ($stateParams.list === 'false' || !$stateParams.list) {
-      $state.go('home', { list: '' });
+      $state.go('home', { list: 'true' });
     }
 
     if(!$scope.dojoList || $scope.dojoList.length <= 0) {
