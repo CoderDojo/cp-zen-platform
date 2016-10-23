@@ -2,11 +2,11 @@
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService',
-  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', 'WizardHandler', 'userUtils', loginCtrl]);
+  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', 'WizardHandler', 'userUtils', 'atomicNotifyService', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService,
-  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, WizardHandler, userUtils) {
+  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, WizardHandler, userUtils, atomicNotifyService) {
 
   $scope.noop = angular.noop;
   var refererUrl = $state.params.referer || $state.params.next;
@@ -247,7 +247,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       if(!response.ok && response.why === 'user-not-found'){
         alertService.showError(msgmap['email-not-found']);
       } else {
-        $scope.message = msgmap['reset-sent'];
+        atomicNotifyService.info(msgmap['reset-sent']);
       }
 
     }, function(out) {
