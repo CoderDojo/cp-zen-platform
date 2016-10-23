@@ -167,14 +167,6 @@ var controller = module.exports = [
   {
     method: 'GET',
     path: '/reset_password/{token}',
-    config: {
-      auth: auth.basicUser,
-      plugins: {
-        'hapi-auth-cookie': {
-          redirectTo: '/login'
-        }
-      }
-    },
     handler: function (request, reply) {
       reply.view('index', request.locals);
     }
