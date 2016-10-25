@@ -2,30 +2,14 @@
 /* global google,jQuery,MarkerClusterer */
 
 //  TODO : reuse cd-dojos-map instead of this mixed-up controller
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation, $q, $location, cdDojoService, gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation, $q, $location, cdDojoService,
+                        gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
   $scope.model = {};
   $scope.markers = [];
   $scope.getDojoURL = dojoUtils.getDojoURL;
   var markerClusterer;
   var centerLocation = new google.maps.LatLng(25, -5);
   $scope.pos = centerLocation;
-
-  if (gmap) {
-    $scope.mapLoaded = true;
-    $scope.mapOptions = {
-      center: centerLocation,
-      zoom: 2,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    $window.setTimeout(function(){
-      if($scope.model.map) {
-        var center = $scope.model.map.getCenter();
-        google.maps.event.trigger($scope.model.map, 'resize');
-        $scope.model.map.setCenter(center);
-      }
-    }, 100);
-  }
 
   $geolocation.watchPosition({
     timeout: 60000,
@@ -34,43 +18,79 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
   })
 
   $scope.loadMap = function () {
-    clearMarkers();
-    cdDojoService.list({verified: 1, deleted: 0, fields$:['name', 'geo_point', 'stage', 'url_slug', 'private']}, function (dojos) {
-      var filteredDojos = [];
-      _.each(dojos, function (dojo) {
-        if(dojo.stage !== 4) filteredDojos.push(dojo);
-      });
-      addMarkersToMap(filteredDojos).then(function () {
-          setZoom();
-      }, function(error) {
-        console.error("Failed!", error);
-      });
-    });
-
-    if($scope.model.map) {
-      $scope.searchResult = null;
-      delete $scope.search.dojo;
+    // If we are on the list page already
+    if ($stateParams.list === 'true') {
+      // Remove the list param from the url
+      $state.go('home', { list: undefined });
     }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        $scope.pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+    if (!$scope.isMapLoaded) {
+      if (gmap) {
+        $scope.mapLoaded = true;
+        $scope.mapOptions = {
+          center: centerLocation,
+          zoom: 2,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        $scope.model.map.setCenter($scope.pos);
-        setZoom();
-      }, function() {
-        $scope.pos = centerLocation;
-        setZoom();
+
+        $window.setTimeout(function(){
+          if($scope.model.map) {
+            var center = $scope.model.map.getCenter();
+            google.maps.event.trigger($scope.model.map, 'resize');
+            $scope.model.map.setCenter(center);
+          }
+        }, 100);
+      }
+
+      clearMarkers();
+      cdDojoService.list({
+        verified: 1,
+        deleted: 0,
+        fields$: ['name', 'geo_point', 'stage', 'url_slug', 'private']
+      }, function (dojos) {
+        var filteredDojos = [];
+        _.each(dojos, function (dojo) {
+          if (dojo.stage !== 4) filteredDojos.push(dojo);
+        });
+        addMarkersToMap(filteredDojos).then(function () {
+          setZoom();
+        }, function (error) {
+          console.error("Failed!", error);
+        });
       });
-    } else {
-      $scope.pos = centerLocation;
-      $scope.model.map.setCenter($scope.pos);
+
+      if ($scope.model.map) {
+        $scope.searchResult = null;
+        delete $scope.search.dojo;
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          $scope.pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          $scope.model.map.setCenter($scope.pos);
+          setZoom();
+        }, function () {
+          $scope.pos = centerLocation;
+          setZoom();
+        });
+      } else {
+        $scope.pos = centerLocation;
+        $scope.model.map.setCenter($scope.pos);
+      }
+      $scope.isMapLoaded = true;
     }
   }
 
-  $scope.loadMap();
+  $scope.isMapLoaded = false;
+
+  if ($stateParams.list === 'true') {
+    // Switch to the second tab (i.e. the list tab)
+    // Note: this triggers the select attribute of the tab, 'loadDojosList' function
+    $scope.activeTabIndex = 1;
+  }
 
   if ($stateParams.bannerMessage) {
     var type = $stateParams.bannerType || 'info';
@@ -105,7 +125,14 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
     });
   });
 
-  $scope.loadDojosList = function(){
+  $scope.loadDojosList = loadDojosList;
+
+  function loadDojosList() {
+    // If we aren't on the list page already
+    if ($stateParams.list === 'false' || !$stateParams.list) {
+      $state.go('home', { list: 'true' });
+    }
+
     if(!$scope.dojoList || $scope.dojoList.length <= 0) {
       usSpinnerService.spin('dojos-list-spinner');
       cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
