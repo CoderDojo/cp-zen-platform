@@ -10,7 +10,7 @@
     $scope.event.isPast = eventUtils.isEventInPast(_.last($scope.event.dates));
 
     var url = window.location.href;
-    if((localStorage.joinDojo) && url.indexOf('event/')>=1){
+    if(($stateParams.joinDojo) && url.indexOf('event/')>=1){
       var initUserTypes = cdUsersService.getInitUserTypes( function (userTypes) {
         var userType = _.find(userTypes, JSON.parse($scope.currentUser.initUserType));
         var userObject = {
@@ -19,7 +19,6 @@
         };
 
         dojoUtils.requestToJoin(userObject, $scope.event.dojoId);
-        delete localStorage.joinDojo;
       });
     }
 
@@ -88,8 +87,7 @@
           }, null);
         });
       } else {
-        localStorage.setItem('eventId', session.eventId);
-        $state.go('register-account.user', { referer: $location.url() });
+        $state.go('register-account.require', { referer: $location.url(), eventId: session.eventId });
       }
     };
   }

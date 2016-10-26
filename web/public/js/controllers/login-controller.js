@@ -203,9 +203,9 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
             if (_.includes(user.roles, 'cdf-admin') && !$scope.referer) {
               $scope.referer = '/dashboard/manage-dojos';
             }
-            if (localStorage.eventId){
+            if ($stateParams.eventId){
               $scope.referer = $state.href('event', {
-                eventId: localStorage.eventId
+                eventId: $stateParams.eventId
               });
             }
             $window.location.href = $scope.referer || '/dashboard/dojo-list';

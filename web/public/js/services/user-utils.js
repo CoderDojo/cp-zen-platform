@@ -32,19 +32,23 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     var user = userFormData.user;
     auth.register(userFormData, function(data) {
       userFormData.referer = userFormData.referer && userFormData.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + userFormData.referer : userFormData.referer;
-      if(userFormData.referer) localStorage.setItem('dojoUrlSlug', userFormData.referer);
       if(data.ok) {
         auth.login(user, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
-          //We use window.location because we need a global reload of templates to take into account the fact that the user is logged-in
           if($state.current.name === 'start-dojo'){
             $window.location.href = $state.href('start-dojo');
           } else {
-            if(userFormData.referer && (userFormData.referer.indexOf('event') > -1 || userFormData.referer.indexOf('/dojo') > -1)){
-              localStorage.setItem('joinDojo', true);
+            // We cannot use $state.go until we find a solution to update the user menu
+            // EventId is having its own redirection, don't cumulate w/ referer
+            var params = {userId: data.user.id};
+            if ($state.params.eventId) {
+              params.eventId = $state.params.eventId;
+            } else if (userFormData.referer) {
+              params.referer = userFormData.referer;
             }
-            $window.location.href = $state.href('edit-user-profile', {userId : data.user.id});
+
+            $window.location.href = $state.href('edit-user-profile', params);
           }
         });
       } else {
@@ -58,11 +62,7 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
           reason = $translate.instant('captcha error');
         }
 
-        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason, function(){
-          if(userFormData.referer){
-            $window.location.href = userFormData.referer;
-          }
-        });
+        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason);
       }
     }, function(err) {
       alertService.showError(JSON.stringify(err));

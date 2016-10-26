@@ -236,15 +236,27 @@
           template: '<cd-register></cd-register>',
           abstract: true,
           params: {
-            referer:null,
-            userType:null,
+            referer: null,
+            userType: null,
+            eventId: null,
             pageTitle: 'Register'
           },
           controller: 'login'
         })
+        .state("register-account.require", {
+          url: "/account",
+          template: '<div class="col-xs-12 col-md-6">'+
+            '<cd-register-user ng-init="size=\'col-xs-12\'; buttonSize=\'col-xs-4\'"></cd-register-user></div>' +
+          '<div class="col-xs-12 col-md-6">' +
+            '<cd-login ng-init="size=\'col-xs-12\';"></cd-login></div>',
+          params: {
+            pageTitle: 'Register',
+          }
+        })
         .state("register-account.user", {
           url: "/user",
-          template: '<cd-register-user></cd-register-user>',
+          template:
+          '<cd-register-user></cd-register-user>',
           params: {
             referer:null,
           }
@@ -449,7 +461,9 @@
             $scope.currentUser = currentUser;
           },
           params: {
-            pageTitle: 'Event details'
+            pageTitle: 'Event details',
+            joinDojo: false,
+            eventId: null
           },
           resolve: {
             profile: resolves.ownProfile,
@@ -486,7 +500,9 @@
             }
           },
           params: {
-            pageTitle: 'Event details'
+            pageTitle: 'Event details',
+            joinDojo: false,
+            eventId: null
           },
           resolve: {
             sessions: resolves.sessions,
@@ -514,7 +530,9 @@
             }
           },
           params: {
-            pageTitle: 'Event details'
+            pageTitle: 'Event details',
+            joinDojo: false,
+            eventId: null
           },
           resolve: {
             sessions: resolves.sessions,
@@ -657,7 +675,7 @@
           templateUrl: '/profiles/template/accept-child-invite'
         })
         .state('edit-user-profile', {
-          url:'/profile/:userId/edit?referer',
+          url:'/profile/:userId/edit?referer&eventId',
           parent: 'dashboard',
           controller: 'user-profile-controller',
           resolve: {
@@ -674,7 +692,8 @@
           },
           params: {
             showBannerMessage: null,
-            referer: null
+            referer: null,
+            eventId: null
           },
           templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
@@ -901,6 +920,10 @@
     }])
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
+      // TODO : remove after 2 months (dopen on 26/10/2016), legacy localStorage that needs to be cleaned
+      delete localStorage.urlDojoSlug;
+      delete localStorage.eventId;
+      delete localStorage.joinDojo;
 
       // Override $translate.instant so it falls back to en_US, then the original key when no result
       var originalTranslateInstant = $translate.instant;
