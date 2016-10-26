@@ -9,6 +9,6 @@
     <button class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to leave this Dojo?"/}" ng-bootbox-confirm-action="leaveDojo()">{@i18n key="Leave Dojo"/}</button>
   </div>
   <div ng-if="loggedOut" class="cd-join-dojo__join-dojo">
-    <button class="btn btn-primary" ui-sref="register-account.user">{@i18n key="Join Dojo"/}</button>
+    <button class="btn btn-primary" ui-sref="register-account.require">{@i18n key="Join Dojo"/}</button>
   </div>
 </div>

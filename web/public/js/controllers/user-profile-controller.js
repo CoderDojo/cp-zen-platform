@@ -347,8 +347,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
               $scope.profile.private =  $scope.profile.private ? "true" : "false";
               alertService.showAlert(message);
               auth.instance(function(data){
-                if( data.user ) $rootScope.$broadcast('user-updated', data.user);
-                if($scope.referer){
+                if ( data.user ) $rootScope.$broadcast('user-updated', data.user);
+                if ($scope.referer){
                   $window.location.href = $scope.referer;
                 } else {
                   goTo();
@@ -662,7 +662,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   };
 
   $scope.initialForm = function () { //if no event id, user is not taking flow from dojo through booking
-    if(localStorage.eventId){
+    if($stateParams.eventId){
       return false;
     } else {
       return true;
@@ -670,7 +670,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.afterForm = function () {
-    if(!localStorage.eventId){
+    if(!$stateParams.eventId){
       return false;
     } else {
       return true;
@@ -679,7 +679,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.abilityToAddChildren = function (){ //dont show add children section if user is youth or is taking direct registration flow (not from booking event ticket)
     if($scope.profile && ($scope.profile.userTypes.indexOf('attendee-u13') > -1 ||
-       $scope.profile.userTypes.indexOf('attendee-o13') > -1) || (!localStorage.eventId)){
+       $scope.profile.userTypes.indexOf('attendee-o13') > -1) || (!$stateParams.eventId)){
       return false;
     }
     return true;
@@ -717,13 +717,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   function goTo(){
-    var urlSlug = localStorage.getItem('dojoUrlSlug');
-    var eventId = localStorage.getItem('eventId');
-    delete localStorage.eventId;
-    delete localStorage.dojoUrlSlug;
-    if (urlSlug && (urlSlug.indexOf("/dojo")> -1  || urlSlug.indexOf("/event")> -1) ){
+    var eventId = $stateParams.eventId;
+    if (eventId){
       $state.go('event', {
-        eventId: eventId
+        eventId: eventId,
+        joinDojo: true
       });
     } else {
       var userId = $state.params.userId || $state.params.parentId;
@@ -731,7 +729,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
   }
 
-  if(profile.data.userType==='attendee-o13' || !localStorage.eventId){ //youth can't have children
+  if(profile.data.userType==='attendee-o13' || !$stateParams.eventId){ //youth can't have children
     $scope.profile.children = null;
   }
 

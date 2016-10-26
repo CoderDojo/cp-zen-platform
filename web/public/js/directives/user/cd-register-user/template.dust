@@ -1,36 +1,36 @@
 <form id="signUpForm" name="signUpForm" novalidate angular-validator angular-validator-submit="next(signUpForm)">
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <input type="text" class="form-control form-group" name="fullName" required required-message="'{@i18n key="Name is empty"/}'" ng-model="formData.user.name" placeholder="{@i18n key="Name"/}">
     </div>
   </div>
 
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <input type="text" class="form-control form-group" name="surname" required required-message="'{@i18n key="Surname is empty"/}'" ng-model="formData.user.lastName" placeholder="{@i18n key="Surname"/}">
     </div>
   </div>
 
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <input type="email" class="form-control form-group" name="emailAddress"  required required-message="'{@i18n key="Email is empty"/}'" ng-model="formData.user.email" placeholder="{@i18n key="Email"/}">
     </div>
   </div>
 
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <input type="password" class="form-control form-group" name="password" ng-model="formData.user.password" autocomplete="off" required required-message="'{@i18n key="Password is empty"/}'" validator="validatePassword(formData.user.password, formData.user.email)" invalid-message="invalidPasswordMessage" placeholder="{@i18n key="Password"/}">
     </div>
   </div>
 
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <input type="password" class="form-control form-group" name="passConfirmField" ng-model="formData.passwordConfirm" autocomplete="off" required required-message="'{@i18n key="Confirm Password is empty"/}'" validator="matchesPassword(formData.user.password, formData.passwordConfirm)" invalid-message="invalidConfirmPasswordMessage" placeholder="{@i18n key="Confirm password"/}">
     </div>
   </div>
 
   <div class="row" ng-enter="noop()">
-    <div class="col-sm-offset-2 col-sm-6">
+    <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
       <div class="checkbox cd-checkbox checkbox-primary">
         <input type="checkbox" title="{@i18n key="Receive monthly updates to your user email address from the CoderDojo community around the world that keep you informed and help you with running your Dojo."/}" ng-model="formData.user.mailingList" id="mailingListCheckbox">
         <label for="mailingListCheckbox">{@i18n key="Join Mailing List"/}</label>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="row cd-btn-row">
-    <div class="form-group col-xs-12 col-sm-offset-2 col-sm-3">
+    <div class="form-group" ng-class="buttonSize? buttonSize : 'col-xs-12 col-sm-offset-2 col-sm-4'">
       <button class="btn btn-primary btn-block cd-wizard-submit" type="submit">{@i18n key="Next"/}</button>
     </div>
   </div>
