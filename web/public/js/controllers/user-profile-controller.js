@@ -189,16 +189,17 @@
 
 
   $scope.imageByLanguage = function () {
-    var languages = $scope.profile.widget.programmingLanguages;
+    var languages = _.map($scope.profile.programmingLanguages, function(language){return language.text});
     cdProgrammingLanguagesService.get().then(
       function (responseData) {
-        $scope.profile.programmingLanguagesImageUrl = _.filter(responseData.data, function (langue) {
+        $scope.programmingLanguagesImageUrl = _.filter(responseData.data, function (langue) {
           return _.indexOf(languages, langue.text) !== -1;
-        }).map(function(language){return language.image});
+        });
       },
       function () {
         console.error("error when get data")
       }
+
     );
   };
 
@@ -228,10 +229,9 @@
     $scope.profile.private = $scope.profile.private ? "true" : "false";
 
     $scope.profile.widget = {};
-    $scope.profile.widget.programmingLanguages = utils.frTags($scope.profile.programmingLanguages);
     $scope.profile.widget.languagesSpoken = utils.frTags($scope.profile.languagesSpoken);
 
-    $scope.profile.programmingLanguagesImageUrl = [];
+    $scope.programmingLanguagesImageUrl = [];
     $scope.imageByLanguage();
     // set image url for each languages
   }
