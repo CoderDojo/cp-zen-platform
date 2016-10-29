@@ -333,7 +333,7 @@
             } else {
               $scope.profile = profile;
               $scope.profile.private =  $scope.profile.private ? "true" : "false";
-              alertService.showAlert(message);
+              //alertService.showAlert(message);
               auth.instance(function(data){
                 if ( data.user ) $rootScope.$broadcast('user-updated', data.user);
                 if ($scope.referer){
