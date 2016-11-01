@@ -92,7 +92,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
         currentStepInt = uncompletedDojoLead.currentStep + 1;
       }
 
-      if (currentStepInt === 4) {
+      if (currentStepInt === 5) { // cf ^desync, the db value is 4
         //Check if user has deleted the Dojo
         cdDojoService.find({dojoLeadId: uncompletedDojoLead.id}, function (response) {
           if (!_.isEmpty(response)) {
