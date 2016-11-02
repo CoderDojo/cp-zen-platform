@@ -2,7 +2,7 @@
   <legend>{@i18n key="Manage Dojo Users"/}</legend>
   <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
   <div class="row">
-    <button type="button" class="btn btn-primary btn-float pull-right" ng-click="userListDownloadLink()">{@i18n key="Export User List"/}</button>
+    <a class="btn btn-primary btn-float pull-right" ng-href="{{ userListDownloadLink }}" target="_blank">{@i18n key="Export User List"/}</a>
     <form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm" class="col-xs-12 col-md-10">
       <div class="form-group">
         <div class="col-md-3">

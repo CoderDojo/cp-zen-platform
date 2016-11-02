@@ -83,36 +83,9 @@
       {name: 'mentor', title: $scope.ticketTypesTranslations.mentor},
       {name: 'other', title: $scope.ticketTypesTranslations.other}
     ];
-
-    event.listDownloadLink = function (status) {
-      cdEventsService.exportGuestList(dojoId, event.id, status, function (response) {
-        //  TODO: export as a directive, it modifies the DOM
-        //  param : name, datasource call (cdEvents.xxx)
-        var downloadLink = angular.element('<a></a>');
-        var csv = new Blob([response.data], { type: "text/csv;charset=utf-8;" });
-        var urlFactory = window.URL || window.webkitURL;
-        var tempFile = urlFactory.createObjectURL(csv);
-        downloadLink.attr('href', tempFile);
-        downloadLink.attr('download', $scope.event.name + '_' + $translate.instant('Applicants') + moment().format() + '.csv');
-        // Ok, that's sad.
-        document.body.appendChild(downloadLink[0]);
-
-        downloadLink[0].click();
-        $timeout(function(){
-         document.body.removeChild(downloadLink[0]);
-         urlFactory.revokeObjectURL(tempFile);
-        }, 0);
-      });
-    };
-    event.guestListDownloadLink = function () {
-			event.listDownloadLink('guests');
-		};
-    event.waitingListDownloadLink = function () {
-      event.listDownloadLink('waiting');
-    };
-    event.fullListDownloadLink = function () {
-      event.listDownloadLink('all');
-    };
+    _.each(['guest', 'waiting', 'full'], function (key){
+      event[key + 'ListUrl'] = 'api/2.0/events/export-guest-list/dojo/' + dojoId + '/event/' + eventId +'/'+ key + '-export.csv';
+    });
 
     var startDateUtcOffset = moment(_.head(event.dates).startTime).utcOffset();
     var endDateUtcOffset = moment(_.head(event.dates).endTime).utcOffset();

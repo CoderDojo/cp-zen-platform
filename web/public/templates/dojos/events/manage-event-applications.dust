@@ -11,9 +11,9 @@
             {@i18n key="Export to CSV"/}<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a ng-click="event.guestListDownloadLink()" target="_blank">{@i18n key="Export Guest List"/}</a></li>
-            <li><a ng-click="event.waitingListDownloadLink()" target="_blank">{@i18n key="Export Waiting List"/}</a></li>
-            <li><a ng-click="event.fullListDownloadLink()" target="_blank">{@i18n key="Export Full List"/}</a></li>
+            <li><a ng-href="{{ event.guestListUrl }}" target="_blank">{@i18n key="Export Guest List"/}</a></li>
+            <li><a ng-href="{{ event.waitingListUrl }}" target="_blank">{@i18n key="Export Waiting List"/}</a></li>
+            <li><a ng-href="{{ event.fullListUrl }}" target="_blank">{@i18n key="Export Full List"/}</a></li>
           </ul>
     </div>
   </div>
