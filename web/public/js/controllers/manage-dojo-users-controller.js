@@ -589,25 +589,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     $scope.loadPage(true);
   }
 
-  $scope.userListDownloadLink = function () {
-    cdDojoService.exportDojoUsers(dojoId, function (response) {
-      //  TODO: export as a directive, it modifies the DOM
-      var downloadLink = angular.element('<a></a>');
-      var csv = new Blob([response], { type: "text/csv;charset=utf-8;" });
-      var urlFactory = window.URL || window.webkitURL;
-      var tempFile = urlFactory.createObjectURL(csv);
-      downloadLink.attr('href', tempFile);
-      downloadLink.attr('download', dojoId +'.csv');
-      // Ok, that's sad.
-      document.body.appendChild(downloadLink[0]);
-
-      downloadLink[0].click();
-      $timeout(function(){
-       document.body.removeChild(downloadLink[0]);
-       urlFactory.revokeObjectURL(tempFile);
-      }, 0);
-    });
-  };
+  $scope.userListDownloadLink = '/api/2.0/dojos/export-users/' + dojoId + '-user-export.csv';
 
   $scope.removeUser = function (user) {
     if($scope.canRemoveUsers) {

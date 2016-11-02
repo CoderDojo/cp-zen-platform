@@ -66,7 +66,7 @@ function cdEventsService(cdApi, $q){
       cdApi.post('events/session/validate-invitation', {invitation: invitation}, win, fail || topfail);
     },
     exportGuestList: function (dojoId, eventId, status, win, fail){
-      cdApi.get('events/export-guest-list/dojo/' + dojoId + '/event/' + eventId +'/'+ status, win, fail || topfail);
+      cdApi.get('events/export-guest-list/dojo/' + dojoId + '/event/' + eventId +'/'+ status + '-export.csv', win, fail || topfail);
     }
   };
 }
