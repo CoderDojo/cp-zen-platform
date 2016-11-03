@@ -3,7 +3,7 @@
 function programmingLanguagesService($http) {
 
   return {
-    get: function(){
+    get: function () {
       return $http.get('/programming-languages');
     }
   };
