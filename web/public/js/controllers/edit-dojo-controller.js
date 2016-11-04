@@ -102,7 +102,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     if ($scope.dojo.notes === '') $scope.editorOptions.initContent = initContent;
 
     $scope.originalDojoListing = angular.copy($scope.dojo);
-    $scope.disableDojoCountryChange = $scope.dojo.verified === 1;
+    $scope.disableDojoCountryChange = ($scope.dojo.verified && !$scope.isCDFAdmin) === true;
     $scope.prevFounder = prevFounder;
     $scope.founder = angular.copy(prevFounder);
     loadDojoMap();
@@ -393,6 +393,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         position: $scope.mapOptions.center
       }));
       dojo.coordinates = data.lat + ', ' + data.lng;
+      dojo.geoPoint = {lat: data.lat, lon: data.lng};
       if (_.isFunction(cb)) cb();
     }, function () {
       //Ask user to add location manually if google geocoding can't find location.
