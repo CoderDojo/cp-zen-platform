@@ -148,7 +148,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
     var country = urlSlugArray[0].toString();
     urlSlugArray.splice(0, 1);
     var path = urlSlugArray.join('/');
-    $state.go('dojo-detail',{country:country, path:path});
+    $state.go('dojo-detail',{country: country, path: path});
   }
 
   $scope.getDojo = function (marker) {
@@ -167,7 +167,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 
   $scope.search = function () {
     if (!$scope.search.dojo) return;
-    return $state.go($state.current, {search: $scope.search.dojo});
+    return $state.go($state.current, {search: $scope.search.dojo}, {reload: true});
   };
 
   function searchArea(address, country, callback) {
