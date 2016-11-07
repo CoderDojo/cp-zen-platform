@@ -16,15 +16,20 @@
     currentUser = currentUser.data;
 
     auth.get_loggedin_user(function (user) {
-      cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId}, function (response) {
-        if(!response || response.length < 1){
-          return $state.go('error-404-no-headers');
-        }
-        var userDojo = response[0];
-        $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
-          return permission.name === 'ticketing-admin';
+      var isCDFAdmin = user && _.includes(user.roles, 'cdf-admin');
+      if (isCDFAdmin) {
+        $scope.isTicketingAdmin = true;
+      } else {
+        cdDojoService.getUsersDojos({userId: user.id, dojoId: dojoId}, function (response) {
+          if(!response || response.length < 1){
+            return $state.go('error-404-no-headers');
+          }
+          var userDojo = response[0];
+          $scope.isTicketingAdmin = _.find(userDojo.userPermissions, function (permission) {
+            return permission.name === 'ticketing-admin';
+          });
         });
-      });
+      }
     });
 
     $scope.sort = {};
