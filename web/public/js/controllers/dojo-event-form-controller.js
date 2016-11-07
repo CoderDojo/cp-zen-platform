@@ -705,6 +705,9 @@
 
     function validateEventRequest(done) {
       cdDojoService.getUsersDojos({userId: currentUser.data.id, dojoId: dojoId}, function (usersDojos) {
+        if (currentUser.data && currentUser.data.roles.indexOf('cdf-admin') >= 0) {
+          return done();
+        }
         if(_.isEmpty(usersDojos)) return done(new Error('No permissions found'));
         var ticketingPermissionFound = _.find(usersDojos[0].userPermissions, function (permission) {
           return permission.name === 'ticketing-admin';
