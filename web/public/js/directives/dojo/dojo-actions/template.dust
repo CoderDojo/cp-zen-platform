@@ -10,6 +10,9 @@
       <a ui-sref="manage-dojo-users({id: cdDA.dojo.id})" alt="{@i18n key="Manage Users"/}"><i class="fa fa-group"></i>{@i18n key="Manage Users"/}</a>
     </li>
     <li role="menuitem">
+      <a ui-sref="manage-dojo-events({dojoId: cdDA.dojo.id})" alt="{@i18n key="Manage Events"/}"><i class="fa fa-calendar"></i>{@i18n key="Manage Events"/}</a>
+    </li>
+    <li role="menuitem">
       <a ng-href="{{ cdDA.previewUrl }}" target="_blank" ng-if="cdDA.currentState !== 'dojo-detail'" alt="{@i18n key="Dojo"/}"><i class="fa fa-eye"></i>{@i18n key="Dojo"/}</a>
     </li>
   </ul>
