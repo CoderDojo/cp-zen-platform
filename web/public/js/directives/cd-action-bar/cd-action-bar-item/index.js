@@ -7,7 +7,7 @@ angular
       bindings: {
         href: '@',
         icon: '@',
-        title: '@',
+        actionTitle: '@',
         color: '@'
       },
       restrict: 'EA',

@@ -6,7 +6,7 @@ angular
     .component('cdActionBarCheckboxItem', {
       bindings: {
         model: '<',
-        title: '@',
+        actionTitle: '@',
         onChange: '<',
         color: '@'
       },
