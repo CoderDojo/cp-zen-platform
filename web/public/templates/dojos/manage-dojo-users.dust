@@ -41,15 +41,15 @@
   </div>
   <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
   <cd-action-bar ng-if="actions" open="showActionBar" force-fixed="actionBarConfig.forceFixed">
-    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always" size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
+    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" action-title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always" size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
       <cd-award-badge user="selectedItems[0].userData"></cd-award-badge>
     </cd-action-bar-popup-item>
-    <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
-    <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
-    <cd-action-bar-item ng-show="actions.remove.ngShow()" ng-click="actions.remove.ngClick($event)" show-as-action="ifRoom" title="{@i18n key="Remove"/}" icon="minus-circle" color="red"></cd-action-bar-item>
-    <cd-action-bar-checkbox-item ng-show="actions.backgroundCheck.ngShow()" title="{@i18n key="Background Checked"/}" model="actions.backgroundCheck.model()" on-change="actions.backgroundCheck.onChange" show-as-action="never"></cd-action-bar-checkbox-item>
+    <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" action-title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
+    <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
+    <cd-action-bar-item ng-show="actions.remove.ngShow()" ng-click="actions.remove.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Remove"/}" icon="minus-circle" color="red"></cd-action-bar-item>
+    <cd-action-bar-checkbox-item ng-show="actions.backgroundCheck.ngShow()" action-title="{@i18n key="Background Checked"/}" model="actions.backgroundCheck.model()" on-change="actions.backgroundCheck.onChange" show-as-action="never"></cd-action-bar-checkbox-item>
     <span ng-repeat="action in userPermActions">
-      <cd-action-bar-checkbox-item ng-show="action.ngShow()" title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
+      <cd-action-bar-checkbox-item ng-show="action.ngShow()" action-title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
     </span>
   </cd-action-bar>
   <div class="row">

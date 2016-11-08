@@ -6,7 +6,7 @@ angular
     .component('cdActionBarPopupItem', {
       bindings: {
         icon: '@',
-        title: '@',
+        actionTitle: '@',
         size: '@',
         closeEvent: '@',
         forceFixed: '='

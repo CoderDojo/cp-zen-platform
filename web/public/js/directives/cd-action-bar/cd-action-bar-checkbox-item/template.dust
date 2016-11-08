@@ -1,4 +1,4 @@
 <label class="cd-action-bar-checkbox-item">
   <input class="cd-action-bar-checkbox-item__checkbox" type="checkbox" ng-model="$ctrl.model" ng-change="$ctrl.handleChange($event)" />
-  <span>{{ $ctrl.title }}</span>
+  <span>{{ $ctrl.actionTitle }}</span>
 </a>
