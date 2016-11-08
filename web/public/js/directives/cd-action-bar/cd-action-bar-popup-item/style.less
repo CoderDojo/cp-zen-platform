@@ -40,6 +40,7 @@
       &--visible {
         display: block;
 
+        // On mobile devices, we want to show to full-width-popup, so hide this one
         @media (max-width: @screen-xs-max) {
           display: none;
         }
@@ -56,6 +57,7 @@
         display: block;
       }
 
+      // On mobile devices, we want to show the full-width-popup
       @media (max-width: @screen-xs-max) {
         display: block;
       }
@@ -69,6 +71,13 @@
     &--active &__popup, &--active + &__full-width-popup {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    &__close-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 8px; // increase hit target size instead of giving top and right 8px each
     }
 }
 

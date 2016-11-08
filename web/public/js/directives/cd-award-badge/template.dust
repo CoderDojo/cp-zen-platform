@@ -6,7 +6,7 @@
         <img ng-src="{{ $ctrl.selectedBadge.imageUrl }}" />
       </div>
       <div class="cd-award-badge__description-text">
-        <p ng-repeat="criteria in $ctrl.selectedBadge.criteria" ng-bind-html="criteria.description | linky"></p>
+        <p ng-repeat="criteria in $ctrl.selectedBadge.criteria" ng-bind="criteria.description"></p>
       </div>
     </div>
     <h4>{@i18n key="Evidence of meeting criteria (required)"/}</h4>
@@ -21,6 +21,6 @@
         </ui-select-choices>
       </ui-select>
     </div>
-    <button class="btn btn-warning btn-award-badge btn-block cd-award-badge__selection-button" ng-disabled="!$ctrl.awardBadgeButtonEnabled" ng-bootbox-confirm="{@i18n key="Are you sure you want to award this badge to the below user?"/}<br />{{ $ctrl.user.name }}" ng-bootbox-confirm-action="$ctrl.awardBadge($ctrl.selectedBadge)">{@i18n key="Award Badge"/}</button>
+    <button class="btn btn-warning btn-award-badge btn-block cd-award-badge__selection-button" ng-disabled="!$ctrl.awardBadgeButtonEnabled" ng-click="$ctrl.awardBadge($ctrl.selectedBadge)">{@i18n key="Award Badge"/}</button>
   </div>
 </div>
