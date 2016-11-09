@@ -16,8 +16,8 @@
     <div class="cd-award-badge__selection-select">
       <ui-select ng-model="$ctrl.selectedBadge" on-select="$ctrl.badgeSelected()">
         <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
-        <ui-select-choices repeat="badge in $ctrl.badges" position="up">
-          <span ng-bind-html="badge.name"></span>
+        <ui-select-choices repeat="badge in $ctrl.badges | filter: {name: $select.search}" position="up">
+          <span ng-bind-html="badge.name | highlight: $select.search"></span>
         </ui-select-choices>
       </ui-select>
     </div>
