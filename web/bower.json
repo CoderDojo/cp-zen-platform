@@ -55,7 +55,7 @@
     "international-phone-number": "0.0.16",
     "ng-idle": "1.2.2",
     "angular-dynamic-locale": "0.1.32",
-    "angularjs-dropdown-multiselect": "https://github.com/wardormeur/angularjs-dropdown-multiselect.git#master",
+    "angularjs-dropdown-multiselect": "https://github.com/CoderDojo/angularjs-dropdown-multiselect.git#1.6.0",
     "angular-socialshare": "https://github.com/720kb/angular-socialshare.git#master",
     "angular-tooltips": "1.1.4",
     "google-maps-utility-library-v3": "*",
