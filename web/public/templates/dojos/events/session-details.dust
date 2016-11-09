@@ -36,7 +36,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)">
+  <button class="btn btn-primary" type="button" ng-click="applyForEvent(sessionApplication)" ng-disabled="getApplications(sessionApplication).length === 0">
     <span ng-if="event.ticketApproval">{@i18n key="Apply now"/}</span>
     <span ng-if="!event.ticketApproval">{@i18n key="Book now"/}</span>
   </button>

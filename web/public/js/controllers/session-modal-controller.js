@@ -42,7 +42,7 @@
       $scope.canOverBook = _.find(userDojo.userPermissions, {name: 'dojo-admin'}) || _.find(userDojo.userPermissions, {name: 'ticketing-admin'});
       _.each(_.keys($scope.session.tickets), function (ticketId) {
         var ticket = $scope.session.tickets[ticketId];
-        $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.totalApplications;
+        $scope.session.tickets[ticketId].remaining = ticket.quantity - ticket.approvedApplications;
 
         var settings = _.clone($scope.applyForSettings);
         // Dojo admin can overbook an event
@@ -72,8 +72,7 @@
       $uibModalInstance.dismiss();
     };
 
-    $scope.applyForEvent = function (sessionApplication) {
-      usSpinnerService.spin('dojo-session-spinner');
+    $scope.getApplications = function (sessionApplication) {
       var applications = [];
       _.each(_.keys(sessionApplication.tickets), function (ticketId) {
         _.each(sessionApplication.tickets[ticketId], function (ticket) {
@@ -90,6 +89,12 @@
           applications.push(application);
         });
       });
+      return applications;
+    };
+
+    $scope.applyForEvent = function (sessionApplication) {
+      usSpinnerService.spin('dojo-session-spinner');
+      var applications = $scope.getApplications(sessionApplication);
       applications[0].emailSubject = {
         'received': 'Your ticket request for %1$s has been received',
         'approved': 'Your ticket request for %1$s has been approved'
