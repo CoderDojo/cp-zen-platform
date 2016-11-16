@@ -319,5 +319,5 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     }
   }
 
-  $scope.recap = {publicKey: '6LfVKQgTAAAAAF3wUs0q-vfrtsKdHO1HCAkp6pnY'};
+  $scope.recap = {publicKey: window.zenConf.recaptchaSiteKey};
 }
