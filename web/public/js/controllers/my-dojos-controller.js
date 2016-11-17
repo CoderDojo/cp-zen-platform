@@ -3,7 +3,6 @@
 function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStore, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner, usSpinnerService) {
   $scope.itemsPerPage = 10;
   var currentUser;
-  $scope.myDojosPageTitle = $translate.instant('My Dojos'); //sets breadcrumb page title
   var errorMsg = $translate.instant('error.general');
 
   $rootScope.$watch(function() {

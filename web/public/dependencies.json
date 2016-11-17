@@ -45,7 +45,6 @@
   "./web/public/components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js",
   "./web/public/components/ng-tags-input/ng-tags-input.min.js",
   "./web/public/components/ngBootbox/dist/ngBootbox.js",
-  "./web/public/components/angular-breadcrumb/dist/angular-breadcrumb.min.js",
   "./web/public/components/ng-file-upload-shim/ng-file-upload-shim.min.js",
   "./web/public/components/ng-file-upload/ng-file-upload.min.js",
   "./web/public/components/angular-truncate/src/truncate.js",

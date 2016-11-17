@@ -22,7 +22,6 @@
     'ngTagsInput',
     'ngBootbox',
     'ngCookies',
-    'ncy-angular-breadcrumb',
     'vcRecaptcha',
     'ngFileUpload',
     'ng-slide-down',
