@@ -27,7 +27,7 @@
     "ng-ckeditor": "https://github.com/david-cahill/ng-ckeditor.git#master",
     "ngstorage": "0.3.10",
     "spin.js": "2.3.2",
-    "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#master",
+    "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#v1.2.9",
     "js-marker-clusterer": "https://github.com/googlemaps/js-marker-clusterer.git#gh-pages",
     "angular-truncate": "*",
     "angular-wizard": "https://github.com/david-cahill/angular-wizard.git#master",
