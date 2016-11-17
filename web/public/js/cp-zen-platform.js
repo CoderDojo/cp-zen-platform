@@ -30,7 +30,6 @@
     'ngIdle',
     'tmh.dynamicLocale',
     'angularjs-dropdown-multiselect',
-    '720kb.tooltips',
     '720kb.socialshare',
     'ngGeolocation',
     'angular-google-analytics',

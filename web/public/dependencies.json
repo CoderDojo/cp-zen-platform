@@ -55,7 +55,6 @@
   "./web/public/components/ng-idle/angular-idle.min.js",
   "./web/public/components/angular-dynamic-locale/tmhDynamicLocale.min.js",
   "./web/public/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js",
-  "./web/public/components/angular-tooltips/dist/angular-tooltips.min.js",
   "./web/public/components/angular-socialshare/lib/angular-socialshare.js",
   "./web/public/components/ngGeolocation/ngGeolocation.min.js",
   "./web/public/components/dustjs-linkedin/dist/dust-core.min.js",
