@@ -10,11 +10,14 @@
       </div>
     </div>
     <h4>{@i18n key="Evidence of meeting criteria (required)"/}</h4>
-    <textarea class="form-control cd-award-badge__evidence" rows="6" placeholder="{@i18n key="e.g. URL of a project, completion of a relevant Sushi Card, description of a project meeting criteria, etc."/}" ng-model="$ctrl.evidence" ng-change="$ctrl.evidenceChanged()"></textarea>
+    <textarea class="form-control cd-award-badge__evidence" rows="6"
+      name="badgeEvidence"
+      placeholder="{@i18n key="e.g. URL of a project, completion of a relevant Sushi Card, description of a project meeting criteria, etc."/}"
+      ng-model="$ctrl.evidence" ng-change="$ctrl.evidenceChanged()"></textarea>
   </div>
   <div class="cd-award-badge__selection">
     <div class="cd-award-badge__selection-select">
-      <ui-select ng-model="$ctrl.selectedBadge" on-select="$ctrl.badgeSelected()">
+      <ui-select ng-model="$ctrl.selectedBadge" on-select="$ctrl.badgeSelected()" name="filterBadges">
         <ui-select-match allow-clear="true" placeholder="{@i18n key="Award a badge..."/}">{{ $select.selected.name  }}</ui-select-match>
         <ui-select-choices repeat="badge in $ctrl.badges | filter: {name: $select.search}" position="up">
           <span ng-bind-html="badge.name | highlight: $select.search"></span>
