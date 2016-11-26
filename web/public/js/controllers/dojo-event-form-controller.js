@@ -279,11 +279,23 @@
 
     $scope.eventInfo.invites = [];
 
-    $scope.cancel = function($event) {
+    $scope.dismiss = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
       deleteLocalStorage();
       goToManageDojoEvents($state, null, dojoId);
+    };
+
+    $scope.cancel = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      deleteLocalStorage();
+      $scope.eventInfo.status =  'cancelled';
+      $scope.eventInfo = getDates($scope.eventInfo);
+      $scope.eventInfo.emailSubject = 'Your ticket request for %1$s has been cancelled';
+      cdEventsService.saveEvent($scope.eventInfo, function (response) {
+        goToManageDojoEvents($state, null, dojoId);
+      });
     };
 
     $scope.addSession = function () {
@@ -343,7 +355,7 @@
     * Dates are recalculated based upon next possible same day than the starting one, keeping the same time gape
     * @param: Object event the selected event from the UI
     */
-    $scope.copyEvent = function(event){
+    $scope.copyEvent = function (event) {
       cdEventsService.load(event.id, function(event){
         var utcOffset = moment().utcOffset();
         var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
@@ -423,7 +435,7 @@
         if(err) return console.error(err);
       });
 
-      function retrieveDojoUsers(done) {
+      function retrieveDojoUsers (done) {
         cdDojoService.loadDojoUsers({dojoId: dojoId}, function (dojoUsers) {
           var eventUserSelection = {};
           eventUserSelection[dojoId] = [];
@@ -440,7 +452,7 @@
         });
       }
 
-      function showInviteDojoMembersModal(eventUserSelection, done) {
+      function showInviteDojoMembersModal (eventUserSelection, done) {
         var inviteDojoMembersModalInstance = $uibModal.open({
           animation: true,
           templateUrl: '/dojos/template/events/session-invite',
@@ -483,28 +495,7 @@
         }
     };
 
-
-    $scope.submit = function(eventInfo) {
-      usSpinnerService.spin('create-event-spinner');
-
-      if($scope.googleMaps && $scope.googleMaps.marker) {
-        var eventPosition = {
-          lat: $scope.googleMaps.marker.getPosition().lat(),
-          lng: $scope.googleMaps.marker.getPosition().lng()
-        };
-
-        // Extend eventInfo
-        eventInfo.position = eventPosition;
-      }
-
-      eventInfo.status = eventInfo.publish ? 'published' : 'saved';
-      delete eventInfo.publish;
-      eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
-
-      if(!_.isEmpty(eventInfo.invites)) {
-        eventInfo.emailSubject = 'Event Invitation';
-      }
-
+    function getDates (eventInfo) {
       var isDateRange = !moment.utc(eventInfo.toDate).isSame(eventInfo.date, 'day');
 
       if (eventInfo.type === 'recurring' && isDateRange) {
@@ -532,64 +523,56 @@
           'one-off'
         );
       }
+      return eventInfo;
+    }
 
-      if(!$scope.dojoInfo) {
-        loadDojo(function(err){
-          if(err) {
-            alertService.showError($translate.instant('An error has occurred while loading Dojo') + ' ' + err);
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-          if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-            cdEventsService.saveEvent(
-              eventInfo,
-              function (response) {
-                if(response.ok === false) {
-                  alertService.showError($translate.instant(response.why));
-                } else {
-                  deleteLocalStorage();
-                }
-                if(response.dojoId && response.id) {
-                  goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-                } else {
-                  goToManageDojoEvents($state, usSpinnerService, dojoId)
-                }
-              },
-              function(err){
-                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-                goToMyDojos($state, usSpinnerService, dojoId)
-              }
-            );
-          } else {
-            alertService.showError($translate.instant('Error setting up event'));
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-        })
-      } else {
-        if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-          cdEventsService.saveEvent(
-            eventInfo,
-            function (response) {
-              if(response.ok === false) {
-                alertService.showError($translate.instant(response.why));
-              } else {
-                deleteLocalStorage();
-              }
-              if(response.dojoId && response.id) {
-                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-              } else {
-                goToManageDojoEvents($state, usSpinnerService, dojoId)
-              }
-            },
-            function (err){
-              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-              goToMyDojos($state, usSpinnerService, dojoId)
-            }
-          );
-        } else {
-          alertService.showError($translate.instant('Error setting up event'));
-          goToMyDojos($state, usSpinnerService, dojoId)
-        }
+
+    $scope.submit = function(eventInfo) {
+      usSpinnerService.spin('create-event-spinner');
+
+      if($scope.googleMaps && $scope.googleMaps.marker) {
+        var eventPosition = {
+          lat: $scope.googleMaps.marker.getPosition().lat(),
+          lng: $scope.googleMaps.marker.getPosition().lng()
+        };
+
+        // Extend eventInfo
+        eventInfo.position = eventPosition;
       }
+
+      eventInfo.status = eventInfo.publish ? 'published' : 'saved';
+      delete eventInfo.publish;
+      eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
+
+      if(!_.isEmpty(eventInfo.invites)) {
+        eventInfo.emailSubject = 'Event Invitation';
+      }
+
+      eventInfo = getDates(eventInfo);
+      if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
+        cdEventsService.saveEvent(
+          eventInfo,
+          function (response) {
+            if(response.ok === false) {
+              alertService.showError($translate.instant(response.why));
+            } else {
+              deleteLocalStorage();
+            }
+            if(response.dojoId && response.id) {
+              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+            } else {
+              goToManageDojoEvents($state, usSpinnerService, dojoId)
+            }
+          },
+          function (err){
+            alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+        );
+      } else {
+        alertService.showError($translate.instant('Error setting up event'));
+        goToMyDojos($state, usSpinnerService, dojoId)
+      }    
     };
 
     function addMap(eventPosition) {
@@ -826,6 +809,7 @@
 
       return async.series([
         validateEventRequest,
+        loadDojo,
         loadDojoUsers,
         loadUserTypes,
         loadEvent,
