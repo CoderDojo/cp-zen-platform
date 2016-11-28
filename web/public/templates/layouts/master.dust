@@ -55,9 +55,6 @@
     <!-- International Tel Input -->
     <link rel="stylesheet" type="text/css" href="/components/intl-tel-input/build/css/intlTelInput.css">
 
-    <!-- Angular Tooltips -->
-    <link rel="stylesheet" type="text/css" href="/components/angular-tooltips/dist/angular-tooltips.min.css">
-
     <!-- CoderDojo Menu -->
     <link rel="stylesheet" type="text/css" href="/components/cd-common/dist/cd-common.min.css">
 

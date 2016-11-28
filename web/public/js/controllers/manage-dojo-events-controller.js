@@ -6,7 +6,6 @@
     $scope.dojoId = $stateParams.dojoId;
     $scope.filter = {dojoId: $scope.dojoId};
     $scope.pagination = {itemsPerPage: 10};
-    $scope.manageDojoEventsPageTitle = $translate.instant('Manage Dojo Events'); //breadcrumb page title
     var utcOffset = moment().utcOffset();
 
     auth.get_loggedin_user(function (user) {

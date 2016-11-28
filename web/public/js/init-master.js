@@ -293,9 +293,6 @@
           params: {
             pageTitle: 'Manage Dojo Users'
           },
-          ncyBreadcrumb: {
-            label: '{{manageDojoUsersPageTitle}}'
-          },
           resolve: {
             initUserTypes: resolves.initUserTypes,
             currentUser: resolves.loggedInUser
@@ -351,9 +348,6 @@
           params: {
             pageTitle: 'My Dojos'
           },
-          ncyBreadcrumb: {
-            label: '{{myDojosPageTitle}}'
-          }
         })
         .state("dojo-detail", {
           url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
@@ -400,9 +394,6 @@
           params: {
             pageTitle: 'Manage Dojo Events'
           },
-          ncyBreadcrumb: {
-            label: '{{manageDojoEventsPageTitle}}'
-          }
         })
         .state("manage-applications", {
           url: "/my-dojos/:dojoId/events/:eventId/applications",
@@ -411,9 +402,6 @@
           controller: 'manage-event-applications-controller',
           params: {
             pageTitle: 'Applicants'
-          },
-          ncyBreadcrumb: {
-            label: '{{manageDojoEventApplicationsPageTitle}}'
           },
           resolve: {
             currentUser: resolves.loggedInUser,
@@ -472,9 +460,6 @@
             event: resolves.event,
             currentUser: resolves.loggedInUser
           },
-          ncyBreadcrumb: {
-            label: '{{EventDetailsPageTitle}}'
-          }
         })
         .state("user-events", {
           url: "/dojos/events/user-events",
@@ -509,9 +494,6 @@
             event: resolves.event,
             profile: resolves.ownProfile
           },
-          ncyBreadcrumb: {
-            label: '{{EventDetailsPageTitle}}'
-          }
         })
         .state("embedded", {
           url: "/embedded",
@@ -539,9 +521,6 @@
             event: resolves.event,
             profile: resolves.ownProfile
           },
-          ncyBreadcrumb: {
-            label: '{{EventDetailsPageTitle}}'
-          }
         })
         .state("embedded.dojo-map",{
           parent : 'embedded',
@@ -556,9 +535,6 @@
           params: {
             pageTitle: 'Dojo Map'
           },
-          ncyBreadcrumb: {
-            label: '{{DojosMapPageTitle}}'
-          }
         })
         .state("start-dojo", {
           url: "/start-dojo",
