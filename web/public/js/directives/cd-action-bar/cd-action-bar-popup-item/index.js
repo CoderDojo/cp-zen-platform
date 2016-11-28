@@ -22,7 +22,9 @@ angular
           if (ctrl.showPopup && popupEl && footer) {
             intervalRef = $interval(function () {
               var windowHeight = window.innerHeight;
-              var footerHeight = footer[0].offsetHeight;
+              var gapUnderFooter = windowHeight - footer[0].getBoundingClientRect().bottom;
+              gapUnderFooter = gapUnderFooter > 0 ? gapUnderFooter : 0; // either positive value, or zero.
+              var footerHeight = footer[0].offsetHeight + gapUnderFooter;
               var popupHeight = popupEl[0].offsetHeight;
               popupHeight = popupHeight === 0 && popupEl[1] ? popupEl[1].offsetHeight : popupHeight;
 
