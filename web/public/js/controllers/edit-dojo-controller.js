@@ -393,7 +393,6 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         position: $scope.mapOptions.center
       }));
       dojo.coordinates = data.lat + ', ' + data.lng;
-      dojo.geoPoint = {lat: data.lat, lon: data.lng};
       if (_.isFunction(cb)) cb();
     }, function () {
       //Ask user to add location manually if google geocoding can't find location.
