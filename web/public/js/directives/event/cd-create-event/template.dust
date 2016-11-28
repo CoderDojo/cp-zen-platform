@@ -199,7 +199,7 @@
             </div>
           </div>
           <div class="well clearfix ticket-controls">
-            <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket(session)" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
             <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
             <div class="pull-right">
               <label class="icon-group">{@i18n key="Add ticket type"/}</label>
