@@ -102,7 +102,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     if ($scope.dojo.notes === '') $scope.editorOptions.initContent = initContent;
 
     $scope.originalDojoListing = angular.copy($scope.dojo);
-    $scope.disableDojoCountryChange = $scope.dojo.verified === 1;
+    $scope.disableDojoCountryChange = ($scope.dojo.verified && !$scope.isCDFAdmin) === true;
     $scope.prevFounder = prevFounder;
     $scope.founder = angular.copy(prevFounder);
     loadDojoMap();
