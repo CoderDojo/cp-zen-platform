@@ -216,7 +216,7 @@ angular.module('cpZenPlatform')
       "Stats": "Stats",
       "Logout": "Logout",
       "Create a Dojo": "Create a Dojo",
-      "Adult Forums": "Adult Forums",
+      "Forums": "Forums",
       "User Invitation": "User Invitation",
       "User Request": "User Request",
       "User Request is being validated...": "User Request is being validated...",
