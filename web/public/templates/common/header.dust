@@ -43,8 +43,9 @@
           <i class="cd-menu__dropdown-icon fa fa-chevron-down"></i>
           <ul>
             <li><a href="/badges">{@i18n key="Badges"/}</a></li>
-            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
+            <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
             <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+            <li><a href="http://coolestprojects.org/">Coolest Projects</a></li>
           </ul>
         </span>
       </li>
@@ -127,8 +128,9 @@
               </div>
               <ul class="cd-menu__content-block">
                 <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
-            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
-            <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+                <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
+                <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+                <li><a href="http://coolestprojects.org/">Coolest Projects</a></li>
               </ul>
             </div>
           </div>
