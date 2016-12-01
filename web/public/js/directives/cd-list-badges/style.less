@@ -1,3 +1,5 @@
+@frame-color: @cd-orange;
+
 .badge-list {
   h2 {
     text-align: center;
@@ -12,10 +14,13 @@
     text-align: center;
     padding: 0 25px;
     flex: 1;
+    max-width: 140px;
+    min-width: 140px;
 
     .badge-thumbnail {
-      max-width: 100px;
+      max-width: 100%;
       max-height: 100px;
+      filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.5));
     }
   }
 
@@ -24,13 +29,46 @@
     flex-wrap: wrap;
 
     .badge-tag-container {
-      flex: 1;
+      flex-wrap: wrap;
+      align-items: baseline;
+      width: 50%;
+      padding: 16px 32px;
+      margin: 0 auto;
+
+      // Totally arbitrary max-width, just around about when it goes into single columns
+      @media only screen and (max-width: 960px) {
+        width: 100%;
+        padding: 16px 8px;
+      }
 
       .badge-tag-block {
         text-align: center;
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
+        flex: 3;
+        border: 15px solid tint(@frame-color, 20%);
+        padding: 16px;
+        border-right-color: shade(@frame-color, 10%);
+        border-bottom-color: shade(@frame-color, 10%); //#4d1e07;
+        background: tint(@frame-color, 80%); //#6d73a0;
+        color: #000;
+        box-shadow: inset 2px 2px 3px rgba(0,0,0,0.25), 3px 3px 5px rgba(0,0,0,0.25);
+        border-radius: 4px;
+        position: relative;
+
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          bottom: -5px;
+          left: -5px;
+          border: 4px solid @frame-color; //#62330b;
+          border-top-color: tint(@frame-color, 10%); //#5d2e07;
+          border-left-color: tint(@frame-color, 10%); //#5d2e07;
+        }
       }
     }
   }
