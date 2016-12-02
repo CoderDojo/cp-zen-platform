@@ -3157,3 +3157,33 @@ msgstr "Change Role"
 
 msgid "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
 msgstr "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
+<<<<<<< HEAD
+=======
+
+msgid "Donate"
+msgstr "Donate"
+
+msgid "Maintained by"
+msgstr "Maintained by"
+
+msgid "Attend a Dojo"
+msgstr "Attend a Dojo"
+
+msgid "Volunteer"
+msgstr "Volunteer"
+
+msgid "News"
+msgstr "News"
+
+msgid "Community"
+msgstr "Community"
+
+msgid "Help us translate"
+msgstr "Help us translate"
+
+msgid "Search..."
+msgstr "Search..."
+
+msgid "Contribute"
+msgstr "Contribute"
+>>>>>>> 748c39e... Translation errors in #934
