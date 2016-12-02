@@ -3154,3 +3154,6 @@ msgstr "You have been invited to a Dojo session"
 
 msgid "Change Role"
 msgstr "Change Role"
+
+msgid "I have read and accept the Terms and Conditions here"
+msgstr "I have read and accept the <a ui-sref='terms-and-conditions' target='_blank'><b>Terms and Conditions here</b></a>"
