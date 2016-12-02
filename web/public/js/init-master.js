@@ -626,6 +626,22 @@
           templateUrl: '/dojos/template/accept-dojo-user-request',
           controller: 'accept-dojo-user-request-controller'
         })
+        .state('my-children', {
+          url: '/children',
+          parent: 'dashboard',
+          templateUrl: '/profiles/template/my-children',
+          controller: 'my-children-controller',
+          resolve: {
+            ownProfile: resolves.ownProfile
+          }
+        })
+        .state('my-children.child', {
+          url: '/:id',
+          template: '<cd-child-card parent-profile-data="parentProfileData"></cd-child-card>',
+          controller: ['$scope', 'ownProfile', function ($scope, ownProfile) {
+            $scope.parentProfileData = ownProfile.data;
+          }]
+        })
         .state('add-child',{
           url: "/profile/child/add/:userType/:parentId",
           parent: 'dashboard',

@@ -7,11 +7,19 @@
       actions: '<',
       multipleSelection: '<',
       selectedItems: '=?',
-      wideCard: '<'
+      wideCard: '<',
+      onSelection: '<',
+      itemIcon: '@',
+      itemIconColor: '@',
+      showItemIcons: '<',
+      imageZoom: '<',
+      align: '@',
+      size: '@'
     },
     templateUrl: '/directives/tpl/cd-picture-grid',
     controller: function ($element) {
       var ctrl = this;
+      ctrl.showItemIcons = ctrl.showItemIcons !== false; // default true
       ctrl.showActionBar = false;
       ctrl.selectedItems = [];
       var gridItems = null;
@@ -39,6 +47,9 @@
             ctrl.selectedItems.push(item);
           }
           ctrl.showActionBar = ctrl.selectedItems.length > 0;
+        }
+        if (ctrl.onSelection) {
+          ctrl.onSelection(e, item);
         }
       };
 

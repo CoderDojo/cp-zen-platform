@@ -17,7 +17,9 @@
         </div>
         <div class="wrapper">
           <!-- our nested state views will be injected here -->
-          <div class="form-views" ui-view></div>
+          <div class="form-views" ui-view>
+            <p>Placeholder text!</p>
+          </div>
         </div>
       </div>
     </div>
