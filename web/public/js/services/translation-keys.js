@@ -314,6 +314,7 @@ angular.module('cpZenPlatform')
       "Tao unverified": "Tao unverified",
       "Join Mailing List": "Join Mailing List",
       "I have read and accept the": "I have read and accept the",
+      "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>": "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>",
       "Terms of Service here": "Terms of Service here",
       "Click on each step to get started": "Click on each step to get started",
       "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.": "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.",
