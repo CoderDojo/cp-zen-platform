@@ -237,7 +237,7 @@
         </div>
       </div>
       <div class="col-md-6 btn-toolbar">
-        <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Cancel"/}</button>
+        <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Discard Changes"/}</button>
         <button ng-if="!pastEvent" type="submit" class="btn btn-secondary pull-right" >{@i18n key="Save Draft"/}</button>
         <button ng-if="!pastEvent" type="submit" class="btn btn-success pull-right" ng-click="scrollToInvalid(eventForm)">{@i18n key="Publish"/}</button>
       </div>
