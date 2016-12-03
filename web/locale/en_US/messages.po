@@ -33,6 +33,9 @@ msgstr "REQUEST PASSWORD RESET"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Discard Changes"
+msgstr "Discard Changes"
+
 msgid "Forgot password"
 msgstr "Forgot password?"
 
