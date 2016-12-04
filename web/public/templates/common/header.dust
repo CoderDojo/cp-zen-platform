@@ -4,9 +4,9 @@
       <a href="/">
         <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
       </a>
-      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">Donate</a>
+      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">{@i18n key="Donate"/}</a>
       <form class="cd-menu__search" role="search" action="https://coderdojo.com/">
-        <input class="cd-menu__search-input" type="text" placeholder="Search..." name="s" />
+        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/} name="s" />
         <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
       </form>
       <div class="cd-menu__flex-spacer"></div>
@@ -69,7 +69,7 @@
     </div>
     <div class="cd-menu__content">
       <div class="cd-menu__content-block cd-menu__search">
-        <input class="cd-menu__search-input" type="text" placeholder="Search...">
+        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/}>
         <button class="cd-menu__search-button" type="button"><span class="fa fa-search fa-2x"></span></button>
       </div>
       <div class="cd-menu__content-block cd-menu__account">
