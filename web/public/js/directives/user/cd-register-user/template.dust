@@ -38,7 +38,7 @@
 
       <div class="checkbox cd-checkbox checkbox-primary">
         <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': registerForm.$submitted && registerForm.termsConditionsAccepted.$error.required}" ng-model="formData.user.termsConditionsAccepted" required required-message="'{@i18n key="You must accept the Terms and Conditions"/}'" id="termsAndConditionsCheckbox">
-        <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the Terms and Conditions here"/}
+        <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"/}
         </label>
       </div>
     </div>
