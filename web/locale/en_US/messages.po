@@ -3157,8 +3157,6 @@ msgstr "Change Role"
 
 msgid "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
 msgstr "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
-<<<<<<< HEAD
-=======
 
 msgid "Donate"
 msgstr "Donate"
@@ -3186,4 +3184,3 @@ msgstr "Search..."
 
 msgid "Contribute"
 msgstr "Contribute"
->>>>>>> 748c39e... Translation errors in #934
