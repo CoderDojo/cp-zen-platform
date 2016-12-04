@@ -1023,6 +1023,7 @@ angular.module('cpZenPlatform')
       "Do you agree?": "Do you agree?",
       "A new dojo has been created": "A new dojo has been created!",
       "You have been invited to a Dojo session": "You have been invited to a Dojo session",
+      "Search...": "Search...",
       CHANGE_ROLE: "Change Role"
     };
   });
