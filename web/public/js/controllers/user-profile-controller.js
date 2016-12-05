@@ -27,7 +27,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.editMode = false;
   $scope.publicMode = false;
   $scope.publicChampion = false;
-  $scope.loggedInUserIsMemberOfDojoChampion = false;
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
@@ -234,14 +233,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }, function (err) {
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
-
-    cdUsersService.loadDojoAdminsForUserPromise(loggedInUser.data.id).then(
-      function(champions){
-        $scope.loggedInUserIsMemberOfDojoChampion = !!(_.find(champions, function (championForUser) {
-          return championForUser.id === profileUserId;
-        }));
-      }
-    );
   }
 
 
