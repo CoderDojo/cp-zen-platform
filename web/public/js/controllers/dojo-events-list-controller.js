@@ -5,7 +5,7 @@
       cdUsersService, cdDojoService, tableUtils, alertService, auth, utilsService, eventUtils) {
     var dojoId = $scope.dojoId;
     $scope.filter = {dojo_id:dojoId};
-    $scope.itemsPerPage = 10;
+    $scope.itemsPerPage = 5;
     $scope.applyData = {};
     $scope.isMember = false;
     $scope.eventUserSelection = {};
@@ -31,16 +31,16 @@
             });
           }
 
-          $scope.loadPage($scope.filter, true);
+          $scope.loadEvents($scope.filter, true);
         } else {
-          $scope.loadPage($scope.filter, true);
+          $scope.loadEvents($scope.filter, true);
         }
       });
     }, function(err){
-      $scope.loadPage($scope.filter, true);
+      $scope.loadEvents($scope.filter, true);
     });
 
-    $scope.loadPage = function (filter, resetFlag, cb) {
+    $scope.loadEvents = function (filter, resetFlag, cb) {
       $scope.tableRowIndexExpandedCurr = '';
       $scope.getSortClass = utilsService.getSortClass;
 
@@ -52,11 +52,11 @@
         dojoId: filter.dojoId,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
-      $scope.pageNo = loadPageData.pageNo;
       $scope.events = [];
+      $scope.currentPageEvents = [];
 
-      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, sort$: $scope.sort}).then(function (result) {
+        $scope.totalItems = result.length;
         if (!$scope.isMember) result = _.filter(result, function(event){
           return event.public;
         });
@@ -72,36 +72,29 @@
         });
         events.sort(eventUtils.nextDateComparator);
         $scope.events = events;
-        cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
-          $scope.totalItems = result.length;
-        }, function (err) {
-          console.error(err);
-          alertService.showError($translate.instant('Error loading events'));
-        });
-      }, function (err) {
-        console.error(err);
-        alertService.showError($translate.instant('Error loading events'));
+        $scope.pageChanged(true);
       });
     };
 
     $scope.eventCollapsed = function (eventIndex) {
-      $scope.events[eventIndex].isCollapsed = false;
+      $scope.currentPageEvents[eventIndex].isCollapsed = false;
     };
 
-    $scope.pageChanged = function () {
-      $scope.loadPage($scope.filter, false);
+    $scope.pageChanged = function (resetFlag) {
+      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo);
+      $scope.currentPageEvents = $scope.events.slice(loadPageData.skip, loadPageData.skip + $scope.itemsPerPage);
     };
 
     $scope.showEventInfo = function (index, eventId) {
-      if (typeof $scope.events[index].isCollapsed === 'undefined') {
+      if (typeof $scope.currentPageEvents[index].isCollapsed === 'undefined') {
         $scope.eventCollapsed(index);
       }
 
-      if ($scope.events[index].isCollapsed === false) {
+      if ($scope.currentPageEvents[index].isCollapsed === false) {
         $scope.tableRowIndexExpandedCurr = index;
-        $scope.events[index].isCollapsed = true;
-      } else if ($scope.events[index].isCollapsed === true) {
-        $scope.events[index].isCollapsed = false;
+        $scope.currentPageEvents[index].isCollapsed = true;
+      } else if ($scope.currentPageEvents[index].isCollapsed === true) {
+        $scope.currentPageEvents[index].isCollapsed = false;
       }
     };
 
@@ -125,7 +118,7 @@
       }
 
       $scope.sort = sortConfig;
-      $scope.loadPage($scope.filter, true);
+      $scope.loadEvents($scope.filter, true);
     }
 
   }
