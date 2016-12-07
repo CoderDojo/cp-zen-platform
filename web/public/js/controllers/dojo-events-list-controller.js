@@ -5,7 +5,7 @@
       cdUsersService, cdDojoService, tableUtils, alertService, auth, utilsService, eventUtils) {
     var dojoId = $scope.dojoId;
     $scope.filter = {dojo_id:dojoId};
-    $scope.itemsPerPage = 10;
+    $scope.itemsPerPage = 5;
     $scope.applyData = {};
     $scope.isMember = false;
     $scope.eventUserSelection = {};
@@ -52,11 +52,11 @@
         dojoId: filter.dojoId,
       }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
 
-      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, query);
-      $scope.pageNo = loadPageData.pageNo;
+      $scope.allEvents = [];
       $scope.events = [];
 
-      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, limit$: $scope.itemsPerPage, skip$: loadPageData.skip, sort$: $scope.sort}).then(function (result) {
+      cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, sort$: $scope.sort}).then(function (result) {
+        $scope.totalItems = result.length;
         if (!$scope.isMember) result = _.filter(result, function(event){
           return event.public;
         });
@@ -71,16 +71,8 @@
           events.push(event);
         });
         events.sort(eventUtils.nextDateComparator);
-        $scope.events = events;
-        cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true}).then(function (result) {
-          $scope.totalItems = result.length;
-        }, function (err) {
-          console.error(err);
-          alertService.showError($translate.instant('Error loading events'));
-        });
-      }, function (err) {
-        console.error(err);
-        alertService.showError($translate.instant('Error loading events'));
+        $scope.allEvents = events;
+        $scope.pageChanged(true);
       });
     };
 
@@ -88,8 +80,9 @@
       $scope.events[eventIndex].isCollapsed = false;
     };
 
-    $scope.pageChanged = function () {
-      $scope.loadPage($scope.filter, false);
+    $scope.pageChanged = function (resetFlag) {
+      var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo);
+      $scope.events = $scope.allEvents.slice(loadPageData.skip, loadPageData.skip + $scope.itemsPerPage);
     };
 
     $scope.showEventInfo = function (index, eventId) {

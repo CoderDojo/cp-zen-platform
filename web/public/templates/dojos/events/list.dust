@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="row center-children" ng-hide="events.length < 10">
+    <div class="row center-children" ng-hide="allEvents.length < itemsPerPage">
       <span class="row col-lg-7 centered-child">
         <uib-pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo"
                     class="pagination-sm"
