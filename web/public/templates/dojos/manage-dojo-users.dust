@@ -41,6 +41,7 @@
   </div>
   <cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
   <cd-action-bar ng-if="actions" open="showActionBar" force-fixed="actionBarConfig.forceFixed">
+    <cd-action-bar-info-item ng-show="actions.quickInfo.ngShow()" href="mailto:{{ actions.quickInfo.ngValue() }}" action-title="{{ actions.quickInfo.ngValue() }}" icon="envelope"></cd-action-bar-info-item>
     <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" action-title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always" size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
       <cd-award-badge user="selectedItems[0].userData"></cd-award-badge>
     </cd-action-bar-popup-item>

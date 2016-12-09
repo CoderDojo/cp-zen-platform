@@ -1,0 +1,5 @@
+<a class="cd-action-bar-item" ng-class="{'cd-action-bar-item--red': $ctrl.color === 'red'}" ng-href="{{ $ctrl.href }}"
+  ng-click="$ctrl.handleClick($event)">
+  <i class="fa fa-{{ $ctrl.icon }}"></i>
+  <span class="hidden-xs">{{ $ctrl.actionTitle }}</span>
+</a>

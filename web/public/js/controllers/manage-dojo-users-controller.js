@@ -2,7 +2,7 @@
 
 function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, tableUtils, usSpinnerService,
   cdBadgesService, $translate, initUserTypes, currentUser, utilsService, cdEventsService, permissionService,
-  $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys) {
+  $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys, cdUsersService) {
 
   var dojoId = $state.params.id;
   var usersDojosLink = [];
@@ -38,7 +38,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   cdDojoService.getUsersDojos({userId: $scope.currentUser.id, deleted: 0, dojoId: dojoId}, function (usersDojos) {
     var userDojo = usersDojos[0];
     var isDojoAdmin;
-    if(userDojo) {
+    if (userDojo) {
       isDojoAdmin = _.find(userDojo.userPermissions, function (userPermission) {
         return userPermission.name === 'dojo-admin';
       });
@@ -151,6 +151,17 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   ];
 
   $scope.actions = {
+    quickInfo: {
+      ngShow: function () {
+        return $scope.selectedItems.length === 1;
+      },
+      ngValue: function () {
+        var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
+        if (user && (user.email || user.parentEmail)) {
+          return user.email || user.parentEmail;
+        }
+      }
+    },
     awardBadge: {
       ngShow: function () {
         var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
@@ -193,10 +204,10 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
               canUpdateUser(function (result) {
                 hasPermission = result;
 
-                if(hasPermission) {
+                if (hasPermission) {
 
                   var userDojoLink = _.find(usersDojosLink, {userId:user.id});
-                  if(!userDojoLink.userTypes) userDojoLink.userTypes = [];
+                  if (!userDojoLink.userTypes) userDojoLink.userTypes = [];
                   var roles = [];
                   if (age < 13) {
                     roles.push('attendee-u13');
@@ -303,6 +314,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       getFilterUserTypes,
       getUsersDojosLink,
       loadDojoUsers,
+      getKidsParents,
       retrieveEventsAttended,
       function(done){
         usSpinnerService.stop('manage-dojo-users-spinner');
@@ -335,7 +347,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           var userDojo = usersDojos[0];
           user.userTypes = userDojo.userTypes;
           mainUserType = permissionService.getUserType(user.userTypes);
-        }else if($scope.isCDFAdmin){
+        }else if ($scope.isCDFAdmin) {
           mainUserType = 'champion';
         }
         //TODO: permissionService should handle that check when every user capabilities will be defined
@@ -394,6 +406,17 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         users = response;
         return done();
       });
+    }
+
+    function getKidsParents (done) {
+      var kids = _.filter(users, {'email': null});
+      async.mapSeries(kids, function (kid, cb) {
+        cdUsersService.loadParentsForUserPromise(kid.id)
+        .then( function (parents) {
+            kid.parentEmail = _.first(parents).email;
+            cb();
+        })
+      }, done);
     }
 
     function retrieveEventsAttended(done) {
@@ -666,4 +689,4 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 angular.module('cpZenPlatform')
     .controller('manage-dojo-users-controller', ['$scope', '$state', '$q', 'cdDojoService', 'alertService', 'tableUtils', 'usSpinnerService',
     'cdBadgesService', '$translate', 'initUserTypes', 'currentUser', 'utilsService', 'cdEventsService', 'permissionService', '$timeout',
-    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', 'translationKeys', cdManageDojoUsersCtrl]);
+    '$ngBootbox', 'userUtils', 'cdChooseRoleModal', 'translationKeys' , 'cdUsersService', cdManageDojoUsersCtrl]);
