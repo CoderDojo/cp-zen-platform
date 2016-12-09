@@ -11,7 +11,7 @@
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar',
       transclude: {
-        'quickInfo': '?cdActionBarInfoItem'
+        'leftAction': '?cdActionBarLeftActions'
       },
       controller: ['$element', function ($element) {
         var ctrl = this;
