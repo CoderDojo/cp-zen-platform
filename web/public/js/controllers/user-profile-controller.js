@@ -551,6 +551,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         if($scope.profile.ownProfileFlag) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
+        if($scope.loggedInUserIsCDFAdmin()) return true;
         return false; //Always private
       case 'attendee-o13':
         if(loggedInUserIsParent()) return true;
@@ -596,17 +597,21 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(!loggedInUser.data) return false;
     return _.includes(loggedInUser.data.roles, 'cdf-admin');
   }
+  $scope.hideConfigurableFieldsBlock = function (block) {
+    if (block && $scope.profile.optionalHiddenFields) {
+      return !$scope.profile.optionalHiddenFields[block];
+    }
+    return true;
+  }
 
   $scope.hideProfileBlock = function (block) {
     if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
-      if(loggedInUserIsChampion()) return false;
-      if(loggedInUserIsDojoAdmin()) return false;
-      if(loggedInUserIsParent()) return false;
-      if($scope.profile.ownProfileFlag) return false;
-      if(block && $scope.profile.optionalHiddenFields) {
-        if(!$scope.profile.optionalHiddenFields[block]) return false;
-        return true;
-      }
+      if($scope.loggedInUserIsCDFAdmin() ||
+        loggedInUserIsChampion() ||
+        loggedInUserIsDojoAdmin() ||
+        loggedInUserIsParent() ||
+        $scope.profile.ownProfileFlag ||
+        $scope.hideConfigurableFieldsBlock(block)) return false;
       return true;
     }
     return false;
