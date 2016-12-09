@@ -151,7 +151,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   ];
 
   $scope.actions = {
-    quickInfo: {
+    email: {
       ngShow: function () {
         return $scope.selectedItems.length === 1;
       },
