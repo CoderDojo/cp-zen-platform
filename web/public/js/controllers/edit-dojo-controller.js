@@ -5,15 +5,20 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
                         $state, $q, $translate, utilsService, currentUser, cdUsersService,
                         $localStorage, $ngBootbox, dojoUtils) {
 
-  dojoUtils.canUpdateDojo(currentUser, $state.params.id).then(function(isDojoAdmin){
+  dojoUtils.isHavingPerm(currentUser, $state.params.id, 'dojo-admin').then(function (isDojoAdmin) {
     $scope.isDojoAdmin = isDojoAdmin;
-    if(!isDojoAdmin){
-      $state.go('error-404-no-headers');
-    }
   })
   .catch(function(){
     $scope.isDojoAdmin = false;
     $state.go('error-404-no-headers');
+  });
+
+  dojoUtils.isHavingPerm(currentUser, dojo.id, 'ticketing-admin')
+  .then(function () {
+    $scope.isTicketingAdmin = true;
+  })
+  .catch(function () {
+    $scope.isTicketingAdmin = false;
   });
 
   $scope.getIsDojoAdmin = function () {
@@ -325,7 +330,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     }
 
     function finish() {
-      dojoUtils.canUpdateDojo(currentUser, $state.params.id).then(function (isDojoAdmin) {
+      dojoUtils.isHavingPerm(currentUser, $state.params.id, 'dojo-admin').then(function (isDojoAdmin) {
         if (isDojoAdmin) {
           if($scope.originalDojoListing.alpha2 !== $scope.dojo.alpha2 ||
             $scope.originalDojoListing.admin1Name !== $scope.dojo.admin1Name ||

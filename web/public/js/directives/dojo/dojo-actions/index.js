@@ -4,17 +4,24 @@
 function cdDojoActions(){
     return {
       scope: {
-        isDojoAdmin: '=',
+        canManageDojo: '=',
+        canManageEvents: '=',
         dojo: '='
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/dojo/dojo-actions',
       controller: ['$scope', 'dojoUtils', '$state', function ($scope, dojoUtils, $state) {
         var cdDA = this;
-        var conditionWatcher = $scope.$watch('isDojoAdmin', function(newCd, oldCd){
+        var isDojoAdminWatcher = $scope.$watch('canManageDojo', function(newCd, oldCd){
           if (newCd) {
-            cdDA.isDojoAdmin = newCd;
-            conditionWatcher();
+            cdDA.canManageDojo = newCd;
+            isDojoAdminWatcher();
+          }
+        });
+        var isDojoTicketingWatcher = $scope.$watch('canManageEvents', function(newCd, oldCd){
+          if (newCd) {
+            cdDA.canManageEvents = newCd;
+            isDojoTicketingWatcher();
           }
         });
         this.dojo = $scope.dojo;
