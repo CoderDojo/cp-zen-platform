@@ -1,15 +1,15 @@
-<div uib-dropdown is-open="status.isopen" ng-if="cdDA.isDojoAdmin" class="cd-dojo-actions">
+<div uib-dropdown is-open="status.isopen" ng-if="cdDA.canManageDojo || cdDA.canManageEvents" class="cd-dojo-actions">
   <button id="cd-dojo-action" type="button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
     <i class="fa fa-gear"></i> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="cd-dojo-action">
-    <li role="menuitem">
+    <li role="menuitem" ng-show="cdDA.canManageDojo">
       <a ui-sref="edit-dojo({id: cdDA.dojo.id})" ng-if="cdDA.currentState !== 'edit-dojo'" alt="{@i18n key="Edit Dojo"/}"><i class="fa fa-edit"></i>{@i18n key="Edit Dojo"/}</a>
     </li>
-    <li role="menuitem">
+    <li role="menuitem" ng-show="cdDA.canManageDojo">
       <a ui-sref="manage-dojo-users({id: cdDA.dojo.id})" alt="{@i18n key="Manage Users"/}"><i class="fa fa-group"></i>{@i18n key="Manage Users"/}</a>
     </li>
-    <li role="menuitem">
+    <li role="menuitem" ng-show="cdDA.canManageEvents && cdDA.dojo.verified && cdDA.dojo.stage !== 4">
       <a ui-sref="manage-dojo-events({dojoId: cdDA.dojo.id})" alt="{@i18n key="Manage Events"/}"><i class="fa fa-calendar"></i>{@i18n key="Manage Events"/}</a>
     </li>
     <li role="menuitem">
