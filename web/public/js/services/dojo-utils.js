@@ -63,19 +63,20 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
 
   dojoUtils.isHavingPerm = function(user, dojoId, perm) {
     var deferred = $q.defer();
-    if(user.data && !_.isEmpty(user.data)){
+    if (user.data && !_.isEmpty(user.data)) {
+      var isCDF = _.includes(user.data.roles, 'cdf-admin');
       var query = {userId: user.data.id, dojoId: dojoId};
       var isHavingPerm = _.includes(user.data.roles, perm);
-      if (isHavingPerm) {
-        deferred.resolve(isHavingPerm);
+      if (isHavingPerm || isCDF) {
+        deferred.resolve(isHavingPerm || isCDF);
       } else {
         cdDojoService.getUsersDojos(query, function (userDojo) {
-          if(!userDojo || userDojo.length < 1){ return deferred.reject(); }
+          if (!userDojo || userDojo.length < 1){ return deferred.reject(); }
 
           var isHavingPerm = _.find(userDojo[0].userPermissions, function (userPermission) {
             return userPermission.name === perm;
           });
-          if(!_.isEmpty(isHavingPerm) && !_.isUndefined(isHavingPerm)){
+          if (!_.isEmpty(isHavingPerm) && !_.isUndefined(isHavingPerm)) {
             deferred.resolve(true);
           } else {
             deferred.reject(false);
