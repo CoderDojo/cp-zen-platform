@@ -10,7 +10,9 @@
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar',
-      transclude: true,
+      transclude: {
+        'leftAction': '?cdActionBarLeftActions'
+      },
       controller: ['$element', function ($element) {
         var ctrl = this;
         var $footer = $('#footer');
