@@ -54,10 +54,16 @@ angular
           };
 
           $scope.getLoginURL = function () {
-            cdLMSService.getLoginURL({approval: true}, callback);
+            cdLMSService.getLoginURL({approval: true}, callback, cbErr);
 
             function callback (link) {
-              $window.location.href = link.url;
+              if (link.url) {
+                $window.location.href = link.url;
+              }
+            }
+
+            function cbErr (err) {
+              if (err.data && err.data.why) alertService.showError($translate.instant(err.data.why));
             }
           };
         }]
