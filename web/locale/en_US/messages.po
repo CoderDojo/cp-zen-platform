@@ -3187,3 +3187,9 @@ msgstr "Search..."
 
 msgid "Contribute"
 msgstr "Contribute"
+
+msgid "UserType not allowed"
+msgstr "UserType not allowed"
+
+msgid "An invitation has been sent by email"
+msgstr "An invitation has been sent by email"
