@@ -7,7 +7,7 @@
           <div class="row">
             <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" alt="{@i18n key="Avatar"/}"
               edit="true" upload="upload"
-              class="col-md-3 hidden-xs"></div>
+              class="col-md-3 mobile-center"></div>
             <div class="col-md-6 cd-profile__username">
               <h2 ng-bind="::profile.name"></h2>
               <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
