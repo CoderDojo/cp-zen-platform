@@ -5,11 +5,13 @@
       <div class="col-xs-12">
         <div cd-banner-background class="row">
           <div cd-social-network email="profile.email" ng-show="loggedInUserIsMemberOfDojoChampion || profile.ownProfileFlag"></div>
-          <div class="row">
-            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="col-md-3 hidden-xs"></div>
-            <div class="col-md-6 cd-profile__username">
-              <h2 ng-bind="::profile.name"></h2>
-              <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+          <div class="cd-profile__header">
+            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="cd-profile__avatar"></div>
+            <div class="cd-profile__username">
+              <div class="col-md-offset-1">
+                <h2 ng-bind="::profile.name"></h2>
+                <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+              </div>
             </div>
           </div>
           <cd-user-actions user="profile" can-edit="canEdit"></cd-user-actions>

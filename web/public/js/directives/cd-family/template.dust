@@ -1,0 +1,6 @@
+  <div class="cd-family">
+    <img src="/img/characters/male-1-hand.png" class="cd-family__male" />
+    <img src="/img/characters/female-1.png" class="cd-family__female" />
+    <img src="/img/characters/youth-male-1.png" class="cd-family__youth-male" />
+    <img src="/img/characters/youth-female-1-laptop.png" class="cd-family__youth-female" />
+  </div>

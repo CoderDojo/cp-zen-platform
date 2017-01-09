@@ -1,0 +1,29 @@
+.cd-simple-flex-grid-generate-cells(@n, @i: 1) when (@i =< @n) {
+  &__flex-@{i} {
+    flex: @i;
+  }
+  .cd-simple-flex-grid-generate-cells(@n, (@i + 1));
+}
+
+.cd-simple-flex-grid {
+  display: flex;
+  margin: 0 -8px;
+
+  > * {
+    margin: 0 8px;
+  }
+
+  &--align-center {
+    align-content: baseline;
+  }
+
+  &--align-baseline {
+    align-content: baseline;
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  .cd-simple-flex-grid-generate-cells(5);
+}

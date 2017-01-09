@@ -1,12 +1,40 @@
 .cd-profile{
   background-color: @cd-white;
-  @media (min-width: @screen-xs-max){
-    &__username {
-      position: absolute;
-      bottom: 30%;
-      left: 30%;
+
+  &__header {
+    display: flex;
+    margin: 0 -16px;
+
+    @media (max-width: @screen-xs-max) {
+      flex-direction: column;
     }
   }
+
+  &__avatar {
+    flex: 1;
+    max-width: 200px;
+    margin: 0 16px;
+    @media (max-width: @screen-xs-max) {
+      margin: 0 auto;
+    }
+  }
+
+  &__username {
+    flex: 3;
+    margin: 0 16px;
+
+    > div {
+      position: absolute;
+      bottom: 30%;
+
+      @media (max-width: @screen-xs-max) {
+        position: static;
+        text-align: center;
+      }
+    }
+  }
+
+
   &__contact {
     .sidebar-contact()
   }
