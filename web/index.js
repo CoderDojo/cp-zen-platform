@@ -20,8 +20,10 @@ var locale = require('locale');
 var languages = require('./config/languages.js');
 var cacheTimes = require('./config/cache-times');
 var cuid = require('cuid');
+var crypto = require('crypto');
 var util = require('util');
 var fs = require('fs');
+var os = require('os');
 var debug = require('debug')('cp-zen-platform:index');
 
 require('./lib/dust-i18n.js');
@@ -33,6 +35,12 @@ var port = process.env.PORT || 8000
 var host = process.env.HOSTNAME || '127.0.0.1';
 var protocol = process.env.PROTOCOL || 'http';
 var hostWithPort = protocol + '://' + host + ':' + port;
+var uid = cuid();
+var hasher = crypto.createHash('sha256');
+hasher.update(os.hostname());
+var hostUid = hasher.digest('hex') + '-' + uid;
+server.method('getUid', function() { return hostUid });
+
 
 function checkHapiPluginError (name) {
   return function (error) {
@@ -102,10 +110,15 @@ server.ext('onPreAuth', function (request, reply) {
 //  TODO: merge onPreResponses cause they conflict
 // Handler for 404/401
 server.ext('onPreResponse', function (request, reply) {
+  //  TODO: separate Boom errors from others
+  //  Add instanceId for tracking
+  if (_.has(request.response, 'header')) request.response.header('cp-host', hostUid);
+  if (_.has(request.response, 'output')) request.response.output.headers['cp-host'] = hostUid;
+
   var status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
 
   if (status === 400) {
-    request.log(['error', '400'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.data.details}, Date.now());
+    request.log(['error', '400'], {status: status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details')? request.response.data.details: request.response.output}, Date.now());
   }
   // if it's an api call, continue as normal..
   if (request.url.path.indexOf('/api/2.0') === 0) {
@@ -126,7 +139,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
-  request.log(['error', '40x'], {status: status, payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '40x'], {status: status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -140,7 +153,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
-  request.log(['error', '50x'], {status: bodyStatus || headerStatus , payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '50x'], {status: bodyStatus || headerStatus, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
   // Display full error message if not in production environment.
   if (env !== 'production') {
     return reply.continue();
@@ -194,7 +207,7 @@ function getUser (request, token, cb) {
   } else {
     setImmediate(cb);
   }
-};
+}
 
 server.register({ register: require('hapi-etags'), options: { varieties: ['plain', 'buffer', 'stream'] } }, checkHapiPluginError('hapi-etags'));
 
@@ -223,8 +236,9 @@ server.register({ register: require('./controllers') }, checkHapiPluginError('Co
 if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
   var goodOptions = {
     opsInterval: 1000,
-    requestPayload:true,
-    responsePayload:true,
+    requestHeaders: true,
+    requestPayload: true,
+    responsePayload: true,
     reporters: []
   };
   if (process.env.HAPI_DEBUG) {
@@ -238,7 +252,7 @@ if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'tru
   if (process.env.LOGENTRIES_ENABLED === 'true' && process.env.LOGENTRIES_TOKEN) {
     goodOptions.reporters.push({
       reporter: require('good-http'),
-      events: { error: '*', request: '*'},
+      events: { log: ['info'], error: '*', request: '*' },
       config: {
         endpoint: 'https://webhook.logentries.com/noformat/logs/' + process.env.LOGENTRIES_TOKEN,
         threshold: 0
@@ -247,6 +261,7 @@ if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'tru
   }
 
   server.register({ register: require('good'), options: goodOptions }, checkHapiPluginError('Good Logger'));
+  server.log(['info'], {uid: hostUid}, Date.now());
 }
 
 var dojos = require('../lib/dojos.js');
