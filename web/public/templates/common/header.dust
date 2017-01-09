@@ -22,7 +22,7 @@
           <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
           <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
           <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-          <li><a href="/dashboard/profile/children">{@i18n key="My Children"/}</a></li>
+          <li class="cd-menu__parent-link"><a href="/dashboard/children">{@i18n key="My Children"/}</a></li>
           <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
           <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
           <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
@@ -98,7 +98,7 @@
                 <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
                 <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
                 <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
-                <li><a href="/dashboard/profile/children">{@i18n key="My Children"/}</a></li>
+                <li class="cd-menu__parent-link"><a href="/dashboard/children">{@i18n key="My Children"/}</a></li>
                 <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
                 <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
                 <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>

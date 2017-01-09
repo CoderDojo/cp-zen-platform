@@ -8,6 +8,7 @@
     templateUrl: '/directives/tpl/cd-child-card',
     controller: ['cdDojoService', 'cdUsersService', 'userUtils', '$stateParams', '$uibModal', '$translate', function (cdDojoService, cdUsersService, userUtils, $stateParams, $uibModal, $translate) {
       var ctrl = this;
+      var MAX_RECENT_BADGES = 4;
       var originalDojoListings;
       var originalDojosNotAMemberOf;
       ctrl.noop = angular.noop;
@@ -40,36 +41,31 @@
         } else {
           userType += 'o13';
         }
+
+        function addOrRemoveDojoSuccess() {
+          totalOps--;
+          if (totalOps <= 0) {
+            originalDojoListings = undefined;
+            originalDojosNotAMemberOf = undefined;
+            ctrl.manageDojos = false;
+            ctrl.savingDojos = false;
+          }
+        }
+
         dojosToAdd.forEach(function (dojo) {
           cdDojoService.saveUsersDojos({
             dojoId: dojo.id,
             userId: ctrl.child.userId,
             owner: 0,
             userTypes: [userType]
-          }, function () {
-            totalOps--;
-            if (totalOps <= 0) {
-              originalDojoListings = undefined;
-              originalDojosNotAMemberOf = undefined;
-              ctrl.manageDojos = false;
-              ctrl.savingDojos = false;
-            }
-          })
+          }, addOrRemoveDojoSuccess)
         });
         dojosToRemove.forEach(function (dojo) {
           cdDojoService.removeUsersDojosLink({
             dojoId: dojo.id,
             userId: ctrl.child.userId,
             emailSubject: 'A user has left your Dojo'
-          }, function () {
-            totalOps--;
-            if (totalOps <= 0) {
-              originalDojoListings = undefined;
-              originalDojosNotAMemberOf = undefined;
-              ctrl.manageDojos = false;
-              ctrl.savingDojos = false;
-            }
-          })
+          }, addOrRemoveDojoSuccess)
         });
       };
 
@@ -143,24 +139,16 @@
         } else {
           child.acceptedBadges = [];
         }
-        child.recentBadges = child.acceptedBadges.sort(function (badge1, badge2) {
-          var d1 = new Date(badge1.dateAccepted);
-          var d2 = new Date(badge2.dateAccepted);
-          if (d1 < d2) {
-            return 1;
-          } else if (d1 > d2) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }).slice(0, 4).map(function (badge) {
-          return {
-            id: badge.id,
-            picture: badge.imageUrl,
-            caption: badge.name,
-            data: badge
-          };
-        });
+        child.recentBadges = _.sortBy(child.acceptedBadges, ['dateAccepted'])
+          .slice(0, MAX_RECENT_BADGES)
+          .map(function (badge) {
+            return {
+              id: badge.id,
+              picture: badge.imageUrl,
+              caption: badge.name,
+              data: badge
+            };
+          });
       }
 
       ctrl.showBadgeModal = function (e, item) {

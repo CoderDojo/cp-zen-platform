@@ -3,17 +3,9 @@
 function myChildrenCtrl($scope, ownProfile) {
   $scope.parentProfileData = ownProfile.data;
 
-  $scope.children = ownProfile.data.resolvedChildren.sort(function (child1, child2) {
-    var n1 = child1.name.toLowerCase();
-    var n2 = child2.name.toLowerCase();
-    if (n1 < n2) {
-      return -1;
-    } else if (n1 > n2) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  $scope.children = _.sortBy(ownProfile.data.resolvedChildren, [function (child) {
+    return child.name.toLowerCase();
+  }]);
 
   $scope.tabs = $scope.children.map(function (child) {
     return {

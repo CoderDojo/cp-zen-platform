@@ -1,3 +1,10 @@
+.cd-simple-flex-grid-generate-cells(@n, @i: 1) when (@i =< @n) {
+  &__flex-@{i} {
+    flex: @i;
+  }
+  .cd-simple-flex-grid-generate-cells(@n, (@i + 1));
+}
+
 .cd-simple-flex-grid {
   display: flex;
   margin: 0 -8px;
@@ -18,23 +25,5 @@
     flex-wrap: wrap;
   }
 
-  &__flex-1 {
-    flex: 1;
-  }
-
-  &__flex-2 {
-    flex: 2;
-  }
-
-  &__flex-3 {
-    flex: 3;
-  }
-
-  &__flex-4 {
-    flex: 4;
-  }
-
-  &__flex-5 {
-    flex: 5;
-  }
+  .cd-simple-flex-grid-generate-cells(5);
 }
