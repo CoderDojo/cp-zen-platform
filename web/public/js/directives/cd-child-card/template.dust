@@ -5,7 +5,7 @@
       <div class="col-xs-12">
         <div cd-banner-background class="row">
           <div class="cd-profile__header">
-            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + $ctrl.child.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="cd-profile__avatar"></div>
+            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + $ctrl.child.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{{ 'AVATAR' | translateFromKey }}" format="base64" class="cd-profile__avatar"></div>
             <div class="cd-profile__username">
               <div>
                 <h2 ng-bind="::$ctrl.child.name"></h2>
@@ -22,51 +22,51 @@
         <p>{{ $ctrl.child.notes }}</p>
         <div>
           <div class="cd-simple-flex-grid cd-simple-flex-grid--align-baseline">
-            <h3 class="cd-simple-flex-grid__flex-1">{@i18n key="Recent Badges"/}</h3>
+            <h3 class="cd-simple-flex-grid__flex-1">{{ 'RECENT_BADGES' | translateFromKey }}</h3>
             <div ng-if="$ctrl.child.recentBadges.length > 0">
-              <a ng-href="/profile/{{ $ctrl.child.userId }}#badges">View all <i class="fa fa-arrow-right"></i></a>
+              <a ng-href="/profile/{{ $ctrl.child.userId }}#badges">{{ 'VIEW_ALL' | translateFromKey }} <i class="fa fa-arrow-right"></i></a>
             </div>
           </div>
-          <p ng-if="$ctrl.child.recentBadges.length === 0" class="cd-child-card__section-placeholder-text lead">{{ $ctrl.child.name }} doesn't have any badges yet. Talk to the organisers of your Dojo to learn how {{ $ctrl.child.name }} can be rewarded through badges.</p>
+          <p ng-if="$ctrl.child.recentBadges.length === 0" class="cd-child-card__section-placeholder-text lead">{{ 'CHILD_NO_BADGES' | translateFromKey:{name: $ctrl.child.name} }}</p>
           <cd-picture-grid ng-if="$ctrl.child.recentBadges.length > 0" items="$ctrl.child.recentBadges" image-zoom="true" align="left" size="medium" on-selection="$ctrl.showBadgeModal"></cd-picture-grid>
         </div>
         <div class="cd-loading-scrim__parent">
           <cd-loading-scrim ng-show="$ctrl.savingDojos"></cd-loading-scrim>
           <div class="cd-simple-flex-grid cd-simple-flex-grid--align-baseline">
-            <h3 class="cd-simple-flex-grid__flex-1">{@i18n key="Dojos"/}</h3>
+            <h3 class="cd-simple-flex-grid__flex-1">{{ 'DOJOS' | translateFromKey }}</h3>
             <div>
-              <button ng-show="!$ctrl.manageDojos" class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()"><i class="fa fa-gear"></i>{@i18n key="Manage" /}</button>
+              <button ng-show="!$ctrl.manageDojos" class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()"><i class="fa fa-gear"></i>{{ 'MANAGE' | translateFromKey }}</button>
               <div class="cd-simple-flex-grid" ng-show="$ctrl.manageDojos">
-                <button class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()">{@i18n key="Cancel" /}</button>
-                <button class="btn btn-primary" ng-click="$ctrl.saveDojos()"><i class="fa fa-check"></i>{@i18n key="Save" /}</button>
+                <button class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()">{{ 'CANCEL' | translateFromKey }}</button>
+                <button class="btn btn-primary" ng-click="$ctrl.saveDojos()"><i class="fa fa-check"></i>{{ 'SAVE' | translateFromKey }}</button>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
               <div ng-show="!$ctrl.manageDojos && $ctrl.child.dojoListings.length === 0" class="cd-child-card__section-placeholder-text">
-                <p ng-if="$ctrl.child.dojoListings.length === 0" class="lead">{{ $ctrl.child.name }} isn't a member of a Dojo. Add them to a Dojo you're a member of, or <a href="/">find a new Dojo</a> for them to join.</p>
+                <p ng-if="$ctrl.child.dojoListings.length === 0" class="lead" ng-bind-html="'CHILD_NO_DOJOS' | translateFromKey:{name: $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
                 <div>
-                  <button ng-if="$ctrl.child.dojoListings.length === 0" class="btn btn-primary" ng-click="$ctrl.toggleManageDojos()">{@i18n key="Add to a Dojo"/}</button>
+                  <button ng-if="$ctrl.child.dojoListings.length === 0" class="btn btn-primary" ng-click="$ctrl.toggleManageDojos()">{{ 'ADD_TO_A_DOJO' | translateFromKey }}</button>
                 </div>
               </div>
               <div ng-show="$ctrl.manageDojos && $ctrl.child.dojoListings.length === 0 && $ctrl.child.dojosNotMemberOf.length === 0" class="cd-child-card__section-placeholder-text">
-                <p class="lead">You aren't a member of a Dojo yet. Find and join a Dojo and your children will be automatically be added along with you.</p>
+                <p class="lead">{{ 'PARENT_NO_DOJOS' | translateFromKey }}</p>
                 <div>
-                  <a class="btn btn-primary" href="/">{@i18n key="Find a Dojo"/}</a>
+                  <a class="btn btn-primary" href="/">{{ 'FIND_A_DOJO' | translateFromKey }}</a>
                 </div>
               </div>
             </div>
             <div ng-class="{'col-md-6': $ctrl.manageDojos, 'col-md-12': !$ctrl.manageDojos}" class="col-xs-12">
               <div ng-show="$ctrl.manageDojos">
-                <h4>Member of</h4>
-                <p>Click a Dojo to remove {{ $ctrl.child.name }} from the Dojo. You and any other child will still remain a member of this Dojo.</p>
+                <h4>{{ 'MEMBER_OF' | translateFromKey }}</h4>
+                <p>{{ 'REMOVE_CHILD_FROM_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.name} }}</p>
               </div>
               <cd-picture-grid ng-show="$ctrl.child.dojoListings.length > 0" items="$ctrl.child.dojoListings" on-selection="$ctrl.manageDojos ? $ctrl.removeFromDojo : $ctrl.noop" item-icon="minus" item-icon-color="red" show-item-icons="$ctrl.manageDojos" align="left" size="medium"></cd-picture-grid>
             </div>
             <div class="col-xs-12 col-md-6" ng-show="$ctrl.manageDojos">
-              <h4>Available Dojos</h4>
-              <p>Click on of your Dojos to add {{ $ctrl.child.name }} as a member, or <a href="/">find a new Dojo</a> for them to join.</p>
+              <h4>{{ 'AVAILABLE_DOJOS' | translateFromKey }}</h4>
+              <p ng-bind-html="'ADD_CHILD_TO_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
               <cd-picture-grid ng-show="$ctrl.child.dojosNotMemberOf.length > 0" items="$ctrl.child.dojosNotMemberOf" on-selection="$ctrl.addToDojo" item-icon="plus" item-icon-color="green" show-item-icons="$ctrl.manageDojos" align="left" size="medium"></cd-picture-grid>
             </div>
           </div>

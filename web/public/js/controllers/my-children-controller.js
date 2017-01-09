@@ -13,10 +13,7 @@ function myChildrenCtrl($scope, ownProfile) {
       stateParams: {id: child.userId},
       tabImage: '/api/2.0/profiles/' + child.id + '/avatar_img',
       tabTitle: child.name,
-      tabSubTitle: child.alias,
-      searchParams: {
-        id: child.userId
-      }
+      tabSubTitle: child.alias
     };
   });
 }
