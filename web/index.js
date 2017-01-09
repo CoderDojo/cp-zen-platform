@@ -129,9 +129,11 @@ server.ext('onPreResponse', function (request, reply) {
   // Others routes are handled by the default redirect of auth-cookie
   // Or should not be handled (403 permissions)
   if (status === 403) {
-    var cdfPath = _.isEqual(request.route.settings.auth.scope, ['cdf-admin']);
-    if (cdfPath) {
-      return reply.redirect('/cdf/login?next=' + request.url.path);
+    if (_.has(request.route.settings, 'auth')) {
+      var cdfPath = _.isEqual(request.route.settings.auth.scope, ['cdf-admin']);
+      if (cdfPath) {
+        return reply.redirect('/cdf/login?next=' + request.url.path);
+      }
     }
   }
 
@@ -139,7 +141,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
-  request.log(['error', '40x'], {status: status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '40x'], {status: status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details')? request.response.data.details: request.response.output}, Date.now());
   debug('onPreResponse', 'showing 404 errors page');
   return reply.view('index', request.locals);
 });
@@ -153,7 +155,7 @@ server.ext('onPreResponse', function (request, reply) {
     return reply.continue();
   }
 
-  request.log(['error', '50x'], {status: bodyStatus || headerStatus, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: request.response.details}, Date.now());
+  request.log(['error', '50x'], {status: bodyStatus || headerStatus, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details')? request.response.data.details: request.response.output}, Date.now());
   // Display full error message if not in production environment.
   if (env !== 'production') {
     return reply.continue();
