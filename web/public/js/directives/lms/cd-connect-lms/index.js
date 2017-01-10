@@ -57,21 +57,25 @@ angular
           };
 
           $scope.getLoginURL = function () {
-            cdLMSService.getLoginURL({}, callback);
+            cdLMSService.getLoginURL({}, callback, cbErr);
 
             function callback (link) {
-              if (link.approvalRequired){
+              if (link.approvalRequired) {
                 alertService.confirm(
                   $translate.instant('By using this functionality, you allow us to share basic information with this provider (email, name, user type)') +
                     '\n'+ $translate.instant('Do you agree?'),
                   function (response) {
-                    if(response === true) {
+                    if (response === true) {
                       cdLMSService.getLoginURL({approval: true}, callback);
                     }
                 });
-              } else if(link.url){
+              } else if (link.url) {
                 $window.location.href = link.url;
               }
+            }
+
+            function cbErr (err) {
+              if (err.data && err.data.why) alertService.showError($translate.instant(err.data.why));
             }
           };
         }]

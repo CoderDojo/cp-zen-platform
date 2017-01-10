@@ -19,7 +19,7 @@
                   uib-popover="{@i18n key="Please type Dojo name in English/Latin character a-Z!"/} {@i18n key="Normally named after an area, like 'Cork', or if there are multiple Dojos are in your area 'San Fran @ GitHub'. Try refrain from prefixing the name with 'CoderDojo'."/}"
                   popover-trigger="focus" popover-placement="bottom">
             </div>
-            <div cd-dojo-actions is-dojo-admin="isDojoAdmin" dojo="dojo"></div>
+            <div cd-dojo-actions can-manage-dojo="isDojoAdmin" can-manage-events="isTicketingAdmin" dojo="dojo"></div>
           </div>
         </div>
       </div>

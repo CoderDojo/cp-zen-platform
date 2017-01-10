@@ -9,7 +9,7 @@ angular.module('cpZenPlatform')
       "Loading ...": "Loading ...",
       "Register a Dojo": "Register a Dojo",
       "REQUEST PASSWORD RESET": "REQUEST PASSWORD RESET",
-      "Cancel": "Cancel",
+      CANCEL: "Cancel",
       "Forgot password": "Forgot password?",
       "Register": "Register",
       "Register an account": "Register an account",
@@ -206,7 +206,7 @@ angular.module('cpZenPlatform')
       "FAQ": "FAQ",
       "CoolestProjects2015": "CoolestProjects2015",
       "Opens in new window": "Opens in new window",
-      "Find a Dojo": "Find a Dojo",
+      FIND_A_DOJO: "Find a Dojo",
       "Resources": "Resources",
       "Dojo List": "Dojo List",
       "My Dojos": "My Dojos",
@@ -216,7 +216,7 @@ angular.module('cpZenPlatform')
       "Stats": "Stats",
       "Logout": "Logout",
       "Create a Dojo": "Create a Dojo",
-      "Adult Forums": "Adult Forums",
+      "Forums": "Forums",
       "User Invitation": "User Invitation",
       "User Request": "User Request",
       "User Request is being validated...": "User Request is being validated...",
@@ -314,6 +314,7 @@ angular.module('cpZenPlatform')
       "Tao unverified": "Tao unverified",
       "Join Mailing List": "Join Mailing List",
       "I have read and accept the": "I have read and accept the",
+      "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>": "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>",
       "Terms of Service here": "Terms of Service here",
       "Click on each step to get started": "Click on each step to get started",
       "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.": "Welcome New Champion! The first step towards setting up a Dojo in your area is filling out this form and giving us a little more information about yourself.",
@@ -444,7 +445,7 @@ angular.module('cpZenPlatform')
       "Applicants": "Applicants",
       "Attending": "Attending",
       "Create Event": "Create Event",
-      "Manage": "Manage",
+      MANAGE: "Manage",
       "Attendance": "Attendance",
       "Manage Dojo Events": "Manage Dojo Events",
       "Are you sure you want to cancel this event?": "Are you sure you want to cancel this event?",
@@ -473,7 +474,7 @@ angular.module('cpZenPlatform')
       "Add the maximum amount of participants": "Add the maximum amount of participants",
       "Invites": "Invites",
       "Invite dojo users": "Invite dojo users",
-      "Save": "Save",
+      SAVE: "Save",
       "Save Draft": "Save Draft",
       "Publish": "Publish",
       "Approve": "Approve",
@@ -831,7 +832,7 @@ angular.module('cpZenPlatform')
       "Select Other to create tickets for unlisted types e.g. laptops.": "Select Other to create tickets for unlisted types e.g. laptops.",
       "Cancel Session": "Cancel Session",
       "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?": "Cancelling a session will notify all of the attendees by email. Are you sure you want to continue?",
-      "Avatar": "Avatar",
+      AVATAR: "Avatar",
       "Your profile image is too large. Please resize to a maximum of 640/640 pixels.": "Your profile image is too large. Please resize to a maximum of 640/640 pixels.",
       "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?": "By changing one of the following: Dojo Name, Country, City/Town, your dojo public url will be changed. Do you agree with this?",
       "Avatar upload: file must be an image.": "Avatar upload: file must be an image.",
@@ -1022,6 +1023,24 @@ angular.module('cpZenPlatform')
       "Do you agree?": "Do you agree?",
       "A new dojo has been created": "A new dojo has been created!",
       "You have been invited to a Dojo session": "You have been invited to a Dojo session",
-      CHANGE_ROLE: "Change Role"
+      "Search...": "Search...",
+      CHANGE_ROLE: "Change Role",
+      MY_CHILDREN: "My Children",
+      RECENT_BADGES: "Recent Badges",
+      VIEW_ALL: "View all",
+      DOJOS: "Dojos",
+      ADD_TO_A_DOJO: "Add to a Dojo",
+      CHILD_NO_BADGES: "{{ name }} doesn't have any badges yet. Talk to the organisers of your Dojo to learn how {{ name }} can be rewarded through badges.",
+      CHILD_NO_DOJOS: "{{ name }} isn't a member of a Dojo. Add them to a Dojo you're a member of, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join.",
+      PARENT_NO_DOJOS: "You aren't a member of a Dojo yet. Find and join a Dojo and your children will be automatically be added along with you.",
+      MEMBER_OF: "Member of",
+      REMOVE_CHILD_FROM_DOJO_TEXT: "Click a Dojo to remove {{ name }} from the Dojo. You and any other child will still remain a member of this Dojo.",
+      AVAILABLE_DOJOS: "Available Dojos",
+      ADD_CHILD_TO_DOJO_TEXT: "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
     };
-  });
+  })
+  .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {
+    return function (input, interpolateParams, sanitizeStrategy) {
+      return $translate.instant(translationKeys[input] || input, interpolateParams, null, null, sanitizeStrategy);
+    };
+  }]);

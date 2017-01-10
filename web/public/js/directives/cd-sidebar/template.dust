@@ -1,0 +1,20 @@
+<div>
+  <h1>{{ $ctrl.header }}</h1>
+  <div class="cd-sidebar" ng-class="{'cd-sidebar--child-state-active': $ctrl.baseState !== $ctrl.currentState}">
+    <div class="cd-sidebar__tabs">
+      <a class="cd-sidebar__tab" ng-repeat="tab in $ctrl.tabs" ui-sref="{{ $ctrl.getUiSrefForTab(tab) }}" ui-sref-active="cd-sidebar__tab--active">
+        <div class="cd-sidebar__tab-image-wrapper">
+          <div style="background-image: url({{ tab.tabImage }})" class="cd-sidebar__tab-image"></div>
+        </div>
+        <div class="cd-sidebar__tab-text">
+          <span class="cd-sidebar__tab-title">{{ tab.tabTitle }}</span>
+          <span class="cd-sidebar__tab-sub-title"> {{ tab.tabSubTitle }}</span>
+        </div>
+      </a>
+    </div>
+    <div class="cd-sidebar__content">
+      <ng-transclude ng-show="$ctrl.baseState === $ctrl.currentState"></ng-transclude>
+      <ui-view ng-show="$ctrl.baseState !== $ctrl.currentState"></ui-view>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.cd-loading-scrim {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: fade(@cd-white, 60%);
+  z-index: 1;
+
+  &__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // Utility class for adding to parents of the loading scrim
+  &__parent {
+    position: relative;
+  }
+}

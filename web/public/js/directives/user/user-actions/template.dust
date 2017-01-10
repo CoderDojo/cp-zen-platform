@@ -15,7 +15,8 @@
         {@i18n key="Profile"/}
       </a>
     </li>
-    <li role="menuitem">
+    {! Commenting out until we have actual public profiles, since this is confusing... !}
+    {! <li role="menuitem">
       <a ui-sref="user-profile({userId: cdUA.user.userId, public: true})" target="_blank" ng-if="!publicMode" alt="{@i18n key="Profile"/}">
         <span class="fa-stack">
           <i class="fa fa-stack-2x fa-circle-o"></i>
@@ -23,6 +24,6 @@
         </span>
         {@i18n key="Public profile"/}
       </a>
-    </li>
+    </li> !}
   </ul>
 </div>

@@ -108,7 +108,7 @@
     <h3 class="cd-section-header"><a id="about"></a><a href="#about">{@i18n key="About you"/}</a></h3>
     <div class="panel-body">
       <div>
-        <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion'])">
+        <div class="form-group">
           <label for="notes" class="col-sm-4 control-label">{@i18n key="Bio"/} </label>
           <div class="col-sm-8">
             <textarea class="form-control"  ng-model="profile.notes" placeholder="{@i18n key="Bio"/}" rows="3"></textarea>

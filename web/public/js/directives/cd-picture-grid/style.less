@@ -3,6 +3,10 @@
   flex-wrap: wrap;
   justify-content: center;
 
+  &--left-align {
+    justify-content: flex-start;
+  }
+
   &__item {
     flex: 1 1 208px;
     // TODO: Base off variables so changes in page width will apply down to these.
@@ -16,7 +20,34 @@
 
       .cd-picture-grid__picture {
         box-shadow: 0 0 0 10px @cd-purple, 0 0 0 0 @cd-blue;
+
+        &-icon {
+          box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.2);
+          transform: translateY(-4px);
+        }
+
+        &--image-zoom {
+          background-size: 60%;
+        }
       }
+    }
+
+    &--size-small {
+      flex: 1 1 144px;
+      min-width: 144px;
+      max-width: 144px;
+    }
+
+    &--size-medium {
+      flex: 1 1 176px;
+      min-width: 176px;
+      max-width: 176px;
+    }
+
+    @media screen and (max-width: @screen-xs-max) {
+      flex: 1 1 144px;
+      min-width: 144px;
+      max-width: 144px;
     }
 
     &--selected, &--selected:hover {
@@ -32,21 +63,38 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    transition: box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out, background-size 0.2s ease-in-out;
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    &--image-zoom {
+      background-size: 50%;
+    }
+  }
+
+  &__action-icon {
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 100%;
+    color: @cd-white;
   }
 
   &__caption {
     text-align: center;
     margin-top: 16px;
     font-size: 16px;
-  }
-
-  @media screen and (max-width: @screen-xs-max) {
-    &__item {
-      min-width: 144px;
-      max-width: 144px;
-      flex: 1 1 144px;
-    }
   }
 
   &--wide-card {

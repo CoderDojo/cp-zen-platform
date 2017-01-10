@@ -4,13 +4,15 @@
     <div class="row">
       <div class="col-xs-12">
         <div cd-banner-background class="row">
-          <div class="row">
+          <div class="cd-profile__header">
             <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" alt="{@i18n key="Avatar"/}"
               edit="true" upload="upload"
-              class="col-md-3 hidden-xs"></div>
-            <div class="col-md-6 cd-profile__username">
-              <h2 ng-bind="::profile.name"></h2>
-              <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+              class="cd-profile__avatar"></div>
+            <div class="cd-profile__username">
+              <div class="col-md-offset-1">
+                <h2 ng-bind="::profile.name"></h2>
+                <span ng-bind="::profile.alias" class="cd-profile__alias"></span>
+              </div>
             </div>
           </div>
           <cd-user-actions user="profile" can-edit="canEdit"></cd-user-actions>

@@ -61,23 +61,24 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     }
   }
 
-  dojoUtils.canUpdateDojo = function(user, dojoId) {
+  dojoUtils.isHavingPerm = function(user, dojoId, perm) {
     var deferred = $q.defer();
-    if(user.data && !_.isEmpty(user.data)){
+    if (user.data && !_.isEmpty(user.data)) {
+      var isCDF = _.includes(user.data.roles, 'cdf-admin');
       var query = {userId: user.data.id, dojoId: dojoId};
-      var isCDFAdmin = _.includes(user.data.roles, 'cdf-admin');
-      if (isCDFAdmin) {
-        deferred.resolve(isCDFAdmin);
+      var isHavingPerm = _.includes(user.data.roles, perm);
+      if (isHavingPerm || isCDF) {
+        deferred.resolve(isHavingPerm || isCDF);
       } else {
         cdDojoService.getUsersDojos(query, function (userDojo) {
-          if(!userDojo || userDojo.length < 1){ return deferred.reject(); }
+          if (!userDojo || userDojo.length < 1){ return deferred.reject(); }
 
-          var isDojoAdmin = _.find(userDojo[0].userPermissions, function (userPermission) {
-            return userPermission.name === 'dojo-admin';
+          var isHavingPerm = _.find(userDojo[0].userPermissions, function (userPermission) {
+            return userPermission.name === perm;
           });
-          if(!_.isEmpty(isDojoAdmin) && !_.isUndefined(isDojoAdmin)){
+          if (!_.isEmpty(isHavingPerm) && !_.isUndefined(isHavingPerm)) {
             deferred.resolve(true);
-          }else {
+          } else {
             deferred.reject(false);
           }
         }, function (err) {

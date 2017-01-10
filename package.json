@@ -9,7 +9,8 @@
     "postinstall": "cd web && bower install",
     "test": "./node_modules/.bin/gulp test",
     "jshint-check": "./node_modules/.bin/gulp jshint",
-    "lint-lib": "./node_modules/.bin/gulp semistandard"
+    "lint-lib": "./node_modules/.bin/gulp semistandard",
+    "gulp": "./node_modules/.bin/gulp"
   },
   "pre-commit": [
     "test"

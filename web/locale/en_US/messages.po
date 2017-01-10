@@ -33,6 +33,9 @@ msgstr "REQUEST PASSWORD RESET"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Discard Changes"
+msgstr "Discard Changes"
+
 msgid "Forgot password"
 msgstr "Forgot password?"
 
@@ -663,8 +666,8 @@ msgstr "Logout"
 msgid "Create a Dojo"
 msgstr "Create a Dojo"
 
-msgid "Adult Forums"
-msgstr "Adult Forums"
+msgid "Forums"
+msgstr "Forums"
 
 msgid "User Invitation"
 msgstr "User Invitation"
@@ -3154,3 +3157,75 @@ msgstr "You have been invited to a Dojo session"
 
 msgid "Change Role"
 msgstr "Change Role"
+
+msgid "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
+msgstr "I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"
+
+msgid "Donate"
+msgstr "Donate"
+
+msgid "Maintained by"
+msgstr "Maintained by"
+
+msgid "Attend a Dojo"
+msgstr "Attend a Dojo"
+
+msgid "Volunteer"
+msgstr "Volunteer"
+
+msgid "News"
+msgstr "News"
+
+msgid "Community"
+msgstr "Community"
+
+msgid "Help us translate"
+msgstr "Help us translate"
+
+msgid "Search..."
+msgstr "Search..."
+
+msgid "Contribute"
+msgstr "Contribute"
+
+msgid "UserType not allowed"
+msgstr "UserType not allowed"
+
+msgid "An invitation has been sent by email"
+msgstr "An invitation has been sent by email"
+
+msgid "My Children"
+msgstr "My Children"
+
+msgid "Recent Badges"
+msgstr "Recent Badges"
+
+msgid "View all"
+msgstr "View all"
+
+msgid "Dojos"
+msgstr "Dojos"
+
+msgid "Add to a Dojo"
+msgstr "Add to a Dojo"
+
+msgid "{{ name }} doesn't have any badges yet. Talk to the organisers of your Dojo to learn how {{ name }} can be rewarded through badges."
+msgstr "{{ name }} doesn't have any badges yet. Talk to the organisers of your Dojo to learn how {{ name }} can be rewarded through badges."
+
+msgid "{{ name }} isn't a member of a Dojo. Add them to a Dojo you're a member of, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
+msgstr "{{ name }} isn't a member of a Dojo. Add them to a Dojo you're a member of, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
+
+msgid "You aren't a member of a Dojo yet. Find and join a Dojo and your children will be automatically be added along with you."
+msgstr "You aren't a member of a Dojo yet. Find and join a Dojo and your children will be automatically be added along with you."
+
+msgid "Member of"
+msgstr "Member of"
+
+msgid "Click a Dojo to remove {{ name }} from the Dojo. You and any other child will still remain a member of this Dojo."
+msgstr "Click a Dojo to remove {{ name }} from the Dojo. You and any other child will still remain a member of this Dojo."
+
+msgid "Available Dojos"
+msgstr "Available Dojos"
+
+msgid "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
+msgstr "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."

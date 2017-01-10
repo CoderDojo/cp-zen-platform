@@ -4,9 +4,9 @@
       <a href="/">
         <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
       </a>
-      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">Donate</a>
+      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">{@i18n key="Donate"/}</a>
       <form class="cd-menu__search" role="search" action="https://coderdojo.com/">
-        <input class="cd-menu__search-input" type="text" placeholder="Search..." name="s" />
+        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/} name="s" />
         <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
       </form>
       <div class="cd-menu__flex-spacer"></div>
@@ -22,6 +22,7 @@
           <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
           <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
           <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
+          <li class="cd-menu__parent-link"><a href="/dashboard/children">{@i18n key="My Children"/}</a></li>
           <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
           <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
           <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
@@ -43,8 +44,9 @@
           <i class="cd-menu__dropdown-icon fa fa-chevron-down"></i>
           <ul>
             <li><a href="/badges">{@i18n key="Badges"/}</a></li>
-            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
+            <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
             <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+            <li><a href="http://coolestprojects.org/">Coolest Projects</a></li>
           </ul>
         </span>
       </li>
@@ -68,7 +70,7 @@
     </div>
     <div class="cd-menu__content">
       <div class="cd-menu__content-block cd-menu__search">
-        <input class="cd-menu__search-input" type="text" placeholder="Search...">
+        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/}>
         <button class="cd-menu__search-button" type="button"><span class="fa fa-search fa-2x"></span></button>
       </div>
       <div class="cd-menu__content-block cd-menu__account">
@@ -96,6 +98,7 @@
                 <li><a class="cd-menu__profile-link">{@i18n key="My Profile"/}</a></li>
                 <li><a href="/dashboard/my-dojos">{@i18n key="My Dojos"/}</a></li>
                 <li><a href="/dashboard/dojos/events/user-events">{@i18n key="My Events"/}</a></li>
+                <li class="cd-menu__parent-link"><a href="/dashboard/children">{@i18n key="My Children"/}</a></li>
                 <li class="cd-menu__e-learning-link"><a href="/dashboard/profile/lms">{@i18n key="E-learning"/}</a></li>
                 <li class="cd-menu__cdf-admin-link"><a href="/dashboard/manage-dojos">{@i18n key="Manage Dojos"/}</a></li>
                 <li class="cd-menu__cdf-admin-link"><a href="http://badgekit.coderdojo.com/">{@i18n key="Badgekit"/}</a></li>
@@ -127,8 +130,9 @@
               </div>
               <ul class="cd-menu__content-block">
                 <li><a href="https://coderdojo.com/community/badges/">{@i18n key="Badges"/}</a></li>
-            <li><a href="https://forums.coderdojo.com/">{@i18n key="Adult Forums"/}</a></li>
-            <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+                <li><a href="https://forums.coderdojo.com/">{@i18n key="Forums"/}</a></li>
+                <li><a href="https://ninjaforums.coderdojo.com/">{@i18n key="Ninja Forums"/}</a></li>
+                <li><a href="http://coolestprojects.org/">Coolest Projects</a></li>
               </ul>
             </div>
           </div>

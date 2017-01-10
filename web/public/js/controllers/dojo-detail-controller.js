@@ -32,12 +32,20 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
   });
 
-  dojoUtils.canUpdateDojo(currentUser, dojo.id)
-  .then(function(){
+  dojoUtils.isHavingPerm(currentUser, dojo.id, 'dojo-admin')
+  .then(function () {
     $scope.isDojoAdmin = true;
   })
-  .catch(function(){
+  .catch(function () {
     $scope.isDojoAdmin = false;
+  });
+
+  dojoUtils.isHavingPerm(currentUser, dojo.id, 'ticketing-admin')
+  .then(function () {
+    $scope.isTicketingAdmin = true;
+  })
+  .catch(function () {
+    $scope.isTicketingAdmin = false;
   });
 
   $scope.$watch('model.map', function(map){
