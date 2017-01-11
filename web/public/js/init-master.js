@@ -71,8 +71,16 @@
   };
 
   var resolves = {
-    profile: function($stateParams, cdUsersService){
-      return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
+    profile: function($stateParams, cdUsersService, $q){
+      if ($stateParams.userId) {
+        return cdUsersService.userProfileDataPromise({userId: $stateParams.userId}).then(winCb, failCb);
+      } else {
+        return $q.resolve({
+          data: {
+            error: 'userId not provided'
+          }
+        });
+      }
     },
     // profile is silently failling to allow us to use optional resolves
     ownProfile: function(auth, cdUsersService){
@@ -102,8 +110,14 @@
     hiddenFields: function(cdUsersService){
       return cdUsersService.getHiddenFieldsPromise().then(winCb, failCb);
     },
-    championsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
+    championsForUser: function ($stateParams, cdUsersService, $q) {
+      if ($stateParams.userId) {
+        return cdUsersService.loadChampionsForUserPromise($stateParams.userId).then(winCb, failCb);
+      } else {
+        return $q.resolve({
+          data: []
+        });
+      }
     },
     championsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
       return auth.get_loggedin_user_promise().then(function (currentUser) {
@@ -114,8 +128,14 @@
         }
       }, failCb);
     },
-    parentsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
+    parentsForUser: function ($stateParams, cdUsersService, $q) {
+      if ($stateParams.userId) {
+        return cdUsersService.loadParentsForUserPromise($stateParams.userId).then(winCb, failCb);
+      } else {
+        return $q.resolve({
+          data: []
+        });
+      }
     },
     parentsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
       return auth.get_loggedin_user_promise().then(function (currentUser) {
@@ -138,8 +158,14 @@
         }
       });
     },
-    dojoAdminsForUser: function ($stateParams, cdUsersService) {
-      return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+    dojoAdminsForUser: function ($stateParams, cdUsersService, $q) {
+      if ($stateParams.userId) {
+        return cdUsersService.loadDojoAdminsForUserPromise($stateParams.userId).then(winCb, failCb);
+      } else {
+        return $q.resolve({
+          data: []
+        });
+      }
     },
     dojoAdminsForLoggedInUser: function ($stateParams, cdUsersService, auth) {
       return auth.get_loggedin_user_promise().then(function (currentUser) {
