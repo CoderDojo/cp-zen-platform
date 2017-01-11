@@ -35,7 +35,7 @@
           <div class="cd-simple-flex-grid cd-simple-flex-grid--align-baseline">
             <h3 class="cd-simple-flex-grid__flex-1">{{ 'DOJOS' | translateFromKey }}</h3>
             <div>
-              <button ng-show="!$ctrl.manageDojos && ($ctrl.child.dojoListings.length > 0 || $ctrl.child.dojosNotMemberOf > 0)" class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()"><i class="fa fa-gear"></i>{{ 'MANAGE' | translateFromKey }}</button>
+              <button ng-show="!$ctrl.manageDojos && ($ctrl.child.dojoListings.length > 0 || $ctrl.child.dojosNotMemberOf.length > 0)" class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()"><i class="fa fa-gear"></i>{{ 'MANAGE' | translateFromKey }}</button>
               <div class="cd-simple-flex-grid" ng-show="$ctrl.manageDojos">
                 <button class="btn btn-secondary" ng-click="$ctrl.toggleManageDojos()">{{ 'CANCEL' | translateFromKey }}</button>
                 <button class="btn btn-primary" ng-click="$ctrl.saveDojos()"><i class="fa fa-check"></i>{{ 'SAVE' | translateFromKey }}</button>
@@ -44,7 +44,7 @@
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <div ng-show="!$ctrl.manageDojos && $ctrl.child.dojoListings.length === 0 && $ctrl.child.dojosNotMemberOf > 0" class="cd-child-card__section-placeholder-text">
+              <div ng-show="!$ctrl.manageDojos && $ctrl.child.dojoListings.length === 0 && $ctrl.child.dojosNotMemberOf.length > 0" class="cd-child-card__section-placeholder-text">
                 <p ng-if="$ctrl.child.dojoListings.length === 0" class="lead" ng-bind-html="'CHILD_NO_DOJOS' | translateFromKey:{name: $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
                 <div>
                   <button ng-if="$ctrl.child.dojoListings.length === 0" class="btn btn-primary" ng-click="$ctrl.toggleManageDojos()">{{ 'ADD_TO_A_DOJO' | translateFromKey }}</button>
