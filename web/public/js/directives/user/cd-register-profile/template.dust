@@ -2,7 +2,7 @@
   <div class="row" ng-enter="noop()">
     <div class="col-sm-offset-2 col-sm-8 col-xs-12">
       <div class="input-group form-group">
-        <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="userFormData.profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of Birth"/}'" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" is-open="picker.opened" ng-click="open()" />
+        <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-append-to-body="true" popup-placement="bottom-left" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="userFormData.profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of Birth"/}'" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" is-open="picker.opened" ng-click="open()" />
         <span class="input-group-btn" ng-class="{'topValign':signup-form.$submitted && signup-form.dateOfBirth.$error.required}">
           <button type="button" class="btn btn-default" ng-click="open()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
         </span>
