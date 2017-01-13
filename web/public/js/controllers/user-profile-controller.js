@@ -165,7 +165,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
-  $scope.canEdit = $scope.profile.ownProfileFlag || $scope.profile.myChild;
+  $scope.ownProfileFlag = profileUserId === loggedInUserId;
+  $scope.canEdit = $scope.ownProfileFlag || loggedInUserIsParent();
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
@@ -514,24 +515,24 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       case 'champion':
         return true; //Always public
       case 'mentor':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         return !$scope.isPrivate;
       case 'parent-guardian':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
-        return false; //Always private
+        return !$scope.isPrivate; //Always private
       case 'attendee-o13':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return !$scope.isPrivate;
       case 'attendee-u13':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
@@ -548,7 +549,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       case 'champion':
       case 'mentor':
       case 'parent-guardian':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
         if($scope.loggedInUserIsCDFAdmin()) return true;
@@ -610,7 +611,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         loggedInUserIsChampion() ||
         loggedInUserIsDojoAdmin() ||
         loggedInUserIsParent() ||
-        $scope.profile.ownProfileFlag ||
+        $scope.ownProfileFlag ||
         $scope.hideConfigurableFieldsBlock(block)) return false;
       return true;
     }
@@ -621,13 +622,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(loggedInUserIsChampion()) return false;
     if(loggedInUserIsDojoAdmin()) return false;
     if(loggedInUserIsParent()) return false;
-    if($scope.profile.ownProfileFlag) return false;
+    if($scope.ownProfileFlag) return false;
     return true;
   }
 
-  $scope.canMakeProfilePrivate = function () {
-    if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') return true;
-    return false;
+  $scope.canSwitchPrivate = function () {
+    if ($scope.highestUserType === 'attendee-o13') return false;
+    return true;
   }
 
   $scope.canUpdateHiddenField = function (hiddenField) {
@@ -635,7 +636,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.hideChampionProfileBlock = function (block) {
-    if($scope.profile.ownProfileFlag) return false;
+    if($scope.ownProfileFlag) return false;
     if($scope.profile.optionalHiddenFields && $scope.profile.optionalHiddenFields[block]) return true;
     return false;
   }

@@ -1,4 +1,4 @@
-<div class="profile-section" ng-show="initialForm()" >
+<div class="profile-section" ng-show="initialForm()" ng-hide="!editMode && categories.length === 0" >
   <h3 class="cd-section-header"><a id="badges"></a><a href="#badges">{@i18n key="Badges"/}</a></h3>
 
   <button ng-show="false" ng-if="(loggedInUser.id === profile.userId)" ng-click="exportBadges()" class="btn btn-sm btn-primary pull-right">{@i18n key="Export Badges"/}</button>

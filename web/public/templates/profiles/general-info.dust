@@ -1,9 +1,9 @@
 
-<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="profile.ownProfileFlag || profile.myChild">
+<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="ownProfileFlag || myChild">
   <h3 class="cd-section-header"><a id="details"></a><a href="#details">{@i18n key="Your Details"/}</a></h3>
   <div class="panel-body">
     <div>
-      <div ng-if="!profile.ownProfileFlag && !profile.myChild">
+      <div ng-if="!ownProfileFlag && !myChild">
         <p ng-if="profile.name && hasAccess(profile.userTypes, ['champion', 'mentor'])">{@i18n key="Name"/}: {{ profile.name }}</p>
         <p ng-if="profile.alias">{@i18n key="Alias"/}: {{ profile.alias }}</p>
         <p ng-if="profile.notes">{{ profile.notes }}</p>
@@ -158,7 +158,7 @@
             </label>
           </div>
         </div>
-        <div class="form-group form-inline full-width" ng-if="canMakeProfilePrivate()">
+        <div class="form-group form-inline full-width" ng-if="canSwitchPrivate()">
           <label class="col-sm-4 control-label">{@i18n key="Private Profile"/} </label>
           <div class="radio">
             <input type="radio" ng-model="profile.private" name="privateProfile" id="privateProfile-yes" value="true">

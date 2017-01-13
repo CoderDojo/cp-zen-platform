@@ -1,5 +1,5 @@
 <div ng-if="!editMode && !publicChampion" class="pull-right alert-container alert-right">
-  <div class="alert alert-info alert-right" ng-if="(parentProfile && profile.ownProfileFlag) || (!parentProfile && profile.myChild)">
+  <div class="alert alert-info alert-right" ng-if="(parentProfile && ownProfileFlag) || (!parentProfile && profile.myChild)">
     <span class="info-button fa fa-info-circle ng-scope" tabindex="1"></span>
     {@i18n key="Only your username and profile picture are publicly viewable. Other fields are for administration purposes only. "/}
     <div class="text-center"><a ng-click="publicProfile()">{@i18n key="Click to view your public profile"/}</a></div>
