@@ -29,7 +29,7 @@ angular
               $scope.eventUserSelection[$scope.dojoId].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
               $scope.eventUserSelection[$scope.dojoId] = _.uniq($scope.eventUserSelection[$scope.dojoId], function (user) { return user.userId; });
               if (isAdult) {
-                cdUsersService.loadNinjasForUser($scope.currentUser.id, function (ninjas) {
+                cdUsersService.loadChildrenForUser($scope.currentUser.id, function (ninjas) {
                   _.each(ninjas, function (ninja) {
                     $scope.eventUserSelection[$scope.dojoId].push({userId: ninja.userId, title: ninja.name});
                     $scope.eventUserSelection[$scope.dojoId] = _.uniq($scope.eventUserSelection[$scope.dojoId], function (user) { return user.userId; });

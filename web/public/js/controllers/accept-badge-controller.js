@@ -6,12 +6,11 @@ function cdAcceptBadgeCtrl($scope, $state, cdBadgesService, cdUsersService, aler
 
   var parent = false;
 
+  // Validate from parent for a kid
   auth.get_loggedin_user(function (user) {
-    if (user){
-      cdUsersService.userProfileData({userId: user.id}, function(profile){
-        _.each(profile.children, function(child){
-          if (child === userId) parent = true;
-        })
+    if (user) {
+      cdUsersService.loadChildrenForUser(user.id, function (children) {
+        parent = _.includes(_.map(children, 'userId'), userId);
         finish();
       })
     } else finish();

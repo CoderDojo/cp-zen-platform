@@ -118,6 +118,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.isPrivate = profile.data.private;
+  $scope.myChild = loggedInUserIsParent();
 
   $scope.showBadgeModal = function (badge) {
     var badgeModal = $uibModal.open({
@@ -166,7 +167,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.profile = profile.data;
   $scope.ownProfileFlag = profileUserId === loggedInUserId;
-  $scope.canEdit = $scope.ownProfileFlag || loggedInUserIsParent();
+  $scope.canEdit = $scope.ownProfileFlag || $scope.myChild;
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
@@ -233,6 +234,15 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       }
     }, function (err) {
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
+    });
+
+    cdUsersService.loadChildrenForUser($stateParams.userId, function (children) {
+      $scope.profile.resolvedChildren = children;
+    });
+
+    cdUsersService.loadParentsForUserPromise($stateParams.userId)
+    .then(function (parents) {
+      $scope.profile.resolvedParents = parents;
     });
   }
 
@@ -569,7 +579,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   function loggedInUserIsParent() {
     if(!loggedInUser.data) return false;
     return _.find(parentsForUser.data, function (parentForUser) {
-      return parentForUser.id === loggedInUser.data.id;
+      return parentForUser.userId === loggedInUser.data.id;
     });
   }
 
@@ -589,8 +599,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   function loggedInUserIsChild() {
     if(!loggedInUser.data) return false;
-    return _.find(profile.data.resolvedChildren, function (children) {
-      return children.userId === loggedInUser.data.id;
+    return _.find(profile.data.children, function (child) {
+      return child === loggedInUser.data.id;
     });
   }
 

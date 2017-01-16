@@ -31,7 +31,7 @@
                     $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: $scope.currentUser.id, title: $translate.instant('Myself')});
                     $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });
                     if (isAdult) {
-                      cdUsersService.loadNinjasForUser(currentUser.id, function (ninjas) {
+                      cdUsersService.loadChildrenForUser(currentUser.id, function (ninjas) {
                         _.each(ninjas, function (ninja) {
                           $scope.eventUserSelection[dojoEvents.dojo.id].push({userId: ninja.userId, title: ninja.name});
                           $scope.eventUserSelection[dojoEvents.dojo.id] = _.uniq($scope.eventUserSelection[dojoEvents.dojo.id], function (user) { return user.userId; });

@@ -38,10 +38,8 @@ function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utils
           $scope.profile = profile;
           if (profile.children) {
             var children = {};
-            _.forEach(profile.children, function(child, index){
-              cdUsersService.userProfileData({userId: child}, function(childProfile){
-                profile.children[index] = childProfile;
-              });
+            cdUsersService.loadChildrenForUser($scope.user.id, function (children) {
+                profile.children = children;
             });
           }
         }
