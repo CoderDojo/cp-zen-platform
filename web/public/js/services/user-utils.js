@@ -13,6 +13,17 @@ angular.module('cpZenPlatform').factory('userUtils',
     return moment.utc().diff(moment(birthDate), 'years');
   };
 
+  userUtils.getBaseUserTypeByAge = function (birthDate) {
+    var age = this.getAge(birthDate);
+    if (age < 13) {
+      return 'attendee-u13';
+    } else if (age < 18) {
+      return 'attendee-o13';
+    } else {
+      return 'parent-guardian';
+    }
+  };
+
   userUtils.doRegister = function (userFormData) {
     if(!userFormData.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
     delete userFormData.passwordConfirm;

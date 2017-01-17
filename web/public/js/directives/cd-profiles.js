@@ -29,27 +29,6 @@ function listOfBadges(){
   };
 }
 
-function listOfChildren(){
-  return {
-    restrict: 'E',
-    templateUrl: '/profiles/template/children-list',
-    controller: ['$scope', '$state', function($scope, $state) {
-      var watcher = $scope.$watch('profile.resolvedChildren', function(newChildren){
-        if(!_.isEmpty(newChildren)){
-          _.each($scope.profile.resolvedChildren, function(user, index){
-            $scope.profile.resolvedChildren[index].href = $state.href('user-profile', {userId: user.userId});
-            $scope.profile.resolvedChildren[index].picture = '/api/2.0/profiles/' + user.id + '/avatar_img';
-            $scope.profile.resolvedChildren[index].caption = user.name;
-          });
-        }
-      });
-      $scope.$on('$destroy', function(){
-        watcher();
-      });
-    }]
-  };
-}
-
 function generalInfo(){
   return {
     restrict: 'E',
@@ -115,7 +94,6 @@ angular
   .directive('programmingLanguagesList', listOfProgrammingLanguages)
   .directive('languagesSpokenList', listOfLanguagesSpoken)
   .directive('badgesList', listOfBadges)
-  .directive('childrenList', listOfChildren)
   .directive('generalInfo', generalInfo)
   .directive('parentsList', listOfParents)
   .directive('bio', bio)

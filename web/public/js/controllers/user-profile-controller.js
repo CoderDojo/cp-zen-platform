@@ -1,3 +1,5 @@
+/* globals inviteNinjaForm */
+
 'use strict';
 
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
@@ -37,8 +39,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $scope.inviteNinjaPopover = {
         title: $translate.instant('Invite Youth over 13'),
         templateUrl: '/profiles/template/invite-ninja-over-13',
-        placement: 'top',
-        placeholder: $translate.instant('Enter Youth Email Address'),
+        placement: 'top-right',
+        placeholder: $translate.instant('Email'),
         show: false
       };
     } else {
@@ -385,7 +387,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
+    console.log('profile', profile);
+    //cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){
@@ -665,14 +668,14 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
       $scope.inviteNinjaPopover.show = false;
-      $scope.inviteNinjaPopover.email = '';
+      inviteNinjaForm.reset();
       if(response.ok === false) return alertService.showError($translate.instant(response.why));
       return alertService.showAlert($translate.instant('Invite Sent'));
     }, function (err) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showError($translate.instant('Error inviting Ninja'));
       $scope.inviteNinjaPopover.show = false;
-      $scope.inviteNinjaPopover.email = '';
+      inviteNinjaForm.reset();
     });
   }
 
