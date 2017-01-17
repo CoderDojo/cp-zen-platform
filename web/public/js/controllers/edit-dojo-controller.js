@@ -322,8 +322,9 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
           });
         }
       }, function (err) {
+        err = err.data || err;
         alertService.showError(
-          $translate.instant('An error has occurred while saving') + ': <br /> ' +
+          $translate.instant('An error has occurred while saving') + ': <br />' +
           (err.error || JSON.stringify(err))
         );
       });

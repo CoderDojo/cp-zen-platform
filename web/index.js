@@ -147,23 +147,7 @@ server.ext('onPreResponse', function (request, reply) {
 });
 
 // Handler for 500
-server.ext('onPreResponse', function (request, reply) {
-  var headerStatus = _.get(request, 'response.statusCode', 500);
-  var bodyStatus = _.get(request, 'response.output.payload.statusCode', undefined);
-
-  if (headerStatus !== 500 && bodyStatus !== 500) {
-    return reply.continue();
-  }
-
-  request.log(['error', '50x'], {status: bodyStatus || headerStatus, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details')? request.response.data.details: request.response.output}, Date.now());
-  // Display full error message if not in production environment.
-  if (env !== 'production') {
-    return reply.continue();
-  }
-  // Otherwise, give a generic error reply to hide errors in production.
-  debug('onPreResponse', 'showing 500 errors page');
-  return reply.view('errors/500', request.locals);
-});
+server.ext('onPreResponse', require('./lib/http-error-handler')(server));
 
 server.register(require('hapi-auth-cookie'), function (err) {
     server.auth.strategy('seneca-login', 'cookie', {
