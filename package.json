@@ -28,6 +28,7 @@
     "async": "0.9.2",
     "blankie": "1.1.1",
     "blipp": "2.3.0",
+    "boom": "2.10.1",
     "chairo": "0.2.0",
     "chairo-cache": "0.5.2",
     "connect-redis": "2.3.0",
