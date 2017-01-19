@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils, $uibModal) {
+  agreement ,championsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils, $uibModal) {
 
   $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
   if(profile.err || loggedInUser.err || (usersDojos && usersDojos.err) || (hiddenFields && hiddenFields.err) || (agreement && agreement.err)){
@@ -32,6 +32,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
+    // TODO : check this w/ async loggedInUserIsParent
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
       $scope.inviteNinjaPopover = {
@@ -236,14 +237,24 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
 
-    cdUsersService.loadChildrenForUser($stateParams.userId, function (children) {
-      $scope.profile.resolvedChildren = children;
-    });
+    if ($scope.profile.children && $scope.profile.children.length > 0) {
+      // setTimeout(function(){
+        cdUsersService.loadChildrenForUser($stateParams.userId)
+        .then(function (response) {
+          $scope.profile.resolvedChildren = response.data;
+        });
+      // }, 10000)
 
-    cdUsersService.loadParentsForUserPromise($stateParams.userId)
-    .then(function (parents) {
-      $scope.profile.resolvedParents = parents;
-    });
+    }
+
+    if ($scope.profile.parents && $scope.profile.parents.length > 0) {
+      // setTimeout(function(){
+        cdUsersService.loadParentsForUserPromise($stateParams.userId)
+        .then(function (parents) {
+          $scope.profile.resolvedParents = parents;
+        });
+      // }, 10000)
+    }
   }
 
 
@@ -534,7 +545,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
-        return !$scope.isPrivate; //Always private
+        return !$scope.isPrivate;
       case 'attendee-o13':
         if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
@@ -577,10 +588,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
 
   function loggedInUserIsParent() {
-    if(!loggedInUser.data) return false;
-    return _.find(parentsForUser.data, function (parentForUser) {
-      return parentForUser.userId === loggedInUser.data.id;
-    });
+    if(!loggedInUser.data || !$scope.profile) return false;
+    return _.find($scope.profile.parents, loggedInUser.data.id);
   }
 
   function loggedInUserIsChampion() {
@@ -759,4 +768,4 @@ angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', 'userUtils', '$uibModal', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', 'userUtils', '$uibModal', cdUserProfileCtrl]);

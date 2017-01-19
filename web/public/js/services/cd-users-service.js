@@ -93,7 +93,7 @@ function cdUsersService(cdApi, $q){
       cdApi.post('profiles/approve-invite-ninja', {data: data}, win, fail || topfail);
     },
     loadChildrenForUser: function (userId, win, fail) {
-      cdApi.get('profiles/children-for-user/' + userId, win, fail || topfail);
+      return cdApi.get('profiles/children-for-user/' + userId, win, fail || topfail);
     },
     loadPrevFounder: function(userId, win, fail) {
       cdApi.get('users/load-previous-founder/' + userId, win, fail || topfail);

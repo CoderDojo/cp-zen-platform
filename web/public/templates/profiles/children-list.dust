@@ -9,3 +9,4 @@
     <button ng-show="initialForm()" ng-if="loggedInUser.id === profile.userId" class="btn btn-sm btn-primary panel-heading-button pull-right" ui-sref="add-child({userType: 'attendee-o13', parentId: profile.userId})">{@i18n key="Add Youth over 13"/}</button>
   </div>
 </div>
+<i ng-show="!profile.resolvedChildren && profile.children" class="fa fa-spinner fa-pulse fa-3x fa-fw col-xs-offset-6"></i>
