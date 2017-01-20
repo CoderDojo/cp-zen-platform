@@ -238,22 +238,17 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     });
 
     if ($scope.profile.children && $scope.profile.children.length > 0) {
-      // setTimeout(function(){
         cdUsersService.loadChildrenForUser($stateParams.userId)
         .then(function (response) {
           $scope.profile.resolvedChildren = response.data;
         });
-      // }, 10000)
-
     }
 
     if ($scope.profile.parents && $scope.profile.parents.length > 0) {
-      // setTimeout(function(){
         cdUsersService.loadParentsForUserPromise($stateParams.userId)
         .then(function (parents) {
           $scope.profile.resolvedParents = parents;
         });
-      // }, 10000)
     }
   }
 
