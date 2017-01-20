@@ -387,8 +387,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    console.log('profile', profile);
-    //cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
+    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){

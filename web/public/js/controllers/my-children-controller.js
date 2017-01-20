@@ -2,8 +2,10 @@
 
 function myChildrenCtrl($scope, $state, $translate, ownProfile, cdUsersService) {
   $scope.parentProfileData = ownProfile.data;
+  $scope.tabs = [];
 
   function loadChildrenTabs () {
+
     cdUsersService.loadChildrenForUser($scope.parentProfileData.userId, function (children) {
       $scope.children = _.sortBy(children, [function (child) {
         return child.name.toLowerCase();

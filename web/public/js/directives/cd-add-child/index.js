@@ -13,7 +13,7 @@
         var ctrl = this;
 
         ctrl.save = function () {
-          ctrl.profile.userTypes = [userUtils.getBaseUserTypeByAge(ctrl.profile.dateOfBirth)];
+          ctrl.profile.userTypes = [userUtils.getBaseUserTypeByAge(ctrl.profile.dob)];
           var fieldsToCopy = [
             'admin1Code',
             'admin1Name',
