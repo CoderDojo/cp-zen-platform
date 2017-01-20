@@ -1,5 +1,6 @@
 
-<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)" role="form" ng-if="ownProfileFlag || myChild">
+<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)"
+  role="form" ng-if="canEdit">
   <h3 class="cd-section-header"><a id="details"></a><a href="#details">{@i18n key="Your Details"/}</a></h3>
   <div class="panel-body">
     <div>

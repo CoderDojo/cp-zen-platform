@@ -119,7 +119,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.isPrivate = profile.data.private;
-  $scope.myChild = loggedInUserIsParent();
 
   $scope.showBadgeModal = function (badge) {
     var badgeModal = $uibModal.open({
@@ -167,8 +166,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
+  $scope.myChild = loggedInUserIsParent();
   $scope.ownProfileFlag = profileUserId === loggedInUserId;
-  $scope.canEdit = $scope.ownProfileFlag || $scope.myChild;
+  $scope.canEdit = $scope.ownProfileFlag || $scope.myChild || $state.current.name === 'add-child';
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
@@ -238,17 +238,17 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     });
 
     if ($scope.profile.children && $scope.profile.children.length > 0) {
-        cdUsersService.loadChildrenForUser($stateParams.userId)
-        .then(function (response) {
-          $scope.profile.resolvedChildren = response.data;
-        });
+      cdUsersService.loadChildrenForUser($stateParams.userId)
+      .then(function (response) {
+        $scope.profile.resolvedChildren = response.data;
+      });
     }
 
     if ($scope.profile.parents && $scope.profile.parents.length > 0) {
-        cdUsersService.loadParentsForUserPromise($stateParams.userId)
-        .then(function (parents) {
-          $scope.profile.resolvedParents = parents;
-        });
+      cdUsersService.loadParentsForUserPromise($stateParams.userId)
+      .then(function (parents) {
+        $scope.profile.resolvedParents = parents;
+      });
     }
   }
 
@@ -582,9 +582,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
 
+  // We use profile.data instead of $scope.profile because this is called before we assign $scope.profile
   function loggedInUserIsParent() {
-    if(!loggedInUser.data || !$scope.profile) return false;
-    return _.find($scope.profile.parents, loggedInUser.data.id);
+    if(!loggedInUser.data || !profile.data) return false;
+    return _.includes(profile.data.parents, loggedInUser.data.id);
   }
 
   function loggedInUserIsChampion() {
@@ -708,8 +709,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
     return true;
   };
-
-  $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+  if ($scope.editMode) {
+    $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+  }
 
   $scope.addChild = function () { //add another child object
     var child = {
@@ -752,11 +754,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $state.go('user-profile', {userId: userId});
     }
   }
-
-  if(profile.data.userType==='attendee-o13' || !$stateParams.eventId){ //youth can't have children
-    $scope.profile.children = null;
-  }
-
 }
 
 angular.module('cpZenPlatform')

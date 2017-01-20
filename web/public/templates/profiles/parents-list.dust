@@ -15,4 +15,6 @@
     </div>
   </div>
 </div>
-<i ng-show="!profile.resolvedParents && profile.parents" class="fa fa-spinner fa-pulse fa-3x fa-fw col-xs-offset-6"></i>
+<div ng-show="!profile.resolvedParents && profile.parents.length > 0 && !editMode">
+  <i class="fa fa-spinner fa-pulse fa-3x fa-fw col-xs-offset-6"></i>
+</div>
