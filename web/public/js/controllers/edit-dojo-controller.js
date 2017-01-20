@@ -110,8 +110,8 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     $scope.disableDojoCountryChange = ($scope.dojo.verified && !$scope.isCDFAdmin) === true;
     $scope.prevFounder = prevFounder;
     $scope.founder = angular.copy(prevFounder);
-    loadDojoMap();
     updateFromLocalStorage();
+    loadDojoMap();
   });
 
   $scope.getUsersByEmails = function (email) {
@@ -205,7 +205,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         $scope.dojo.place = lsed.place;
         $scope.setPlace($scope.dojo, lsed.place);
       }
-      if (lsed.country && lsed.place) {
+      if (lsed.country && lsed.place && !lsed.coordinates) {
         $scope.getLocationFromAddress();
       }
       if (lsed.address1) $scope.dojo.address1 = lsed.address1;
@@ -218,6 +218,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       if (lsed.twitter) $scope.dojo.twitter = lsed.twitter;
       if (lsed.supporterImage) $scope.dojo.supporterImage = lsed.supporterImage;
       if (lsed.mailingList) $scope.dojo.mailingList = lsed.mailingList;
+      if (lsed.markerPlaced) $scope.markerPlaced = lsed.markerPlaced;
     }
   }
 
@@ -384,11 +385,14 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       position: $params[0].latLng
     }));
     dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
+    $scope.updateLocalStorage('dojoListing', 'coordinates', dojo.coordinates);
+    $scope.updateLocalStorage('dojoListing', 'markerPlaced', $scope.markerPlaced);
   };
 
   $scope.getLocationFromAddress = function (cb) {
     var dojo = $scope.dojo;
     utilsService.getLocationFromAddress(dojo).then(function (data) {
+      $scope.markerPlaced = false;
       $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
       $scope.model.map.panTo($scope.mapOptions.center);
       angular.forEach($scope.markers, function (marker) {
@@ -401,9 +405,15 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       dojo.coordinates = data.lat + ', ' + data.lng;
       if (_.isFunction(cb)) cb();
     }, function () {
-      //Ask user to add location manually if google geocoding can't find location.
-      if (!_.isFunction(cb)) alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
-      if (_.isFunction(cb)) cb();
+      if ($scope.dojo.coordinates) {
+        if (_.isFunction(cb)) {
+          alertService.confirm($translate.instant('We could not determine a location from this address. Your previous location marker has been retained.'), cb);
+        } else {
+          alertService.showAlert($translate.instant('We could not determine a location from this address. Your previous location marker has been retained.'));
+        }
+      } else {
+        alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+      }
     });
   };
 
