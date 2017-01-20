@@ -3229,3 +3229,6 @@ msgstr "Available Dojos"
 
 msgid "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
 msgstr "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
+
+msgid "We could not determine a location from this address. Your previous location marker has been retained."
+msgstr "We could not determine a location from this address. Your previous location marker has been retained."
