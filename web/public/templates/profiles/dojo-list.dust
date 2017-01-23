@@ -1,4 +1,4 @@
-<div class="profile-section" ng-show="initialForm()" >
+<div class="profile-section" ng-show="initialForm() && profile.dojos.length > 0" >
   <h3 class="cd-section-header"><a id="dojos"></a><a href="#dojos">{@i18n key="Member of Dojos"/}</a></h3>
   <cd-picture-grid items="profile.dojos"></cd-picture-grid>
 </div>

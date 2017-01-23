@@ -92,8 +92,8 @@ function cdUsersService(cdApi, $q){
     approveInviteNinja: function (data, win, fail) {
       cdApi.post('profiles/approve-invite-ninja', {data: data}, win, fail || topfail);
     },
-    loadNinjasForUser: function (userId, win, fail) {
-      cdApi.get('profiles/ninjas-for-user/' + userId, win, fail || topfail);
+    loadChildrenForUser: function (userId, win, fail) {
+      return cdApi.get('profiles/children-for-user/' + userId, win, fail || topfail);
     },
     loadPrevFounder: function(userId, win, fail) {
       cdApi.get('users/load-previous-founder/' + userId, win, fail || topfail);

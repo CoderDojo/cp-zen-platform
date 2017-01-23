@@ -1,4 +1,4 @@
-<div uib-dropdown is-open="status.isopen" ng-if="cdUA.canEdit" class="cd-user-actions" ng-if="loggedInUser && ((loggedInUser.id === profile.userId) || profile.myChild">
+<div uib-dropdown is-open="status.isopen" ng-if="cdUA.canEdit" class="cd-user-actions">
   <button id="cd-dojo-action" type="button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
     <i class="fa fa-gear"></i> <span class="caret"></span>
   </button>

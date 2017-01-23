@@ -3,7 +3,7 @@
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
   $translate, profile, utils, loggedInUser, usersDojos, $stateParams, hiddenFields,
   Upload, cdBadgesService, utilsService, initUserTypes, cdProgrammingLanguagesService,
-  agreement ,championsForUser, parentsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils, $uibModal) {
+  agreement ,championsForUser, badgeCategories, dojoAdminsForUser, usSpinnerService, atomicNotifyService, dojoUtils, $timeout, userUtils, $uibModal) {
 
   $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
   if(profile.err || loggedInUser.err || (usersDojos && usersDojos.err) || (hiddenFields && hiddenFields.err) || (agreement && agreement.err)){
@@ -27,7 +27,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.editMode = false;
   $scope.publicMode = false;
   $scope.publicChampion = false;
-  $scope.loggedInUserIsMemberOfDojoChampion = false;
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
@@ -166,7 +165,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   profile.data.dob = new Date(profile.data.dob);
 
   $scope.profile = profile.data;
-  $scope.canEdit = $scope.profile.ownProfileFlag || $scope.profile.myChild;
+  $scope.myChild = loggedInUserIsParent();
+  $scope.ownProfileFlag = profileUserId === loggedInUserId;
+  $scope.canEdit = $scope.ownProfileFlag || $scope.myChild || $state.current.name === 'add-child';
 
   $scope.capitalizeFirstLetter = utilsService.capitalizeFirstLetter;
 
@@ -235,13 +236,19 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
     });
 
-    cdUsersService.loadDojoAdminsForUserPromise(loggedInUser.data.id).then(
-      function(champions){
-        $scope.loggedInUserIsMemberOfDojoChampion = !!(_.find(champions, function (championForUser) {
-          return championForUser.id === profileUserId;
-        }));
-      }
-    );
+    if ($scope.profile.children && $scope.profile.children.length > 0) {
+      cdUsersService.loadChildrenForUser($stateParams.userId)
+      .then(function (response) {
+        $scope.profile.resolvedChildren = response.data;
+      });
+    }
+
+    if ($scope.profile.parents && $scope.profile.parents.length > 0) {
+      cdUsersService.loadParentsForUserPromise($stateParams.userId)
+      .then(function (parents) {
+        $scope.profile.resolvedParents = parents;
+      });
+    }
   }
 
 
@@ -523,24 +530,24 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       case 'champion':
         return true; //Always public
       case 'mentor':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         return !$scope.isPrivate;
       case 'parent-guardian':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
-        return false; //Always private
+        return !$scope.isPrivate;
       case 'attendee-o13':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
         return !$scope.isPrivate;
       case 'attendee-u13':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsChampion()) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsParent()) return true;
@@ -557,9 +564,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       case 'champion':
       case 'mentor':
       case 'parent-guardian':
-        if($scope.profile.ownProfileFlag) return true;
+        if($scope.ownProfileFlag) return true;
         if(loggedInUserIsDojoAdmin()) return true;
         if(loggedInUserIsChild()) return true;
+        if($scope.loggedInUserIsCDFAdmin()) return true;
         return false; //Always private
       case 'attendee-o13':
         if(loggedInUserIsParent()) return true;
@@ -573,11 +581,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
 
+  // We use profile.data instead of $scope.profile because this is called before we assign $scope.profile
   function loggedInUserIsParent() {
-    if(!loggedInUser.data) return false;
-    return _.find(parentsForUser.data, function (parentForUser) {
-      return parentForUser.id === loggedInUser.data.id;
-    });
+    if(!loggedInUser.data || !profile.data) return false;
+    return _.includes(profile.data.parents, loggedInUser.data.id);
   }
 
   function loggedInUserIsChampion() {
@@ -596,8 +603,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   function loggedInUserIsChild() {
     if(!loggedInUser.data) return false;
-    return _.find(profile.data.resolvedChildren, function (children) {
-      return children.userId === loggedInUser.data.id;
+    return _.find(profile.data.children, function (child) {
+      return child === loggedInUser.data.id;
     });
   }
 
@@ -605,17 +612,21 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(!loggedInUser.data) return false;
     return _.includes(loggedInUser.data.roles, 'cdf-admin');
   }
+  $scope.hideConfigurableFieldsBlock = function (block) {
+    if (block && $scope.profile.optionalHiddenFields) {
+      return !$scope.profile.optionalHiddenFields[block];
+    }
+    return true;
+  }
 
   $scope.hideProfileBlock = function (block) {
     if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') {
-      if(loggedInUserIsChampion()) return false;
-      if(loggedInUserIsDojoAdmin()) return false;
-      if(loggedInUserIsParent()) return false;
-      if($scope.profile.ownProfileFlag) return false;
-      if(block && $scope.profile.optionalHiddenFields) {
-        if(!$scope.profile.optionalHiddenFields[block]) return false;
-        return true;
-      }
+      if($scope.loggedInUserIsCDFAdmin() ||
+        loggedInUserIsChampion() ||
+        loggedInUserIsDojoAdmin() ||
+        loggedInUserIsParent() ||
+        $scope.ownProfileFlag ||
+        $scope.hideConfigurableFieldsBlock(block)) return false;
       return true;
     }
     return false;
@@ -625,13 +636,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     if(loggedInUserIsChampion()) return false;
     if(loggedInUserIsDojoAdmin()) return false;
     if(loggedInUserIsParent()) return false;
-    if($scope.profile.ownProfileFlag) return false;
+    if($scope.ownProfileFlag) return false;
     return true;
   }
 
-  $scope.canMakeProfilePrivate = function () {
-    if($scope.highestUserType === 'attendee-o13' || $scope.highestUserType === 'mentor') return true;
-    return false;
+  $scope.canSwitchPrivate = function () {
+    if ($scope.highestUserType === 'attendee-o13') return false;
+    return true;
   }
 
   $scope.canUpdateHiddenField = function (hiddenField) {
@@ -639,7 +650,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.hideChampionProfileBlock = function (block) {
-    if($scope.profile.ownProfileFlag) return false;
+    if($scope.ownProfileFlag) return false;
     if($scope.profile.optionalHiddenFields && $scope.profile.optionalHiddenFields[block]) return true;
     return false;
   }
@@ -697,8 +708,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
     return true;
   };
-
-  $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+  if ($scope.editMode) {
+    $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+  }
 
   $scope.addChild = function () { //add another child object
     var child = {
@@ -741,15 +753,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $state.go('user-profile', {userId: userId});
     }
   }
-
-  if(profile.data.userType==='attendee-o13' || !$stateParams.eventId){ //youth can't have children
-    $scope.profile.children = null;
-  }
-
 }
 
 angular.module('cpZenPlatform')
   .controller('user-profile-controller', ['$scope', '$rootScope', '$state', '$window', 'auth', 'cdUsersService', 'cdDojoService', 'alertService',
     '$translate', 'profile', 'utilsService', 'loggedInUser', 'usersDojos', '$stateParams',
     'hiddenFields', 'Upload', 'cdBadgesService', 'utilsService', 'initUserTypes', 'cdProgrammingLanguagesService',
-    'agreement','championsForUser', 'parentsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', 'userUtils', '$uibModal', cdUserProfileCtrl]);
+    'agreement','championsForUser', 'badgeCategories', 'dojoAdminsForUser', 'usSpinnerService', 'atomicNotifyService', 'dojoUtils', '$timeout', 'userUtils', '$uibModal', cdUserProfileCtrl]);

@@ -84,14 +84,14 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     var deferred = $q.defer();
     auth.get_loggedin_user(function (user) {
       cdUsersService.userProfileData({userId: user.id}, function (userProfile) {
-        if(userProfile.userType === 'attendee-o13') return deferred.resolve(true);
+        if (userProfile.userType === 'attendee-o13') return deferred.resolve(true);
         cdDojoService.getUsersDojos({userId: user.id}, function (usersDojos) {
           var userTypesFound = _.find(usersDojos, function (userDojo) {
             return _.includes(userDojo.userTypes, 'attendee-o13');
           });
-          if(userTypesFound) return deferred.resolve(true);
+          if (userTypesFound) return deferred.resolve(true);
           cdConfigService.get('forumModerators', function (response) {
-            if(_.includes(response.forumModerators, user.email)) return deferred.resolve(true);
+            if (_.includes(response.forumModerators, user.email)) return deferred.resolve(true);
             return deferred.resolve(false);
           });
         }, function (err) {

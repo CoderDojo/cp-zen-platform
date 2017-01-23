@@ -1,10 +1,10 @@
 <div class="cd-profile row">
   <span spinner-key="user-profile-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-  <div class="col-xs-12" ng-if="profileVisible()">
+  <div class="col-xs-12">
     <div class="row">
       <div class="col-xs-12">
         <div cd-banner-background class="row">
-          <div cd-social-network email="profile.email" ng-show="loggedInUserIsMemberOfDojoChampion || profile.ownProfileFlag"></div>
+          <div cd-social-network email="profile.email" ng-show="profile.email"></div>
           <div class="cd-profile__header">
             <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="cd-profile__avatar"></div>
             <div class="cd-profile__username">
@@ -35,9 +35,9 @@
             <general-info ng-if="editMode && !publicChampion"></general-info>
             <bio ng-if="!hideChampionProfileBlock('notes') && profile.notes"></bio>
             <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
-            <projects-list ng-if="!hideChampionProfileBlock('projects') && hasAccess(profile.userTypes, ['champion'])"></projects-list>
-            <parents-list ng-if="!hideProfileBlock() && hasAccess(profile.userTypes, ['attendee-u13', 'attendee-o13'])"></parents-list>
-            <children-list ng-if="loggedInUserIsCDFAdmin() || hasAccess(profile.userTypes, ['parent-guardian', 'mentor', 'champion'])"></children-list>
+            <projects-list ng-if="!hideChampionProfileBlock('projects')"></projects-list>
+            <parents-list ng-if="!hideProfileBlock()"></parents-list>
+            <children-list ></children-list>
             <programming-languages-list ng-if="!hideProfileBlock('programmingLanguages') && profile.widget.languages"></programming-languages-list>
             <dojo-list ng-if="!hideProfileBlock('dojos') && profile.dojos.length > 0"></dojo-list>
           </div>
