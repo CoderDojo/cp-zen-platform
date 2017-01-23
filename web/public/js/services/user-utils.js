@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$translate', '$state', '$rootScope', 'cdDojoService', 'cdUsersService', 'auth', 'usSpinnerService', 'alertService', function($location, $window, $translate, $state, $rootScope, cdDojoService, cdUsersService, auth, usSpinnerService, alertService){
+angular.module('cpZenPlatform').factory('userUtils',
+['$location', '$window', '$translate', '$state', '$rootScope', 'cdDojoService',
+  'cdUsersService', 'auth', 'usSpinnerService', 'alertService', 'permissionService',
+  function($location, $window, $translate, $state, $rootScope, cdDojoService,
+     cdUsersService, auth, usSpinnerService, alertService, permissionService){
   var userUtils = {};
 
   var approvalRequired = ['mentor', 'champion'];
@@ -103,6 +107,12 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     return  avatar || overallDefault;
   }
 
+  /**
+   * getTitleForUserTypes Return a title based upon usertypes of a user
+   * @param  {Array} userTypes  List of userTypes/roles
+   * @param  {Object} user      The user profile
+   * @return {String}           The title (ie : Youth Champion, Ninja)
+   */
   userUtils.getTitleForUserTypes = function (userTypes, user) {
     var title = [];
     var age = this.getAge(user.dob);
@@ -126,6 +136,27 @@ angular.module('cpZenPlatform').factory('userUtils', ['$location', '$window', '$
     }
 
     return title.join(' ');
+  }
+
+  userUtils.getPermissionsForUserTypes = function (userTypes, userDojo) {
+    var def = {
+      // name: array since we're using concat to have a one-level array
+      'champion': [{"title":"Dojo Admin","name":"dojo-admin"},
+       {"title":"Ticketing Admin","name":"ticketing-admin"}]
+    };
+    var perms;
+    // If original perm is lower than the new one, we reset it, else we expand it
+    if (permissionService.getUserTypesIndex(userDojo.userTypes) < permissionService.getUserTypesIndex(userTypes)) {
+      perms = [];
+    } else {
+      perms = userDojo.userPermissions;
+    }
+    userTypes.forEach(function (usertype) {
+      if (def[usertype]) {
+        perms = perms.concat(def[usertype]);
+      }
+    });
+    return _.uniqBy(perms, 'name');
   }
 
   return userUtils;
