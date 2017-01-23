@@ -32,7 +32,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
-    // TODO : check this w/ async loggedInUserIsParent
     if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
       $scope.editMode = true;
       $scope.inviteNinjaPopover = {

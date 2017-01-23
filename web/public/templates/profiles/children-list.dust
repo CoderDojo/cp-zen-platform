@@ -1,5 +1,5 @@
 <div class="profile-section" ng-show="initialForm()">
-  <div ng-show="profile.resolvedChildren">
+  <div ng-show="profile.resolvedChildren || editMode">
     <h3 class="cd-section-header"><a id="youths"></a><a href="#youths">{@i18n key="Youths"/}</a></h3>
     <cd-picture-grid items="profile.resolvedChildren" class="col-xs-12" ng-if="profile.resolvedChildren.length > 0"></cd-picture-grid>
   </div>
