@@ -37,6 +37,13 @@ function permissionService () {
     }))];
   };
 
+  service.getUserTypesIndex = function (userTypes) {
+    return _.min(_.map(userTypes, function(userType){
+      var index = _userTypes.indexOf(userType);
+      // Check if we found it
+      return index > -1 ? index : _userTypes.length;
+    }));
+  }
   /**
   * @function: create an array of role which are lesser important than the one inputed
   * @param: userType the base usertype to compare with

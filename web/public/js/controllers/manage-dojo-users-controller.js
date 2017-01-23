@@ -218,6 +218,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
                     roles.push(userType.name);
                   }
                   $scope.selectedItems[0].subCaption = userUtils.getTitleForUserTypes(roles, user);
+                  userDojoLink.userPermissions = userUtils.getPermissionsForUserTypes(roles, userDojoLink);
                   userDojoLink.userTypes = roles;
                   cdDojoService.saveUsersDojos(userDojoLink, function (response) {
                     if(response.error) {
