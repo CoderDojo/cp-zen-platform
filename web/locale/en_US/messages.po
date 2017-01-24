@@ -3233,5 +3233,5 @@ msgstr "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ f
 msgid "We could not determine a location from this address. Your previous location marker has been retained."
 msgstr "We could not determine a location from this address. Your previous location marker has been retained."
 
-msgid "Day selected doesn\'t exist in date range, please check your date range."
-msgstr "Day selected doesn\'t exist in date range, please check your date range."
+msgid "Day selected doesn't exist in date range, please check your date range."
+msgstr "Day selected doesn't exist in date range, please check your date range."
