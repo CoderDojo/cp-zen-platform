@@ -315,7 +315,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
           }
         },
         function(callback){
-          if($scope.profile.children !== null) {
+          // This condition is only valid (save children) when on the quick reg process
+          if($scope.profile.children !== null && !$scope.profile.resolvedChildren) {
             localStorage.setItem('children', 'true');
             async.mapSeries($scope.profile.children, function(child, doneChild){
               childrenCopy.name = child.name;
@@ -708,8 +709,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
     return true;
   };
-  if ($scope.editMode) {
-    $scope.profile.children = [{name: null, alias: null, dateOfBirth:null, email: null, gender: null}];
+
+  if ($scope.profile.children === null && $scope.abilityToAddChildren()) {
+    $scope.profile.children = [];
   }
 
   $scope.addChild = function () { //add another child object
