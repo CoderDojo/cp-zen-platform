@@ -533,6 +533,12 @@
         );
       }
 
+      if (_.isEmpty(eventInfo.dates)) {
+        alertService.showError($translate.instant('Day selected doesn\'t exist in date range, please check your date range.'));
+        usSpinnerService.stop('create-event-spinner');
+        return;
+      }
+
       if(!$scope.dojoInfo) {
         loadDojo(function(err){
           if(err) {
