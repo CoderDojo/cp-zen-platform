@@ -48,10 +48,8 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
         deleted: 0,
         fields$: ['name', 'geo_point', 'stage', 'url_slug', 'private']
       }, function (dojos) {
-        var filteredDojos = [];
-        _.each(dojos, function (dojo) {
-          if (dojo.stage !== 4) filteredDojos.push(dojo);
-        });
+        var filteredDojos = filterDojos(dojos);
+
         addMarkersToMap(filteredDojos).then(function () {
           setZoom();
         }, function (error) {
@@ -211,9 +209,18 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
     $scope.markers = [];
   }
 
+  function filterDojos (dojos) {
+    var filteredDojos = [];
+    _.each(dojos, function (dojo) {
+      if (dojo.stage !== 4) filteredDojos.push(dojo);
+    });
+    return filteredDojos;
+  }
+
   function searchBounds(location, bounds, search) {
     var boundsRadius = getBoundsRadius(bounds);
     cdDojoService.searchBoundingBox({lat: location.lat(), lon: location.lng(), radius: boundsRadius, search: search}).then(function (result) {
+      result = filterDojos(result);
       if (result.length > 0) {
         if(result.length === 1){
           $scope.model.map.setCenter({lat: result[0].geo_point.lat, lng: result[0].geo_point.lon});
@@ -232,6 +239,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 
   function searchNearest(location, search) {
     cdDojoService.searchNearestDojos({lat: location.lat(), lon: location.lng(), search:search}).then(function (result) {
+      result = filterDojos(result);
       if(result.length > 0) {
         $scope.searchResult = result;
       }
