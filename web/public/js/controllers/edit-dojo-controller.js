@@ -384,7 +384,11 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       map: $scope.model.map,
       position: $params[0].latLng
     }));
-    dojo.coordinates = $params[0].latLng.lat() + ', ' + $params[0].latLng.lng();
+    dojo.geoPoint = {
+      lat: $params[0].latLng.lat(),
+      lon: $params[0].latLng.lng()
+    };
+    dojo.coordinates = dojo.geoPoint.lat + ', ' + dojo.geoPoint.lon;
     $scope.updateLocalStorage('dojoListing', 'coordinates', dojo.coordinates);
     $scope.updateLocalStorage('dojoListing', 'markerPlaced', $scope.markerPlaced);
   };
@@ -402,6 +406,10 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         map: $scope.model.map,
         position: $scope.mapOptions.center
       }));
+      dojo.geoPoint = {
+        lat: data.lat,
+        lon: data.lng
+      };
       dojo.coordinates = data.lat + ', ' + data.lng;
       if (_.isFunction(cb)) cb();
     }, function () {
