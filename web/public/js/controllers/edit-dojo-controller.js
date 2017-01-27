@@ -210,6 +210,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       }
       if (lsed.address1) $scope.dojo.address1 = lsed.address1;
       if (lsed.coordinates) $scope.dojo.coordinates = lsed.coordinates;
+      if (lsed.geoPoint) $scope.dojo.geoPoint = lsed.geoPoint;
       if (lsed.needMentors) $scope.dojo.needMentors = lsed.needMentors;
       if (lsed.stage) $scope.dojo.stage = lsed.stage;
       if (lsed.private) $scope.dojo.private = lsed.private;
@@ -389,6 +390,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       lon: $params[0].latLng.lng()
     };
     dojo.coordinates = dojo.geoPoint.lat + ', ' + dojo.geoPoint.lon;
+    $scope.updateLocalStorage('dojoListing', 'geoPoint', dojo.geoPoint);
     $scope.updateLocalStorage('dojoListing', 'coordinates', dojo.coordinates);
     $scope.updateLocalStorage('dojoListing', 'markerPlaced', $scope.markerPlaced);
   };
