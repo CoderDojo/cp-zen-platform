@@ -866,11 +866,18 @@
         $translateProvider.useUrlLoader('/locale/data?format=mf')
         .useCookieStorage()
         .useSanitizeValueStrategy('sanitizeParameters')
-        .registerAvailableLanguageKeys(['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
-                                        'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
-                                        'hi_IN', 'ja_JP', 'ro_RO', 'es_AR', 'fr_FR', 'uk_UK',
-                                        'sl_SL', 'sk_SK'])
         .uniformLanguageTag('java')
+        .registerAvailableLanguageKeys(
+          ['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
+            'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
+            'hi_IN', 'ja_JP', 'ro_RO', 'es_AR', 'fr_FR', 'uk_UK',
+          'sl_SL', 'sk_SK'],
+          {
+           'en': 'en_US', 'nl': 'nl_NL', 'de': 'de_DE', 'it': 'it_IT', 'pl': 'pl_PL', 'mt': 'mt_MT',
+           'pt': 'pt_PT', 'es': 'es_ES', 'tr': 'tr_TR', 'bg': 'bg_BG', 'el': 'el_GR', 'et': 'et_EE',
+           'hi': 'hi_IN', 'ja': 'ja_JP', 'ro': 'ro_RO', 'fr': 'fr_FR', 'uk': 'uk_UK',
+           'sl': 'sl_SL', 'sk': 'sk_SK'
+        })
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
       }
