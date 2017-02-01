@@ -1,6 +1,6 @@
 <div>
   <div class="cd-picture-grid" ng-class="{'cd-picture-grid--wide-card': $ctrl.wideCard, 'cd-picture-grid--left-align': $ctrl.align === 'left'}">
-    <a class="cd-picture-grid__item" ng-class="{'cd-picture-grid__item--size-small': $ctrl.size === 'small', 'cd-picture-grid__item--size-medium': $ctrl.size === 'medium'}" ng-repeat="item in $ctrl.items" ng-href="{{ item.href }}" ng-click="$ctrl.handleSelection($event, item)">
+    <a class="cd-picture-grid__item" ng-class="{'cd-picture-grid__item--size-small': $ctrl.size === 'small', 'cd-picture-grid__item--size-medium': $ctrl.size === 'medium'}" ng-repeat="item in $ctrl.items | orderBy: 'caption'" ng-href="{{ item.href }}" ng-click="$ctrl.handleSelection($event, item)">
       <div class="cd-picture-grid__picture" ng-class="{'cd-picture-grid__picture--image-zoom': $ctrl.imageZoom }" style="background-image: url({{ item.picture }});">
         <i ng-if="$ctrl.showItemIcons && $ctrl.itemIcon" class="cd-picture-grid__action-icon fa fa-{{ $ctrl.itemIcon }} cd-bg-{{ $ctrl.itemIconColor || 'purple' }}"></i>
       </div>
