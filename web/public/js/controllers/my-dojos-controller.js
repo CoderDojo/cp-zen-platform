@@ -2,6 +2,7 @@
 
 function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStore, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner, usSpinnerService) {
   $scope.itemsPerPage = 10;
+  $scope.pagination = {};
   var currentUser;
   var errorMsg = $translate.instant('error.general');
 
@@ -98,8 +99,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
   $scope.loadPage = function(currentUser, resetFlag, cb){
     cb = cb || function(){};
 
-    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pageNo, $scope.filterQuery, $scope.sort);
-    $scope.pageNo = loadPageData.pageNo;
+    var loadPageData = tableUtils.loadPage(resetFlag, $scope.itemsPerPage, $scope.pagination.pageNo, $scope.filterQuery, $scope.sort);
     $scope.myDojos = [];
 
     var search = {

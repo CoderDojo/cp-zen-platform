@@ -36,7 +36,9 @@
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-            <uib-pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>
+            <uib-pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo"
+              class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}"
+              boundary-links="true"></uib-pagination>
           </div>
         </div>
       </div>
