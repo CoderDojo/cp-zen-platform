@@ -382,7 +382,6 @@ angular.module('cpZenPlatform')
       "An error has occurred while saving": "An error has occurred while saving:",
       "Suggested Notes:": "Suggested Notes:",
       "Please bring:": "Please bring:",
-      "A pack lunch.": "A pack lunch.",
       "A laptop. Borrow one from somebody if needs be.": "A laptop. Borrow one from somebody if needs be.",
       "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.": "A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.",
       "Join Request Sent": "Join Request Sent",
