@@ -98,7 +98,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
 
     var initContent = "<p>" +
       $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
-      "<li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +
+      "<ul><li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +
       "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') + "</b></li>" +
       "</ul></p>";
 
