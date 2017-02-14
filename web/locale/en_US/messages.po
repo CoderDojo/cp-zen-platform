@@ -1176,9 +1176,6 @@ msgstr "Suggested Notes:"
 msgid "Please bring:"
 msgstr "Please bring:"
 
-msgid "A pack lunch."
-msgstr "A pack lunch."
-
 msgid "A laptop. Borrow one from somebody if needs be."
 msgstr "A laptop. Borrow one from somebody if needs be."
 
