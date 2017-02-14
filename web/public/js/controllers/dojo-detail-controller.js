@@ -1,35 +1,37 @@
 'use strict';
 /* global google */
-
-function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersService, alertService, usSpinnerService, auth, dojo, gmap, $translate, currentUser, dojoUtils) {
-
+function cdDojoDetailCtrl ($scope, $state, $location, cdDojoService, cdUsersService,
+   alertService, usSpinnerService, auth, dojo, gmap, $translate, currentUser, dojoUtils) {
   $scope.needMentorsTooltip = '<a href="http://kata.coderdojo.com/wiki/Mentor_Guide" target="_blank">' + $translate.instant('Find out more about becoming a CoderDojo mentor') + '</a>';
   $scope.dojo = dojo;
+  $scope.ribbons = {};
+  $scope.ribbons.verified = $translate.instant($scope.dojo.verified === 1 ? 'Verified!' : 'Not verified');
+  $scope.ribbons.private = $translate.instant($scope.dojo.private === 0 ? 'Private Dojo' : 'This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo.');
+  $scope.ribbons.taoVerified = $translate.instant($scope.dojo.taoVerified === 1 ? 'Tao verified' : 'Tao unverified');
   $scope.model = {};
   $scope.markers = [];
   $scope.currentUser = currentUser.data;
   $scope.isDojoAdmin = false;
   var latitude, longitude;
 
-  if(!_.isEmpty($scope.currentUser)) {
-    if(!dojo || !dojo.id){
+  if (!_.isEmpty($scope.currentUser)) {
+    if (!dojo || !dojo.id) {
       return $state.go('error-404-no-headers');
     }
 
-    if(!dojo.verified && dojo.creator !== $scope.currentUser.id && !_.includes($scope.currentUser.roles, 'cdf-admin')){
+    if (!dojo.verified && dojo.creator !== $scope.currentUser.id && !_.includes($scope.currentUser.roles, 'cdf-admin')) {
       return $state.go('error-404-no-headers');
     }
-
   } else {
-    if(!dojo || !dojo.id || !dojo.verified) return $state.go('error-404-no-headers');
+    if (!dojo || !dojo.id || !dojo.verified) return $state.go('error-404-no-headers');
     $scope.userMemberCheckComplete = true;
   }
 
-  cdDojoService.getDojoConfig(function(json){
-    $scope.dojoStages = _.map(json.dojoStages, function(item){
+  cdDojoService.getDojoConfig(function (json) {
+    $scope.dojoStages = _.map(json.dojoStages, function (item) {
       return { value: item.value, label: $translate.instant(item.label) };
     });
-    $scope.dojo.stage = _.find($scope.dojoStages, function(obj) { return obj.value === $scope.dojo.stage })
+    $scope.dojo.stage = _.find($scope.dojoStages, function (obj) { return obj.value === $scope.dojo.stage; });
   });
 
   dojoUtils.isHavingPerm(currentUser, dojo.id, 'dojo-admin')
@@ -48,9 +50,9 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     $scope.isTicketingAdmin = false;
   });
 
-  $scope.$watch('model.map', function(map){
-    if(map) {
-      if(latitude && longitude) {
+  $scope.$watch('model.map', function (map) {
+    if (map) {
+      if (latitude && longitude) {
         var marker = new google.maps.Marker({
           map: $scope.model.map,
           position: new google.maps.LatLng(latitude, longitude)
@@ -60,10 +62,10 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     }
   });
 
-  if(gmap) {
-    if($scope.dojo.coordinates) {
+  if (gmap) {
+    if ($scope.dojo.coordinates) {
       var coordinates = $scope.dojo.coordinates.split(',');
-      latitude  = coordinates[0];
+      latitude = coordinates[0];
       longitude = coordinates[1];
       $scope.mapOptions = {
         center: new google.maps.LatLng(latitude, longitude),
@@ -75,7 +77,6 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     } else {
       var countryCoordinates;
       cdDojoService.loadCountriesLatLongData(function (response) {
-
         countryCoordinates = response[$scope.dojo.alpha2];
 
         $scope.mapOptions = {
@@ -93,11 +94,10 @@ function cdDojoDetailCtrl($scope, $state, $location, cdDojoService, cdUsersServi
     cdDojoService.removeUsersDojosLink({userId: $scope.currentUser.id, dojoId: dojo.id, emailSubject: 'A user has left your Dojo'}, function (response) {
       usSpinnerService.stop('dojo-detail-spinner');
       $state.go($state.current, {}, {reload: true});
-    }, function (err) {
+    }, function () {
       alertService.showError($translate.instant('Error leaving Dojo'));
     });
   };
-
 }
 
 angular.module('cpZenPlatform')
