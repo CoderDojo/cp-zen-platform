@@ -75,7 +75,7 @@
               <div ng-bind="::dojo.time"></div>
             </div>
           </div>
-          <div cd-social-network twitter="dojo.twitter" google="dojo.google_group" class="row"></div>
+          <div cd-social-network twitter="dojo.twitter" google="dojo.google_group" facebook="dojo.facebook" class="row"></div>
         </div>
         <div class="col-xs-12 col-md-9">
           <div class="row ">

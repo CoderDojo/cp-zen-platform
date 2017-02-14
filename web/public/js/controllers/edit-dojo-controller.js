@@ -216,6 +216,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       if (lsed.googleGroup) $scope.dojo.googleGroup = lsed.googleGroup;
       if (lsed.website) $scope.dojo.website = lsed.website;
       if (lsed.twitter) $scope.dojo.twitter = lsed.twitter;
+      if (lsed.facebook) $scope.dojo.facebook = lsed.facebook;
       if (lsed.supporterImage) $scope.dojo.supporterImage = lsed.supporterImage;
       if (lsed.mailingList) $scope.dojo.mailingList = lsed.mailingList;
       if (lsed.markerPlaced) $scope.markerPlaced = lsed.markerPlaced;

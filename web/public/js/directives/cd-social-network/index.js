@@ -19,7 +19,7 @@ function cdSocialNetwork(){
       controller: function ($scope) {
         var cdSN = this;
         var providers = ['flickr', 'google', 'linkedin', 'facebook', 'twitter'];
-        var urls = ['', '', '//linkedin.com/', '//facebook.com/', '//twitter.com/'];
+        var urls = ['', '', '//linkedin.com/', '', '//twitter.com/'];
         _.each(providers, function (provider, index){
           if ($scope[provider]) {
             this[provider] = $scope[provider];
