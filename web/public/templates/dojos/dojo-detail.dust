@@ -26,7 +26,8 @@
             </div>
             <div cd-dojo-actions can-manage-dojo="isDojoAdmin" can-manage-events="isTicketingAdmin" dojo="dojo"></div>
               <div class="cd-profile__avatar">
-                <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" alt="{@i18n key="Avatar"/}" class="cd-profile__avatar"></div>
+                <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}"
+                alt="{@i18n key="Avatar"/}" class="cd-profile__avatar"></div>
                 <div class="col-md-6 cd-dojo-detail__dojo-name">
                   <h2 ng-bind="::dojo.name"></h2>
                   <h5 ng-if="dojo.website" class="cd-dojo-detail__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
