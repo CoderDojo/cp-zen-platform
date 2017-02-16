@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div ng-show="$ctrl.profile.dob < $ctrl.thirteenYearsAgo">
+  <div class="cd-add-child__o13-section" ng-show="$ctrl.profile.dob < $ctrl.thirteenYearsAgo">
     <div class="col-sm-10 col-sm-offset-2 cd-add-child__info-box">
       <p>{@i18n key="As your child is over 13 years of age, they can have their own CoderDojo account."/}</p>
       <p>{@i18n key="This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."/}</p>
@@ -52,13 +52,13 @@
     <div class="form-group">
       <label for="cd-add-child__email" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="cd-add-child__email" placeholder="Email" ng-model="$ctrl.profile.email">
+        <input type="email" class="form-control" name="cd-add-child__email" placeholder="Email" ng-model="$ctrl.profile.email" validator="$ctrl.emailValidator()" invalid-message="'{@i18n key="You must provide an email address when providing a password."/}'">
       </div>
     </div>
     <div class="form-group">
       <label for="cd-add-child__password" class="col-sm-2 control-label">Password</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="cd-add-child__password" placeholder="Password" ng-model="$ctrl.profile.password">
+        <input type="password" class="form-control" name="cd-add-child__password" placeholder="Password" ng-model="$ctrl.profile.password" validator="$ctrl.passwordValidator()" invalid-message="$ctrl.invalidPasswordMessage">
       </div>
     </div>
   </div>

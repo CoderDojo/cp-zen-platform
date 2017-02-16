@@ -431,8 +431,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.dobDateOptions = $scope.childDobDateOptions = {
     formatYear: 'yyyy',
     startingDay: 1,
-    'datepicker-mode': "'year'",
-    initDate: initialDate
+    initDate: initialDate,
+    datepickerMode: 'year'
   };
 
   $scope.setCountry = function(profile, country) {

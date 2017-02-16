@@ -1,15 +1,19 @@
+/* global _, angular */
+
 'use strict';
 
-function myChildrenCtrl($scope, $state, $translate, ownProfile, cdUsersService) {
+function myChildrenCtrl ($scope, $state, $translate, ownProfile, cdUsersService) {
   $scope.parentProfileData = ownProfile.data;
   $scope.tabs = [];
 
   function loadChildrenTabs () {
-
+    $scope.tabs = [];
     cdUsersService.loadChildrenForUser($scope.parentProfileData.userId, function (children) {
-      $scope.children = _.sortBy(children, [function (child) {
-        return child.name.toLowerCase();
-      }]);
+      $scope.children = _.sortBy(children, [
+        function (child) {
+          return child.name.toLowerCase();
+        }
+      ]);
 
       $scope.tabs = $scope.children.map(function (child) {
         return {
@@ -34,13 +38,13 @@ function myChildrenCtrl($scope, $state, $translate, ownProfile, cdUsersService) 
   $scope.$on('$stateChangeStart', function (e, toState, params) {
     if (toState.name === 'my-children.child') {
       var childLoaded = _.some($scope.children, function (child) {
-        return child.id === params.id;
+        return child.userId === params.id;
       });
       if (!childLoaded) {
         loadChildrenTabs();
       }
     }
-  })
+  });
 }
 
 angular.module('cpZenPlatform')

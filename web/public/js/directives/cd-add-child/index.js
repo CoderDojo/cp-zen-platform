@@ -1,4 +1,5 @@
-;(function() {
+/* global angular, _ */
+;(function () {
   'use strict';
 
   angular
@@ -9,7 +10,7 @@
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-add-child',
-      controller: ['$translate', '$state', 'cdUsersService', 'alertService', 'userUtils', function ($translate, $state, cdUsersService, alertService, userUtils) {
+      controller: ['$translate', '$state', 'cdUsersService', 'alertService', 'userUtils', 'utilsService', function ($translate, $state, cdUsersService, alertService, userUtils, utilsService) {
         var ctrl = this;
 
         ctrl.save = function () {
@@ -43,18 +44,27 @@
                   $state.go('my-children.child', {id: resp.data.userId});
                 }
               }
-            })
+            });
+        };
+
+        ctrl.passwordValidator = function () {
+          var validationResult = utilsService.validatePassword(ctrl.profile.password, ctrl.profile.email);
+          if (!validationResult.valid) ctrl.invalidPasswordMessage = $translate.instant(validationResult.msg);
+          return validationResult.valid;
+        };
+
+        ctrl.emailValidator = function () {
+          return !(!ctrl.profile.email && ctrl.profile.password);
         };
 
         ctrl.$onInit = function () {
           ctrl.profile = {};
           var thirteenYearsAgo = new Date();
-          thirteenYearsAgo.setFullYear(thirteenYearsAgo.getFullYear()-13);
+          thirteenYearsAgo.setFullYear(thirteenYearsAgo.getFullYear() - 13);
           ctrl.thirteenYearsAgo = thirteenYearsAgo;
           ctrl.dobDateOptions = {
             formatYear: 'yyyy',
             startingDay: 1,
-            'datepicker-mode': "'year'",
             initDate: thirteenYearsAgo,
             datepickerMode: 'year'
           };
