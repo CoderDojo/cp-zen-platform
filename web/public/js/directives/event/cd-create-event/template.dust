@@ -10,7 +10,7 @@
   </div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)" class="row">
     <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
-    <div class="row controls">
+    <div ng-if="!isEditMode" class="row controls">
       <div class="col-md-2 col-md-offset-6">
         <h5>{@i18n key="Duplicate Existing Event"/}</h5>
       </div>

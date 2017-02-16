@@ -744,7 +744,6 @@
     function loadEvent(done) {
       var eventId = $stateParams.eventId;
       $scope.eventInfo.prefillAddress = false;
-      $scope.isEditMode = true;
       cdEventsService.load(eventId, function(event) {
         var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
@@ -828,6 +827,7 @@
     }
 
     if ($stateParams.eventId) {
+      $scope.isEditMode = true;
       if(_.isEmpty(currentUser.data)) return $state.go('error-404-no-headers');
 
       return async.series([
