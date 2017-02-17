@@ -2311,6 +2311,9 @@ msgstr "Event Invitation"
 msgid "e.g. @CoderDojo"
 msgstr "e.g. @CoderDojo"
 
+msgid "e.g. https://www.facebook.com/Coderdojo"
+msgstr "e.g. https://www.facebook.com/Coderdojo"
+
 msgid "User is already a parent of this Ninja"
 msgstr "User is already a parent of this Ninja"
 

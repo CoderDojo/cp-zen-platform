@@ -693,6 +693,7 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
       if(lsdl.googleGroup) $scope.dojo.googleGroup = lsdl.googleGroup;
       if(lsdl.website) $scope.dojo.website = lsdl.website;
       if(lsdl.twitter) $scope.dojo.twitter = lsdl.twitter;
+      if(lsdl.facebook) $scope.dojo.facebook = lsdl.facebook;
       if(lsdl.supporterImage) $scope.dojo.supporterImage = lsdl.supporterImage;
       if(lsdl.mailingList) $scope.dojo.mailingList = lsdl.mailingList;
     }
