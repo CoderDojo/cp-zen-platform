@@ -25,11 +25,16 @@
               </div>
             </div>
             <div cd-dojo-actions can-manage-dojo="isDojoAdmin" can-manage-events="isTicketingAdmin" dojo="dojo"></div>
-            <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}" class="col-md-3 hidden-xs"></div>
-            <div class="col-md-6 cd-dojo-detail__dojo-name">
-              <h2 ng-bind="::dojo.name"></h2>
-              <h5 ng-if="dojo.website" class="cd-dojo-detail__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
-            </div>
+              <div class="cd-banner-background__header">
+                <div cd-rounded-image src="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/" src-id="{{ dojo.id }}" src-fallback="/img/avatars/dojo-default-logo.png" alt="{{ dojo.name }}"
+                class="cd-banner-background__image"></div>
+                <div class="cd-dojo-detail__dojo-name cd-banner-background__title">
+                  <div class="col-md-offset-1">
+                    <h2 ng-bind="::dojo.name"></h2>
+                    <h5 ng-if="dojo.website" class="cd-dojo-detail__dojo-website"><a ng-href="{{ dojo.website }}" title="{@i18n key="Website"/}"> <i class="fa fa-globe"></i> <span ng-bind="::dojo.website"></span></a></h5>
+                  </div>
+                </div>
+              </div>
             <cd-join-dojo></cd-join-dojo>
           </div>
         </div>
