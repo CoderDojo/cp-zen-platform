@@ -3,7 +3,7 @@
   /*global $*/
 
   function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $uibModal, alertService, cdEventsService, tableUtils,
-    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event, $timeout) {
+    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event, $timeout, eventUtils) {
 
     $scope.strings = {
       deleteUserCheckedIn: $translate.instant('User must not be checked in to be deleted')
@@ -44,11 +44,10 @@
     $scope.predicate = 'created';
     $scope.reverse = -1;
 
-
     $scope.attendanceDropdownSettings = {
-      idProp: 'date',
+      idProp: 'attendance',
       externalIdProp: '',
-      displayProp: 'date',
+      displayProp: 'formattedDate',
       showUncheckAll: false,
       showCheckAll: false,
       scrollableHeight: '200px',
@@ -57,20 +56,22 @@
 
     $scope.attendanceDropdownEvents = {
       onItemSelect: function (item) {
-        item.attended = true;
-        item.dojoId = dojoId;
-        cdEventsService.updateApplicationAttendance(item, null, function (err) {
-          if(err) console.error(err);
+        var attendance = item.attendance;
+        attendance.attended = true;
+        attendance.dojoId = dojoId;
+        cdEventsService.updateApplicationAttendance(attendance, null, function (err) {
+          if (err) console.error(err);
         });
       },
       onItemDeselect: function (item) {
-        item.attended = false;
-        item.dojoId = dojoId;
-        cdEventsService.updateApplicationAttendance(item, null, function (err) {
-          if(err) console.error(err);
+        var attendance = item.attendance;
+        attendance.attended = false;
+        attendance.dojoId = dojoId;
+        cdEventsService.updateApplicationAttendance(attendance, null, function (err) {
+          if (err) console.error(err);
         });
       }
-    }
+    };
 
     /* ninja is defined as a key in many areas, keep it for backward compatibility */
     // Used for translating ticket types in the table. Better than looping through an array each time to find matching translations
@@ -101,7 +102,7 @@
     if(event.type === 'recurring') {
       event.formattedDates = [];
       _.each(event.dates, function (eventDate) {
-        event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
+        event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YYYY'));
       });
 
       event.day = moment(startDate).format('dddd');
@@ -120,14 +121,17 @@
       }
     } else {
       //One-off event
-      event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
+      event.formattedDate = moment(startDate).format('Do MMMM YYYY') + ', ' +
         moment(startDate).format('HH:mm') +  ' - ' +
         moment(endDate).format('HH:mm');
     }
 
-    _.each(event.dates, function (eventDateObj) {
-      var date = moment(eventDateObj.startTime).format('Do MMMM YY');
-      applicationCheckInDates.push(date);
+    var eventWithFormattedDates = eventUtils.getFormattedDates(event);
+    _.each(eventWithFormattedDates.dates, function (date, index) {
+      applicationCheckInDates.push({
+        date: date.startTime,
+        formattedDate: event.formattedDates[index]
+      });
     });
 
     $scope.event = event;
@@ -270,17 +274,24 @@
           }
 
           application.age = moment().diff(application.dateOfBirth, 'years');
-          application.dateApplied = moment(application.created).format('Do MMMM YY');
+          application.dateApplied = moment(application.created).format('Do MMMM YYYY');
 
           application.applicationDates = [];
           _.each(applicationCheckInDates, function (checkInDate) {
-            application.applicationDates.push({applicationId: application.id, date: checkInDate});
+            application.applicationDates.push({attendance: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate});
           });
 
           application.attendanceModel = [];
           _.each(application.attendance, function (attendanceDate) {
-            var checkInDate = moment(attendanceDate).format('Do MMMM YY');
-            application.attendanceModel.push({applicationId: application.id, date: checkInDate})
+            var checkInDate = {
+              date: attendanceDate,
+              formattedDate: moment.utc(attendanceDate).format('Do MMMM YYYY')
+            };
+            var applicationDate = {attendance: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate};
+            if (_.findIndex(applicationCheckInDates, {date: checkInDate.date}) === -1) {
+              application.applicationDates.unshift(applicationDate);
+            }
+            application.attendanceModel.push(applicationDate);
           });
 
           application.parents = [];
@@ -365,7 +376,7 @@
       }
 
       function updateAttendance() {
-        var date = moment.utc(application.applicationDates[0].date, 'Do MMMM YY').toISOString();
+        var date = moment.utc(application.applicationDates[0].date, 'Do MMMM YYYY').toISOString();
         application.updateAction = 'checkin';
         if(!$scope.userIsCheckedIn(application)) {
           if(!application.attendance) application.attendance = [];
@@ -518,6 +529,6 @@
 
   angular.module('cpZenPlatform')
     .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$uibModal', 'alertService', 'cdEventsService',
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', '$timeout', manageEventApplicationsCtrl]);
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', '$timeout', 'eventUtils', manageEventApplicationsCtrl]);
 
 })();
