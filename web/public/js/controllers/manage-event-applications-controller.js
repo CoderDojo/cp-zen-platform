@@ -130,7 +130,7 @@
     _.each(eventWithFormattedDates.dates, function (date, index) {
       applicationCheckInDates.push({
         date: date.startTime,
-        formattedDate: event.formattedDates[index]
+        formattedDate: eventWithFormattedDates.formattedDates[index]
       });
     });
 
