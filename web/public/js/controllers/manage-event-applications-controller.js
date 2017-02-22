@@ -45,7 +45,7 @@
     $scope.reverse = -1;
 
     $scope.attendanceDropdownSettings = {
-      idProp: 'id',
+      idProp: 'attendance',
       externalIdProp: '',
       displayProp: 'formattedDate',
       showUncheckAll: false,
@@ -56,7 +56,7 @@
 
     $scope.attendanceDropdownEvents = {
       onItemSelect: function (item) {
-        var attendance = item.id;
+        var attendance = item.attendance;
         attendance.attended = true;
         attendance.dojoId = dojoId;
         cdEventsService.updateApplicationAttendance(attendance, null, function (err) {
@@ -64,7 +64,7 @@
         });
       },
       onItemDeselect: function (item) {
-        var attendance = item.id;
+        var attendance = item.attendance;
         attendance.attended = false;
         attendance.dojoId = dojoId;
         cdEventsService.updateApplicationAttendance(attendance, null, function (err) {
@@ -278,7 +278,7 @@
 
           application.applicationDates = [];
           _.each(applicationCheckInDates, function (checkInDate) {
-            application.applicationDates.push({id: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate});
+            application.applicationDates.push({attendance: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate});
           });
 
           application.attendanceModel = [];
@@ -287,10 +287,11 @@
               date: attendanceDate,
               formattedDate: moment.utc(attendanceDate).format('Do MMMM YYYY')
             };
+            var applicationDate = {attendance: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate};
             if (_.findIndex(applicationCheckInDates, {date: checkInDate.date}) === -1) {
-              application.applicationDates.unshift({id: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate});
+              application.applicationDates.unshift(applicationDate);
             }
-            application.attendanceModel.push({id: {applicationId: application.id, date: checkInDate.date}, formattedDate: checkInDate.formattedDate});
+            application.attendanceModel.push(applicationDate);
           });
 
           application.parents = [];
