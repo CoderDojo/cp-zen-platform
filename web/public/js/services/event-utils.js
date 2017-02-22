@@ -56,12 +56,12 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
     var startDate = mStartDate.subtract(mStartDate.utcOffset(), 'minutes');
     var endDate = mEndDate.subtract(mEndDate.utcOffset(), 'minutes');
 
-    if(event.type === 'recurring') {
-      event.formattedDates = [];
-      _.each(event.dates, function (eventDate) {
-        event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YYYY'));
-      });
+    event.formattedDates = [];
+    _.each(event.dates, function (eventDate) {
+      event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YYYY'));
+    });
 
+    if (event.type === 'recurring') {
       event.day = mStartDate.format('dddd');
       event.time = mStartDate.format('HH:mm') + ' - ' + mEndDate.format('HH:mm');
 
