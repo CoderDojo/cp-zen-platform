@@ -1608,9 +1608,6 @@ msgstr "Champion"
 msgid "Term"
 msgstr "Term"
 
-msgid "One off"
-msgstr "One off"
-
 msgid "Select event date..."
 msgstr "Select event date..."
 
