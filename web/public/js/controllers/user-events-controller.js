@@ -107,6 +107,15 @@
     $scope.tableRowIndexExpandedCurr = '';
     $scope.dojoRowIndexExpandedCurr = '';
 
+    $scope.getEventTypeDisplayText = function (event) {
+      switch (event.type) {
+        case 'one-off':
+          return $translate.instant('One off');
+        case 'recurring':
+          return $translate.instant('Term');
+      }
+    };
+
     $scope.eventCollapsed = function (dojosEventsIndex, eventIdx) {
       $scope.dojosEvents[dojosEventsIndex].events[eventIdx].isCollapsed = false;
     }

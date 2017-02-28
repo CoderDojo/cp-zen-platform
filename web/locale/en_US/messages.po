@@ -1605,10 +1605,10 @@ msgstr "Mentor/Volunteer"
 msgid "Champion"
 msgstr "Champion"
 
-msgid "recurring"
-msgstr "Recurring"
+msgid "Term"
+msgstr "Term"
 
-msgid "one-off"
+msgid "One off"
 msgstr "One off"
 
 msgid "Select event date..."
