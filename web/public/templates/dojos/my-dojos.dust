@@ -1,4 +1,6 @@
 <div class="cd-dashboard cd-color-3-underline">
+  <cd-expanding-dojo-card ng-repeat="dojo in myDojos" dojo="dojo">
+  </cd-expanding-dojo-card>
   <div class="row">
     <div class="my-dojos" ui-view>
       <legend>{@i18n key="My Dojos"/}</legend>
