@@ -3238,3 +3238,12 @@ msgstr "We could not determine a location from this address. Your previous locat
 
 msgid "Day selected doesn't exist in date range, please check your date range."
 msgstr "Day selected doesn't exist in date range, please check your date range."
+
+msgid "CoderDojo %1s | Zen"
+msgstr "CoderDojo %1s | Zen"
+
+msgid "%1s at %2s on %3s"
+msgstr "%1s at %2s on %3s"
+
+msgid "%1s in %2s"
+msgstr "%1s in %2s"

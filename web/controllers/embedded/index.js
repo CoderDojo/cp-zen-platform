@@ -9,7 +9,10 @@ var controller = module.exports = [
         reply.view('embedded', request.locals);
       },
       plugins: {
-        blankie: false
+        blankie: false,
+        senecaPreloader: {
+          handler: 'seneca-event-preloader'
+        }
       },
       security: {
         xframe: false
