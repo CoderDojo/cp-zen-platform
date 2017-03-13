@@ -95,6 +95,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.hiddenFields =  getHiddenFields(hiddenFields.data, profile.data.userTypes);
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
+  $scope.invitedParentEmail = {};
   var lastClicked = {};
   $scope.hasAccess = utils.hasAccess;
   // $scope.avatar = cdUsersService.getAvatar.bind(profile.id);
@@ -196,7 +197,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     var fail = function(){
       alertService.showError($translate.instant('An error has occurred while sending invitation') );
     };
-
     data.emailSubject = 'You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.';
     cdUsersService.inviteParent(data, win, fail);
   };
