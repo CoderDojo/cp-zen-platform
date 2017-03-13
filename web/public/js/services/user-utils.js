@@ -146,7 +146,8 @@ angular.module('cpZenPlatform').factory('userUtils',
     };
     var perms;
     // If original perm is lower than the new one, we reset it, else we expand it
-    if (permissionService.getUserTypesIndex(userDojo.userTypes) < permissionService.getUserTypesIndex(userTypes)) {
+    if (permissionService.getUserTypesIndex(userDojo.userTypes) < permissionService.getUserTypesIndex(userTypes) ||
+      !userDojo.userPermissions) {
       perms = [];
     } else {
       perms = userDojo.userPermissions;
