@@ -1,38 +1,31 @@
 .cd-expanding-dojo-card {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 0 -16px;
 
   &__panel {
-    min-width: 50%;
     padding: 16px;
+    width: 50%;
 
     @media (max-width: @screen-xs-max) {
-      min-width: 100%;
+      width: 100%;
     }
   }
 
-  &__dojo-users {
-    // background: green;
-    height: 200px;
+  &__view-edit-buttons {
+    display: flex;
+    justify-content: flex-end;
   }
-  &__dojo-events {
-    // background: blue;
-    // height: 200px;
-  }
-  &__dojo-resources {
-    // background: orange;
-    // height: 200px;
-  }
-  &__dojo-tao {
-    // background: grey;
-    // height: 200px;
+
+  &__placeholder {
+    text-align: center;
   }
 
   &__header {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
   }
 
   &__header-text {

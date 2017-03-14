@@ -40,7 +40,7 @@
         dfd.reject(err);
       });
     } else if( ($stateParams.dojoId && !_.isNumber($stateParams.dojoId) ) ||
-      ($stateParams.id && !_.isNumber($stateParams.dojoId) ) ) {
+      ($stateParams.id && !_.isNumber($stateParams.id) ) ) {
         var id = $stateParams.dojoId || $stateParams.id;
         cdDojoService.load(id,
         function (data) {
@@ -411,7 +411,17 @@
           controller: 'dojo-detail-controller'
         })
         .state("dojo-detail-alt", {
-          url: "/dojo/:legacyId",
+          url: "/dojo/{legacyId:[0-9]+}",
+          templateUrl: '/dojos/template/dojo-detail',
+          resolve: {
+            dojo: resolveDojo,
+            gmap: gmap,
+            currentUser: resolves.loggedInUser
+          },
+          controller: 'dojo-detail-controller'
+        })
+        .state("dojo-detail-id", {
+          url: "/dojo/:id",
           templateUrl: '/dojos/template/dojo-detail',
           resolve: {
             dojo: resolveDojo,

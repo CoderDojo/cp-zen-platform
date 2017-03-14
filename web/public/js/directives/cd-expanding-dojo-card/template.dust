@@ -3,16 +3,20 @@
   round-image="{{ $ctrl.dojoImage }}">
   <div class="cd-expanding-dojo-card">
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users">
-      <cd-expanding-dojo-card-users></cd-expanding-dojo-card-users>
+      <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>
     </div>
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events">
       <cd-expanding-dojo-card-events dojo="$ctrl.dojo"></cd-expanding-dojo-card-events>
     </div>
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
-      <cd-expanding-dojo-card-resources></cd-expanding-dojo-card-resources>
+      <cd-expanding-dojo-card-resources dojo="$ctrl.dojo"></cd-expanding-dojo-card-resources>
     </div>
-    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">
+    <!-- <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">
       <cd-expanding-dojo-card-tao></cd-expanding-dojo-card-tao>
-    </div>
+    </div> -->
+  </div>
+  <div class="cd-expanding-dojo-card__view-edit-buttons btn-group" role="group" aria-hidden="true">
+    <a ui-sref="dojo-detail-id({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i> {@i18n key="View"/}</a>
+    <a ui-sref="edit-dojo({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {@i18n key="Edit"/}</a>
   </div>
 </cd-expanding-card>
