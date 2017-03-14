@@ -27,7 +27,7 @@ module.exports = function (request, cb) {
           //  TODO: This locale is frankly a hack, we need a "per-dojo" language
           var locale = dojo.alpha2.toLowerCase() + '_' + dojo.alpha2 || defaultLanguage;
 
-          preloaded.title = translater(locale, {key: 'CoderDojo %1s | Zen',
+          preloaded.title = translater(locale, {key: '%1s | CoderDojo',
             var: dojo.name});
           preloaded.description = translater(locale, {key: '%1s at %2s on %3s',
            var: [event.name, dojo.name, event.date]});
