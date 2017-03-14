@@ -4,6 +4,7 @@
  * @param  {Function} cb      Callback assigning the preloaded object and continuing
  */
 var translater = require('../fn/i18n-translate');
+var languages = require('country-language');
 module.exports = function (request, cb) {
   var preloaded = {};
   var defaultLanguage = 'en_US';
@@ -11,7 +12,7 @@ module.exports = function (request, cb) {
     query: {urlSlug: request.params['id'] + '/' + request.params['alpha2']}},
     function (err, dojo) {
       if (err || !dojo) return cb(); // If metadata fails to load, continue loading the page normally
-      var locale = dojo.alpha2.toLowerCase() + '_' + dojo.alpha2 || defaultLanguage;
+      var locale = languages.getCountryMsLocales(dojo.alpha2)[0].langCultureName || defaultLanguage;
       preloaded.title = translater(locale, {key: '%1s | CoderDojo',
         var: dojo.name});
       preloaded.description = translater(locale, {key: '%1s in %2s',

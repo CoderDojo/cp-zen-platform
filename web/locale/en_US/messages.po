@@ -3239,14 +3239,14 @@ msgstr "We could not determine a location from this address. Your previous locat
 msgid "Day selected doesn't exist in date range, please check your date range."
 msgstr "Day selected doesn't exist in date range, please check your date range."
 
-msgctxt "Displayed when sharing a dojo page, %1s being the dojo name"
 msgid "%1s | CoderDojo"
+msgctxt "Displayed when sharing a dojo page, %1s being the dojo name"
 msgstr "%1s | CoderDojo"
 
-msgctxt "Metadata displayed when sharing an event page, %1s being the event name, %2s the dojo name and %3s the time of the event"
 msgid "%1s at %2s on %3s"
+msgctxt "Metadata displayed when sharing an event page, %1s being the event name, %2s the dojo name and %3s the time of the event"
 msgstr "%1s at %2s on %3s"
 
-msgctxt "Metadata displayed when sharing a dojo page, %1s being the dojo name, %2s being the country"
 msgid "%1s in %2s"
+msgctxt "Metadata displayed when sharing a dojo page, %1s being the dojo name, %2s being the country"
 msgstr "%1s in %2s"

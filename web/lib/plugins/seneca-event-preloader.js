@@ -5,9 +5,9 @@
  */
 var translater = require('../fn/i18n-translate');
 var _ = require('lodash');
+var languages = require('country-language');
 module.exports = function (request, cb) {
   var preloaded = {};
-  var context = request.locals.context;
   var defaultLanguage = 'en_US';
 
   request.seneca.act({role: 'cd-events', cmd: 'getEvent', id: request.params['eventId']},
@@ -24,8 +24,7 @@ module.exports = function (request, cb) {
       request.seneca.act({role: 'cd-dojos', cmd: 'load', id: event.dojoId},
         function (err, dojo) {
           if (err || !dojo) return cb();
-          //  TODO: This locale is frankly a hack, we need a "per-dojo" language
-          var locale = dojo.alpha2.toLowerCase() + '_' + dojo.alpha2 || defaultLanguage;
+          var locale = languages.getCountryMsLocales(dojo.alpha2)[0].langCultureName || defaultLanguage;
 
           preloaded.title = translater(locale, {key: '%1s | CoderDojo',
             var: dojo.name});
