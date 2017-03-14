@@ -1,0 +1,7 @@
+<div class="cd-expanding-dojo-card-resources">
+  <h3 class="cd-expanding-dojo-card-resources__title cd-no-margin">Resources</h3>
+  <!-- <p>We provide a number of resources to help run your Dojo.
+    These range from resources for running your Dojo to our
+    learning materials for youths, Sushi Cards.</p> -->
+  <button class="cd-expanding-dojo-card-resources__resource-button btn btn-secondary">{@i18n key="View Available Resources"/}</button>
+</div>

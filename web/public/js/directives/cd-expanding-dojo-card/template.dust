@@ -1,0 +1,18 @@
+<cd-expanding-card main-title="{{ $ctrl.dojo.name }}"
+  sub-title-1="{{ $ctrl.address }}"
+  round-image="{{ $ctrl.dojoImage }}">
+  <div class="cd-expanding-dojo-card">
+    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users">
+      <cd-expanding-dojo-card-users></cd-expanding-dojo-card-users>
+    </div>
+    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events">
+      <cd-expanding-dojo-card-events dojo="$ctrl.dojo"></cd-expanding-dojo-card-events>
+    </div>
+    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
+      <cd-expanding-dojo-card-resources></cd-expanding-dojo-card-resources>
+    </div>
+    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">
+      <cd-expanding-dojo-card-tao></cd-expanding-dojo-card-tao>
+    </div>
+  </div>
+</cd-expanding-card>

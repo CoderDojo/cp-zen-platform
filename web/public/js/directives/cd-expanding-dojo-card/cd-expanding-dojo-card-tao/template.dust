@@ -1,0 +1,4 @@
+<div class="cd-expanding-dojo-card-tao">
+  <h3 class="cd-expanding-dojo-card-tao__title cd-no-margin">Tao</h3>
+  <button class="cd-expanding-dojo-card-tao__tao-button btn btn-primary">{@i18n key="Complete CoderDojo Tao"/}</button>
+</div>
