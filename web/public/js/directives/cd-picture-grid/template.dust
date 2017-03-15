@@ -4,9 +4,20 @@
       <div class="cd-picture-grid__picture" ng-class="{'cd-picture-grid__picture--image-zoom': $ctrl.imageZoom }" style="background-image: url({{ item.picture }});">
         <i ng-if="$ctrl.showItemIcons && $ctrl.itemIcon" class="cd-picture-grid__action-icon fa fa-{{ $ctrl.itemIcon }} cd-bg-{{ $ctrl.itemIconColor || 'purple' }}"></i>
       </div>
+      <div ng-repeat="item in item.subs" class="cd-picture-grid__picture-sub-container">
+        <div class="cd-picture-grid__picture-sub" style="background-image: url({{ item.picture }});">
+          <i ng-if="$ctrl.showItemIcons && $ctrl.itemIcon"
+            class="cd-picture-grid__action-icon fa fa-{{ $ctrl.itemIcon }} cd-bg-{{ $ctrl.itemIconColor || 'purple' }}"></i>
+        </div>
+      </div>
       <div class="cd-picture-grid__info">
         <p class="cd-picture-grid__caption">{{ item.caption }}</p>
         <p ng-if="item.subCaption" class="cd-picture-grid__sub-caption">{{ item.subCaption }}</p>
+        <div ng-repeat="item in item.subs">
+          <div class="cd-picture-grid__sub-caption">
+            <span ng-bind="item.name"></span>
+          </div>
+        </div>
       </div>
     </a>
   </div>
