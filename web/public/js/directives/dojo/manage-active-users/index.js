@@ -399,7 +399,8 @@
                   userData: user,
                   picture: '/api/2.0/profiles/' + user.profileId + '/avatar_img',
                   caption: user.name,
-                  subCaption: userUtils.getTitleForUserTypes(user.types, user)
+                  subCaption: userUtils.getTitleForUserTypes(user.types, user),
+                  subs: user.parents
                 };
               });
               usSpinnerService.stop('manage-dojo-users-spinner');
@@ -479,23 +480,33 @@
             }
 
             function getKidsParents (done) {
-              var kids = _.filter(users, {'email': null});
+              var kids = _.filter(users, function (user) {
+                return _.intersection(user.types, ['attendee-u13', 'attendee-o13']).length > 0;
+              });
               async.mapSeries(kids, function (kid, cb) {
                 cdUsersService.loadParentsForUserPromise(kid.id)
-                .then( function (parents) {
+                .then(function (parents) {
+                  if (parents.length) {
                     kid.parentEmail = _.first(parents).email;
-                    cb();
-                })
+                    kid.parents = _.map(parents, function (parent) {
+                      return {
+                        name: parent.name,
+                        picture: '/api/2.0/profiles/' + parent.id + '/avatar_img'
+                      };
+                    });
+                  }
+                  cb();
+                });
               }, done);
             }
 
-            function retrieveEventsAttended(done) {
+            function retrieveEventsAttended (done) {
               async.each(users, function (user, cb) {
-                cdEventsService.searchApplications({dojoId:dojoId, userId: user.id}, function (applications) {
+                cdEventsService.searchApplications({dojoId: dojoId, userId: user.id}, function (applications) {
                   _.each(applications, function (application) {
-                    if(application.attendance && application.attendance.length > 0) {
-                      if(!user.eventsAttended) user.eventsAttended = 0;
-                      if(application.ticketType !== 'other') user.eventsAttended += application.attendance.length;
+                    if (application.attendance && application.attendance.length > 0) {
+                      if (!user.eventsAttended) user.eventsAttended = 0;
+                      if (application.ticketType !== 'other') user.eventsAttended += application.attendance.length;
                     }
                   });
                   return cb();
