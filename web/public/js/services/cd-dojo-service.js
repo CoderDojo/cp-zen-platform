@@ -131,6 +131,9 @@
       acceptUserRequest: function(data, win, fail) {
         return cdApi.post('dojos/accept-user-request', { data: data }, win, fail || topfail);
       },
+      declineUserRequest: function(data, win, fail) {
+        return cdApi.delete('dojos/decline-user-request', { data: data }, win, fail || topfail);
+      },
       dojosForUser: function(userId, win, fail) {
         return cdApi.get('dojos/dojos-for-user/' + userId, win, fail || topfail);
       },
@@ -188,6 +191,9 @@
       notifyAllMembers: function (data, win, fail) {
         return cdApi.post('dojos/notify-all-members', { data: data }, win, fail || topfail);
       },
+      searchDojoInvites: function (dojoId, query) {
+        return cdApi.post('dojos/' + dojoId + '/requests', {query: query});
+      }
     };
   }
 angular.module('cpZenPlatform')

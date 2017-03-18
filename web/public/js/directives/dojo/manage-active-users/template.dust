@@ -1,0 +1,60 @@
+<span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+<div class="row">
+  <a class="btn btn-primary btn-float pull-right" ng-href="{{ userListDownloadLink }}" target="_blank">{@i18n key="Export User List"/}</a>
+  <form id="inviteMentorForm" novalidate angular-validator angular-validator-submit="inviteUser(invite, this)" name="inviteMentorForm" class="col-xs-12 col-md-10">
+    <div class="form-group">
+      <div class="col-md-3">
+        <input type="email" required required-message="'{@i18n key="Email is empty"/}'" placeholder="{@i18n key="Enter Email"/}" class="form-group form-control" name="inviteMentor" ng-model="invite.email" id="inviteMentor">
+      </div>
+      <div class="col-md-5 form-group" ng-class="{'has-error': inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required}">
+        <ui-select name="inviteUserType" ng-model="invite.userType" required>
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Select a user type to invite..."/}">{{ $select.selected.title  }}</ui-select-match>
+          <ui-select-choices repeat="userType in userTypes">
+            <span ng-bind-html="userType.title"></span>
+          </ui-select-choices>
+        </ui-select>
+        <label class="control-label has-error validationMessage"
+               ng-show="inviteMentorForm.$submitted && inviteMentorForm.inviteUserType.$error.required">{@i18n key="Select an option"/}</label>
+      </div>
+      <button class="btn btn-primary" type="submit">{@i18n key="Send Invite"/}</button>
+    </div>
+
+  </form>
+  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter, this)" name="filterUserForm" class="col-xs-12 col-md-10">
+    <div class="form-group">
+      <div class="col-md-3">
+        <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control form-group" name="filterUserName" ng-model="filter.name" id="filterUserName">
+      </div>
+      <div class="col-md-5 form-group">
+        <ui-select name="filterUserType" ng-model="filter.userType">
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Filter Users by type..."/}">{{ $select.selected.title  }}</ui-select-match>
+          <ui-select-choices repeat="userType in filterUserTypes">
+            <span ng-bind-html="userType.title"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
+    </div>
+  </form>
+</div>
+<cd-picture-grid items="userGridItems" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
+<cd-action-bar ng-if="actions" open="showActionBar" force-fixed="actionBarConfig.forceFixed">
+  <cd-action-bar-left-actions>
+    <cd-action-bar-item ng-show="actions.email.ngShow()" href="mailto:{{ actions.email.ngValue() }}" action-title="{{ actions.email.ngValue() }}" icon="envelope"></cd-action-bar-item>
+  </cd-action-bar-left-actions>
+  <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" action-title="{@i18n key="Award Badge"/}" icon="trophy" show-as-action="always" size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
+    <cd-award-badge user="selectedItems[0].userData"></cd-award-badge>
+  </cd-action-bar-popup-item>
+  <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" action-title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
+  <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
+  <cd-action-bar-item ng-show="actions.remove.ngShow()" ng-click="actions.remove.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Remove"/}" icon="minus-circle" color="red"></cd-action-bar-item>
+  <cd-action-bar-checkbox-item ng-show="actions.backgroundCheck.ngShow()" action-title="{@i18n key="Background Checked"/}" model="actions.backgroundCheck.model()" on-change="actions.backgroundCheck.onChange" show-as-action="never"></cd-action-bar-checkbox-item>
+  <span ng-repeat="action in userPermActions">
+    <cd-action-bar-checkbox-item ng-show="action.ngShow()" action-title="{{ action.title }}" model="action.model()" on-change="action.onChange" color="{{ action.color }}" show-as-action="{{ action.showAsAction }}"></cd-action-bar-checkbox-item>
+  </span>
+</cd-action-bar>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="row">
+  <form id="filterUserForm" novalidate ng-submit="filterUsers(filter)" name="filterUserForm" class="col-xs-12 col-md-10">
+    <div class="form-group">
+      <div class="col-md-3">
+        <input type="text" placeholder="{@i18n key="Filter by Name"/}" class="form-control form-group" name="filterUserName" ng-model="filter.name" id="filterUserName">
+      </div>
+      <div class="col-md-5 form-group">
+        <ui-select name="filterUserType" ng-model="filter.userType">
+          <ui-select-match allow-clear="true" placeholder="{@i18n key="Filter Users by type..."/}">{{ $select.selected.title  }}</ui-select-match>
+          <ui-select-choices repeat="userType in filterUserTypes">
+            <span ng-bind-html="userType.title"></span>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <button class="btn btn-primary" type="submit">{@i18n key="Filter Users"/}</button>
+    </div>
+  </form>
+</div>
+<cd-picture-grid items="pendingUsers" selected-items="selectedItems" wide-card="true" actions="true"></cd-picture-grid>
+<cd-action-bar class="pending-actions" ng-if="actions" open="showActionBar" force-fixed="actionBarConfig.forceFixed">
+  <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" action-title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
+  <cd-action-bar-item ng-show="actions.decline.ngShow()" ng-click="actions.decline.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Decline"/}" icon="minus-circle" color="red"></cd-action-bar-item>
+  <cd-action-bar-item ng-show="actions.accept.ngShow()" ng-click="actions.accept.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Accept"/}" icon="check-circle" color="green"></cd-action-bar-item>
+</cd-action-bar>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" items-per-page="pagination.itemsPerPage" ng-model="pagination.pageNo" class="pagination-sm" first-text="{@i18n key="First" /}" previous-text="{@i18n key="Previous" /}" next-text="{@i18n key="Next" /}" last-text="{@i18n key="Last" /}" boundary-links="true"></uib-pagination>
+  </div>
+</div>
