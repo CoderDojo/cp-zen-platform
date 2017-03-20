@@ -34,7 +34,7 @@ function cdDojoDetailCtrl ($scope, $state, $location, cdDojoService, cdUsersServ
     $scope.dojo.stage = _.find($scope.dojoStages, function (obj) { return obj.value === $scope.dojo.stage; });
   });
 
-  dojoUtils.isHavingPerm(currentUser, dojo.id, 'dojo-admin')
+  dojoUtils.isHavingPerm(currentUser.data, dojo.id, 'dojo-admin')
   .then(function () {
     $scope.isDojoAdmin = true;
   })
@@ -42,7 +42,7 @@ function cdDojoDetailCtrl ($scope, $state, $location, cdDojoService, cdUsersServ
     $scope.isDojoAdmin = false;
   });
 
-  dojoUtils.isHavingPerm(currentUser, dojo.id, 'ticketing-admin')
+  dojoUtils.isHavingPerm(currentUser.data, dojo.id, 'ticketing-admin')
   .then(function () {
     $scope.isTicketingAdmin = true;
   })

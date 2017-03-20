@@ -4,7 +4,8 @@ angular
     .module('cpZenPlatform')
     .component('cdExpandingDojoCardEvents', {
       bindings: {
-        dojo: '<'
+        dojo: '<',
+        isTicketingAdmin: '<'
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-expanding-dojo-card/cd-expanding-dojo-card-next-event',

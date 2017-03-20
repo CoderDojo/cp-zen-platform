@@ -4,14 +4,17 @@ angular
     .module('cpZenPlatform')
     .component('cdExpandingDojoCard', {
       bindings: {
-        dojo: '<'
+        dojo: '<',
+        user: '<'
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-expanding-dojo-card',
-      controller: ['cdDojoService', function (cdDojoService) {
+      controller: ['cdDojoService', 'dojoUtils', function (cdDojoService, dojoUtils) {
         var ctrl = this;
         var dojo = ctrl.dojo;
+        var user = ctrl.user;
         var address = [];
+        var usersDojosQuery = {userId: user.id, dojoId: dojo.id, deleted: 0};
         if (dojo.address1) {
           address.push(dojo.address1);
         }
@@ -29,6 +32,16 @@ angular
           .then(function(avatarUrl){
             ctrl.dojoImage = avatarUrl;
           });
+        cdDojoService.getUsersDojos(usersDojosQuery, function (usersDojos) {
+          dojoUtils.isHavingPerm(user, dojo.id, 'dojo-admin', usersDojos[0])
+            .then(function(isDojoAdmin){
+              ctrl.isDojoAdmin = isDojoAdmin;
+            });
+          dojoUtils.isHavingPerm(user, dojo.id, 'ticketing-admin', usersDojos[0])
+            .then(function(isTicketingAdmin){
+              ctrl.isTicketingAdmin = isTicketingAdmin;
+            });
+        })
       }]
     });
 }());

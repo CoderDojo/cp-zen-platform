@@ -2,16 +2,16 @@
   sub-title-1="{{ $ctrl.address }}"
   round-image="{{ $ctrl.dojoImage }}">
   <div class="cd-expanding-dojo-card">
-    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users">
+    <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-show="$ctrl.isDojoAdmin">
       <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>
     </div>
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events">
-      <cd-expanding-dojo-card-events dojo="$ctrl.dojo"></cd-expanding-dojo-card-events>
+      <cd-expanding-dojo-card-events dojo="$ctrl.dojo" is-ticketing-admin="$ctrl.isTicketingAdmin"></cd-expanding-dojo-card-events>
     </div>
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
       <cd-expanding-dojo-card-resources dojo="$ctrl.dojo"></cd-expanding-dojo-card-resources>
     </div>
-    <!-- <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">
+    <!-- <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">     // To be implemented at at later date
       <cd-expanding-dojo-card-tao></cd-expanding-dojo-card-tao>
     </div> -->
   </div>

@@ -3,7 +3,8 @@
     <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">Resources</h3>
   </div>
   <div class="cd-expanding-dojo-card__placeholder">
-    <p>{@i18n key="We provide a number of resources to help run your Dojo. These range from resources for running your Dojo to our learning materials for youths, Sushi Cards."/}</p>
+    <p class="lead">{@i18n key="We provide a number of resources to help run your Dojo."/}</p>
+    <p class="lead cd-lead-sml">{@i18n key="These range from resources for running your Dojo to our learning materials for youths, Sushi Cards."/}</p>
     <a href="http://kata.coderdojo.com/wiki/Home_Page" target="_blank" class="cd-expanding-dojo-card-resources btn btn-secondary">{@i18n key="View Available Resources"/}</a>
   </div>
 </div>
