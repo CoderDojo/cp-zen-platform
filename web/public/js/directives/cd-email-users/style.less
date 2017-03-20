@@ -1,0 +1,46 @@
+.cd-email-users {
+  margin: 0 8px;
+  @border-radius: 10px;
+  @side-margin: 0px 5px;
+  @between-margin: 1px 3px;
+  @img-size: 20px;
+  @icon-padding: 0 5px;
+  @label-padding: 0px 8px;
+
+  input {
+    color: @cd-black;
+  }
+  textarea#emailContent, #cke_emailContent {
+    margin: 8px 0px;
+  }
+  &_input {
+    // display: flex;
+    & > span {
+      // flex: auto;
+    }
+    &-content {
+      background-color: @cd-white;
+      height: auto;
+      // flex: auto;
+      &-label {
+        border-radius: @border-radius;
+        display: inline-block;
+        background-color: @cd-very-light-grey;
+        margin: @between-margin;
+        color: @cd-black;
+        & span {
+          margin: @side-margin;
+        }
+        & img {
+          border-radius: @border-radius;
+          height: @img-size;
+          width: @img-size;
+        }
+        & i {
+          border-radius: @border-radius;
+          padding: @icon-padding;
+        }
+      }
+    }
+  }
+}

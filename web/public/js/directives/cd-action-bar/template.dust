@@ -3,7 +3,7 @@
     <span class="cd-action-bar__info" ng-transclude="leftAction"></span>
     <span class="cd-action-bar__spacer"></span>
     <span class="cd-action-bar__actions" ng-transclude></span>
-    <span class="cd-action-bar-item fa fa-ellipsis-v" ng-click="$ctrl.overflowOpen = !$ctrl.overflowOpen"></span>
+    <span class="cd-action-bar-item fa fa-ellipsis-v" ng-show="$ctrl.showOverflowButton" ng-click="$ctrl.overflowOpen = !$ctrl.overflowOpen"></span>
     <span class="cd-action-bar__overflow-menu" ng-show="$ctrl.overflowOpen" ng-transclude></span>
   </div>
 </div>

@@ -9,6 +9,7 @@ angular
         actionTitle: '@',
         size: '@',
         closeEvent: '@',
+        openAction: '&',
         forceFixed: '='
       },
       restrict: 'EA',
@@ -28,6 +29,7 @@ angular
               var popupHeight = popupEl[0].offsetHeight;
               popupHeight = popupHeight === 0 && popupEl[1] ? popupEl[1].offsetHeight : popupHeight;
 
+              console.log(ctrl.forceFixed,  windowHeight >= footerHeight + popupHeight,  windowHeight, footerHeight + popupHeight);
               if (ctrl.forceFixed === false && windowHeight < footerHeight + popupHeight) {
                 popupEl.css({
                   overflow: 'auto'
@@ -49,14 +51,21 @@ angular
           e.stopPropagation();
           e.preventDefault();
           ctrl.showPopup = !ctrl.showPopup;
+          if (ctrl.showPopup) ctrl.openAction();
           startStopInterval();
+        };
+
+        ctrl.close = function () {
+          ctrl.showPopup = false;
+          ctrl.forceFixed = false;
+          $interval.cancel(intervalRef);
         };
 
         ctrl.$onInit = function () {
           popupEl = $element.find('.cd-action-bar-popup-item__full-width-popup');
           footer = $('#footer');
           $rootScope.$on(ctrl.closeEvent, function () {
-            ctrl.showPopup = false;
+            ctrl.close();
           });
         };
 

@@ -5,6 +5,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys, cdUsersService) {
 
   var dojoId = $state.params.id;
+  $scope.dojoId = dojoId;
   var usersDojosLink = [];
   $scope.userTypes = [];
   $scope.userPermissions = [];
@@ -67,7 +68,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   $scope.selectedItems = [];
 
-  $scope.showActionBar = false;
+  $scope.showActionBarActions = false;
 
   $scope.$watch('selectedItems', function (newValue) {
     $scope.badgeSelection = {};
@@ -77,7 +78,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.$watch('selectedItems.length', function (newValue) {
     $scope.badgeSelection = {};
     $scope.awardBadgeButtonEnabled = false;
-    $scope.showActionBar = newValue > 0;
+    $scope.showActionBarActions = newValue > 0;
   });
 
   // TODO: Centralise for use between this and join dojo
@@ -172,6 +173,43 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         }
       }
     },
+    sendEmail: {
+      ngClick: function () {
+        if ($scope.selectedItems.length !== 1) {
+          return cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
+          .then(function (users) {
+            var kids = _.filter(users.data.response, {'email': null});
+            async.mapSeries(kids, function (kid, cb) {
+              cdUsersService.loadParentsForUserPromise(kid.id)
+              .then(function (parents) {
+                kid.parent = _.first(parents);
+                cb();
+              });
+            }, function () {
+              $scope.emailedUsers = _.map(users.data.response, function (user) {
+                var response = {
+                  userId: user.userId,
+                  profileId: user.id,
+                  name: user.name
+                };
+                if (user.parent) response.parent = user.parent;
+                return response;
+              });
+            });
+          });
+        } else {
+          $scope.emailedUsers = _.map($scope.selectedItems, function (user) {
+            var response = {
+              userId: user.userData.userId,
+              profileId: user.userData.id,
+              name: user.caption
+            };
+            if (user.userData.parent) response.parent = user.userData.parent;
+            return response;
+          });
+        }
+      }
+    },
     viewProfile: {
       ngShow: function () {
         return $scope.selectedItems.length === 1;
@@ -243,12 +281,12 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       ngClick: function () {
         var user = $scope.selectedItems[0].userData;
         $ngBootbox.confirm($translate.instant('Are you sure you want to remove this user from your Dojo?'))
-          .then(function() {
-            $scope.removeUser(user);
-          });
+        .then(function () {
+          $scope.removeUser(user);
+        });
       },
       ngShow: function () {
-        return true;
+        return $scope.selectedItems.length === 1;
       }
     },
     backgroundCheck: {
@@ -270,7 +308,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     }
   };
 
-  function updateActions() {
+  function updateActions () {
     $scope.userPermActions = [];
     $scope.userPermissions.forEach(function (userPermission) {
       $scope.userPermActions.push({
@@ -293,17 +331,19 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
           }
         },
         ngShow: function () {
-          return $scope.canUpdateUserPermissions;
+          return $scope.canUpdateUserPermissions && $scope.selectedItems.length === 1;
         },
         showAsAction: 'never'
-      })
+      });
     });
   }
+  $scope.showOverflowButton = function () {
+    return $scope.selectedItems.length === 1;
+  };
   updateActions();
 
-
-  $scope.loadPage = function(resetFlag) {
-    $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort: {name: 1};
+  $scope.loadPage = function (resetFlag) {
+    $scope.queryModel.sort = $scope.queryModel.sort ? $scope.queryModel.sort : {name: 1};
     var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, $scope.filterQuery, $scope.queryModel.sort);
     $scope.pagination.pageNo = loadPageData.pageNo;
     $scope.users = [];
@@ -415,6 +455,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         cdUsersService.loadParentsForUserPromise(kid.id)
         .then( function (parents) {
             kid.parentEmail = _.first(parents).email;
+            kid.parent = _.first(parents);
             cb();
         })
       }, done);

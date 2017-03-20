@@ -6,7 +6,8 @@
     .component('cdActionBar', {
       bindings: {
         open: '<',
-        forceFixed: '<'
+        forceFixed: '<',
+        showOverflowButton: '<'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar',
@@ -22,7 +23,6 @@
         $footer.data('inview', true);
 
         ctrl.overflowOpen = false;
-        ctrl.showOverflowButton = false;
 
         var actionBar;
 
@@ -56,7 +56,7 @@
               actionBar.removeClass('cd-action-bar--fixed');
             }
           }
-        }
+        };
       }]
     });
 
