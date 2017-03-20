@@ -11,12 +11,8 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
     } else {
       usSpinnerService.spin('user-request-spinner');
       $scope.user = user;
-      var tokenData = {
-        requestedByUser: userId,
-        inviteToken: inviteToken
-      };
-
-      cdDojoService.acceptUserRequest(tokenData, function (response) {
+      cdDojoService.acceptUserRequest(null, inviteToken, userId)
+      .then(function (response) {
         usSpinnerService.stop('user-request-spinner');
         if(!response.error) {
           alertService.showAlert($translate.instant('User Successfully Validated'), function () {

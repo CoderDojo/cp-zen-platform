@@ -11,8 +11,9 @@
           initUserTypes: '='
         },
         controller: ['cdDojoService', '$state', 'userUtils', '$scope', 'cdUsersService', '$q',
-        'usSpinnerService', 'atomicNotifyService', '$translate',
-        function (cdDojoService, $state, userUtils, $scope, cdUsersService, $q, usSpinnerService, atomicNotifyService, $translate) {
+        'usSpinnerService', 'atomicNotifyService', '$translate', 'alertService',
+        function (cdDojoService, $state, userUtils, $scope, cdUsersService, $q,
+          usSpinnerService, atomicNotifyService, $translate, alertService) {
           var ctrl = this;
           $scope.actionBarConfig = {
             forceFixed: false,
@@ -76,17 +77,17 @@
               },
               ngClick: function () {
                 usSpinnerService.spin('manage-dojo-users-spinner');
-                var tokenData = {
-                  requestedByUser: $scope.selectedItems[0].userData.userId,
-                  inviteToken: $scope.selectedItems[0].invite.id
-                };
-                cdDojoService.acceptUserRequest(tokenData)
+                cdDojoService.declineUserRequest(dojoId, $scope.selectedItems[0].invite.id, $scope.selectedItems[0].userData.userId)
                 .then(function () {
                   return $scope.loadData();
                 })
                 .then(function () {
                   usSpinnerService.stop('manage-dojo-users-spinner');
-                  atomicNotifyService.success($translate.instant('User successfully removed from your dojo'));
+                  atomicNotifyService.success($translate.instant('User request to join your Dojo successfully declined'));
+                })
+                .catch(function (err) {
+                  usSpinnerService.stop('manage-dojo-users-spinner');
+                  alertService.showError($translate.instant('Error declining an user request') + JSON.stringify(err));
                 });
               }
             },
@@ -96,17 +97,17 @@
               },
               ngClick: function () {
                 usSpinnerService.spin('manage-dojo-users-spinner');
-                var tokenData = {
-                  requestedByUser: $scope.selectedItems[0].userData.userId,
-                  inviteToken: $scope.selectedItems[0].invite.id
-                };
-                cdDojoService.acceptUserRequest(tokenData)
+                cdDojoService.acceptUserRequest(dojoId, $scope.selectedItems[0].invite.id, $scope.selectedItems[0].userData.userId)
                 .then(function () {
                   return $scope.loadData();
                 })
                 .then(function () {
-                  atomicNotifyService.success($translate.instant('User successfully added to your dojo'));
+                  atomicNotifyService.success($translate.instant('User request to join your Dojo accepted. \nThe user is now a member of your Dojo'));
                   usSpinnerService.stop('manage-dojo-users-spinner');
+                })
+                .catch(function (err) {
+                  usSpinnerService.stop('manage-dojo-users-spinner');
+                  alertService.showError($translate.instant('Error accepting an user request') + JSON.stringify(err));
                 });
               }
             }
