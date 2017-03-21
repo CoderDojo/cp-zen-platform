@@ -39,6 +39,7 @@
           };
 
           $scope.loadData = function (query) {
+            usSpinnerService.spin('manage-dojo-users-spinner');
             return cdDojoService.searchDojoInvites(dojoId, query || {})
             .then(function (invites) {
               $scope.invites = invites.data;
@@ -51,9 +52,10 @@
                   invite: invite,
                   picture: '/api/2.0/profiles/' + user.profileId + '/avatar_img',
                   caption: user.name,
-                  subCaption: userUtils.getTitleForUserTypes(user.types, user)
+                  subCaption: userUtils.getTitleForUserTypes(invite.userType, user)
                 };
               });
+              usSpinnerService.stop('manage-dojo-users-spinner');
             });
           };
 
