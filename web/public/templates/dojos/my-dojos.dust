@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <cd-expanding-dojo-card ng-repeat="dojo in myDojos" dojo="dojo" user="currentUser">
+  <cd-expanding-dojo-card ng-repeat="dojo in myDojos" dojo="dojo" user="currentUser" start-expanded="{{ myDojos.length === 1 }}">
   </cd-expanding-dojo-card>
   <div class="row">
     <div class="col-md-12 text-center">

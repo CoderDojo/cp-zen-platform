@@ -1,6 +1,7 @@
 <cd-expanding-card main-title="{{ $ctrl.dojo.name }}"
   sub-title-1="{{ $ctrl.address }}"
-  round-image="{{ $ctrl.dojoImage }}">
+  round-image="{{ $ctrl.dojoImage }}"
+  start-expanded="{{ $ctrl.startExpanded }}">
   <div class="cd-expanding-dojo-card">
     <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-show="$ctrl.isDojoAdmin">
       <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>

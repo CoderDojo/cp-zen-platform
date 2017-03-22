@@ -5,7 +5,8 @@ angular
     .component('cdExpandingDojoCard', {
       bindings: {
         dojo: '<',
-        user: '<'
+        user: '<',
+        startExpanded: '@'
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-expanding-dojo-card',
