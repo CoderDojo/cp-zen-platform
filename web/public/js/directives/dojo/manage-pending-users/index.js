@@ -11,9 +11,9 @@
           initUserTypes: '='
         },
         controller: ['cdDojoService', '$state', 'userUtils', '$scope', 'cdUsersService', '$q',
-        'usSpinnerService', 'atomicNotifyService', '$translate', 'alertService',
+        'usSpinnerService', 'atomicNotifyService', '$translate', 'alertService', 'translationKeys',
         function (cdDojoService, $state, userUtils, $scope, cdUsersService, $q,
-          usSpinnerService, atomicNotifyService, $translate, alertService) {
+          usSpinnerService, atomicNotifyService, $translate, alertService, translationKeys) {
           var ctrl = this;
           $scope.actionBarConfig = {
             forceFixed: false,
@@ -80,16 +80,20 @@
               ngClick: function () {
                 usSpinnerService.spin('manage-dojo-users-spinner');
                 cdDojoService.declineUserRequest(dojoId, $scope.selectedItems[0].invite.id, $scope.selectedItems[0].userData.userId)
-                .then(function () {
-                  return $scope.loadData();
+                .then(function (res) {
+                  if (res.data.error) {
+                    throw res.data.error;
+                  } else {
+                    return $scope.loadData();
+                  }
                 })
                 .then(function () {
                   usSpinnerService.stop('manage-dojo-users-spinner');
-                  atomicNotifyService.success($translate.instant('User request to join your Dojo successfully declined'));
+                  atomicNotifyService.success($translate.instant(translationKeys.DECLINE_JOIN_REQUEST));
                 })
                 .catch(function (err) {
                   usSpinnerService.stop('manage-dojo-users-spinner');
-                  alertService.showError($translate.instant('Error declining an user request') + JSON.stringify(err));
+                  alertService.showError($translate.instant(translationKeys.ERROR_DECLINE_JOIN_REQUEST) + JSON.stringify(err));
                 });
               }
             },
@@ -100,16 +104,20 @@
               ngClick: function () {
                 usSpinnerService.spin('manage-dojo-users-spinner');
                 cdDojoService.acceptUserRequest(dojoId, $scope.selectedItems[0].invite.id, $scope.selectedItems[0].userData.userId)
-                .then(function () {
-                  return $scope.loadData();
+                .then(function (res) {
+                  if (res.data.error) {
+                    throw res.data.error;
+                  } else {
+                    return $scope.loadData();
+                  }
                 })
                 .then(function () {
-                  atomicNotifyService.success($translate.instant('User request to join your Dojo accepted. \nThe user is now a member of your Dojo'));
+                  atomicNotifyService.success($translate.instant(translationKeys.ACCEPT_JOIN_REQUEST));
                   usSpinnerService.stop('manage-dojo-users-spinner');
                 })
                 .catch(function (err) {
                   usSpinnerService.stop('manage-dojo-users-spinner');
-                  alertService.showError($translate.instant('Error accepting an user request') + JSON.stringify(err));
+                  alertService.showError($translate.instant(translationKeys.ERROR_ACCEPT_JOIN_REQUEST) + JSON.stringify(err));
                 });
               }
             }

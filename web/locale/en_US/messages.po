@@ -867,6 +867,24 @@ msgstr "Supporters Image URL"
 msgid "Manage Dojo Users"
 msgstr "Manage Dojo Users"
 
+msgid "User request to join your Dojo accepted. \nThe user is now a member of your Dojo"
+msgstr "User request to join your Dojo accepted. \nThe user is now a member of your Dojo"
+
+msgid "User request to join your Dojo declined"
+msgstr "User request to join your Dojo declined"
+
+msgid "Error accepting a user request"
+msgstr "Error accepting a user request"
+
+msgid "Error declining a user request"
+msgstr "Error declining a user request"
+
+msgid "Active Users"
+msgstr "Active Users"
+
+msgid "User Request"
+msgstr "User Request"
+
 msgid "Send Invite"
 msgstr "Send Invite"
 
@@ -2628,9 +2646,6 @@ msgstr "My Events"
 
 msgid "Review Champion Application"
 msgstr "Review Champion Application"
-
-msgid "Manage Dojo Users"
-msgstr "Manage Dojo Users"
 
 msgid "Setup Dojo"
 msgstr "Setup Dojo"

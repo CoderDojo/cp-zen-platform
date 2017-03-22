@@ -24,13 +24,13 @@ angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
         });
       }, resolve, reject);
     },
-    get: function(url, resolve, reject, params) {
+    get: function(url, resolve, reject, config) {
       return wrapCbPromise(function(){
         return $http(_.extend({
           method: 'GET',
           url: baseUrl + url,
           headers: {'Content-Type': 'application/json'}
-        }, params));
+        }, config));
       }, resolve, reject);
     },
     delete: function(url, resolve, reject) {

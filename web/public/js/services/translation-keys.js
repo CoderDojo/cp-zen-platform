@@ -1035,7 +1035,11 @@ angular.module('cpZenPlatform')
       MEMBER_OF: "Member of",
       REMOVE_CHILD_FROM_DOJO_TEXT: "Click a Dojo to remove {{ name }} from the Dojo. You and any other child will still remain a member of this Dojo.",
       AVAILABLE_DOJOS: "Available Dojos",
-      ADD_CHILD_TO_DOJO_TEXT: "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join."
+      ADD_CHILD_TO_DOJO_TEXT: "Click one of your Dojos to add {{ name }} as a member, or <a href=\"{{ findADojoUrl }}\">find a new Dojo</a> for them to join.",
+      ACCEPT_JOIN_REQUEST: "User request to join your Dojo accepted. \nThe user is now a member of your Dojo",
+      DECLINE_JOIN_REQUEST: "User request to join your Dojo declined",
+      ERROR_ACCEPT_JOIN_REQUEST: "Error accepting a user request",
+      ERROR_DECLINE_JOIN_REQUEST: "Error declining a user request"
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {

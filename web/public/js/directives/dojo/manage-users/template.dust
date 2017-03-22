@@ -3,12 +3,12 @@
   <uib-tabset active="activeState" justified="true">
     <uib-tab index="1" ui-sref="manage-dojo-active-users">
       <uib-tab-heading>
-        <h2 class="h4">{@i18n key="Active"/}</h2>
+        <h2 class="h4">{@i18n key="Active Users"/}</h2>
       </uib-tab-heading>
     </uib-tab>
     <uib-tab index="2" ui-sref="manage-dojo-pending-users">
       <uib-tab-heading>
-        <h2 class="h4">{@i18n key="Pending"/}</h2>
+        <h2 class="h4">{@i18n key="User Requests"/}</h2>
       </uib-tab-heading>
     </uib-tab>
   </uib-tabset>
