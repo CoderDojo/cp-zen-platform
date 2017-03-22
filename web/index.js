@@ -28,6 +28,7 @@ var debug = require('debug')('cp-zen-platform:index');
 
 require('./lib/dust-i18n.js');
 require('./lib/dust-loadjs.js');
+require('./lib/dust-load-open-graph.js');
 
 var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 var server = new hapi.Server(options.hapi)
@@ -219,6 +220,7 @@ server.register(scooter, function (err) {
 
 server.register({ register: require('./controllers') }, checkHapiPluginError('CoderDojo controllers'));
 
+
 if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
   var goodOptions = {
     opsInterval: 1000,
@@ -304,6 +306,10 @@ var polls = require('../lib/polls.js');
 server.register(polls, function (err) {
   checkHapiPluginError('polls')(err);
 });
+
+server.register({register: require('./lib/plugins/seneca-preloader-dustjs'),
+  options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}}, 
+  checkHapiPluginError('Seneca preloader'));
 
 // Locale related server method
 function formatLocaleCode (code) {
