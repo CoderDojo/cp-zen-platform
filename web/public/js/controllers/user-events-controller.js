@@ -8,6 +8,10 @@
     usersDojos = usersDojos.data;
     $scope.currentUser = currentUser;
     $scope.eventUserSelection = {};
+    $scope.eventTypeTranslations = {
+      'one-off' : $translate.instant('One off'),
+      'recurring' : $translate.instant('Term')
+    };
 
     var utcOffset = moment().utcOffset();
 
@@ -106,15 +110,6 @@
 
     $scope.tableRowIndexExpandedCurr = '';
     $scope.dojoRowIndexExpandedCurr = '';
-
-    $scope.getEventTypeDisplayText = function (event) {
-      switch (event.type) {
-        case 'one-off':
-          return $translate.instant('One off');
-        case 'recurring':
-          return $translate.instant('Term');
-      }
-    };
 
     $scope.eventCollapsed = function (dojosEventsIndex, eventIdx) {
       $scope.dojosEvents[dojosEventsIndex].events[eventIdx].isCollapsed = false;

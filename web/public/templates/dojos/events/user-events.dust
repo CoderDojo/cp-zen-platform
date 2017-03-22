@@ -24,7 +24,7 @@
             <tr ng-click="showEventInfo(dojoEvents, $index)" class="event-info-row">
               <td>{{ event.name }}</td>
               <td>{{ event.formattedDate }}</td>
-              <td>{{ getEventTypeDisplayText(event) }}</td>
+              <td>{{ eventTypeTranslations[event.type] }}</td>
               <td class="pointer">
                 <i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': events[$index].isCollapsed, 'glyphicon-chevron-right': !events[$index].isCollapsed}"></i>
               </td>
