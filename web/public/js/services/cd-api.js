@@ -48,7 +48,12 @@ angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
     if (resolve) {
       fn()
       .then(function (response) {
-        return resolve(_.has(response, 'data') && _.has(response, 'headers') && _.has(response, 'config') ? response.data : response);
+        if (_.has(response, 'data') && _.has(response, 'headers') && _.has(response, 'config')) {
+          return resolve(response.data);
+        } else {
+          return resolve(response);
+        }
+        // return resolve(_.has(response, 'data') && _.has(response, 'headers') && _.has(response, 'config') ? response.data : response);
       }, reject);
     } else {
       return fn();
