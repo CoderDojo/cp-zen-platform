@@ -45,15 +45,15 @@
       <cd-action-bar-item ng-show="actions.email.ngShow()" href="mailto:{{ actions.email.ngValue() }}" action-title="{{ actions.email.ngValue() }}" icon="envelope"></cd-action-bar-item>
     </cd-action-bar-left-actions>
     <cd-action-bar-popup-item action-title="{@i18n key="Send Email"/}" icon="envelope" show-as-action="always"
-      size="full-width" force-fixed="actionBarConfig.forceFixed" close-event="emailSent"
-      open-action="actions.sendEmail.ngClick($event)">
+      show-popup="emailPopup.isVisible" size="full-width" force-fixed="actionBarConfig.forceFixed"
+      close-event="emailSent" open-action="actions.sendEmail.ngClick($event)">
       <cd-email-users users="emailedUsers" dojo-id="dojoId"></cd-email-users>
     </cd-action-bar-popup-item>
-    <!-- <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" action-title="{@i18n key="Award Badge"/}"
+    <cd-action-bar-popup-item ng-show="actions.awardBadge.ngShow()" action-title="{@i18n key="Award Badge"/}"
       icon="trophy" show-as-action="always" size="full-width"
       force-fixed="actionBarConfig.forceFixed" close-event="badgeAwarded">
       <cd-award-badge user="selectedItems[0].userData"></cd-award-badge>
-    </cd-action-bar-popup-item> -->
+    </cd-action-bar-popup-item>
     <cd-action-bar-item ng-show="actions.viewProfile.ngShow()" href="{{ actions.viewProfile.ngHref() }}" show-as-action="always" action-title="{@i18n key="View Profile"/}" icon="eye"></cd-action-bar-item>
     <cd-action-bar-item ng-show="actions.changeRole.ngShow()" ng-click="actions.changeRole.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Change Role"/}" icon="exchange"></cd-action-bar-item>
     <cd-action-bar-item ng-show="actions.remove.ngShow()" ng-click="actions.remove.ngClick($event)" show-as-action="ifRoom" action-title="{@i18n key="Remove"/}" icon="minus-circle" color="red"></cd-action-bar-item>

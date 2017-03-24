@@ -49,10 +49,10 @@
         };
 
         ctrl.$onChanges = function (changes) {
-          if (changes.forceFixed) {
+          if (changes.forceFixed && actionBar) {
             if (changes.forceFixed.currentValue === true) {
               actionBar.addClass('cd-action-bar--fixed');
-            } else if (changes.forceFixed.currentValue === false && ctrl.fixed === false) {
+            } else if (changes.forceFixed.currentValue === false && !ctrl.fixed) {
               actionBar.removeClass('cd-action-bar--fixed');
             }
           }

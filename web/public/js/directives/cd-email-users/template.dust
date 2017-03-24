@@ -7,7 +7,7 @@
   <div class="cd-email-users_input">
     <span>{@i18n key="To"/}</span>
     <div class="cd-email-users_input-content form-control">
-      <div class="cd-email-users_input-content-label" ng-repeat="user in $ctrl.email.users">
+      <div class="cd-email-users_input-content-label" ng-repeat="user in $ctrl.users">
         <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
         <span>{{ user.name }}</span>
         <i class="fa fa-times" ng-click="$ctrl.removeUser(user.userId)"></i>
@@ -23,13 +23,16 @@
       </div>
     </div>
   </div>
-  <div class="cd-email-users_input">
-    <span>{@i18n key="Title"/}</span>
-    <input type="text" ng-model="$ctrl.title" class="form-control" placeholder="{@i18n key="Email title"/}"/>
+  <form novalidate angular-validator angular-validator-submit="$ctrl.sendEmail()" name="mailForm">
+    <div class="cd-email-users_input">
+      <span>{@i18n key="Subject"/}</span>
+      <input type="text" ng-model="$ctrl.title" class="form-control" name="emailSubject"
+      autofocus placeholder="{@i18n key="Email subject"/}"
+      required="true" required-message="'{@i18n key="Email subject must not be empty"/}'"/>
+    </div>
+    <textarea ng-if="$ctrl.editorOptions" ckeditor="$ctrl.editorOptions"
+      ng-model="$ctrl.content" name="emailContent" class="form-control"
+      required="true" required-message="'{@i18n key="Email content is required"/}'"></textarea>
+    <button type="submit" class="btn btn-warning pull-right">{@i18n key="Send Email"/}</button>
   </div>
-  <textarea ng-if="$ctrl.editorOptions" ckeditor="$ctrl.editorOptions"
-    ng-model="$ctrl.content" id="" name="emailContent"
-    placeholder="{@i18n key="Type the content of your email here"/}"
-    class="form-control"></textarea>
-  <button type="button" ng-click="$ctrl.sendEmail()" class="btn btn-warning pull-right">{@i18n key="Send Email"/}</button>
 </div>

@@ -26,6 +26,8 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.actionBarConfig = {
     forceFixed: false
   };
+  $scope.emailPopup = {};
+  $scope.emailPopup.isVisible = false;
 
   initUserTypes.data = _.map(initUserTypes.data, function(userType){
     userType.title = $translate.instant(userType.title);
@@ -108,7 +110,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     {
       name: 'Champion',
       userType: {
-        name:  'champion'
+        name: 'champion'
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
@@ -130,7 +132,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     {
       name: 'Youth Volunteer',
       userType: {
-        name:  'mentor'
+        name: 'mentor'
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('mentor'),
@@ -141,7 +143,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     {
       name: 'Youth Champion',
       userType: {
-        name:  'champion'
+        name: 'champion'
       },
       approvalRequired: true,
       image: userUtils.defaultAvatar('champion'),
@@ -154,7 +156,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.actions = {
     email: {
       ngShow: function () {
-        return $scope.selectedItems.length === 1;
+        return $scope.selectedItems.length === 1 && !$scope.emailPopup.isVisible;
       },
       ngValue: function () {
         var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
@@ -178,7 +180,9 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
         if ($scope.selectedItems.length !== 1) {
           return cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
           .then(function (users) {
-            var kids = _.filter(users.data.response, {'email': null});
+            var kids = _.filter(users.data.response, function (user) {
+              return _.includes(user.initUserType, 'attendee');
+            });
             async.mapSeries(kids, function (kid, cb) {
               cdUsersService.loadParentsForUserPromise(kid.id)
               .then(function (parents) {

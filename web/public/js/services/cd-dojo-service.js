@@ -188,6 +188,9 @@
       notifyAllMembers: function (data, win, fail) {
         return cdApi.post('dojos/notify-all-members', { data: data }, win, fail || topfail);
       },
+      sendEmail: function (dojoId, email, win, fail) {
+        return cdApi.post('dojos/' + dojoId + '/users/notifications', email, win, fail || topfail);
+      }
     };
   }
 angular.module('cpZenPlatform')
