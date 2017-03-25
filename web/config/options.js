@@ -63,7 +63,7 @@ module.exports = {
     {type: 'web',  port: 10303, pin: 'role:user, cmd:*'},
     {type: 'web',  port: 10305, pin: 'role:cd-badges, cmd:*'},
     {type: 'web',  port: 10306, pin: 'role:cd-events, cmd:*'},
-    {type: 'web',  port: 10306, pin: 'role:cd-eventbrite, cmd:*'}
+    {type: 'web',  port: 10307, pin: 'role:cd-eventbrite, cmd:*'}
   ],
 
   timeout: 120000
