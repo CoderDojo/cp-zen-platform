@@ -172,6 +172,7 @@ server.register(require('hapi-auth-cookie'), function (err) {
                 return callback(null, true, {scope: 'basic-user'}); // They're a `user`
               }
             } else {
+              console.log('missing token for ', request.route);
               return callback(null, false);
             }
           });
@@ -183,7 +184,7 @@ server.register(require('hapi-auth-cookie'), function (err) {
 // TODO - cache!
 function getUser (request, token, cb) {
   if (token) {
-    request.seneca.act({role: 'user', cmd:'auth', token: token}, function (err, resp) {
+    request.seneca.act({role: 'user', cmd: 'auth', token: token}, function (err, resp) {
       if (err) return cb(err);
       if (resp.ok === false) {
         return cb('login not ok');

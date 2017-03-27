@@ -32,34 +32,35 @@ function cdEventbriteIntegration($window, cdEventbriteService, alertService, ato
           alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'), function(){
             $state.go('edit-dojo', {id: dojoId});
           });
-        }
+        };
 
         $scope.authorizeOAuthEventBrite = function () {
           cdEventbriteService.getPublicToken()
-          .then ( function (response) {
+          .then(function (response) {
             $localStorage.eventbriteDojo = $scope.dojo.id;
-            if (response.token) {
-              $window.location.href=  'https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=' + response.token;
+            if (response.data.token) {
+              $window.location.href=  'https://www.eventbrite.com/oauth/authorize?response_type=code&client_id=' + response.data.token;
             } else {
               // Something went wrong on our side TODO log with logentries
               genErrorHandler();
             }
           })
-          .catch ( function (err) {
+          .catch(function (err) {
             // Something went wrong on our side TODO log with logentries
             genErrorHandler();
           });
-        }
+        };
         var token = $stateParams.code;
         var dojoId = $localStorage.eventbriteDojo;
-        if (!_.isUndefined(token)){
-         $scope.saving = true;
-         delete $localStorage.eventbriteDojo;
-         cdEventbriteService.authorize({code: token, id: dojoId})
-         .then(function (){
-           $state.go('edit-dojo', {id: dojoId});
-           atomicNotifyService.info($translate.instant('Your eventbrite account has been successfully attached'), 5000);
-         });
+        if (!_.isUndefined(token)) {
+          $scope.saving = true;
+          // Commented for testing purpose
+          //  delete $localStorage.eventbriteDojo;
+          cdEventbriteService.authorize(dojoId, {code: token})
+          .then(function () {
+            $state.go('edit-dojo', {id: dojoId});
+            atomicNotifyService.info($translate.instant('Your eventbrite account has been successfully attached'), 5000);
+          });
         }
       }
 
