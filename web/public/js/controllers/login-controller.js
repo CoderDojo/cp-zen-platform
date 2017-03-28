@@ -145,8 +145,8 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   $scope.dobDateOptions = $scope.childDobDateOptions = {
     formatYear: 'yyyy',
     startingDay: 1,
-    'datepicker-mode': "'year'",
-    initDate: initialDate
+    initDate: initialDate,
+    datepickerMode: 'year'
   };
 
   $scope.setCountry = function(country) {

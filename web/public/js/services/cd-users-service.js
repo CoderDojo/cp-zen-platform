@@ -37,9 +37,9 @@ function cdUsersService(cdApi, $q){
     },
     saveYouthProfile: function(profile, win, fail) {
       if(profile.id){
-        cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
+        return cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
       } else{
-        cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
+        return cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
       }
     },
     inviteParent: function(data, win, fail) {

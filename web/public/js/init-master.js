@@ -661,6 +661,13 @@
             ownProfile: resolves.ownProfile
           }
         })
+        .state('my-children.add', {
+          url: '/add',
+          template: '<cd-add-child parent-profile-data="parentProfileData"></cd-add-child>',
+          controller: ['$scope', 'ownProfile', function ($scope, ownProfile) {
+            $scope.parentProfileData = ownProfile;
+          }]
+        })
         .state('my-children.child', {
           url: '/:id',
           template: '<cd-child-card parent-profile-data="parentProfileData"></cd-child-card>',

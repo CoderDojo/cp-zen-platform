@@ -3250,3 +3250,33 @@ msgstr "%1s at %2s on %3s"
 msgid "%1s in %2s"
 msgctxt "Metadata displayed when sharing a dojo page, %1s being the dojo name, %2s being the country"
 msgstr "%1s in %2s"
+
+msgid "First Name"
+msgstr "First Name"
+
+msgid "First name is required"
+msgstr "First name is required"
+
+msgid "Surname is required"
+msgstr "Surname is required"
+
+msgid "Alias is required"
+msgstr "Alias is required"
+
+msgid "This unique alias is shown instead of your child's name to protect their privacy on features such as the Ninja Forum."
+msgstr "This unique alias is shown instead of your child's name to protect their privacy on features such as the Ninja Forum."
+
+msgid "Date of birth is required"
+msgstr "Date of birth is required"
+
+msgid "We need your child's date of birth to comply with child protection laws in some countries."
+msgstr "We need your child's date of birth to comply with child protection laws in some countries."
+
+msgid "As your child is over 13 years of age, they can have their own CoderDojo account."
+msgstr "As your child is over 13 years of age, they can have their own CoderDojo account."
+
+msgid "This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."
+msgstr "This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."
+
+msgid "You must provide an email address when providing a password."
+msgstr "You must provide an email address when providing a password."

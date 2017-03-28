@@ -27,7 +27,7 @@
               <a ng-href="/profile/{{ $ctrl.child.userId }}#badges">{{ 'VIEW_ALL' | translateFromKey }} <i class="fa fa-arrow-right"></i></a>
             </div>
           </div>
-          <p ng-if="$ctrl.child.recentBadges.length === 0" class="cd-child-card__section-placeholder-text lead">{{ 'CHILD_NO_BADGES' | translateFromKey:{name: $ctrl.child.name} }}</p>
+          <p ng-if="$ctrl.child.recentBadges.length === 0" class="cd-child-card__section-placeholder-text lead">{{ 'CHILD_NO_BADGES' | translateFromKey:{name: $ctrl.child.firstName || $ctrl.child.name} }}</p>
           <cd-picture-grid ng-if="$ctrl.child.recentBadges.length > 0" items="$ctrl.child.recentBadges" image-zoom="true" align="left" size="medium" on-selection="$ctrl.showBadgeModal"></cd-picture-grid>
         </div>
         <div class="cd-loading-scrim__parent">
@@ -45,7 +45,7 @@
           <div class="row">
             <div class="col-xs-12">
               <div ng-show="!$ctrl.manageDojos && $ctrl.child.dojoListings.length === 0 && $ctrl.child.dojosNotMemberOf.length > 0" class="cd-child-card__section-placeholder-text">
-                <p ng-if="$ctrl.child.dojoListings.length === 0" class="lead" ng-bind-html="'CHILD_NO_DOJOS' | translateFromKey:{name: $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
+                <p ng-if="$ctrl.child.dojoListings.length === 0" class="lead" ng-bind-html="'CHILD_NO_DOJOS' | translateFromKey:{name: $ctrl.child.firstName || $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
                 <div>
                   <button ng-if="$ctrl.child.dojoListings.length === 0" class="btn btn-primary" ng-click="$ctrl.toggleManageDojos()">{{ 'ADD_TO_A_DOJO' | translateFromKey }}</button>
                 </div>
@@ -60,13 +60,13 @@
             <div ng-class="{'col-md-6': $ctrl.manageDojos, 'col-md-12': !$ctrl.manageDojos}" class="col-xs-12">
               <div ng-show="$ctrl.manageDojos">
                 <h4>{{ 'MEMBER_OF' | translateFromKey }}</h4>
-                <p>{{ 'REMOVE_CHILD_FROM_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.name} }}</p>
+                <p>{{ 'REMOVE_CHILD_FROM_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.firstName || $ctrl.child.name} }}</p>
               </div>
               <cd-picture-grid ng-show="$ctrl.child.dojoListings.length > 0" items="$ctrl.child.dojoListings" on-selection="$ctrl.manageDojos ? $ctrl.removeFromDojo : $ctrl.noop" item-icon="minus" item-icon-color="red" show-item-icons="$ctrl.manageDojos" align="left" size="medium"></cd-picture-grid>
             </div>
             <div class="col-xs-12 col-md-6" ng-show="$ctrl.manageDojos">
               <h4>{{ 'AVAILABLE_DOJOS' | translateFromKey }}</h4>
-              <p ng-bind-html="'ADD_CHILD_TO_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
+              <p ng-bind-html="'ADD_CHILD_TO_DOJO_TEXT' | translateFromKey:{name: $ctrl.child.firstName || $ctrl.child.name, findADojoUrl: '/'}:'escapeParameters'"></p>
               <cd-picture-grid ng-show="$ctrl.child.dojosNotMemberOf.length > 0" items="$ctrl.child.dojosNotMemberOf" on-selection="$ctrl.addToDojo" item-icon="plus" item-icon-color="green" show-item-icons="$ctrl.manageDojos" align="left" size="medium"></cd-picture-grid>
             </div>
           </div>
