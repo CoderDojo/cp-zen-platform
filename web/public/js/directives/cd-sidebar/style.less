@@ -1,8 +1,39 @@
 .cd-sidebar {
-  display: flex;
-  min-height: 50vh;
-  border-top: 1px solid @cd-light-gray;
   margin: 0 -16px -16px -16px;
+  &__headers {
+    display: flex;
+    align-items: center;
+    & > * {
+      padding: 16px;
+    }
+  }
+  .cd-sidebar__header-title() {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  &__header {
+    flex: 1;
+    // Beware shenanigan values
+    // this is what happens when variable don't exists
+    margin-right: 90px;
+    &-title {
+      .cd-sidebar__header-title();
+    }
+  }
+  &__tab-header {
+    flex: 3;
+    line-height: 39px; // To be able to align w/ header's font
+    &-title {
+      .cd-sidebar__header-title();
+    }
+  }
+
+  &__body {
+    display: flex;
+    min-height: 50vh;
+    border-top: 1px solid @cd-light-gray;
+
+  }
 
   &__tabs {
     flex: 1;
@@ -64,6 +95,13 @@
 
     &__content {
       display: none;
+    }
+
+    &__tab-header {
+      display: none;
+    }
+    &__header {
+      margin-right: 0px;
     }
 
     &--child-state-active {

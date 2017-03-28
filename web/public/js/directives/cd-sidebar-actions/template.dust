@@ -1,0 +1,4 @@
+<div class="cd-sidebar-actions">
+  <button type="button" ng-click="$ctrl.save">{@i18n key="Save"}</button>
+  <button type="button" ng-click="$ctrl.submit" ng-readonly="$ctrl.submitReadonly">{@i18n key="Submit"}</button>
+</div>
