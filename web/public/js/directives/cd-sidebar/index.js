@@ -11,7 +11,9 @@
         baseState: '@'
       },
       restrict: 'E',
-      transclude: true,
+      transclude: {
+        'actions': '?cdSidebarActions'
+      },
       templateUrl: '/directives/tpl/cd-sidebar',
       controller: ['$state', '$scope', function ($state, $scope) {
         var ctrl = this;

@@ -1,0 +1,87 @@
+<form class="cd-sad-champion" >
+
+  <div class="cd-sad-champion_video">
+    <img src="http://placekitten.com/g/400/300"></img>
+    <p class="help-block">{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
+  </div>
+  <!-- novalidate="" angular-validator angular-validator-submit="$ctrl.submit"  -->
+  <div class="cd-sad-champion_side-form">
+    <div class="form-group">
+      <label for="firstName">{@i18n key="First Name"/}</label>
+      <input type="text" class="form-control" id="firstName"
+        placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.champion.firstName">
+    </div>
+    <div class="form-group">
+      <label for="lastName">{@i18n key="Last Name"/}</label>
+      <input type="text" class="form-control" id="lastName"
+        placeholder="{@i18n key="Last Name"/}" ng-model="$ctrl.champion.lastName">
+      <p class="help-block">Help text here.</p>
+    </div>
+    <div class="form-group">
+      <label for="email">{@i18n key="Personal/Work Email address"/}</label>
+      <input type="text" class="form-control" id="email" readonly=""
+        placeholder="{@i18n key="Email"/}" ng-model="$ctrl.champion.email">
+      <p class="help-block">Help text here.</p>
+    </div>
+    <div class="form-group">
+      <label for="dob">{@i18n key="Date of Birth"/}</label>
+      <div class="input-group">
+        <input id="dob" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
+          datepicker-options="$ctrl.dobDateOptions" min-date="'1900-01-01'" max-date="today"
+          ng-model="$ctrl.champion.dateOfBirth" name="dateOfBirth"
+          required required-message="'{@i18n key="Date of birth is empty"/}'" is-open="$ctrl.picker.opened"
+          current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
+          close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}"
+          ng-click="$ctrl.toggle($event)"
+          ng-change="$ctrl.isKid()"/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </div>
+    </div>
+    <div ng-show="$ctrl.champion.dateOfBirth && $ctrl.champion.isKid">
+      <div class="form-group">
+        <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
+        <input type="text" class="form-control" id="parentEmail"
+          ng-model="$ctrl.champion.parentEmail" placeholder="{@i18n key="Parent Email address"/}">
+        <p class="help-block">Help text here.</p>
+      </div>
+      <div class="form-group">
+        <label for="parentName">{@i18n key="Parent Name"/}</label>
+        <input type="text" class="form-control" id="parentName"
+          ng-model="$ctrl.champion.parentName" placeholder="{@i18n key="Parent Name"/}">
+        <p class="help-block">Help text here.</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address">{@i18n key="Home address"/}</label>
+      <input type="text" class="form-control" id="address"
+        ng-model="$ctrl.champion.address" placeholder="{@i18n key="Home address"/}">
+      <p class="help-block">Help text here.</p>
+    </div>
+  </div>
+  <div class="cd-sad-champion_bottom-form">
+    <h3>{@i18n key="Contact"/}</h3>
+    <div class="form-group">
+      <label for="phone">{@i18n key="Phone number"/}</label>
+      <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
+        utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js"
+        required required-message="'{@i18n key="Telephone Number is empty"/}'"
+        ng-enter="noop()" international-phone-number ng-model="$ctrl.champion.phone">
+      <p class="help-block">Help text here.</p>
+    </div>
+    <div class="cd-sad-champion_social-network cd-simple-flex-grid">
+      <div class="form-group cd-simple-flex-grid__flex-1">
+        <label for="twitter">{@i18n key="Twitter"/}</label>
+        <input type="text" class="form-control" ng-model="$ctrl.champion.twitter"
+          name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
+      </div>
+      <div class="form-group cd-simple-flex-grid__flex-1">
+        <label for="phone">{@i18n key="Facebook"/}</label>
+        <input type="text" class="form-control" ng-model="$ctrl.champion.facebook"
+          cd-input-prefix="https://www.facebook.com/"
+          name="facebook" id="facebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}">
+      </div>
+    </div>
+  </div>
+</form>

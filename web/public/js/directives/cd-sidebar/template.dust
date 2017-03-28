@@ -1,9 +1,17 @@
-<div>
-  <h1>{{ $ctrl.header }}</h1>
-  <div class="cd-sidebar" ng-class="{'cd-sidebar--child-state-active': $ctrl.baseState !== $ctrl.currentState}">
+<div class="cd-sidebar">
+  <div class="cd-sidebar__headers">
+    <div class="cd-sidebar__header">
+      <div class="cd-sidebar__header-title h1">{{ $ctrl.header }}</div>
+    </div>
+    <div ng-show="$ctrl.tabHeader" class="cd-sidebar__tab-header">
+      <div class="cd-sidebar__header-title h3">{{ $ctrl.tabHeader }}</div>
+    </div>
+    <div ng-transclude="actions"></div>
+  </div>
+  <div class="cd-sidebar__body" ng-class="{'cd-sidebar--child-state-active': $ctrl.baseState !== $ctrl.currentState}">
     <div class="cd-sidebar__tabs">
       <a class="cd-sidebar__tab" ng-repeat="tab in $ctrl.tabs" ui-sref="{{ $ctrl.getUiSrefForTab(tab) }}" ui-sref-active="cd-sidebar__tab--active">
-        <div class="cd-sidebar__tab-image-wrapper">
+        <div class="cd-sidebar__tab-image-wrapper" ng-show="tab.tabImage">
           <div style="background-image: url({{ tab.tabImage }})" class="cd-sidebar__tab-image"></div>
         </div>
         <div class="cd-sidebar__tab-text">
@@ -14,7 +22,7 @@
     </div>
     <div class="cd-sidebar__content">
       <ng-transclude ng-show="$ctrl.baseState === $ctrl.currentState"></ng-transclude>
-      <ui-view ng-show="$ctrl.baseState !== $ctrl.currentState"></ui-view>
+      <ui-view ng-show="$ctrl.baseState !== $ctrl.currentState" tab-header="$ctrl.tabHeader"></ui-view>
     </div>
   </div>
 </div>
