@@ -5,7 +5,7 @@
       <input type="text" class="form-control" name="cd-add-child__first-name" placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.profile.firstName" required required-message="'{@i18n key="First name is required"/}'">
     </div>
     <div class="col-sm-5">
-      <input type="text" class="form-control" name="cd-add-child__surname" placeholder="{@18n key="Surname"/}" ng-model="$ctrl.profile.lastName" required required-message="'{@i18n key="Surname is required"/}'">
+      <input type="text" class="form-control" name="cd-add-child__surname" placeholder="{@i18n key="Surname"/}" ng-model="$ctrl.profile.lastName" required required-message="'{@i18n key="Surname is required"/}'">
     </div>
   </div>
   <div class="form-group">
