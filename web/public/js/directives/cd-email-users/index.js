@@ -1,5 +1,5 @@
 ;(function () {
-  /*global mailForm*/
+  /*global mailForm, _*/
   'use strict';
 
   angular
@@ -10,20 +10,22 @@
         dojoId: '<'
       },
       controller: ['usSpinnerService', '$translate', '$rootScope', 'utilsService',
-      'cdDojoService', 'alertService', 'atomicNotifyService', '$scope',
+      'cdDojoService', 'alertService', 'atomicNotifyService', '$scope', '$window',
       function (usSpinnerService, $translate, $rootScope, utilsService,
-        cdDojoService, alertService, atomicNotifyService, $scope) {
+        cdDojoService, alertService, atomicNotifyService, $scope, $window) {
         var ctrl = this;
-        ctrl.editorOptions = utilsService.getCKEditorConfig();
-        var defaultContent = ctrl.content = $translate.instant('Type the content of your email here');
-        ctrl.title = '';
-        cdDojoService.load(ctrl.dojoId)
-        .then(function (dojo) {
-          ctrl.dojo = dojo.data;
-        })
-        .catch(function (err) {
-          alertService.showError($translate.instant('Error while loading Dojo' + JSON.stringify(err)));
-        });
+        ctrl.$onInit = function () {
+          ctrl.editorOptions = utilsService.getCKEditorConfig();
+          ctrl.defaultContent = ctrl.content = $translate.instant('Type the content of your email here');
+          ctrl.title = '';
+          cdDojoService.load(ctrl.dojoId)
+          .then(function (dojo) {
+            ctrl.dojo = dojo.data;
+          })
+          .catch(function (err) {
+            alertService.showError($translate.instant('Error while loading Dojo' + JSON.stringify(err)));
+          });
+        };
         ctrl.update = function () {
           if (ctrl.users) {
             ctrl.parents = _.uniqBy(_.map(_.pickBy(ctrl.users, 'parent'), 'parent'), 'userId');
@@ -53,7 +55,7 @@
           cdDojoService.sendEmail(ctrl.dojo.id, ctrl.payload)
           .then(function () {
             ctrl.title = '';
-            ctrl.content = defaultContent;
+            ctrl.content = ctrl.defaultContent;
             mailForm.mailForm.reset();
             usSpinnerService.stop('manage-dojo-users-spinner');
             atomicNotifyService.success($translate.instant('Email sent!'), 5000);

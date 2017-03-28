@@ -1,30 +1,39 @@
 <div class="cd-email-users">
   <h3>{@i18n key="Send Email"/} <span class="label label-warning">{{ $ctrl.total }}</span></h3>
-  <div class="cd-email-users_input">
+  <div class="cd-email-users__input">
     <span>{@i18n key="From"/}</span>
     <input type="text" ng-model="$ctrl.dojo.email" readonly="" class="form-control"/>
   </div>
-  <div class="cd-email-users_input">
+  <div class="cd-email-users__input">
     <span>{@i18n key="To"/}</span>
-    <div class="cd-email-users_input-content form-control">
-      <div class="cd-email-users_input-content-label" ng-repeat="user in $ctrl.users">
-        <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
-        <span>{{ user.name }}</span>
-        <i class="fa fa-times" ng-click="$ctrl.removeUser(user.userId)"></i>
+    <div class="text-center" ng-show="!$ctrl.users || $ctrl.users.length === 0">
+      <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    </div>
+    <div cd-expandable-container="100" ng-show="$ctrl.users.length > 0">
+      <div class="cd-email-users__input-content form-control cd-expandable-block">
+        <div class="cd-email-users__input-content-label" ng-repeat="user in $ctrl.users">
+          <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
+          <span>{{ user.name }}</span>
+          <i class="fa fa-times" ng-click="$ctrl.removeUser(user.userId)"></i>
+        </div>
       </div>
+      <a cd-expander class="text-center col-xs-12"></a>
     </div>
   </div>
-  <div class="cd-email-users_input" ng-if="$ctrl.parents.length > 0">
+  <div class="cd-email-users__input" ng-if="$ctrl.parents.length > 0">
     <span>{@i18n key="Included Parents"/}</span>
-    <div class="cd-email-users_input-content form-control">
-      <div class="cd-email-users_input-content-label" ng-repeat="user in $ctrl.parents">
-        <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
-        <span>{{ user.name }}</span>
+    <div cd-expandable-container="100">
+      <div class="cd-email-users__input-content form-control cd-expandable-block">
+        <div class="cd-email-users__input-content-label" ng-repeat="user in $ctrl.parents">
+          <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
+          <span>{{ user.name }}</span>
+        </div>
       </div>
+      <a cd-expander class="text-center col-xs-12"></a>
     </div>
   </div>
   <form novalidate angular-validator angular-validator-submit="$ctrl.sendEmail()" name="mailForm">
-    <div class="cd-email-users_input">
+    <div class="cd-email-users__input">
       <span>{@i18n key="Subject"/}</span>
       <input type="text" ng-model="$ctrl.title" class="form-control" name="emailSubject"
       autofocus placeholder="{@i18n key="Email subject"/}"

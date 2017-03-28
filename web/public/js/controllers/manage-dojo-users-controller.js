@@ -177,6 +177,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
     },
     sendEmail: {
       ngClick: function () {
+        $scope.emailedUsers = []; // reset to allow animation to trigger while we load the new data set
         if ($scope.selectedItems.length !== 1) {
           return cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
           .then(function (users) {

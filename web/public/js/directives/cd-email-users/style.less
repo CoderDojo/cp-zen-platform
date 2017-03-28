@@ -13,10 +13,14 @@
   textarea#emailContent, #cke_emailContent {
     margin: 8px 0px;
   }
-  &_input {
-    // display: flex;
-    & > span {
-      // flex: auto;
+  div#cke_2_contents {
+    height: 40vh!important;
+    overflow-y: auto;
+  }
+
+  &__input {
+    a[cd-expander] {
+      color: @cd-white;
     }
     &-content {
       background-color: @cd-white;
