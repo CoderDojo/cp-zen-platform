@@ -6,7 +6,7 @@
   function listOfChildren(){
     return {
       restrict: 'E',
-      templateUrl: '/directives/tpl/user/cd-profile/children-list', // '/profiles/template/children-list',
+      templateUrl: '/directives/tpl/user/cd-profile/children-list',
       controller: ['$scope', '$state', function($scope, $state) {
         var watcher = $scope.$watch('profile.resolvedChildren', function(newChildren){
           if(!_.isEmpty(newChildren)){

@@ -13,10 +13,10 @@
         <div class="form-group" ng-enter="noop()">
           <label for="fullname" class="col-sm-4 control-label">{@i18n key="Name"/}* </label>
           <div class="col-sm-4">
-            <input name="firstName" type="text" required required-message="'Name is required'" class="form-control" id="firstName" placeholder="{@i18n key="Name"/}" ng-model="profile.firstName">
+            <input name="firstName" type="text" required required-message="'{@i18n key="Name is required"/}'" class="form-control" id="firstName" placeholder="{@i18n key="Name"/}" ng-model="profile.firstName">
           </div>
           <div class="col-sm-4">
-            <input name="lastName" type="text" required required-message="'Surname is required'" class="form-control" id="lastName" placeholder="{@i18n key="Surname"/}" ng-model="profile.lastName">
+            <input name="lastName" type="text" required required-message="'{@i18n key="Surname is required"/}'" class="form-control" id="lastName" placeholder="{@i18n key="Surname"/}" ng-model="profile.lastName">
           </div>
         </div>
 

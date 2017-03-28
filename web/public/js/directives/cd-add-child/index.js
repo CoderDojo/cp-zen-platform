@@ -35,7 +35,7 @@
             'placeName',
             'state'
           ];
-          cdUsersService.saveYouthProfilePromise(_.defaults(ctrl.profile, _.pick(ctrl.parentProfileData.data, fieldsToCopy)))
+          cdUsersService.saveYouthProfile(_.defaults(ctrl.profile, _.pick(ctrl.parentProfileData.data, fieldsToCopy)))
             .then(function (resp) {
               if (resp.data && resp.data.error) {
                 alertService.showError($translate.instant(resp.data.error));
