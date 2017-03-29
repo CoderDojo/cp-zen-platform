@@ -314,14 +314,36 @@
         .state("manage-dojo-users", {
           url: "/my-dojos/:id/users",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/manage-dojo-users',
-          controller: 'manage-dojo-users-controller',
+          // abstract: true, // Dropped to support redirection to default state, supported in uiRouter 1.0
+          redirectTo: 'manage-dojo-active-users',
+          template: '<cd-manage-dojo-users></cd-manage-dojo-users>',
+          controller: ['initUserTypes', 'currentUser', '$scope',
+            function (initUserTypes, currentUser, $scope) {
+              $scope.initUserTypes = initUserTypes;
+              $scope.currentUser = currentUser.data;
+          }],
           params: {
             pageTitle: 'Manage Dojo Users'
           },
           resolve: {
             initUserTypes: resolves.initUserTypes,
             currentUser: resolves.loggedInUser
+          }
+        })
+        .state("manage-dojo-active-users", {
+          url: "",
+          parent: 'manage-dojo-users',
+          template: '<cd-dojo-manage-active-users></cd-dojo-manage-active-users>',
+          params: {
+            pageTitle: 'Manage Dojo Active Users'
+          }
+        })
+        .state("manage-dojo-pending-users", {
+          url: "/pending",
+          parent: 'manage-dojo-users',
+          template: '<cd-dojo-manage-pending-users init-user-types="initUserTypes"></cd-dojo-manage-pending-users>',
+          params: {
+            pageTitle: 'Manage Dojo Pending Users'
           }
         })
         .state("setup-dojo", {
@@ -970,6 +992,13 @@
       };
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (toState.redirectTo) {
+          event.preventDefault();
+          $state.go(toState.redirectTo, toParams);
+        }
+      });
+
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if(!$cookieStore.get('verifyProfileComplete') && toState.parent === 'dashboard' ) {
           if(toState.name !== 'edit-user-profile') {
             verifyProfileComplete().then(function (verifyProfileResult) {
@@ -989,8 +1018,8 @@
         }
       });
 
-      $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if ( embedder.isEmbedded(fromState) ) {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (embedder.isEmbedded(fromState)) {
           var url = $state.href(toState, toParams);
           window.open(url, '_blank');
           event.preventDefault();

@@ -1,0 +1,18 @@
+<div class="dojo-users" class="cd-manage-dojo-users">
+  <h1>{@i18n key="Manage Dojo Users"/}</h1>
+  <uib-tabset active="activeState" justified="true">
+    <uib-tab index="1" ui-sref="manage-dojo-active-users">
+      <uib-tab-heading>
+        <h2 class="h4">{@i18n key="Active Users"/}</h2>
+      </uib-tab-heading>
+    </uib-tab>
+    <uib-tab index="2" ui-sref="manage-dojo-pending-users">
+      <uib-tab-heading>
+        <h2 class="h4">{@i18n key="User Requests"/}</h2>
+      </uib-tab-heading>
+    </uib-tab>
+  </uib-tabset>
+  <span spinner-key="manage-dojo-users-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
+  <ui-view>
+  </ui-view>
+</div>

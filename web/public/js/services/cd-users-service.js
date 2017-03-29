@@ -24,7 +24,7 @@ function cdUsersService(cdApi, $q){
       return promise;
     },
     userProfileData: function(query, win, fail) {
-      cdApi.post('profiles/user-profile-data', {query: query}, win, fail || topfail);
+      return cdApi.post('profiles/user-profile-data', {query: query}, win, fail || topfail);
     },
     userProfileDataPromise: function (query) {
       var deferred = $q.defer();
@@ -98,6 +98,7 @@ function cdUsersService(cdApi, $q){
     loadPrevFounder: function(userId, win, fail) {
       cdApi.get('users/load-previous-founder/' + userId, win, fail || topfail);
     }
+
   };
 }
 
