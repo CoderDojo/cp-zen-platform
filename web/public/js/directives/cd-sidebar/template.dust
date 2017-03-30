@@ -6,7 +6,7 @@
     <div ng-show="$ctrl.tabHeader" class="cd-sidebar__tab-header">
       <div class="cd-sidebar__header-title h3">{{ $ctrl.tabHeader }}</div>
     </div>
-    <div ng-transclude="actions"></div>
+    <div ng-transclude="actions" class="cd-sidebar__actions"></div>
   </div>
   <div class="cd-sidebar__body" ng-class="{'cd-sidebar--child-state-active': $ctrl.baseState !== $ctrl.currentState}">
     <div class="cd-sidebar__tabs">

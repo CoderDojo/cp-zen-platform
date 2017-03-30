@@ -586,16 +586,23 @@
         })
         .state('start-dojo', {
           url: '/start-dojo',
-          template: '<cd-start-dojo></cd-start-dojo>',
+          template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
+          },
+          resolve: {
+            currentUser: resolves.loggedInUser
+          },
+          controller: function (currentUser, $scope) {
+            $scope.currentUser = currentUser;
           }
         })
         .state('start-dojo.champion', {
           url: '/champion',
           parent: 'start-dojo',
-          template: '<cd-sad-champion tab-header="$ctrl.tabHeader"></cd-sad-champion>',
+          template: '<cd-sad-champion tab-header="$ctrl.tabHeader" save="$ctrl.save" ' +
+           'champion="$ctrl.application.champion" class="cd-sidebar__content--padded"></cd-sad-champion>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
@@ -604,7 +611,8 @@
         .state('start-dojo.informations', {
           url: '/informations',
           parent: 'start-dojo',
-          template: '<cd-sad-informations tab-header="$ctrl.tabHeader"></cd-sad-informations>',
+          template: '<cd-sad-informations tab-header="$ctrl.tabHeader" save="$ctrl.save" ' +
+          'informations="$ctrl.application.informations" class="cd-sidebar__content--padded"></cd-sad-informations>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
@@ -613,7 +621,7 @@
         .state('start-dojo.venue', {
           url: '/venue',
           parent: 'start-dojo',
-          template: '<cd-sad-venue tab-header="$ctrl.tabHeader"></cd-sad-venue>',
+          template: '<cd-sad-venue tab-header="$ctrl.tabHeader" save="$ctrl.save" venue="$ctrl.application.venue"></cd-sad-venue>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
@@ -622,7 +630,7 @@
         .state('start-dojo.team', {
           url: '/team',
           parent: 'start-dojo',
-          template: '<cd-sad-team tab-header="$ctrl.tabHeader"></cd-sad-team>',
+          template: '<cd-sad-team tab-header="$ctrl.tabHeader" save="$ctrl.save" team="$ctrl.application.team"></cd-sad-team>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
@@ -631,7 +639,7 @@
         .state('start-dojo.charter', {
           url: '/charter',
           parent: 'start-dojo',
-          template: '<cd-sad-charter tab-header="$ctrl.tabHeader"></cd-sad-charter>',
+          template: '<cd-sad-charter tab-header="$ctrl.tabHeader" save="$ctrl.save" charter="$ctrl.application.charter"></cd-sad-charter>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'

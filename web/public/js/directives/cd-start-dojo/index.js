@@ -5,9 +5,12 @@ angular
     .module('cpZenPlatform')
     .component('cdStartDojo', {
       restrict: 'EA',
+      bindings: {
+        currentUser: '='
+      },
       templateUrl: '/directives/tpl/cd-start-dojo',
       //TODO : dep injection array
-      controller: function ($scope, $translate, usSpinnerService) {
+      controller: function ($scope, $translate, usSpinnerService, atomicNotifyService) {
         var ctrl = this;
         usSpinnerService.spin('start-dojo-spinner');
         $scope.tabs = [{
@@ -31,8 +34,29 @@ angular
           tabTitle: $translate.instant('Sign the Charter')
         }];
 
+        ctrl.submit = function () {
+          cdDojoService.saveDojoLead(ctrl.application)
+          .then(function () {
+            atomicNotifyService.info($translate.instant('Congratz'));
+          });
+        };
+
+        ctrl.submitReadonly = function () {
+          //_.every(application, 'isValid');
+          return true;
+        };
         // TODO: redir to proper substate depending on actual dojolead
         usSpinnerService.stop('start-dojo-spinner');
+        ctrl.application = {};
+        ctrl.application.champion = {};
+        ctrl.application.informations = {};
+        ctrl.application.venue = {};
+        ctrl.application.team = {};
+        ctrl.application.charter = {};
+        // cdDojoService.searchDojoLead({userId: ctrl.currentUser})
+        // .then(function (application) {
+        //   ctrl.application = ctrl.application;
+        // })
       }
     });
 }());
