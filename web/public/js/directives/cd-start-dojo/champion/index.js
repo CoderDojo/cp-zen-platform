@@ -7,13 +7,14 @@ angular
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/champion/',
       bindings: {
-        tabHeader: '='
+        tabHeader: '=',
+        save: '=',
+        champion: '='
       },
-      //TODO : dep injection array
-      controller: function (userUtils) {
+      // TODO : dep injection array
+      controller: function (userUtils, $state, cdDojoService) {
         var ctrl = this;
-        ctrl.tabHeader = '0 % complete';
-        ctrl.champion = {};
+        ctrl.tabHeader = '100% complete';
         var initialDate = new Date();
         initialDate.setFullYear(initialDate.getFullYear() - 18);
         ctrl.dobDateOptions = {
@@ -27,8 +28,16 @@ angular
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
         };
+
         ctrl.isKid = function () {
           ctrl.champion.isKid = userUtils.getAge(ctrl.champion.dateOfBirth) <= 18;
+        };
+
+        ctrl.save = function () {
+          cdDojoService.saveDojoLead(ctrl.champion)
+          .then(function () {
+            $state.go('start-dojo.informations');
+          });
         };
 
         ctrl.dateFormat = 'dd-MMMM-yyyy';

@@ -3,36 +3,35 @@
   &__headers {
     display: flex;
     align-items: center;
-    & > * {
-      padding: 16px;
-    }
   }
   .cd-sidebar__header-title() {
     margin-top: 0px;
     margin-bottom: 0px;
+    padding: 16px;
   }
   &__header {
     flex: 1;
-    // Beware shenanigan values
-    // this is what happens when variable don't exists
-    margin-right: 90px;
     &-title {
       .cd-sidebar__header-title();
     }
   }
   &__tab-header {
-    flex: 3;
+    flex: 2;
     line-height: 39px; // To be able to align w/ header's font
     &-title {
       .cd-sidebar__header-title();
     }
+  }
+  &__actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
   }
 
   &__body {
     display: flex;
     min-height: 50vh;
     border-top: 1px solid @cd-light-gray;
-
   }
 
   &__tabs {
@@ -83,7 +82,9 @@
 
   &__content {
     flex: 3;
-    margin: 15px;
+    &--padded {
+      padding: 8px;
+    }
   }
 
   @media screen and (max-width: @screen-xs-max) {
