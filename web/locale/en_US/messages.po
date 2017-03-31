@@ -867,6 +867,24 @@ msgstr "Supporters Image URL"
 msgid "Manage Dojo Users"
 msgstr "Manage Dojo Users"
 
+msgid "User request to join your Dojo accepted. \nThe user is now a member of your Dojo"
+msgstr "User request to join your Dojo accepted. \nThe user is now a member of your Dojo"
+
+msgid "User request to join your Dojo declined"
+msgstr "User request to join your Dojo declined"
+
+msgid "Error accepting a user request"
+msgstr "Error accepting a user request"
+
+msgid "Error declining a user request"
+msgstr "Error declining a user request"
+
+msgid "Active Users"
+msgstr "Active Users"
+
+msgid "User Request"
+msgstr "User Request"
+
 msgid "Send Invite"
 msgstr "Send Invite"
 
@@ -2629,9 +2647,6 @@ msgstr "My Events"
 msgid "Review Champion Application"
 msgstr "Review Champion Application"
 
-msgid "Manage Dojo Users"
-msgstr "Manage Dojo Users"
-
 msgid "Setup Dojo"
 msgstr "Setup Dojo"
 
@@ -3238,3 +3253,42 @@ msgstr "We could not determine a location from this address. Your previous locat
 
 msgid "Day selected doesn't exist in date range, please check your date range."
 msgstr "Day selected doesn't exist in date range, please check your date range."
+
+msgid "%1s | CoderDojo"
+msgstr "%1s | CoderDojo"
+
+msgid "%1s at %2s on %3s"
+msgstr "%1s at %2s on %3s"
+
+msgid "%1s in %2s"
+msgstr "%1s in %2s"
+
+msgid "First Name"
+msgstr "First Name"
+
+msgid "First name is required"
+msgstr "First name is required"
+
+msgid "Surname is required"
+msgstr "Surname is required"
+
+msgid "Alias is required"
+msgstr "Alias is required"
+
+msgid "This unique alias is shown instead of your child's name to protect their privacy on features such as the Ninja Forum."
+msgstr "This unique alias is shown instead of your child's name to protect their privacy on features such as the Ninja Forum."
+
+msgid "Date of birth is required"
+msgstr "Date of birth is required"
+
+msgid "We need your child's date of birth to comply with child protection laws in some countries."
+msgstr "We need your child's date of birth to comply with child protection laws in some countries."
+
+msgid "As your child is over 13 years of age, they can have their own CoderDojo account."
+msgstr "As your child is over 13 years of age, they can have their own CoderDojo account."
+
+msgid "This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."
+msgstr "This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."
+
+msgid "You must provide an email address when providing a password."
+msgstr "You must provide an email address when providing a password."

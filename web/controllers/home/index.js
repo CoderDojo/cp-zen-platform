@@ -89,6 +89,13 @@ var controller = module.exports = [
       if (request.params.alpha2) {
         reply.view('index', request.locals);
       }
+    },
+    config: {
+      plugins: {
+        senecaPreloader: {
+          handler: 'seneca-dojo-preloader'
+        }
+      }
     }
   },
 
@@ -102,9 +109,31 @@ var controller = module.exports = [
 
   {
     method: 'GET',
+    path: '/dojo/{dojoId}/event/{eventId}',
+    handler: function (request, reply) {
+      reply.view('index', request.locals);
+    },
+    config: {
+      plugins: {
+        senecaPreloader: {
+          handler: 'seneca-event-preloader'
+        }
+      }
+    }
+  },
+
+  {
+    method: 'GET',
     path: '/event/{eventId}',
     handler: function (request, reply) {
       reply.view('index', request.locals);
+    },
+    config: {
+      plugins: {
+        senecaPreloader: {
+          handler: 'seneca-event-preloader'
+        }
+      }
     }
   },
 

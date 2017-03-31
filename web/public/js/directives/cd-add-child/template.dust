@@ -1,0 +1,70 @@
+<form id="cdAddChildForm" name="cdAddChildForm" class="cd-add-child form-horizontal" novalidate angular-validator angular-validator-submit="$ctrl.save()" role="form">
+  <div class="form-group">
+    <label for="cd-add-child__first-name" class="col-sm-2 control-label">{@i18n key="Name"/}*</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="cd-add-child__first-name" placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.profile.firstName" required required-message="'{@i18n key="First name is required"/}'">
+    </div>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" name="cd-add-child__surname" placeholder="{@i18n key="Surname"/}" ng-model="$ctrl.profile.lastName" required required-message="'{@i18n key="Surname is required"/}'">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="cd-add-child__alias" class="col-sm-2 control-label">{@i18n key="Alias"/}*</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="cd-add-child__alias" placeholder="{@i18n key="Alias"/}" ng-model="$ctrl.profile.alias" required required-message="'{@i18n key="Alias is required"/}'">
+      <span class="help-block">{@i18n key="This unique alias is shown instead of your child's name to protect their privacy on features such as the Ninja Forum."/}</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="cd-add-child__dob" class="col-sm-2 control-label">{@i18n key="Date of Birth"/}*</label>
+    <div class="col-sm-10">
+      <div class="input-group">
+        <input type="text" class="form-control" readonly uib-datepicker-popup="dd-MMMM-yyyy" datepicker-options="$ctrl.dobDateOptions" popup-placement="bottom-left" datepicker-append-to-body="true" min-date="'1900-01-01'" max-date="today" ng-model="$ctrl.profile.dob" name="cdAddChildDob" required-message="'{@i18n key="Date of birth is required"/}'" is-open="$ctrl.dobIsOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Date of Birth"/}" ng-click="$ctrl.dobIsOpen = !$ctrl.dobIsOpen" />
+        <span class="input-group-btn" ng-class="{'topValign':cdAddChildForm.$submitted && cdAddChildForm.cdAddChildDob.$error.required}">
+          <button type="button" class="btn btn-default" ng-click="$ctrl.dobIsOpen = !$ctrl.dobIsOpen"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </div>
+      <span class="help-block">{@i18n key="We need your child's date of birth to comply with child protection laws in some countries."/}</span>
+    </div>
+  </div>
+  <div class="form-group form-inline">
+    <label for="cd-add-child__gender" class="col-sm-2 control-label">{@i18n key="Gender"/}</label>
+    <div class="col-sm-10">
+      <div class="radio">
+        <input type="radio" id="cd-add-child__gender-male" name="cd-add-child__gender" value="Male" ng-model="$ctrl.profile.gender" />
+        <label for="cd-add-child__gender-male">{@i18n key="Male"/}</label>
+      </div>
+      <div class="radio">
+        <input type="radio" id="cd-add-child__gender-female" name="cd-add-child__gender" value="Female" ng-model="$ctrl.profile.gender" />
+        <label for="cd-add-child__gender-female">{@i18n key="Female"/}</label>
+      </div>
+      <div class="radio">
+        <input type="radio" id="cd-add-child__gender-undisclosed" name="cd-add-child__gender" value="Undisclosed" ng-model="$ctrl.profile.gender" />
+        <label for="cd-add-child__gender-undisclosed">{@i18n key="Undisclosed"/}</label>
+      </div>
+    </div>
+  </div>
+  <div class="cd-add-child__o13-section" ng-show="$ctrl.profile.dob < $ctrl.thirteenYearsAgo">
+    <div class="col-sm-10 col-sm-offset-2 cd-add-child__info-box">
+      <p>{@i18n key="As your child is over 13 years of age, they can have their own CoderDojo account."/}</p>
+      <p>{@i18n key="This is optional, but will allow your child to log in by themselves to access features such as badging, booking and the youth forums by themselves. Enter your child's email address, and give them a password if you wish to do this."/}</p>
+    </div>
+    <div class="form-group">
+      <label for="cd-add-child__email" class="col-sm-2 control-label">{@i18n key="Email"/}</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" name="cd-add-child__email" placeholder="{@i18n key="Email"/}" ng-model="$ctrl.profile.email" validator="$ctrl.emailValidator()" invalid-message="'{@i18n key="You must provide an email address when providing a password."/}'">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cd-add-child__password" class="col-sm-2 control-label">{@i18n key="Password"/}</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" name="cd-add-child__password" placeholder="{@i18n key="Password"/}" ng-model="$ctrl.profile.password" validator="$ctrl.passwordValidator()" invalid-message="$ctrl.invalidPasswordMessage">
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">{@i18n key="Save"/}</button>
+    </div>
+  </div>
+</form>

@@ -24,7 +24,7 @@ function cdUsersService(cdApi, $q){
       return promise;
     },
     userProfileData: function(query, win, fail) {
-      cdApi.post('profiles/user-profile-data', {query: query}, win, fail || topfail);
+      return cdApi.post('profiles/user-profile-data', {query: query}, win, fail || topfail);
     },
     userProfileDataPromise: function (query) {
       var deferred = $q.defer();
@@ -37,9 +37,9 @@ function cdUsersService(cdApi, $q){
     },
     saveYouthProfile: function(profile, win, fail) {
       if(profile.id){
-        cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
+        return cdApi.put('profiles/youth/update', {profile: profile}, win, fail || topfail);
       } else{
-        cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
+        return cdApi.post('profiles/youth/create', {profile: profile}, win, fail || topfail);
       }
     },
     inviteParent: function(data, win, fail) {
@@ -98,6 +98,7 @@ function cdUsersService(cdApi, $q){
     loadPrevFounder: function(userId, win, fail) {
       cdApi.get('users/load-previous-founder/' + userId, win, fail || topfail);
     }
+
   };
 }
 

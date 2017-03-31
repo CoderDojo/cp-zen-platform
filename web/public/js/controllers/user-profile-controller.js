@@ -1,3 +1,5 @@
+/* globals inviteNinjaForm */
+
 'use strict';
 
 function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersService, cdDojoService, alertService,
@@ -37,8 +39,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $scope.inviteNinjaPopover = {
         title: $translate.instant('Invite Youth over 13'),
         templateUrl: '/profiles/template/invite-ninja-over-13',
-        placement: 'top',
-        placeholder: $translate.instant('Enter Youth Email Address'),
+        placement: 'top-right',
+        placeholder: $translate.instant('Email'),
         show: false
       };
     } else {
@@ -429,8 +431,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.dobDateOptions = $scope.childDobDateOptions = {
     formatYear: 'yyyy',
     startingDay: 1,
-    'datepicker-mode': "'year'",
-    initDate: initialDate
+    initDate: initialDate,
+    datepickerMode: 'year'
   };
 
   $scope.setCountry = function(profile, country) {
@@ -665,14 +667,14 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     cdUsersService.inviteNinja(ninjaData, function (response) {
       usSpinnerService.stop('user-profile-spinner');
       $scope.inviteNinjaPopover.show = false;
-      $scope.inviteNinjaPopover.email = '';
+      inviteNinjaForm.reset();
       if(response.ok === false) return alertService.showError($translate.instant(response.why));
       return alertService.showAlert($translate.instant('Invite Sent'));
     }, function (err) {
       usSpinnerService.stop('user-profile-spinner');
       alertService.showError($translate.instant('Error inviting Ninja'));
       $scope.inviteNinjaPopover.show = false;
-      $scope.inviteNinjaPopover.email = '';
+      inviteNinjaForm.reset();
     });
   }
 

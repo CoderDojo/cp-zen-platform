@@ -10,7 +10,7 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title ng-bind="pageTitle"></title>
-
+    {@setMeta /}
     <style>
         [ng\:cloak],
         [ng-cloak],

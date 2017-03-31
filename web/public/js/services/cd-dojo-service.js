@@ -128,8 +128,13 @@
       requestInvite: function (data, win, fail) {
         return cdApi.post('dojos/request-user-invite', { data: data }, win, fail || topfail);
       },
-      acceptUserRequest: function(data, win, fail) {
-        return cdApi.post('dojos/accept-user-request', { data: data }, win, fail || topfail);
+       // dojoId is optional, it's more to respect the url format
+      acceptUserRequest: function (dojoId, inviteToken, requestedByUser, win, fail) {
+        return cdApi.put('dojos/' + dojoId + '/request/' + inviteToken + '/user/' + requestedByUser, null, win, fail || topfail);
+      },
+       // dojoId is optional, it's more to respect the url format
+      declineUserRequest: function (dojoId, inviteToken, requestedByUser, win, fail) {
+        return cdApi.delete('dojos/' + dojoId + '/request/' + inviteToken + '/user/' + requestedByUser, win, fail || topfail);
       },
       dojosForUser: function(userId, win, fail) {
         return cdApi.get('dojos/dojos-for-user/' + userId, win, fail || topfail);
@@ -190,6 +195,9 @@
       },
       sendEmail: function (dojoId, email, win, fail) {
         return cdApi.post('dojos/' + dojoId + '/users/notifications', email, win, fail || topfail);
+      },
+      searchDojoInvites: function (dojoId, query) {
+        return cdApi.get('dojos/' + dojoId + '/requests', null, null, {params: query});
       }
     };
   }

@@ -276,8 +276,8 @@ function startDojoWizardCtrl($scope, $window, $state, $location, auth, alertServ
     $scope.dobDateOptions = {
       formatYear: 'yyyy',
       startingDay: 1,
-      'datepicker-mode': "'year'",
-      initDate: initialDate
+      initDate: initialDate,
+      datepickerMode: 'year'
     };
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.fullDateFormat = $scope.formats[0];
