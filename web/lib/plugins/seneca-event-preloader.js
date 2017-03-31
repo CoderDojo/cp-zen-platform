@@ -6,6 +6,7 @@
 var translater = require('../fn/i18n-translate');
 var _ = require('lodash');
 var languages = require('country-language');
+var moment = require('moment');
 module.exports = function (request, cb) {
   var preloaded = {};
   var defaultLanguage = 'en_US';
@@ -15,9 +16,11 @@ module.exports = function (request, cb) {
       if (err || !event) return cb(); // If metadata fails to load, continue loading the page normally
       var now = new Date();
       _.some(event.dates, function (date) {
+        var x = moment.utc(date.startTime);
+        var y = x.subtract(x.utcOffset(), 'minutes');
         var formattedDate = new Date(date.startTime);
         if (formattedDate > now) {
-          event.date = formattedDate.getUTCDate() + '/' + formattedDate.getUTCMonth() + '/' + formattedDate.getUTCFullYear();
+          event.date = y.format('YYYY/MM/DD');
           return true;
         }
       });
