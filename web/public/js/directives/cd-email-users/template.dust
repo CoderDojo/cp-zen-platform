@@ -9,28 +9,11 @@
     <div class="text-center" ng-show="!$ctrl.users || $ctrl.users.length === 0">
       <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
     </div>
-    <div cd-expandable-container="100" ng-show="$ctrl.users.length > 0">
-      <div class="cd-email-users__input-content form-control cd-expandable-block">
-        <div class="cd-email-users__input-content-label" ng-repeat="user in $ctrl.users">
-          <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
-          <span>{{ user.name }}</span>
-          <i class="fa fa-times" ng-click="$ctrl.removeUser(user.userId)"></i>
-        </div>
-      </div>
-      <a cd-expander class="text-center col-xs-12"></a>
-    </div>
+    <cd-email-users-list users="$ctrl.users" remove-user="$ctrl.removeUser"></cd-email-users-list>
   </div>
-  <div class="cd-email-users__input" ng-if="$ctrl.parents.length > 0">
+  <div class="cd-email-users__input" ng-show="$ctrl.parents && $ctrl.parents.length > 0">
     <span>{@i18n key="Included Parents"/}</span>
-    <div cd-expandable-container="100">
-      <div class="cd-email-users__input-content form-control cd-expandable-block">
-        <div class="cd-email-users__input-content-label" ng-repeat="user in $ctrl.parents">
-          <img ng-src="/api/2.0/profiles/{{user.profileId}}/avatar_img"/>
-          <span>{{ user.name }}</span>
-        </div>
-      </div>
-      <a cd-expander class="text-center col-xs-12"></a>
-    </div>
+    <cd-email-users-list users="$ctrl.parents"></cd-email-users-list>
   </div>
   <form novalidate angular-validator angular-validator-submit="$ctrl.sendEmail()" name="mailForm">
     <div class="cd-email-users__input">
@@ -40,7 +23,7 @@
       required="true" required-message="'{@i18n key="Email subject must not be empty"/}'"/>
     </div>
     <textarea ng-if="$ctrl.editorOptions" ckeditor="$ctrl.editorOptions"
-      ng-model="$ctrl.content" name="emailContent" class="form-control"
+      ng-model="$ctrl.content" name="cd-email-users__email-content" class="form-control"
       required="true" required-message="'{@i18n key="Email content is required"/}'"></textarea>
     <button type="submit" class="btn btn-warning pull-right">{@i18n key="Send Email"/}</button>
   </div>

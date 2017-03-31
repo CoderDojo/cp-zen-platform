@@ -7,12 +7,13 @@
     .component('cdEmailUsers', {
       bindings: {
         users: '<',
+        ccUsers: '<',
         dojoId: '<'
       },
       controller: ['usSpinnerService', '$translate', '$rootScope', 'utilsService',
-      'cdDojoService', 'alertService', 'atomicNotifyService', '$scope', '$window',
+      'cdDojoService', 'alertService', 'atomicNotifyService', '$scope',
       function (usSpinnerService, $translate, $rootScope, utilsService,
-        cdDojoService, alertService, atomicNotifyService, $scope, $window) {
+        cdDojoService, alertService, atomicNotifyService, $scope) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.editorOptions = utilsService.getCKEditorConfig();
@@ -28,7 +29,7 @@
         };
         ctrl.update = function () {
           if (ctrl.users) {
-            ctrl.parents = _.uniqBy(_.map(_.pickBy(ctrl.users, 'parent'), 'parent'), 'userId');
+            ctrl.parents = _.uniqBy(_.values(ctrl.ccUsers), 'userId');
             //TODO: take into account users without emails, should the "To" field change?
             ctrl.total = ctrl.users.length + ctrl.parents.length;
           }
@@ -40,6 +41,7 @@
 
         ctrl.removeUser = function (userId) {
           ctrl.users = _.reject(ctrl.users, {userId: userId});
+          delete ctrl.ccUsers[userId];
           ctrl.update();
         };
 

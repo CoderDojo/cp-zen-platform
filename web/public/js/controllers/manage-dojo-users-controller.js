@@ -28,7 +28,7 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   };
   $scope.emailPopup = {};
   $scope.emailPopup.isVisible = false;
-
+  $scope.ccUsers = {};
   initUserTypes.data = _.map(initUserTypes.data, function(userType){
     userType.title = $translate.instant(userType.title);
     return userType;
@@ -70,8 +70,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
 
   $scope.selectedItems = [];
 
-  $scope.showActionBarActions = false;
-
   $scope.$watch('selectedItems', function (newValue) {
     $scope.badgeSelection = {};
     $scope.awardBadgeButtonEnabled = false;
@@ -80,7 +78,6 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
   $scope.$watch('selectedItems.length', function (newValue) {
     $scope.badgeSelection = {};
     $scope.awardBadgeButtonEnabled = false;
-    $scope.showActionBarActions = newValue > 0;
   });
 
   // TODO: Centralise for use between this and join dojo
@@ -179,27 +176,34 @@ function cdManageDojoUsersCtrl($scope, $state, $q, cdDojoService, alertService, 
       ngClick: function () {
         $scope.emailedUsers = []; // reset to allow animation to trigger while we load the new data set
         if ($scope.selectedItems.length !== 1) {
-          return cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
+
+          cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
           .then(function (users) {
+            $scope.emailedUsers = _.map(users.data.response, function (user) {
+              var response = {
+                userId: user.userId,
+                profileId: user.profileId,
+                name: user.name
+              };
+              return response;
+            });
             var kids = _.filter(users.data.response, function (user) {
               return _.includes(user.initUserType, 'attendee');
             });
-            async.mapSeries(kids, function (kid, cb) {
+            var parents = {};
+            async.each(kids, function (kid, cb) {
               cdUsersService.loadParentsForUserPromise(kid.id)
-              .then(function (parents) {
-                kid.parent = _.first(parents);
+              .then(function (kidParents) {
+                var parent = _.first(kidParents);
+                if (_.isArray(kidParents)) parents[kid.id] = {
+                  userId: parent.userId,
+                  profileId: parent.id,
+                  name: parent.name
+                };
                 cb();
               });
             }, function () {
-              $scope.emailedUsers = _.map(users.data.response, function (user) {
-                var response = {
-                  userId: user.userId,
-                  profileId: user.id,
-                  name: user.name
-                };
-                if (user.parent) response.parent = user.parent;
-                return response;
-              });
+              $scope.ccUsers = parents;
             });
           });
         } else {

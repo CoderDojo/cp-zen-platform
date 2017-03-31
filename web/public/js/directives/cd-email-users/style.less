@@ -10,13 +10,14 @@
   input {
     color: @cd-black;
   }
-  textarea#emailContent, #cke_emailContent {
-    margin: 8px 0px;
+
+  textarea#cd-email-users__email-content, #cke_cd-email-users__email-content {
+    margin: 8px 0;
+    .cke_contents {
+      height: 40vh !important; // Needed because CKEditor adds a height style tag
+    }
   }
-  div#cke_2_contents {
-    height: 40vh!important;
-    overflow-y: auto;
-  }
+
 
   &__input {
     a[cd-expander] {

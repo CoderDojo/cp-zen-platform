@@ -1,0 +1,10 @@
+<div cd-expandable-container="100" ng-show="$ctrl.users.length > 0">
+  <div class="cd-email-users__input-content form-control cd-expandable-block">
+    <div class="cd-email-users__input-content-label" ng-repeat="user in $ctrl.users">
+      <img ng-src="/api/2.0/profiles/{{ user.profileId }}/avatar_img"/>
+      <span>{{ user.name }}</span>
+      <i class="fa fa-times" ng-if="$ctrl.removeUser" ng-click="$ctrl.removeUser()(user.userId)"></i>
+    </div>
+  </div>
+  <a cd-expander class="text-center col-xs-12"></a>
+</div>
