@@ -56,6 +56,7 @@
     "localizr": "0.1.0",
     "lodash": "3.7.0",
     "lodash-deep": "1.6.0",
+    "moment": "^2.18.1",
     "newrelic": "1.19.2",
     "po2json": "0.4.1",
     "requireindex": "1.1.0",
