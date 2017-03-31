@@ -30,19 +30,20 @@ angular
         }
         ctrl.address = address.join(', ');
         cdDojoService.getAvatar(dojo.id)
-          .then(function(avatarUrl){
+          .then(function(avatarUrl) {
             ctrl.dojoImage = avatarUrl;
           });
-        cdDojoService.getUsersDojos(usersDojosQuery, function (usersDojos) {
-          dojoUtils.isHavingPerm(user, dojo.id, 'dojo-admin', usersDojos[0])
-            .then(function(isDojoAdmin){
-              ctrl.isDojoAdmin = isDojoAdmin;
-            });
-          dojoUtils.isHavingPerm(user, dojo.id, 'ticketing-admin', usersDojos[0])
-            .then(function(isTicketingAdmin){
-              ctrl.isTicketingAdmin = isTicketingAdmin;
-            });
-        })
+        cdDojoService.getUsersDojos(usersDojosQuery)
+          .then(function (usersDojos) {
+            dojoUtils.isHavingPerm(user, dojo.id, 'dojo-admin', usersDojos.data[0])
+              .then(function(isDojoAdmin) {
+                ctrl.isDojoAdmin = isDojoAdmin;
+              });
+            dojoUtils.isHavingPerm(user, dojo.id, 'ticketing-admin', usersDojos.data[0])
+              .then(function(isTicketingAdmin) {
+                ctrl.isTicketingAdmin = isTicketingAdmin;
+              });
+          });
       }]
     });
 }());

@@ -1,0 +1,6 @@
+<div>
+    <img class="cd-picture-grid" ng-src="/img/avatars/avatar.png"/>
+    <h4 class="cd-expanding-dojo-card__stats-header">{{ $ctrl.kidCounter }} {@i18n key="Attendees"/}</h4>
+    <img class="cd-picture-grid" ng-src="/img/avatars/avatar.png"/>
+    <h4>{{ $ctrl.mentorCounter }} {@i18n key="Mentors"/}</h4>
+</div>
