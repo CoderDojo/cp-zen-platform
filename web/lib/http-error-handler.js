@@ -14,11 +14,12 @@ module.exports = function (server) {
       } else {
         switch (status) {
           case 400:
-            var msg = _.get(reponse, 'output.payload.message', undefined);
+            var msg = _.get(response, 'output.payload.message', undefined);
             return reply(Boom.badRequest(msg));
             break;
           case 401:
           case 403:
+          case 410:
             return reply.continue();
             break;
           default:
