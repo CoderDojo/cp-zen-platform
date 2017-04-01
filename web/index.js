@@ -172,7 +172,6 @@ server.register(require('hapi-auth-cookie'), function (err) {
                 return callback(null, true, {scope: 'basic-user'}); // They're a `user`
               }
             } else {
-              console.log('missing token for ', request.route);
               return callback(null, false);
             }
           });

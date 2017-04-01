@@ -55,7 +55,7 @@ function cdEventbriteIntegration($window, cdEventbriteService, alertService, ato
         if (!_.isUndefined(token)) {
           $scope.saving = true;
           // Commented for testing purpose
-          //  delete $localStorage.eventbriteDojo;
+          delete $localStorage.eventbriteDojo;
           cdEventbriteService.authorize(dojoId, {code: token})
           .then(function () {
             $state.go('edit-dojo', {id: dojoId});
