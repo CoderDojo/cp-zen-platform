@@ -20,7 +20,7 @@
       <span>{@i18n key="Email subject"/}</span>
       <input type="text" ng-model="$ctrl.title" class="form-control" name="emailSubject"
       autofocus placeholder="{@i18n key="Email subject"/}"
-      required="true" required-message="'{@i18n key="Email subject must not be empty"/}'"/>
+      required="true" required-message="'{@i18n key="Email subject is required"/}'"/>
     </div>
     <textarea ng-if="$ctrl.editorOptions" ckeditor="$ctrl.editorOptions"
       ng-model="$ctrl.content" name="cd-email-users__email-content" class="form-control"

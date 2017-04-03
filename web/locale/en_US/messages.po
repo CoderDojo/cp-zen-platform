@@ -3317,8 +3317,8 @@ msgstr "Included Parents"
 msgid "Email subject"
 msgstr "Email subject"
 
-msgid "Email subject must not be empty"
-msgstr "Email subject must not be empty"
+msgid "Email subject is required"
+msgstr "Email subject is required"
 
 msgid "Email content is required"
 msgstr "Email content is required"
