@@ -10,6 +10,7 @@
   </div>
 </span>
 <div class="cd-action-bar-popup-item__popup cd-action-bar-popup-item__full-width-popup" ng-class="{'cd-action-bar-popup-item__full-width-popup--visible': $ctrl.size === 'full-width'}">
-  <i class="fa fa-times fa-lg cd-action-bar-popup-item__close-button" aria-hidden="true" ng-click="$ctrl.showPopup = false"></i>
+  <i class="fa fa-times fa-lg cd-action-bar-popup-item__close-button"
+    aria-hidden="true" ng-click="$ctrl.handleClick($event)"></i>
   <div ng-transclude></div>
 </div>

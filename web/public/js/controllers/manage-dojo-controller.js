@@ -5,7 +5,7 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
-
+  
   var errorMsg = $translate.instant('error.general');
 
   $scope.pageChanged = function () {

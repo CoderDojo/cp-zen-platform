@@ -9,7 +9,9 @@ angular
         actionTitle: '@',
         size: '@',
         closeEvent: '@',
-        forceFixed: '='
+        openAction: '&',
+        forceFixed: '=',
+        showPopup: '=?'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-action-bar/cd-action-bar-popup-item',
@@ -18,7 +20,7 @@ angular
 
         var intervalRef, popupEl, footer;
 
-        function startStopInterval() {
+        function startStopInterval () {
           if (ctrl.showPopup && popupEl && footer) {
             intervalRef = $interval(function () {
               var windowHeight = window.innerHeight;
@@ -41,6 +43,7 @@ angular
               }
             }, 500);
           } else if (intervalRef) {
+            ctrl.forceFixed = false;
             $interval.cancel(intervalRef);
           }
         }
@@ -49,14 +52,25 @@ angular
           e.stopPropagation();
           e.preventDefault();
           ctrl.showPopup = !ctrl.showPopup;
+          if (ctrl.showPopup) ctrl.openAction();
           startStopInterval();
         };
 
+        ctrl.applyShortcut = function ($event) {
+          if ($event.keyCode === 27) ctrl.handleClick();
+        };
+
         ctrl.$onInit = function () {
+          console.log(ctrl, ctrl.showPopup);
           popupEl = $element.find('.cd-action-bar-popup-item__full-width-popup');
           footer = $('#footer');
-          $rootScope.$on(ctrl.closeEvent, function () {
+          $element.on('keydown', ctrl.applyShortcut);
+          $rootScope.$on(ctrl.closeEvent, function (event) {
+            // Because we transclude twice, we cannot use the toggling function "handleClick"
+            // instead we force values
             ctrl.showPopup = false;
+            ctrl.forceFixed = false;
+            $interval.cancel(intervalRef);
           });
         };
 

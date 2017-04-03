@@ -3292,3 +3292,41 @@ msgstr "This is optional, but will allow your child to log in by themselves to a
 
 msgid "You must provide an email address when providing a password."
 msgstr "You must provide an email address when providing a password."
+
+msgid "Type the content of your email here"
+msgstr "Type the content of your email here"
+
+msgid "Email sent!"
+msgstr "Email sent!"
+
+msgid "An error has occurred while sending the email"
+msgstr "An error has occurred while sending the email"
+
+msgid "Send Email"
+msgstr "Send Email"
+
+msgid "From"
+msgstr "From"
+
+msgid "To"
+msgstr "To"
+
+msgid "Included Parents"
+msgstr "Included Parents"
+
+msgid "Email subject"
+msgstr "Email subject"
+
+msgid "Email subject is required"
+msgstr "Email subject is required"
+
+msgid "Email content is required"
+msgstr "Email content is required"
+
+msgid "You have a new message from %1s Dojo:"
+msgstr "You have a new message from %1s Dojo:"
+
+msgid "Your child %1s has a new message from %2s Dojo:"
+msgid_plural "Your children %1s have a new message from %2s Dojo:"
+msgstr[0] "Your child %1s has a new message from %2s Dojo:"
+msgstr[1] "Your children %1s have a new message from %2s Dojo:"

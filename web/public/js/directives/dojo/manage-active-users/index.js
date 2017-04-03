@@ -16,6 +16,7 @@
           $timeout, $ngBootbox, userUtils, cdChooseRoleModal, translationKeys, cdUsersService) {
 
           var dojoId = $state.params.id;
+          $scope.dojoId = dojoId;
           var usersDojosLink = [];
           $scope.userTypes = [];
           $scope.userPermissions = [];
@@ -36,6 +37,9 @@
           $scope.actionBarConfig = {
             forceFixed: false
           };
+          $scope.emailPopup = {};
+          $scope.emailPopup.isVisible = false;
+          $scope.ccUsers = {};
 
           $scope.initUserTypes.data = _.map($scope.initUserTypes.data, function(userType){
             userType.title = $translate.instant(userType.title);
@@ -160,15 +164,66 @@
             }
           ];
 
+          function lookUpParents (users) {
+            var parents = {};
+            var kids = _.filter(users, function (user) {
+              return _.includes(user.initUserType, 'attendee');
+            });
+            async.each(kids, function (kid, cb) {
+              cdUsersService.loadParentsForUserPromise(kid.id)
+              .then(function (kidParents) {
+                var parent = _.first(kidParents);
+                if (_.isArray(kidParents)) parents[kid.id] = {
+                  userId: parent.userId,
+                  profileId: parent.id,
+                  name: parent.name
+                };
+                cb();
+              });
+            }, function () {
+              $scope.ccUsers = parents;
+            });
+          }
+
           $scope.actions = {
             email: {
               ngShow: function () {
-                return $scope.selectedItems.length === 1;
+                return $scope.selectedItems.length === 1 && !$scope.emailPopup.isVisible;
               },
               ngValue: function () {
                 var user = $scope.selectedItems[0] ? $scope.selectedItems[0].userData : null;
                 if (user && (user.email || user.parentEmail)) {
                   return user.email || user.parentEmail;
+                }
+              }
+            },
+            sendEmail: {
+              ngClick: function () {
+                $scope.emailedUsers = []; // reset to allow animation to trigger while we load the new data set
+                if ($scope.selectedItems.length !== 1) {
+                  cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
+                  .then(function (users) {
+                    $scope.emailedUsers = _.map(users.data.response, function (user) {
+                      var response = {
+                        userId: user.userId,
+                        profileId: user.profileId,
+                        name: user.name
+                      };
+                      return response;
+                    });
+                    lookUpParents(users.data.response);
+                  });
+                } else {
+                  $scope.emailedUsers = _.map($scope.selectedItems, function (user) {
+                    var response = {
+                      userId: user.userData.userId,
+                      profileId: user.userData.id,
+                      name: user.caption
+                    };
+                    if (user.userData.parent) response.parent = user.userData.parent;
+                    return response;
+                  });
+                  lookUpParents(_.map($scope.selectedItems, 'userData'));
                 }
               }
             },
@@ -258,7 +313,7 @@
                   });
               },
               ngShow: function () {
-                return true;
+                return $scope.selectedItems.length === 1;
               }
             },
             backgroundCheck: {
@@ -303,12 +358,16 @@
                   }
                 },
                 ngShow: function () {
-                  return $scope.canUpdateUserPermissions;
+                  return $scope.canUpdateUserPermissions && $scope.selectedItems.length === 1;
                 },
                 showAsAction: 'never'
               })
             });
           }
+
+          $scope.showOverflowButton = function () {
+            return $scope.selectedItems.length === 1;
+          };
           updateActions();
 
 
