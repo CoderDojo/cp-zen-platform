@@ -164,6 +164,27 @@
             }
           ];
 
+          function lookUpParents (users) {
+            var parents = {};
+            var kids = _.filter(users, function (user) {
+              return _.includes(user.initUserType, 'attendee');
+            });
+            async.each(kids, function (kid, cb) {
+              cdUsersService.loadParentsForUserPromise(kid.id)
+              .then(function (kidParents) {
+                var parent = _.first(kidParents);
+                if (_.isArray(kidParents)) parents[kid.id] = {
+                  userId: parent.userId,
+                  profileId: parent.id,
+                  name: parent.name
+                };
+                cb();
+              });
+            }, function () {
+              $scope.ccUsers = parents;
+            });
+          }
+
           $scope.actions = {
             email: {
               ngShow: function () {
@@ -180,7 +201,6 @@
               ngClick: function () {
                 $scope.emailedUsers = []; // reset to allow animation to trigger while we load the new data set
                 if ($scope.selectedItems.length !== 1) {
-
                   cdDojoService.loadDojoUsers({dojoId: dojoId, userType: $scope.queryModel.userType, name: $scope.queryModel.name})
                   .then(function (users) {
                     $scope.emailedUsers = _.map(users.data.response, function (user) {
@@ -191,24 +211,7 @@
                       };
                       return response;
                     });
-                    var kids = _.filter(users.data.response, function (user) {
-                      return _.includes(user.initUserType, 'attendee');
-                    });
-                    var parents = {};
-                    async.each(kids, function (kid, cb) {
-                      cdUsersService.loadParentsForUserPromise(kid.id)
-                      .then(function (kidParents) {
-                        var parent = _.first(kidParents);
-                        if (_.isArray(kidParents)) parents[kid.id] = {
-                          userId: parent.userId,
-                          profileId: parent.id,
-                          name: parent.name
-                        };
-                        cb();
-                      });
-                    }, function () {
-                      $scope.ccUsers = parents;
-                    });
+                    lookUpParents(users.data.response);
                   });
                 } else {
                   $scope.emailedUsers = _.map($scope.selectedItems, function (user) {
@@ -220,6 +223,7 @@
                     if (user.userData.parent) response.parent = user.userData.parent;
                     return response;
                   });
+                  lookUpParents(_.map($scope.selectedItems, 'userData'));
                 }
               }
             },

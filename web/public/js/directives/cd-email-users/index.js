@@ -24,7 +24,7 @@
             ctrl.dojo = dojo.data;
           })
           .catch(function (err) {
-            alertService.showError($translate.instant('Error while loading Dojo' + JSON.stringify(err)));
+            alertService.showError($translate.instant('An error has occurred while loading Dojo') + JSON.stringify(err));
           });
         };
         ctrl.update = function () {
@@ -65,7 +65,7 @@
           })
           .catch(function () {
             usSpinnerService.stop('manage-dojo-users-spinner');
-            alertService.showError($translate.instant('Error sending the email'));
+            alertService.showError($translate.instant('An error has occurred while sending the email'));
           });
         };
       }],
