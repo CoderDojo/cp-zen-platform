@@ -11,7 +11,7 @@ function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $
         $scope.markers = [];
         $scope.model = {};
         var colors = _.values(cdTheme.colors);
-        if($scope.gmap){
+        if ($scope.gmap) {
           $scope.mapLoaded = true;
           $scope.mapOptions = {
             center: new google.maps.LatLng(25, -5),
@@ -19,22 +19,22 @@ function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
           var interval = 30000;
-          var getLastResults = function(time){
+          var getLastResults = function (time) {
             var query = {pollId: $scope.pollId};
-            if(time){
+            if (time) {
               query.createdAt = time;
             }
             cdPollService.getResults(query,
-              function(results){
+              function (results) {
                 var votes = {};
-                if(results.length > 0){
-                  cdDojoService.list({ids: _.map(results, 'dojoId')}, function(dojos){
-                    async.eachSeries(dojos, function(dojo, done){
+                if (results.length > 0) {
+                  cdDojoService.list({ids: _.map(results, 'dojoId')}, function(dojos) {
+                    async.eachSeries(dojos, function (dojo, done) {
                       votes[dojo.id] = _.find(results, {dojoId: dojo.id});
                       votes[dojo.id].dojo = dojo;
-                      if(dojo.geoPoint){
+                      if (dojo.geoPoint && _.isFinite(parseInt(votes[dojo.id].value))) {
                         //  Magic trick to display an active-alike map
-                        $timeout(function(){
+                        $timeout(function () {
                           var valueLength = votes[dojo.id].value.toString().length;
                           var color = colors[Math.floor(Math.random() * (colors.length))];
                           var marker = new StyledMarker({
@@ -47,7 +47,7 @@ function cdPollMap($compile, $interval, cdPollService, cdDojoService, cdTheme, $
                             done();
                             $scope.markers.push(marker);
                           }, 1000/results.length);
-                      }else {
+                      } else {
                         done();
                       }
                     });
