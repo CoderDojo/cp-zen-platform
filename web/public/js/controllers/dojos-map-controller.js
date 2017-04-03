@@ -2,11 +2,13 @@
 /* global google,jQuery,MarkerClusterer */
 
 //  TODO : reuse cd-dojos-map instead of this mixed-up controller
-function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation, $q, $location, cdDojoService,
-                        gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
+function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geolocation,
+  $q, $location, cdDojoService, $anchorScroll, $timeout,
+  gmap, Geocoder, atomicNotifyService, usSpinnerService, dojoUtils) {
   $scope.model = {};
   $scope.markers = [];
   $scope.getDojoURL = dojoUtils.getDojoURL;
+  var hash = $location.hash();
   var markerClusterer;
   var centerLocation = new google.maps.LatLng(25, -5);
   $scope.pos = centerLocation;
@@ -136,6 +138,11 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
       cdDojoService.dojosByCountry({verified: 1, deleted: 0}, function (dojos) {
         $scope.dojoList = dojos;
         usSpinnerService.stop('dojos-list-spinner');
+        if (hash) {
+          $timeout(function () {
+            $anchorScroll(hash);
+          });
+        }
       });
     }
   }
@@ -308,4 +315,7 @@ function cdDojosMapCtrl($scope, $window, $state, $stateParams, $translate, $geol
 }
 
 angular.module('cpZenPlatform')
-  .controller('dojos-map-controller', ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation', '$q', '$location', 'cdDojoService', 'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', 'dojoUtils', cdDojosMapCtrl]);
+  .controller('dojos-map-controller',
+  ['$scope', '$window', '$state', '$stateParams', '$translate', '$geolocation',
+   '$q', '$location', 'cdDojoService', '$anchorScroll', '$timeout',
+   'gmap', 'Geocoder', 'atomicNotifyService', 'usSpinnerService', 'dojoUtils', cdDojosMapCtrl]);
