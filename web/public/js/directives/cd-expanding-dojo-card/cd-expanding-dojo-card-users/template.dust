@@ -1,10 +1,10 @@
 <div>
     <div class="cd-expanding-dojo-card__header">
         <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">Users</h3>
-        <a ui-sref="manage-dojo-users({id: $ctrl.dojo.id})" class="cd-expanding-dojo-card-users btn btn-secondary" ng-if="$ctrl.event"><i class="fa fa-users" aria-hidden="true"></i> {@i18n key="Manage Users"/}</a>
+        <a ui-sref="manage-dojo-users({id: $ctrl.dojo.id})" class="cd-expanding-dojo-card-users btn btn-secondary" ng-if="$ctrl.dojo.id"><i class="fa fa-users" aria-hidden="true"></i> {@i18n key="Manage Users"/}</a>
     </div>
-    <cd-user-stats class="cd-expanding-dojo-card__stats-header" dojo-id="$ctrl.dojo.id" ng-if="$ctrl.dojo.id"></cd-user-stats>
-    <div class="cd-expanding-dojo-card__placeholder" ng-if="!ctrl.dojo.id">
+    <cd-user-stats dojo-id="$ctrl.dojo.id" ng-if="$ctrl.dojo.id"></cd-user-stats>
+    <div class="cd-expanding-dojo-card__placeholder" ng-if="ctrl.dojo.id">
         <p class="lead">{@i18n key="Your dojo currently has no users."/}</p>
         <p class="lead cd-lead-sml">{@i18n key="Having users registered on the CoderDojo community project will help you plan your dojos, as well as allow you to reward attendees badges. You can invite users to get started."/}</p>
         <a ui-sref="manage-dojo-users({id: $ctrl.dojo.id})" class="cd-expanding-dojo-card-users btn btn-primary">{@i18n key="Invite Users"/}</a>

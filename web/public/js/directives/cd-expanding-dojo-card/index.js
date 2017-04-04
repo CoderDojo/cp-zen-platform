@@ -26,7 +26,7 @@ angular
           address.push(dojo.placeName);
         }
         if (dojo.countryName) {
-          address.push(dojo.countryName);
+          address.push(dojo.countryName)
         }
         ctrl.address = address.join(', ');
         cdDojoService.getAvatar(dojo.id)

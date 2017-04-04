@@ -1,0 +1,28 @@
+.cd-user-stats {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+    &__stat {
+      align-items: center;
+      flex: 1;
+      display: flex;
+      margin-top: 16px;        
+
+      &-image {
+        flex: 2;
+        max-width: 116px;
+        min-width: 64px;
+
+        > img {
+          margin: 6px;
+          border-radius: 100%;
+          width: 100%;
+        }
+      }
+
+      &-header {
+        margin-left: 12px;
+      }
+    }
+}
