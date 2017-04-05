@@ -1,13 +1,13 @@
 <div class="cd-user-stats">
     <div class="cd-user-stats__stat">
         <div class="cd-user-stats__stat-image">
-            <img ng-src="/img/avatars/avatar.png"/>
+            <img ng-src="{{ $ctrl.kidAvatar }}"/>
         </div>
         <h4 class="cd-user-stats__stat-header cd-no-margin">{{ $ctrl.kidCounter }} {@i18n key="Attendees"/}</h4>
     </div>
     <div class="cd-user-stats__stat">
         <div class="cd-user-stats__stat-image">
-            <img ng-src="/img/avatars/avatar.png"/>
+            <img ng-src="{{ $ctrl.mentorAvatar }}"/>
         </div>
         <h4 class="cd-user-stats__stat-header cd-no-margin">{{ $ctrl.mentorCounter }} {@i18n key="Mentors"/}</h4>
     </div>

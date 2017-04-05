@@ -9,10 +9,12 @@ angular
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-user-stats',
-      controller: ['cdDojoService', '$q', function(cdDojoService, $q) {
+      controller: ['cdDojoService', '$q', 'userUtils', function(cdDojoService, $q, userUtils) {
         var ctrl = this;
         ctrl.kidCounter = 0;
         ctrl.mentorCounter = 0;
+        ctrl.kidAvatar = userUtils.defaultAvatar('attendee-u13');
+        ctrl.mentorAvatar = userUtils.defaultAvatar('mentor');
 
         function getUsersDojos() {   // it will run the 'getUsersDojos'
           return cdDojoService.getUsersDojos({  
