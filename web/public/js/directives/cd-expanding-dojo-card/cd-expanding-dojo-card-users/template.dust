@@ -1,6 +1,6 @@
 <div>
     <div class="cd-expanding-dojo-card__header">
-        <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">Users</h3>
+        <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">{@i18n key="Users"/}</h3>
         <a ui-sref="manage-dojo-users({id: $ctrl.dojo.id})" class="cd-expanding-dojo-card-users btn btn-secondary" ng-if="$ctrl.dojo.id"><i class="fa fa-users" aria-hidden="true"></i> {@i18n key="Manage Users"/}</a>
     </div>
     <cd-user-stats users-dojos="$ctrl.usersDojos" ng-if="$ctrl.usersDojos.length > 1"></cd-user-stats>

@@ -1,6 +1,6 @@
 <div class="cd-expanding-dojo-card-next-event">
   <div class="cd-expanding-dojo-card__header">
-    <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">Next Event</h3>
+    <h3 class="cd-expanding-dojo-card__header-text cd-no-margin">{@i18n key="Next Event"/}</h3>
     <a ui-sref="manage-dojo-events({dojoId: $ctrl.dojo.id})" ng-if="$ctrl.event && $ctrl.isTicketingAdmin" class="cd-expanding-dojo-card-next-event btn btn-secondary">
     <i class="fa fa-calendar" aria-hidden="true"></i> {@i18n key="Manage Events"/}</a>
   </div>
