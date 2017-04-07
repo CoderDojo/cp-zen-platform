@@ -8,6 +8,10 @@
     usersDojos = usersDojos.data;
     $scope.currentUser = currentUser;
     $scope.eventUserSelection = {};
+    $scope.eventTypeTranslations = {
+      'one-off' : $translate.instant('One off'),
+      'recurring' : $translate.instant('Term')
+    };
 
     var utcOffset = moment().utcOffset();
 

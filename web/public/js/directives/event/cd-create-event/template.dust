@@ -44,7 +44,7 @@
             <div class="col-sm-4">
               <div class="radio">
                 <input ng-disabled="pastEvent" type="radio" name="type" ng-model="eventInfo.type" ng-change="updateLocalStorage('type', eventInfo.type)" id="recurring" value="recurring">
-                <label for="recurring">{@i18n key="Recurring"/}</label>
+                <label for="recurring">{@i18n key="Term"/}</label>
               </div>
             </div>
             <div class="col-sm-4">
