@@ -8,7 +8,6 @@
   <p>{@i18n key="All Dojos are independent, autonomous, community groups set up to inspire young people to learn code. All Dojos have different styles of operating but they all hold the same ethos."/}</p>
   <ul>
     <li><span>{@i18n key="We commit to inspiring and supporting young people to learn how to create technology"/}</span></li>
-    <li><span>{@i18n key="We commit to inspiring and supporting young people to learn how to create technology"/}</span></li>
     <li><span>{@i18n key="We commit to the highest possible standards of child protection in our jurisdiction"/}</span></li>
     <li><span>{@i18n key="We commit to not charging children attending nor their parents"/}</span></li>
     <li><span>{@i18n key="We commit to encourage parent participation within our Dojo"/}</span></li>
@@ -18,7 +17,7 @@
     <li><span>{@i18n key="We commit to encouraging collaboration, peer to peer mentoring and project work between the attendees"/}</span></li>
     <li><span>{@i18n key="We commit to welcoming volunteers and children regardless of gender, race, sexual orientation, creed, religion or ability."/}</span></li>
   </ul>
-  <p>{@i18n key="CoderDojo (CDF) commitments to you:"/}</p>
+  <p>{@i18n key="CoderDojo Foundation (CDF) commitments to you:"/}</p>
   <ul>
     <li><span>{@i18n key="CDF commits to act in the interest of the global CoderDojo community"/}</span></li>
     <li><span>{@i18n key="CDF commits to facilitating the community to share its knowledge"/}</span></li>
