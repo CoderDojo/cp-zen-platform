@@ -9,9 +9,6 @@
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
             <cd-expanding-dojo-card-resources dojo="$ctrl.dojo"></cd-expanding-dojo-card-resources>
         </div>
-        <!-- <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-tao">     // To be implemented at at later date
-      <cd-expanding-dojo-card-tao></cd-expanding-dojo-card-tao>
-    </div> -->
     </div>
     <div class="cd-expanding-dojo-card__view-edit-buttons btn-group" role="group" aria-hidden="true">
         <a ui-sref="dojo-detail-id({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i> {@i18n key="View"/}</a>
