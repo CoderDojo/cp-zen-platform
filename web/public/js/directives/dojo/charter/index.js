@@ -3,9 +3,9 @@
 
 angular
     .module('cpZenPlatform')
-    .component('cdSadInformations', {
+    .component('cdCharter', {
       restrict: 'EA',
-      templateUrl: '/directives/tpl/cd-start-dojo/informations/',
+      templateUrl: '/directives/tpl/dojo/charter/',
       //TODO : dep injection array
       controller: function ($scope, $translate) {
 

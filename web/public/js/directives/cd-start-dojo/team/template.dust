@@ -1,1 +1,57 @@
-Team
+<form class="cd-sad-team" name="$ctrl.team.form">
+
+  <div class="cd-sad-team__video">
+    <img src="http://placekitten.com/g/400/300"></img>
+    <p class="help-block">{@i18n key="Building a dedicated team of technical and non-technical mentors will ensure your Dojo is sustainable!"/}</p>
+  </div>
+  <div class="cd-sad-team__side-form">
+    <p class="help-block">
+      {@i18n key="Both technically skilled and non-technically skilled individuals who guide attendees (or Ninjas) in a Dojo session are called Mentors.  Mentors facilitate learning and project work during the Dojo sessions."/}
+    </p>
+    <p class="help-block">
+      {@i18n key="Non-technical volunteers and parents who are not comfortable mentoring can help out at your Dojo by setting up, checking in attendees or managing social media."/}
+    </p>
+    <a href="">{@i18n key="To get more insight on what mentors and volunteers do at a Dojo, you can take this quick E-Learning module>>>"/}</a>
+    <p class="help-block">
+      {@i18n key="It’s up to the Dojo to ensure volunteers are background checked and that your Dojo is meeting local child safeguarding legislation."/}
+      {@i18n key="<a href=\"\">You can see more information on global safeguarding here >>></a> or you can complete our global safeguarding E-Learning module."/}
+    </p>
+  </div>
+  <div class="cd-sad-team__bottom-form">
+    <div class="cd-sad-team__button-group">
+      <label class="btn btn-secondary" ng-model="$ctrl.team.exists"
+        ng-click="$ctrl.team.exists = !$ctrl.team.exists">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
+      <label class="btn btn-secondary" ng-model="$ctrl.team.searching"
+        ng-click="$ctrl.team.searching = !$ctrl.team.searching">{@i18n key="I am searching for volunteers to join my Dojo."/}</label>
+      <label class="btn btn-secondary" ng-model="$ctrl.team.solo"
+        ng-click="$ctrl.team.solo = !$ctrl.team.solo">{@i18n key="I plan on running the club by myself for now."/}</label>
+    </div>
+
+    <div class="" ng-show="dojo.users">
+      <p class="help-block">{@i18n key="See the volunteers that have already joined your Dojo here."/}</p>
+      <cd-picture-grid items="$ctrl.dojo.users" selected-items="$ctrl.selectedItems" wide-card="false" actions="false"></cd-picture-grid>
+    </div>
+    <div class="cd-simple-flex-grid cd-sad-team__team-block">
+      <!-- TODO : functions to be renamed -->
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists" ng-show="$ctrl.team.exists">
+        <p>{@i18n key="Enter your volunteers emails here to invite them to be a part of your Dojo and help manage your account."/}</p>
+        <textarea name="teamMembers" ng-model="$ctrl.teamMembers"
+          class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
+        <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteTeam()">{@i18n key="Send"/}</button>
+      </div>
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--searching" ng-show="$ctrl.team.searching">
+        <h4>{@i18n key="Invite potential volunteers to join your Dojo!"/}</h4>
+        <p>{@i18n key="Enter a contact email to invite volunteers to join your Dojo here"/}</p>
+        <textarea name="teamMembers" ng-model="$ctrl.teamMembers"
+          class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
+        <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteMembers()">{@i18n key="Send"/}</button>
+      </div>
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--solo" ng-show="$ctrl.team.solo">
+        ?????
+      </div>
+    </div>
+    <div class="form-group text-center">
+      <a href="" class="btn btn-secondary">{@i18n key="Download a template letter to help you find volunteers send to local schools and companies here >>"/}</a>
+    </div>
+  </div>
+</form>

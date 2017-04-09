@@ -1,0 +1,32 @@
+cd-sad-information {
+  display: block;
+}
+
+.cd-sad-information {
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  & > * {
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    flex-basis: 100%;
+  }
+  &__social-network {
+    flex-wrap: wrap;
+  }
+  &__button-group {
+    text-align: center;
+  }
+  &__email {
+    display: flex;
+    justify-content: space-around;
+    & > input {
+      margin: 6px;
+      max-width: 320px;
+    }
+  }
+}

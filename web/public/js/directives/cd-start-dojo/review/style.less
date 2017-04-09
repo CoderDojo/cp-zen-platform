@@ -1,0 +1,15 @@
+cd-sad-review {
+  display: block;
+}
+.cd-sad-review {
+  display: flex;
+  align-items: flex-start;
+  align-content: space-around;
+  flex-wrap: wrap;
+  & > * {
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+}

@@ -8,7 +8,9 @@
       bindings: {
         header: '@',
         tabs: '<',
-        baseState: '@'
+        baseState: '@',
+        actions: '<',
+        viewData: '='
       },
       restrict: 'E',
       transclude: {

@@ -1,6 +1,6 @@
 <div class="cd-sidebar-actions">
   <button type="button" class="btn btn-success cd-sidebar-actions__button"
-    ng-click="$ctrl.save()">{@i18n key="Save"/}</button>
+    ng-click="$ctrl.save()" ng-show="$ctrl.saveVisible">{@i18n key="Save"/}</button>
   <button type="button" class="btn btn-primary cd-sidebar-actions__button"
     ng-click="$ctrl.submit()" ng-disabled="$ctrl.submitReadonly">{@i18n key="Submit"/}</button>
 </div>

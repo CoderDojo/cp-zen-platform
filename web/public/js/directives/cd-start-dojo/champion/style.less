@@ -7,23 +7,42 @@ cd-sad-champion {
   align-content: space-around;
   flex-wrap: wrap;
   & > * {
-    padding-left: 8px;
-    padding-right: 8px;
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
   }
-  &_video {
+  &__video {
     flex: 1;
     text-align: center;
+    flex-basis: 100px;
+    & > img {
+      width: 100%;
+    }
   }
-  &_side-form {
+  &__side-form {
     flex: 1;
+    flex-basis: @screen-xs-min;
+    flex-wrap: wrap;
   }
-  &_bottom-form {
+  &__bottom-form {
     flex: 1;
     flex-basis: 100%;
   }
-  &_social-network {
-    // display: flex;
-    // justify-content: space-between;
-    //
+  &__social-network {
+    flex-wrap: wrap;
   }
+  &__sliders {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  &__slider {
+    margin-bottom: 20px;
+    & .rzslider {
+      & .rz-selection, & .rz-pointer, .rz-tick.rz-selected{
+        background-color: @cd-blue;
+      }
+    }
+  }
+
 }

@@ -3,17 +3,17 @@
 
 angular
     .module('cpZenPlatform')
-    .component('cdSadCharter', {
+    .component('cdSadReview', {
       restrict: 'EA',
-      templateUrl: '/directives/tpl/cd-start-dojo/charter/',
-      //TODO : dep injection array
+      templateUrl: '/directives/tpl/cd-start-dojo/review/',
       bindings : {
-        tabHeader: '=',
-        charter: '='
+        application: '=',
+        tabHeader: '='
       },
+      //TODO : dep injection array
       controller: function ($scope, $translate) {
         var ctrl = this;
-        console.log($scope, this);
+
       }
     });
 }());
