@@ -1,0 +1,6 @@
+<section ng-if="$ctrl.mapLoaded" id="map">
+  <div ng-repeat="marker in $ctrl.markers" ui-map-marker="$ctrl.markers[$index]"></div>
+  <div id="googleMap" ui-map="$ctrl.model.map"
+    ui-event="{'map-click': '$ctrl.addMarker($event, $params)'}"
+    ui-options="$ctrl.mapOptions" class="map-canvas"></div>
+</section>

@@ -1,4 +1,4 @@
-<div >
+<!-- <div >
   <h3 class="cd-section-header"><a id="location"></a><a href="#location">{@i18n key="Location"/}</a></h3>
 
   <div class="row cd-input-row" ng-enter="noop()">
@@ -66,4 +66,32 @@
       </div>
     </div>
   </div>
+</div> -->
+
+{{ JSON.stringify($ctrl) }}
+<div class="form-group">
+  <label for="country">{@i18n key="Country"/}</label>
+  <ui-select name="country" ng-model="$ctrl.country" on-select="$ctrl.setCountry($item)" required>
+    <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
+    <ui-select-choices repeat="country in $ctrl.countries | filter: { countryName: $select.search }">
+      <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+    </ui-select-choices>
+  </ui-select>
+</div>
+
+<div class="form-group">
+  <label for="place">{@i18n key="CityTown"/}</label>
+  <ui-select name="place" ng-model="$ctrl.place" on-select="$ctrl.setPlace($item)" required>
+    <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
+    <ui-select-choices repeat="place in $ctrl.places" refresh="$ctrl.getPlaces($select)" refresh-delay="500">
+      <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
+    </ui-select-choices>
+  </ui-select>
+</div>
+
+<div class="form-group">
+  <label for="address1">{@i18n key="Building name/number and Street Address"/}</label>
+  <textarea class="form-control" rows="5" required required-message="'{@i18n key="Address is Empty"/}'"
+    ng-model="$ctrl.ngModel.address1" name="address1" id="address" placeholder="{@i18n key="Enter street level address"/}"
+    ng-blur="$ctrl.getLocationFromAddress()"></textarea>
 </div>

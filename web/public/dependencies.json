@@ -61,5 +61,7 @@
   "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js",
   "./web/public/components/angular-google-analytics/dist/angular-google-analytics.min.js",
   "./web/public/components/angular-aria/angular-aria.min.js",
+  "./web/public/components/angularjs-slider/dist/rzslider.min.js",
+  "./web/public/components/jspdf/dist/jspdf.min.js",
   "./web/public/components/cd-common/dist/cd-common.min.js"
 ]

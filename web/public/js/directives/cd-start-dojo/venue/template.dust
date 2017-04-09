@@ -1,1 +1,70 @@
-Venue
+<form class="cd-sad-venue" name="$ctrl.venue.form">
+  <div class="cd-sad-venue__video" ng-if="!$ctrl.displayOnly">
+    <img src="http://placekitten.com/g/400/300"></img>
+    <p class="help-block">
+      {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+    </p>
+    <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-map>
+  </div>
+  <div class="cd-sad-venue__side-form">
+    <div class="cd-sad-venue__button-group" ng-if="!$ctrl.displayOnly">
+      <div class="btn-group">
+        <label class="btn btn-secondary" ng-model="$ctrl.venue.status"
+        uib-btn-radio="'existing'">{@i18n key="I have a venue"/}</label>
+        <label class="btn btn-secondary" ng-model="$ctrl.venue.status"
+        uib-btn-radio="'searching'">{@i18n key="I'm still looking for a venue"/}</label>
+      </div>
+    </div>
+    <div ng-show="$ctrl.venue.status === 'existing'" class="cd-sad-venue__container">
+      <div class="form-group">
+        <label>{@i18n key="Where is your venue located?"/}</label>
+        <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
+        <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
+        <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map>
+      </div>
+      <div class="form-group">
+        <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
+        <select ng-model="$ctrl.venue.type" name="venueType" class="form-control" ng-readonly="!$ctrl.displayOnly">
+          <option ng-repeat="option in $ctrl.venueTypes" value="option.id">
+            {{ option.name }}
+          </option>
+        </select>
+        <div ng-show="$ctrl.venue.type === 'other'">
+          {@i18n key="Other (please detail)"/}
+          <input type="text" class="form-control" name="venueTypeDetails"
+            placeholder="Please detail"
+            ng-required="$ctrl.venue.type === 'other'"
+            ng-readOnly="!$ctrl.displayOnly"
+            ng-model="$ctrl.venue.venueTypeDetails"></input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
+        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" ng-readonly="!$ctrl.displayOnly">
+          <option ng-repeat="option in $ctrl.corporateList" value="option.id">
+            {{ option.name }}
+          </option>
+        </select>
+        {@i18n key="Or specify another:"/}
+        <input type="text" class="form-control" ng-model="$ctrl.venue.corporateDetailed"></input>
+      </div>
+      <div class="form-group">
+        {@i18n key="What is the maximum amount of people can your venue hold?"/}
+        <input type="number" name="maxCapacity" ng-model="$ctrl.venue.maxCapacity" class="form-control" ng-readonly="!$ctrl.displayOnly"></input>
+      </div>
+    </div>
+    <div ng-show="$ctrl.venue.status === 'searching'" class="cd-sad-venue__container text-center">
+      <div>
+        <p>{@i18n key="I’m currently searching for a venue. - I’ll come back to this later."/}</p>
+      </div>
+      <div>
+        <a href="" name="downloadTemplate" class="btn btn-secondary">Download a template letter to send to potential venues here >></a>
+      </div>
+    </div>
+  </div>
+
+
+
+</form>

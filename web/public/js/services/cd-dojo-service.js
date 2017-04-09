@@ -84,12 +84,8 @@
       getStats: function(win, fail){
         return cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
-      saveDojoLead: function(dojoLead, win, fail) {
-        if(dojoLead.id) {
-          cdApi.put('dojos/update-dojo-lead/' + dojoLead.id, { dojoLead: dojoLead }, win, fail || topfail);
-        } else {
-          cdApi.post('dojos/save-dojo-lead', { dojoLead: dojoLead }, win, fail || topfail);
-        }
+      saveDojoLead: function(lead, win, fail) {
+        return cdApi.post('dojos/lead', { lead: lead }, win, fail || topfail);
       },
       loadUserDojoLead: function(userId, win, fail) {
         return cdApi.get('dojos/user-dojo-lead/' + userId, win, fail || topfail);
@@ -104,9 +100,7 @@
         return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },
       searchDojoLeads: function(query) {
-        return $q(function(resolve, reject) {
-          cdApi.post('dojos/search-dojo-leads', {query: query}, resolve, reject);
-        });
+        return cdApi.post('dojos/search-dojo-leads', {query: query});
       },
       getUsersDojosPromise: function(query){
         var deferred = $q.defer();

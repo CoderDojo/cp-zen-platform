@@ -1,34 +1,35 @@
-<form class="cd-sad-champion" >
-
-  <div class="cd-sad-champion_video">
+<form class="cd-sad-champion" name="$ctrl.champion.form" novalidate="">
+  <p class="help-block">
+    {@i18n key="Congratulations on registering as a CoderDojo Champion!"/}
+    {@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}
+    {@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}
+  </p>
+  <div class="cd-sad-champion__video" ng-if="!$ctrl.displayOnly">
     <img src="http://placekitten.com/g/400/300"></img>
     <p class="help-block">{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
   </div>
-  <!-- novalidate="" angular-validator angular-validator-submit="$ctrl.submit"  -->
-  <div class="cd-sad-champion_side-form">
+  <div class="cd-sad-champion__side-form">
     <div class="form-group">
       <label for="firstName">{@i18n key="First Name"/}</label>
-      <input type="text" class="form-control" id="firstName"
+      <input type="text" class="form-control" id="firstName" ng-readonly="$ctrl.displayOnly"
         placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.champion.firstName">
     </div>
     <div class="form-group">
       <label for="lastName">{@i18n key="Last Name"/}</label>
-      <input type="text" class="form-control" id="lastName"
+      <input type="text" class="form-control" id="lastName" ng-readonly="$ctrl.displayOnly"
         placeholder="{@i18n key="Last Name"/}" ng-model="$ctrl.champion.lastName">
-      <p class="help-block">Help text here.</p>
     </div>
     <div class="form-group">
       <label for="email">{@i18n key="Personal/Work Email address"/}</label>
       <input type="text" class="form-control" id="email" readonly=""
         placeholder="{@i18n key="Email"/}" ng-model="$ctrl.champion.email">
-      <p class="help-block">Help text here.</p>
     </div>
     <div class="form-group">
       <label for="dob">{@i18n key="Date of Birth"/}</label>
-      <div class="input-group">
+      <div class="input-group" ng-hide="$ctrl.displayOnly">
         <input id="dob" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
           datepicker-options="$ctrl.dobDateOptions" min-date="'1900-01-01'" max-date="today"
-          ng-model="$ctrl.champion.dateOfBirth" name="dateOfBirth"
+          ng-model="$ctrl.champion.dob" name="dateOfBirth"
           required required-message="'{@i18n key="Date of birth is empty"/}'" is-open="$ctrl.picker.opened"
           current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
           close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}"
@@ -37,51 +38,75 @@
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
+        <input type="text" disabled="true" ng-show="$ctrl.displayOnly" ng-model="$ctrl.champion.dob" class="form-control"/>
       </div>
     </div>
-    <div ng-show="$ctrl.champion.dateOfBirth && $ctrl.champion.isKid">
+    <div ng-show="$ctrl.champion.dob && $ctrl.form.isKid">
       <div class="form-group">
         <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
-        <input type="text" class="form-control" id="parentEmail"
+        <input type="text" class="form-control" id="parentEmail" ng-readonly="$ctrl.displayOnly"
           ng-model="$ctrl.champion.parentEmail" placeholder="{@i18n key="Parent Email address"/}">
-        <p class="help-block">Help text here.</p>
       </div>
       <div class="form-group">
         <label for="parentName">{@i18n key="Parent Name"/}</label>
-        <input type="text" class="form-control" id="parentName"
+        <input type="text" class="form-control" id="parentName" ng-readonly="$ctrl.displayOnly"
           ng-model="$ctrl.champion.parentName" placeholder="{@i18n key="Parent Name"/}">
-        <p class="help-block">Help text here.</p>
       </div>
     </div>
     <div class="form-group">
       <label for="address">{@i18n key="Home address"/}</label>
-      <input type="text" class="form-control" id="address"
+      <input type="text" class="form-control" id="address" ng-readonly="$ctrl.displayOnly"
         ng-model="$ctrl.champion.address" placeholder="{@i18n key="Home address"/}">
-      <p class="help-block">Help text here.</p>
     </div>
   </div>
-  <div class="cd-sad-champion_bottom-form">
+  <div class="cd-sad-champion__bottom-form">
     <h3>{@i18n key="Contact"/}</h3>
     <div class="form-group">
       <label for="phone">{@i18n key="Phone number"/}</label>
       <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
         utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js"
         required required-message="'{@i18n key="Telephone Number is empty"/}'"
+        ng-readonly="$ctrl.displayOnly"
         ng-enter="noop()" international-phone-number ng-model="$ctrl.champion.phone">
-      <p class="help-block">Help text here.</p>
     </div>
-    <div class="cd-sad-champion_social-network cd-simple-flex-grid">
+    <div class="cd-sad-champion__social-network cd-simple-flex-grid">
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="twitter">{@i18n key="Twitter"/}</label>
+        <span class="pull-right">{@i18n key="(optional)"/}</span>
         <input type="text" class="form-control" ng-model="$ctrl.champion.twitter"
+          cd-input-prefix="https://www.twitter.com/"
           name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
       </div>
       <div class="form-group cd-simple-flex-grid__flex-1">
-        <label for="phone">{@i18n key="Facebook"/}</label>
-        <input type="text" class="form-control" ng-model="$ctrl.champion.facebook"
-          cd-input-prefix="https://www.facebook.com/"
-          name="facebook" id="facebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}">
+        <label for="phone">{@i18n key="Linkedin"/}</label>
+        <span class="pull-right">{@i18n key="(optional)"/}</span>
+        <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
+          cd-input-prefix="https://www.linkedin.com/in/"
+          ng-readonly="$ctrl.displayOnly"
+          name="linkedin" id="linkedin" placeholder="{@i18n key="e.g. https://www.linkedin.com/in/Coderdojo"/}">
       </div>
+    </div>
+
+    <h3>{@i18n key="Tell us your skills"/}</h3>
+    <p class="help-block">
+      To become a Champion you do not need to have technical skills as you can find other volunteers with these skills or use our awesome learning content.
+      Tell us how  confident you feel in the following areas;
+    </p>
+    <div class="cd-simple-flex-grid cd-sad-champion__sliders">
+      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
+        <label for="">{@i18n key="How confident are you in mentoring youths and young people ?"/}</label>
+        <rzslider rz-slider-model="$ctrl.champion.confidentMentoring" ng-readonly="$ctrl.displayOnly" rz-slider-options="$ctrl.sliderOptions"></rzslider>
+      </div>
+      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
+        <label for="">{@i18n key="How confident are you in your coding and technology skills ?"/}</label>
+        <rzslider rz-slider-model="$ctrl.champion.confidentCoding" ng-readonly="$ctrl.displayOnly" rz-slider-options="$ctrl.sliderOptions"></rzslider>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="source">{@i18n key="How did you hear about CoderDojo?"/}</label>
+      <select ng-model="$ctrl.champion.source" name="source" class="form-control" ng-readonly="$ctrl.displayOnly">
+        <option ng-repeat="source in $ctrl.sources" value="{{ source.id }}">{{ source.name }}</option>
+      </select>
     </div>
   </div>
 </form>

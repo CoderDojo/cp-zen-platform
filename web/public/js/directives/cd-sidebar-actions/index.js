@@ -6,6 +6,7 @@
     .component('cdSidebarActions', {
       bindings: {
         save: '=',
+        saveVisible: '=',
         submit: '<',
         submitReadonly: '='
       },

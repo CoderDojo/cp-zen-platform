@@ -1,0 +1,104 @@
+<form class="cd-sad-information" name="$ctrl.information.form" novalidate="">
+  <p class="help-block text-center">
+    {@i18n key="Here you are filling out the basic information needed to populate your Dojos public profile page."/}
+  </p>
+  <div class="form-group">
+    <label for="name">{@i18n key="Name your Dojo"/}</label>
+    <input type="text" class="form-control" name="name" ng-model="$ctrl.information.name"
+      ng-pattern="/^((?!coderdojo|dojo).)*$/i"></input>
+    <div ng-messages="$ctrl.information.form.name.$error">
+      <!-- That's not how it's supposed to work, but eh -->
+      <div ng-show="$ctrl.information.form.name.$error.pattern">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</div>
+    </div>
+    <p class="help-block">
+      {@i18n key="The Dojo Name should be formatted as [City/Town/State]@ [Sponsor/Venue Name] or in a large city [Neighbourhood/Area], [City] @ [Sponsor/Venue Name]"/}
+    </p>
+  </div>
+
+  <div class="form-group">
+    <label for="firstDate">{@i18n key="Set the date of your first session"/}</label>
+    <div class="input-group">
+      <input id="firstDate" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
+        datepicker-options="$ctrl.firstDateOptions" min-date="'1900-01-01'" max-date="today"
+        ng-model="$ctrl.information.firstDate" name="firstDate"
+        required required-message="'{@i18n key="First date is empty"/}'" is-open="$ctrl.picker.opened"
+        current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
+        close-text="{@i18n key="Done"/}"
+        ng-click="$ctrl.toggle($event)"/>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+    <p class="help-block">{@i18n key="Please add in the proposed Date of your first session."/}
+      {@i18n key="It is good to give yourself a target start date."/}
+    </p>
+  </div>
+
+  <div class="form-group">
+    <label>{@i18n key="How often will your Dojo run?"/}</label>
+    <span class="pull-right">{@i18n key="(optional)"/}</span>
+    <p class="help-block">
+      {@i18n key="Please add the normal frequency that you want to run Dojo sessions."/}
+      {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
+    </p>
+    <select ng-model="$ctrl.information.frequency" class="form-control">
+      <option ng-repeat="option in $ctrl.options" value="{{ option.id }}"> {{ option.name }}</option>
+    </select>
+    <div ng-show="$ctrl.information.frequency === 'other'">
+      <input type="text" class="form-control" name="email"
+      placeholder="{@i18n key="Please detail"/}"
+      ng-required="$ctrl.information.frequency === 'other'"
+      ng-model="$ctrl.information.frequencyDetail"></input>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{@i18n key="Provide your Dojo Email"/}</label>
+    <p class="help-block">
+      {@i18n key="You will need a specific email for your Dojo that can be shared with your team."/}
+      {@i18n key="You can set up your own Dojo email address (e.g.docklandsdojo@gmail.com) or we can create a coderdojo.com email up on your behalf in the format:  townname.isocountrycode@coderdojo.com"/}
+    </p>
+    <div class="cd-sad-information__button-group">
+      <div class="btn-group">
+        <label class="btn btn-secondary" ng-model="$ctrl.information.emailSrc"
+        uib-btn-radio="'input'">{@i18n key="I have an email account setup for my Dojo"/}</label>
+        <label class="btn btn-secondary" ng-model="$ctrl.information.emailSrc"
+        uib-btn-radio="'create'">{@i18n key="I want a coderdojo.com Email set up"/}</label>
+      </div>
+    </div>
+    <div ng-show="$ctrl.information.emailSrc === 'input'" class="cd-sad-information__email">
+      <input type="text" class="form-control" name="email"
+      placeholder="myDojo@example.com"
+      ng-required="$ctrl.information.emailType === 'input'"
+      ng-model="$ctrl.information.email"></input>
+    </div>
+    <div ng-show="$ctrl.information.emailType === 'create'">
+
+    </div>
+    <p class="help-block">
+      {@i18n key="Once you have your email set up we advise you set up an Auto-responder to all emails with more information about your Dojo so that parents know you are still active or you can set up an Auto-forwarder to your personal email so you don’t miss anything coming into your Dojo email."/}
+    </p>
+  </div>
+
+  <div class="form-group">
+    <label for="website">{@i18n key="Website (optional)"/}</label>
+    <input type="text" class="form-control" ng-model="$ctrl.information.website"
+      name="website" id="website" placeholder="{@i18n key="e.g. coderdojo.com"/}">
+  </div>
+  <div class="cd-sad-information__social-network cd-simple-flex-grid">
+    <div class="form-group cd-simple-flex-grid__flex-1">
+      <label for="twitter">{@i18n key="Twitter"/}</label>
+      <span class="pull-right">{@i18n key="(optional)"/}</span>
+      <input type="text" class="form-control" ng-model="$ctrl.information.twitter"
+        name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
+    </div>
+    <div class="form-group cd-simple-flex-grid__flex-1">
+      <label for="phone">{@i18n key="Facebook"/}</label>
+      <span class="pull-right">{@i18n key="(optional)"/}</span>
+      <input type="text" class="form-control" ng-model="$ctrl.information.facebook"
+        cd-input-prefix="https://www.facebook.com/"
+        name="facebook" id="facebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}">
+    </div>
+  </div>
+
+</div>
