@@ -3,12 +3,12 @@
         <div class="cd-user-stats__stat-image">
             <img ng-src="{{ $ctrl.kidAvatar }}"/>
         </div>
-        <h4 class="cd-user-stats__stat-header cd-no-margin">{{ $ctrl.kidCounter }} {@i18n key="Attendees"/}</h4>
+        <h4 class="cd-user-stats__stat-header cd-no-margin">{{ 'NUM_OF_ATTENDEES' | translateFromKey:{numAttendees: $ctrl.kidCounter} }}</h4>
     </div>
     <div class="cd-user-stats__stat">
         <div class="cd-user-stats__stat-image">
             <img ng-src="{{ $ctrl.mentorAvatar }}"/>
         </div>
-        <h4 class="cd-user-stats__stat-header cd-no-margin">{{ $ctrl.mentorCounter }} {@i18n key="Mentors"/}</h4>
+        <h4 class="cd-user-stats__stat-header cd-no-margin">{{ 'NUM_OF_MENTORS' | translateFromKey:{numMentors: $ctrl.mentorCounter} }}</h4>
     </div>
 </div>
