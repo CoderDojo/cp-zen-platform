@@ -131,7 +131,7 @@
       .pipe(gulp.dest(relativePath('./web/public/dist/')));
   });
 
-  gulp.task('build', ['clean', 'jshint', 'build-less', 'build-dependencies'], function () {
+  gulp.task('build', ['clean', 'semistandard', 'jshint', 'build-less', 'build-dependencies'], function () {
     var _app = Array.from(app);
     for (var index in cdfApp) {
       _app.push('!' + cdfApp[index]);
@@ -157,7 +157,7 @@
     return gulp.watch([ relativePath('./web/public/css/**/*.less'), relativePath('./web/public/js/directives/**/*.less')], ['build-less']);
   });
 
-  gulp.task('default', ['test']);
+  gulp.task('default', ['build-cdf']);
 
   gulp.task('dev', ['watch-less']);
 })();
