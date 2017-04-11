@@ -235,6 +235,11 @@
           <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
           <i uib-tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
         </div>
+        <div class="checkbox checkbox-block">
+          <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.emailNotifications" id="emailNotifications">
+          <label for="emailNotifications">{@i18n key="Send me email notifications"/}</label>
+          <i uib-tooltip="{@i18n key="Enabling this will send you an email when a new ticket application has been made."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
+        </div>
       </div>
       <div class="col-md-6 btn-toolbar">
         <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Discard Changes"/}</button>
