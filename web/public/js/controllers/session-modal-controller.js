@@ -95,10 +95,17 @@
     $scope.applyForEvent = function (sessionApplication) {
       usSpinnerService.spin('dojo-session-spinner');
       var applications = $scope.getApplications(sessionApplication);
+      //set possible email subjects based on application status
       applications[0].emailSubject = {
         'received': 'Your ticket request for %1$s has been received',
-        'approved': 'Your ticket request for %1$s has been approved'
+        'approved': 'Your ticket request for %1$s has been approved',
+        'pending': 'Your ticket request for %1$s is pending approval'
       };
+      applications[0].dojoEmailSubject = {
+        'approved': 'A ticket has been booked for %1$s',
+        'pending': 'A ticket request has been made for %1$s'
+      };
+      //bulkApplyApplications handles the creation of payloads for the email(s) and sends them
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
         $uibModalInstance.close(response);
