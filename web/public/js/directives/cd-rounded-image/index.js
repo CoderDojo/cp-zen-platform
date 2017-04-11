@@ -15,18 +15,17 @@ function cdRoundedImage(){
         alt: '@',
         size: '=?',
         edit: '=?',
-        upload: '=?',
-        format: '=?' // fallback for base64 to avoid the S3 request
+        upload: '=?'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-rounded-image',
-      controller: ['$scope', 'atomicNotifyService', '$translate', '$http', function ($scope, atomicNotifyService, $translate, $http) {
+      controller: ['$scope', 'atomicNotifyService', '$translate', '$http', '$timeout',
+      function ($scope, atomicNotifyService, $translate, $http, $timeout) {
         this.srcFallback = $scope.srcFallback || 'https://placekitten.com/g/400/400';
         this.src = $scope.src ? $scope.src : this.srcFallback;
-        this.size = $scope.size? $scope.size : '200px';
+        this.size = $scope.size ? $scope.size : '200px';
         this.edit = $scope.edit ? $scope.edit : false;
         this.fullWidth = false;
-        this.format = $scope.format;
         this.saved = false;
         var cdRI = this;
 
@@ -40,16 +39,16 @@ function cdRoundedImage(){
           if (newId) {
             cdRI.srcId = newId;
             cdRI.src += $scope.srcId ? $scope.srcId : '';
-            idWatcher();
-            if(_.isUndefined(cdRI.format)) {
-              //  TODO: use a provider like cd-Entity-Service (i.e: cd-dojos-service=>getAvatar) to get the proper image
-              $http.head(cdRI.src).then(function successCallback(response) {
-                //Nothing to do, it all works as expected, the image is stored online
-              }, function errorCallback(response) {
-                //File doesn't exists, we should fallback
+            $timeout(function () {
+              var image = angular.element(
+                document.getElementsByClassName(cdRI.edit ?
+                  'cd-rounded-image__img--edit-default':
+                  'cd-rounded-image__img--display'));
+              image.bind('error', function () {
                 cdRI.src = cdRI.srcFallback;
               });
-            }
+            });
+            idWatcher();
           }
         });
 

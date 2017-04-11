@@ -6,7 +6,7 @@
         <div cd-banner-background class="row">
           <div cd-social-network email="profile.email" ng-show="profile.email"></div>
           <div class="cd-profile__header">
-            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" format="base64" class="cd-profile__avatar"></div>
+            <div cd-rounded-image src="{{ '/api/2.0/profiles/' + profile.id + '/avatar_img' }}" src-fallback="{{ defaultAvatar }}" alt="{@i18n key="Avatar"/}" class="cd-profile__avatar"></div>
             <div class="cd-profile__username">
               <div class="col-md-offset-1">
                 <h2 ng-bind="::profile.name"></h2>
