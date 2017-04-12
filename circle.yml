@@ -5,11 +5,7 @@ machine:
     LANG: en_US.utf8
 dependencies:
   pre:
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then gem install mime-types -v 2.6.2; fi
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then gem install rest-client -v 1.8; fi
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then gem install crowdin-cli; fi
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then crowdin-cli upload sources; fi
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then for lang in it pt-PT de nl ro mt sl sk fr uk es-ES es-AR el pl et bg tr ja hi lt; do crowdin-cli download -l $lang; done; fi
+    - if [ "$CIRCLE_BRANCH" = "master" ]; then cd ~/ && git clone git@github.com:CoderDojo/cp-translations.git && cd cp-translations && ./build.sh; fi
   override:
     - npm install
 test:
