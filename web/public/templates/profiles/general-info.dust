@@ -177,6 +177,12 @@
             </label>
           </div>
         </div>
+        <div class="margin-left-35-percent">
+          <div class="checkbox">
+            <input type="checkbox" ng-model="profile.user.mailingList" name="mailingList" id="mailingList" ng-true-value="1" ng-false-value="0">
+            <label for="mailingList">{@i18n key="Subscribe to newsletter"/} </label>
+          </div>
+        </div>
 
         <h4 ng-if="abilityToAddChildren()" ng-show="afterForm()" >{@i18n key="Got a child? Add them below"/}</h4>
         <div ng-show="afterForm()">
