@@ -3,7 +3,7 @@
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-show="$ctrl.isDojoAdmin">
             <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>
         </div>
-        <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events">
+        <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events" ng-if="$ctrl.dojo.verified === 1 && $ctrl.dojo.stage !== 4">
             <cd-expanding-dojo-card-events dojo="$ctrl.dojo" is-ticketing-admin="$ctrl.isTicketingAdmin"></cd-expanding-dojo-card-events>
         </div>
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
