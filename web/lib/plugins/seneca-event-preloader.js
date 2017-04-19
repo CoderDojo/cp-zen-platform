@@ -27,7 +27,7 @@ module.exports = function (request, cb) {
       request.seneca.act({role: 'cd-dojos', cmd: 'load', id: event.dojoId},
         function (err, dojo) {
           if (err || !dojo) return cb();
-          var locale = languages.getCountryMsLocales(dojo.alpha2)[0].langCultureName || defaultLanguage;
+          var locale = (languages.getCountryMsLocales(dojo.alpha2)[0].langCultureName).replace('-', '_') || defaultLanguage;
 
           preloaded.title = translater(locale, {key: '%1s | CoderDojo',
             var: dojo.name});

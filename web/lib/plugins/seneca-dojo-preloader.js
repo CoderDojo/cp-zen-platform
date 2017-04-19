@@ -13,7 +13,7 @@ module.exports = function (request, cb) {
     function (err, dojo) {
       if (err || !dojo) return cb(); // If metadata fails to load, continue loading the page normally
       var localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
-      var locale = (localesFromCountry && localesFromCountry[0].langCultureName) || defaultLanguage;
+      var locale = ((localesFromCountry && localesFromCountry[0].langCultureName)).replace('-', '_') || defaultLanguage;
       preloaded.title = translater(locale, {key: '%1s | CoderDojo',
         var: dojo.name});
       preloaded.description = translater(locale, {key: '%1s in %2s',
