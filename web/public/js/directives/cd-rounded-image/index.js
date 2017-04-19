@@ -6,7 +6,7 @@
  * For upload, scope must contains upload function and return the new image path
  * @return {[type]} [description]
  */
-function cdRoundedImage(){
+  function cdRoundedImage () {
     return {
       scope: {
         src: '@?',
@@ -19,8 +19,8 @@ function cdRoundedImage(){
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-rounded-image',
-      controller: ['$scope', 'atomicNotifyService', '$translate', '$http', '$timeout',
-      function ($scope, atomicNotifyService, $translate, $http, $timeout) {
+      controller: ['$scope', 'atomicNotifyService', '$translate', '$http', '$timeout', '$element',
+      function ($scope, atomicNotifyService, $translate, $http, $timeout, $element) {
         this.srcFallback = $scope.srcFallback || 'https://placekitten.com/g/400/400';
         this.src = $scope.src ? $scope.src : this.srcFallback;
         this.size = $scope.size ? $scope.size : '200px';
@@ -29,21 +29,20 @@ function cdRoundedImage(){
         this.saved = false;
         var cdRI = this;
 
-        var srcWatcher = $scope.$watch('src', function(newSrc, oldSrc){
+        var srcWatcher = $scope.$watch('src', function (newSrc, oldSrc) {
           if (newSrc) {
             cdRI.src = newSrc;
           }
         });
 
-        var idWatcher = $scope.$watch('srcId', function(newId, oldId){
+        var idWatcher = $scope.$watch('srcId', function (newId, oldId) {
           if (newId) {
             cdRI.srcId = newId;
             cdRI.src += $scope.srcId ? $scope.srcId : '';
             $timeout(function () {
-              var image = angular.element(
-                document.getElementsByClassName(cdRI.edit ?
-                  'cd-rounded-image__img--edit-default':
-                  'cd-rounded-image__img--display'));
+              var image = $element.find(cdRI.edit ? '.cd-rounded-image__img--edit-default'
+              : '.cd-rounded-image__img--display');
+
               image.bind('error', function () {
                 cdRI.src = cdRI.srcFallback;
               });
@@ -52,23 +51,23 @@ function cdRoundedImage(){
           }
         });
 
-        var altWatcher = $scope.$watch('alt', function(newAlt, oldAlt){
+        var altWatcher = $scope.$watch('alt', function (newAlt, oldAlt) {
           if (newAlt) {
             cdRI.srcId = newAlt;
             altWatcher();
           }
         });
 
-        this.toggleFullWidth = function (){
+        this.toggleFullWidth = function () {
           return this.fullWidth = !this.fullWidth;
-        }
+        };
         this.submit = function () {
           if (this.file) {
             this.upload(this.file)
-            .then(function(uploaded) {
+            .then(function (uploaded) {
               atomicNotifyService.info($translate.instant('Image successfully updated'));
               // Date.now is a hack to refresh the ng-src, because, yeah.
-              cdRI.src = uploaded + "#" + Date.now();
+              cdRI.src = uploaded + '#' + Date.now();
               cdRI.canSave = false;
             });
           }
@@ -77,9 +76,9 @@ function cdRoundedImage(){
         // upload on file select or drop
         this.upload = $scope.upload;
 
-        $scope.$on('$destroy', function(){
+        $scope.$on('$destroy', function () {
           srcWatcher();
-        })
+        });
       }],
       controllerAs: 'cdRI'
     };
@@ -88,5 +87,4 @@ function cdRoundedImage(){
 angular
     .module('cpZenPlatform')
     .directive('cdRoundedImage', [cdRoundedImage]);
-
 }());
