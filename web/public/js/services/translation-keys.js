@@ -1039,7 +1039,9 @@ angular.module('cpZenPlatform')
       ACCEPT_JOIN_REQUEST: "User request to join your Dojo accepted. \nThe user is now a member of your Dojo",
       DECLINE_JOIN_REQUEST: "User request to join your Dojo declined",
       ERROR_ACCEPT_JOIN_REQUEST: "Error accepting a user request",
-      ERROR_DECLINE_JOIN_REQUEST: "Error declining a user request"
+      ERROR_DECLINE_JOIN_REQUEST: "Error declining a user request",
+      NUM_OF_ATTENDEES: "{{ numAttendees }} Attendees",
+      NUM_OF_MENTORS: "{{ numMentors }} Mentors"
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {

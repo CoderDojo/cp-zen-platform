@@ -1,9 +1,8 @@
 'use strict';
 
 function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStore, cdDojoService, $location, auth, tableUtils, alertService, $translate, AlertBanner, usSpinnerService) {
-  $scope.itemsPerPage = 10;
+  $scope.itemsPerPage = 5;
   $scope.pagination = {};
-  var currentUser;
   var errorMsg = $translate.instant('error.general');
 
   $rootScope.$watch(function() {
@@ -18,7 +17,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
   );
 
   $scope.pageChanged = function(){
-    $scope.loadPage(currentUser, false);
+    $scope.loadPage($scope.currentUser, false);
   };
 
   $scope.editDojo = function(dojo) {
@@ -61,7 +60,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
     var isChampion;
     var isDojoAdmin;
     var isDojoOwner;
-    var query = {userId: currentUser.id, dojoId:dojo.id};
+    var query = {userId: $scope.currentUser.id, dojoId:dojo.id};
 
     function getUsersDojos() {
       return $q(function(resolve, reject) {
@@ -177,8 +176,8 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
   };
 
   auth.get_loggedin_user(function(user) {
-    currentUser = user;
-    $scope.loadPage(currentUser, true);
+    $scope.currentUser = user;
+    $scope.loadPage($scope.currentUser, true);
   });
 
 }

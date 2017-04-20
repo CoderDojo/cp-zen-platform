@@ -61,29 +61,34 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     }
   }
 
-  dojoUtils.isHavingPerm = function(user, dojoId, perm) {
+  dojoUtils.isHavingPerm = function(user, dojoId, perm, userDojo) {
+    function checkUserDojo (userDojo) {
+      if (!userDojo || userDojo.length < 1){ return deferred.reject(); }
+
+      var isHavingPerm = _.find(userDojo[0].userPermissions, function (userPermission) {
+        return userPermission.name === perm;
+      });
+      if (!_.isEmpty(isHavingPerm) && !_.isUndefined(isHavingPerm)) {
+        deferred.resolve(true);
+      } else {
+        deferred.reject(false);
+      }
+    }
     var deferred = $q.defer();
-    if (user.data && !_.isEmpty(user.data)) {
-      var isCDF = _.includes(user.data.roles, 'cdf-admin');
-      var query = {userId: user.data.id, dojoId: dojoId};
-      var isHavingPerm = _.includes(user.data.roles, perm);
+    if (user && !_.isEmpty(user)) {
+      var isCDF = _.includes(user.roles, 'cdf-admin');
+      var query = {userId: user.id, dojoId: dojoId, deleted: 0};
+      var isHavingPerm = _.includes(user.roles, perm);
       if (isHavingPerm || isCDF) {
         deferred.resolve(isHavingPerm || isCDF);
       } else {
-        cdDojoService.getUsersDojos(query, function (userDojo) {
-          if (!userDojo || userDojo.length < 1){ return deferred.reject(); }
-
-          var isHavingPerm = _.find(userDojo[0].userPermissions, function (userPermission) {
-            return userPermission.name === perm;
+        if (userDojo) {
+          checkUserDojo([userDojo]);
+        } else {
+          cdDojoService.getUsersDojos(query, checkUserDojo, function (err) {
+            deferred.reject(err);
           });
-          if (!_.isEmpty(isHavingPerm) && !_.isUndefined(isHavingPerm)) {
-            deferred.resolve(true);
-          } else {
-            deferred.reject(false);
-          }
-        }, function (err) {
-          deferred.reject(err);
-        });
+        }
       }
     } else {
       deferred.reject();

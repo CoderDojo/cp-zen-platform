@@ -112,7 +112,7 @@ angular.module('cpZenPlatform').factory('userUtils',
       if(sex) {
         avatar = _.sample(userTypeAvatar[sex]);
       } else {
-        avatar = userTypeAvatar.default;
+        avatar = _.sample(_.concat(userTypeAvatar.Female, userTypeAvatar.Male));
       }
     }
     return  avatar || overallDefault;
