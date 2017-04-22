@@ -1,0 +1,14 @@
+<h2 ng-bind="::cdfOUL.orgName"></h2>
+<div ng-repeat="user in cdfOUL.users">
+  <a> {{ user.username }}</a>
+  <i class="fa fa-times" ng-click="cdfOUL.delete(user.userId)"></i>
+</div>
+<form class="row" ng-submit="cdfOUL.save()" class="form-inline">
+  <h3>Link new user</h3>
+  <div class="input-group">
+    <input type="text" ng-model="cdfOUL.userId" placeholder="userId" class="form-control"/>
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </span>
+  </div>
+</div>

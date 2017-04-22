@@ -1,6 +1,6 @@
 ;(function() {
   'use strict';
-
+  /* global google */
 angular
     .module('cpZenPlatform')
     .component('cdDojoMap', {

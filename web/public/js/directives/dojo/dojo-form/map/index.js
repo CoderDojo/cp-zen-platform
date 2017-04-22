@@ -1,6 +1,6 @@
 ;(function() {
   'use strict';
-
+  /* global google */
 angular
   .module('cpZenPlatform')
   .component('cdDojoFormMap', {
@@ -61,7 +61,7 @@ angular
             lon: data.lng
           };
           setTimeout(function () {
-            ctrl.model.map.panTo(center);
+            ctrl.model.map.panTo(ctrl.mapOptions.center);
           });
           ctrl.addMarker(null, [{latLng: ctrl.mapOptions.center}]);
         }, function (err) {
