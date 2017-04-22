@@ -1,6 +1,6 @@
 ;(function() {
   'use strict';
-
+  /* global jsPDF */
 angular
     .module('cpZenPlatform')
     .component('cdSignCharter', {

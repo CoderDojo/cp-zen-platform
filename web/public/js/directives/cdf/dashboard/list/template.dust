@@ -1,0 +1,3 @@
+<div ng-repeat="org in cdfOL.orgs">
+  {{ org.name }}
+</div>

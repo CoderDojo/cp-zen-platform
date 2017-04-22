@@ -307,8 +307,14 @@ server.register(polls, function (err) {
   checkHapiPluginError('polls')(err);
 });
 
+var orgs = require('../lib/organisations.js');
+server.register(orgs, function (err) {
+  checkHapiPluginError('orgs')(err);
+});
+
+
 server.register({register: require('./lib/plugins/seneca-preloader-dustjs'),
-  options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}}, 
+  options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}},
   checkHapiPluginError('Seneca preloader'));
 
 // Locale related server method
