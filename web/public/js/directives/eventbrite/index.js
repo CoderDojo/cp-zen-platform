@@ -39,7 +39,8 @@ var cdEventbriteIntegration = {
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
-      cdE.eventbriteText = $translate.instant('Connect');
+      var text = cdE.dojo && cdE.dojo.eventbriteConnected ? 'Reconnect' : 'Connect';
+      cdE.eventbriteText = $translate.instant(text);
       if (!_.isUndefined(token)) {
         cdE.saving = true;
         // Commented for testing purpose
