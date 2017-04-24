@@ -105,6 +105,10 @@
         'approved': 'A ticket has been booked for %1$s',
         'pending': 'A ticket request has been made for %1$s'
       };
+      applications[0].parentEmailSubject = {
+        'approved': 'A ticket has been booked for your child for %1$s',
+        'pending': 'Your childs ticket request for %1$s is pending approval'
+      };
       //bulkApplyApplications handles the creation of payloads for the email(s) and sends them
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
