@@ -401,6 +401,10 @@
         'approved': 'Your ticket request for %1$s has been approved',
         'cancelled': 'Your ticket request for %1$s has been cancelled'
       };
+      application.parentEmailSubject = {
+        'approved': 'A ticket has been booked for your child for %1$s',
+        'cancelled': 'A ticket for your child for %1$s has been cancelled'
+      };
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
         if(_.isEmpty(applications)) return;
