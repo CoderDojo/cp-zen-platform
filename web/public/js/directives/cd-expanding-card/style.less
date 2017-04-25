@@ -10,6 +10,11 @@
   overflow: hidden;
   position: relative;
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  outline: none;
+
+  @media (max-width: @screen-xs-max) {
+    margin: @cd-expanding-card-spacing-base 0;
+  }
 
   &__expand-button {
     cursor: pointer;
@@ -170,7 +175,7 @@
       }
 
       &__header-main {
-        color: #fff;
+        color: @cd-white;
 
         &::before {
           transform: translateY(0);

@@ -1,7 +1,7 @@
 <div class="cd-expanding-card" data-expanded="{{ $ctrl.expanded }}" ng-click="$ctrl.expand($event)">
   <div class="cd-expanding-card__info">
     <div ng-if="$ctrl.roundImage" class="cd-expanding-card__round-image">
-      <img ng-src="{{ $ctrl.roundImage }}" />
+      <img cd-img-fallback original-src="{{ $ctrl.roundImage }}" fallback-src="{{ $ctrl.roundImageFallback }}" />
     </div>
     <div class="cd-expanding-card__header">
       <div class="cd-expanding-card__header-main">
