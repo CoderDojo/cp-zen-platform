@@ -1,64 +1,141 @@
-@card-opening-speed: 0.2s;
+// The z-indexes in here are to do with some weird compositing issues with transforms
+
+@cd-expanding-card-anim-speed: 0.2s;
+@cd-expanding-card-spacing-base: 16px;
 
 .cd-expanding-card {
   background: @cd-white;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  margin: 16px;
+  box-shadow: @cd-box-shadow;
+  margin: @cd-expanding-card-spacing-base;
   overflow: hidden;
   position: relative;
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  transition: transform @cd-expanding-card-anim-speed ease-out, box-shadow @cd-expanding-card-anim-speed ease-out;
+  outline: none;
+
+  @media (max-width: @screen-xs-max) {
+    margin: @cd-expanding-card-spacing-base 0;
+  }
 
   &__expand-button {
     cursor: pointer;
     position: absolute;
-    top: 138px;
-    right: 16px;
-    transition: transform @card-opening-speed ease-in-out;
+    bottom: 0;
+    right: 8px;
+    transition: transform @cd-expanding-card-anim-speed ease-in-out;
     color: @cd-purple;
   }
 
-  &__hero-image {
-    background-size: cover;
-    transform: translateY(-86px);
-    transition: transform @card-opening-speed ease-in-out, height @card-opening-speed ease-in-out;
-    margin-bottom: -96px;
-    height: 96px;
-    background: @cd-purple;
-  }
-
-  &__round-image {
-    border-radius: 100% !important;
-    margin: 0 32px;
-    overflow: hidden;
-    width: 128px;
-    height: 128px;
-    transition: transform @card-opening-speed ease-in-out;
-    transform-origin: left center;
-    transition-delay: 0.1s
-  }
-
   &__info {
+    position: relative;
     display: flex;
-    margin: 32px 0 22px 0;
-    height: 128px;
+    margin: (@cd-expanding-card-spacing-base * 2) 0;
+    transition: margin @cd-expanding-card-anim-speed ease-in-out;
+    z-index: 2;
+
+    @media (max-width: @screen-xs-max) {
+      flex-direction: column;
+    }
   }
 
   &__header {
     flex: 1;
-    transition: transform @card-opening-speed ease-in-out;
-    transition-delay: 0.1s;
-    h1 {
-      transition: color @card-opening-speed ease-in-out;
+    transition: transform @cd-expanding-card-anim-speed ease-in-out;
+
+    &-main {
+      min-height: (@cd-expanding-card-spacing-base * 4);
+      transition: color @cd-expanding-card-anim-speed ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      padding: (@cd-expanding-card-spacing-base / 2) 0;
+
+      > h2 {
+        z-index: 2;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: -(@cd-expanding-card-spacing-base * (8 + 2 + 2)); // To stretch to size of image plus margin left and right
+        right: 0;
+        height: calc(~'100% +' (@cd-expanding-card-spacing-base * (2))); // Height of the h2, plus margin top
+        transform: translateY(calc(~'-100% +' (@cd-expanding-card-spacing-base * 0.5))); // Height of the h2 minus the thickness of the purple bar (inverted)
+        background: @cd-purple;
+        transition: transform @cd-expanding-card-anim-speed ease-in-out;
+        z-index: 1;
+
+        @media (max-width: @screen-xs-max) {
+          left: 0;
+          height: calc(~'100% +' (@cd-expanding-card-spacing-base * (2))); // Height of h2, plus margin-top
+        }
+      }
+
+      @media (max-width: @screen-xs-max) {
+        height: auto;
+      }
+    }
+
+    &-sub {
+      padding: (@cd-expanding-card-spacing-base / 2) 0;
     }
 
     &:first-child {
-      margin-left: 32px;
+      margin-left: (@cd-expanding-card-spacing-base * 2);
+
+      @media (max-width: @screen-xs-max) {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: @screen-xs-max) {
+      text-align: center;
+    }
+  }
+
+  &__round-image {
+    border-radius: 100%;
+    margin: 0 (@cd-expanding-card-spacing-base * 2);
+    overflow: hidden;
+    width: (@cd-expanding-card-spacing-base * 8);
+    height: (@cd-expanding-card-spacing-base * 8);
+    transition: transform @cd-expanding-card-anim-speed ease-in-out;
+    transform-origin: left center;
+    z-index: 2;
+
+    @media (max-width: @screen-xs-max) {
+      margin: 0 auto;
+    }
+
+    > img {
+      width: 100%;
+    }
+  }
+
+  // LESS is annoying and wouldn't let me do this as a nested rule of the existing &__round-image
+  &__round-image ~ &__header {
+    .cd-expanding-card {
+      &__header {
+        &-main {
+          &::before {
+            @media (max-width: @screen-xs-max) {
+              height: calc(~'100% +' (@cd-expanding-card-spacing-base * (8 + 2))); // Height of h2, plus image height and margin-top
+            }
+          }
+        }
+      }
     }
   }
 
   &__sub-title-1 {
     display: inline-block;
-    margin-right: 32px;
+    margin-right: (@cd-expanding-card-spacing-base * 2);
+
+    @media (max-width: @screen-xs-max) {
+      margin: 0 (@cd-expanding-card-spacing-base * 2);
+    }
   }
 
   &__sub-title-2 {
@@ -69,7 +146,7 @@
     height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: height @card-opening-speed ease-in-out;
+    transition: height @cd-expanding-card-anim-speed ease-in-out;
     &-size-wrapper {
       padding: 16px;
     }
@@ -78,7 +155,7 @@
   &[data-expanded=collapsed], &[data-expanded=expanding] {
     .cd-expanding-card {
       &__card-content {
-        transition: opacity @card-opening-speed @card-opening-speed ease-in-out, height @card-opening-speed ease-in-out;
+        transition: opacity @cd-expanding-card-anim-speed @cd-expanding-card-anim-speed ease-in-out, height @cd-expanding-card-anim-speed ease-in-out;
       }
 
     }
@@ -86,32 +163,23 @@
 
   &[data-expanded=expanding], &[data-expanded=expanded] {
     box-shadow: 0px 10px 15px rgba(0,0,0,0.2);
-    transform: translateY(-5px);
+    transform: translateY(-(@cd-expanding-card-spacing-base / 4));
 
     .cd-expanding-card {
+      &__info {
+        margin: (@cd-expanding-card-spacing-base * 2) 0 0 0;
+      }
+
       &__expand-button {
-        transform: rotate(180deg) translateY(-10px);
+        transform: rotate(180deg);
       }
 
-      &__hero-image {
-        transform: translateY(0);
-        height: 140px;
-      }
+      &__header-main {
+        color: @cd-white;
 
-      &__round-image {
-        transform: scale(1.5, 1.5);
-      }
-
-      &__header {
-        transform: translateX(64px);
-
-        &:first-child {
-          transform: translateX(0);
+        &::before {
+          transform: translateY(0);
         }
-      }
-
-      &__header h1 {
-        color: #fff;
       }
 
       &__card-content {
@@ -125,22 +193,20 @@
 
     &:hover {
       box-shadow: 0px 10px 15px rgba(0,0,0,0.2);
-      transform: translateY(-5px);
+      transform: translateY(-(@cd-expanding-card-spacing-base / 4));
     }
   }
 
   &[data-expanded=expanded], &[data-expanded=collapsing] {
+    cursor: default;
+
     .cd-expanding-card {
       &__expand-button {
-        transform: rotate(180deg) translateY(-10px);
-      }
-
-      &__hero-image, &__profile-image, &__header, &__header h1 {
-        transition-delay: @card-opening-speed;
+        transform: rotate(180deg);
       }
 
       &__card-content {
-        transition: opacity @card-opening-speed ease-in-out, height @card-opening-speed @card-opening-speed ease-in-out;
+        transition: opacity @cd-expanding-card-anim-speed ease-in-out, height @cd-expanding-card-anim-speed @cd-expanding-card-anim-speed ease-in-out;
       }
     }
   }

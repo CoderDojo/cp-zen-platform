@@ -4,8 +4,8 @@
   angular.module('cpZenPlatform').component('cdExpandingCard', {
     transclude: true,
     bindings: {
-        heroImage: '@',
         roundImage: '@',
+        roundImageFallback: '@',
         mainTitle: '@',
         subTitle1: '@',
         subTitle2: '@',
