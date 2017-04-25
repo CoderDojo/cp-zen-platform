@@ -35,7 +35,10 @@
             <general-info ng-if="editMode && !publicChampion"></general-info>
             <bio ng-if="!hideChampionProfileBlock('notes') && profile.notes"></bio>
             <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
-
+            <projects-list ng-if="!hideChampionProfileBlock('projects')"></projects-list>
+            <parents-list ng-if="!hideProfileBlock()"></parents-list>
+            <children-list ></children-list>
+            <programming-languages-list ng-if="!hideProfileBlock('programmingLanguages') && profile.widget.languages"></programming-languages-list>
             <dojo-list ng-if="!hideProfileBlock('dojos') && profile.dojos.length > 0"></dojo-list>
           </div>
         </div>
