@@ -35,6 +35,7 @@
             <general-info ng-if="editMode && !publicChampion"></general-info>
             <bio ng-if="!hideChampionProfileBlock('notes') && profile.notes"></bio>
             <badges-list ng-if="!hideProfileBlock('badges')"></badges-list>
+
             <dojo-list ng-if="!hideProfileBlock('dojos') && profile.dojos.length > 0"></dojo-list>
           </div>
         </div>
