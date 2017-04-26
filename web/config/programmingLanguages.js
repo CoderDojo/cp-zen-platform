@@ -73,7 +73,7 @@ module.exports = [
   },
   {
     'text': 'Haskell',
-    'image': '/img/languages/haskell.png'
+    'image': '/img/languages/Haskell.png'
   },
   {
     'text': 'Scala',
@@ -104,4 +104,3 @@ module.exports = [
     'image': '/img/languages/clojure.png'
   }
 ];
-

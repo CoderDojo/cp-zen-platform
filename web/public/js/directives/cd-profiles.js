@@ -43,11 +43,26 @@ function listOfLanguagesSpoken(){
   };
 }
 
-function listOfProgrammingLanguages(){
-  return {
-    restrict: 'E',
-    templateUrl: '/profiles/template/programming-languages-list'
-  };
+var listOfProgrammingLanguages = {
+  restrict: 'E',
+  templateUrl: '/profiles/template/programming-languages-list',
+  bindings: {
+    programmingLanguages: '<'
+  },
+  controller: ['cdProgrammingLanguagesService', function (cdProgrammingLanguagesService) {
+    var ctrl = this;
+    cdProgrammingLanguagesService.get().then(function (data) {
+      var programmingLanguagesJSON = data.data;
+      _.each(ctrl.programmingLanguages, function (language, index) {
+        var lLanguage = _.find(programmingLanguagesJSON, {text: language.text});
+        if (!_.isUndefined(lLanguage)) {
+          ctrl.programmingLanguages[index].picture = lLanguage.image;
+          ctrl.programmingLanguages[index].caption = lLanguage.text;
+          ctrl.programmingLanguages[index].href = "#";
+        }
+      });
+    });
+  }]
 }
 
 function listOfProjects(){
@@ -91,7 +106,7 @@ function listOfDojos() {
 angular
   .module('cpZenPlatform')
   .directive('projectsList', listOfProjects)
-  .directive('programmingLanguagesList', listOfProgrammingLanguages)
+  .component('programmingLanguagesList', listOfProgrammingLanguages)
   .directive('languagesSpokenList', listOfLanguagesSpoken)
   .directive('badgesList', listOfBadges)
   .directive('generalInfo', generalInfo)

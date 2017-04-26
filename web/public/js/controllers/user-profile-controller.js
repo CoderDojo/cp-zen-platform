@@ -186,8 +186,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.loggedInUser = loggedInUser.data;
 
-  $scope.loadProgrammmingLanguagesTags = function(query) {
-    return cdProgrammingLanguagesService.get();
+  $scope.loadProgrammmingLanguagesTags = function (query) {
+    return cdProgrammingLanguagesService.get()
+    .then(function (languages) {
+      return _.filter(languages.data, function (lang) {
+        return lang.text.indexOf(query) > -1;
+      })
+    });
   };
 
   $scope.inviteParent = function(data){

@@ -38,7 +38,7 @@
             <projects-list ng-if="!hideChampionProfileBlock('projects')"></projects-list>
             <parents-list ng-if="!hideProfileBlock()"></parents-list>
             <children-list ></children-list>
-            <programming-languages-list ng-if="!hideProfileBlock('programmingLanguages') && profile.widget.languages"></programming-languages-list>
+            <programming-languages-list programming-languages="profile.programmingLanguages" ng-if="!hideProfileBlock('programmingLanguages')"></programming-languages-list>
             <dojo-list ng-if="!hideProfileBlock('dojos') && profile.dojos.length > 0"></dojo-list>
           </div>
         </div>
