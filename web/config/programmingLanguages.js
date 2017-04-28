@@ -7,7 +7,7 @@ module.exports = [
   {
     'text': 'Java',
     'image': '/img/languages/java.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Java_Path'
   },
   {
     'text': 'Python',
@@ -22,7 +22,7 @@ module.exports = [
   {
     'text': 'Perl',
     'image': '/img/languages/perl.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Perl_Path'
   },
   {
     'text': 'PHP',
@@ -37,7 +37,7 @@ module.exports = [
   {
     'text': 'Javascript',
     'image': '/img/languages/javascript.png',
-    'href': 'http://kata.coderdojo.com/wiki/JavaScript'
+    'href': 'http://kata.coderdojo.com/wiki/JavaScript_Path'
   },
   {
     'text': 'NodeJS',
@@ -47,62 +47,62 @@ module.exports = [
   {
     'text': 'AngularJS',
     'image': '/img/languages/angularjs.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Angular.js'
   },
   {
     'text': 'C#',
     'image': '/img/languages/c_sharp.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/CSharp_Path'
   },
   {
     'text': 'C++',
     'image': '/img/languages/c_plus_plus.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/C++_Path'
   },
   {
     'text': 'Processing',
     'image': '/img/languages/processing.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Processing_Path'
   },
   {
     'text': 'C',
     'image': '/img/languages/c.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/C_Path'
   },
   {
     'text': 'Go',
     'image': '/img/languages/golang.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Go_Path'
   },
   {
     'text': 'CSS',
     'image': '/img/languages/css.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/HTML_Path'
   },
   {
     'text': 'Lua',
     'image': '/img/languages/lua.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Lua_Path'
   },
   {
     'text': 'Bash',
     'image': '/img/languages/bash.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Bash_Path'
   },
   {
     'text': 'Haskell',
     'image': '/img/languages/Haskell.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Haskell_Path'
   },
   {
     'text': 'Scala',
     'image': '/img/languages/scala.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Scala_Path'
   },
   {
     'text': 'Objective C',
     'image': '/img/languages/objective_c.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/ObjectiveC_Path'
   },
   {
     'text': 'SQL',
@@ -117,16 +117,16 @@ module.exports = [
   {
     'text': 'Swift',
     'image': '/img/languages/swift.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Swift_Path'
   },
   {
     'text': 'R',
     'image': '/img/languages/r.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/R_Path'
   },
   {
     'text': 'Clojure',
     'image': '/img/languages/clojure.png',
-    'href': ''
+    'href': 'http://kata.coderdojo.com/wiki/Clojure_Path'
   }
 ];
