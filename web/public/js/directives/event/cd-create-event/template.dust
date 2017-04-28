@@ -236,8 +236,8 @@
           <i uib-tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
         </div>
         <div class="checkbox checkbox-block">
-          <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.emailNotifications" id="emailNotifications">
-          <label for="emailNotifications">{@i18n key="Send me email notifications"/}</label>
+          <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.notifyOnApplicant" id="notifyOnApplicant">
+          <label for="notifyOnApplicant">{@i18n key="Send me email notifications"/}</label>
           <i uib-tooltip="{@i18n key="Enabling this will send you an email when a new ticket application has been made."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
         </div>
       </div>
