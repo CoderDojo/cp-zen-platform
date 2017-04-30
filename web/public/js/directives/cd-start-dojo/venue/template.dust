@@ -1,22 +1,22 @@
-<form class="cd-sad-venue" name="$ctrl.venue.form">
+<form class="cd-sad-venue" name="$ctrl.venue.form" novalidate="">
   <div class="cd-sad-venue__video" ng-if="!$ctrl.displayOnly">
     <img src="http://placekitten.com/g/400/300"></img>
-    <p class="help-block">
-      {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
-    </p>
     <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
       map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-map>
   </div>
   <div class="cd-sad-venue__side-form">
     <div class="cd-sad-venue__button-group" ng-if="!$ctrl.displayOnly">
       <div class="btn-group">
-        <label class="btn btn-secondary" ng-model="$ctrl.venue.status"
-        uib-btn-radio="'existing'">{@i18n key="I have a venue"/}</label>
-        <label class="btn btn-secondary" ng-model="$ctrl.venue.status"
-        uib-btn-radio="'searching'">{@i18n key="I'm still looking for a venue"/}</label>
+        <button class="btn btn-secondary" ng-model="$ctrl.venue.isFound"
+        uib-btn-radio="true">{@i18n key="I have a venue"/}</button>
+        <button class="btn btn-secondary" ng-model="$ctrl.venue.isFound"
+        uib-btn-radio="false">{@i18n key="I'm still looking for a venue"/}</button>
       </div>
     </div>
-    <div ng-show="$ctrl.venue.status === 'existing'" class="cd-sad-venue__container">
+    <p class="help-block">
+      {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+    </p>
+    <div ng-show="$ctrl.venue.isFound" class="cd-sad-venue__container">
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
@@ -37,7 +37,7 @@
             placeholder="Please detail"
             ng-required="$ctrl.venue.type === 'other'"
             ng-readOnly="!$ctrl.displayOnly"
-            ng-model="$ctrl.venue.venueTypeDetails"></input>
+            ng-model="$ctrl.venue.alternativeType"></input>
         </div>
       </div>
       <div class="form-group">
@@ -48,19 +48,21 @@
           </option>
         </select>
         {@i18n key="Or specify another:"/}
-        <input type="text" class="form-control" ng-model="$ctrl.venue.corporateDetailed"></input>
+        <input type="text" class="form-control" ng-model="$ctrl.venue.alternativeCorporate"></input>
       </div>
       <div class="form-group">
         {@i18n key="What is the maximum amount of people can your venue hold?"/}
         <input type="number" name="maxCapacity" ng-model="$ctrl.venue.maxCapacity" class="form-control" ng-readonly="!$ctrl.displayOnly"></input>
       </div>
     </div>
-    <div ng-show="$ctrl.venue.status === 'searching'" class="cd-sad-venue__container text-center">
+    <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
       <div>
         <p>{@i18n key="I’m currently searching for a venue. - I’ll come back to this later."/}</p>
       </div>
       <div>
-        <a href="" name="downloadTemplate" class="btn btn-secondary">Download a template letter to send to potential venues here >></a>
+        <a href="http://kata.coderdojo.com/wiki/Template_Letter_for_Mentor_Acquisition"
+         name="downloadTemplate" target="_blank"
+         class="btn btn-secondary">Download a template letter to send to potential venues here >></a>
       </div>
     </div>
   </div>

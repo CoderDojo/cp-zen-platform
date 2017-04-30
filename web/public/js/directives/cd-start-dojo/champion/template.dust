@@ -5,7 +5,8 @@
     {@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}
   </p>
   <div class="cd-sad-champion__video" ng-if="!$ctrl.displayOnly">
-    <img src="http://placekitten.com/g/400/300"></img>
+    <!-- <img class="cd-sad-champion__video-container" src="http://placekitten.com/g/400/300"></img> -->
+    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/ZZ5LpwO-An4?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
   </div>
   <div class="cd-sad-champion__side-form">
@@ -27,16 +28,18 @@
     <div class="form-group">
       <label for="dob">{@i18n key="Date of Birth"/}</label>
       <div class="input-group" ng-hide="$ctrl.displayOnly">
-        <input id="dob" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
-          datepicker-options="$ctrl.dobDateOptions" min-date="'1900-01-01'" max-date="today"
-          ng-model="$ctrl.champion.dob" name="dateOfBirth"
-          required required-message="'{@i18n key="Date of birth is empty"/}'" is-open="$ctrl.picker.opened"
+        <input type="text" class="form-control"
+          name="dateOfBirth" ng-readonly="true"
+          min-date="'1900-01-01'" max-date="today"
+          uib-datepicker-popup="{{ $ctrl.dateFormat }}" ng-model="$ctrl.champion.dob"
+          is-open="$ctrl.picker.opened" datepicker-options="$ctrl.dobDateOptions"
+          ng-required="true" required-message="'{@i18n key="Date of birth is empty"/}'"
+          ng-click="$ctrl.toggle($event)" ng-change="$ctrl.isKid()"
           current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
-          close-text="{@i18n key="Done"/}" placeholder="{@i18n key="You must be over 18 years old..."/}"
-          ng-click="$ctrl.toggle($event)"
-          ng-change="$ctrl.isKid()"/>
+          close-text="{@i18n key="Done"/}"
+          placeholder="{@i18n key="You must be over 18 years old..."/}" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
         <input type="text" disabled="true" ng-show="$ctrl.displayOnly" ng-model="$ctrl.champion.dob" class="form-control"/>
       </div>
@@ -103,10 +106,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="source">{@i18n key="How did you hear about CoderDojo?"/}</label>
-      <select ng-model="$ctrl.champion.source" name="source" class="form-control" ng-readonly="$ctrl.displayOnly">
+      <label for="reference">{@i18n key="How did you hear about CoderDojo?"/}</label>
+      <select ng-model="$ctrl.champion.reference" name="reference" class="form-control" ng-readonly="$ctrl.displayOnly">
         <option ng-repeat="source in $ctrl.sources" value="{{ source.id }}">{{ source.name }}</option>
       </select>
+      <div>
+      <input type="text" name="alternativeReference" class="form-control"
+        placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}"
+        ng-show="$ctrl.champion.reference == 'other'" ng-required="$ctrl.champion.reference === 'other'"
+        ng-model="$ctrl.champion.alternativeReference"/>
     </div>
   </div>
 </form>

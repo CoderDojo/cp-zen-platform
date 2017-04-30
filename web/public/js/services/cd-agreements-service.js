@@ -4,24 +4,27 @@ function cdAgreementsService(cdApi, $q){
   function topfail(err){
     console.log(err);
   }
-
+  var base = 'agreements';
   return {
     save: function(agreement, win, fail){
       agreement = angular.copy(agreement);
-      cdApi.post('agreements', { agreement: agreement }, win, fail || topfail);
+      return cdApi.post(base, { agreement: agreement }, win, fail || topfail);
     },
     count: function(query, win, fail){
-      cdApi.post('agreements/count', {query: query}, win, fail || topfail);
+      cdApi.post(base + '/count', {query: query}, win, fail || topfail);
     },
-    loadUserAgreement: function(id, win, fail){
-      cdApi.get('agreements/' + id, win, fail || topfail);
+    loadUserAgreement: function (version, userId, win, fail) {
+      return cdApi.get(base + '/version/' + version + '/users/' + userId, win, fail || topfail);
     },
-    loadUserAgreementPromise: function(id){
+    loadUserAgreementPromise: function (id) {
       var deferred = $q.defer();
 
-      cdApi.get('agreements/' + id, deferred.resolve, deferred.reject);
+      cdApi.get(base + '/' + id, deferred.resolve, deferred.reject);
 
       return deferred.promise;
+    },
+    getCurrentCharterVersion: function () {
+      return cdApi.get(base + '/version');
     }
   };
 }

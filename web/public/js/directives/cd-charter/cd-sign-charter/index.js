@@ -5,7 +5,7 @@ angular
     .module('cpZenPlatform')
     .component('cdSignCharter', {
       restrict: 'EA',
-      templateUrl: '/directives/tpl/dojo/sign-charter/',
+      templateUrl: '/directives/tpl/cd-charter/cd-sign-charter/',
       bindings: {
         ngModel: '=',
         accept: '='
@@ -13,8 +13,9 @@ angular
       //TODO : dep injection array
       controller: function (cdAgreementsService, $window) {
         var ctrl = this;
-        ctrl.ngModel.version = 2;
-        ctrl.currentDate = new Date();
+        ctrl.$onInit = function () {
+          ctrl.currentDate = new Date();
+        };
 
         ctrl.download = function () {
           var pdf = new jsPDF('p', 'pt', 'letter');
@@ -22,6 +23,18 @@ angular
           pdf.addHTML($('.cd-sad-charter'), function () {
             pdf.save('charter' + ctrl.currentDate + '.pdf');
           });
+        };
+
+        ctrl.isValid = function () {
+          // /charter scenarios
+          if (ctrl.accept && !ctrl.ngModel) { // Never signed or outdated version
+            return false;
+          } else if (!ctrl.accept) {
+            return true; // unlogged user or valid agreement
+          } else if (ctrl.ngModel && (ctrl.ngModel.isValid || // SAD scenarios
+            (ctrl.ngModel.form && ctrl.ngModel.form.$valid))) {
+            return ctrl.ngModel.isValid || ctrl.ngModel.form.$valid;
+          }
         };
 
         ctrl.print = function () {

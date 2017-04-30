@@ -262,11 +262,6 @@ server.register(cdUsers, function (err) {
   checkHapiPluginError('users')(err);
 });
 
-var charter = require('../lib/charter.js');
-server.register(charter, function (err) {
-  checkHapiPluginError('charter')(err);
-});
-
 var agreements = require('../lib/agreements.js');
 server.register(agreements, function (err) {
   checkHapiPluginError('agreements')(err);
