@@ -1,4 +1,4 @@
-<form class="cd-sad-team" name="$ctrl.team.form">
+<form class="cd-sad-team" name="$ctrl.team.form" novalidate="">
 
   <div class="cd-sad-team__video">
     <img src="http://placekitten.com/g/400/300"></img>
@@ -18,40 +18,38 @@
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
-    <div class="cd-sad-team__button-group">
-      <label class="btn btn-secondary" ng-model="$ctrl.team.exists"
-        ng-click="$ctrl.team.exists = !$ctrl.team.exists">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
-      <label class="btn btn-secondary" ng-model="$ctrl.team.searching"
-        ng-click="$ctrl.team.searching = !$ctrl.team.searching">{@i18n key="I am searching for volunteers to join my Dojo."/}</label>
-      <label class="btn btn-secondary" ng-model="$ctrl.team.solo"
-        ng-click="$ctrl.team.solo = !$ctrl.team.solo">{@i18n key="I plan on running the club by myself for now."/}</label>
+    <div class="cd-sad-team__button-group" ng-if="$ctrl.canSendEmail">
+      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
+        uib-btn-radio="'exists'">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
+      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
+        uib-btn-radio="'searching'">{@i18n key="I am searching for volunteers to join my Dojo."/}</label>
+      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
+        uib-btn-radio="'solo'">{@i18n key="I plan on running the club by myself for now."/}</label>
     </div>
+    <p class="help-block" ng-if="!$ctrl.canSendEmail">
+      {@i18n key="In order to send an email, we need you to complete the dojo informations"/}
+    </p>
 
-    <div class="" ng-show="dojo.users">
+    <div class="cd-simple-flex-grid cd-sad-team__team-block" ng-if="$ctrl.canSendEmail">
+      <div ng-show="$ctrl.dojo.users">
       <p class="help-block">{@i18n key="See the volunteers that have already joined your Dojo here."/}</p>
       <cd-picture-grid items="$ctrl.dojo.users" selected-items="$ctrl.selectedItems" wide-card="false" actions="false"></cd-picture-grid>
     </div>
-    <div class="cd-simple-flex-grid cd-sad-team__team-block">
-      <!-- TODO : functions to be renamed -->
-      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists" ng-show="$ctrl.team.exists">
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists"
+        ng-show="$ctrl.team.status === 'exists'">
         <p>{@i18n key="Enter your volunteers emails here to invite them to be a part of your Dojo and help manage your account."/}</p>
-        <textarea name="teamMembers" ng-model="$ctrl.teamMembers"
+        <textarea name="teamMembers" ng-model="$ctrl.team.teamMembers"
           class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
         <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteTeam()">{@i18n key="Send"/}</button>
       </div>
-      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--searching" ng-show="$ctrl.team.searching">
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--searching"
+        ng-show="$ctrl.team.status === 'searching'">
         <h4>{@i18n key="Invite potential volunteers to join your Dojo!"/}</h4>
         <p>{@i18n key="Enter a contact email to invite volunteers to join your Dojo here"/}</p>
-        <textarea name="teamMembers" ng-model="$ctrl.teamMembers"
+        <textarea name="teamMembers" ng-model="$ctrl.team.potentialMembers"
           class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
         <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteMembers()">{@i18n key="Send"/}</button>
       </div>
-      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--solo" ng-show="$ctrl.team.solo">
-        ?????
-      </div>
-    </div>
-    <div class="form-group text-center">
-      <a href="" class="btn btn-secondary">{@i18n key="Download a template letter to help you find volunteers send to local schools and companies here >>"/}</a>
     </div>
   </div>
 </form>

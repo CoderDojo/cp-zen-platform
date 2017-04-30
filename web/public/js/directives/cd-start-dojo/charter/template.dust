@@ -1,4 +1,4 @@
-<form class="cd-sad-charter">
+<form class="cd-sad-charter" novalidate="" name="$ctrl.charter.form">
   <div class="cd-sad-charter__disclaimer help-block">
     <p>{@i18n key="All global Dojos follow a common ethos and principles, such as always being free for children, and encouraging kids to work together!"/}</p>
     <p>{@i18n key="All of these principles are  documented in the CoderDojo Charter."/}</p>
@@ -9,9 +9,9 @@
     <p>{@i18n key="You should encourage all volunteers to take the CoderDojo E-Learning modules."/}</p>
   </div>
   <div class="cd-sad-charter__container">
-    <cd-charter></cd-charter>
+    <cd-charter-content></cd-charter-content>
   </div>
   <div class="form-group cd-sad-charter__group">
-    <cd-sign-charter user="$ctrl.user" ng-model="$ctrl.charter"></cd-sign-charter>
+    <cd-sign-charter ng-model="$ctrl.charter"></cd-sign-charter>
   </div>
 </form>

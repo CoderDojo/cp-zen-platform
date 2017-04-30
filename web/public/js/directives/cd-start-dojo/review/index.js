@@ -7,8 +7,7 @@ angular
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/review/',
       bindings : {
-        application: '=',
-        tabHeader: '='
+        application: '='
       },
       //TODO : dep injection array
       controller: function ($scope, $translate) {

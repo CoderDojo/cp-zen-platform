@@ -3,14 +3,20 @@ cd-sign-charter {
 }
 .cd-sign-charter {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  &__final {
+    flex: 1;
+  }
   &__name {
     flex: 1;
+    flex-basis: 100%;
   }
   &__submit {
     flex: 1;
   }
   &__button-group {
     flex: 1;
+    vertical-align: bottom;
   }
 }

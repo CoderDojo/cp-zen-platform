@@ -7,16 +7,14 @@ angular
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/information/',
       bindings : {
-        information: '=',
-        tabHeader: '=',
+        dojo: '=',
         displayOnly: '<'
       },
       //TODO : dep injection array
-      controller: function ($scope, $translate) {
+      controller: function ($translate) {
         var ctrl = this;
         var initialDate = new Date();
-        initialDate.setFullYear(initialDate.getFullYear() - 18);
-        ctrl.dobDateOptions = {
+        ctrl.firstDateOptions = {
           formatYear: 'yyyy',
           startingDay: 1,
           datepickerMode: 'year',
@@ -35,6 +33,17 @@ angular
           { id: '',
             name: $translate.instant('Other (please detail)')}
         ];
+        ctrl.toggle = function () {
+          ctrl.picker.opened = !ctrl.picker.opened;
+        };
+        ctrl.requestEmail = function () {
+          ctrl.dojo.requestEmail = true;
+          delete ctrl.dojo.email;
+          ctrl.dojo.form.email.$setPristine();
+        };
+        ctrl.setEmail = function () {
+          delete ctrl.dojo.requestEmail;
+        };
       }
     });
 }());

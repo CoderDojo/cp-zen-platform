@@ -8,6 +8,7 @@
       bindings: {
         header: '@',
         tabs: '<',
+        tabHeader: '<',
         baseState: '@',
         actions: '<',
         viewData: '='

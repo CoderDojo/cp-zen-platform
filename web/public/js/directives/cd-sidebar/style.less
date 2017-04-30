@@ -35,6 +35,9 @@
   }
 
   &__tabs {
+    @media print {
+      display: none;
+    }
     flex: 1;
     border-right: 1px solid @cd-light-gray;
   }

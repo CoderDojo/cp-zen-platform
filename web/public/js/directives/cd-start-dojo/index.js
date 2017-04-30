@@ -10,11 +10,11 @@ angular
       },
       templateUrl: '/directives/tpl/cd-start-dojo',
       //TODO : dep injection array
-      controller: function ($scope, $translate, usSpinnerService,
-        atomicNotifyService, cdDojoService, $state, $window, alertService, cdAgreementsService) {
+      controller: function ($rootScope, $translate, usSpinnerService,
+        atomicNotifyService, cdDojoService, $state, $window, alertService, cdAgreementsService, cdUsersService) {
         var ctrl = this;
         usSpinnerService.spin('start-dojo-spinner');
-        $scope.tabs = [
+        ctrl.tabs = [
           {
             state: 'start-dojo.champion',
             tabTitle: $translate.instant('Champion Registration')
@@ -43,17 +43,27 @@ angular
 
         ctrl.actions = {};
         ctrl.actions.submit = function () {
-          cdDojoService.submitDojoLead(ctrl.application)
-          .then(function () {
-            atomicNotifyService.info($translate.instant('Congratz'));
-          })
-          .catch(function () {
-            // This should not happend and be caught by the front before submitting
+          var promise = $q.defer().promise;
+          // Submit dojoLead upgrade an existing lead
+          // So we presubmit it in case an user went all the way down to the last step in one run
+          if (!lead.id) {
+            promise.then(function () {
+              ctrl.save();
+            });
+          }
+          promise.then(function () {
+            cdDojoService.submitDojoLead(ctrl.application)
+            .then(function () {
+              atomicNotifyService.info($translate.instant('Congratz'));
+            })
+            .catch(function () {
+              // This should not happend and be caught by the front before submitting
+            });
           });
+          promise.resolve();
         };
 
-        ctrl.actions.save = function () {
-          var index = 0;
+        ctrl.save = function () {
           var lead = {
             userId: ctrl.currentUser.id,
             completed: ctrl.isValid(),
@@ -64,17 +74,24 @@ angular
             })
           };
           if (ctrl.leadId) lead.id = ctrl.leadId;
-          cdDojoService.saveDojoLead(lead)
+          return cdDojoService.saveDojoLead(lead)
+            .then(function (lead) {
+              ctrl.leadId = lead.data.id;
+              ctrl.application = lead.data.application;
+            });
+        };
+
+        ctrl.actions.save = function () {
+          var index = 0;
+          ctrl.save()
           .then(function (lead) {
-            ctrl.leadId = lead.data.id;
-            ctrl.application = lead.data.application;
             if (ctrl.application && ctrl.isValid()) {
-              index = $scope.tabs.length;
+              index = ctrl.tabs.length;
             } else {
-              index = _.findIndex($scope.tabs, {state: $state.current.name});
+              index = _.findIndex(ctrl.tabs, {state: $state.current.name});
               index ++;
             }
-            $state.go($scope.tabs[index].state);
+            $state.go(ctrl.tabs[index].state);
           });
         };
 
@@ -87,7 +104,13 @@ angular
         };
 
         ctrl.tabHeader = function () {
-          return (_.filter(ctrl.application, function (application) { return application.form.$valid; }).length / ctrl.application.length) * 100;
+          var header = 0;
+          if (ctrl.application) {
+            header = (_.filter(ctrl.application, function (step) {
+              return (step.form && step.form.$valid) || step.isValid;
+            })).length / _.keys(ctrl.application).length * 100;
+          }
+          return header + '% done';
         };
 
         ctrl.exitingListener = $window.addEventListener('beforeunload', function ($event) {
@@ -97,9 +120,15 @@ angular
           });
         });
 
-        // $scope.on('stateChangeStart', function (nextState, nextParams) {
-        //   if (nextState.parent !== $state.current.name)
-        // })
+        $rootScope.$on('$stateChangeStart', function (event, nextState, nextParams, fromState) {
+          if (nextState.parent !== $state.current.parent) {
+            // Are you sure you want to leave?
+          }
+
+          if (nextState.name !== $state.current.name) {
+            ctrl.save();
+          }
+        });
         // ctrl.$onDestroy = function ($event) {
         //   console.log($event);
         //   $window.removeEventListener('beforeunload', ctrl.exitingListener);
@@ -110,26 +139,58 @@ angular
         // };
 
         // TODO: redir to proper substate depending on actual dojolead
-        this.$onInit = function () {
+        ctrl.$onInit = function () {
           var leadQuery = {userId: ctrl.currentUser.id};
           ctrl.leadId = $state.params.leadId;
           if (ctrl.leadId) leadQuery.id = ctrl.leadId;
-          cdDojoService.searchDojoLeads(leadQuery)
-          .then(function (leads) {
-            if (leads.data.length > 1) console.log('multiple pending applications, pick one'); // TODO
-            if (leads.data.length === 1) ctrl.application = leads.data[0].application;
-            if (leads.data.length === 0) ctrl.application = {
-              champion: {
-                firstName: ctrl.currentUser.firstName,
-                lastName: ctrl.currentUser.lastName,
-                email: ctrl.currentUser.email,
-                isValid: false
-            }, dojo: {isValid: false}, venue: {isValid: false}, team: {isValid: false}};
+          cdUsersService.userProfileData(leadQuery)
+          .then(function (profile) {
+            profile = profile.data;
+            return cdDojoService.searchDojoLeads(leadQuery)
+            .then(function (leads) {
+              if (leads.data.length > 1) console.log('multiple pending applications, pick one'); // TODO
+              if (leads.data.length === 1) {
+                ctrl.application = leads.data[0].application;
+                ctrl.leadId = leads.data[0].id;
+              }
+              // NOTE : this starts to get quite big
+              if (leads.data.length === 0) ctrl.application = {
+                champion: {
+                  firstName: ctrl.currentUser.firstName,
+                  lastName: ctrl.currentUser.lastName,
+                  email: ctrl.currentUser.email,
+                  dob: new Date(profile.dob),
+                  phone: profile.phone,
+                  twitter: profile.twitter,
+                  linkedin: profile.linkedin,
+                  address: profile.address,
+                  isValid: false
+              }, dojo: {isValid: false}, venue: {isValid: false}, team: {isValid: false}};
+            });
           })
           // The user may already have signed the charter, we load this separatly
           .then(function () {
-            return cdAgreementsService.loadUserAgreement(ctrl.currentUser.id, function (response) {
-              ctrl.application.charter = response || {isValid: false};
+            cdAgreementsService.getCurrentCharterVersion()
+            .then(function (response) {
+              return response.data.version;
+            })
+            .then(function (version) {
+              return cdAgreementsService.loadUserAgreement(version, ctrl.currentUser.id,
+              function (response) {
+                if (response) {
+                  ctrl.application.charter = {
+                    fullName: response.fullName,
+                    id: response.id
+                  };
+                  ctrl.application.charter.isValid = true;
+                } else {
+                  ctrl.application.charter = {
+                    isValid: false,
+                    version: cdAgreementsService.getCurrentCharterVersion(),
+                    signed_at: new Date()
+                  };
+                }
+              });
             });
           })
           .then(function () {
