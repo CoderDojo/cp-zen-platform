@@ -22,7 +22,10 @@
               </thead>
               <tbody>
                 <tr ng-repeat="event in events">
-                  <td class="pointer"><a ui-sref="manage-applications({dojoId: dojoId, eventId:event.id})">{{ event.name }}</a></td>
+                  <td class="pointer">
+                    <a ng-if="!event.eventbriteId" ui-sref="manage-applications({dojoId: dojoId, eventId:event.id})">{{ event.name }}</a>
+                    <a ng-if="event.eventbriteId" ng-href="https://www.eventbrite.com/myevent?eid={{ event.eventbriteId }}">{{ event.name }}</a>
+                  </td>
                   <td>{{ event.formattedDate }}</td>
                   <td><span ng-if="!event.eventbriteId">{{ event.eventStats.capacity }}</span></td>
                   <td><span ng-if="!event.eventbriteId">{{ event.eventStats.totalApplicants }}</span></td>
