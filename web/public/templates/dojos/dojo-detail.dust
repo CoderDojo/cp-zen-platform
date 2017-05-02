@@ -10,18 +10,21 @@
         <div cd-banner-background class="row">
           <div class="row">
             <div class="pull-right">
-              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.verified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.verified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'"
+                ng-attr-title="{{ ribbons.verified }}">
                 <i class="fa" ng-class="dojo.verified === 1? 'fa-check': 'fa-exclamation'"
-                  ng-attr-title="{{ ribbons.verified }}"></i>
+                  aria-hidden="true"></i>
               </div>
-              <div class="cd-dojo-detail__ribbon--vertical-right cd-color-white" ng-class="dojo.private === 1? 'cd-bg-red-70': 'cd-bg-green'">
+              <div class="cd-dojo-detail__ribbon--vertical-right cd-color-white" ng-class="dojo.private === 1? 'cd-bg-red-70': 'cd-bg-green'"
+                ng-attr-title="{{ ribbons.private }}">
                 <i class="fa" ng-class="dojo.private === 1? 'fa-lock': 'fa-child'"
-                  ng-attr-title="{{ ribbons.private }}"></i>
+                  aria-hidden="true"></i>
               </div>
-              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'">
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'"
+                ng-attr-title="{{ ribbons.taoVerified }}">
                 <img src="/img/tao.svg" class="img-responsive"
                 ng-attr-alt="{{ ribbons.taoVerified }}"
-                ng-attr-title="{{ ribbons.taoVerified }}"/>
+                aria-hidden="true"/>
               </div>
             </div>
             <div cd-dojo-actions can-manage-dojo="isDojoAdmin" can-manage-events="isTicketingAdmin" dojo="dojo"></div>
