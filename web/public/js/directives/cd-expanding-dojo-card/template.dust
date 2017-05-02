@@ -12,6 +12,6 @@
     </div>
     <div class="cd-expanding-dojo-card__view-edit-buttons btn-group" role="group" aria-hidden="true">
         <a ui-sref="dojo-detail-id({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i> {@i18n key="View"/}</a>
-        <a ui-sref="edit-dojo({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {@i18n key="Edit"/}</a>
+        <a ui-sref="edit-dojo({id: $ctrl.dojo.id})" ng-if="$ctrl.isDojoAdmin" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {@i18n key="Edit"/}</a>
     </div>
 </cd-expanding-card>
