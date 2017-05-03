@@ -1,6 +1,6 @@
 
 <form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)"
-  role="form" ng-if="canEdit">
+  role="form" ng-if="canEdit || loggedInUserIsCDFAdmin()">
   <h3 class="cd-section-header"><a id="details"></a><a href="#details">{@i18n key="Your Details"/}</a></h3>
   <div class="panel-body">
     <div>
@@ -30,9 +30,21 @@
         <div class="form-group" ng-enter="noop()">
           <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
-            <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="profile.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event, profile)" />
-            <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
-              <button type="button" class="btn btn-default" ng-click="open($event, profile)"><i class="glyphicon glyphicon-calendar"></i></button>
+            <input type="text" class="form-control"
+              ng-disabled="editMode && !loggedInUserIsCDFAdmin()"
+              readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions"
+              min-date="'1900-01-01'" max-date="today" ng-model="profile.dob"
+              name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'"
+              is-open="profile.isOpen" required current-text="{@i18n key="Today"/}"
+              clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
+              placeholder="{@i18n key="Enter your date of birth here..."/}"
+              ng-click="open($event, profile)" />
+            <span class="input-group-btn"
+              ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
+              <button type="button" class="btn btn-default"
+                ng-disabled="editMode && !loggedInUserIsCDFAdmin()"
+                ng-click="open($event, profile)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </div>
         </div>

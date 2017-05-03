@@ -17,6 +17,10 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.getDojoURL = dojoUtils.getDojoURL;
 
+  $scope.loggedInUserIsCDFAdmin = function () {
+    if(!loggedInUser.data) return false;
+    return _.includes(loggedInUser.data.roles, 'cdf-admin');
+  }
 
   if ($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
@@ -34,7 +38,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   var getHighestUserType = utilsService.getHighestUserType;
 
   if($state.current.name === 'edit-user-profile') {
-    if(profileUserId === loggedInUserId || loggedInUserIsParent()) {
+    if(profileUserId === loggedInUserId || loggedInUserIsParent() || $scope.loggedInUserIsCDFAdmin()) {
       $scope.editMode = true;
       $scope.inviteNinjaPopover = {
         title: $translate.instant('Invite Youth over 13'),
@@ -611,10 +615,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     });
   }
 
-  $scope.loggedInUserIsCDFAdmin = function () {
-    if(!loggedInUser.data) return false;
-    return _.includes(loggedInUser.data.roles, 'cdf-admin');
-  }
   $scope.hideConfigurableFieldsBlock = function (block) {
     if (block && $scope.profile.optionalHiddenFields) {
       return !$scope.profile.optionalHiddenFields[block];

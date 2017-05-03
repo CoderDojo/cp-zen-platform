@@ -14,7 +14,7 @@
               </div>
             </div>
           </div>
-          <cd-user-actions user="profile" can-edit="canEdit"></cd-user-actions>
+          <cd-user-actions user="profile" can-edit="canEdit || loggedInUserIsCDFAdmin()"></cd-user-actions>
         </div>
       </div>
     </div>
