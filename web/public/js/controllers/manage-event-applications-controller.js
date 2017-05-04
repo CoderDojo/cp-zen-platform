@@ -399,11 +399,13 @@
       application.emailSubject = {
         'received': 'Your ticket request for %1$s has been received',
         'approved': 'Your ticket request for %1$s has been approved',
-        'cancelled': 'Your ticket request for %1$s has been cancelled'
+        'cancelled': 'Your ticket request for %1$s has been cancelled',
+        'pending': 'Your ticket status for %1$s has been changed to pending'
       };
       application.parentEmailSubject = {
         'approved': 'A ticket has been booked for your child for %1$s',
-        'cancelled': 'A ticket for your child for %1$s has been cancelled'
+        'cancelled': 'A ticket for your child for %1$s has been cancelled',
+        'pending': 'Your childs ticket status for %1$s has been changed to pending'
       };
       application.dojoId = dojoId;
       cdEventsService.bulkApplyApplications([application], function (applications) {
