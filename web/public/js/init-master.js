@@ -915,7 +915,7 @@
            'en': 'en_US', 'nl': 'nl_NL', 'de': 'de_DE', 'it': 'it_IT', 'pl': 'pl_PL', 'mt': 'mt_MT',
            'pt': 'pt_PT', 'es': 'es_ES', 'tr': 'tr_TR', 'bg': 'bg_BG', 'el': 'el_GR', 'et': 'et_EE',
            'hi': 'hi_IN', 'ja': 'ja_JP', 'ro': 'ro_RO', 'fr': 'fr_FR', 'uk': 'uk_UK',
-           'sl': 'sl_SL', 'sk': 'sk_SK'
+           'sl': 'sl_SL', 'sk': 'sk_SK', '*': 'en_US'
         })
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
