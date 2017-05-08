@@ -12,7 +12,7 @@ angular
         displayOnly: '<'
       },
       //TODO : dep injection array
-      controller: function ($translate) {
+      controller: function ($translate, cdDojoService, atomicNotifyService) {
         var ctrl = this;
         ctrl.$onInit = function () {
           var now = new Date();

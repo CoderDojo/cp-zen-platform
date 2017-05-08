@@ -1,4 +1,4 @@
-<form class="cd-sad-champion" name="$ctrl.champion.form" novalidate="">
+<form class="cd-sad-champion" name="$ctrl.champion.form">
   <p class="help-block">
     {@i18n key="Congratulations on registering as a CoderDojo Champion!"/}
     {@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}
@@ -6,23 +6,24 @@
   </p>
   <div class="cd-sad-champion__video" ng-if="!$ctrl.displayOnly">
     <!-- <img class="cd-sad-champion__video-container" src="http://placekitten.com/g/400/300"></img> -->
-    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/ZZ5LpwO-An4?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
   </div>
   <div class="cd-sad-champion__side-form">
     <div class="form-group">
       <label for="firstName">{@i18n key="First Name"/}</label>
-      <input type="text" class="form-control" id="firstName" ng-readonly="$ctrl.displayOnly"
+      <input type="text" class="form-control" name="firstName" id="firstName" ng-readonly="$ctrl.displayOnly"
         placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.champion.firstName">
     </div>
     <div class="form-group">
       <label for="lastName">{@i18n key="Last Name"/}</label>
-      <input type="text" class="form-control" id="lastName" ng-readonly="$ctrl.displayOnly"
+      <input type="text" class="form-control" name="lastName" id="lastName" ng-readonly="$ctrl.displayOnly"
         placeholder="{@i18n key="Last Name"/}" ng-model="$ctrl.champion.lastName">
     </div>
     <div class="form-group">
       <label for="email">{@i18n key="Personal/Work Email address"/}</label>
       <input type="text" class="form-control" id="email" readonly=""
+        name="email"
         placeholder="{@i18n key="Email"/}" ng-model="$ctrl.champion.email">
     </div>
     <div class="form-group">
@@ -44,15 +45,17 @@
         <input type="text" disabled="true" ng-show="$ctrl.displayOnly" ng-model="$ctrl.champion.dob" class="form-control"/>
       </div>
     </div>
-    <div ng-show="$ctrl.champion.dob && $ctrl.form.isKid">
+    <div ng-show="$ctrl.champion.dob && $ctrl.champion.form.isKid">
       <div class="form-group">
         <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
         <input type="text" class="form-control" id="parentEmail" ng-readonly="$ctrl.displayOnly"
+          name="parentEmail"
           ng-model="$ctrl.champion.parentEmail" placeholder="{@i18n key="Parent Email address"/}">
       </div>
       <div class="form-group">
         <label for="parentName">{@i18n key="Parent Name"/}</label>
-        <input type="text" class="form-control" id="parentName" ng-readonly="$ctrl.displayOnly"
+        <input type="text" class="form-control" id="parentName"
+          ng-readonly="$ctrl.displayOnly" name="parentName"
           ng-model="$ctrl.champion.parentName" placeholder="{@i18n key="Parent Name"/}">
       </div>
     </div>

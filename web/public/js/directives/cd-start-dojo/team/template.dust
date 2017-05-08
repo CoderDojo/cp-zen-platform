@@ -18,7 +18,8 @@
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
-    <div class="cd-sad-team__button-group" ng-if="$ctrl.canSendEmail">
+    ng-if="$ctrl.canSendEmail"
+    <div class="cd-sad-team__button-group" >
       <label class="btn btn-secondary" ng-model="$ctrl.team.status"
         uib-btn-radio="'exists'">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
       <label class="btn btn-secondary" ng-model="$ctrl.team.status"

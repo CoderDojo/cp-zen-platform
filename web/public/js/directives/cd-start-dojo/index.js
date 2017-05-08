@@ -11,7 +11,8 @@ angular
       templateUrl: '/directives/tpl/cd-start-dojo',
       //TODO : dep injection array
       controller: function ($rootScope, $translate, usSpinnerService,
-        atomicNotifyService, cdDojoService, $state, $window, alertService, cdAgreementsService, cdUsersService) {
+        atomicNotifyService, cdDojoService, $state, $window, alertService,
+        cdAgreementsService, cdUsersService, $q) {
         var ctrl = this;
         usSpinnerService.spin('start-dojo-spinner');
         ctrl.tabs = [
@@ -46,7 +47,7 @@ angular
           var promise = $q.defer().promise;
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
-          if (!lead.id) {
+          if (!ctrl.leadId) {
             promise.then(function () {
               ctrl.save();
             });
@@ -150,22 +151,25 @@ angular
             .then(function (leads) {
               if (leads.data.length > 1) console.log('multiple pending applications, pick one'); // TODO
               if (leads.data.length === 1) {
-                ctrl.application = leads.data[0].application;
+                _.merge(ctrl.application, leads.data[0].application);
                 ctrl.leadId = leads.data[0].id;
               }
               // NOTE : this starts to get quite big
-              if (leads.data.length === 0) ctrl.application = {
-                champion: {
-                  firstName: ctrl.currentUser.firstName,
-                  lastName: ctrl.currentUser.lastName,
-                  email: ctrl.currentUser.email,
-                  dob: new Date(profile.dob),
-                  phone: profile.phone,
-                  twitter: profile.twitter,
-                  linkedin: profile.linkedin,
-                  address: profile.address,
-                  isValid: false
-              }, dojo: {isValid: false}, venue: {isValid: false}, team: {isValid: false}};
+              if (leads.data.length === 0) {
+                // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
+                _.merge(ctrl.application, {
+                  champion: {
+                    firstName: ctrl.currentUser.firstName,
+                    lastName: ctrl.currentUser.lastName,
+                    email: ctrl.currentUser.email,
+                    dob: new Date(profile.dob),
+                    phone: profile.phone,
+                    twitter: profile.twitter,
+                    linkedin: profile.linkedin,
+                    address: profile.address,
+                    isValid: false
+                }, dojo: {isValid: false}, venue: {isValid: false}, team: {isValid: false}});
+              }
             });
           })
           // The user may already have signed the charter, we load this separatly

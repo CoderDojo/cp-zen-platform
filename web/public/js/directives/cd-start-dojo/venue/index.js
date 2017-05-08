@@ -16,7 +16,7 @@ angular
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
-          ctrl.displayOnly ? ctrl.displayOnly : false;
+          ctrl.displayOnly = ctrl.displayOnly ? ctrl.displayOnly : false;
           ctrl.venueTypes = [
             { id: 'office',
               name: $translate.instant('Corporate Office')

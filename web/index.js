@@ -206,7 +206,7 @@ server.register(scooter, function (err) {
     connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
-    frameSrc: "https://www.google.com",
+    frameSrc: "https://www.google.com https://www.youtube.com",
     frameAncestors: "'none'",
     imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",

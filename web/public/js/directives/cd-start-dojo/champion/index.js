@@ -58,7 +58,7 @@ angular
             { id: 'other',
               name: $translate.instant('Other')}
           ];
-        }
+        };
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
         };
