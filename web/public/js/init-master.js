@@ -1045,11 +1045,34 @@
         }
         pageTitle.push("CoderDojo Zen");
         $rootScope.pageTitle = pageTitle.join(" | ");
+
+        //if moving from another page
+        if (!fromState.abstract) {
+          //navigating so accept cookie policy
+          jQuery('.cdbar-cookie-accept').click();
+        }
       });
 
       //  uncomment when debugging routing error
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
         console.log(toState, toParams, error);
+      });
+
+      //display cookie disclaimer if not accepted
+      $rootScope.$on('$viewContentLoaded', function() {
+        jQuery('body').cookieDisclaimer({
+          text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."),
+          style: "light", // dark,light
+          position: 'bottom',
+          acceptBtn: { text: 'x' },
+          policyBtn: { active: false },
+          cookie: {
+            name: "cookieDisclaimer",
+            val: "confirmed",
+            path: "/",
+            expire: 365
+          }
+        });
       });
     }])
     .run(function ($window, $cookieStore, tmhDynamicLocale) {
