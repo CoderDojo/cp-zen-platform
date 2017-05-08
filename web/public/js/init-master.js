@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+  /* global jQuery */
 
   var gmap = function($q, $window) {
     var dfd = $q.defer();
