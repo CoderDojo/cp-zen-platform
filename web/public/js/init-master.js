@@ -754,6 +754,15 @@
           },
           templateUrl: '/directives/tpl/user/cd-profile/edit'
         })
+        //redirect to edit-user-profile page without need for userId in url
+        .state("edit-my-profile", {
+          url: '/profile/edit',
+          controller: function ($state, auth) {
+            auth.get_loggedin_user_promise().then(function(user) {
+              $state.go('edit-user-profile', {userId: user.id});
+            });
+          }
+        })
         .state("my-profile", {
           url: '/profile?public',
           templateUrl: '/directives/tpl/user/cd-profile/view',
