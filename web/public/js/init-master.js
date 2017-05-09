@@ -757,16 +757,12 @@
         //redirect to edit-user-profile page without need for userId in url
         .state("edit-my-profile", {
           url: '/profile/edit',
-          controller: function ($state, auth) {
-            auth.get_loggedin_user_promise().then(function(user) {
-              //if logged in
-              if (user) {
-                $state.go('edit-user-profile', {userId: user.id});
-              } else {
-                //otherwise go to log in page
-                $state.go('login');
-              }
-            });
+          parent: 'dashboard',
+          resolve: {
+            loggedInUser: resolves.loggedInUser
+          },
+          controller: function ($state, loggedInUser) {
+            $state.go('edit-user-profile', {userId: loggedInUser.data.id});
           }
         })
         .state("my-profile", {
