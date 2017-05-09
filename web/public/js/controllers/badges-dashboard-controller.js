@@ -1,5 +1,6 @@
  'use strict';
-function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utilsService, alertService, $translate, auth, cdDojoService, usSpinnerService, cdUsersService) {
+function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utilsService,
+   alertService, $translate, auth, cdDojoService, usSpinnerService, cdUsersService, $uibModal) {
   $scope.badges = {};
   $scope.badgeInfo = {};
   $scope.badgeInfoIsCollapsed = {};
@@ -79,6 +80,20 @@ function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utils
     console.log(err);
   });
 
+  $scope.showBadgeModal = function (e, item) {
+    var badge = item;
+    var badgeModal = $uibModal.open({
+      controller: function () {
+        this.badge = badge;
+        this.close = badgeModal.close;
+      },
+      bindToController: true,
+      controllerAs: '$ctrl',
+      template: '<div><cd-badge-cert badge="$ctrl.badge"></cd-badge-cert><div class="modal-footer"><button ng-click="$ctrl.close()" class="btn btn-default pull-right">' + $translate.instant('Close') + '</button></div>',
+      size: 'lg'
+    });
+  };
+
   $scope.prepareHeading = function(heading){
     return heading.replace(/-/g, ' ').replace(/\w\S*/g, function(str){return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();}); // capitalize first letter of each word
   };
@@ -125,4 +140,7 @@ function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utils
 }
 
 angular.module('cpZenPlatform')
-  .controller('badges-dashboard-controller', ['$scope', '$state', '$location', 'cdBadgesService', 'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService', 'cdUsersService', cdBadgesDashboardCtrl]);
+  .controller('badges-dashboard-controller', ['$scope', '$state', '$location', 'cdBadgesService',
+  'utilsService', 'alertService', '$translate', 'auth', 'cdDojoService', 'usSpinnerService',
+  'cdUsersService', '$uibModal',
+  cdBadgesDashboardCtrl]);
