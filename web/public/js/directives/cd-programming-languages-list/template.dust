@@ -1,0 +1,4 @@
+<div class="profile-section cd-programming-languages" ng-show="$ctrl.programmingLanguages.length > 0">
+  <h3 class="cd-section-header"><a id="prog"></a><a href="#prog">{@i18n key="Programming Languages"/}</a></h3>
+  <cd-picture-grid size="small" items="$ctrl.programmingLanguages"></cd-picture-grid>
+</div>

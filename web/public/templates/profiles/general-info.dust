@@ -129,7 +129,9 @@
         <div class="form-group" ng-if="hasAccess(profile.userTypes, ['champion', 'mentor'])" ng-enter="noop()">
           <label for="programmingLanguages" class="col-sm-4 control-label">{@i18n key="Programming Languages"/} </label>
           <div class="col-sm-8">
-            <tags-input ng-model="profile.programmingLanguages" add-from-autocomplete-only="true" add-on-enter="true" min-length=1 placeholder="{@i18n key="Programming Languages"/}">
+            <tags-input ng-model="profile.programmingLanguages"
+              add-from-autocomplete-only="true" add-on-enter="true" min-length=1
+              placeholder="{@i18n key="Programming Languages"/}">
               <auto-complete source="loadProgrammmingLanguagesTags($query)" select-first-match="false" min-length=1 ></auto-complete>
             </tags-input>
           </div>

@@ -43,13 +43,6 @@ function listOfLanguagesSpoken(){
   };
 }
 
-function listOfProgrammingLanguages(){
-  return {
-    restrict: 'E',
-    templateUrl: '/profiles/template/programming-languages-list'
-  };
-}
-
 function listOfProjects(){
   return {
     restrict: 'E',
@@ -91,7 +84,6 @@ function listOfDojos() {
 angular
   .module('cpZenPlatform')
   .directive('projectsList', listOfProjects)
-  .directive('programmingLanguagesList', listOfProgrammingLanguages)
   .directive('languagesSpokenList', listOfLanguagesSpoken)
   .directive('badgesList', listOfBadges)
   .directive('generalInfo', generalInfo)
