@@ -1,10 +1,10 @@
 <div class="cd-sidebar">
   <div class="cd-sidebar__headers">
     <div class="cd-sidebar__header">
-      <div class="cd-sidebar__header-title h1">{{ $ctrl.header }}</div>
+      <div class="cd-sidebar__header-title h3">{{ $ctrl.header }}</div>
     </div>
     <div ng-show="$ctrl.tabHeader" class="cd-sidebar__tab-header">
-      <div class="cd-sidebar__header-title h3">{{ $ctrl.tabHeader }}</div>
+      <div class="cd-sidebar__header-title h4">{{ $ctrl.tabHeader }}</div>
     </div>
     <div ng-transclude="actions" class="cd-sidebar__actions" actions="$ctrl.actions"></div>
   </div>

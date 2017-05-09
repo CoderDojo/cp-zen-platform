@@ -15,7 +15,7 @@ cd-sad-team {
   &__video {
     flex: 1;
     text-align: center;
-    flex-basis: 100px;
+    flex-basis: 400px;
     & > img {
       width: 100%;
     }
@@ -36,21 +36,41 @@ cd-sad-team {
     justify-content: space-around;
     .team-block() {
       box-shadow: @cd-box-shadow;
-      flex-basis: 50%;
+      flex-basis: 100%;
       padding: 8px;
     }
     &--exists {
-      background-color: @cd-blue;
-      color: @cd-white;
       .team-block;
     }
     &--searching {
-      background-color: @cd-purple;
-      color: @cd-white;
       .team-block;
     }
     &--solo {
       .team-block;
+    }
+  }
+  &__team-choice {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: @cd-box-shadow;
+    padding: 8px;
+    margin: 8px;
+    flex-basis: 200px;
+    min-height: 150px;
+    &-selected {
+      flex: 2;
+      flex-basis: 300px;
+    }
+    &-not-selected {
+      background-color: @cd-very-light-grey;
+    }
+    &-group {
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
     }
   }
   &__button-group {

@@ -22,16 +22,16 @@ angular
         };
         ctrl.picker = {opened: false};
         ctrl.options = [
-          { id: '',
+          { id: '2/w',
             name: $translate.instant('Twice Weekly')},
-          { id: '',
+          { id: '1/w',
             name: $translate.instant('Weekly')},
-          { id: '',
+          { id: '2/m',
             name: $translate.instant('Bi-weekly/Fortnightly/Every two weeks')},
-          { id: '',
+          { id: '1/m',
             name: $translate.instant('Monthly')},
-          { id: '',
-            name: $translate.instant('Other (please detail)')}
+          { id: 'other',
+            name: $translate.instant('Other')}
         ];
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;

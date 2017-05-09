@@ -12,4 +12,13 @@ cd-sad-review {
       padding-right: 8px;
     }
   }
+  cd-expanding-card {
+    @card-size: 8px;
+    .cd-expanding-card__info {
+      margin: @card-size 0;
+      .cd-expanding-card__header-main::before {
+        height: calc(100% + @card-size);
+      }
+    }
+  }
 }

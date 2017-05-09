@@ -16,7 +16,7 @@ angular
         var ctrl = this;
         ctrl.$onInit = function () {
           var now = new Date();
-          ctrl.canSendEmail = ctrl.dojo.form.$valid || ctrl.dojo.isValid;
+          ctrl.canSendEmail = (ctrl.dojo.form.$valid || ctrl.dojo.isValid) && !ctrl.dojo.emailRequired;
           ctrl.emailPlaceholder = 'myfriend@example.com\nmyotherfriend@example.com';
           ctrl.inviteTeam = function () {
             ctrl.team.team[now] = ctrl.team.temp.teamMembers;

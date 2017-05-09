@@ -19,23 +19,50 @@
   </div>
   <div class="cd-sad-team__bottom-form">
     ng-if="$ctrl.canSendEmail"
-    <div class="cd-sad-team__button-group" >
+    <div class="cd-sad-team__team-choice-group">
+      <div class="cd-sad-team__team-choice"
+        ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}">
+        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
+          uib-btn-radio="'exists'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
+          <i class="fa fa-users fa-3x"></i>
+          <p>{@i18n key="I have volunteers to help run my Dojo"/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-team__team-choice"
+        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'searching', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'searching'}">
+        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
+          uib-btn-radio="'searching'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
+          <span class="fa-stack fa-lg fa-2x">
+            <i class="fa fa-users fa-stack-1x"></i>
+            <i class="fa fa-search fa-stack-2x text-warning"></i>
+          </span>
+          <p>{@i18n key="I am searching for volunteers to join my Dojo"/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-team__team-choice"
+        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}">
+        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
+          uib-btn-radio="'solo'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
+          <i class="fa fa-user fa-3x"></i>
+          <p>{@i18n key="I plan on running the club by myself for now"/}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- <div class="cd-sad-team__button-group" >
       <label class="btn btn-secondary" ng-model="$ctrl.team.status"
         uib-btn-radio="'exists'">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
       <label class="btn btn-secondary" ng-model="$ctrl.team.status"
         uib-btn-radio="'searching'">{@i18n key="I am searching for volunteers to join my Dojo."/}</label>
       <label class="btn btn-secondary" ng-model="$ctrl.team.status"
         uib-btn-radio="'solo'">{@i18n key="I plan on running the club by myself for now."/}</label>
-    </div>
+    </div>-->
     <p class="help-block" ng-if="!$ctrl.canSendEmail">
       {@i18n key="In order to send an email, we need you to complete the dojo informations"/}
     </p>
-
-    <div class="cd-simple-flex-grid cd-sad-team__team-block" ng-if="$ctrl.canSendEmail">
-      <div ng-show="$ctrl.dojo.users">
-      <p class="help-block">{@i18n key="See the volunteers that have already joined your Dojo here."/}</p>
-      <cd-picture-grid items="$ctrl.dojo.users" selected-items="$ctrl.selectedItems" wide-card="false" actions="false"></cd-picture-grid>
-    </div>
+ng-if="$ctrl.canSendEmail"
+    <div class="cd-simple-flex-grid cd-sad-team__team-block" >
       <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists"
         ng-show="$ctrl.team.status === 'exists'">
         <p>{@i18n key="Enter your volunteers emails here to invite them to be a part of your Dojo and help manage your account."/}</p>
@@ -51,6 +78,22 @@
           class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
         <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteMembers()">{@i18n key="Send"/}</button>
       </div>
+      <div ng-show="$ctrl.dojo.users">
+        <p class="help-block">{@i18n key="See the volunteers that have already joined your Dojo"/}</p>
+        <cd-picture-grid items="$ctrl.dojo.users" wide-card="false" actions="false"></cd-picture-grid>
+      </div>
+      <div ng-show="$ctrl.team.members">
+        <p class="help-block">{@i18n key="Invitation sent to"/}</p>
+        <div ng-repeat="date, users in $ctrl.team.teamMembers">
+          On the {{ date }}
+          <div ng-repeat="users"> {{ user }} </div>
+        </div>
+        <div ng-repeat="date, users in $ctrl.team.potentialMembers">
+          On the {{ date }}
+          <div ng-repeat="users"> {{ user }} </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </form>

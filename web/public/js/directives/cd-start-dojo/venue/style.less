@@ -15,7 +15,7 @@ cd-sad-venue {
   &__video {
     flex: 1;
     text-align: center;
-    flex-basis: 100px;
+    flex-basis: 400px;
     & > img {
       width: 100%;
     }
@@ -38,5 +38,30 @@ cd-sad-venue {
   &__bottom-form {
     flex: 1;
     flex-basis: 100%;
+  }
+  &__venue-choice {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: @cd-box-shadow;
+    padding: 8px;
+    margin: 8px;
+    flex-basis: 200px;
+    min-height: 100px;
+    &-selected {
+      flex: 2;
+      flex-basis: 250px;
+    }
+    &-not-selected {
+      background-color: @cd-very-light-grey;
+      flex-basis: 100px;
+    }
+    &-group {
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 }

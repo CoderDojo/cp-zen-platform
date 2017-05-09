@@ -65,15 +65,19 @@ angular
         };
 
         ctrl.save = function () {
+          var application = _.clone(ctrl.application);
+          application = _.each(application, function (step, key) {
+            step.isValid = step.form ? step.form.valid$ : step.isValid;
+            delete step.form;
+            step = _.omitBy(step, _.isNil);
+            return {key: step};
+          });
           var lead = {
             userId: ctrl.currentUser.id,
             completed: ctrl.isValid(),
-            application : _.each(_.clone(ctrl.application), function (step, key) {
-              delete step.form;
-              step.isValid = step.form ? step.form.valid$ : step.isValid;
-              return {key: step};
-            })
+            application : application
           };
+
           if (ctrl.leadId) lead.id = ctrl.leadId;
           return cdDojoService.saveDojoLead(lead)
             .then(function (lead) {

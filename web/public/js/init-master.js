@@ -763,7 +763,7 @@
         })
         .state('my-children.add', {
           url: '/add',
-          template: '<cd-add-child parent-profile-data="parentProfileData"></cd-add-child>',
+          template: '<cd-add-child parent-profile-data="parentProfileData" class="cd-sidebar__content--padded"></cd-add-child>',
           controller: ['$scope', 'ownProfile', function ($scope, ownProfile) {
             $scope.parentProfileData = ownProfile;
           }]

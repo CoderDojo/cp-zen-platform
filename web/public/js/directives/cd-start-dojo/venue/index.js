@@ -12,11 +12,11 @@ angular
         displayOnly: '<'
       },
       //TODO : dep injection array
-      controller: function ($translate, Geocoder) {
+      controller: function ($translate, Geocoder, atomicNotifyService) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
-          ctrl.displayOnly = ctrl.displayOnly ? ctrl.displayOnly : false;
+          ctrl.displayOnly = !_.isUndefined(ctrl.displayOnly) ? ctrl.displayOnly : false;
           ctrl.venueTypes = [
             { id: 'office',
               name: $translate.instant('Corporate Office')
@@ -40,7 +40,7 @@ angular
               name: $translate.instant('University')
             },
             { id: 'other',
-              name: $translate.instant('Other (please detail)')
+              name: $translate.instant('Other')
             }
           ];
           ctrl.corporateList = [
@@ -84,6 +84,11 @@ angular
         };
         ctrl.setVenueFound = function () {
           ctrl.venue.found = true;
+        };
+        ctrl.displayInfo = function () {
+          atomicNotifyService.custom('info',
+            $translate.instant('No problem! You can continue filling out the rest of the application, and come back to this when you’ve found a venue.'),
+            'fa fa-thumbs-up fa-flip-horizontal', 30000);
         };
       }
     });
