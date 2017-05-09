@@ -759,7 +759,13 @@
           url: '/profile/edit',
           controller: function ($state, auth) {
             auth.get_loggedin_user_promise().then(function(user) {
-              $state.go('edit-user-profile', {userId: user.id});
+              //if logged in
+              if (user) {
+                $state.go('edit-user-profile', {userId: user.id});
+              } else {
+                //otherwise go to log in page
+                $state.go('login');
+              }
             });
           }
         })
