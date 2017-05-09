@@ -1,5 +1,6 @@
 (function() {
   'use strict';
+  /* global jQuery */
 
   var gmap = function($q, $window) {
     var dfd = $q.defer();
@@ -1035,6 +1036,17 @@
           event.preventDefault();
         }
       });
+      var firstLoad = true;
+      //listen for navigations and accept cookie policy on navigation
+      var cookieAcceptListener = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+        //if not the pages initial load
+        if (!firstLoad) {
+          //navigating so accept cookie policy
+          jQuery('.cdbar-cookie-accept').click();
+          cookieAcceptListener();
+        }
+        firstLoad = false;
+      });
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
@@ -1045,11 +1057,31 @@
         }
         pageTitle.push("CoderDojo Zen");
         $rootScope.pageTitle = pageTitle.join(" | ");
+
+
       });
 
       //  uncomment when debugging routing error
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
         console.log(toState, toParams, error);
+      });
+
+      //display cookie disclaimer if not accepted
+      var cookieDisclaimerListener = $rootScope.$on('$viewContentLoaded', function() {
+        jQuery('body').cookieDisclaimer({
+          text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."),
+          style: "light", // dark,light
+          position: 'bottom',
+          acceptBtn: { text: 'x', onAfter: angular.noop },
+          policyBtn: { active: false },
+          cookie: {
+            name: "cookieDisclaimer",
+            val: "confirmed",
+            path: "/",
+            expire: 365
+          }
+        });
+        cookieDisclaimerListener();
       });
     }])
     .run(function ($window, $cookieStore, tmhDynamicLocale) {
