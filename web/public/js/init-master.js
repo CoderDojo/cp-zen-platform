@@ -1067,7 +1067,7 @@
       });
 
       //display cookie disclaimer if not accepted
-      $rootScope.$on('$viewContentLoaded', function() {
+      var cookieDisclaimerListener = $rootScope.$on('$viewContentLoaded', function() {
         jQuery('body').cookieDisclaimer({
           text: $translate.instant("By using this website you agree to the use of cookies. You can read about our cookie policy <a href='/privacy-statement#cookies'>here</a>."),
           style: "light", // dark,light
@@ -1081,6 +1081,7 @@
             expire: 365
           }
         });
+        cookieDisclaimerListener();
       });
     }])
     .run(function ($window, $cookieStore, tmhDynamicLocale) {
