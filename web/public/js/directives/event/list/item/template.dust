@@ -4,7 +4,7 @@
     <p ng-bind="::cdELI.event.address"></p>
     <p ng-bind="::cdELI.event.city.nameWithHierarchy"></p>
   </div>
-  <div ng-bind-html="::cdELI.event.description">
+  <div class="cd-event-list-item__description" ng-bind-html="::cdELI.event.description">
   </div>
 </div>
 
