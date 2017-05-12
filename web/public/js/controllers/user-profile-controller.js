@@ -591,7 +591,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     }
   }
 
-
   // We use profile.data instead of $scope.profile because this is called before we assign $scope.profile
   function loggedInUserIsParent() {
     if(!loggedInUser.data || !profile.data) return false;
