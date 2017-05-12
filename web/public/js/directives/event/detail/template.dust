@@ -26,7 +26,7 @@
         <button class="btn btn-secondary btn-block-xs" ng-click="goToGoogleMaps()" ng-show="event.position">{@i18n key="Location"/}</button>
       </span>
     </div>
-    <p ng-bind-html="::event.description"></p>
+    <p class="cd-event-detail__description" ng-bind-html="::event.description"></p>
 
     <cd-apply-for-event ></cd-apply-for-event>
   </div>
