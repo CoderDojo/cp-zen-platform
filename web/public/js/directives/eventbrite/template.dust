@@ -5,8 +5,11 @@
   <label class="col-lg-4 cd-form-label1">EventBrite</label>
   <div class="col-lg-8">
     <button type="button" class="btn btn-default"
-    name="dojoEventbrite" id="dojoEventbrite"
-    ng-click="$ctrl.authorizeOAuthEventBrite()">{{ $ctrl.eventbriteText }}</button>
+      name="authorizeOAuthEventBrite"
+      ng-click="$ctrl.authorizeOAuthEventBrite()">{{ $ctrl.eventbriteText }}</button>
+    <button type="button" class="btn btn-danger"
+      name="deauthorizeOAuthEventBrite" ng-show="$ctrl.dojo.eventbriteConnected"
+      ng-click="$ctrl.removeAuthorization()">{@i18n key="Disconnect"/}</button>
     <span class="help-block">{@i18n key="All your events will be visible on your dojo page"/}</span>
   </div>
 </div>

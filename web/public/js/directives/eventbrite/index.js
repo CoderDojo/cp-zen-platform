@@ -31,16 +31,30 @@ var cdEventbriteIntegration = {
           genErrorHandler();
         }
       })
-      .catch(function (err) {
+      .catch(function () {
         // Something went wrong on our side TODO log with logentries
+        genErrorHandler();
+      });
+    };
+    cdE.getConnectButtonText = function () {
+      var text = cdE.dojo && cdE.dojo.eventbriteConnected ? 'Reconnect' : 'Connect';
+      cdE.eventbriteText = $translate.instant(text);
+    };
+    cdE.removeAuthorization = function () {
+      cdEventbriteService.deauthorize(cdE.dojo.id)
+      .then(function () {
+        cdE.dojo.eventbriteConnected = false;
+        atomicNotifyService.info($translate.instant('Your integration with eventbrite has been removed'));
+        cdE.getConnectButtonText();
+      })
+      .catch(function () {
         genErrorHandler();
       });
     };
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
-      var text = cdE.dojo && cdE.dojo.eventbriteConnected ? 'Reconnect' : 'Connect';
-      cdE.eventbriteText = $translate.instant(text);
+      cdE.getConnectButtonText();
       if (!_.isUndefined(token)) {
         cdE.saving = true;
         // Commented for testing purpose
