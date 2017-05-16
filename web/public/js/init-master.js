@@ -1068,7 +1068,7 @@
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if (toState.redirectTo) {
           event.preventDefault();
-          $state.go(toState.redirectTo, toParams);
+          $state.go(toState.redirectTo, toParams, {location: 'replace'});
         }
       });
 

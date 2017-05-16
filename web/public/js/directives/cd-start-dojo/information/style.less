@@ -23,12 +23,15 @@ cd-sad-information {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     box-shadow: @cd-box-shadow;
     padding: 8px;
     margin: 8px;
     flex-basis: 200px;
     min-height: 150px;
+    &-selector {
+      align-self: flex-start;
+    }
     &-selected {
       flex: 2;
       flex-basis: 300px;

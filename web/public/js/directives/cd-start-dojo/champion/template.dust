@@ -1,13 +1,13 @@
 <form class="cd-sad-champion" name="$ctrl.champion.form">
-  <p class="help-block">
-    {@i18n key="Congratulations on registering as a CoderDojo Champion!"/}
-    {@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}
-    {@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}
-  </p>
+  <div class="cd-sad-champion__intro text-center">
+    <p>{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
+  </div>
   <div class="cd-sad-champion__video" ng-if="!$ctrl.displayOnly">
     <!-- <img class="cd-sad-champion__video-container" src="http://placekitten.com/g/400/300"></img> -->
     <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    <p class="help-block">{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
+    <p class="help-block">{@i18n key="Congratulations on registering as a CoderDojo Champion!"/}</p>
+    <p class="help-block">{@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
+    <p class="help-block">{@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}</p>
   </div>
   <div class="cd-sad-champion__side-form">
     <div class="form-group">
@@ -100,11 +100,11 @@
     </p>
     <div class="cd-simple-flex-grid cd-sad-champion__sliders">
       <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <label for="">{@i18n key="How confident are you in mentoring youths and young people ?"/}</label>
+        <p>{@i18n key="How confident are you in mentoring youths and young people ?"/}</p>
         <rzslider rz-slider-model="$ctrl.champion.confidentMentoring" ng-readonly="$ctrl.displayOnly" rz-slider-options="$ctrl.sliderOptions"></rzslider>
       </div>
       <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <label for="">{@i18n key="How confident are you in your coding and technology skills ?"/}</label>
+        <p>{@i18n key="How confident are you in your coding and technology skills ?"/}</p>
         <rzslider rz-slider-model="$ctrl.champion.confidentCoding" ng-readonly="$ctrl.displayOnly" rz-slider-options="$ctrl.sliderOptions"></rzslider>
       </div>
     </div>

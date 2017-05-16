@@ -61,27 +61,33 @@
     </p>
     <div class="cd-sad-information__email-choice-group">
       <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.emailSrc == 'input', 'cd-sad-information__email-choice-not-selected': $ctrl.emailSrc && $ctrl.emailSrc != 'input'}">
-        <div class="cd-sad-information__email-choice-action" ng-model="$ctrl.emailSrc"
-          uib-btn-radio="'input'" ng-click="$ctrl.setEmail()">
+        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false && $ctrl.dojo.requestEmail != undefined }"
+        ng-click="$ctrl.dojo.requestEmail = false">
+        <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+          class="cd-sad-information__email-choice-selector"
+          ng-value="false"/>
+        <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-at fa-2x"></i>
           <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
         </div>
-        <div ng-show="$ctrl.emailSrc == 'input'">
+        <div ng-show="$ctrl.dojo.requestEmail == false">
           <input type="text" class="form-control" name="email"
             placeholder="myDojo@example.com"
-            ng-required="$ctrl.emailSrc == 'input'"
+            ng-required="$ctrl.dojo.requestEmail == true"
             ng-model="$ctrl.dojo.email"/>
         </div>
       </div>
       <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.emailSrc == 'create', 'cd-sad-information__email-choice-not-selected': $ctrl.emailSrc && $ctrl.emailSrc != 'create'}">
-        <div class="cd-sad-information__email-choice-action" ng-model="$ctrl.emailSrc"
-          uib-btn-radio="'create'" ng-click="$ctrl.requestEmail()">
+        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail == true, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != true}"
+        ng-click="$ctrl.dojo.requestEmail = true">
+        <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+          class="cd-sad-information__email-choice-selector"
+          ng-value="true"/>
+        <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-magic fa-2x"></i>
           <p>{@i18n key="I want a coderdojo.com email set up"/}</p>
         </div>
-        <div ng-show="$ctrl.emailSrc == 'create'">
+        <div ng-show="$ctrl.dojo.requestEmail == true">
           <p class="help-block">{@i18n key="You'll receive the credentials once the dojo has been verified"/}</p>
         </div>
       </div>

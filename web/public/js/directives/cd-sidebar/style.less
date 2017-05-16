@@ -40,6 +40,13 @@
     }
     flex: 1;
     border-right: 1px solid @cd-light-gray;
+    transition: width 2s ease-in-out;
+    &.ng-hide-add, &.ng-hide-remove-active {
+      width: 100%;
+    }
+    &.ng-hide-remove, &.ng-hide-add-active {
+      width: 0%;
+    }
   }
 
   &__tab {
@@ -108,12 +115,12 @@
       margin-right: 0px;
     }
 
+    &--list-visible {
+      display: block;
+    }
+
     &--child-state-active {
       .cd-sidebar {
-        &__tabs {
-          display: none;
-        }
-
         &__content {
           display: block;
         }

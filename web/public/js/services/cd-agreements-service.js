@@ -6,15 +6,15 @@ function cdAgreementsService(cdApi, $q){
   }
   var base = 'agreements';
   return {
-    save: function(agreement, win, fail){
+    save: function (agreement) {
       agreement = angular.copy(agreement);
-      return cdApi.post(base, { agreement: agreement }, win, fail || topfail);
+      return cdApi.post(base, { agreement: agreement });
     },
-    count: function(query, win, fail){
+    count: function(query, win, fail) {
       cdApi.post(base + '/count', {query: query}, win, fail || topfail);
     },
-    loadUserAgreement: function (version, userId, win, fail) {
-      return cdApi.get(base + '/version/' + version + '/users/' + userId, win, fail || topfail);
+    loadUserAgreement: function (version, userId) {
+      return cdApi.get(base + '/version/' + version + '/users/' + userId);
     },
     loadUserAgreementPromise: function (id) {
       var deferred = $q.defer();

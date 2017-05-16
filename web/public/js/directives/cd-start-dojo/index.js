@@ -66,11 +66,10 @@ angular
 
         ctrl.save = function () {
           var application = _.clone(ctrl.application);
-          application = _.each(application, function (step, key) {
-            step.isValid = step.form ? step.form.valid$ : step.isValid;
+          _.each(application, function (step, key, application) {
+            application[key].isValid = !_.isUndefined(step.form) ? step.form.$valid : step.isValid;
             delete step.form;
-            step = _.omitBy(step, _.isNil);
-            return {key: step};
+            application[key] = _.omitBy(step, _.isNil);
           });
           var lead = {
             userId: ctrl.currentUser.id,
@@ -115,7 +114,7 @@ angular
               return (step.form && step.form.$valid) || step.isValid;
             })).length / _.keys(ctrl.application).length * 100;
           }
-          return header + '% done';
+          return header + '% completed';
         };
 
         ctrl.exitingListener = $window.addEventListener('beforeunload', function ($event) {
@@ -178,24 +177,28 @@ angular
           })
           // The user may already have signed the charter, we load this separatly
           .then(function () {
+            var version;
             cdAgreementsService.getCurrentCharterVersion()
             .then(function (response) {
-              return response.data.version;
+              version = response.data.version;
             })
-            .then(function (version) {
-              return cdAgreementsService.loadUserAgreement(version, ctrl.currentUser.id,
-              function (response) {
-                if (response) {
+            .then(function () {
+              var agreement = {};
+              return cdAgreementsService.loadUserAgreement(version, ctrl.currentUser.id)
+              .then(function (response) {
+                agreement = response.data;
+              })
+              .then(function (version) {
+                if (agreement) {
                   ctrl.application.charter = {
-                    fullName: response.fullName,
-                    id: response.id
+                    fullName: agreement.fullName,
+                    id: agreement.id
                   };
                   ctrl.application.charter.isValid = true;
                 } else {
                   ctrl.application.charter = {
                     isValid: false,
-                    version: cdAgreementsService.getCurrentCharterVersion(),
-                    signed_at: new Date()
+                    version: version
                   };
                 }
               });

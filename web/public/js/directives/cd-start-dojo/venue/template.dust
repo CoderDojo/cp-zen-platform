@@ -1,9 +1,8 @@
 <form class="cd-sad-venue" name="$ctrl.venue.form" novalidate="">
-  {{ $ctrl.venue.isValid }}
   <div class="cd-sad-venue__video" ng-if="!$ctrl.displayOnly">
     <img src="http://placekitten.com/g/400/300"></img>
-    <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
-      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
+    <!-- <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map> -->
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
@@ -12,51 +11,41 @@
     <h5 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h5>
     <div class="cd-sad-venue__venue-choice-group">
       <div class="cd-sad-venue__venue-choice"
-        ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}">
-        <div class="cd-sad-venue__venue-choice-action" ng-model="$ctrl.venue.isFound"
-          uib-btn-radio="true">
+        ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
+        ng-click="$ctrl.venue.isFound = true">
+        <input type="radio" ng-model="$ctrl.venue.isFound"
+          class="cd-sad-venue__venue-choice-selector"
+          ng-value="true"/>
+        <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-at fa-2x"></i>
           <p>{@i18n key="I have a venue"/}</p>
         </div>
-        <div ng-show="$ctrl.venue.isFound == true">
-        </div>
       </div>
       <div class="cd-sad-venue__venue-choice"
-        ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}">
-        <div class="cd-sad-venue__venue-choice-action" ng-model="$ctrl.venue.isFound"
-          uib-btn-radio="false">
+        ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}"
+        ng-click="$ctrl.venue.isFound = false">
+        <input type="radio" ng-model="$ctrl.venue.isFound"
+          class="cd-sad-venue__venue-choice-selector"
+          ng-value="false"/>
+        <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-magic fa-2x"></i>
           <p>{@i18n key="I'm looking for a venue"/}</p>
         </div>
-        <div ng-show="$ctrl.venue.isFound == false">
-        </div>
       </div>
     </div>
-    <!-- <label class="radio-inline">
-      <input type="radio" ng-model="$ctrl.venue.isFound" name="venueIsFound" value="true"> {@i18n key="Yes"/}
-    </label>
-    <label class="radio-inline">
-      <input type="radio" ng-model="$ctrl.venue.isFound" name="venueIsFound" value="false" ng-click="$ctrl.displayInfo()"> {@i18n key="No"/}
-    </label> -->
-    <!-- <div class="cd-sad-venue__button-group" ng-if="!$ctrl.displayOnly">
-      <div class="btn-group">
-        <button class="btn btn-secondary" ng-model="$ctrl.venue.isFound"
-        uib-btn-radio="true">{@i18n key="I have a venue"/}</button>
-        <button class="btn btn-secondary" ng-model="$ctrl.venue.isFound"
-        uib-btn-radio="false">{@i18n key="I'm still looking for a venue"/}</button>
-      </div>
-    </div> -->
+  
     <div ng-show="$ctrl.venue.isFound === true" class="cd-sad-venue__container">
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
         <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
-        <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
-          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map>
+        <!-- <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map> -->
       </div>
       <div class="form-group">
         <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
-        <select ng-model="$ctrl.venue.type" name="venueType" class="form-control" ng-disabled="$ctrl.displayOnly">
+        <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
+          required="true" ng-disabled="$ctrl.displayOnly">
           <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
             {{ option.name }}
           </option>
@@ -72,7 +61,7 @@
       </div>
       <div class="form-group">
         <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
-        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" ng-disabled="$ctrl.displayOnly">
+        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" required="true" ng-disabled="$ctrl.displayOnly">
           <option ng-repeat="option in $ctrl.corporateList" value="{{ option.id }}">
             {{ option.name }}
           </option>
@@ -80,12 +69,15 @@
         <div ng-show="($ctrl.venue.corporate === 'other') || ($ctrl.displayOnly && $ctrl.venue.alternativeCorporate)" >
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control"
-          ng-model="$ctrl.venue.alternativeCorporate" ng-readonly="$ctrl.displayOnly"></input>
+            ng-required="$ctrl.venue.corporate === 'other'"
+            ng-model="$ctrl.venue.alternativeCorporate" ng-readonly="$ctrl.displayOnly"></input>
         </div>
       </div>
       <div class="form-group">
         {@i18n key="What is the maximum amount of people can your venue hold?"/}
-        <input type="number" name="maxCapacity" ng-model="$ctrl.venue.maxCapacity" class="form-control" ng-readonly="$ctrl.displayOnly"></input>
+        <input type="number" name="maxCapacity"
+          required="true"
+          ng-model="$ctrl.venue.maxCapacity" class="form-control" ng-readonly="$ctrl.displayOnly"></input>
       </div>
     </div>
 
