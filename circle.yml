@@ -25,3 +25,16 @@ deployment:
             key_pattern: applications/cp-zen-platform-ci-{BUILD_NUM}.zip
         deployment_group: prod-zen
         deployment_config: CodeDeployDefault.OneAtATime
+  staging:
+    branch: staging
+    codedeploy:
+      cp-zen-platform-staging:
+        application_root: /
+        region: eu-west-1
+        revision_location:
+          revision_type: S3
+          s3_location:
+            bucket: zen-deployments
+            key_pattern: staging/applications/cp-zen-platform-staging-{SHORT_COMMIT}-{BUILD_NUM}.zip
+        deployment_group: staging-zen
+        deployment_config: CodeDeployDefault.OneAtATime
