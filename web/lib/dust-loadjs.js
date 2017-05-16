@@ -48,6 +48,8 @@ dust.helpers.loadJS = function (chunk, context, bodies, params) {
   var js = 'window.zenConf = {};';
   if (process.env.NODE_ENV === 'production'){
     conf = require('../config/web-production.js');
+  } else if (process.env.NODE_ENV === 'staging') {
+    conf = require('../config/web-staging.js');
   } else {
     conf = require('../config/web-development.js');
   }
