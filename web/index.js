@@ -88,6 +88,10 @@ server.register(vision, function (err) {
   });
 });
 
+server.register(require('cp-zen-frontend'), function (err) {
+  checkHapiPluginError('cp-zen-frontend')(err);
+})
+
 server.ext('onPreAuth', function (request, reply) {
   var translateCookie = request.state && request.state.NG_TRANSLATE_LANG_KEY;
   if (_.isArray(translateCookie)) {
@@ -130,7 +134,7 @@ server.ext('onPreResponse', function (request, reply) {
   // Or should not be handled (403 permissions)
   if (status === 403) {
     if (_.has(request.route.settings, 'auth')) {
-      var cdfPath = _.isEqual(request.route.settings.auth.scope, ['cdf-admin']);
+      var cdfPath = _.isEqual(request.route.settings.auth && request.route.settings.auth.scope, ['cdf-admin']);
       if (cdfPath) {
         return reply.redirect('/cdf/login?next=' + request.url.path);
       }

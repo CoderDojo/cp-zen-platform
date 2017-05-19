@@ -8,6 +8,7 @@ dependencies:
     - npm -g install npm@latest-2
   override:
     - npm install
+    - if [ "$CIRCLE_BRANCH" = "staging" ]; npm install git+https://github.com/CoderDojo/cp-zen-frontend.git#staging; fi
 test:
   override:
     - npm run test
