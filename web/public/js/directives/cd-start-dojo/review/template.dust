@@ -1,5 +1,8 @@
 <form class="cd-sad-review" >
     <cd-expanding-card main-title="{@i18n key="Champion"/}">
+      <expanding-card-icon>
+        <span> <i class="fa" ng-class="$ctrl.validity ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'"></i></span>
+      </expanding-card-icon>
       <cd-sad-champion champion="$ctrl.application.champion" class="cd-sidebar__content--padded" display-only="true" ></cd-sad-champion>
     </cd-expanding-card>
     <cd-expanding-card main-title="{@i18n key="Dojo"/}">

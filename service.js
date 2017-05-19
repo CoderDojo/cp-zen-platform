@@ -72,7 +72,7 @@ function startWorker() {
 // will result in the worker process being restarted by the master.
 function start() {
   if (cluster.isMaster) {
-    var numCPUs = require('os').cpus().length;
+    var numCPUs = 1;//require('os').cpus().length;
     // Fork workers.
     for (var i = 0; i < numCPUs; i++) {
       var worker = cluster.fork();

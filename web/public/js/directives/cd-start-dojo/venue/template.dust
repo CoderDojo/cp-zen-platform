@@ -1,8 +1,8 @@
 <form class="cd-sad-venue" name="$ctrl.venue.form" novalidate="">
   <div class="cd-sad-venue__video" ng-if="!$ctrl.displayOnly">
     <img src="http://placekitten.com/g/400/300"></img>
-    <!-- <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
-      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map> -->
+    <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
@@ -33,14 +33,14 @@
         </div>
       </div>
     </div>
-  
+
     <div ng-show="$ctrl.venue.isFound === true" class="cd-sad-venue__container">
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
         <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
-        <!-- <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
-          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map> -->
+        <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map>
       </div>
       <div class="form-group">
         <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>

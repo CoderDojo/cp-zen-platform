@@ -44,7 +44,7 @@ cd-sad-venue {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     box-shadow: @cd-box-shadow;
     padding: 8px;
     margin: 8px;
@@ -56,6 +56,16 @@ cd-sad-venue {
     }
     &-selector {
       align-self: flex-start;
+      transform: scale(1.5);
+      &[aria-checked="true"] {
+        transform: scale(2);
+      }
+    }
+    &-action {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
     }
     &-not-selected {
       background-color: @cd-very-light-grey;

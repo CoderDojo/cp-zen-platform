@@ -11,6 +11,9 @@
         subTitle2: '@',
         startExpanded: '@'
     },
+    transclude: {
+      icon: '?expandingCardIcon'
+    },
     templateUrl: '/directives/tpl/cd-expanding-card',
     controller: function ($timeout, $element) {
       var ctrl = this;

@@ -152,15 +152,16 @@ angular
             profile = profile.data;
             return cdDojoService.searchDojoLeads(leadQuery)
             .then(function (leads) {
+              // ctrl.application = {};
               if (leads.data.length > 1) console.log('multiple pending applications, pick one'); // TODO
               if (leads.data.length === 1) {
-                _.merge(ctrl.application, leads.data[0].application);
+                ctrl.application = _.merge(ctrl.application, leads.data[0].application);
                 ctrl.leadId = leads.data[0].id;
               }
               // NOTE : this starts to get quite big
               if (leads.data.length === 0) {
                 // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
-                _.merge(ctrl.application, {
+                ctrl.application = _.merge(ctrl.application, {
                   champion: {
                     firstName: ctrl.currentUser.firstName,
                     lastName: ctrl.currentUser.lastName,

@@ -23,14 +23,24 @@ cd-sad-information {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;;
     box-shadow: @cd-box-shadow;
     padding: 8px;
     margin: 8px;
     flex-basis: 200px;
     min-height: 150px;
+    &-action {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+    }
     &-selector {
       align-self: flex-start;
+      transform: scale(1.5);
+      &[aria-checked="true"] {
+        transform: scale(2);
+      }
     }
     &-selected {
       flex: 2;

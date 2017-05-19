@@ -1,10 +1,10 @@
 <form class="cd-sad-team" name="$ctrl.team.form" novalidate="">
 
-  <div class="cd-sad-team__video">
+  <div class="cd-sad-team__video" ng-hide="$ctrl.displayOnly">
     <img src="http://placekitten.com/g/400/300"></img>
     <p class="help-block">{@i18n key="Building a dedicated team of technical and non-technical mentors will ensure your Dojo is sustainable!"/}</p>
   </div>
-  <div class="cd-sad-team__side-form">
+  <div class="cd-sad-team__side-form" ng-hide="$ctrl.displayOnly">
     <p class="help-block">
       {@i18n key="Both technically skilled and non-technically skilled individuals who guide attendees (or Ninjas) in a Dojo session are called Mentors.  Mentors facilitate learning and project work during the Dojo sessions."/}
     </p>
@@ -18,31 +18,28 @@
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
-    ng-if="$ctrl.canSendEmail"
     <div class="cd-sad-team__team-choice-group">
       <div class="cd-sad-team__team-choice"
-        ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}">
-        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
-          uib-btn-radio="'exists'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
+        ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}"
+        ng-click="$ctrl.team.status = 'exists'">
+        <input type="radio" ng-model="$ctrl.team.status"
+          class="cd-sad-team__team-choice-selector"
+          ng-value="'exists'"
+          ng-readonly="$ctrl.displayOnly"/>
+        <div class="cd-sad-team__team-choice-action" >
           <i class="fa fa-users fa-3x"></i>
           <p>{@i18n key="I have volunteers to help run my Dojo"/}</p>
         </div>
+
       </div>
       <div class="cd-sad-team__team-choice"
-        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'searching', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'searching'}">
-        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
-          uib-btn-radio="'searching'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
-          <span class="fa-stack fa-lg fa-2x">
-            <i class="fa fa-users fa-stack-1x"></i>
-            <i class="fa fa-search fa-stack-2x text-warning"></i>
-          </span>
-          <p>{@i18n key="I am searching for volunteers to join my Dojo"/}</p>
-        </div>
-      </div>
-      <div class="cd-sad-team__team-choice"
-        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}">
-        <div class="cd-sad-team__team-choice-action" ng-model="$ctrl.team.status"
-          uib-btn-radio="'solo'" ng-readonly="$ctrl.team.team || $ctrl.team.invited">
+        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}"
+        ng-click="$ctrl.team.status = 'solo'">
+        <input type="radio" ng-model="$ctrl.team.status"
+          class="cd-sad-team__team-choice-selector"
+          ng-value="'solo'"
+          ng-readonly="$ctrl.displayOnly"/>
+        <div class="cd-sad-team__team-choice-action">
           <i class="fa fa-user fa-3x"></i>
           <p>{@i18n key="I plan on running the club by myself for now"/}</p>
         </div>
@@ -50,50 +47,29 @@
 
     </div>
 
-    <!-- <div class="cd-sad-team__button-group" >
-      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
-        uib-btn-radio="'exists'">{@i18n key="I have volunteers to help run my Dojo!"/}</label>
-      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
-        uib-btn-radio="'searching'">{@i18n key="I am searching for volunteers to join my Dojo."/}</label>
-      <label class="btn btn-secondary" ng-model="$ctrl.team.status"
-        uib-btn-radio="'solo'">{@i18n key="I plan on running the club by myself for now."/}</label>
-    </div>-->
-    <p class="help-block" ng-if="!$ctrl.canSendEmail">
-      {@i18n key="In order to send an email, we need you to complete the dojo informations"/}
-    </p>
-ng-if="$ctrl.canSendEmail"
     <div class="cd-simple-flex-grid cd-sad-team__team-block" >
       <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists"
         ng-show="$ctrl.team.status === 'exists'">
-        <p>{@i18n key="Enter your volunteers emails here to invite them to be a part of your Dojo and help manage your account."/}</p>
-        <textarea name="teamMembers" ng-model="$ctrl.team.teamMembers"
-          class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
-        <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteTeam()">{@i18n key="Send"/}</button>
+        <label class="cd-sad-team__team-block-description">{@i18n key="Let us know where you found mentors for your Dojo."/}<span class="pull-right">(optional)</span></label>
+        <label ng-repeat="(id, src) in $ctrl.srcMentors" class="cd-sad-team__team-block-srcs">
+          <input type="checkbox" ng-model="$ctrl.team.selected[id]" ng-value="{{ id }}"
+            ng-readonly="$ctrl.displayOnly"
+            ng-change="$ctrl.setSrcMentorsValue(id)"/> {{ src.value }}
+        </label>
+        <input type="text"
+          class="form-control"
+          ng-show="$ctrl.team.selected['other'] === true"
+          placeholder="Please detail"
+          ng-readonly="$ctrl.displayOnly"/>
       </div>
       <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--searching"
-        ng-show="$ctrl.team.status === 'searching'">
-        <h4>{@i18n key="Invite potential volunteers to join your Dojo!"/}</h4>
-        <p>{@i18n key="Enter a contact email to invite volunteers to join your Dojo here"/}</p>
-        <textarea name="teamMembers" ng-model="$ctrl.team.potentialMembers"
-          class="form-control" placeholder="{{ $ctrl.emailPlaceholder }}"></textarea>
-        <button type="button" class="btn btn-secondary" ng-click="$ctrl.inviteMembers()">{@i18n key="Send"/}</button>
+        ng-show="$ctrl.team.status === 'solo'" ng-hide="$ctrl.displayOnly">
+        <p>
+          {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/}
+          {@i18n key="You’re Dojo will grow and it’s always good to have extra hands."/}
+          {@i18n key="You can see more tips on finding volunteers <a href=\"\">here.</a>"/}
+        </p>
       </div>
-      <div ng-show="$ctrl.dojo.users">
-        <p class="help-block">{@i18n key="See the volunteers that have already joined your Dojo"/}</p>
-        <cd-picture-grid items="$ctrl.dojo.users" wide-card="false" actions="false"></cd-picture-grid>
-      </div>
-      <div ng-show="$ctrl.team.members">
-        <p class="help-block">{@i18n key="Invitation sent to"/}</p>
-        <div ng-repeat="date, users in $ctrl.team.teamMembers">
-          On the {{ date }}
-          <div ng-repeat="users"> {{ user }} </div>
-        </div>
-        <div ng-repeat="date, users in $ctrl.team.potentialMembers">
-          On the {{ date }}
-          <div ng-repeat="users"> {{ user }} </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </form>

@@ -87,20 +87,17 @@
       saveDojoLead: function(lead, win, fail) {
         return cdApi.post('dojos/lead', { lead: lead }, win, fail || topfail);
       },
-      loadUserDojoLead: function(userId, win, fail) {
-        return cdApi.get('dojos/user-dojo-lead/' + userId, win, fail || topfail);
-      },
       loadDojoLead: function(id, win, fail) {
         return cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
+      },
+      searchDojoLeads: function(query) {
+        return cdApi.post('dojos/leads/search', {query: query});
       },
       loadSetupDojoSteps: function(win, fail) {
         return cdApi.get('dojos/setup-steps', win, fail || topfail);
       },
       getUsersDojos: function(query, win, fail) {
         return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
-      },
-      searchDojoLeads: function(query) {
-        return cdApi.post('dojos/search-dojo-leads', {query: query});
       },
       getUsersDojosPromise: function(query){
         var deferred = $q.defer();

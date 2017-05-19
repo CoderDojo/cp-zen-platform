@@ -71,7 +71,7 @@
           <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
         </div>
         <div ng-show="$ctrl.dojo.requestEmail == false">
-          <input type="text" class="form-control" name="email"
+          <input type="email" class="form-control" name="email"
             placeholder="myDojo@example.com"
             ng-required="$ctrl.dojo.requestEmail == true"
             ng-model="$ctrl.dojo.email"/>
@@ -100,21 +100,22 @@
   <div class="form-group">
     <label for="website">{@i18n key="Website (optional)"/}</label>
     <input type="text" class="form-control" ng-model="$ctrl.dojo.website"
-      name="website" id="website" placeholder="{@i18n key="e.g. coderdojo.com"/}">
+      name="website" placeholder="{@i18n key="e.g. coderdojo.com"/}">
   </div>
   <div class="cd-sad-information__social-network cd-simple-flex-grid">
     <div class="form-group cd-simple-flex-grid__flex-1">
       <label for="twitter">{@i18n key="Twitter"/}</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
-      <input type="text" class="form-control" ng-model="$ctrl.dojo.twitter"
-        name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
+      <input type="url" class="form-control" ng-model="$ctrl.dojo.twitter"
+        cd-input-prefix="https://www.twitter.com/"
+        name="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
       <label for="phone">{@i18n key="Facebook"/}</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
       <input type="text" class="form-control" ng-model="$ctrl.dojo.facebook"
         cd-input-prefix="https://www.facebook.com/"
-        name="facebook" id="facebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}">
+        name="facebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}">
     </div>
   </div>
 

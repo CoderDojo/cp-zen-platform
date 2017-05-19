@@ -1,0 +1,3 @@
+  <div class="cd-dojo-map-controls">
+    <i class="fa fa-arrows-alt" ng-click="$ctrl.open()"></i>
+  </div>

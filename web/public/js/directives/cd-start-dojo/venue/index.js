@@ -16,7 +16,6 @@ angular
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
-          ctrl.displayOnly = !_.isUndefined(ctrl.displayOnly) ? ctrl.displayOnly : false;
           ctrl.venueTypes = [
             { id: 'office',
               name: $translate.instant('Corporate Office')
@@ -88,7 +87,7 @@ angular
         ctrl.displayInfo = function () {
           atomicNotifyService.custom('info',
             $translate.instant('No problem! You can continue filling out the rest of the application, and come back to this when you’ve found a venue.'),
-            'fa fa-thumbs-up fa-flip-horizontal', 30000);
+            'fa fa-thumbs-up fa-flip-horizontal', 3000);
         };
       }
     });

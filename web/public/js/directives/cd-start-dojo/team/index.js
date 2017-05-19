@@ -8,31 +8,26 @@ angular
       templateUrl: '/directives/tpl/cd-start-dojo/team/',
       bindings : {
         team: '=',
-        dojo: '=',
         displayOnly: '<'
       },
       //TODO : dep injection array
       controller: function ($translate, cdDojoService, atomicNotifyService) {
         var ctrl = this;
         ctrl.$onInit = function () {
-          var now = new Date();
-          ctrl.canSendEmail = (ctrl.dojo.form.$valid || ctrl.dojo.isValid) && !ctrl.dojo.emailRequired;
-          ctrl.emailPlaceholder = 'myfriend@example.com\nmyotherfriend@example.com';
-          ctrl.inviteTeam = function () {
-            ctrl.team.team[now] = ctrl.team.temp.teamMembers;
-            cdDojoService.sendTeamInvitation(ctrl.team.team[now])
-            .then(function () {
-              atomicNotifyService.info($translate('Invitation sent to %1s team members'));
-            });
+          ctrl.srcMentors = {
+            community: {value: $translate.instant('Youth/Community Workers')},
+            teachers: {value: $translate.instant('Primary or Secondary Teachers')},
+            pro: {value: $translate.instant('IT Professionals')},
+            students: {value: $translate.instant('3rd level education students')},
+            staff: {value: $translate.instant('Staff of Venue')},
+            youth: {value: $translate.instant('Youth Mentors (under 18)')},
+            parents: {value: $translate.instant('Parents of attendees')},
+            other: {value: $translate.instant('Other')}
           };
-          ctrl.inviteMembers = function () {
-            ctrl.team.invited[now] = ctrl.team.temp.invitedMembers;
-            cdDojoService.sendDojoUserInvitation(ctrl.team.invited[now])
-            .then(function () {
-              atomicNotifyService.info($translate('Invitation sent to %1s team members'));
-            });
+          ctrl.setSrcMentorsValue = function (key) {
+            if (!ctrl.team.selected[key]) delete ctrl.team.selected[key];
           };
-        }
+        };
       }
     });
 }());

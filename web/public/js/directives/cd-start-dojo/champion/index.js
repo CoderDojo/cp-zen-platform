@@ -14,14 +14,10 @@ angular
       controller: function (userUtils, $state, cdDojoService, $translate, $scope) {
         var ctrl = this;
         ctrl.$onInit = function () {
-          var initialDate = new Date();
           ctrl.dateFormat = 'dd-MMMM-yyyy';
-          initialDate.setFullYear(initialDate.getFullYear() - 18);
-          // ctrl.champion && ctrl.champion.dob ? new Date(ctrl.champion.dob) :
           ctrl.dobDateOptions = {
             formatYear: 'yyyy',
             startingDay: 1,
-            initDate: initialDate,
             datepickerMode: 'year'
           };
           ctrl.picker = {opened: false};
@@ -36,7 +32,6 @@ angular
               {value: 5, legend: 'Very'}
             ]
           };
-
           // TODO : cd-cdf
           ctrl.sources = [
             { id: 'search_engine',
@@ -59,12 +54,22 @@ angular
               name: $translate.instant('Other')}
           ];
         };
+
+        ctrl.formatDoB = function () {
+          if (ctrl.champion && !_.isDate(ctrl.champion.dob)) ctrl.champion.dob = new Date(ctrl.champion.dob);
+        };
+        ctrl.isKid = function () {
+          if (ctrl.champion && ctrl.champion.form) {
+            ctrl.champion.form.isKid = userUtils.getAge(ctrl.champion.dob) <= 18;
+          }
+        };
+        // Because we use 2way binding, onChanges can't be used
+        $scope.$watch('$ctrl.champion.dob', function () {
+          ctrl.isKid();
+          ctrl.formatDoB();
+        });
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
-        };
-
-        ctrl.isKid = function () {
-          ctrl.champion.form.isKid = userUtils.getAge(ctrl.champion.dob) <= 18;
         };
       }
     });

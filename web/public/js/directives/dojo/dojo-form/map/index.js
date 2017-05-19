@@ -12,7 +12,7 @@ angular
       model: '=',
       addMarker: '='
     },
-    controller: function (utilsService, Geocoder, cdDojoService, alertService, $translate) {
+    controller: function (utilsService, Geocoder, cdDojoService, alertService, $translate, $timeout) {
       var ctrl = this;
       ctrl.$onInit = function () {
         ctrl.places = [];
@@ -33,14 +33,15 @@ angular
       };
 
       ctrl.setCountry = function (country) {
-        _.extend(ctrl.ngModel, _.pick(country, ['countryName', 'countryNumber', 'continent', 'alpha2', 'alpha3']));
+        _.extend(ctrl.ngModel, _.pick(country, ['countryName', 'continent', 'alpha2', 'alpha3']));
         if (!ctrl.model.markers.length) ctrl.getBoundariesFromCountry();
       };
 
       ctrl.getBoundariesFromCountry = function () {
         Geocoder.boundsForCountry(ctrl.ngModel.countryName)
         .then(function (bounds) {
-          setTimeout(function () {
+          $timeout(function () {
+            console.log('fitBounds');
             ctrl.model.map.fitBounds(bounds);
           });
         });
@@ -55,12 +56,12 @@ angular
         //the extend is a hack for backward compat
         utilsService.getLocationFromAddress(_.extend(ctrl, ctrl.ngModel)).then(function (data) {
           ctrl.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-          ctrl.ngModel.coordinates = data.lat + ', ' + data.lng;
           ctrl.ngModel.geoPoint = {
             lat: data.lat,
             lon: data.lng
           };
-          setTimeout(function () {
+          $timeout(function () {
+            console.log('panTo');
             ctrl.model.map.panTo(ctrl.mapOptions.center);
           });
           ctrl.addMarker(null, [{latLng: ctrl.mapOptions.center}]);

@@ -41,12 +41,20 @@ cd-sad-team {
     }
     &--exists {
       .team-block;
-    }
-    &--searching {
-      .team-block;
+      display: flex;
+      flex-wrap: wrap;
+      & > label.cd-sad-team__team-block-description {
+        flex-basis: 100%;
+        padding: 8px;
+      }
     }
     &--solo {
       .team-block;
+    }
+    &-srcs {
+      flex: 1;
+      padding: 8px;
+      flex-basis: 320px;
     }
   }
   &__team-choice {
@@ -54,12 +62,25 @@ cd-sad-team {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     box-shadow: @cd-box-shadow;
     padding: 8px;
     margin: 8px;
     flex-basis: 200px;
     min-height: 150px;
+    &-action {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+    }
+    &-selector {
+      align-self: flex-start;
+      transform: scale(1.5);
+      &[aria-checked="true"] {
+        transform: scale(2);
+      }
+    }
     &-selected {
       flex: 2;
       flex-basis: 300px;
