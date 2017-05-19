@@ -10,7 +10,9 @@
     "test": "./node_modules/.bin/gulp",
     "jshint-check": "./node_modules/.bin/gulp jshint",
     "lint-lib": "./node_modules/.bin/gulp semistandard",
-    "gulp": "./node_modules/.bin/gulp"
+    "gulp": "./node_modules/.bin/gulp",
+    "dev": "./node_modules/.bin/gulp dev",
+    "build": "npm run gulp"
   },
   "pre-commit": [
     "test"
@@ -65,7 +67,8 @@
     "seneca": "0.7.2",
     "serve-static": "1.4.0",
     "slug": "0.9.1",
-    "vision": "3.0.0"
+    "vision": "3.0.0",
+    "cp-zen-frontend": "git+https://github.com/CoderDojo/cp-zen-frontend.git#master"
   },
   "devDependencies": {
     "bower": "1.4.1",
