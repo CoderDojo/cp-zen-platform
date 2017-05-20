@@ -13,6 +13,7 @@
 
         <div ng-hide="currentPageEvents.length === 0">
           <cd-event-list-item ng-repeat="event in currentPageEvents" event="event"
+            can-book="canBook(event)"
             class="row flex-row cd-event-list-item"></cd-event-list-item>
         </div>
       </div>

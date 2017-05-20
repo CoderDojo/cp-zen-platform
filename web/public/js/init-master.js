@@ -562,13 +562,29 @@
         .state("embedded.event",{
           parent : 'embedded',
           url: "/event/:eventId",
-          template: '<div class="cd-event-list col-xs-12"><cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event"></cd-event-list-item></div>',
-          controller: function($scope, event, sessions, profile){
+          template: '<div class="cd-event-list col-xs-12">' +
+          '<cd-event-list-item class="row flex-row cd-event-list-item cd-event-list-item--embedded" event="event" can-book="canBook()">' +
+          '</cd-event-list-item></div>',
+          controller: function ($scope, event, sessions, profile, $q, cdDojoService, eventUtils) {
             $scope.event = event.data;
             $scope.sessions = sessions.data;
-            if(profile){
+            $scope.isMember = false;
+            cdDojoService.load($scope.event.dojoId)
+            .then(function (dojo) {
+              $scope.dojo = dojo.data;
+            });
+            if (profile) {
               $scope.profile = profile.data;
+              cdDojoService.getUsersDojos({userId: $scope.profile.user.id, dojoId: $scope.event.dojoId})
+              .then(function (response) {
+                if (!_.isEmpty(response.data)) $scope.isMember = true;
+              });
             }
+            $scope.canBook = function () {
+              if ($scope.event && $scope.dojo) {
+                return eventUtils.canBook($scope.event.public, $scope.dojo.private, $scope.isMember);
+              }
+            };
           },
           params: {
             pageTitle: 'Event details',

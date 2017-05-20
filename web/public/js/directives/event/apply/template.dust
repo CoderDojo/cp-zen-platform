@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-4 cd-event-apply__apply-column">
+      <div class="col-xs-12 col-sm-4 cd-event-apply__apply-column" ng-if="canBook()">
         <!-- TODO: remove this popup and add a button/ticket ?-->
         <button class="btn btn-block btn-secondary" ng-click="showSessionDetails(session)" ng-if="!event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Book"/}</a>
         <button class="btn btn-block btn-secondary disabled" ng-if="event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Booking closed"/}</a>

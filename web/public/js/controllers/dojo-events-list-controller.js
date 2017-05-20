@@ -4,7 +4,7 @@
   function cdDojoEventsListCtrl($scope, $state, $location, $translate, $q, cdEventsService,
       cdUsersService, cdDojoService, tableUtils, alertService, auth, utilsService, eventUtils) {
     var dojoId = $scope.dojoId;
-    $scope.filter = {dojo_id:dojoId};
+    $scope.filter = {dojo_id: dojoId};
     $scope.itemsPerPage = 5;
     $scope.applyData = {};
     $scope.isMember = false;
@@ -14,7 +14,7 @@
     auth.get_loggedin_user(function (user) {
       $scope.currentUser = user;
 
-      cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId:dojoId}, function (response) {
+      cdDojoService.getUsersDojos({userId:$scope.currentUser.id, dojoId: dojoId}, function (response) {
         if(!_.isEmpty(response)) {
           $scope.isMember = true;
 
@@ -120,7 +120,9 @@
       $scope.sort = sortConfig;
       $scope.loadEvents($scope.filter, true);
     }
-
+    $scope.canBook = function ($event) {
+      return eventUtils.canBook($event.public, $scope.private, $scope.isMember);
+    };
   }
 
   angular.module('cpZenPlatform')
