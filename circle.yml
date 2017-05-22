@@ -8,7 +8,7 @@ dependencies:
     - npm -g install npm@latest-2
   override:
     - npm install
-    - if [ "$CIRCLE_BRANCH" = "staging" ]; then npm install cp-zen-frontend@staging; fi
+    - if [ "$CIRCLE_BRANCH" = "staging" ]; then npm install --save cp-zen-frontend@staging; fi
 test:
   override:
     - npm run test
