@@ -68,7 +68,7 @@
     "serve-static": "1.4.0",
     "slug": "0.9.1",
     "vision": "3.0.0",
-    "cp-zen-frontend": "cp-zen-frontend"
+    "cp-zen-frontend": "^1.0.0"
   },
   "devDependencies": {
     "bower": "1.4.1",
