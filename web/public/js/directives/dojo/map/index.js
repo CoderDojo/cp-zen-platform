@@ -17,7 +17,6 @@
       $scope.$watch('$ctrl.model.map', function (map) {
         if (map) {
           $timeout(function () {
-            console.log('resize');
             google.maps.event.trigger(ctrl.model.map, 'resize');
           }, 100);
         }
@@ -25,12 +24,13 @@
 
       $scope.$watch('$ctrl.mapOptions', function (map) {
           $timeout(function () {
-            console.log('pan');
             ctrl.model.map.panTo(ctrl.mapOptions.center);
           }, 100);
       });
     };
-
+    ctrl.setLoc = function ($event, $params) {
+      ctrl.setLocation()($params[0].latLng);
+    };
     ctrl.addMarker = function ($event, $params) {
       angular.forEach(ctrl.model.markers, function (marker) {
         marker.setMap(null);
@@ -51,7 +51,7 @@
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         template: '<cd-dojo-map map="$ctrl.map" map-options="$ctrl.mapOptions" ' +
-         'model="$ctrl.model" add-marker="$ctrl.addMarker">' +
+         'model="$ctrl.model" add-marker="$ctrl.addMarker" controls-visible="false">' +
          '</cd-dojo-map>',
         controllerAs: '$ctrl',
         scope: $scope,
@@ -68,7 +68,9 @@ angular
         map: '=?',
         mapOptions: '=',
         model: '=?',
-        addMarker: '='
+        setLocation: '&?',
+        addMarker: '=',
+        controlsVisible: '<'
       },
       //TODO : dep injection array
       controller: ctrller

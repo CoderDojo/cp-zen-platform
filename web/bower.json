@@ -51,7 +51,7 @@
     "ng-slide-down": "1.2.0",
     "angular-i18n": "1.5.7",
     "angular-atomic-notify": "https://github.com/david-cahill/angular-atomic-notify.git#master",
-    "international-phone-number": "0.0.16",
+    "international-phone-number": "https://github.com/kidroca/international-phone-number.git#0.0.16p",
     "ng-idle": "1.2.2",
     "angular-dynamic-locale": "0.1.32",
     "angularjs-dropdown-multiselect": "https://github.com/CoderDojo/angularjs-dropdown-multiselect.git#1.6.0",

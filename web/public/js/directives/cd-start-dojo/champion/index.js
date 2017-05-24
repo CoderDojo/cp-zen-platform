@@ -7,8 +7,7 @@ angular
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/champion/',
       bindings: {
-        champion: '=',
-        displayOnly: '<'
+        champion: '='
       },
       // TODO : dep injection array
       controller: function (userUtils, $state, cdDojoService, $translate, $scope) {

@@ -84,8 +84,12 @@
       getStats: function(win, fail){
         return cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
+      // LEADS
       saveDojoLead: function(lead, win, fail) {
         return cdApi.post('dojos/lead', { lead: lead }, win, fail || topfail);
+      },
+      submitDojoLead: function (id, lead, win, fail) {
+        return cdApi.put('dojos/lead/' + id, { lead: lead });
       },
       loadDojoLead: function(id, win, fail) {
         return cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
@@ -96,6 +100,7 @@
       loadSetupDojoSteps: function(win, fail) {
         return cdApi.get('dojos/setup-steps', win, fail || topfail);
       },
+      //
       getUsersDojos: function(query, win, fail) {
         return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
       },

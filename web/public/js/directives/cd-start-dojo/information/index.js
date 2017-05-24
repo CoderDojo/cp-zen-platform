@@ -1,17 +1,16 @@
 ;(function() {
   'use strict';
-
+  /*global CKEDITOR*/
 angular
     .module('cpZenPlatform')
     .component('cdSadInformation', {
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/information/',
       bindings : {
-        dojo: '=',
-        displayOnly: '<'
+        dojo: '='
       },
       // TODO : dep injection array
-      controller: function ($translate, $scope) {
+      controller: function ($translate, $scope, utilsService) {
         var ctrl = this;
         ctrl.$onInit = function () {
           var initialDate = new Date();
@@ -34,9 +33,25 @@ angular
             { id: 'other',
             name: $translate.instant('Other')}
           ];
+          ctrl.initContent = "<p>" +
+            $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
+            "<ul><li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +
+            "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') + "</b></li>" +
+            "</ul></p>";
+
+
+          ctrl.editorOptions = utilsService.getCKEditorConfig();
         };
-        $scope.$watch('$ctrl.dojo.firstSession', function () {
+        var dateWatcher = $scope.$watch('$ctrl.dojo.firstSession', function () {
           ctrl.formatFirstSessionDate();
+        });
+        var notesWatcher = $scope.$watch('$ctrl.dojo.notes', function () {
+          if (ctrl.dojo.notes === '' || ctrl.dojo.notes === '<p></p>') {
+            ctrl.dojo.notes = ctrl.initContent;
+            // ckEditor doens't refresh if we set the content post-init
+            CKEDITOR.instances['dojoNotes'].setData(ctrl.initContent);
+            notesWatcher();
+          }
         });
         ctrl.formatFirstSessionDate = function () {
           if (ctrl.dojo && ctrl.dojo.firstSession && !_.isDate(ctrl.dojo.firstSession)) {
@@ -54,6 +69,11 @@ angular
         ctrl.setEmail = function () {
           delete ctrl.dojo.requestEmail;
         };
+
+        $scope.$on('$destroy', function () {
+          notesWatcher();
+          dateWatcher();
+        });
       }
     });
 }());

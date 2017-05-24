@@ -48,6 +48,9 @@
             // TODO: redirect?
           });
         };
+        ctrl.isValid = function () {
+          return ctrl.user ? (ctrl.agreement ? true: false) : true;
+        };
       }]
     });
 }());

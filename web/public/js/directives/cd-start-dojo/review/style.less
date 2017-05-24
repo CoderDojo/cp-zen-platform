@@ -3,7 +3,7 @@ cd-sad-review {
 }
 .cd-sad-review {
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
   align-content: space-around;
   flex-wrap: wrap;
   & > * {
@@ -12,28 +12,32 @@ cd-sad-review {
       padding-right: 8px;
     }
   }
-  cd-expanding-card {
-    @card-size: 8px;
-    flex-basis: 100%;
-    .cd-expanding-card__info {
-      margin: @card-size 0;
-      .cd-expanding-card__header-main::before {
-        height: calc(100% + @card-size);
+  .cd-sad-review-step {
+    box-shadow: @cd-box-shadow;
+    flex: 1;
+    margin: 3%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 30%;
+    max-width: 320px;
+    h3 {
+      flex: 1;
+      padding: 8px;
+    }
+    &__icon {
+      margin-left: 8px;
+      .fa {
+        width: 24px;
+        text-align: center;
+        border-radius: 100%;
+        background-color: @cd-white;
       }
     }
-    expanding-card-icon {
-      span {
-        display: inline-block;
-        position: absolute;
-        right: 16px;
-        .fa {
-          // width: 64px; // @fa-2x-size
-          width: 24px;
-          text-align: center;
-          border-radius: 100%;
-          background-color: @cd-white;
-        }
-      }
+    &__icon-navigate {
+      font-size: 3em;
+      margin: 0;
     }
   }
 }

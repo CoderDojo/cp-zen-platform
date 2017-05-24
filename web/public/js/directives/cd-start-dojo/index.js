@@ -42,9 +42,21 @@ angular
           }
         ];
 
+        ctrl.save = function () {
+          var lead = ctrl.prepareSavePayload();
+          return cdDojoService.saveDojoLead(lead)
+            .then(function (lead) {
+              ctrl.leadId = lead.data.id;
+              _.each(ctrl.application, function (step, key) {
+                if (step.form) lead.data.application[key].form = step.form;
+              });
+              ctrl.application = lead.data.application;
+            });
+        };
         ctrl.actions = {};
         ctrl.actions.submit = function () {
-          var promise = $q.defer().promise;
+          var deferred = $q.defer();
+          var promise = deferred.promise;
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
           if (!ctrl.leadId) {
@@ -53,19 +65,43 @@ angular
             });
           }
           promise.then(function () {
-            cdDojoService.submitDojoLead(ctrl.application)
+            var lead = ctrl.prepareSavePayload();
+            cdDojoService.submitDojoLead(ctrl.leadId, lead)
             .then(function () {
-              atomicNotifyService.info($translate.instant('Congratz'));
+              atomicNotifyService.info(
+                $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') +
+                $translate.instant('We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team. We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
+             );
+             $state.go('my-dojos');
             })
             .catch(function () {
               // This should not happend and be caught by the front before submitting
             });
           });
-          promise.resolve();
+          deferred.resolve();
+          return promise;
+        };
+        ctrl.actions.save = function () {
+          var index = 0;
+          ctrl.save()
+          .then(function (lead) {
+            if (ctrl.application && ctrl.isValid()) {
+              // We go to the review tab
+              index = ctrl.tabs.length - 1;
+            } else {
+              // We go to the next tab that is invalid
+              // normal = next; review = next invalid
+              index = _.findIndex(ctrl.tabs, {isValid: false});
+              if (index < 0) {
+                index = ctrl.tabs.length - 1;
+              }
+            }
+            $state.go(ctrl.tabs[index].state);
+          });
         };
 
-        ctrl.save = function () {
-          var application = _.clone(ctrl.application);
+        ctrl.prepareSavePayload = function () {
+          var application = _.cloneDeep(ctrl.application);
           _.each(application, function (step, key, application) {
             application[key].isValid = !_.isUndefined(step.form) ? step.form.$valid : step.isValid;
             delete step.form;
@@ -78,27 +114,8 @@ angular
           };
 
           if (ctrl.leadId) lead.id = ctrl.leadId;
-          return cdDojoService.saveDojoLead(lead)
-            .then(function (lead) {
-              ctrl.leadId = lead.data.id;
-              ctrl.application = lead.data.application;
-            });
-        };
-
-        ctrl.actions.save = function () {
-          var index = 0;
-          ctrl.save()
-          .then(function (lead) {
-            if (ctrl.application && ctrl.isValid()) {
-              index = ctrl.tabs.length;
-            } else {
-              index = _.findIndex(ctrl.tabs, {state: $state.current.name});
-              index ++;
-            }
-            $state.go(ctrl.tabs[index].state);
-          });
-        };
-
+          return lead;
+        }
         ctrl.isValid = ctrl.actions.submitReadonly = ctrl.actions.saveVisible = function () {
           var validities = _.map(ctrl.application, function (step) {
             return step.form ? step.form.$valid // Current form validity
@@ -106,12 +123,14 @@ angular
           });
           return _.every(validities);
         };
-
+        ctrl.actions.isLastTab = function () {
+          return _.findIndex(ctrl.tabs[$state.current.name]) -1 === ctrl.tabs.length;
+        };
         ctrl.tabHeader = function () {
           var header = 0;
           if (ctrl.application) {
             header = (_.filter(ctrl.application, function (step) {
-              return (step.form && step.form.$valid) || step.isValid;
+              return step.isValid; // Only saved validity matter
             })).length / _.keys(ctrl.application).length * 100;
           }
           return header + '% completed';
@@ -144,7 +163,7 @@ angular
 
         // TODO: redir to proper substate depending on actual dojolead
         ctrl.$onInit = function () {
-          var leadQuery = {userId: ctrl.currentUser.id};
+          var leadQuery = {userId: ctrl.currentUser.id, completed: false};
           ctrl.leadId = $state.params.leadId;
           if (ctrl.leadId) leadQuery.id = ctrl.leadId;
           cdUsersService.userProfileData(leadQuery)
@@ -152,8 +171,9 @@ angular
             profile = profile.data;
             return cdDojoService.searchDojoLeads(leadQuery)
             .then(function (leads) {
-              // ctrl.application = {};
-              if (leads.data.length > 1) console.log('multiple pending applications, pick one'); // TODO
+              if (leads.data.length > 1) {
+                console.log('multiple pending applications, pick one'); // TODO
+              }
               if (leads.data.length === 1) {
                 ctrl.application = _.merge(ctrl.application, leads.data[0].application);
                 ctrl.leadId = leads.data[0].id;

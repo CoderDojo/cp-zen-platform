@@ -8,8 +8,7 @@ angular
       templateUrl: '/directives/tpl/cd-start-dojo/venue/',
       bindings : {
         gmap: '=?',
-        venue: '=',
-        displayOnly: '<'
+        venue: '='
       },
       //TODO : dep injection array
       controller: function ($translate, Geocoder, atomicNotifyService) {

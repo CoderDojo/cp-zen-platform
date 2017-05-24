@@ -1,13 +1,15 @@
 <form class="cd-sad-venue" name="$ctrl.venue.form" novalidate="">
-  <div class="cd-sad-venue__video" ng-if="!$ctrl.displayOnly">
+  <div class="cd-sad-venue__video">
     <img src="http://placekitten.com/g/400/300"></img>
     <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+      set-location="$ctrl.setLocation"
       map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
       {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
     </p>
+    <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
     <h5 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h5>
     <div class="cd-sad-venue__venue-choice-group">
       <div class="cd-sad-venue__venue-choice"
@@ -40,47 +42,45 @@
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
         <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
         <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
-          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker"></cd-dojo-form-map>
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" set-location="$ctrl.setLocation"></cd-dojo-form-map>
       </div>
       <div class="form-group">
         <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
         <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
-          required="true" ng-disabled="$ctrl.displayOnly">
+          required="true">
           <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
             {{ option.name }}
           </option>
         </select>
-        <div ng-show="($ctrl.venue.type === 'other') || ($ctrl.displayOnly && $ctrl.venue.alternativeType)">
+        <div ng-show="($ctrl.venue.type === 'other')">
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control" name="venueTypeDetails"
             placeholder="Please detail"
             ng-required="$ctrl.venue.type === 'other'"
-            ng-readonly="$ctrl.displayOnly"
             ng-model="$ctrl.venue.alternativeType"></input>
         </div>
       </div>
       <div class="form-group">
         <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
-        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" required="true" ng-disabled="$ctrl.displayOnly">
+        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" required="true">
           <option ng-repeat="option in $ctrl.corporateList" value="{{ option.id }}">
             {{ option.name }}
           </option>
         </select>
-        <div ng-show="($ctrl.venue.corporate === 'other') || ($ctrl.displayOnly && $ctrl.venue.alternativeCorporate)" >
+        <div ng-show="($ctrl.venue.corporate === 'other')" >
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control"
             ng-required="$ctrl.venue.corporate === 'other'"
-            ng-model="$ctrl.venue.alternativeCorporate" ng-readonly="$ctrl.displayOnly"></input>
+            ng-model="$ctrl.venue.alternativeCorporate"></input>
         </div>
       </div>
       <div class="form-group">
         {@i18n key="What is the maximum amount of people can your venue hold?"/}
-        <input type="number" name="maxCapacity"
+        <input type="number" name="capacity"
           required="true"
-          ng-model="$ctrl.venue.maxCapacity" class="form-control" ng-readonly="$ctrl.displayOnly"></input>
+          ng-model="$ctrl.venue.capacity" class="form-control"></input>
       </div>
     </div>
-
     <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
       <div>
         <a href="http://kata.coderdojo.com/wiki/Template_Letter_for_Mentor_Acquisition"
@@ -88,7 +88,4 @@
       </div>
     </div>
   </div>
-
-
-
 </form>

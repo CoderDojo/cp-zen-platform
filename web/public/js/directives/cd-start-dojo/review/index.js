@@ -12,10 +12,29 @@ angular
       //TODO : dep injection array
       controller: function ($scope, $translate) {
         var ctrl = this;
-        ctrl.$onChanges = function () {
-          if (ctrl.application && ctrl.application.champion) {
-            ctrl.validity = ctrl.application.champion.form ? ctrl.application.champion.form.$valid : ctrl.application.champion.isValid;
+        ctrl.steps = {
+          champion: {
+            state: 'start-dojo.champion',
+            name: $translate.instant('Champion Registration')
+          },
+          dojo: {
+            state: 'start-dojo.information',
+            name: $translate.instant('Dojo Information')
+          },
+          venue: {
+            state: 'start-dojo.venue',
+            name: $translate.instant('Venue Details')
+          },
+          team: {
+            state: 'start-dojo.team',
+            name: $translate.instant('Gather your Team')
+          },
+          charter: {
+            state: 'start-dojo.charter',
+            name: $translate.instant('Sign the Charter')
           }
+        };
+        ctrl.$onChanges = function () {
         };
       }
     });

@@ -8,7 +8,8 @@ angular
       templateUrl: '/directives/tpl/cd-charter/cd-sign-charter/',
       bindings: {
         ngModel: '=',
-        accept: '='
+        accept: '=',
+        isValid: '='
       },
       //TODO : dep injection array
       controller: function (cdAgreementsService, $window) {
@@ -23,18 +24,6 @@ angular
           pdf.addHTML($('.cd-sad-charter'), function () {
             pdf.save('charter' + ctrl.currentDate + '.pdf');
           });
-        };
-
-        ctrl.isValid = function () {
-          // /charter scenarios
-          if (ctrl.accept && !ctrl.ngModel) { // Never signed or outdated version
-            return false;
-          } else if (!ctrl.accept) {
-            return true; // unlogged user or valid agreement
-          } else if (ctrl.ngModel && (ctrl.ngModel.isValid || // SAD scenarios
-            (ctrl.ngModel.form && ctrl.ngModel.form.$valid))) {
-            return ctrl.ngModel.isValid || ctrl.ngModel.form.$valid;
-          }
         };
 
         ctrl.print = function () {

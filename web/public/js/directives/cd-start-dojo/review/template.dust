@@ -1,17 +1,12 @@
 <form class="cd-sad-review" >
-    <cd-expanding-card main-title="{@i18n key="Champion"/}">
-      <expanding-card-icon>
-        <span> <i class="fa" ng-class="$ctrl.validity ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'"></i></span>
-      </expanding-card-icon>
-      <cd-sad-champion champion="$ctrl.application.champion" class="cd-sidebar__content--padded" display-only="true" ></cd-sad-champion>
-    </cd-expanding-card>
-    <cd-expanding-card main-title="{@i18n key="Dojo"/}">
-      <cd-sad-information champion="$ctrl.application.dojo" class="cd-sidebar__content--padded" display-only="true" ></cd-sad-information>
-    </cd-expanding-card>
-    <cd-expanding-card main-title="{@i18n key="Venue"/}">
-      <cd-sad-venue champion="$ctrl.application.venue" class="cd-sidebar__content--padded" display-only="true" ></cd-sad-venue>
-    </cd-expanding-card>
-    <cd-expanding-card main-title="{@i18n key="Team"/}">
-      <cd-sad-team champion="$ctrl.application.team" class="cd-sidebar__content--padded" display-only="true" ></cd-sad-team>
-    </cd-expanding-card>
+  <div class="cd-sad-review-step" ng-repeat="(key, step) in $ctrl.steps" ui-sref="{{ step.state }}">
+    <h3>{{ step.name }}
+      <span class="cd-sad-review-step__icon">
+        <i class="fa"
+          ng-class="$ctrl.application[key].isValid ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'">
+        </i>
+      </span>
+    </h3>
+    <i class="fa fa-angle-right pull-right cd-sad-review-step__icon-navigate h3"></i>
+  </div>
 </form>

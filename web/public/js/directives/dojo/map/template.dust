@@ -1,9 +1,8 @@
 <section ng-if="$ctrl.mapLoaded" id="map" class="cd-dojo-map">
   <div ng-repeat="marker in $ctrl.markers" ui-map-marker="$ctrl.markers[$index]"></div>
   <div id="googleMap" ui-map="$ctrl.model.map"
-    ui-event="{'map-click': '$ctrl.addMarker($event, $params)'}"
+    ui-event="{'map-click': '$ctrl.setLoc($event, $params)'}"
     ui-options="$ctrl.mapOptions" class="map-canvas"></div>
-  <div class="cd-dojo-map-controls">
-    <i class="fa fa-arrows-alt" ng-click="$ctrl.open()"></i>
-  </div>
+  <cd-dojo-map-controls open="$ctrl.open()" ng-if="$ctrl.controlsVisible">
+  </cd-dojo-map-controls>
 </section>

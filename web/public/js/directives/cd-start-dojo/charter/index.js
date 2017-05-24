@@ -12,6 +12,9 @@ angular
       },
       controller: function ($scope, $translate) {
         var ctrl = this;
+        ctrl.isValid = function () {
+          return ctrl.charter.form ? ctrl.charter.form.$valid : ctrl.charter.isValid || false;
+        };
       }
     });
 }());

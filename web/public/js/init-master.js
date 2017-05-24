@@ -586,6 +586,7 @@
           },
         })
         .state('start-dojo', {
+          parent: 'dashboard',
           url: '/start-dojo',
           redirectTo: 'start-dojo.champion',
           template: '<cd-start-dojo current-user="currentUser" ></cd-start-dojo>',
@@ -601,7 +602,7 @@
           }
         })
         .state('start-dojo.champion', {
-          url: '/champion',
+          url: '/champion?validate',
           parent: 'start-dojo',
           template: '<cd-sad-champion ' +
            'champion="$ctrl.viewData.champion" class="cd-sidebar__content--padded"></cd-sad-champion>',
@@ -611,7 +612,7 @@
           }
         })
         .state('start-dojo.information', {
-          url: '/information',
+          url: '/information?validate',
           parent: 'start-dojo',
           template: '<cd-sad-information ' +
           'dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-information>',
@@ -621,7 +622,7 @@
           }
         })
         .state('start-dojo.venue', {
-          url: '/venue',
+          url: '/venue?validate',
           parent: 'start-dojo',
           template: '<cd-sad-venue ' +
             'venue="$ctrl.viewData.venue" gmap="gmap" class="cd-sidebar__content--padded" ></cd-sad-venue>',
@@ -637,7 +638,7 @@
           }
         })
         .state('start-dojo.team', {
-          url: '/team',
+          url: '/team?validate',
           parent: 'start-dojo',
           template: '<cd-sad-team ' +
           'team="$ctrl.viewData.team" dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-team>',
@@ -647,7 +648,7 @@
           }
         })
         .state('start-dojo.charter', {
-          url: '/charter',
+          url: '/charter?validate',
           parent: 'start-dojo',
           template: '<cd-sad-charter ' +
           'charter="$ctrl.viewData.charter" user="$ctrl.user" class="cd-sidebar__content--padded"></cd-sad-charter>',

@@ -98,6 +98,14 @@
   </div>
 
   <div class="form-group">
+    <label for="notes">{@i18n key="Notes"/}</label>
+    <textarea ng-if="$ctrl.editorOptions" ckeditor="editorOptions"
+      ng-model="$ctrl.dojo.notes" id="dojoNotes" class="form-control"
+      name="notes"
+      required="required"></textarea>
+  </div>
+
+  <div class="form-group">
     <label for="website">{@i18n key="Website (optional)"/}</label>
     <input type="text" class="form-control" ng-model="$ctrl.dojo.website"
       name="website" placeholder="{@i18n key="e.g. coderdojo.com"/}">

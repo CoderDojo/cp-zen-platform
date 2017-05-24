@@ -10,21 +10,39 @@ angular
       ngModel: '=',
       mapOptions: '=',
       model: '=',
-      addMarker: '='
+      addMarker: '=',
+      setLocation: '='
     },
-    controller: function (utilsService, Geocoder, cdDojoService, alertService, $translate, $timeout) {
+    controller: function (utilsService, Geocoder, cdDojoService, alertService,
+      $translate, $timeout, $scope) {
       var ctrl = this;
       ctrl.$onInit = function () {
         ctrl.places = [];
         ctrl.countries = [];
+        ctrl.geoPointSet = false;
         cdDojoService.listCountries(function (countries) {
           ctrl.countries = countries;
         });
       };
+      $scope.$watch('$ctrl.ngModel.country', function () {
+        if (!_.isUndefined(ctrl.ngModel.country)) {
+          ctrl.getBoundariesFromCountry();
+        }
+      });
+      // Init manually set marker
+      var initMarker2 = $scope.$watchGroup(['$ctrl.ngModel.geoPoint', '$ctrl.mapOptions'], function () {
+        if (_.isEmpty(ctrl.model.markers) && !ctrl.geoPointSet) {
+          if (!_.isUndefined(ctrl.mapOptions) && ctrl.ngModel.geoPoint) {
+            ctrl.setPoint(ctrl.ngModel.geoPoint);
+          }
+        } else {
+          initMarker2();
+        }
+      }, true);
 
       ctrl.getPlaces = function ($select) {
-        if (ctrl.ngModel && ctrl.ngModel.alpha2) {
-          return utilsService.getPlaces(ctrl.ngModel.alpha2, $select).then(function (data) {
+        if (ctrl.ngModel.country && ctrl.ngModel.country.alpha2) {
+          return utilsService.getPlaces(ctrl.ngModel.country.alpha2, $select).then(function (data) {
             ctrl.places = data;
           }, function (err) {
             ctrl.places = [];
@@ -33,12 +51,11 @@ angular
       };
 
       ctrl.setCountry = function (country) {
-        _.extend(ctrl.ngModel, _.pick(country, ['countryName', 'continent', 'alpha2', 'alpha3']));
-        if (!ctrl.model.markers.length) ctrl.getBoundariesFromCountry();
+        ctrl.ngModel.country = _.pick(country, ['countryName', 'continent', 'alpha2', 'alpha3']);
       };
 
       ctrl.getBoundariesFromCountry = function () {
-        Geocoder.boundsForCountry(ctrl.ngModel.countryName)
+        Geocoder.boundsForCountry(ctrl.ngModel.country.countryName)
         .then(function (bounds) {
           $timeout(function () {
             console.log('fitBounds');
@@ -47,24 +64,39 @@ angular
         });
       };
 
+      ctrl.setLocation = function (latLng) {
+        ctrl.ngModel.geoPoint = {
+          lat: latLng.lat(),
+          lon: latLng.lng()
+        };
+        ctrl.setPoint(ctrl.ngModel.geoPoint);
+      };
+
       ctrl.setPlace = function (place) {
-        _.extend(ctrl.ngModel, place);
-        if (!ctrl.model.markers.length) ctrl.getLocationFromAddress();
+        ctrl.ngModel.place = _.omit(place, '$$hashKey');
+        if (!ctrl.model.markers.length && !_.isUndefined(ctrl.ngModel.place)) {
+          ctrl.getLocationFromAddress();
+        }
+      };
+
+      ctrl.setPoint = function (geoPoint) {
+        ctrl.mapOptions.center = new google.maps.LatLng(geoPoint.lat, geoPoint.lon);
+        $timeout(function () {
+          ctrl.model.map.panTo(ctrl.mapOptions.center);
+        });
+        ctrl.addMarker(null, [{latLng: ctrl.mapOptions.center}]);
+        ctrl.geoPointSet = true;
       };
 
       ctrl.getLocationFromAddress = function () {
         //the extend is a hack for backward compat
-        utilsService.getLocationFromAddress(_.extend(ctrl, ctrl.ngModel)).then(function (data) {
-          ctrl.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
+        utilsService.getLocationFromAddress(_.cloneDeep(ctrl.ngModel))
+        .then(function (data) {
           ctrl.ngModel.geoPoint = {
             lat: data.lat,
             lon: data.lng
           };
-          $timeout(function () {
-            console.log('panTo');
-            ctrl.model.map.panTo(ctrl.mapOptions.center);
-          });
-          ctrl.addMarker(null, [{latLng: ctrl.mapOptions.center}]);
+          ctrl.setPoint(ctrl.ngModel.geoPoint);
         }, function (err) {
           //Ask user to add location manually if google geocoding can't find location.
           alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));

@@ -67,11 +67,9 @@
     </div>
   </div>
 </div> -->
-
-{{ JSON.stringify($ctrl) }}
 <div class="form-group">
   <label for="country">{@i18n key="Country"/}</label>
-  <ui-select name="country" ng-model="$ctrl.country" on-select="$ctrl.setCountry($item)" required>
+  <ui-select name="country" ng-model="$ctrl.ngModel.country" on-select="$ctrl.setCountry($item)" required>
     <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
     <ui-select-choices repeat="country in $ctrl.countries | filter: { countryName: $select.search }">
       <span ng-bind-html="country.countryName | highlight: $select.search"></span>
@@ -81,7 +79,7 @@
 
 <div class="form-group">
   <label for="place">{@i18n key="CityTown"/}</label>
-  <ui-select name="place" ng-model="$ctrl.place" on-select="$ctrl.setPlace($item)" required>
+  <ui-select name="place" ng-model="$ctrl.ngModel.place" on-select="$ctrl.setPlace($item)" required>
     <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
     <ui-select-choices repeat="place in $ctrl.places" refresh="$ctrl.getPlaces($select)" refresh-delay="500">
       <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>

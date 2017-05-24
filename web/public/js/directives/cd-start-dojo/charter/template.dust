@@ -12,6 +12,6 @@
     <cd-charter-content></cd-charter-content>
   </div>
   <div class="form-group cd-sad-charter__group">
-    <cd-sign-charter ng-model="$ctrl.charter"></cd-sign-charter>
+    <cd-sign-charter ng-model="$ctrl.charter" is-valid="$ctrl.isValid()"></cd-sign-charter>
   </div>
 </form>

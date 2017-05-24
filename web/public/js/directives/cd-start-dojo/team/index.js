@@ -7,13 +7,13 @@ angular
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/team/',
       bindings : {
-        team: '=',
-        displayOnly: '<'
+        team: '='
       },
       //TODO : dep injection array
       controller: function ($translate, cdDojoService, atomicNotifyService) {
         var ctrl = this;
         ctrl.$onInit = function () {
+          // Ids must be synchronized with Joi payload validation
           ctrl.srcMentors = {
             community: {value: $translate.instant('Youth/Community Workers')},
             teachers: {value: $translate.instant('Primary or Secondary Teachers')},
@@ -25,7 +25,7 @@ angular
             other: {value: $translate.instant('Other')}
           };
           ctrl.setSrcMentorsValue = function (key) {
-            if (!ctrl.team.selected[key]) delete ctrl.team.selected[key];
+            if (!ctrl.team.src[key]) delete ctrl.team.src[key];
           };
         };
       }
