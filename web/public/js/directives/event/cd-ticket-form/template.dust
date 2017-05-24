@@ -1,0 +1,40 @@
+<div class="col-sm-3 form-group">
+  <label class="visible-xs-block">{@i18n key="Ticket Name"/}</label>
+  <input ng-readonly="pastEvent" placeholder="{@i18n key="e.g. Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'">
+</div>
+<div class="col-sm-3">
+  <label class="visible-xs-block">{@i18n key="Ticket Type"/}<i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></label>
+  <div ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
+    <ui-select ng-disabled="pastEvent" name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
+      <ui-select-match allow-clear="true" placeholder="{@i18n key="e.g. Mentor"/}">{{ $select.selected.title }}</ui-select-match>
+      <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
+        <span ng-bind-html="ticketType.title"></span>
+      </ui-select-choices>
+    </ui-select>
+    <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
+  </div>
+</div>
+<div class="col-sm-3">
+  <label class="visible-xs-block">{@i18n key="Ticket Release Date"/}</label>
+  <div class="input-group">
+    <input readonly type="text" class="form-control" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="ticket.releaseDate" ng-value="ticket.releaseDate"
+      is-open="datepicker.datePicker"
+      ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}"
+      current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
+      name="session-{{ sessionIndex }}-ticketReleaseDate-{{ ticketIndex }}" ng-click="toggleDatepicker($event, 'datePicker')"
+      ng-change="updateLocalStorage('ticketReleaseDate', ticket.releaseDate{{ ticketIndex }})" id="ticketReleaseDate"></input>
+    <span class="input-group-btn">
+      <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker')">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </button>
+    </span>
+  </div>
+</div>
+<div class="col-sm-2">
+  <label class="visible-xs-block">{@i18n key="Ticket Quantity"/}</label>
+  <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">
+</div>
+<div class="col-sm-1 remove-control">
+  <label class="visible-xs-block" ng-hide="lastTicket(session) || pastEvent">{@i18n key="Remove Ticket"/}</label>
+  <i ng-hide="lastTicket(session) || pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="fa fa-close fa-2x pointer cd-color-red" aria-hidden="true"></i>
+</div>

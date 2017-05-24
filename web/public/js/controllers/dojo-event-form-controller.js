@@ -123,7 +123,8 @@
     $scope.eventInfo.type = 'one-off';
     $scope.eventInfo.prefillAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
+    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, releaseDate: null, quantity: 0}]}];
+    $scope.eventInfo.ticketsReleased = false;
 
     $scope.eventInfo.date = defaultEventTime;
     $scope.eventInfo.toDate = defaultEventEndTime;
@@ -177,7 +178,6 @@
         if(!$localStorage[currentUser.data.id]) $localStorage[currentUser.data.id] = {};
         if(!$localStorage[currentUser.data.id][dojoId]) $localStorage[currentUser.data.id][dojoId] = {};
         if(!$localStorage[currentUser.data.id][dojoId].eventForm) $localStorage[currentUser.data.id][dojoId].eventForm = {};
-
         // what if the actual value is 'false' or 'null'
         if(value === false || value === null || value) {
           $localStorage[currentUser.data.id][dojoId].eventForm[item] = value;
