@@ -98,7 +98,7 @@
       //set possible email subjects based on application status
       applications[0].emailSubject = {
         'received': 'Your ticket request for %1$s has been received',
-        'approved': 'Your ticket request for %1$s has been approved',
+        'approved': 'Your ticket for %1$s has been booked',
         'pending': 'Your ticket request for %1$s is pending approval'
       };
       applications[0].dojoEmailSubject = {
