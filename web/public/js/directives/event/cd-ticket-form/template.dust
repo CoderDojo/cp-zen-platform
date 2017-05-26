@@ -14,7 +14,8 @@
     <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
   </div>
 </div>
-<div class="col-sm-3">
+{! My first attempt at making a calendar for inputting ticket release date but it is no longer meant to be inputted for each ticket. Just left this here as a reference.
+  <div class="col-sm-3">
   <label class="visible-xs-block">{@i18n key="Ticket Release Date"/}</label>
   <div class="input-group">
     <input readonly type="text" class="form-control" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="ticket.releaseDate" ng-value="ticket.releaseDate"
@@ -29,7 +30,7 @@
       </button>
     </span>
   </div>
-</div>
+</div> !}
 <div class="col-sm-2">
   <label class="visible-xs-block">{@i18n key="Ticket Quantity"/}</label>
   <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">

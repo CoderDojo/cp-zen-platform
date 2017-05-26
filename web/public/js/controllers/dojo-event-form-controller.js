@@ -123,7 +123,7 @@
     $scope.eventInfo.type = 'one-off';
     $scope.eventInfo.prefillAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
-    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, releaseDate: null, quantity: 0}]}];
+    $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
     $scope.eventInfo.ticketsReleased = false;
 
     $scope.eventInfo.date = defaultEventTime;
