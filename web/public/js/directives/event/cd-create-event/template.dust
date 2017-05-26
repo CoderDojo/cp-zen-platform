@@ -168,9 +168,10 @@
             <div class="col-sm-3">
               <h5>{@i18n key="Ticket Type"/} <i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></h5>
             </div>
+            {! My first attempt at making a calendar for inputting ticket release date but it is no longer meant to be inputted for each ticket. Just left this here as a reference.
             <div class="col-sm-3">
               <h5>{@i18n key="Ticket Release Date"/}</h5>
-            </div>
+            </div> !}
             <div class="col-sm-2">
               <h5>{@i18n key="Ticket Quantity"/}</h5>
             </div>
