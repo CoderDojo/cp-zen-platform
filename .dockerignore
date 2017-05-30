@@ -1,0 +1,12 @@
+.git
+.gitignore
+*.md
+Dockerfile
+*.sh
+deploy
+test
+example
+*.yml
+*.yaml
+components
+node_modules
