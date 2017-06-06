@@ -90,7 +90,15 @@ server.register(vision, function (err) {
 
 server.register(require('cp-zen-frontend'), function (err) {
   checkHapiPluginError('cp-zen-frontend')(err);
-})
+});
+
+server.register(require('hapi-ip2country-plugin'), {
+  routes: {
+    prefix: '/api/2.0/ip-country-details'
+  }
+}, function (err) {
+  checkHapiPluginError('cp-zen-frontend')(err);
+});
 
 server.ext('onPreAuth', function (request, reply) {
   var translateCookie = request.state && request.state.NG_TRANSLATE_LANG_KEY;
