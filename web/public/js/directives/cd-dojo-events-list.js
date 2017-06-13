@@ -6,7 +6,8 @@ function cdDojoEventsList(){
       restrict: 'E',
       templateUrl: '/dojos/template/events/list',
       scope: {
-        dojoId: '@'
+        dojoId: '@',
+        private: '<'
       },
       controller: 'dojo-events-list-controller',
       transclude: true

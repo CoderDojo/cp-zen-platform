@@ -22,7 +22,10 @@ angular
         }).then(function(events){
           events.sort(eventUtils.nextDateComparator);
           ctrl.event = events[0];
-        })
+        });
+        ctrl.canBook = function () {
+          return eventUtils.canBook(ctrl.event.public, ctrl.dojo.private, true);
+        }
       }]
     });
 }());
