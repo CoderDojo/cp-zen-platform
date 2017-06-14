@@ -14,23 +14,7 @@
     <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
   </div>
 </div>
-{! My first attempt at making a calendar for inputting ticket release date but it is no longer meant to be inputted for each ticket. Just left this here as a reference.
-  <div class="col-sm-3">
-  <label class="visible-xs-block">{@i18n key="Ticket Release Date"/}</label>
-  <div class="input-group">
-    <input readonly type="text" class="form-control" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="ticket.releaseDate" ng-value="ticket.releaseDate"
-      is-open="datepicker.datePicker"
-      ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}"
-      current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}"
-      name="session-{{ sessionIndex }}-ticketReleaseDate-{{ ticketIndex }}" ng-click="toggleDatepicker($event, 'datePicker')"
-      ng-change="updateLocalStorage('ticketReleaseDate', ticket.releaseDate{{ ticketIndex }})" id="ticketReleaseDate"></input>
-    <span class="input-group-btn">
-      <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker')">
-        <i class="fa fa-calendar" aria-hidden="true"></i>
-      </button>
-    </span>
-  </div>
-</div> !}
+
 <div class="col-sm-2">
   <label class="visible-xs-block">{@i18n key="Ticket Quantity"/}</label>
   <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">

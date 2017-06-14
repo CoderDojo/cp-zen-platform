@@ -3,6 +3,7 @@
   'use strict';
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
+
     endDateTime = moment.utc(endDateTime).add(1, 'days');
     var startTimeHour = moment(startDateTime.toDate()).hour();
     var startTimeMin = moment(startDateTime.toDate()).minute();
@@ -78,12 +79,19 @@
     $state.go('my-dojos');
   }
 
-  function fixEventDates(newDate, oldDate){
+    function fixEventDates(newDate, oldDate){
+      newDate = moment.utc(newDate);
+      oldDate = moment.utc(oldDate);
+      return moment.utc([ newDate.get('year'),newDate.get('month'), newDate.date(),
+                        oldDate.get('hour'), oldDate.get('minute'), oldDate.get('second'), oldDate.get('millisecond') ]);
+  }
+
+  function fixReleaseDateTime(newDate, oldDate){
     newDate = moment.utc(newDate);
     oldDate = moment.utc(oldDate);
     return moment.utc([ newDate.get('year'),newDate.get('month'), newDate.date(),
-                        oldDate.get('hour'), oldDate.get('minute'), oldDate.get('second'), oldDate.get('millisecond') ]);
-  }
+                      newDate.get('hour'), newDate.get('minute'), newDate.get('second'), newDate.get('millisecond') ]);
+}
 
   function fixEventTime(newTime, date){
     if (!newTime) {
@@ -98,10 +106,13 @@
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
                             alertService, utilsService, ticketTypes, currentUser, eventUtils) {
+    //Event Info is undefined here..
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
+    var defaultReleaseDate = moment.utc(now).add(1, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
+
     $scope.today = moment.utc().toDate();
     $scope.ticketTypes = ticketTypes.data || [];
     $scope.ticketTypesTooltip = '';
@@ -118,6 +129,7 @@
     $scope.ticketTypesTooltip = $sce.trustAsHtml($scope.ticketTypesTooltip);
 
     $scope.eventInfo = {};
+
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
     $scope.eventInfo.type = 'one-off';
@@ -137,11 +149,23 @@
     $scope.eventInfo.endTime.setMinutes(0);
     $scope.eventInfo.endTime.setSeconds(0);
 
+    //DEFINING RELEASE DATE
+    $scope.eventInfo.releaseDate = defaultReleaseDate;
+    $scope.eventInfo.releaseDate.setMinutes(0);
+    $scope.eventInfo.releaseDate.setSeconds(0);
+
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
 
+    //SETTING UP TO BE ABLE TO CHANGE RELEASE DATE
+    $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate;
+
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
+    $scope.hasAccess = true;
+
+    $scope.datepicker2 = {};
+    $scope.datepicker2.minDate = now;
     $scope.hasAccess = true;
 
     //description editor
@@ -166,11 +190,16 @@
       $scope.eventInfo.fixedEndDateTime = fixEventTime(endTime, $scope.eventInfo.fixedEndDateTime);
     });
 
+
     $scope.toggleDatepicker = function($event, isOpen) {
       $event.preventDefault();
       $event.stopPropagation();
-
       $scope.datepicker[isOpen] = !$scope.datepicker[isOpen];
+    };
+    $scope.toggleDatepicker2 = function($event, isOpen) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $scope.datepicker2[isOpen] = !$scope.datepicker2[isOpen];
     };
 
     $scope.updateLocalStorage = function (item, value) {
@@ -287,6 +316,8 @@
     };
 
     $scope.addSession = function () {
+
+
       if($scope.eventInfo.sessions.length === 20) return alertService.showError($translate.instant('You can only create a max of 20 sessions/rooms'));
       var session = {
         name: null,
@@ -343,11 +374,16 @@
     * Dates are recalculated based upon next possible same day than the starting one, keeping the same time gape
     * @param: Object event the selected event from the UI
     */
+
     $scope.copyEvent = function(event){
       cdEventsService.load(event.id, function(event){
         var utcOffset = moment().utcOffset();
         var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
+
+        //Not sure about this..
+        var ticketReleaseDate = moment((event.releaseDate)).subtract(utcOffset, 'minutes');
+
         var now = moment().utc();
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
@@ -370,11 +406,14 @@
         }
         $scope.eventInfo.date = firstDate.toDate();
         $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
+        $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate = ticketReleaseDate;
         $scope.eventInfo.toDate = lastDate.toDate();
         $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = lastDate;
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
         $scope.eventInfo.position = event.position;
+
+
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
@@ -475,6 +514,7 @@
 
     };
 
+
     $scope.scrollToInvalid = function (form) {
         if (form.$invalid) {
             angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
@@ -483,8 +523,46 @@
         }
     };
 
+//needed for event dates to change validity of release time
+    $scope.releaseDateBeforeEventDate = function() {
+
+      //only submit if release date is BEFORE event date
+
+      console.log("inside releaseDateBeforeEventDate");
+      var eventDate = $scope.eventInfo.date;
+      var eventDateTime = eventDate.getTime();
+      var releaseDate = $scope.eventInfo.releaseDate;
+      var releaseDateTime = releaseDate.getTime();
+      console.log(eventDate);
+      console.log(releaseDate);
+      console.log('eventForm',$scope.eventForm);
+      var checkIfReleaseDateIsBeforeEvent = eventDateTime - releaseDateTime;
+
+      console.log("checkIfReleaseDateIsBeforeEvent", checkIfReleaseDateIsBeforeEvent);
+
+
+      //$scope.eventForm.releaseDateTime);
+
+      var releaseBeforeEvent;
+            if(checkIfReleaseDateIsBeforeEvent > 0){
+              releaseBeforeEvent = true;
+              console.log('is before');
+            }
+            else{
+              console.log('is after');
+              releaseBeforeEvent = false;
+            }
+       $scope.eventForm.$setValidity('checkReleaseDate', releaseBeforeEvent);
+       console.log('eventForm invalid? ',$scope.eventForm.$invalid);
+
+    }
+
+
 
     $scope.submit = function(eventInfo) {
+
+      //false by defaults
+      console.log("inside submit? ");
       usSpinnerService.spin('create-event-spinner');
 
       if($scope.googleMaps && $scope.googleMaps.marker) {
@@ -498,6 +576,7 @@
       }
 
       eventInfo.status = eventInfo.publish ? 'published' : 'saved';
+
       delete eventInfo.publish;
       eventInfo.userType = eventInfo.userType && eventInfo.userType.name ? eventInfo.userType.name : '';
 
@@ -513,6 +592,7 @@
           eventInfo.dates = getEveryTargetWeekdayInDateRange(
             eventInfo.fixedStartDateTime,
             eventInfo.fixedEndDateTime,
+            eventInfo.fixedReleaseDateTime,
             $scope.weekdayPicker.selection.id,
             'weekly'
           );
@@ -549,6 +629,7 @@
             cdEventsService.saveEvent(
               eventInfo,
               function (response) {
+
                 if(response.ok === false) {
                   alertService.showError($translate.instant(response.why));
                 } else {
@@ -742,10 +823,11 @@
     }
 
     function loadEvent(done) {
+
       var eventId = $stateParams.eventId;
       $scope.eventInfo.prefillAddress = false;
       cdEventsService.load(eventId, function(event) {
-        var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
+        var startTime = _.head(event.dates).startTime ;
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
 
         var startUtcOffset = moment(startTime).utcOffset();
@@ -755,6 +837,7 @@
         event.endTime = moment(endTime).subtract(endUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = event.startTime;
+
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
         event.toDate = new Date(lastEventOcurrance.replace(/-/g, '\/').replace(/T.+/, ''));
 
@@ -763,13 +846,11 @@
           return dayObject.name === $translate.instant(eventDay);
         });
 
-        $scope.eventInfo.fixedStartDateTime = event.startTime;
-        $scope.eventInfo.fixedEndDateTime = event.endTime;
+        event.releaseDate = new Date(event.releaseDate);
 
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
-
         done(null, event);
       }, done);
     }
@@ -796,6 +877,7 @@
     }
 
     function loadLocalStorage(done) {
+
       if(isLocalStorageUsable()){
         var localStorage = $localStorage[currentUser.data.id][dojoId].eventForm;
         if(localStorage.name) $scope.eventInfo.name = localStorage.name;
@@ -811,6 +893,8 @@
         if(localStorage.address) $scope.eventInfo.address = localStorage.address;
         if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
         if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+
+        if(localStorage.releaseDate) $scope.eventInfo.releaseDate = localStorage.releaseDate;
       }
 
 

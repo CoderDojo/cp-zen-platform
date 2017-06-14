@@ -87,7 +87,11 @@
               <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
               <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
               <div class="input-group">
-                <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.fromDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'fromDatePicker')" ng-change="updateLocalStorage('date', eventInfo.date)" id="date" />
+                <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today"
+                  uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.fromDatePicker" ng-required="true" ng-readonly="true"
+                  ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}"
+                  clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                  ng-click="toggleDatepicker($event, 'fromDatePicker')" ng-change="releaseDateBeforeEventDate()" id="date" />
                 <span class="input-group-btn">
                   <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'fromDatePicker')">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -98,7 +102,8 @@
             <div class="col-sm-3 col-sm-offset-2" ng-if="eventInfo.type === 'recurring'">
               <label for="to-date">{@i18n key="To"/}:</label>
               <div class="input-group">
-                <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'toDatePicker')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
+                <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                 ng-click="toggleDatepicker($event, 'toDatePicker')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="toggleDatepicker($event, 'toDatePicker')">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -107,6 +112,7 @@
               </div>
             </div>
           </div>
+
           <div class="row" ng-show="!pastEvent">
             <div class="col-sm-3 col-xs-3">
               <label for="start-time">{@i18n key="Start time"/}:</label>
@@ -117,8 +123,10 @@
               <uib-timepicker min="eventInfo.startTime" name="endTime" ng-model="eventInfo.endTime" ng-change="updateLocalStorage('endTime', eventInfo.endTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker" required></uib-timepicker>
             </div>
           </div>
+
         </div>
       </div>
+
       <div class="form-group form-inline full-width" ng-show="!eventInfo.status">
         <div class="checkbox checkbox-block">
           <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
@@ -203,6 +211,55 @@
     </div>
     <div class="row controls">
       <div class="col-md-6">
+        <!--DATE RELEASE -->
+
+        <!-- - add a checkbox and only display this if the box is ticked-->
+        <label> Ticket release </label>
+        <div ng-if="pastEvent">
+          <h5>{@i18n key="Event has passed"/}</h5>
+        </div>
+
+        <div ng-if="eventInfo.ticketsReleased">
+          <h5>{@i18n key="Tickets have been released"/}</h5>
+        </div>
+        <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent">
+          <div class="col-md-6" >
+            {! <div ng-class = "check-release-date"> !}
+                {@i18n key="Date"/}:
+              <div class="input-group">
+                <input name="releaseDate" type="releaseDate" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent"
+                ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                ng-click="toggleDatepicker2($event, 'fromDatePicker')" ng-change="releaseDateBeforeEventDate()" id="releaseDate"/>
+                 <div ng-if="eventForm.$invalid">
+                  {@i18n key="Release Date is after before event date"/}:
+                </div>
+                <span class="input-group-btn">
+                  <button type="button"
+                  ng-disabled="pastEvent || eventInfo.ticketsReleased" class="btn btn-default" ng-click="toggleDatepicker2($event, 'fromDatePicker')">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </div>
+              {@i18n key="Time"/}:
+              <uib-timepicker id="ticket-release-time"
+              name="releaseTime"
+              ng-model="eventInfo.releaseDate"
+              ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)"
+              hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
+            {! </div> !}
+          </div>
+        </div>
+{!
+        <div class="checkbox checkbox-block">
+          <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="ticket-release" ng-model="eventInfo.ticketsReleased">
+          <label for="ticket-release">
+            {@i18n key="Ticket release <time></time>"/}
+          </label>
+          <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+        </div> !}
+
+
+        <!-- Date Release end -->
         <label> Additional options </label>
         <div class="checkbox checkbox-block">
           <input ng-disabled="pastEvent" type="checkbox" id="is-public" ng-model="eventInfo.public">
@@ -222,10 +279,11 @@
           <i uib-tooltip="{@i18n key="Enabling this will send you an email when a new ticket application has been made."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
         </div>
       </div>
+
       <div class="col-md-6 btn-toolbar">
         <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Discard Changes"/}</button>
         <button ng-if="!pastEvent" type="submit" class="btn btn-secondary pull-right" >{@i18n key="Save Draft"/}</button>
-        <button ng-if="!pastEvent" type="submit" class="btn btn-success pull-right" ng-click="scrollToInvalid(eventForm)">{@i18n key="Publish"/}</button>
+        <button ng-if="!pastEvent" ng-disabled="eventForm.$invalid" type="submit" class="btn btn-success pull-right" ng-click="scrollToInvalid(eventForm)">{@i18n key="Publish"/}</button>
       </div>
     </div>
   </form>
