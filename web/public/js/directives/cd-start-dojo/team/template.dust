@@ -1,7 +1,8 @@
-<form class="cd-sad-team" name="$ctrl.team.form" novalidate="">
+<form class="cd-sad-team" name="$ctrl.teamForm" no-validate="" ng-class="{'cd-validate': $ctrl.team.visited}" focus-invalid>
 
   <div class="cd-sad-team__video">
-    <img src="http://placekitten.com/g/400/300"></img>
+    <iframe class="cd-sad-team__video-container" width="560" height="315"
+     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Building a dedicated team of technical and non-technical mentors will ensure your Dojo is sustainable!"/}</p>
   </div>
   <div class="cd-sad-team__side-form" >
@@ -25,6 +26,8 @@
         <input type="radio" ng-model="$ctrl.team.status"
           class="cd-sad-team__team-choice-selector"
           ng-value="'exists'"
+          name="teamStatus"
+          ng-required="!$ctrl.team.status"
           />
         <div class="cd-sad-team__team-choice-action" >
           <i class="fa fa-users fa-3x"></i>
@@ -38,6 +41,8 @@
         <input type="radio" ng-model="$ctrl.team.status"
           class="cd-sad-team__team-choice-selector"
           ng-value="'solo'"
+          name="teamStatus"
+          ng-required="!$ctrl.team.status"
           />
         <div class="cd-sad-team__team-choice-action">
           <i class="fa fa-user fa-3x"></i>
@@ -51,7 +56,7 @@
         ng-show="$ctrl.team.status === 'exists'">
         <label class="cd-sad-team__team-block-description">{@i18n key="Let us know where you found mentors for your Dojo."/}<span class="pull-right">(optional)</span></label>
         <label ng-repeat="(id, src) in $ctrl.srcMentors" class="cd-sad-team__team-block-srcs">
-          <input type="checkbox" ng-model="$ctrl.team.src[id]" ng-value="{{ id }}"
+          <input type="checkbox" ng-model="$ctrl.team.src[id]" name="{{ id }}" ng-value="{{ id }}"
             ng-change="$ctrl.setSrcMentorsValue(id)"/> {{ src.value }}
         </label>
         <input type="text"
@@ -59,9 +64,10 @@
           ng-model="$ctrl.team.alternativeSrc"
           ng-show="$ctrl.team.src['other'] === true"
           placeholder="Please detail"
+          ng-required="$ctrl.team.src['other'] === true"
           />
       </div>
-      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--searching"
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--solo"
         ng-show="$ctrl.team.status === 'solo'">
         <p>
           {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/}

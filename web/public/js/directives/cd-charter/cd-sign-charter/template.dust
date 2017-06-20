@@ -9,10 +9,10 @@
         required-message="'{@i18n key="You must accept the charter"/}'" name="agreed">
       <label for="agreed">{@i18n key="I have read and accepted the above charter"/}</label>
     </div>
-    <input type="text" name="fullName" ng-model="$ctrl.ngModel.fullName" class="form-control"
+    <input type="text" name="fullName"
+      ng-model="$ctrl.ngModel.fullName" class="form-control"
       placeholder="{@i18n key="Full Name"/}"></input>
     <div class="cd-sign-charter__button-group input-group-btn">
-      <button class="btn btn-secondary" ng-click="$ctrl.download()"><i class="fa fa-cloud-download"> {@i18n key="Download"/}</i></button>
       <button class="btn btn-secondary" ng-click="$ctrl.print()"><i class="fa fa-print"> {@i18n key="Print"/}</i></button>
     </div>
     <!-- NOTE : Submit action -->

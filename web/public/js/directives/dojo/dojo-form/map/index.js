@@ -13,6 +13,9 @@ angular
       addMarker: '=',
       setLocation: '='
     },
+    require: {
+      form: '^form'
+    },
     controller: function (utilsService, Geocoder, cdDojoService, alertService,
       $translate, $timeout, $scope) {
       var ctrl = this;
@@ -25,14 +28,14 @@ angular
         });
       };
       $scope.$watch('$ctrl.ngModel.country', function () {
-        if (!_.isUndefined(ctrl.ngModel.country)) {
+        if (!_.isUndefined(ctrl.ngModel) && !_.isUndefined(ctrl.ngModel.country)) {
           ctrl.getBoundariesFromCountry();
         }
       });
       // Init manually set marker
       var initMarker2 = $scope.$watchGroup(['$ctrl.ngModel.geoPoint', '$ctrl.mapOptions'], function () {
         if (_.isEmpty(ctrl.model.markers) && !ctrl.geoPointSet) {
-          if (!_.isUndefined(ctrl.mapOptions) && ctrl.ngModel.geoPoint) {
+          if (!_.isUndefined(ctrl.mapOptions) && !_.isUndefined(ctrl.ngModel) && !_.isUndefined(ctrl.ngModel.geoPoint)) {
             ctrl.setPoint(ctrl.ngModel.geoPoint);
           }
         } else {
@@ -99,7 +102,7 @@ angular
           ctrl.setPoint(ctrl.ngModel.geoPoint);
         }, function (err) {
           //Ask user to add location manually if google geocoding can't find location.
-          alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
+          ctrl.geoPointSet = false;
         });
       };
     }

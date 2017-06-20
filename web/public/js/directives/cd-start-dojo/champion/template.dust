@@ -1,9 +1,8 @@
-<form class="cd-sad-champion" name="$ctrl.champion.form">
+<form class="cd-sad-champion" name="$ctrl.championForm" ng-class="{'cd-validate': $ctrl.champion.visited}" focus-invalid>
   <div class="cd-sad-champion__intro text-center">
     <p>{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
   </div>
   <div class="cd-sad-champion__video" >
-    <!-- <img class="cd-sad-champion__video-container" src="http://placekitten.com/g/400/300"></img> -->
     <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Congratulations on registering as a CoderDojo Champion!"/}</p>
     <p class="help-block">{@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
@@ -47,26 +46,26 @@
         </span>
       </div>
     </div>
-    <div ng-show="$ctrl.champion.dob && $ctrl.champion.form.isKid">
+    <div ng-show="$ctrl.champion.dob && $ctrl.getAge()">
       <div class="form-group">
         <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
         <input type="text" class="form-control" id="parentEmail"
           name="parentEmail"
-          ng-required="$ctrl.champion.form.isKid"
+          ng-required="$ctrl.isKid"
           ng-model="$ctrl.champion.parentEmail" placeholder="{@i18n key="Parent Email address"/}">
       </div>
       <div class="form-group">
         <label for="parentName">{@i18n key="Parent Name"/}</label>
         <input type="text" class="form-control" id="parentName"
           name="parentName"
-          ng-required="$ctrl.champion.form.isKid"
+          ng-required="$ctrl.isKid"
           ng-model="$ctrl.champion.parentName" placeholder="{@i18n key="Parent Name"/}">
       </div>
     </div>
     <div class="form-group">
       <label for="address">{@i18n key="Home address"/}</label>
       <input type="text" class="form-control" id="address"
-        required="required"
+        required="required" name="address"
         ng-model="$ctrl.champion.address" placeholder="{@i18n key="Home address"/}">
     </div>
   </div>
@@ -85,14 +84,14 @@
         <span class="pull-right">{@i18n key="(optional)"/}</span>
         <input type="text" class="form-control" ng-model="$ctrl.champion.twitter"
           cd-input-prefix="https://www.twitter.com/"
-          name="twitter" id="twitter" placeholder="{@i18n key="e.g. @CoderDojo"/}">
+          name="twitter" id="twitter" placeholder="{@i18n key="e.g. https://www.twitter.com/SuperMario"/}">
       </div>
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="phone">{@i18n key="Linkedin"/}</label>
         <span class="pull-right">{@i18n key="(optional)"/}</span>
         <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
           cd-input-prefix="https://www.linkedin.com/in/"
-          name="linkedin" id="linkedin" placeholder="{@i18n key="e.g. https://www.linkedin.com/in/Coderdojo"/}">
+          name="linkedin" id="linkedin" placeholder="{@i18n key="e.g. https://www.linkedin.com/in/SuperMario"/}">
       </div>
     </div>
 
@@ -112,17 +111,20 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="reference">{@i18n key="How did you hear about CoderDojo?"/}</label>
-      <select ng-model="$ctrl.champion.reference" name="reference"
-        class="form-control"
-        required="required" >
-        <option ng-repeat="source in $ctrl.sources" value="{{ source.id }}">{{ source.name }}</option>
-      </select>
-      <div>
-      <input type="text" name="alternativeReference" class="form-control"
-        placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}"
-        ng-show="$ctrl.champion.reference == 'other'" ng-required="$ctrl.champion.reference === 'other'"
-        ng-model="$ctrl.champion.alternativeReference"/>
+      <label for="reference" class="cd-sad-champion__reference-label">{@i18n key="How did you hear about CoderDojo?"/}</label>
+      <div class="col-xs-12 col-md-6 cd-sad-champion__reference-choice">
+        <select ng-model="$ctrl.champion.reference" name="reference"
+          class="form-control"
+          required="required" >
+          <option ng-repeat="source in $ctrl.sources" value="{{ source.id }}">{{ source.name }}</option>
+        </select>
+      </div>
+      <div class="col-xs-12 col-md-6 cd-sad-champion__reference-choice">
+        <input type="text" name="alternativeReference" class="form-control"
+          placeholder="{@i18n key="Please specify where you heard about CoderDojo"/}"
+          ng-show="$ctrl.champion.reference == 'other'" ng-required="$ctrl.champion.reference === 'other'"
+          ng-model="$ctrl.champion.alternativeReference"/>
+      </div>
     </div>
   </div>
 </form>

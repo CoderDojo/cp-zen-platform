@@ -1,3 +1,14 @@
+.flex-block() {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: @cd-box-shadow;
+  padding: 8px;
+  margin: 8px;
+}
+
 cd-sad-information {
   display: block;
 }
@@ -22,41 +33,87 @@ cd-sad-information {
   #cke_dojoNotes .cke_contents {
     height: 20vh !important; // Needed because CKEditor adds a height style tag
   }
-  &__email-choice {
-    flex: 1;
+
+  &__time {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;;
-    box-shadow: @cd-box-shadow;
-    padding: 8px;
-    margin: 8px;
-    flex-basis: 200px;
-    min-height: 150px;
-    &-action {
+    &-date {
       display: flex;
-      justify-content: center;
-      flex-direction: column;
-      height: 100%;
-    }
-    &-selector {
-      align-self: flex-start;
-      transform: scale(1.5);
-      &[aria-checked="true"] {
-        transform: scale(2);
+      flex-basis: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      &-session {
+        flex: 1;
+        min-width: 320px;
+        max-width: 45%;
+      }
+      &-frequency {
+        flex: 1;
+        min-width: 320px;
+        max-width: 45%;
       }
     }
-    &-selected {
-      flex: 2;
-      flex-basis: 300px;
-    }
-    &-not-selected {
-      background-color: @cd-very-light-grey;
-    }
-    &-group {
-      text-align: center;
+    &-picker {
       display: flex;
+      flex: 1;
+      flex-basis: 100%;
       flex-wrap: wrap;
+      justify-content: space-between;
+      &-description {
+        flex: 1;
+        min-width: 320px;
+      }
+      &-day {
+        display: flex;
+        flex: 1;
+        min-width: 320px;
+        align-items: center;
+        max-width: 33%;
+      }
+      &-hour {
+        display: flex;
+        flex: 1;
+        min-width: 200px;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 33%;
+      }
+    }
+  }
+  &__email {
+    &-answer {
+      .flex-block();
+    }
+    &-choice {
+      .flex-block();
+      flex-basis: 200px;
+      min-height: 150px;
+      &-action {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+      }
+      &-selector {
+        align-self: flex-start;
+        transform: scale(1.5);
+        &[aria-checked="true"] {
+          transform: scale(2);
+        }
+      }
+      &-selected {
+        flex: 2;
+        flex-basis: 300px;
+      }
+      &-not-selected {
+        background-color: @cd-very-light-grey;
+      }
+      &-group {
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+      }
     }
   }
 }

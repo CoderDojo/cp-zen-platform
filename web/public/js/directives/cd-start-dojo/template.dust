@@ -4,3 +4,5 @@
   <cd-sidebar-actions submit="$ctrl.actions.submit" save="$ctrl.actions.save"
     submit-readonly="!$ctrl.actions.submitReadonly()" save-visible="!$ctrl.actions.isLastTab()"></cd-sidebar-actions>
 </cd-sidebar>
+<cd-sidebar-actions class="cd-start-dojo__bottom-bar row" submit="$ctrl.actions.submit" save="$ctrl.actions.save"
+  submit-readonly="!$ctrl.actions.submitReadonly()" save-visible="!$ctrl.actions.isLastTab()"></cd-sidebar-actions>

@@ -52,24 +52,40 @@ angular
             { id: 'other',
               name: $translate.instant('Other')}
           ];
+          ctrl.isKid = false;
         };
 
         ctrl.formatDoB = function () {
           if (ctrl.champion && !_.isDate(ctrl.champion.dob)) ctrl.champion.dob = new Date(ctrl.champion.dob);
         };
-        ctrl.isKid = function () {
-          if (ctrl.champion && ctrl.champion.form) {
-            ctrl.champion.form.isKid = userUtils.getAge(ctrl.champion.dob) <= 18;
+        ctrl.getAge = function () {
+          var isKid = false;
+          if (ctrl.champion && ctrl.champion.dob) {
+            ctrl.isKid = isKid = userUtils.getAge(ctrl.champion.dob) <= 18;
           }
+          return isKid;
         };
         // Because we use 2way binding, onChanges can't be used
-        $scope.$watch('$ctrl.champion.dob', function () {
-          ctrl.isKid();
+        var dobWatcher = $scope.$watch('$ctrl.champion.dob', function () {
+          ctrl.getAge();
           ctrl.formatDoB();
-        });
+        }, true);
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
         };
+        ctrl.setValidity = function () {
+          if (ctrl.champion) ctrl.champion.formValidity = ctrl.championForm.$valid;
+        };
+        // We don't watch over validity, but over the fact it's touched, so that it refreshes even when the status of validity is the same
+        var validityWatcher = $scope.$watchGroup(['$ctrl.championForm.$pristine', '$ctrl.championForm.$valid'], function () {
+          if (ctrl.championForm && !ctrl.championForm.$pristine) {
+            ctrl.setValidity();
+          }
+        });
+        $scope.$on('$destroy', function () {
+          validityWatcher();
+          dobWatcher();
+        });
       }
     });
 }());

@@ -89,6 +89,10 @@
 
 <div class="form-group">
   <label for="address1">{@i18n key="Building name/number and Street Address"/}</label>
+  <span ng-show="!$ctrl.geoPointSet && !$ctrl.form.address1.$pristine" class="pull-right">
+    <i class="fa" ng-class="$ctrl.ngModel.found ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'"></i>
+    {@i18n key="Location not found, please specify on the map"/}
+  </span>
   <textarea class="form-control" rows="5" required required-message="'{@i18n key="Address is Empty"/}'"
     ng-model="$ctrl.ngModel.address1" name="address1" id="address" placeholder="{@i18n key="Enter street level address"/}"
     ng-blur="$ctrl.getLocationFromAddress()"></textarea>

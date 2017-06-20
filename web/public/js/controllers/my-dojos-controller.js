@@ -125,7 +125,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
             dojo.isChampion = isChampion;
             dojo.isTicketingAdmin = isTicketingAdmin;
             dojo.isDojoAdmin = isDojoAdmin;
-            dojo.country = dojo.alpha2.toLowerCase();
+            if (dojo.alpha2) dojo.country = dojo.alpha2.toLowerCase();
             var path = dojo.urlSlug.split('/');
             path.splice(0, 1);
             path = path.join('/');
@@ -172,6 +172,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
 
       return cb(err);
     });
+    // cdDojoService.searchDojoLeads({userId: ctrl.currentUser.id, completed: false, validated: false})
 
   };
 

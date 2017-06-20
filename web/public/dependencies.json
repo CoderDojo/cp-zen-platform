@@ -15,6 +15,7 @@
   "./web/public/components/angular-route/angular-route.min.js",
   "./web/public/components/angular-ui-map/ui-map.min.js",
   "./web/public/components/moment/min/moment.min.js",
+  "./web/public/components/moment/min/locales.js",
   "./web/public/components/angular-moment/angular-moment.min.js",
   "./web/public/components/angular-ui-map/ui-map.min.js",
   "./web/public/components/angular-google-maps/dist/angular-google-maps.min.js",

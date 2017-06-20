@@ -1041,7 +1041,9 @@ angular.module('cpZenPlatform')
       ERROR_ACCEPT_JOIN_REQUEST: "Error accepting a user request",
       ERROR_DECLINE_JOIN_REQUEST: "Error declining a user request",
       NUM_OF_ATTENDEES: "{{ numAttendees }} Attendees",
-      NUM_OF_MENTORS: "{{ numMentors }} Mentors"
+      NUM_OF_MENTORS: "{{ numMentors }} Mentors",
+      APPLICATION_CREATED: "Created on {{ date }}",
+      APPLICATION_UPDATED: "Last updated on {{ date }}"
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {

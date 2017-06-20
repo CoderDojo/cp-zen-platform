@@ -10,7 +10,7 @@ angular
         team: '='
       },
       //TODO : dep injection array
-      controller: function ($translate, cdDojoService, atomicNotifyService) {
+      controller: function ($translate, cdDojoService, atomicNotifyService, $scope) {
         var ctrl = this;
         ctrl.$onInit = function () {
           // Ids must be synchronized with Joi payload validation
@@ -27,6 +27,13 @@ angular
           ctrl.setSrcMentorsValue = function (key) {
             if (!ctrl.team.src[key]) delete ctrl.team.src[key];
           };
+          // We don't watch over validity, but over the fact it's touched, so that it refreshes even when the status of validity is the same
+          var validityWatcher = $scope.$watchGroup(['$ctrl.teamForm.$pristine', '$ctrl.teamForm.$valid'], function () {
+            if (ctrl.team && !ctrl.teamForm.$pristine) ctrl.team.formValidity = ctrl.teamForm.$valid;
+          });
+          $scope.$on('$destroy', function () {
+            validityWatcher();
+          });
         };
       }
     });

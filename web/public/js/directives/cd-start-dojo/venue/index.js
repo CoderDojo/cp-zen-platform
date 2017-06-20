@@ -11,7 +11,7 @@ angular
         venue: '='
       },
       //TODO : dep injection array
-      controller: function ($translate, Geocoder, atomicNotifyService) {
+      controller: function ($translate, Geocoder, atomicNotifyService, $scope) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
@@ -77,17 +77,18 @@ angular
             }
           ];
         };
-        ctrl.setLookinUpForVenue = function () {
-          ctrl.venue.found = false;
-        };
-        ctrl.setVenueFound = function () {
-          ctrl.venue.found = true;
-        };
         ctrl.displayInfo = function () {
           atomicNotifyService.custom('info',
             $translate.instant('No problem! You can continue filling out the rest of the application, and come back to this when you’ve found a venue.'),
             'fa fa-thumbs-up fa-flip-horizontal', 3000);
         };
+        // We don't watch over validity, but over the fact it's touched, so that it refreshes even when the status of validity is the same
+        var validityWatcher = $scope.$watchGroup(['$ctrl.venueForm.$pristine', '$ctrl.venueForm.$valid'], function () {
+          if (ctrl.venue && !ctrl.venueForm.$pristine) ctrl.venue.formValidity = ctrl.venueForm.$valid;
+        });
+        $scope.$on('$destroy', function () {
+          validityWatcher();
+        });
       }
     });
 }());

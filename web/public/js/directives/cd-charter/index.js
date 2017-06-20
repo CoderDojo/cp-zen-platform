@@ -25,31 +25,26 @@
                 .then(function (agreement) {
                   if (agreement.data && !_.isEmpty(agreement.data)) {
                     // We remove the faculty to save to signal sign-charter that it's a valid chart
-                    delete ctrl.save;
                     ctrl.agreement = agreement.data;
                   } else {
                     ctrl.agreement = {};
                   }
                 });
-              } else { // User is logged out
-                delete ctrl.save;
               }
-            })
-            .catch(function () {
-              delete ctrl.save;
             });
           });
         };
         ctrl.save = function () {
           cdAgreementsService.save(ctrl.agreement)
-          .then(function () {
+          .then(function (agreement) {
+            ctrl.agreement = agreement;
             // NOTE: @rosa have a look plz
-            atomicNotifyService.success($translate.instant('Thanks for agreeing to this charter!'));
+            atomicNotifyService.success($translate.instant('Thanks for agreeing to our charter!'));
             // TODO: redirect?
           });
         };
         ctrl.isValid = function () {
-          return ctrl.user ? (ctrl.agreement ? true: false) : true;
+          return !_.isEmpty(ctrl.user) ? (!_.isEmpty(ctrl.agreement) && ctrl.agreement.id) : true;
         };
       }]
     });

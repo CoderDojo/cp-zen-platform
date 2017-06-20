@@ -1,22 +1,22 @@
-<form class="cd-sad-venue" name="$ctrl.venue.form" novalidate="">
+<form class="cd-sad-venue" name="$ctrl.venueForm"  no-validate="" ng-class="{'cd-validate': $ctrl.venue.visited}" focus-invalid>
   <div class="cd-sad-venue__video">
-    <img src="http://placekitten.com/g/400/300"></img>
-    <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
-      set-location="$ctrl.setLocation"
-      map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
+    <iframe class="cd-sad-venue__video-container" width="560" height="315"
+     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
       {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
     </p>
     <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
-    <h5 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h5>
+    <h4 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h4>
     <div class="cd-sad-venue__venue-choice-group">
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
         ng-click="$ctrl.venue.isFound = true">
         <input type="radio" ng-model="$ctrl.venue.isFound"
           class="cd-sad-venue__venue-choice-selector"
+          name="isFound"
           ng-value="true"/>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-at fa-2x"></i>
@@ -25,9 +25,10 @@
       </div>
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}"
-        ng-click="$ctrl.venue.isFound = false">
+        ng-click="$ctrl.venue.isFound = false; $ctrl.displayInfo();">
         <input type="radio" ng-model="$ctrl.venue.isFound"
           class="cd-sad-venue__venue-choice-selector"
+          name="isFound"
           ng-value="false"/>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-magic fa-2x"></i>
@@ -37,6 +38,9 @@
     </div>
 
     <div ng-show="$ctrl.venue.isFound === true" class="cd-sad-venue__container">
+      <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+        set-location="$ctrl.setLocation"
+        map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
@@ -54,13 +58,13 @@
         </select>
         <div ng-show="($ctrl.venue.type === 'other')">
           {@i18n key="Other (please detail)"/}
-          <input type="text" class="form-control" name="venueTypeDetails"
+          <input type="text" class="form-control" name="alternativeType"
             placeholder="Please detail"
             ng-required="$ctrl.venue.type === 'other'"
             ng-model="$ctrl.venue.alternativeType"></input>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-show="$ctrl.venue.type === 'office'">
         <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
         <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" required="true">
           <option ng-repeat="option in $ctrl.corporateList" value="{{ option.id }}">
@@ -70,6 +74,7 @@
         <div ng-show="($ctrl.venue.corporate === 'other')" >
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control"
+            name="alternativeCorporate"
             ng-required="$ctrl.venue.corporate === 'other'"
             ng-model="$ctrl.venue.alternativeCorporate"></input>
         </div>

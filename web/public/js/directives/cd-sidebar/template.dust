@@ -20,6 +20,7 @@
           <span class="cd-sidebar__tab-title">{{ tab.tabTitle }}</span>
           <span class="cd-sidebar__tab-sub-title"> {{ tab.tabSubTitle }}</span>
         </div>
+        <span class="cd-sidebar__tab-status" ng-if="tab.status" ng-bind-html="tab.status()"></span>
       </a>
     </div>
     <div class="cd-sidebar__content">

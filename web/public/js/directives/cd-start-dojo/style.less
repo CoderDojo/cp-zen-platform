@@ -16,8 +16,19 @@ cd-start-dojo {
       color: @cd-white;
     }
   }
-  .ng-invalid { // While not being blocking, we want it to be displayed clearly
-    border-color: #a94442;
+  form.cd-validate {
+    & .ng-invalid-required {
+      border-color: @red-invalid;
+    }
   }
   // TODO : recover any reusable sub-part of content (side + video + btn-group)
+}
+.cd-start-dojo {
+  &__bottom-bar {
+    display: block;
+    & .cd-sidebar-actions {
+      background-color: @cd-light-purple;
+      padding: 8px;
+    }
+  }
 }

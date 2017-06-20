@@ -12,7 +12,7 @@ cd-sad-review {
       padding-right: 8px;
     }
   }
-  .cd-sad-review-step {
+  &__step {
     box-shadow: @cd-box-shadow;
     flex: 1;
     margin: 3%;
@@ -25,18 +25,19 @@ cd-sad-review {
     h3 {
       flex: 1;
       padding: 8px;
+      margin-top: 10px;
     }
-    &__icon {
+    &-icon {
       margin-left: 8px;
       .fa {
         width: 24px;
+        font-size: 2em;
         text-align: center;
-        border-radius: 100%;
-        background-color: @cd-white;
       }
     }
-    &__icon-navigate {
-      font-size: 3em;
+    &-icon--navigate {
+      font-size: 4em;
+      margin-bottom: 5px;
       margin: 0;
     }
   }

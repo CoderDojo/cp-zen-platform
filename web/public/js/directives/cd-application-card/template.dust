@@ -1,0 +1,7 @@
+<cd-expanding-card
+   main-title="{{ $ctrl.dojo.name }}"
+  sub-title-1="{{ $ctrl.dateKey | translateFromKey: {date: $ctrl.date}  }}"
+  round-image="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/{{ $ctrl.dojo.id }}"
+  round-image-fallback="/img/avatars/dojo-default-logo.png" start-expanded="{{ $ctrl.startExpanded }}"
+  ui-sref="start-dojo({id: $ctrl.application.id})">
+</cd-expanding-card>

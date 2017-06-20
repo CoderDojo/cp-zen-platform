@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('cpZenPlatform').component('cdExpandingCard', {
-    transclude: true,
     bindings: {
         roundImage: '@',
         roundImageFallback: '@',

@@ -34,8 +34,6 @@ angular
             name: $translate.instant('Sign the Charter')
           }
         };
-        ctrl.$onChanges = function () {
-        };
       }
     });
 }());

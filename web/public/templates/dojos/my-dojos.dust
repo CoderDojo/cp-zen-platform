@@ -1,4 +1,4 @@
-<div class="cd-dashboard cd-color-3-underline">
+<div class="cd-dashboard">
   <div class="row">
     <div class="my-dojos">
       <h1>{@i18n key="My Dojos"/}</h1>
@@ -19,4 +19,8 @@
       boundary-links="true"></uib-pagination>
     </div>
   </div>
+  <cd-application-card ng-repeat="application in applications" application="application"
+   user="currentUser" start-expanded="{{ myDojos.length === 0 && applications.length === 1 }}">
+  </cd-application-card>
+
 </div>

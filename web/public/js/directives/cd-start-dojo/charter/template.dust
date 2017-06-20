@@ -1,17 +1,17 @@
-<form class="cd-sad-charter" novalidate="" name="$ctrl.charter.form">
+<form class="cd-sad-charter" novalidate="" name="$ctrl.charterForm" ng-class="{'cd-validate': $ctrl.charter.visited}" focus-invalid>
   <div class="cd-sad-charter__disclaimer help-block">
-    <p>{@i18n key="All global Dojos follow a common ethos and principles, such as always being free for children, and encouraging kids to work together!"/}</p>
-    <p>{@i18n key="All of these principles are  documented in the CoderDojo Charter."/}</p>
-    <p>{@i18n key="To become a verified Dojo you must agree to follow all principles in the CoderDojo Charter."/}</p>
+    <p>{@i18n key="All global Dojos follow a common ethos and principles, such as always being free for children, and encouraging kids to work together!"/}
+    {@i18n key="All of these principles are  documented in the CoderDojo Charter."/}
+    {@i18n key="To become a verified Dojo you must agree to follow all principles in the CoderDojo Charter."/}
 
-    <p>{@i18n key="It’s important that as part of the CoderDojo community you and your volunteers understand the CoderDojo Ethos."/}</p>
-    <p>{@i18n key="To make it easier to understand and implement in your Dojo we have created a short E-Learning module <a href=\"?\">which you can find here.</a>"/}</p>
-    <p>{@i18n key="You should encourage all volunteers to take the CoderDojo E-Learning modules."/}</p>
+    {@i18n key="It’s important that as part of the CoderDojo community you and your volunteers understand the CoderDojo Ethos."/}
+    {@i18n key="To make it easier to understand and implement in your Dojo we have created a short E-Learning module <a href=\"?\">which you can find here.</a>"/}
+    {@i18n key="You should encourage all volunteers to take the CoderDojo E-Learning modules."/}</p>
   </div>
   <div class="cd-sad-charter__container">
     <cd-charter-content></cd-charter-content>
   </div>
-  <div class="form-group cd-sad-charter__group">
+  <ng-form class="form-group cd-sad-charter__group">
     <cd-sign-charter ng-model="$ctrl.charter" is-valid="$ctrl.isValid()"></cd-sign-charter>
-  </div>
+  </ng-form>
 </form>

@@ -589,7 +589,7 @@
           parent: 'dashboard',
           url: '/start-dojo',
           redirectTo: 'start-dojo.champion',
-          template: '<cd-start-dojo current-user="currentUser" ></cd-start-dojo>',
+          template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
           params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
@@ -602,27 +602,29 @@
           }
         })
         .state('start-dojo.champion', {
-          url: '/champion?validate',
+          url: '/champion',
           parent: 'start-dojo',
           template: '<cd-sad-champion ' +
            'champion="$ctrl.viewData.champion" class="cd-sidebar__content--padded"></cd-sad-champion>',
           params: {
             referer: 'start-dojo',
-            pageTitle: 'Start a Dojo'
+            pageTitle: 'Start a Dojo',
+            skip: false
           }
         })
         .state('start-dojo.information', {
-          url: '/information?validate',
+          url: '/information',
           parent: 'start-dojo',
           template: '<cd-sad-information ' +
           'dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-information>',
           params: {
             referer: 'start-dojo',
-            pageTitle: 'Start a Dojo'
+            pageTitle: 'Start a Dojo',
+            skip: false
           }
         })
         .state('start-dojo.venue', {
-          url: '/venue?validate',
+          url: '/venue',
           parent: 'start-dojo',
           template: '<cd-sad-venue ' +
             'venue="$ctrl.viewData.venue" gmap="gmap" class="cd-sidebar__content--padded" ></cd-sad-venue>',
@@ -634,27 +636,30 @@
           },
           params: {
             referer: 'start-dojo',
-            pageTitle: 'Start a Dojo'
+            pageTitle: 'Start a Dojo',
+            skip: false
           }
         })
         .state('start-dojo.team', {
-          url: '/team?validate',
+          url: '/team',
           parent: 'start-dojo',
           template: '<cd-sad-team ' +
           'team="$ctrl.viewData.team" dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-team>',
           params: {
             referer: 'start-dojo',
-            pageTitle: 'Start a Dojo'
+            pageTitle: 'Start a Dojo',
+            skip: false
           }
         })
         .state('start-dojo.charter', {
-          url: '/charter?validate',
+          url: '/charter',
           parent: 'start-dojo',
           template: '<cd-sad-charter ' +
           'charter="$ctrl.viewData.charter" user="$ctrl.user" class="cd-sidebar__content--padded"></cd-sad-charter>',
           params: {
             referer: 'start-dojo',
-            pageTitle: 'Start a Dojo'
+            pageTitle: 'Start a Dojo',
+            skip: false
           }
         })
         .state('start-dojo.review', {

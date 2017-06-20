@@ -1,11 +1,12 @@
 'use strict';
 /*global $*/
 
-function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoService, $location, cdUsersService, $translate, utilsService) {
+function manageDojosCtrl ($scope, $state, alertService, auth, tableUtils, cdDojoService,
+   $location, cdUsersService, $translate, utilsService, cdOrganisationsService) {
   $scope.filter = {};
   $scope.filter.verified = 1;
   $scope.itemsPerPage = 10;
-  
+
   var errorMsg = $translate.instant('error.general');
 
   $scope.pageChanged = function () {
@@ -116,6 +117,24 @@ function manageDojosCtrl($scope, $state, alertService, auth, tableUtils, cdDojoS
     }, function (err) {
       alertService.showError($translate.instant('An error has occurred while loading Dojos'));
       return cb(err);
+    })
+    .then(function () {
+      return cdOrganisationsService.loadOrgUsers({userIds: _.map($scope.dojos, 'creator')})
+      .then(function (userOrgs) {
+        $scope.userOrg = {};
+        _.each(userOrgs.data, function (userOrg) {
+          $scope.userOrgs[userOrg.userId] = userOrg;
+        });
+      });
+    })
+    .then(function () {
+      return cdOrganisationsService.list({query: {orgIds: _.map($scope.userOrgs, 'orgId')}})
+      .then(function (orgs) {
+        $scope.orgs = {};
+        _.each(orgs.data, function (org) {
+          $scope.orgs[org.id] = org;
+        });
+      });
     });
   };
 
@@ -300,4 +319,4 @@ angular.module('cpZenPlatform')
   .controller('manage-dojo-controller',
   ['$scope', '$state', 'alertService', 'auth',
   'tableUtils', 'cdDojoService', '$location',
-  'cdUsersService', '$translate', 'utilsService', manageDojosCtrl]);
+  'cdUsersService', '$translate', 'utilsService', 'cdOrganisationsService', manageDojosCtrl]);
