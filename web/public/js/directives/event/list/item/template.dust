@@ -30,7 +30,7 @@
         <div class="cd-date__date h3"><span ng-bind="::cdELI.event.formattedStartTime"></span> - <span ng-bind="::cdELI.event.formattedEndTime"></span></div>
       </div>
     </div>
-    <div class="cd-event-list-item__link">
+    <div class="cd-event-list-item__link" ng-show="cdELI.canBook">
       <a ng-click="cdELI.goTo()" class="btn btn-warning btn-block btn-main" ng-disabled="cdELI.event.isPast">
         <span ng-if="!cdELI.event.isPast">{@i18n key="Book"/}</span>
         <!-- TODO : isFull? <span ng-if="cdELI.event.isFull && !cdELI.event.isPast">{@i18n key="Book"/}</span> -->
