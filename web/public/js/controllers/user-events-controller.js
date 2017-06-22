@@ -19,7 +19,7 @@
     if(currentUser.id){
       $scope.loadPage = function () {
         $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
-        var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
+        var query = {status: 'published', filterPastEvents: true, sort$: $scope.sort};
         cdEventsService.getUserDojosEvents(query, function (response) {
           usSpinnerService.stop('user-events-spinner');
           $scope.dojosEvents = response;

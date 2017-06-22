@@ -84,6 +84,7 @@
 
         sessionModalInstance.result.then(function (result) {
           if(result.ok === false) return alertService.showError($translate.instant(result.why));
+          //If event requires ticket approval
           if($scope.event.ticketApproval) {
             alertService.showAlert($translate.instant('Thank You. Your application has been received. You will be notified by email if you are approved for this event.'));
             $state.go('dojo-list');
