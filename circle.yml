@@ -6,7 +6,6 @@ machine:
 dependencies:
   pre:
     - npm -g install npm@latest-2
-    - if [ "$CIRCLE_BRANCH" = "master" ]; then cd ~/ && git clone git@github.com:CoderDojo/cp-translations.git && cd cp-translations && ./build.sh; fi
   override:
     - npm install
 test:
