@@ -72,32 +72,21 @@ angular
         };
         ctrl.actions = {};
         ctrl.actions.submit = function () {
-          var deferred = $q.defer();
-          var promise = deferred.promise;
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
-          if (!ctrl.leadId) {
-            promise.then(function () {
-              ctrl.save();
-            });
-          }
-          promise.then(function () {
-            var lead = ctrl.prepareSavePayload();
-            lead.completed = ctrl.isValid();
-            cdDojoService.submitDojoLead(ctrl.leadId, lead)
-            .then(function () {
-              atomicNotifyService.info(
-                $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') +
-                $translate.instant('We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team. We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
-              );
-              $state.go('my-dojos');
-            })
-            .catch(function () {
-              // This should not happend and be caught by the front before submitting
-            });
+          var lead = ctrl.prepareSavePayload();
+          lead.completed = ctrl.isValid();
+          return cdDojoService.submitDojoLead(ctrl.leadId, lead)
+          .then(function () {
+            atomicNotifyService.info(
+              $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '<br/>' +
+              $translate.instant('We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
+            );
+            $state.go('my-dojos');
+          })
+          .catch(function () {
+            // This should not happen and be caught by the front before submitting
           });
-          deferred.resolve();
-          return promise;
         };
         ctrl.actions.save = function () {
           ctrl.save()
