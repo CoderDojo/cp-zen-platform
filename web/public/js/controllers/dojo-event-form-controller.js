@@ -524,40 +524,40 @@
     };
 
 //needed for event dates to change validity of release time
-    $scope.releaseDateBeforeEventDate = function() {
-
-      //only submit if release date is BEFORE event date
-
-      console.log("inside releaseDateBeforeEventDate");
-      var eventDate = $scope.eventInfo.date;
-      var eventDateTime = eventDate.getTime();
-      var releaseDate = $scope.eventInfo.releaseDate;
-      var releaseDateTime = releaseDate.getTime();
-      console.log(eventDate);
-      console.log(releaseDate);
-      console.log('eventForm',$scope.eventForm);
-      var checkIfReleaseDateIsBeforeEvent = eventDateTime - releaseDateTime;
-
-      console.log("checkIfReleaseDateIsBeforeEvent", checkIfReleaseDateIsBeforeEvent);
-
-
-      //$scope.eventForm.releaseDateTime);
-
-      var releaseBeforeEvent;
-            if(checkIfReleaseDateIsBeforeEvent > 0){
-              releaseBeforeEvent = true;
-              console.log('is before');
-            }
-            else{
-              console.log('is after');
-              releaseBeforeEvent = false;
-            }
-       $scope.eventForm.$setValidity('checkReleaseDate', releaseBeforeEvent);
-       console.log('eventForm invalid? ',$scope.eventForm.$invalid);
-
-    }
-
-
+    // $scope.releaseDateBeforeEventDate = function() {
+    //
+    //   //only submit if release date is BEFORE event date
+    //
+    //   console.log("inside releaseDateBeforeEventDate");
+    //   var eventDate = $scope.eventInfo.date;
+    //   var eventDateTime = eventDate.getTime();
+    //   var releaseDate = $scope.eventInfo.releaseDate;
+    //   var releaseDateTime = releaseDate.getTime();
+    //   console.log(eventDate);
+    //   console.log(releaseDate);
+    //   console.log('eventForm',$scope.eventForm);
+    //   var checkIfReleaseDateIsBeforeEvent = eventDateTime - releaseDateTime;
+    //
+    //   console.log("checkIfReleaseDateIsBeforeEvent", checkIfReleaseDateIsBeforeEvent);
+    //
+    //
+    //   //$scope.eventForm.releaseDateTime);
+    //
+    //   var releaseBeforeEvent;
+    //         if(checkIfReleaseDateIsBeforeEvent > 0){
+    //           releaseBeforeEvent = true;
+    //           console.log('is before');
+    //         }
+    //         else{
+    //           console.log('is after');
+    //           releaseBeforeEvent = false;
+    //         }
+    //    $scope.eventForm.$setValidity('checkReleaseDate', releaseBeforeEvent);
+    //    console.log('eventForm invalid? ',$scope.eventForm.$invalid);
+    //
+    // }
+    //
+    //
 
     $scope.submit = function(eventInfo) {
 

@@ -1,37 +1,30 @@
-// ;(function() {
-//   'use strict';
-// //  var app = angular.module("myApp", []);
-// //app.directive("
-// function checkReleaseDate() {
-//   return {
-//     restrict: 'A',
-//     require: 'ngModel',
-//     link: function (scope, element, attrs, ngModelCtrl) {
-//
-//       ngModelCtrl.$parsers.push(checkValidity);
-//       ngModelCtrl.$formatters.push(checkValidity);
-//
-//       console.log(ngModelCtrl.$modelValue);
-//       console.log("inside directive");
-//       function checkValidity  () {
-//         var releaseBeforeEvent;
-//         if(checkIfReleaseDateIsBeforeEvent > 0){
-//           releaseBeforeEvent = true;
-//           console.log('is before');
-//         }
-//         else{
-//           console.log('is after');
-//           releaseBeforeEvent = false;
-//         }
-//
-//         ngModelCtrl.$setValidity('checkReleaseDate', releaseBeforeEvent)
-//       }
-//     }
-//   };
-//
-// }
-//
-// angular
-//     .module('cpZenPlatform')
-//     .directive('checkReleaseDate', checkReleaseDate)
-// }());
+angular
+    .module('cpZenPlatform')
+    .directive("checkReleaseDate", function () {
+    return {
+        restrict: "A",
+        require: "^form",
+        link: function (scope, element, attributes, ngFormCtrl) {
+
+           scope.$watch(ngFormCtrl.$name + '.releaseDate.$modelValue', function(oldV, newV) {
+             var releaseBeforeEvent;
+             var releaseDate = ngFormCtrl.releaseDate.$viewValue;
+             var releaseDate1 = new Date(releaseDate);
+             var releaseDateInMilli = releaseDate1.valueOf();
+             var eventDate = ngFormCtrl.fromDate.$modelValue;
+             var eventInMilli = eventDate.valueOf();
+             console.log('from',ngFormCtrl.fromDate.$modelValue);
+             console.log('eventInMilli', eventInMilli);
+             console.log('releaseDateInMilli', releaseDateInMilli);
+             var eventMInusRelease = eventInMilli - releaseDateInMilli;
+             if (eventMInusRelease > 0){
+               releaseBeforeEvent = true;
+             }
+             else{
+               releaseBeforeEvent = false;
+             }
+            ngFormCtrl.$setValidity('checkReleaseDate', releaseBeforeEvent);
+           });
+          }
+        }
+    });
