@@ -64,6 +64,15 @@ angular
         var dateWatcher = $scope.$watch('$ctrl.dojo.firstSession', function () {
           ctrl.formatFirstSessionDate();
         });
+        var settertimeWatcher = $scope.$watch('$ctrl.dojo.hour', function () {
+          if (!_.isUndefined(ctrl.dojo.hour)) {
+            ctrl.hour = moment(ctrl.dojo.hour, 'HH:mm:SSZZ').toDate();
+            settertimeWatcher();
+          }
+        });
+        var timeWatcher = $scope.$watch('$ctrl.hour', function () {
+          ctrl.dojo.hour = moment(ctrl.hour).utc().format('HH:mm:SSZZ');
+        });
         var notesWatcher = $scope.$watch('$ctrl.dojo.notes', function () {
           if (ctrl.dojo && (ctrl.dojo.notes === '' || ctrl.dojo.notes === '<p></p>')) {
             ctrl.dojo.notes = ctrl.initContent;
@@ -96,6 +105,7 @@ angular
           validityWatcher();
           notesWatcher();
           dateWatcher();
+          timeWatcher();
         });
       }
     });

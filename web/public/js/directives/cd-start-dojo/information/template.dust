@@ -63,7 +63,7 @@
         </select>
       </div>
       <div class="cd-sad-information__time-picker-hour">
-        <div uib-timepicker ng-model="$ctrl.dojo.hour" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
+        <div uib-timepicker ng-model="$ctrl.hour" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
       </div>
     </div>
   </div>
