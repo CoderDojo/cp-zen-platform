@@ -1,35 +1,35 @@
 <form class="cd-sad-champion" name="$ctrl.championForm" ng-class="{'cd-validate': $ctrl.champion.visited}" focus-invalid>
   <div class="cd-sad-champion__intro text-center">
-    <p>{@i18n key="Please answer the following questions correctly so that our Community team can verify all new Champions are real people."/}</p>
+    <p>{@i18n key="Please answer the following questions correctly so that our community team can verify all new Champions are real people."/}</p>
   </div>
   <div class="cd-sad-champion__video" >
     <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Congratulations on registering as a CoderDojo Champion!"/}</p>
-    <p class="help-block">{@i18n key="A Champion is the individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
+    <p class="help-block">{@i18n key="A Champion is an individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
     <p class="help-block">{@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}</p>
   </div>
   <div class="cd-sad-champion__side-form">
     <div class="form-group">
-      <label for="firstName">{@i18n key="First Name"/}</label>
+      <label for="firstName">{@i18n key="First name"/}</label>
       <input type="text" class="form-control" name="firstName" id="firstName"
         required="required"
         placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.champion.firstName">
     </div>
     <div class="form-group">
-      <label for="lastName">{@i18n key="Last Name"/}</label>
+      <label for="lastName">{@i18n key="Last name"/}</label>
       <input type="text" class="form-control" name="lastName" id="lastName"
         required="required"
         placeholder="{@i18n key="Last Name"/}" ng-model="$ctrl.champion.lastName">
     </div>
     <div class="form-group">
-      <label for="email">{@i18n key="Personal/Work Email address"/}</label>
+      <label for="email">{@i18n key="Personal/Work email address"/}</label>
       <input type="text" class="form-control" id="email" readonly=""
         name="email"
         required="required"
         placeholder="{@i18n key="Email"/}" ng-model="$ctrl.champion.email">
     </div>
     <div class="form-group">
-      <label for="dob">{@i18n key="Date of Birth"/}</label>
+      <label for="dob">{@i18n key="Date of birth"/}</label>
       <div class="input-group">
         <input type="text" class="form-control"
           name="dateOfBirth" ng-readonly="true"
@@ -87,7 +87,7 @@
           name="twitter" id="twitter" placeholder="{@i18n key="e.g. https://www.twitter.com/SuperMario"/}">
       </div>
       <div class="form-group cd-simple-flex-grid__flex-1">
-        <label for="phone">{@i18n key="Linkedin"/}</label>
+        <label for="phone">{@i18n key="LinkedIn"/}</label>
         <span class="pull-right">{@i18n key="(optional)"/}</span>
         <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
           cd-input-prefix="https://www.linkedin.com/in/"
@@ -97,12 +97,12 @@
 
     <h3>{@i18n key="Tell us your skills"/}</h3>
     <p class="help-block">
-      To become a Champion you do not need to have technical skills as you can find other volunteers with these skills or use our awesome learning content.
-      Tell us how  confident you feel in the following areas;
+      {@i18n key="To become a Champion you do not need to have technical skills as you can find other volunteers with these skills or use our awesome learning content."/} &nbsp;
+      {@i18n key="Tell us how confident you feel in the following areas;" /}
     </p>
     <div class="cd-simple-flex-grid cd-sad-champion__sliders">
       <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <p>{@i18n key="How confident are you in mentoring youths and young people ?"/}</p>
+        <p>{@i18n key="How confident are you in mentoring young people ?"/}</p>
         <rzslider rz-slider-model="$ctrl.champion.confidentMentoring" rz-slider-options="$ctrl.sliderOptions"></rzslider>
       </div>
       <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">

@@ -37,4 +37,6 @@
     <li><span>{@i18n key="You are solely responsible for the activities conducted by your own Dojo. Agreeing to this Charter does not constitute endorsement of those activities by the CoderDojo Foundation."/}.</span></li>
   </ul>
   <i class="fa fa-2x fa-quote-right pull-right"></i>
+  <!-- Required br to avoid meh css solution to have the float right not overflowing -->
+  <br/>
 </div>

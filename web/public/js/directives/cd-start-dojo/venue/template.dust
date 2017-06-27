@@ -6,7 +6,9 @@
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
-      {@i18n key="The venue is where the Dojo takes place, it should be a safe, accessible and fun space. Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+      {@i18n key="The venue is where the Dojo takes place."/}&nbsp;
+      {@i18n key="It should be a safe, accessible and fun space."/}&nbsp;
+      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
     </p>
     <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
     <h4 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h4>
@@ -31,7 +33,7 @@
           name="isFound"
           ng-value="false"/>
         <div class="cd-sad-venue__venue-choice-action">
-          <i class="fa fa-magic fa-2x"></i>
+          <i class="fa fa-search fa-2x"></i>
           <p>{@i18n key="I'm looking for a venue"/}</p>
         </div>
       </div>
@@ -83,6 +85,7 @@
         {@i18n key="What is the maximum amount of people can your venue hold?"/}
         <input type="number" name="capacity"
           required="true"
+          placeholder="42"
           ng-model="$ctrl.venue.capacity" class="form-control"></input>
       </div>
     </div>

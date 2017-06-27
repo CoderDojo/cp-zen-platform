@@ -15,11 +15,11 @@ angular
         ctrl.$onInit = function () {
           // Ids must be synchronized with Joi payload validation
           ctrl.srcMentors = {
-            community: {value: $translate.instant('Youth/Community Workers')},
-            teachers: {value: $translate.instant('Primary or Secondary Teachers')},
-            pro: {value: $translate.instant('IT Professionals')},
+            community: {value: $translate.instant('Youth/community workers')},
+            teachers: {value: $translate.instant('Primary or secondary teachers')},
+            pro: {value: $translate.instant('IT professionals')},
             students: {value: $translate.instant('3rd level education students')},
-            staff: {value: $translate.instant('Staff of Venue')},
+            staff: {value: $translate.instant('Staff of venue')},
             youth: {value: $translate.instant('Youth Mentors (under 18)')},
             parents: {value: $translate.instant('Parents of attendees')},
             other: {value: $translate.instant('Other')}

@@ -24,9 +24,9 @@ angular
             showSelectionBar: true,
             showTicksValues: true,
             stepsArray: [
-              {value: 1, legend: 'Poorly'},
+              {value: 1, legend: 'Not very'},
               {value: 2},
-              {value: 3, legend: 'Fairly'},
+              {value: 3, legend: 'Moderatly'},
               {value: 4},
               {value: 5, legend: 'Very'}
             ]
