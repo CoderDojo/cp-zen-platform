@@ -110,7 +110,7 @@
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
-    var defaultReleaseDate = moment.utc(now).add(1, 'hours').toDate();
+    var defaultReleaseDate = moment.utc(now).toDate;
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
 
     $scope.today = moment.utc().toDate();
@@ -151,8 +151,8 @@
 
     //DEFINING RELEASE DATE
     $scope.eventInfo.releaseDate = defaultReleaseDate;
-    $scope.eventInfo.releaseDate.setMinutes(0);
-    $scope.eventInfo.releaseDate.setSeconds(0);
+    // $scope.eventInfo.releaseDate.setMinutes(0);
+    // $scope.eventInfo.releaseDate.setSeconds(0);
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
@@ -404,16 +404,15 @@
           firstDate = offsetedFirstDate;
           lastDate = offsetedLastDate;
         }
+
         $scope.eventInfo.date = firstDate.toDate();
         $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
-        $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate = ticketReleaseDate;
+        $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate = now;
         $scope.eventInfo.toDate = lastDate.toDate();
         $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = lastDate;
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
         $scope.eventInfo.position = event.position;
-
-
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
@@ -522,42 +521,6 @@
             $scope.eventInfo.publish=true;
         }
     };
-
-//needed for event dates to change validity of release time
-    // $scope.releaseDateBeforeEventDate = function() {
-    //
-    //   //only submit if release date is BEFORE event date
-    //
-    //   console.log("inside releaseDateBeforeEventDate");
-    //   var eventDate = $scope.eventInfo.date;
-    //   var eventDateTime = eventDate.getTime();
-    //   var releaseDate = $scope.eventInfo.releaseDate;
-    //   var releaseDateTime = releaseDate.getTime();
-    //   console.log(eventDate);
-    //   console.log(releaseDate);
-    //   console.log('eventForm',$scope.eventForm);
-    //   var checkIfReleaseDateIsBeforeEvent = eventDateTime - releaseDateTime;
-    //
-    //   console.log("checkIfReleaseDateIsBeforeEvent", checkIfReleaseDateIsBeforeEvent);
-    //
-    //
-    //   //$scope.eventForm.releaseDateTime);
-    //
-    //   var releaseBeforeEvent;
-    //         if(checkIfReleaseDateIsBeforeEvent > 0){
-    //           releaseBeforeEvent = true;
-    //           console.log('is before');
-    //         }
-    //         else{
-    //           console.log('is after');
-    //           releaseBeforeEvent = false;
-    //         }
-    //    $scope.eventForm.$setValidity('checkReleaseDate', releaseBeforeEvent);
-    //    console.log('eventForm invalid? ',$scope.eventForm.$invalid);
-    //
-    // }
-    //
-    //
 
     $scope.submit = function(eventInfo) {
 
@@ -895,6 +858,9 @@
         if(localStorage.position) $scope.eventInfo.position = localStorage.position;
 
         if(localStorage.releaseDate) $scope.eventInfo.releaseDate = localStorage.releaseDate;
+        if(localStorage.chooseReleaseDate) $scope.eventInfo.chooseReleaseDate = localStorage.chooseReleaseDate;
+
+
       }
 
 

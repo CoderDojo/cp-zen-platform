@@ -213,25 +213,27 @@
             </div>
             <div class="row controls">
               <div class="col-md-6">
-                <!--DATE RELEASE -->
-
-                <!-- - add a checkbox and only display this if the box is ticked-->
-                <label> Ticket release </label>
-                <div ng-if="pastEvent">
-                  <h5>{@i18n key="Event has passed"/}</h5>
-                </div>
+                  <label> Ticket release </label>
+                        <div class="checkbox checkbox-block">
+                          <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="chooseReleaseTime" ng-model="eventInfo.chooseReleaseTime">
+                          <label for="chooseReleaseTime">
+                            {@i18n key="Ticket release <time></time>"/}
+                          </label>
+                          <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+                        </div>
 
                 <div ng-if="eventInfo.ticketsReleased">
                   <h5>{@i18n key="Tickets have been released"/}</h5>
                 </div>
-                <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent">
+                <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent ">
+                  <span ng-if="eventInfo.chooseReleaseTime">
                   <div class="col-md-6" >
                     {! <div ng-class = "check-release-date"> !}
                         {@i18n key="Date"/}:
                       <div class="input-group">
-                        <input name="releaseDate" type="releaseDate" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent"
+                        <input ng-if="eventInfo.chooseReleaseTime" name="releaseDate" type="releaseDate" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-readonly="true" ng-disabled="pastEvent"
                         ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
-                        ng-click="toggleDatepicker2($event, 'fromDatePicker')" invalid-message="'{@i18n key="me"/}'" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" id="releaseDate"/>
+                        ng-click="toggleDatepicker2($event, 'fromDatePicker')" invalid-message="'{@i18n key="Please enter a date"/}'" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" id="releaseDate"/>
                          {! <div ng-if="eventForm.$invalid">
                           {@i18n key="Release Date is after event date"/}:
                         </div> !}
@@ -244,22 +246,14 @@
                       </div>
                       {@i18n key="Time"/}:
                       <uib-timepicker id="ticket-release-time"
-                      name="releaseTime"
+                      name="releaseDate"
                       ng-model="eventInfo.releaseDate"
                       ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)"
                       hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
                     {! </div> !}
-                  </div>
+                  </span>
                 </div>
-        {!
-                <div class="checkbox checkbox-block">
-                  <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="ticket-release" ng-model="eventInfo.ticketsReleased">
-                  <label for="ticket-release">
-                    {@i18n key="Ticket release <time></time>"/}
-                  </label>
-                  <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
-                </div> !}
-
+                </div>
 
                 <!-- Date Release end -->
                 <label> Additional options </label>
