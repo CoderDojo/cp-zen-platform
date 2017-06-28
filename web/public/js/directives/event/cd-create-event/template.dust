@@ -8,8 +8,7 @@
       </div>
     </div>
   </div>
-
-          <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)" class="row" check-release-date>
+          <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)" class="row" choose-release-time>
 
             <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
             <div ng-if="!isEditMode" class="row controls">
@@ -93,8 +92,9 @@
                           uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.fromDatePicker" ng-required="true" ng-readonly="true"
                           ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}"
                           clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                          datepicker-options="datepickerFrom"
                           ng-click="toggleDatepicker($event, 'fromDatePicker')" ng-change="updateLocalStorage(date, eventInfo.date)" id="date" />
-                        <span class="input-group-btn" ng-messages="eventForm.releaseTime.$error">
+                        <span class="input-group-btn">
                           <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'fromDatePicker')">
                             <i class="fa fa-calendar" aria-hidden="true"></i>
                           </button>
@@ -104,8 +104,11 @@
                     <div class="col-sm-3 col-sm-offset-2" ng-if="eventInfo.type === 'recurring'">
                       <label for="to-date">{@i18n key="To"/}:</label>
                       <div class="input-group">
-                        <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
-                         ng-click="toggleDatepicker($event, 'toDatePicker')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
+                        <input name="toDate" type="date" datepicker-options="datepickerTo"
+                          uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePicker" ng-required="true"
+                          ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}"
+                          clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                          ng-click="toggleDatepicker($event, 'toDatePicker')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default" ng-click="toggleDatepicker($event, 'toDatePicker')">
                             <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -211,51 +214,37 @@
                  <span spinner-key="create-event-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
               </div>
             </div>
-            <div class="row controls">
               <div class="col-md-6">
+                <div ng-if="eventInfo.type !== 'recurring'">
                   <label> Ticket release </label>
-                        <div class="checkbox checkbox-block">
-                          <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="chooseReleaseTime" ng-model="eventInfo.chooseReleaseTime">
-                          <label for="chooseReleaseTime">
-                            {@i18n key="Ticket release <time></time>"/}
-                          </label>
-                          <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+                    <div class="checkbox checkbox-block">
+                      <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="choosingReleaseTime" ng-model="eventInfo.chooseReleaseTime">
+                      <label ng-if="!eventInfo.ticketsReleased" for="choosingReleaseTime">{@i18n key="Ticket release"/}</label>
+                      <label ng-if="eventInfo.ticketsReleased" for="choosingReleaseTime">{@i18n key="Tickets have been released"/}</label>
+                      <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+                    </div>
+                    <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent ">
+                      <span ng-if="eventInfo.chooseReleaseTime">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <h5> {@i18n key="Date"/}:</h5>
+                            <input id="releaseDate" name="releaseDate" type="releaseDate" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-readonly="true" ng-disabled="pastEvent"
+                              ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                              ng-click="toggleDatepicker2($event, 'fromDatePicker')" datepicker-options="datepicker2" invalid-message="'{@i18n key="Invalid time."/}'" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" id="releaseDate"/>
+                            <span class="input-group-btn">
+                              <button type="button"
+                                class="btn btn-default" ng-click="toggleDatepicker2($event, 'fromDatePicker')">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <h5> {@i18n key="Time"/}:</h5>
+                          <uib-timepicker id="ticket-release-time"
+                          name="releaseDate" ng-model="eventInfo.releaseDate" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
                         </div>
-
-                <div ng-if="eventInfo.ticketsReleased">
-                  <h5>{@i18n key="Tickets have been released"/}</h5>
+                      </span>
+                    </div>
                 </div>
-                <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent ">
-                  <span ng-if="eventInfo.chooseReleaseTime">
-                  <div class="col-md-6" >
-                    {! <div ng-class = "check-release-date"> !}
-                        {@i18n key="Date"/}:
-                      <div class="input-group">
-                        <input ng-if="eventInfo.chooseReleaseTime" name="releaseDate" type="releaseDate" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-readonly="true" ng-disabled="pastEvent"
-                        ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
-                        ng-click="toggleDatepicker2($event, 'fromDatePicker')" invalid-message="'{@i18n key="Please enter a date"/}'" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" id="releaseDate"/>
-                         {! <div ng-if="eventForm.$invalid">
-                          {@i18n key="Release Date is after event date"/}:
-                        </div> !}
-                        <span class="input-group-btn">
-                          <button type="button"
-                          ng-disabled="pastEvent || eventInfo.ticketsReleased" class="btn btn-default" ng-click="toggleDatepicker2($event, 'fromDatePicker')">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                      </div>
-                      {@i18n key="Time"/}:
-                      <uib-timepicker id="ticket-release-time"
-                      name="releaseDate"
-                      ng-model="eventInfo.releaseDate"
-                      ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)"
-                      hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
-                    {! </div> !}
-                  </span>
-                </div>
-                </div>
-
-                <!-- Date Release end -->
                 <label> Additional options </label>
                 <div class="checkbox checkbox-block">
                   <input ng-disabled="pastEvent" type="checkbox" id="is-public" ng-model="eventInfo.public">
@@ -269,8 +258,16 @@
                   <label for="ticketApproval">{@i18n key="Turn on ticket approval"/}</label>
                   <i uib-tooltip="{@i18n key="Enabling this will require you or another admin with Ticketing Admin permissions to approve applications to attend this event."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
                 </div>
-
               </div>
+<<<<<<< eb8e0c2f210ce3d8bd4e8ab3ee8fd2871d723dcd
+=======
+
+
+
+
+
+
+>>>>>>> Event can't be published if release date and time is before the event date and time
 
               {! <div class="col-md-6 btn-toolbar"> !}
 

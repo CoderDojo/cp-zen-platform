@@ -1,21 +1,17 @@
 angular
     .module('cpZenPlatform')
-    .directive("checkReleaseDate", function () {
+    .directive("chooseReleaseTime", function () {
     return {
         restrict: "A",
         require: "^form",
         link: function (scope, element, attributes, ngFormCtrl) {
 
-           scope.$watch(ngFormCtrl.$name + '.releaseDate.$modelValue', function(oldV, newV) {
+           scope.$watchGroup([ngFormCtrl.$name + '.releaseDate.$modelValue',ngFormCtrl.$name + '.fromDate.$modelValue'], function(oldV, newV) {
              var releaseBeforeEvent;
              var releaseDate = ngFormCtrl.releaseDate.$viewValue;
-             var releaseDate1 = new Date(releaseDate);
-             var releaseDateInMilli = releaseDate1.valueOf();
+             var releaseDateInMilli = releaseDate.valueOf();
              var eventDate = ngFormCtrl.fromDate.$modelValue;
              var eventInMilli = eventDate.valueOf();
-             console.log('from',ngFormCtrl.fromDate.$modelValue);
-             console.log('eventInMilli', eventInMilli);
-             console.log('releaseDateInMilli', releaseDateInMilli);
              var eventMInusRelease = eventInMilli - releaseDateInMilli;
              if (eventMInusRelease > 0){
                releaseBeforeEvent = true;
@@ -23,7 +19,7 @@ angular
              else{
                releaseBeforeEvent = false;
              }
-            ngFormCtrl.$setValidity('checkReleaseDate', releaseBeforeEvent);
+            ngFormCtrl.releaseDate.$setValidity('chooseReleaseTime', releaseBeforeEvent);
            });
           }
         }

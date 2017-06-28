@@ -110,7 +110,7 @@
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
-    var defaultReleaseDate = moment.utc(now).toDate;
+    var defaultReleaseDate = moment.utc(now).add(1, 'hours').toDate();
     var defaultEventEndTime = moment.utc(now).add(3, 'hours').toDate();
 
     $scope.today = moment.utc().toDate();
@@ -130,6 +130,7 @@
 
     $scope.eventInfo = {};
 
+
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
     $scope.eventInfo.type = 'one-off';
@@ -148,11 +149,12 @@
     $scope.eventInfo.endTime = defaultEventEndTime;
     $scope.eventInfo.endTime.setMinutes(0);
     $scope.eventInfo.endTime.setSeconds(0);
+    var ticketReleaseDate;
 
     //DEFINING RELEASE DATE
     $scope.eventInfo.releaseDate = defaultReleaseDate;
-    // $scope.eventInfo.releaseDate.setMinutes(0);
-    // $scope.eventInfo.releaseDate.setSeconds(0);
+    $scope.eventInfo.releaseDate.setMinutes(0);
+    $scope.eventInfo.releaseDate.setSeconds(0);
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
@@ -160,14 +162,15 @@
     //SETTING UP TO BE ABLE TO CHANGE RELEASE DATE
     $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate;
 
-    $scope.datepicker = {};
-    $scope.datepicker.minDate = now;
+    $scope.datepicker = $scope.datepickerTo = {};
+    $scope.datepickerFrom = {};
+    $scope.datepickerFrom.minDate = now;
+    $scope.datepickerTo.minDate = now;
     $scope.hasAccess = true;
 
     $scope.datepicker2 = {};
     $scope.datepicker2.minDate = now;
-    $scope.hasAccess = true;
-
+    $scope.datepicker2.maxDate = now;
     //description editor
     $scope.editorOptions = utilsService.getCKEditorConfig({
       height: '100px',
@@ -176,6 +179,9 @@
 
     $scope.$watch('eventInfo.date', function (date) {
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
+      // Force min selectable date for "To" date to be after "From" date
+      $scope.datepickerTo.minDate = $scope.eventInfo.date;
+      $scope.datepicker2.maxDate = $scope.eventInfo.date;
     });
 
     $scope.$watch('eventInfo.toDate', function (toDate) {
@@ -382,9 +388,8 @@
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
 
         //Not sure about this..
-        var ticketReleaseDate = moment((event.releaseDate)).subtract(utcOffset, 'minutes');
-
         var now = moment().utc();
+
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
@@ -405,14 +410,16 @@
           lastDate = offsetedLastDate;
         }
 
+        console.log(event);
         $scope.eventInfo.date = firstDate.toDate();
         $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
-        $scope.eventInfo.fixedReleaseDateTime = $scope.eventInfo.releaseDate = now;
         $scope.eventInfo.toDate = lastDate.toDate();
         $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = lastDate;
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
         $scope.eventInfo.position = event.position;
+        $scope.eventInfo.chooseReleaseTime = event.chooseReleaseTime;
+        $scope.eventInfo.releaseDate = event.releaseDate;
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
@@ -524,9 +531,9 @@
 
     $scope.submit = function(eventInfo) {
 
-      //false by defaults
       console.log("inside submit? ");
       usSpinnerService.spin('create-event-spinner');
+      console.log(eventInfo.chooseReleaseTime);
 
       if($scope.googleMaps && $scope.googleMaps.marker) {
         var eventPosition = {
