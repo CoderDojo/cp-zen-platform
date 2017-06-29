@@ -400,16 +400,13 @@
         })
         .state("dojo-detail", {
           url: "/dojo/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
-          templateUrl: '/dojos/template/dojo-detail',
-          resolve: {
-            dojo: resolveDojo,
-            gmap: gmap,
-            currentUser: resolves.loggedInUser
-          },
+          template: '<div></div>',
           params: {
             pageTitle: 'Dojo'
           },
-          controller: 'dojo-detail-controller'
+          controller: function () {
+            window.location.reload(true);
+          }
         })
         .state("dojo-detail-alt", {
           url: "/dojo/{legacyId:[0-9]+}",
