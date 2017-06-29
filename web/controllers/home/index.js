@@ -86,9 +86,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/dojo/{id}/{alpha2*}',
     handler: function (request, reply) {
-      if (request.params.alpha2) {
-        reply.view('index', request.locals);
-      }
+      reply.redirect('/dojos/' + request.params.id + '/' + request.params.alpha2);
     },
     config: {
       plugins: {
