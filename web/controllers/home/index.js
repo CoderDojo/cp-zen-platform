@@ -4,14 +4,6 @@ var auth = require('../../../lib/authentications');
 var controller = module.exports = [
   {
     method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-      reply.view('index', request.locals);
-    }
-  },
-
-  {
-    method: 'GET',
     path: '/login',
     handler: function (request, reply) {
       reply.view('index', request.locals);

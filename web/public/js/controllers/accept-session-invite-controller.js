@@ -22,10 +22,10 @@
     cdEventsService.validateTicketInvitation(invitation, function (response) {
       if(response.ok === true) {
         alertService.showAlert($translate.instant('Invitation successfully validated. Your ticket has been sent to your email.'));
-        $state.go('home');
+        $state.go('dojo-list');
       } else {
         alertService.showAlert($translate.instant(response.why));
-        $state.go('home');
+        $state.go('dojo-list');
       }
     }, function (err) {
       if(err) {
