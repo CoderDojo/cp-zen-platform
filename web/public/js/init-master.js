@@ -188,7 +188,9 @@
     }
   };
 
-
+  function reloadPage() {
+    window.location.reload(true);
+  }
 
 
   angular.module('cpZenPlatform')
@@ -205,17 +207,11 @@
       $stateProvider
           .state("home", {
             url: "/?search&list",
-            templateUrl: '/dojos/template/dojos-map',
-            resolve: {
-              gmap: gmap
-            },
+            template: '<div></div>',
             params: {
-              bannerType: null,
-              bannerMessage: null,
               pageTitle: 'Home'
             },
-            controller: 'dojos-map-controller',
-            reloadOnSearch: false
+            controller: reloadPage
           })
         .state("dashboard", {
           url: "/dashboard",
@@ -404,9 +400,7 @@
           params: {
             pageTitle: 'Dojo'
           },
-          controller: function () {
-            window.location.reload(true);
-          }
+          controller: reloadPage
         })
         .state("dojo-detail-alt", {
           url: "/dojo/{legacyId:[0-9]+}",

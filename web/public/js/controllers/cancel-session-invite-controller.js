@@ -26,14 +26,14 @@
         } else {
             alertService.showAlert($translate.instant(response.why));
         }
-        $state.go('home');
+        $state.go('dojo-list');
 
     }, function (err) {
         if (err) {
             console.error(err);
             alertService.showError($translate.instant('Invalid application cancellation link.'));
         }
-        $state.go('home');
+        $state.go('dojo-list');
     })
   }
 
