@@ -8,7 +8,7 @@
     <a title="Facebook" ng-if="cdSN.facebook" ng-href="{{ cdSN.facebook}}"><div class="fa fa-facebook"></div></a>
     <div ng-if="cdSN.email" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn--visible': cdSN.emailVisible}">
       <button title="email" ng-if="cdSN.email" ng-click="cdSN.expand($event)"
-        class="fa fa-envelope"></button>
+        class="fa fa-envelope btn"></button>
       <span ng-bind="::cdSN.email" class="cd-social-network__slider-btn__data"></span>
     </div>
     <div ng-if="cdSN.phone" class="cd-social-network__slider-btn pull-right" ng-class="{'cd-social-network__slider-btn__data--visible': cdSN.phoneVisible}">

@@ -64,14 +64,27 @@ angular
         var dateWatcher = $scope.$watch('$ctrl.dojo.firstSession', function () {
           ctrl.formatFirstSessionDate();
         });
-        var settertimeWatcher = $scope.$watch('$ctrl.dojo.hour', function () {
-          if (!_.isUndefined(ctrl.dojo.hour)) {
-            ctrl.hour = moment(ctrl.dojo.hour, 'HH:mm:SSZZ').toDate();
-            settertimeWatcher();
+        var setterStartTimeWatcher = $scope.$watch('$ctrl.dojo.startTime', function () {
+          if (ctrl.dojo && !_.isUndefined(ctrl.dojo.startTime)) {
+            ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm:SSZZ').toDate();
+            setterStartTimeWatcher();
           }
         });
-        var timeWatcher = $scope.$watch('$ctrl.hour', function () {
-          ctrl.dojo.hour = moment(ctrl.hour).utc().format('HH:mm:SSZZ');
+        var setterEndTimeWatcher = $scope.$watch('$ctrl.dojo.endTime', function () {
+          if (ctrl.dojo && !_.isUndefined(ctrl.dojo.endTime)) {
+            ctrl.endTime = moment(ctrl.dojo.endTime, 'HH:mm:SSZZ').toDate();
+            setterEndTimeWatcher();
+          }
+        });
+        var startTimeWatcher = $scope.$watch('$ctrl.startTime', function () {
+          if (!_.isUndefined(ctrl.startTime)) {
+            ctrl.dojo.startTime = moment(ctrl.startTime).utc().format('HH:mm:SSZZ');
+          }
+        });
+        var endTimeWatcher = $scope.$watch('$ctrl.endTime', function () {
+          if (!_.isUndefined(ctrl.endTime)) {
+            ctrl.dojo.endTime = moment(ctrl.endTime).utc().format('HH:mm:SSZZ');
+          }
         });
         var notesWatcher = $scope.$watch('$ctrl.dojo.notes', function () {
           if (ctrl.dojo && (ctrl.dojo.notes === '' || ctrl.dojo.notes === '<p></p>')) {
@@ -105,7 +118,8 @@ angular
           validityWatcher();
           notesWatcher();
           dateWatcher();
-          timeWatcher();
+          startTimeWatcher();
+          endTimeWatcher();
         });
       }
     });

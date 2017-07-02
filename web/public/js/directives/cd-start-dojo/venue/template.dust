@@ -84,7 +84,7 @@
       <div class="form-group">
         {@i18n key="What is the maximum amount of people can your venue hold?"/}
         <input type="number" name="capacity"
-          required="true"
+          required="required"
           placeholder="42"
           ng-model="$ctrl.venue.capacity" class="form-control"></input>
       </div>

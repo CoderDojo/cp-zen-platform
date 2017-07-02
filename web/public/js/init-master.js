@@ -294,13 +294,15 @@
           controller: 'stats-controller'
         })
         .state("review-champion-application", {
-          url: "/champion-applications/:id",
+          url: "/lead/:id",
           parent: 'dashboard',
-          templateUrl: '/champion/template/review-application',
+          template: '<cd-dojo-lead id="id"></cd-dojo-lead>',
           params: {
-            pageTitle: 'Review Champion Application'
+            pageTitle: 'Review Application'
           },
-          controller: 'review-champion-application-controller'
+          controller: function ($scope, $state) {
+            $scope.id = $state.params.id;
+          }
         })
         .state("manage-dojo-users", {
           url: "/my-dojos/:id/users",
@@ -587,7 +589,7 @@
         })
         .state('start-dojo', {
           parent: 'dashboard',
-          url: '/start-dojo',
+          url: '/start-dojo?id',
           redirectTo: 'start-dojo.champion',
           template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
           params: {

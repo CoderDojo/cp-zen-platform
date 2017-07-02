@@ -148,7 +148,7 @@ angular
             application[key] = _.omitBy(step, _.isNil); // Remove null keys to avoid validations errors
           });
           var lead = {
-            userId: ctrl.currentUser.id,
+            userId: ctrl.userId,
             application : application
           };
 
@@ -225,43 +225,61 @@ angular
 
         ctrl.$onInit = function () {
           var leadQuery = {userId: ctrl.currentUser.id, completed: false};
-          ctrl.leadId = $state.params.leadId;
-          if (ctrl.leadId) leadQuery.id = ctrl.leadId;
-          cdUsersService.userProfileData(leadQuery)
-          .then(function (profile) {
-            profile = profile.data;
-            return cdDojoService.searchDojoLeads(leadQuery)
-            .then(function (leads) {
-              if (leads.data.length > 1) {
-                // TODO : Do a request to orgs to see if it's a valid scenario
-                console.log('multiple pending applications, pick one');
-              }
-              if (leads.data.length === 1) {
-                ctrl.application = _.merge(ctrl.application, leads.data[0].application);
-                ctrl.leadId = leads.data[0].id;
-              }
-              // NOTE : this starts to get quite big
-              if (leads.data.length === 0) {
-                // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
-                ctrl.application = _.merge(ctrl.application, {
-                  champion: {
-                    firstName: ctrl.currentUser.firstName,
-                    lastName: ctrl.currentUser.lastName,
-                    email: ctrl.currentUser.email,
-                    dob: new Date(profile.dob),
-                    phone: profile.phone,
-                    twitter: profile.twitter,
-                    linkedin: profile.linkedin,
-                    address: profile.address,
-                    isValid: false,
-                    visited: false
-                  },
-                  dojo: {hour: moment({minutes: 0}), visited: false, isValid: false},
-                  venue: {visited: false, isValid: false},
-                  team: {visited: false, isValid: false}
-                });
-              }
+          if ($state.params.id) {
+            ctrl.leadId = $state.params.id;
+            // By passing an id, we allow ourselves to bypass the restriction regarding the completion
+            leadQuery = {id: ctrl.leadId};
+          }
+          return cdDojoService.searchDojoLeads(leadQuery)
+          .then(function (leads) {
+            ctrl.leads = leads;
+            if (ctrl.leads.data.length > 1) {
+              // TODO : Do a request to orgs to see if it's a valid scenario
+              console.log('multiple pending applications, pick one');
+            }
+            if (ctrl.leads.data.length === 1) {
+              ctrl.application = _.merge(ctrl.application, ctrl.leads.data[0].application);
+              ctrl.leadId = ctrl.leads.data[0].id;
+              ctrl.userId = ctrl.leads.data[0].userId;
+            }
+          })
+          .then(function () {
+            var userProfileQuery = {
+              userId: ctrl.currentUser.id
+            };
+            if ($state.params.id) {
+              userProfileQuery = {
+                userId: ctrl.userId
+              };
+            }
+            return cdUsersService.userProfileData(leadQuery)
+            .then(function (profile) {
+              ctrl.profile = profile.data;
             });
+          })
+          .then(function () {
+            // NOTE : this starts to get quite big
+            if (ctrl.leads.data.length === 0) {
+              ctrl.userId = ctrl.currentUser.id;
+              // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
+              ctrl.application = _.merge(ctrl.application, {
+                champion: {
+                  firstName: ctrl.profile.firstName,
+                  lastName: ctrl.profile.lastName,
+                  email: ctrl.profile.email,
+                  dob: new Date(ctrl.profile.dob),
+                  phone: ctrl.profile.phone,
+                  twitter: ctrl.profile.twitter,
+                  linkedin: ctrl.profile.linkedin,
+                  address: ctrl.profile.address,
+                  isValid: false,
+                  visited: false
+                },
+                dojo: {startTime: moment({minutes: 0}), endTime: moment({minutes: 0}), visited: false, isValid: false},
+                venue: {visited: false, isValid: false},
+                team: {visited: false, isValid: false}
+              });
+            }
           })
           // The user may already have signed the charter, we load this separatly
           .then(function () {
@@ -271,7 +289,7 @@ angular
               agreement.version = response.data.version;
             })
             .then(function () {
-              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.currentUser.id)
+              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.id)
               .then(function (response) {
                 if (response.data) {
                   agreement = response.data;

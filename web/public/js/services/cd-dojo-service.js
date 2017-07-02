@@ -91,8 +91,11 @@
       submitDojoLead: function (id, lead, win, fail) {
         return cdApi.put('dojos/lead/' + id, { lead: lead });
       },
+      verify: function (id, verified) {
+        return cdApi.patch('dojos/' + id + '/verified', {verified: verified});
+      },
       loadDojoLead: function(id, win, fail) {
-        return cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
+        return cdApi.get('dojos/lead/' + id, win, fail || topfail);
       },
       searchDojoLeads: function(query) {
         return cdApi.post('dojos/leads/search', {query: query});
