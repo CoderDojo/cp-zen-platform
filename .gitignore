@@ -44,3 +44,9 @@ dist/
 # i18n dictionaries from crowdin, except en_US
 web/locale/*
 !web/locale/en_US
+
+# Bower
+web/public/components
+.bower-cache
+.bower-registry
+.bower-tmp
