@@ -13,7 +13,7 @@ function cdOrganisationsService (cdApi, $q) {
       return cdApi.post(base, {org: {name: orgName}});
     },
     loadUsersOrg: function (query) {
-      return cdApi.post(base + '/users', query);
+      return cdApi.post('users/organisations', query);
     },
     loadOrgUsers: function (orgId) {
       return cdApi.get(base + '/' + orgId + '/users');
