@@ -35,6 +35,11 @@ angular
             validityWatcher();
           });
         };
+        ctrl.setTeamStatus = function (value) {
+          ctrl.teamForm.status.$setViewValue(value);
+          ctrl.teamForm.status.$commitViewValue();
+          ctrl.teamForm.status.$render();
+        };
       }
     });
 }());

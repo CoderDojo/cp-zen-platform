@@ -22,26 +22,25 @@
     <div class="cd-sad-team__team-choice-group">
       <div class="cd-sad-team__team-choice"
         ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}"
-        ng-click="$ctrl.team.status = 'exists'">
+        ng-click="$ctrl.setTeamStatus('exists')">
         <input type="radio" ng-model="$ctrl.team.status"
           class="cd-sad-team__team-choice-selector"
           ng-value="'exists'"
-          name="teamStatus"
+          name="status"
           ng-required="!$ctrl.team.status"
           />
         <div class="cd-sad-team__team-choice-action" >
           <i class="fa fa-users fa-3x"></i>
           <p>{@i18n key="I have volunteers to help run my Dojo."/}</p>
         </div>
-
       </div>
       <div class="cd-sad-team__team-choice"
         ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}"
-        ng-click="$ctrl.team.status = 'solo'">
+        ng-click="$ctrl.setTeamStatus('solo')">
         <input type="radio" ng-model="$ctrl.team.status"
           class="cd-sad-team__team-choice-selector"
           ng-value="'solo'"
-          name="teamStatus"
+          name="status"
           ng-required="!$ctrl.team.status"
           />
         <div class="cd-sad-team__team-choice-action">
