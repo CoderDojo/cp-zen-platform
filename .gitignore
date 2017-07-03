@@ -47,6 +47,4 @@ web/locale/*
 
 # Bower
 web/public/components
-.bower-cache
-.bower-registry
-.bower-tmp
+.bower
