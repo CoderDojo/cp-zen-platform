@@ -375,11 +375,10 @@
         .state("manage-dojos", {
           url: "/manage-dojos",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/manage-dojos',
+          template: '<cd-dojos-manage></cd-dojos-manage>',
           params: {
             pageTitle: 'Manage Dojos'
-          },
-          controller: 'manage-dojo-controller'
+          }
         })
         .state("my-dojos", {
           url: "/my-dojos",

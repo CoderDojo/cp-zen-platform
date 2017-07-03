@@ -19,22 +19,26 @@ angular
         });
       };
       function getDojo () {
-        return cdDojoService.load(ctrl.lead.application.dojo.id)
-        .then(function (res) {
-          ctrl.dojo = res.data;
-        })
-        .then(function () {
-          return cdDojoService.getAvatar(ctrl.dojo.id)
+        if (ctrl.lead.application.dojo) {
+          return cdDojoService.load(ctrl.lead.application.dojo.id)
           .then(function (res) {
-            ctrl.dojo.avatar = res.data;
+            ctrl.dojo = res.data;
+          })
+          .then(function () {
+            return cdDojoService.getAvatar(ctrl.dojo.id)
+            .then(function (res) {
+              ctrl.dojo.avatar = res.data;
+            });
           });
-        });
+        }
       }
       function getCharter () {
-        return cdAgreementsService.load(ctrl.lead.application.charter.id)
-        .then(function (res) {
-          ctrl.charter = res.data;
-        });
+        if (ctrl.lead.application.charter) {
+          return cdAgreementsService.load(ctrl.lead.application.charter.id)
+          .then(function (res) {
+            ctrl.charter = res.data;
+          });
+        }
       }
       // Get user profile
       function getProfile () {
@@ -68,25 +72,25 @@ angular
         });
       }
       function parseValidity () {
-          ctrl.tabs = _.map(ctrl.lead.application, function (step, key) {
-            return [{name: key, validity: step.validity }];
-          });
-        }
-        ctrl.$onInit = function () {
-          cdDojoService.loadDojoLead(ctrl.id)
-          .then(function (response) {
-            ctrl.lead = response.data;
-            ctrl.champion = ctrl.lead.application.champion;
-            ctrl.champion.age = userUtils.getAge(ctrl.champion.dob);
-          })
-          .then(function () {
-            return $q.all([
-              getDojo(),
-              getCharter(),
-              getProfile(),
-              parseValidity()
-            ]);
-          });
-        };
+        ctrl.tabs = _.map(ctrl.lead.application, function (step, key) {
+          return {name: key, isValid: step.isValid};
+        });
+      }
+      ctrl.$onInit = function () {
+        cdDojoService.loadDojoLead(ctrl.id)
+        .then(function (response) {
+          ctrl.lead = response.data;
+          ctrl.champion = ctrl.lead.application.champion;
+          ctrl.champion.age = userUtils.getAge(ctrl.champion.dob);
+        })
+        .then(function () {
+          return $q.all([
+            getDojo(),
+            getCharter(),
+            getProfile(),
+            parseValidity()
+          ]);
+        });
+      };
     }]
   });

@@ -24,19 +24,27 @@
     <div class="col-xs-12 text-center">
       <!-- Care : it may overwrite the owner of the lead -->
       <div class="btn-group">
-        <button class="btn btn-primary" ng-click="$ctrl.verify()" ng-if="!$ctrl.dojo.verified">
+        <button class="btn btn-primary" ng-click="$ctrl.verify()" ng-if="!$ctrl.dojo.verified && $ctrl.lead.completed">
           <i class="fa fa-check"></i>Verify
         </button>
-        <a class="btn btn-warning" ui-sref="start-dojo({id: $ctrl.lead.id})" target="_blank" ng-disabled="$ctrl.dojo.verified"><i class="fa fa-link"></i>{@i18n key="Go to application"/}</a>
-        <a class="btn btn-secondary" href="https://hwf.zendesk.com/agent/tickets/new/1"><i class="fa fa-envelope"></i>{@i18n key="Email"/}</a>
+        <a class="btn btn-secondary" href="https://hwf.zendesk.com/agent/tickets/new/1"><i class="fa fa-envelope"></i>New ticket</a>
       </div>
     </div>
-    <div class="col-xs-12">
-      <span ng-repeat="tab in $ctrl.tabsValidity">
-        <i class="fa fa-check cd-icon--success" ng-if="tab.isValid"></i>
-        <i class="fa fa-times cd-icon--danger" ng-if="!tab.isValid"></i>
-        <span ng-bind="::tab.name"></span> <i ng-if="!$last" class="fa fa-chevron-right"></i>
-      </span>
+    <div class="col-xs-12 cd-dojo-lead__validity-status">
+      <div>
+        <label>Steps :</label>
+        <span ng-repeat="tab in $ctrl.tabs">
+          <i class="fa fa-check cd-icon--success" ng-if="tab.isValid"></i>
+          <i class="fa fa-times cd-icon--danger" ng-if="!tab.isValid"></i>
+          <span ng-bind="::tab.name" class="h5"></span>
+          <i class="fa fa-chevron-right"></i>
+        </span>
+        <span>
+          <a ui-sref="start-dojo({id: $ctrl.lead.id})" target="_blank" ng-disabled="$ctrl.dojo.verified">
+            {@i18n key="Go to application"/}<i class="fa fa-link fa-flip-horizontal"></i>
+          </a>
+        </span>
+      </div>
     </div>
     <div class="cd-dojo-lead__social col-xs-12">
       <div class="cd-dojo-lead__social--champion">
@@ -53,7 +61,8 @@
       <div class="cd-dojo-lead__social--dojo">
         <div><i class="fa fa-envelope"></i>
           <span ng-if="$ctrl.dojo.email" ng-bind="::$ctrl.dojo.email"></span>
-          <span ng-if="!$ctrl.dojo.email" class="label label-warning">Require manual activation</span>
+          <span ng-if="!$ctrl.dojo.email && $ctrl.dojo.requestEmail" class="label label-warning">Require manual activation</span>
+          <span ng-if="!$ctrl.dojo.email && !$ctrl.dojo.requestEmail" class="label label-warning">Email not filled</span>
         </div>
         <div ng-show="$ctrl.dojo.facebook"><i class="fa fa-facebook"></i><span ng-bind="::$ctrl.dojo.facebook"></span></div>
         <div ng-show="$ctrl.dojo.twitter"><i class="fa fa-twitter"></i><span ng-bind="::$ctrl.dojo.twitter"></span></div>
@@ -165,7 +174,7 @@
           <!-- <div><label>Latest update</label><span ng-bind="::$ctrl.dojo.updatedAt | date: 'MM/dd/yyyy HH:mm'"></span></div> -->
           <div ng-if="$ctrl.dojo.verified"><label>Verified At</label><i class="fa fa-check"></i><span ng-bind="::$ctrl.dojo.verifiedAt | date: 'MM/dd/yyyy HH:mm'"></span></div>
           <div> <label>Planned first session</label> <span ng-bind="::$ctrl.lead.application.dojo.firstSession | date: 'MM/dd/yyyy HH:mm'"></span></div>
-          <div> <label>Frequency </label> <span ng-bind="::$ctrl.dojo.frequency"></span><span ng-bind="::$ctrl.days[$ctrl.dojo.day]"></span></div>
+          <div> <label>Frequency </label> <span ng-bind="::$ctrl.dojo.frequency"> on </span><span ng-bind="::$ctrl.days[$ctrl.dojo.day]"></span></div>
         </div>
       </div>
     </div>
