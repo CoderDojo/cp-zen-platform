@@ -79,9 +79,10 @@ angular
           return cdDojoService.submitDojoLead(ctrl.leadId, lead)
           .then(function () {
             atomicNotifyService.info(
-              $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '<br/>' +
+              $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '\n' +
               $translate.instant('We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
             );
+            saveOnStateChange();
             $state.go('my-dojos');
           })
           .catch(function () {
@@ -213,7 +214,7 @@ angular
         //   // ctrl.uponLeaving($event);
         // });
 
-        $rootScope.$on('$stateChangeStart', function (event, nextState, nextParams, fromState) {
+        var saveOnStateChange = $rootScope.$on('$stateChangeStart', function (event, nextState, nextParams, fromState) {
           // if (nextState.parent !== $state.current.parent) {
           //   // ctrl.uponLeaving(event);
           // }
@@ -306,6 +307,9 @@ angular
             // We go to the next invalid step when the application has been previously started
             if (ctrl.leadId) ctrl.goToNextStep();
           });
+        };
+        ctrl.$onDestroy = function () {
+          saveOnStateChange();
         };
       }
     });
