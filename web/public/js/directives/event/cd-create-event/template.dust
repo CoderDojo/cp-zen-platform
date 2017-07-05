@@ -194,12 +194,14 @@
               <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">
             </div>
             <div class="col-sm-1 remove-control">
-              <label class="visible-xs-block" ng-hide="lastTicket(session) || pastEvent">{@i18n key="Remove Ticket"/}</label>
-              <i ng-hide="lastTicket(session) || pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="fa fa-close fa-2x pointer cd-color-red" aria-hidden="true"></i>
+              <span ng-hide="lastTicket(session) || pastEvent">
+                <label class="visible-xs-block">{@i18n key="Remove Ticket"/}</label>
+                <i ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="fa fa-close fa-2x pointer cd-color-red" aria-hidden="true"></i>
+              </span>
             </div>
           </div>
           <div class="well clearfix ticket-controls">
-            <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket(session)" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <button type="button" ng-disabled="pastEvent" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
             <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
             <div class="pull-right">
               <label class="icon-group">{@i18n key="Add ticket type"/}</label>
