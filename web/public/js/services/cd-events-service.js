@@ -62,8 +62,8 @@ function cdEventsService(cdApi, $q){
     cancelSession: function(session, win, fail) {
       cdApi.post('events/session/cancel', {session: session}, win, fail || topfail);
     },
-    validateSessionInvitation: function (invitation, win, fail) {
-      cdApi.post('events/session/validate-invitation', {invitation: invitation}, win, fail || topfail);
+    validateTicketInvitation: function (invitation, win, fail) {
+      cdApi.post('events/ticket/' + invitation.ticketId + '/invitations/user/' + invitation.userId , {invitation: invitation}, win, fail || topfail);
     },
     exportGuestList: function (dojoId, eventId, status, win, fail){
       cdApi.get('events/export-guest-list/dojo/' + dojoId + '/event/' + eventId +'/'+ status + '-export.csv', win, fail || topfail);
