@@ -2,7 +2,7 @@
 'use strict';
 /*global $*/
 var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
-   $location, cdUsersService, $translate, utilsService, cdOrganisationsService) {
+   $location, cdUsersService, $translate, utilsService, cdOrganisationsService, $q) {
   var ctrl = this;
   var errorMsg = $translate.instant('error.general');
   ctrl.dojoStagesSettings = {
@@ -53,6 +53,26 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
   ctrl.pageChanged = function () {
     ctrl.loadPage(ctrl.filter, false);
   };
+  ctrl.buildQuery = function (target) {
+    var payload = {
+      name: ctrl.filter.name,
+      verified: ctrl.filter.verified,
+      email: ctrl.filter.email,
+      creatorEmail: ctrl.filter.creatorEmail,
+      stage: ctrl.filter.stages,
+      alpha2: ctrl.filter.country && ctrl.filter.country.alpha2,
+      limit$: ctrl.itemsPerPage,
+      skip$: ctrl.skip,
+      sort$: ctrl.sort
+    };
+    var baseFields = {
+      dojo: _.keys(payload),
+      lead: ['email', 'skip$']
+    };
+    var selectedFields = baseFields[target];
+    var query = _.omitBy(payload, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+    return _.pick(query, selectedFields);
+  };
 
   ctrl.getDojoStageLabel = function(stage) {
     if (stage)
@@ -70,19 +90,10 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
 
   function allSigned (dojo) {
     var currentAgreementVersion = 2;
-    var creators = dojo.creators;
-    var agreements = _.flatten(_.map(creators, 'agreements'));
-    var signedCreators = [];
-
-    _.each(creators, function (creator) {
-      var result = _.find(agreements, {agreementVersion: currentAgreementVersion, userId: creator.id});
-
-      if (result) {
-        signedCreators.push(creator);
-      }
+    var signed = _.find(ctrl.agreements, function (agreement) {
+      return agreement.userId === dojo.owner;
     });
-
-    return signedCreators.length === (creators && creators.length);
+    return _.identity(signed);
   }
 
   ctrl.allSigned = allSigned;
@@ -103,76 +114,118 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
 
     ctrl.loadPage(ctrl.filter, true);
   };
-  ctrl.loadPage = function (filter, resetFlag, cb) {
-    cb = cb || function () {};
+  ctrl.loadPage = function (filter, resetFlag) {
     //sort ascending = 1
     //sort descending = -1
     ctrl.sort = ctrl.sort ? ctrl.sort : { created: -1 };
-    var loadPageData = tableUtils.loadPage(resetFlag, ctrl.itemsPerPage, ctrl.pageNo, query);
-    ctrl.pageNo = loadPageData.pageNo;
     ctrl.dojos = [];
-
-    var query = _.omitBy({
-      name: ctrl.filter.name,
-      verified: ctrl.filter.verified,
-      email: ctrl.filter.email,
-      creatorEmail: ctrl.filter.creatorEmail,
-      stage: ctrl.filter.stages,
-      alpha2: ctrl.filter.country && ctrl.filter.country.alpha2,
-      limit$: ctrl.itemsPerPage,
-      skip$: loadPageData.skip,
-      sort$: ctrl.sort
-    }, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
-
-    cdDojoService.search(query).then(function (result) {
-      if(!_.isUndefined(result.ok) && result.ok === false){
-        $state.go('error-404-no-headers');
-        return cb();
-      }
-      ctrl.dojos = ctrl.formatDojos(result);
-      if(ctrl.dojos.length > 0) {
-        cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
-          ctrl.totalItems = result.length;
+    function getDojos () {
+      var loadPageData = tableUtils.loadPage(resetFlag, ctrl.itemsPerPage, ctrl.pageNo, query);
+      ctrl.pageNo = loadPageData.pageNo;
+      ctrl.skip = loadPageData.skip;
+      var query = ctrl.buildQuery('dojo');
+      return cdDojoService.search(query).then(function (result) {
+        if(!_.isUndefined(result.ok) && result.ok === false){
+          $state.go('error-404-no-headers');
+          return $q.reject();
+        }
+        ctrl.dojos = ctrl.formatDojos(result);
+        if (ctrl.dojos.length > 0) {
+          return cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
+            ctrl.totalItems = result.length;
+          });
+        } else {
+          ctrl.totalItems = 0;
+          return $q.resolve();
+        }
+      }, function (err) {
+        alertService.showError($translate.instant('An error has occurred while loading Dojos'));
+        return $q.reject(err);
+      });
+    }
+    function getUncompletedLeads () {
+      // We only display uncompleted leads when the unverified filter is set manually
+      if (ctrl.filter.verified === 0) {
+        var query = _.extend(ctrl.buildQuery('lead'), {completed: false});
+        return cdDojoService.searchDojoLeads(query)
+        .then(function (res) {
+          var leads = res.data;
+          var leadsIds = _.map(leads, 'id');
+          ctrl.dojos = _.omitBy(ctrl.dojos, function (dojo) {
+            return leadsIds.indexOf(dojo.dojoLeadId) > -1;
+          });
+          ctrl.leads = ctrl.formatDojos(_.map(leads, function (lead) {
+            return _.extend(lead.application.dojo, lead.application.venue, {
+              dojoLeadId: lead.id,
+              creator: [{email: lead.email, id: lead.userId}],
+              creators: [{email: lead.email, id: lead.userId}],
+              completed: lead.completed,
+              completedAt: lead.completedAt
+            });
+          }));
+          return $q.resolve();
         });
       } else {
-        ctrl.totalItems = 0;
+        return $q.resolve();
       }
-    }, function (err) {
-      alertService.showError($translate.instant('An error has occurred while loading Dojos'));
-      return cb(err);
-    })
-    .then(function () {
-      cdDojoService.searchDojoLeads({completed: false})
-      .then(function (res) {
-        var leads = res.data;
-        var leadsIds = _.map(leads, 'id');
-        ctrl.dojos = _.omitBy(ctrl.dojos, function (dojo) {
-          return leadsIds.indexOf(dojo.leadId) > -1;
-        });
-        ctrl.leads = ctrl.formatDojos(_.map(leads, function (lead) {
-          return _.extend(lead.application.dojo, lead.application.venue, {
-            dojoLeadId: lead.id
+    }
+    function getRelatedLeads () {
+      // We only need to extend definition when we don't have enough info
+      // which is to say, when it's an uncomplete lead
+      if (ctrl.filter.verified !== 1 && ctrl.dojos.length > 0) {
+        return cdDojoService.searchDojoLeads({completed: true, id: {in$: _.map(ctrl.dojos, 'dojoLeadId')}})
+        .then(function (res) {
+          var leads = res.data;
+          _.each(ctrl.dojos, function (dojo) {
+            var lead = _.find(leads, function (lead) { return lead.id === dojo.dojoLeadId });
+            if (lead) {
+              _.merge(lead, dojo);
+            }
           });
-        }));
-      });
-    })
-    .then(function () {
-      return cdOrganisationsService.loadUsersOrg({userIds: _.map(ctrl.dojos, 'creator')})
+          return $q.resolve();
+        });
+      } else {
+        return $q.resolve();
+      }
+    }
+    function getUserOrg () {
+      var userIds = _.compact(_.map(ctrl.dojos, 'creator').concat(_.map(ctrl.leads), 'userId'));
+      return cdOrganisationsService.loadUsersOrg({userIds: userIds})
       .then(function (userOrgs) {
         ctrl.userOrg = {};
         _.each(userOrgs.data, function (userOrg) {
           ctrl.userOrgs[userOrg.userId] = userOrg;
         });
+        return $q.resolve();
       });
-    })
-    .then(function () {
+    }
+    function getOrgs () {
       return cdOrganisationsService.list({query: {orgIds: _.map(ctrl.userOrgs, 'orgId')}})
       .then(function (orgs) {
         ctrl.orgs = {};
         _.each(orgs.data, function (org) {
           ctrl.orgs[org.id] = org;
         });
+        return $q.resolve();
       });
+    }
+    function getCharters () {
+      var userIds = _.compact(_.map(ctrl.dojos, 'userId').concat(_.map(ctrl.leads, 'application.champion.userId')));
+      return cdAgreementsService.list({query: {userId: {in$: userIds}, version: 2}})
+      .then(function (res) {
+        ctrl.agreements = res.data;
+        return $q.resolve();
+      });
+    }
+    getDojos()
+    .then(function () {
+      return $q.all(
+        getUncompletedLeads(),
+        getRelatedLeads(),
+        getUserOrg(),
+        getOrgs()
+        // getChampions()
+      );
     });
   };
 
@@ -193,7 +246,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     ctrl.loadPage(ctrl.filter, true);
     ctrl.changedDojos = [];
   };
-  ctrl.processDojos = function (event) {
+  ctrl.applyMarkedDojos = function (event) {
     ctrl.changedDojos = _.map(ctrl.changedDojos, function (dojo) {
       if (dojo.creatorEmail) {
         delete dojo.creatorEmail;
@@ -355,6 +408,6 @@ angular
       templateUrl: '/directives/tpl/dojo/manage',
       controller: ['$state', 'alertService', 'auth',
       'tableUtils', 'cdDojoService', '$location',
-      'cdUsersService', '$translate', 'utilsService', 'cdOrganisationsService', ctrller]
+      'cdUsersService', '$translate', 'utilsService', 'cdOrganisationsService', '$q', ctrller]
     });
 }());

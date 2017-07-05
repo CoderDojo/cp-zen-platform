@@ -90,8 +90,16 @@
             <th>{@i18n key="User"/}</th>
             <th>{@i18n key="Application"/}</th>
             <th>{@i18n key="Edit"/}</th>
-            <th><span ng-click="$ctrl.toggleSort($event, 'verifiedAt')"
-               ng-class="$ctrl.getSortClass(sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}</th>
+            <th>
+              <span ng-if="$ctrl.filter.verified === 1">
+                <span ng-click="$ctrl.toggleSort($event, 'verifiedAt')"
+                 ng-class="$ctrl.getSortClass(sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}
+              </span>
+              <span ng-if="$ctrl.filter.verified === 0">
+                <span ng-click="$ctrl.toggleSort($event, 'completedAt')"
+                 ng-class="$ctrl.getSortClass(sort.completedAt)">&nbsp;</span>{@i18n key="Submitted at"/}
+              </span>
+             </th>
             <th>{@i18n key="Verified"/}</th>
             <th>{@i18n key="Delete"/}</th>
           </tr>
@@ -111,7 +119,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="pull-right">
-        <button class="btn btn-primary done-btn" ng-click="$ctrl.processDojos()">{@i18n key="Apply"/}</button>
+        <button class="btn btn-primary done-btn" ng-click="$ctrl.applyMarkedDojos()">{@i18n key="Apply"/}</button>
       </div>
     </div>
   </div>
