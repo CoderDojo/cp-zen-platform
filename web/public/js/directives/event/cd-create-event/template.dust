@@ -117,8 +117,8 @@
               </div>
               <div class="row" ng-show="!pastEvent">
                 <div class="col-sm-3 col-xs-3">
-                  <label for="start-time">{@i18n key="Start time"/}:</label>
-                  <uib-timepicker id="start-time" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
+                  <label for="startTime">{@i18n key="Start time"/}:</label>
+                  <uib-timepicker id="startTime" name="startTime" ng-model="eventInfo.startTime" ng-change="updateLocalStorage('startTime', eventInfo.startTime)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker" required></uib-timepicker>
                 </div>
                 <div class="col-sm-3 col-xs-3 col-sm-offset-2 col-xs-offset-3">
                   <label for="endTime">{@i18n key="End time"/}:</label>

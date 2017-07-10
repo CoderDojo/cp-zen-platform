@@ -152,8 +152,6 @@
 
     //DEFINING RELEASE DATE
     $scope.eventInfo.releaseDate = defaultReleaseDate;
-    // $scope.eventInfo.releaseDate.setMinutes(0);
-    // $scope.eventInfo.releaseDate.setSeconds(0);
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;

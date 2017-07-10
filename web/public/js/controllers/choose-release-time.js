@@ -6,7 +6,10 @@ angular
         require: "^form",
         link: function (scope, element, attributes, ngFormCtrl) {
 
-           scope.$watchGroup([ngFormCtrl.$name + '.releaseDate.$modelValue',ngFormCtrl.$name + '.fromDate.$modelValue'], function(oldV, newV) {
+           scope.$watchGroup([ngFormCtrl.$name + '.releaseDate.$modelValue',ngFormCtrl.$name + '.fromDate.$modelValue', ngFormCtrl.$name + '.startTime.$modelValue'], function(oldV, newV) {
+             console.log(ngFormCtrl.startTime);
+             console.log(ngFormCtrl);
+
              var releaseBeforeEvent;
              var releaseDate = ngFormCtrl.releaseDate.$viewValue;
              var releaseDateInMilli = releaseDate.valueOf();
