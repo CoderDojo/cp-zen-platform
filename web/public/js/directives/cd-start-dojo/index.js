@@ -196,7 +196,7 @@ angular
               return step.isValid; // Only saved validity matter
             })).length / _.keys(ctrl.application).length * 100;
           }
-          return header + '% completed';
+          return Math.trunc(header) + '% completed';
         };
 
         // ctrl.uponLeaving = function (event) {
