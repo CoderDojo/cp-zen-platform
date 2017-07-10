@@ -8,5 +8,6 @@ test
 example
 *.yml
 *.yaml
-components
 node_modules
+web/public/components
+.bower

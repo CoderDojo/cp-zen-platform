@@ -1,0 +1,10 @@
+{
+  "directory": "public/components",
+  "json": "bower.json",
+  "cwd": "./web",
+  "storage": {
+    "packages": ".bower/cache",
+    "registry": ".bower/registry"
+  },
+  "tmp": ".bower/tmp"
+}
