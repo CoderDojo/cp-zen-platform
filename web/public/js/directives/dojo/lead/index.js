@@ -56,7 +56,7 @@ angular
             .then(function (res) {
               var userDojos = res.data;
               var setDojo = function (dojo) {
-                var userDojo = _.find(userDojos, function (uD) {return dojo.id == uD.dojoId});
+                var userDojo = _.find(userDojos, function (uD) {return dojo.id === uD.dojoId});
                 cdDojoService.getAvatar(dojo.id)
                 .then(function (url) {
                   ctrl.otherDojos.push({

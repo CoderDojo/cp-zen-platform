@@ -25,15 +25,21 @@
     <span ng-if="dojo.verified === 0">{{ dojo.completedAt | date:'yyyy/MM/dd' }}</span>
   </td>
   <td>
-    <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
+    <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" ng-if="dojo.id">
       <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
       <label class="awesome-label" for="{{dojo.id + 'checkbox-primary'}}"></label>
     </div>
   </td>
   <td>
     <div ng-if="dojo.deleted === 0" class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
-      <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
-      <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
+      <div ng-if="dojo.id">
+        <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
+        <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
+      </div>
+      <div ng-if="!dojo.id">
+        <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.dojoLeadId + 'Checkbox'}}" ng-change="$ctrl.pushChangedLead(dojo)">
+        <label class="awesome-label" for="{{dojo.dojoLeadId + 'Checkbox'}}"></label>
+      </div>
     </div>
     <span ng-if="dojo.deleted === 1" class="green-text glyphicon glyphicon-ok-sign"></span>
   </td>

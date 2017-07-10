@@ -95,6 +95,9 @@
       searchDojoLeads: function(query) {
         return cdApi.post('dojos/leads/search', {query: query});
       },
+      deleteDojoLeads: function (id) {
+        return cdApi.delete('dojos/lead/' + id);
+      },
       loadSetupDojoSteps: function(win, fail) {
         return cdApi.get('dojos/setup-steps', win, fail || topfail);
       },

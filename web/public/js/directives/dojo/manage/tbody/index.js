@@ -1,3 +1,4 @@
+'use strict';
 (function () {
   angular
     .module('cpZenPlatform')

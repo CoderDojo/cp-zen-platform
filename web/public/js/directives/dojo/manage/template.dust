@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-10">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="dojoVerifiedFilter">{@i18n key="Verification"/}</label>
             <ui-select name="dojoVerifiedFilter" ng-model="$ctrl.filter.verified" ng-disabled="disabled" ng-change="$ctrl.filterDojos()" >
@@ -14,15 +14,24 @@
             </ui-select>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="dojoStageFilter">{@i18n key="Stage"/}</label>
-            <!-- TODO : select by label -->
+            <!-- TODO : select by label, require lib update -->
             <div ng-dropdown-multiselect="" options="$ctrl.dojoStages"
               events="$ctrl.dojoStagesEvents"
               group-by="active"
               selected-model="$ctrl.selectedStages" extra-settings="$ctrl.dojoStagesSettings"></div>
           </div>
+        </div>
+        <div class="col-md-2">
+          <label for="dojoDeletionFilter">{@i18n key="Deleted"/}</label>
+          <ui-select name="dojoVerifiedFilter" ng-model="$ctrl.filter.deleted" ng-change="$ctrl.filterDojos()" >
+            <ui-select-match allow-clear="true" placeholder="{@i18n key="Select state..."/}">{{ $select.selected.label }}</ui-select-match>
+            <ui-select-choices repeat="dojoState.value as dojoState in $ctrl.dojoDeletedStatuses">
+              <span ng-bind-html="dojoState.label | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
         <div class="col-md-6">
           <div class="form-group">
@@ -106,12 +115,14 @@
         </thead>
         <tbody class="cd-dojos-manage__dojos">
           <tr cd-dojos-manage-tbody data-dojos="$ctrl.dojos"></tr>
+          <tr ng-show="$ctrl.dojos && $ctrl.dojos.length == 0"><td>No Dojo found</td></tr>
         </tbody>
         <tbody ng-show="$ctrl.filter.verified === 0">
           <tr><td>Leads</td></tr>
         </tbody>
         <tbody class="cd-dojos-manage__unverified-leads" ng-show="$ctrl.filter.verified === 0">
           <tr cd-dojos-manage-tbody data-dojos="$ctrl.leads"></tr>
+          <tr ng-show="$ctrl.leads && $ctrl.leads.length == 0"><td>No Lead found</td></tr>
         </tbody>
       </table>
     </div>

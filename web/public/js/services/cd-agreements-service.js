@@ -21,10 +21,11 @@ function cdAgreementsService(cdApi, $q){
     },
     loadUserAgreementPromise: function (id) {
       var deferred = $q.defer();
-
       cdApi.get(base + '/' + id, deferred.resolve, deferred.reject);
-
       return deferred.promise;
+    },
+    search: function (query) {
+      return cdApi.post(base + '/', {query: query});
     },
     getCurrentCharterVersion: function () {
       return cdApi.get(base + '/version');
