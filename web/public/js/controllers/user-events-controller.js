@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService, alertService, currentUser, utilsService, cdDojoService, usersDojos, usSpinnerService) {
+  function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService,
+     alertService, currentUser, utilsService, cdDojoService, usersDojos, usSpinnerService, eventUtils) {
     $scope.applyData = {};
     $scope.currentEvents = false;
     currentUser = currentUser.data;
@@ -18,7 +19,7 @@
     if(currentUser.id){
       $scope.loadPage = function () {
         $scope.sort = $scope.sort ? $scope.sort: {createdAt: 1};
-        var query = {userId: currentUser.id, status: 'published', filterPastEvents: true, sort$: $scope.sort};
+        var query = {status: 'published', filterPastEvents: true, sort$: $scope.sort};
         cdEventsService.getUserDojosEvents(query, function (response) {
           usSpinnerService.stop('user-events-spinner');
           $scope.dojosEvents = response;
@@ -49,44 +50,11 @@
                 $scope.sort[dojoEvents.dojo.id] = {createdAt: 1};
                 var events = [];
                 dojoEvents.title = $translate.instant('Events for Dojo') + ': ' + dojoEvents.dojo.name;
-                _.each(dojoEvents.events, function(event){
-
-                  var utcOffset = moment().utcOffset();
-
-                  var startDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-                  var endDate = moment(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-
-                  if(event.type === 'recurring') {
-                    event.formattedDates = [];
-                    _.each(event.dates, function (eventDate) {
-                      event.formattedDates.push(moment.utc(eventDate.startTime).format('Do MMMM YY'));
-                    });
-
-                    event.day = moment(startDate).format('dddd');
-                    event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
-
-                    if(event.recurringType === 'weekly') {
-                      event.formattedRecurringType = $translate.instant('Weekly');
-                      event.formattedDate = $translate.instant('Weekly') + " " +
-                        $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-                        $translate.instant('at') + " " + event.time;
-                    } else {
-                      event.formattedRecurringType = $translate.instant('Every two weeks');
-                      event.formattedDate = $translate.instant('Every two weeks') + " " +
-                        $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-                        $translate.instant('at') + " " + event.time;
-                    }
-                  } else {
-                    //One-off event
-
-                    event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
-                      moment(startDate).format('HH:mm') +  ' - ' +
-                      moment(endDate).format('HH:mm');
-                  }
-
+                _.each(dojoEvents.events, function (event) {
+                  var formattedEvent = eventUtils.getFormattedDates(event);
                   var userType = event.userType;
                   event.for = $translate.instant(userType);
-                  events.push(event);
+                  events.push(formattedEvent);
                 });
 
                 dojoEvents.events = events;
@@ -163,46 +131,16 @@
       cdEventsService.search({dojoId: dojoId, status: 'published', filterPastEvents: true, sort$: $scope.sort[dojoId]}).then(function (result) {
         var events = [];
         _.each(result, function (event) {
-
-          var startDate = moment.utc(_.head(event.dates).startTime).subtract(utcOffset, 'minutes').toDate();
-          var endDate = moment.utc(_.head(event.dates).endTime).subtract(utcOffset, 'minutes').toDate();
-
-          if(event.type === 'recurring') {
-            event.formattedDates = [];
-            _.each(event.dates, function (eventDate) {
-              event.formattedDates.push(moment(eventDate.startTime).format('Do MMMM YY'));
-            });
-
-            event.day = moment(startDate).format('dddd');
-            event.time = moment(startDate).format('HH:mm') + ' - ' + moment(endDate).format('HH:mm');
-
-            if(event.recurringType === 'weekly') {
-              event.formattedRecurringType = $translate.instant('Weekly');
-              event.formattedDate = $translate.instant('Weekly') + " " +
-                $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-                $translate.instant('at') + " " + event.time;
-            } else {
-              event.formattedRecurringType = $translate.instant('Every two weeks');
-              event.formattedDate = $translate.instant('Every two weeks') + " " +
-                $translate.instant('on') + " " + $translate.instant(event.day) + " " +
-                $translate.instant('at') + " " + event.time;
-            }
-          } else {
-            //One-off event
-            event.formattedDate = moment(startDate).format('Do MMMM YY') + ', ' +
-              moment(startDate).format('HH:mm') +  ' - ' +
-              moment(endDate).format('HH:mm');
-          }
-
+          var formattedEvent = eventUtils.getFormattedDates(event);
           var userType = event.userType;
           event.for = $translate.instant(userType);
-          events.push(event);
+          events.push(formattedEvent);
         });
 
         var dojoUpdated = _.find($scope.dojosEvents, function (dojoObject) {
           return dojoObject.dojo.id === dojoId;
         });
-        if(dojoUpdated) dojoUpdated.events = events;
+        if (dojoUpdated) dojoUpdated.events = events;
 
       }, function (err) {
         console.error(err);
@@ -214,6 +152,8 @@
   }
 
   angular.module('cpZenPlatform')
-      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService', 'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', 'usersDojos', 'usSpinnerService', userEventsCtrl]);
+      .controller('user-events-controller', ['$scope', '$translate', 'cdEventsService',
+       'cdUsersService', 'alertService', 'currentUser', 'utilsService', 'cdDojoService', 'usersDojos', 'usSpinnerService', 'eventUtils',
+        userEventsCtrl]);
 
 })();

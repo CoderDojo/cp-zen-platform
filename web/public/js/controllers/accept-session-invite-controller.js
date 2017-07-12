@@ -11,14 +11,15 @@
 
     var invitation = {
       ticketId: ticketId,
-      invitedUserId: invitedUserId,
+      userId: invitedUserId,
       emailSubject: {
         'received': 'Your ticket request for %1$s has been received',
-        'approved': 'Your ticket request for %1$s has been approved'
+        'approved': 'Your ticket for %1$s has been booked',
+        'pending': 'Your ticket request for %1$s is pending approval'
       }
     };
 
-    cdEventsService.validateSessionInvitation(invitation, function (response) {
+    cdEventsService.validateTicketInvitation(invitation, function (response) {
       if(response.ok === true) {
         alertService.showAlert($translate.instant('Invitation successfully validated. Your ticket has been sent to your email.'));
         $state.go('home');

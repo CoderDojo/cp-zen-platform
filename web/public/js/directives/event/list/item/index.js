@@ -6,16 +6,22 @@ angular
     .directive('cdEventListItem', function () {
         return {
           scope: {
-            'event': '='
+            'event': '=',
+            'private': '<',
+            'canBook': '<'
           },
           restrict: 'AE',
           templateUrl: '/directives/tpl/event/list/item',
           controller: ['$scope', '$state', 'embedder', 'eventUtils', '$window',
-          function($scope, $state, embedder, eventUtils, $window) {
+          function ($scope, $state, embedder, eventUtils, $window) {
             var cdELI = this;
             cdELI.event = $scope.event;
+            cdELI.private = $scope.private;
             cdELI.isEmbedded = embedder.isEmbedded();
             cdELI.event.isPast = eventUtils.isEventInPast(_.last(cdELI.event.dates));
+            var visibilityWatcher = $scope.$watch('canBook', function () {
+              cdELI.canBook = $scope.canBook;
+            });
             cdELI.event = eventUtils.getFormattedDates(cdELI.event);
             if (!cdELI.event.isPast && cdELI.event.type === 'recurring') {
               cdELI.event.upcomingDates = eventUtils.getNextDates(cdELI.event.dates, cdELI.event.formattedDates);
@@ -31,6 +37,9 @@ angular
                 }
               })
             }
+            $scope.$on('$destroy', function () {
+              visibilityWatcher();
+            });
           }],
           controllerAs: 'cdELI'
         };

@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node_modules/.bin/migrate",
     "start": "node web/index.js",
-    "postinstall": "cd web && bower install",
+    "postinstall": "bower install",
     "test": "./node_modules/.bin/gulp",
     "jshint-check": "./node_modules/.bin/gulp jshint",
     "lint-lib": "./node_modules/.bin/gulp semistandard",

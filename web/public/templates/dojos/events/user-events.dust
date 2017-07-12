@@ -29,7 +29,7 @@
                 <i class="pull-right glyphicon ng-scope glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': events[$index].isCollapsed, 'glyphicon-chevron-right': !events[$index].isCollapsed}"></i>
               </td>
             </tr>
-            <tr ng-switch-when="true" class="event-info-row-content">
+            <tr ng-switch-when="true" class="event-info-row-content" ng-init="dojo = dojoEvents.dojo">
               <td colspan="9">
                 <div class="span9">
                   <cd-apply-for-event></cd-apply-for-event>

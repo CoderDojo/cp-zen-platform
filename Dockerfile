@@ -1,18 +1,15 @@
-FROM mhart/alpine-node:0.10
-MAINTAINER nearForm <info@nearform.com>
+FROM mhart/alpine-node:0.10.48
+MAINTAINER butlerx <butlerx@notthe.cloud>
 
-RUN apk-install git make gcc g++ python
-
-RUN mkdir -p /usr/src/app /usr/src/lib /usr/src/web /usr/src/tasks
+RUN apk add --update git make gcc g++ python && \
+    mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-COPY package.json /usr/src/app/
-COPY lib /usr/src/app/lib/
-COPY web /usr/src/app/web/
-COPY tasks /usr/src/app/tasks/
-COPY *.js /usr/src/app/
-RUN npm install --production 
-
-RUN apk del make gcc g++ python && rm -rf /tmp/* /root/.npm /root/.node-gyp
-  
-VOLUME ["/usr/src/app/public"]
+ADD . /usr/src/app/
+RUN npm install && \
+    node_modules/.bin/bower install --allow-root && \
+    npm run lint-lib && \
+    npm run gulp && \
+    apk del make gcc g++ python && \
+    rm -rf /tmp/* /root/.npm /root/.node-gyp
+EXPOSE 8000
+CMD ["node", "service.js"]
