@@ -4,25 +4,35 @@ angular
     .module('cpZenPlatform')
     .component('cdApplicationCard', {
       bindings: {
-        application: '<',
+        lead: '<',
         user: '<'
       },
       restrict: 'E',
-      templateUrl: '/directives/tpl/cd-expanding-dojo-card',
-      controller: ['cdDojoService', 'dojoUtils', function (cdDojoService, dojoUtils) {
+      templateUrl: '/directives/tpl/cd-application-card',
+      controller: ['cdDojoService', 'dojoUtils', '$q', 'intercomService',
+      function (cdDojoService, dojoUtils, $q, intercomService) {
         var ctrl = this;
-        var application = ctrl.application;
-        var user = ctrl.user;
-        var date = ctrl.application.completed ? ctrl.application.updatedAt : ctrl.application.createdAt;
-        var dateKey = ctrl.application.completed ? 'Last updated on {{ date }}' : 'Started on {{ date }}';
-        cdDojoService.load(ctrl.application.dojo.id)
-        .then(function (dojo) {
-          ctrl.dojo = dojo;
-        });
-        cdDojoService.getAvatar(ctrl.application.dojo.id)
-        .then(function (avatarUrl) {
-          ctrl.dojoImage = avatarUrl;
-        });
+        ctrl.application = ctrl.lead.application;
+        ctrl.date = ctrl.lead.completed ? ctrl.lead.updatedAt : ctrl.lead.createdAt;
+        ctrl.dateKey = ctrl.lead.completed ? 'Last updated on {{ date }}' : 'Started on {{ date }}';
+        ctrl.timesUp = moment(ctrl.date).diff(moment(), 'days') > 2;
+        ctrl.$onInit = function () {
+          if (ctrl.application.dojo) {
+            return $q.all((function () {
+              cdDojoService.load(ctrl.application.dojo.id)
+              .then(function (res) {
+                ctrl.dojo = res.data;
+              });
+            }()),
+            (function () {
+              cdDojoService.getAvatar(ctrl.application.dojo.id)
+              .then(function (avatarUrl) {
+                ctrl.dojoImage = avatarUrl;
+              });
+            }()));
+          }
+        };
+        ctrl.openIntercom = intercomService.InitIntercom;
       }]
     });
 }());

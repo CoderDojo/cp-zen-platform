@@ -12,7 +12,7 @@ angular
       //TODO : dep injection array
       controller: function ($rootScope, $translate, usSpinnerService,
         atomicNotifyService, cdDojoService, $state, $window, alertService,
-        cdAgreementsService, cdUsersService, $q, $sce) {
+        cdAgreementsService, cdUsersService, $q, $sce, intercomService) {
         var ctrl = this;
         usSpinnerService.spin('start-dojo-spinner');
         ctrl.tabs = [
@@ -92,6 +92,10 @@ angular
         ctrl.actions.save = function () {
           ctrl.save()
           .then(function (lead) { ctrl.setCharterStatus(ctrl.application.charter); })
+          .then(function (lead) {
+            if (ctrl.application.dojo.id)
+            intercomService.update(ctrl.application.dojo.id);
+          })
           .then(function (lead) {
             ctrl.goToNextStep(true);
           });
@@ -199,26 +203,7 @@ angular
           return Math.trunc(header) + '% completed';
         };
 
-        // ctrl.uponLeaving = function (event) {
-        //   if (confirm('Are you sure you want to leave?')) {
-        //       // Save it!
-        //       event.preventDefault();
-        //       event.stopImmediatePropagation();
-        //   } else {
-        //       // Do nothing!
-        //   }
-        // };
-
-        // ctrl.exitingListener = $window.addEventListener('beforeunload', function ($event) {
-        //   $window.removeEventListener('beforeunload', ctrl.exitingListener);
-        //   // ctrl.uponLeaving($event);
-        // });
-
         var saveOnStateChange = $rootScope.$on('$stateChangeStart', function (event, nextState, nextParams, fromState) {
-          // if (nextState.parent !== $state.current.parent) {
-          //   // ctrl.uponLeaving(event);
-          // }
-
           if (nextState.name !== $state.current.name && !nextParams.skip) {
             ctrl.save();
           }
@@ -261,6 +246,7 @@ angular
           .then(function () {
             // NOTE : this starts to get quite big
             if (ctrl.leads.data.length === 0) {
+              intercomService.InitIntercom();
               ctrl.userId = ctrl.currentUser.id;
               // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
               ctrl.application = _.merge(ctrl.application, {
