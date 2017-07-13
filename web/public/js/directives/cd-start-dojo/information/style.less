@@ -50,8 +50,6 @@ cd-sad-information {
       }
       &-frequency {
         flex: 1;
-        min-width: 320px;
-        max-width: 45%;
       }
     }
     &-picker {
@@ -60,16 +58,18 @@ cd-sad-information {
       flex-basis: 100%;
       flex-wrap: wrap;
       justify-content: space-between;
+      &-wrapper {
+        flex: 1;
+        min-width: 320px;
+        flex-wrap: wrap;
+      }
       &-description {
         flex: 1;
-        min-width: 320px;
+        display: inline-block;
+        flex-wrap: wrap;
       }
       &-day {
-        display: flex;
         flex: 1;
-        min-width: 320px;
-        align-items: center;
-        max-width: 33%;
       }
       &-hour {
         display: flex;
@@ -77,7 +77,7 @@ cd-sad-information {
         min-width: 200px;
         justify-content: space-around;
         align-items: center;
-        max-width: 33%;
+        flex-wrap: wrap;
       }
     }
   }

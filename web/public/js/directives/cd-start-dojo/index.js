@@ -11,8 +11,8 @@ angular
       templateUrl: '/directives/tpl/cd-start-dojo',
       //TODO : dep injection array
       controller: function ($rootScope, $translate, usSpinnerService,
-        atomicNotifyService, cdDojoService, $state, $window, alertService,
-        cdAgreementsService, cdUsersService, $q, $sce, intercomService) {
+        atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
+        cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
         var ctrl = this;
         usSpinnerService.spin('start-dojo-spinner');
         ctrl.tabs = [
@@ -93,8 +93,12 @@ angular
           ctrl.save()
           .then(function (lead) { ctrl.setCharterStatus(ctrl.application.charter); })
           .then(function (lead) {
-            if (ctrl.application.dojo.id)
-            intercomService.update(ctrl.application.dojo.id);
+            if (ctrl.application.dojo.id) {
+              cdDojoService.getUsersDojos({userId: ctrl.userId})
+              .then(function (res) {
+                intercomService.update(_.map(res.data, 'id'));
+              });
+            }
           })
           .then(function (lead) {
             ctrl.goToNextStep(true);
@@ -218,16 +222,33 @@ angular
           }
           return cdDojoService.searchDojoLeads(leadQuery)
           .then(function (leads) {
-            ctrl.leads = leads;
-            if (ctrl.leads.data.length > 1) {
-              // TODO : Do a request to orgs to see if it's a valid scenario
-              console.log('multiple pending applications, pick one');
-            }
-            if (ctrl.leads.data.length === 1) {
-              ctrl.application = _.merge(ctrl.application, ctrl.leads.data[0].application);
-              ctrl.leadId = ctrl.leads.data[0].id;
-              ctrl.userId = ctrl.leads.data[0].userId;
-            }
+            ctrl.leads = leads.data;
+            return $q.resolve();
+          })
+          .then(function () {
+            return cdOrganisationsService.loadUserOrgs(ctrl.currentUser.id)
+            .then(function (res) {
+              ctrl.orgs = res.data;
+              // Multiple lead for a non-authorised user, loophole detected
+              if (ctrl.leads.length > 1) {
+                ctrl.userId = ctrl.leads[0].userId;
+                if (!ctrl.orgs || ctrl.orgs.length === 0 ) {
+                  alertService.showError($translate.instant('Multiple ongoing lead, please contact support'));
+                  intercomService.show();
+                  return $q.reject();
+                }
+              }
+              if (ctrl.leads.length === 1) {
+                // Reload previous lead
+                if (_.isEmpty(ctrl.orgs) || $state.params.id) {
+                  ctrl.application = _.merge(ctrl.application, ctrl.leads[0].application);
+                  ctrl.leadId = ctrl.leads[0].id;
+                }
+                // Set creator user
+                ctrl.userId = ctrl.leads[0].userId;
+                return $q.resolve();
+              }
+            });
           })
           .then(function () {
             var userProfileQuery = {
@@ -238,14 +259,14 @@ angular
                 userId: ctrl.userId
               };
             }
-            return cdUsersService.userProfileData(leadQuery)
+            return cdUsersService.userProfileData(userProfileQuery)
             .then(function (profile) {
               ctrl.profile = profile.data;
             });
           })
           .then(function () {
             // NOTE : this starts to get quite big
-            if (ctrl.leads.data.length === 0) {
+            if (ctrl.leads.length === 0 || (!_.isEmpty(ctrl.orgs) && !$state.params.id)) {
               intercomService.InitIntercom();
               ctrl.userId = ctrl.currentUser.id;
               // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)

@@ -6,7 +6,7 @@
     <label for="name">{@i18n key="Name your Dojo"/}</label>
     <input type="text" class="form-control" name="name" ng-model="$ctrl.dojo.name"
       placeholder="{@i18n key="Kings Cross, London @ Dogpath Labs"/}"
-      ng-pattern="/^((?!coderdojo|dojo).)*$/igm" required></input>
+      cd-dojo-name required></input>
     <div ng-messages="$ctrl.dojo.form.name.$error">
       <!-- That's not how it's supposed to work, but eh i'm giving up on that one -->
       <div ng-show="$ctrl.dojo.form.name.$error.pattern">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</div>
@@ -17,8 +17,8 @@
   </div>
 
   <div class="form-group cd-sad-information__time">
-    <div class="cd-sad-information__time-date">
-      <div class="cd-sad-information__time-date-session">
+    <div class="cd-sad-information__time-date cd-simple-flex-grid">
+      <div class="cd-sad-information__time-date-session cd-simple-flex-grid__flex-1">
         <label for="firstDate">{@i18n key="When will your first session be?"/}</label>
         <div class="input-group">
           <input id="firstDate" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
@@ -34,33 +34,49 @@
           </span>
         </div>
       </div>
-      <div class="cd-sad-information__time-date-frequency">
-        <label>{@i18n key="How often will your Dojo run?"/}</label>
-        <select ng-model="$ctrl.dojo.frequency" class="form-control" name="frequency" required>
-          <option ng-repeat="option in $ctrl.frequencies" value="{{ option.id }}"> {{ option.name }}</option>
-        </select>
-        <p class="help-block">
-          {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
-        </p>
-        <div ng-show="$ctrl.dojo.frequency === 'other'">
-          <input type="text" class="form-control" name="alternativeFrequency"
-          placeholder="{@i18n key="Please detail"/}"
-          ng-required="$ctrl.dojo.frequency === 'other'"
-          ng-model="$ctrl.dojo.alternativeFrequency"></input>
-        </div>
+      <div class="cd-sad-information__time-date-frequency cd-simple-flex-grid__flex-1">
+        <span class="cd-sad-information__time-date-frequency--main">
+          <label>{@i18n key="How often will your Dojo run?"/}</label>
+          <select ng-model="$ctrl.dojo.frequency" class="form-control" name="frequency" required>
+            <option ng-repeat="option in $ctrl.frequencies" value="{{ option.id }}"> {{ option.name }}</option>
+          </select>
+          <p class="help-block">
+            {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
+          </p>
+        </span>
+        <span class="cd-sad-information__time-date-frequency--alternative">
+          <div ng-show="$ctrl.dojo.frequency === 'other'">
+            <input type="text" class="form-control" name="alternativeFrequency"
+            placeholder="{@i18n key="Please detail"/}"
+            ng-required="$ctrl.dojo.frequency === 'other'"
+            ng-model="$ctrl.dojo.alternativeFrequency"></input>
+          </div>
+        </span>
       </div>
     </div>
     <div class="cd-sad-information__time-picker">
-      <div class="cd-sad-information__time-picker-description">
-        <label for="day">{@i18n key="When will our dojo run?"/}</label>
-        <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
-      </div>
-      <div class="cd-sad-information__time-picker-day">
-        <select ng-model="$ctrl.dojo.day" class="form-control"
-          ng-options="value.id as value.name for (key, value) in $ctrl.days"
-          name="day" required>
-          <option value="" disabled>{@i18n key="Select a day"/}</option>
-        </select>
+      <div class="cd-sad-information__time-picker-wrapper">
+        <div class="cd-sad-information__time-picker-description">
+          <label for="day">{@i18n key="When will our dojo run?"/}</label>
+          <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
+        </div>
+        <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">
+          <div ng-show="$ctrl.dojo.frequency === '1/m'" class="cd-simple-flex-grid__flex-1">
+            <select ng-model="$ctrl.dojo.alternativeFrequency" class="form-control" name="alternativeFrequency">
+              <option ng-repeat="option in $ctrl.monthlyFrequencies" value="{{ option.id }}"> {{ option.name }}</option>
+            </select>
+            <p class="help-block">
+              {@i18n key="Give some insight on when it happens"/}
+            </p>
+          </div>
+          <div class="cd-simple-flex-grid__flex-1">
+            <select ng-model="$ctrl.dojo.day" class="form-control"
+              ng-options="value.id as value.name for (key, value) in $ctrl.days"
+              name="day" required>
+              <option value="" disabled>{@i18n key="Select a day"/}</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="cd-sad-information__time-picker-hour">
         <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>

@@ -33,6 +33,12 @@ angular
             { id: 'other',
             name: $translate.instant('Other')}
           ];
+          ctrl.monthlyFrequencies = [
+            {id: 'first', name: $translate.instant('First')},
+            {id: '2nd', name: $translate.instant('Second')},
+            {id: '3rd', name: $translate.instant('Third')},
+            {id: 'last', name: $translate.instant('Last')}
+          ];
           // ISO 8601 based, no Sunday as 1
           // We don't use moment data because we want to handle more than the locale,
           // and that would force us to preload the data for day/dates/etc, meaning 2 different processes for the same thing
