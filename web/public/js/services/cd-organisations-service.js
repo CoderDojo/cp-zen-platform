@@ -18,6 +18,9 @@ function cdOrganisationsService (cdApi, $q) {
     loadOrgUsers: function (orgId) {
       return cdApi.get(base + '/' + orgId + '/users');
     },
+    loadUserOrgs: function (userId) {
+      return cdApi.get('user/' + userId + '/organisations');
+    },
     createUser: function (orgId, userId) {
       return cdApi.post(base + '/' + orgId + '/users', {userOrg: {orgId: orgId, userId: userId}});
     },
