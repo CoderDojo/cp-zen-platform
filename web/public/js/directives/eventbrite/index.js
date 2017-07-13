@@ -44,7 +44,7 @@ var cdEventbriteIntegration = {
       cdEventbriteService.deauthorize(cdE.dojo.id)
       .then(function () {
         cdE.dojo.eventbriteConnected = false;
-        atomicNotifyService.info($translate.instant('Your integration with eventbrite has been removed'));
+        atomicNotifyService.info($translate.instant('Your Eventbrite account has been disconnected'));
         cdE.getConnectButtonText();
       })
       .catch(function () {
@@ -62,7 +62,7 @@ var cdEventbriteIntegration = {
         cdEventbriteService.authorize(cdE.dojoId, {code: token})
         .then(function () {
           $state.go('edit-dojo', {id: cdE.dojoId});
-          atomicNotifyService.info($translate.instant('Your eventbrite account has been successfully attached'), 5000);
+          atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
         });
       }
     };
