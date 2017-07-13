@@ -62,7 +62,8 @@ module.exports = {
     {type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-oauth2,cmd:*'},
     {type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:user,cmd:*'},
     {type: 'web', host: process.env.CD_BADGES || 'localhost', port: 10305, pin: 'role:cd-badges,cmd:*'},
-    {type: 'web', host: process.env.CD_EVENTS || 'localhost', port: 10306, pin: 'role:cd-events,cmd:*'}
+    {type: 'web', host: process.env.CD_EVENTS || 'localhost', port: 10306, pin: 'role:cd-events,cmd:*'},
+    {type: 'web', host: process.env.CD_EVENTBRITE || 'localhost', port: 10307, pin: 'role:cd-eventbrite, cmd:*'}
   ],
 
   timeout: 120000
