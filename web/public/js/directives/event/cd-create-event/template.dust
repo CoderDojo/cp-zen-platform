@@ -87,9 +87,9 @@
               <label ng-if="eventInfo.type === 'one-off'" for="date">{@i18n key="Date"/}:</label>
               <label ng-if="eventInfo.type === 'recurring'" for="date">{@i18n key="From"/}:</label>
               <div class="input-group">
-                <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.datePicker1" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'datePicker1')" ng-change="updateLocalStorage('date', eventInfo.date)" id="date" />
+                <input name="fromDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[0] || today" uib-datepicker-popup ng-model="eventInfo.date" is-open="datepicker.fromDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'fromDatePicker')" ng-change="updateLocalStorage('date', eventInfo.date)" id="date" />
                 <span class="input-group-btn">
-                  <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker1')">
+                  <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker($event, 'fromDatePicker')">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                   </button>
                 </span>
@@ -98,9 +98,9 @@
             <div class="col-sm-3 col-sm-offset-2" ng-if="eventInfo.type === 'recurring'">
               <label for="to-date">{@i18n key="To"/}:</label>
               <div class="input-group">
-                <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.datePicker2" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'datePicker2')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
+                <input name="toDate" type="date" ng-attr-min-date="isEditMode && eventInfo.dates[(eventInfo.dates.length-1)] || today" uib-datepicker-popup ng-model="eventInfo.toDate" is-open="datepicker.toDatePicker" ng-required="true" ng-readonly="true" ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control" ng-click="toggleDatepicker($event, 'toDatePicker')" ng-change="updateLocalStorage('toDate', eventInfo.toDate)" id="to-date" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="toggleDatepicker($event, 'datePicker2')">
+                  <button type="button" class="btn btn-default" ng-click="toggleDatepicker($event, 'toDatePicker')">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                   </button>
                 </span>
@@ -146,7 +146,7 @@
     <cd-expanding-card main-title="{@i18n key="Event Tickets"/}" sub-title-1="{@i18n key="Ticket Type"/}">
       <div class="row ticket-form">
         <input type="hidden" name="sessionValidation" ng-model="eventInfo.sessionValidation" validator="validateSessions(eventInfo.sessions)" invalid-message="'{@i18n key="Your event must contain at least one session."/}'">
-        <div class="col-xs-12 col-md-6 form-group ticket-box" ng-repeat="session in eventInfo.sessions" ng-init="sessionIndex = $index">
+        <div class="col-xs-12 col-md-9 form-group ticket-box" ng-repeat="session in eventInfo.sessions" ng-init="sessionIndex = $index">
           <div class="form-group form-inline full-width" ng-hide="lastSession()">
             <label class="icon-group"> Remove session </label>
             <button type="button" ng-disabled="pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this Session/room?"/}" ng-bootbox-confirm-action="removeSession($index)" class="btn btn-danger">
@@ -162,41 +162,22 @@
             <textarea ng-readonly="pastEvent" class="form-control" ng-model="session.description" placeholder="{@i18n key="e.g. Beginners to attend only please."/}"></textarea>
           </div>
           <div class="row hidden-xs">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <h5>{@i18n key="Ticket Name"/}</h5>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <h5>{@i18n key="Ticket Type"/} <i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></h5>
             </div>
+            {! My first attempt at making a calendar for inputting ticket release date but it is no longer meant to be inputted for each ticket. Just left this here as a reference.
             <div class="col-sm-3">
+              <h5>{@i18n key="Ticket Release Date"/}</h5>
+            </div> !}
+            <div class="col-sm-2">
               <h5>{@i18n key="Ticket Quantity"/}</h5>
             </div>
           </div>
           <div class="row ticket-row" ng-repeat="ticket in session.tickets" ng-init="ticketIndex = $index" >
-            <div class="col-sm-4 form-group">
-              <label class="visible-xs-block">{@i18n key="Ticket Name"/}</label>
-              <input ng-readonly="pastEvent" placeholder="{@i18n key="e.g. Laptops"/}" type="text" name="session-{{ sessionIndex }}-ticketName-{{ ticketIndex }}" class="form-control col-md-2" ng-model="ticket.name" ng-value="ticket.name" required required-message="'{@i18n key="Name is empty"/}'">
-            </div>
-            <div class="col-sm-4">
-              <label class="visible-xs-block">{@i18n key="Ticket Type"/}<i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></label>
-              <div ng-class="{'has-error': eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required}">
-                <ui-select ng-disabled="pastEvent" name="session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}" ng-model="ticket.type" required>
-                  <ui-select-match allow-clear="true" placeholder="{@i18n key="e.g. Mentor"/}">{{ $select.selected.title }}</ui-select-match>
-                  <ui-select-choices repeat="ticketType.name as ticketType in ticketTypes">
-                    <span ng-bind-html="ticketType.title"></span>
-                  </ui-select-choices>
-                </ui-select>
-                <label class="control-label has-error validationMessage" ng-show="eventForm.$submitted && eventForm['session-{{ sessionIndex }}-ticketUserType-{{ ticketIndex }}'].$error.required">{@i18n key="Select a ticket type"/}</label>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <label class="visible-xs-block">{@i18n key="Ticket Quantity"/}</label>
-              <input ng-readonly="pastEvent" type="number" min="0" class="form-control col-md-1" ng-value="ticket.quantity" ng-model="ticket.quantity" name="session-{{ sessionIndex }}-ticketQuantity-{{ ticketIndex }}" required required-message="'{@i18n key="Quantity is empty"/}'">
-            </div>
-            <div class="col-sm-1 remove-control">
-              <label class="visible-xs-block" ng-hide="lastTicket(session) || pastEvent">{@i18n key="Remove Ticket"/}</label>
-              <i ng-hide="lastTicket(session) || pastEvent" ng-bootbox-confirm="{@i18n key="Are you sure you want to delete this ticket type?"/}" ng-bootbox-confirm-action="removeTicket($index, session)" class="fa fa-close fa-2x pointer cd-color-red" aria-hidden="true"></i>
-            </div>
+            <cd-ticket-form></cd-ticket-form>
           </div>
           <div class="well clearfix ticket-controls">
             <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket(session)" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
