@@ -2,7 +2,7 @@
   'use strict';
 
   function userEventsCtrl($scope, $translate, cdEventsService, cdUsersService,
-     alertService, currentUser, utilsService, cdDojoService, usersDojos, usSpinnerService, eventUtils) {
+    alertService, currentUser, utilsService, cdDojoService, usersDojos, usSpinnerService, eventUtils) {
     $scope.applyData = {};
     $scope.currentEvents = false;
     currentUser = currentUser.data;

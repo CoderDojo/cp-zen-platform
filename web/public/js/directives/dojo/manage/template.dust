@@ -1,0 +1,149 @@
+<div class="cd-dashboard">
+  <h2>{@i18n key="Manage Dojos"/}</h2>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="dojoVerifiedFilter">{@i18n key="Verification"/}</label>
+            <ui-select name="dojoVerifiedFilter" ng-model="$ctrl.filter.verified" ng-disabled="disabled" ng-change="$ctrl.filterDojos()" >
+              <ui-select-match allow-clear="true" placeholder="{@i18n key="Select state..."/}">{{ $select.selected.label }}</ui-select-match>
+              <ui-select-choices repeat="dojoState.value as dojoState in $ctrl.dojoStates | filter: { label: $select.search }">
+                <span ng-bind-html="dojoState.label | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="dojoStageFilter">{@i18n key="Stage"/}</label>
+            <!-- TODO : select by label, require lib update -->
+            <div ng-dropdown-multiselect="" options="$ctrl.dojoStages"
+              events="$ctrl.dojoStagesEvents"
+              group-by="active"
+              selected-model="$ctrl.selectedStages" extra-settings="$ctrl.dojoStagesSettings"></div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="dojoDeletionFilter">{@i18n key="Deleted"/}</label>
+          <ui-select name="dojoVerifiedFilter" ng-model="$ctrl.filter.deleted" ng-change="$ctrl.filterDojos()" >
+            <ui-select-match allow-clear="true" placeholder="{@i18n key="Select state..."/}">{{ $select.selected.label }}</ui-select-match>
+            <ui-select-choices repeat="dojoState.value as dojoState in $ctrl.dojoDeletedStatuses">
+              <span ng-bind-html="dojoState.label | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dojoCountryFilter">{@i18n key="Country"/}</label>
+            <ui-select name="dojoCountryFilter" ng-model="$ctrl.filter.country" ng-disabled="disabled" ng-change="$ctrl.filterDojos()" >
+              <ui-select-match allow-clear="true" placeholder="{@i18n key="Select or search a country in the list..."/}">{{ $select.selected.countryName }}</ui-select-match>
+              <ui-select-choices repeat="country in $ctrl.countries | filter: { countryName: $select.search }">
+                <span ng-bind-html="country.countryName | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">{@i18n key="Dojo Name"/}</label>
+            <input type="text" placeholder="{@i18n key="Search by dojo name"/}" class="form-control"
+              ng-model="$ctrl.filter.name" ng-enter="$ctrl.filterDojos()">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">{@i18n key="Dojo Email"/}</label>
+            <input type="text" placeholder="{@i18n key="Search by dojo email"/}" class="form-control"
+              ng-model="$ctrl.filter.email" ng-enter="$ctrl.filterDojos()">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">{@i18n key="User Email"/}</label>
+            <input type="text" placeholder="{@i18n key="Search by user email"/}" class="form-control"
+              ng-model="$ctrl.filter.creatorEmail" ng-enter="$ctrl.filterDojos()">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="padding-top-25 pull-right">
+        <div class="pull-right">
+          <button class="btn btn-primary" ng-click="$ctrl.filterDojos()">{@i18n key="Filter"/}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      &nbsp;
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 table-responsive">
+      <table id="manageDojos" class="table cd-grid-table">
+        <thead>
+          <tr>
+            <th><span ng-click="$ctrl.toggleSort($event, 'name')" ng-class="$ctrl.getSortClass(sort.name)">&nbsp;</span>{@i18n key="Dojo"/}</th>
+            <th></th>
+            <th class="ten-percent-width"><span ng-click="$ctrl.toggleSort($event, 'stage')"
+               ng-class="$ctrl.getSortClass(sort.stage)">&nbsp;</span>{@i18n key="Stage"/}</th>
+            <th class="ten-percent-width"><span ng-click="$ctrl.toggleSort($event, 'alpha2')"
+               ng-class="$ctrl.getSortClass(sort.alpha2)">&nbsp;</span>{@i18n key="Country"/}</th>
+            <th><span ng-click="$ctrl.toggleSort($event, 'email')"
+               ng-class="$ctrl.getSortClass(sort.email)">&nbsp;</span>{@i18n key="Dojo Email"/}</th>
+            <th>{@i18n key="Group"/}</th>
+            <th>{@i18n key="User"/}</th>
+            <th>{@i18n key="Application"/}</th>
+            <th>{@i18n key="Edit"/}</th>
+            <th>
+              <span ng-if="$ctrl.filter.verified === 1">
+                <span ng-click="$ctrl.toggleSort($event, 'verifiedAt')"
+                 ng-class="$ctrl.getSortClass(sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}
+              </span>
+              <span ng-if="$ctrl.filter.verified === 0">
+                <span ng-click="$ctrl.toggleSort($event, 'completedAt')"
+                 ng-class="$ctrl.getSortClass(sort.completedAt)">&nbsp;</span>{@i18n key="Submitted at"/}
+              </span>
+             </th>
+            <th>{@i18n key="Verified"/}</th>
+            <th>{@i18n key="Delete"/}</th>
+          </tr>
+        </thead>
+        <tbody class="cd-dojos-manage__dojos">
+          <tr cd-dojos-manage-tbody data-dojos="$ctrl.dojos"></tr>
+          <tr ng-show="$ctrl.dojos && $ctrl.dojos.length == 0"><td>No Dojo found</td></tr>
+        </tbody>
+        <tbody ng-show="$ctrl.filter.verified === 0">
+          <tr><td>Leads</td></tr>
+        </tbody>
+        <tbody class="cd-dojos-manage__unverified-leads" ng-show="$ctrl.filter.verified === 0">
+          <tr cd-dojos-manage-tbody data-dojos="$ctrl.leads"></tr>
+          <tr ng-show="$ctrl.leads && $ctrl.leads.length == 0"><td>No Lead found</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-right">
+        <button class="btn btn-primary done-btn" ng-click="$ctrl.applyMarkedDojos()">{@i18n key="Apply"/}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <uib-pagination total-items="totalItems" ng-change="$ctrl.pageChanged()" items-per-page="itemsPerPage"
+                  ng-model="pageNo"
+                  first-text="{@i18n key="First" /}"
+                  previous-text="{@i18n key="Previous" /}"
+                  next-text="{@i18n key="Next" /}"
+                  last-text="{@i18n key="Last" /}"
+                  class="pagination-sm"
+                  boundary-links="true"></uib-pagination>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@ function cdUsersService(cdApi, $q){
       cdApi.put('users/promote/' + id, {roles:roles}, win, fail || topfail);
     },
     getUsersByEmails: function(email, win, fail) {
-      cdApi.post('users/emails', {email: email}, win, fail || topfail);
+      return cdApi.post('users/emails', {email: email}, win, fail || topfail);
     },
     getInitUserTypes: function(win, fail) {
       cdApi.get('users/init-user-types', win, fail || topfail);

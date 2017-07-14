@@ -15,6 +15,7 @@
   "./web/public/components/angular-route/angular-route.min.js",
   "./web/public/components/angular-ui-map/ui-map.min.js",
   "./web/public/components/moment/min/moment.min.js",
+  "./web/public/components/moment/min/locales.js",
   "./web/public/components/angular-moment/angular-moment.min.js",
   "./web/public/components/angular-ui-map/ui-map.min.js",
   "./web/public/components/angular-google-maps/dist/angular-google-maps.min.js",
@@ -61,5 +62,8 @@
   "./web/public/components/dustjs-linkedin-helpers/dist/dust-helpers.min.js",
   "./web/public/components/angular-google-analytics/dist/angular-google-analytics.min.js",
   "./web/public/components/angular-aria/angular-aria.min.js",
+  "./web/public/components/angularjs-slider/dist/rzslider.min.js",
+  "./web/public/components/jspdf/dist/jspdf.min.js",
+  "./web/public/components/html2canvas/build/html2canvas.min.js",
   "./web/public/components/cd-common/dist/cd-common.min.js"
 ]

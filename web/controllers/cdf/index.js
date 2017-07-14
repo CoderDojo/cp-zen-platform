@@ -23,15 +23,6 @@ module.exports = [{
 },
 {
   method: 'GET',
-  path: '/cdf/dashboard',
-  config: {
-      auth: auth.cdfAdmin,
-      plugins: overrideAuth
-  },
-  handler: handler
-},
-{
-  method: 'GET',
   path: '/cdf/login',
   config: {
     cache: {

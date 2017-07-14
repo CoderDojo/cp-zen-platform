@@ -1,0 +1,46 @@
+<tr ng-repeat="dojo in $ctrl.dojos" ng-style="$ctrl.setStyle(dojo)">
+  <td><a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})"
+    ng-bind="dojo.name"></a></td>
+  <td><span ng-show="$ctrl.allSigned(dojo) && (dojo.origVerified === 1)"
+     class="green-text glyphicon glyphicon-ok-sign"></span></td>
+  <td>{{ $ctrl.getDojoStageLabel(dojo.stage) }}</td>
+  <td>{{ dojo.alpha2 }}</td>
+  <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
+  <td>
+    <a ng-if="dojo.org" href="org/{{ $ctrl.orgs[$ctrl.userOrgs[user.id].orgId] }}"> {{ org.name }}</a>
+  </td>
+  <td>
+    <ul ng-repeat="creator in dojo.creators">
+      <li>
+        <a title="{{ creator.email }}" href="mailto:{{ creator.email }}" >{{ creator.email | characters:20 }}</a>
+        <span ng-show="creator.agreements.length < 1">&nbsp;({@i18n key="unsigned"/})</span>
+      </li>
+    </ul>
+  </td>
+  <td><a ui-sref="review-champion-application({id:dojo.dojoLeadId})" ng-if="dojo.dojoLeadId">{@i18n key="View"/}</a></td>
+  <td>
+    <button class="btn btn-link" ng-if="dojo.id && (!dojo.deleted || dojo.deleted===0)" ng-click="$ctrl.editDojo(dojo)">{@i18n key="Edit"/}</button></td>
+  <td>
+    <span ng-if="dojo.verified === 1">{{ dojo.verifiedAt | date:'yyyy/MM/dd' }}</span>
+    <span ng-if="dojo.verified === 0">{{ dojo.completedAt | date:'yyyy/MM/dd' }}</span>
+  </td>
+  <td>
+    <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" ng-if="dojo.id">
+      <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
+      <label class="awesome-label" for="{{dojo.id + 'checkbox-primary'}}"></label>
+    </div>
+  </td>
+  <td>
+    <div ng-if="dojo.deleted === 0" class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" >
+      <div ng-if="dojo.id">
+        <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.id + 'Checkbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
+        <label class="awesome-label" for="{{dojo.id + 'Checkbox'}}"></label>
+      </div>
+      <div ng-if="!dojo.id">
+        <input type="checkbox" ng-model="dojo.toBeDeleted" id="{{dojo.dojoLeadId + 'Checkbox'}}" ng-change="$ctrl.pushChangedLead(dojo)">
+        <label class="awesome-label" for="{{dojo.dojoLeadId + 'Checkbox'}}"></label>
+      </div>
+    </div>
+    <span ng-if="dojo.deleted === 1" class="green-text glyphicon glyphicon-ok-sign"></span>
+  </td>
+</tr>

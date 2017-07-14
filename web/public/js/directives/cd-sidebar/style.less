@@ -1,12 +1,50 @@
 .cd-sidebar {
-  display: flex;
-  min-height: 50vh;
-  border-top: 1px solid @cd-light-gray;
-  margin: 0 -16px -16px -16px;
+  margin: 0 -16px 0px -16px;
+  &__headers {
+    display: flex;
+    align-items: center;
+  }
+  .cd-sidebar__header-title() {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 16px;
+  }
+  &__header {
+    flex: 1;
+    &-title {
+      .cd-sidebar__header-title();
+    }
+  }
+  &__tab-header {
+    flex: 2;
+    line-height: 39px; // To be able to align w/ header's font
+    &-title {
+      .cd-sidebar__header-title();
+    }
+  }
+  &__actions {
+    flex: 1;
+  }
+
+  &__body {
+    display: flex;
+    min-height: 50vh;
+    border-top: 1px solid @cd-light-gray;
+  }
 
   &__tabs {
+    @media print {
+      display: none;
+    }
     flex: 1;
     border-right: 1px solid @cd-light-gray;
+    transition: width 2s ease-in-out;
+    &.ng-hide-add, &.ng-hide-remove-active {
+      width: 100%;
+    }
+    &.ng-hide-remove, &.ng-hide-add-active {
+      width: 0%;
+    }
   }
 
   &__tab {
@@ -35,6 +73,9 @@
       flex: 2;
       padding: 8px;
     }
+    &-status {
+      align-self: center;
+    }
 
     &-title {
       font-size: 18px;
@@ -52,7 +93,9 @@
 
   &__content {
     flex: 3;
-    margin: 15px;
+    &--padded {
+      padding: 16px 16px;
+    }
   }
 
   @media screen and (max-width: @screen-xs-max) {
@@ -66,12 +109,19 @@
       display: none;
     }
 
+    &__tab-header {
+      display: none;
+    }
+    &__header {
+      margin-right: 0px;
+    }
+
+    &--list-visible {
+      display: block;
+    }
+
     &--child-state-active {
       .cd-sidebar {
-        &__tabs {
-          display: none;
-        }
-
         &__content {
           display: block;
         }

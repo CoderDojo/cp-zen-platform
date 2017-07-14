@@ -1,0 +1,21 @@
+<h2 ng-bind="::cdfOUL.orgName"></h2>
+<div ng-repeat="user in cdfOUL.users">
+  <a href="/dashboard/profile/{{ user.id }}/edit"> {{ user.username }}</a>
+  <i class="fa fa-times" ng-click="cdfOUL.delete(user.userId)"></i>
+</div>
+<form ng-submit="cdfOUL.save()" class="form-inline">
+  <h3>Link new user</h3>
+  <div class="input-group">
+    <ui-select ng-model="cdfOUL.user">
+      <ui-select-match allow-clear="true" placeholder="{@i18n key="Search by user email"/}">{{ $select.selected.email  }}</ui-select-match>
+      <ui-select-choices repeat="user in cdfOUL.searchedUsers"
+          refresh="cdfOUL.search($select.search)"
+          refresh-delay="500">
+        <span ng-bind-html="user.email | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </span>
+  </div>
+</div>

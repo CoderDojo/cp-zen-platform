@@ -217,7 +217,7 @@ server.register(scooter, function (err) {
     connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com https://www.eventbrite.com",
     defaultSrc: "'none'",
     fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
-    frameSrc: "https://www.google.com",
+    frameSrc: "https://www.google.com https://www.youtube.com",
     frameAncestors: "'none'",
     imgSrc: "'self' 'unsafe-eval' 'unsafe-inline' data: * blob: *",
     manifestSrc: "'none'",
@@ -273,11 +273,6 @@ server.register(cdUsers, function (err) {
   checkHapiPluginError('users')(err);
 });
 
-var charter = require('../lib/charter.js');
-server.register(charter, function (err) {
-  checkHapiPluginError('charter')(err);
-});
-
 var agreements = require('../lib/agreements.js');
 server.register(agreements, function (err) {
   checkHapiPluginError('agreements')(err);
@@ -322,6 +317,12 @@ var polls = require('../lib/polls.js');
 server.register(polls, function (err) {
   checkHapiPluginError('polls')(err);
 });
+
+var orgs = require('../lib/organisations.js');
+server.register(orgs, function (err) {
+  checkHapiPluginError('orgs')(err);
+});
+
 
 server.register({register: require('./lib/plugins/seneca-preloader-dustjs'),
   options: {handlers: ['seneca-event-preloader', 'seneca-dojo-preloader']}},

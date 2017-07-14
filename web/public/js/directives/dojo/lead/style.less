@@ -1,0 +1,90 @@
+.cd-dojo-lead {
+
+  &__header {
+    display: flex;
+    margin: 0 -16px;
+
+    @media (max-width: @screen-xs-max) {
+      flex-direction: column;
+    }
+  }
+  h2.text-center:after {
+    content: "";
+    background:linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(0, 0, 0) 50%, rgba(255, 255, 255, 0) 80%);
+    height: 1px;
+    left: 30%;
+    width: 50%;
+    top: 2em;
+    display: block;
+    position: absolute;
+  }
+  &__social, &__knowledge_comparison, &__timing_comparison,
+   &__location_comparison, &__culture_comparison, &__validity-status {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .fa {
+      padding: 1em;
+    }
+    label {
+      margin-right: 1em;
+    }
+  }
+  &__dojo-name {
+    justify-content: flex-end;
+  }
+  &__champion-name {
+    justify-content: flex-start;
+  }
+  &__champion, &__dojo {
+    &-avatar {
+      flex: 1;
+      max-width: 200px;
+      margin: 0 16px;
+      @media (max-width: @screen-xs-max) {
+        margin: 0 auto;
+      }
+    }
+
+    &-name {
+      flex: 3;
+      margin: 0 16px;
+      align-items: flex-end;
+      display: flex;
+      a {
+        color: @cd-white;
+      }
+      > div, > span {
+        margin-bottom: 30%;
+
+        @media (max-width: @screen-xs-max) {
+          position: static;
+          text-align: center;
+        }
+      }
+    }
+  }
+  &__knowledge {
+    &-sources {
+      text-align: left;
+      ul {
+        display: inline-block;
+      }
+    }
+    &--team {
+      & .fa {
+        padding: 0.1em;
+        display: block;
+      }
+    }
+  }
+  &__culture {
+    &_comparison {
+      > div {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+<form class="cd-sad-team" name="$ctrl.teamForm" no-validate="" ng-class="{'cd-validate': $ctrl.team.visited}" focus-invalid>
+
+  <div class="cd-sad-team__video">
+    <iframe class="cd-sad-team__video-container" width="560" height="315"
+     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    <p class="help-block">{@i18n key="Building a dedicated team of Mentors will help to ensure a sustainable Dojo."/}</p>
+  </div>
+  <div class="cd-sad-team__side-form" >
+    <p class="help-block">
+      {@i18n key="A CoderDojo Mentor is someone who guides Dojo attendees (Ninjas) and facilitate their learning."/}
+    </p>
+    <p class="help-block">
+      {@i18n key="Volunteers can also help out by setting up the Dojo, chechin in attendees, managing ticketing or social media, etc."/}&nbsp;
+      {@i18n key="You can learn more about Mentors and Volunteers at Dojos in this short <a href=\"\">e-learning course.</a>"/}
+    </p>
+    <p class="help-block">
+      {@i18n key="Dojo must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
+      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global sefguarding e-learning course</a>"/}
+    </p>
+  </div>
+  <div class="cd-sad-team__bottom-form">
+    <div class="cd-sad-team__team-choice-group">
+      <div class="cd-sad-team__team-choice"
+        ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}"
+        ng-click="$ctrl.setTeamStatus('exists')">
+        <input type="radio" ng-model="$ctrl.team.status"
+          class="cd-sad-team__team-choice-selector"
+          ng-value="'exists'"
+          name="status"
+          ng-required="!$ctrl.team.status"
+          />
+        <div class="cd-sad-team__team-choice-action" >
+          <i class="fa fa-users fa-3x"></i>
+          <p>{@i18n key="I have volunteers to help run my Dojo."/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-team__team-choice"
+        ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}"
+        ng-click="$ctrl.setTeamStatus('solo')">
+        <input type="radio" ng-model="$ctrl.team.status"
+          class="cd-sad-team__team-choice-selector"
+          ng-value="'solo'"
+          name="status"
+          ng-required="!$ctrl.team.status"
+          />
+        <div class="cd-sad-team__team-choice-action">
+          <i class="fa fa-user fa-3x"></i>
+          <p>{@i18n key="I intend to run the Dojo by myself."/}</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="cd-simple-flex-grid cd-sad-team__team-block" >
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists"
+        ng-show="$ctrl.team.status === 'exists'">
+        <label class="cd-sad-team__team-block-description">{@i18n key="Let us know where you found mentors for your Dojo."/}<span class="pull-right">(optional)</span></label>
+        <label ng-repeat="(id, src) in $ctrl.srcMentors" class="cd-sad-team__team-block-srcs">
+          <input type="checkbox" ng-model="$ctrl.team.src[id]" name="{{ id }}" ng-value="{{ id }}"
+            ng-change="$ctrl.setSrcMentorsValue(id)"/> {{ src.value }}
+        </label>
+        <input type="text"
+          class="form-control"
+          ng-model="$ctrl.team.alternativeSrc"
+          ng-show="$ctrl.team.src['other'] === true"
+          placeholder="Please detail"
+          ng-required="$ctrl.team.src['other'] === true"
+          />
+      </div>
+      <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--solo"
+        ng-show="$ctrl.team.status === 'solo'">
+        <p>
+          {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/} &nbsp;
+          {@i18n key="Your Dojo will grow and it’s always good to have extra hands."/}&nbsp;
+          {@i18n key="You can find more tips on finding volunteers <a href=\"\">here.</a>"/}
+        </p>
+      </div>
+    </div>
+  </div>
+</form>

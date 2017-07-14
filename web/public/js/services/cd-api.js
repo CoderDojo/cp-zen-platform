@@ -14,6 +14,16 @@ angular.module('cpZenPlatform').service('cdApi', ['$http', function($http) {
         });
       }, resolve, reject)
     },
+    patch: function(url, params, resolve, reject) {
+      return wrapCbPromise(function(){
+        return $http({
+          method: 'PATCH',
+          url: baseUrl + url,
+          data: JSON.stringify(params),
+          headers: {'Content-Type': 'application/json'}
+        });
+      }, resolve, reject);
+    },
     put: function(url, params, resolve, reject) {
       return wrapCbPromise(function(){
         return $http({

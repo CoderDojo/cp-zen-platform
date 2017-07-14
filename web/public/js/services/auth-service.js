@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').service('auth', ['$http', '$q', function($http, $q) {
-
+angular.module('cpZenPlatform').service('auth', ['$http', '$q', 'cdApi', function($http, $q, cdApi) {
   var loggedin_user = null;
   function topfail( data ) {
     console.log(data)
@@ -24,8 +23,7 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', function($http, 
     },
 
     instance: function(win,fail){
-      $http({method:'GET', url: '/api/2.0/users/instance', cache:false}).
-        success(win).error(fail||topfail)
+      return cdApi.get('users/instance', win, fail, {cache:false});
     },
 
     cdfInstance: function(win,fail){

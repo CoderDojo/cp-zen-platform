@@ -1,7 +1,7 @@
 <div class="cd-child-card">
   <cd-loading-scrim ng-show="!$ctrl.child.name"></cd-loading-scrim>
   <div ng-show="$ctrl.child.name">
-    <div class="row">
+    <div>
       <div class="col-xs-12">
         <div cd-banner-background class="row">
           <div class="cd-profile__header">
