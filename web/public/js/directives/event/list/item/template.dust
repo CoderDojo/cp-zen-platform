@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="cd-event-list-item__link" ng-show="cdELI.canBook">
-      <a ng-click="cdELI.goTo()" class="btn btn-warning btn-block btn-main" ng-disabled="cdELI.event.isPast || !cdELI.event.ticketsReleased">
+      <a ng-click="if(!(cdELI.event.isPast || !cdELI.event.ticketsReleased)) {cdELI.goTo()}" class="btn btn-warning btn-block btn-main" ng-disabled="cdELI.event.isPast || !cdELI.event.ticketsReleased">
         <span ng-if="!cdELI.event.isPast && cdELI.event.ticketsReleased ">{@i18n key="Book"/}</span>
         <!-- TODO : isFull? <span ng-if="cdELI.event.isFull && !cdELI.event.isPast">{@i18n key="Book"/}</span> -->
         <span ng-if="cdELI.event.isPast">{@i18n key="Booking closed"/}</span>

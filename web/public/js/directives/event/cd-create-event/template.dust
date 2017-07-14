@@ -208,39 +208,35 @@
       </div>
       <div class="row controls">
         <div class="col-md-6">
-
-          {! Ticket release div !}
           <div ng-if="eventInfo.type !== 'recurring'">
             <label> Ticket release </label>
-              <div class="checkbox checkbox-block">
+              <div class="checkbox checkbox-block" >
                 <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="choosingReleaseTime" ng-model="eventInfo.chooseReleaseTime">
                 <label ng-if="!eventInfo.ticketsReleased" for="choosingReleaseTime">{@i18n key="Ticket release"/}</label>
                 <label ng-if="eventInfo.ticketsReleased" for="choosingReleaseTime">{@i18n key="Tickets have been released"/}</label>
-                <i uib-tooltip="{@i18n key="This allows you to select a time and date that you want your tickets to be released. The default is the current date and time."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
+                <i uib-tooltip="{@i18n key="You can choose a time to release your tickets."/}" tooltip-placement="top" tooltip-animation="True" class="fa fa-info-circle event-tooltip"></i>
               </div>
               <div class="row form-group" ng-if="!eventInfo.ticketsReleased && !pastEvent ">
                 <span ng-if="eventInfo.chooseReleaseTime">
                   <div class="col-md-6">
+                    <h5> {@i18n key="Release date"/}:</h5>
                     <div class="input-group">
-                      <input name="releaseDate" type="date" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-required="true" ng-readonly="true"
-                        ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}"
-                        clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
-                        datepicker-options="datepicker2"
-                        ng-click="toggleDatepicker2($event, 'fromDatePicker')" ng-change="updateLocalStorage(releaseDate, eventInfo.releaseDate)" id="releaseDate" />
                       <span class="input-group-btn">
-                        <button type="button" ng-disabled="pastEvent" class="btn btn-default" ng-click="toggleDatepicker2($event, 'fromDatePicker')">
+                        <input name="releaseDate" type="date" uib-datepicker-popup ng-model="eventInfo.releaseDate" is-open="datepicker2.fromDatePicker" ng-required="true" ng-readonly="true"
+                          ng-disabled="pastEvent" ng-class="{'selectable': !pastEvent}" current-text="{@i18n key="Today"/}"
+                          clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" class="form-control"
+                          datepicker-options="datepicker2" ng-click="toggleDatepicker2($event, 'fromDatePicker')" ng-change="updateLocalStorage(releaseDate, eventInfo.releaseDate)" id="releaseDate"/>
+                        <button type="button" class="btn btn-default" ng-click="toggleDatepicker2($event, 'fromDatePicker')">
                           <i class="fa fa-calendar" aria-hidden="true"></i>
                         </button>
                       </span>
                     </div>
-                    <h5> {@i18n key="Time"/}:</h5>
-                    <uib-timepicker id="ticket-release-time"
-                      name="releaseDate" ng-model="eventInfo.releaseDate" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
+                    <h5> {@i18n key="Release time"/}:</h5>
+                    <uib-timepicker id="ticket-release-time" name="releaseDate" ng-model="eventInfo.releaseDate" ng-change="updateLocalStorage('releaseDate', eventInfo.releaseDate)" hour-step="timepicker.hstep" minute-step="timepicker.mstep" show-meridian="timepicker.imderidian" class="timepicker"></uib-timepicker>
                   </div>
                 </span>
               </div>
           </div>
-        {! <div class="col-md-6 btn-toolbar"> !}
           <label> Additional options </label>
           <div class="checkbox checkbox-block">
             <input ng-disabled="pastEvent" type="checkbox" id="is-public" ng-model="eventInfo.public">

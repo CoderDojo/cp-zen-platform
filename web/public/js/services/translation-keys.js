@@ -810,6 +810,12 @@ angular.module('cpZenPlatform')
       "End time": "End time",
       "Charter already signed.": "Charter already signed.",
       "Total event capacity": "Total event capacity",
+      "Ticket release": "Ticket release",
+      "Tickets have been released": "Tickets have been released",
+      "Release time": "Release time",
+      "Release date": "Release date",
+
+
       "Add ticket type": "Add ticket type",
       "Total attending": "Total attending",
       "Total waitlist": "Total waitlist",

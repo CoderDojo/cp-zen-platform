@@ -17,7 +17,7 @@
     // the result of this function will be finally saved in the DB
     function calculateDatesObj(startDateTime, endDateTime){
       var date = {};
-      startDateTime = moment(startDateTime);
+      // startDateTime = moment(startDateTime);
       date.startTime = moment.utc([
         startDateTime.year(), startDateTime.month(), startDateTime.date(),
         startTimeHour, startTimeMin, 0, 0
@@ -186,6 +186,8 @@
 
     $scope.$watch('eventInfo.startTime', function (startTime) {
       $scope.eventInfo.fixedStartDateTime = fixEventTime(startTime, $scope.eventInfo.fixedStartDateTime);
+      $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
+
     });
 
     $scope.$watch('eventInfo.endTime', function (endTime) {
@@ -240,7 +242,7 @@
         if(cb) cb();
       }, function (err) {
         if(err) console.error(err);
-        alertService.showError($translate.instant('Please add the event location manually by clicking on the map.'));
+          alertService.showError($translate.instant('Please add the event location manually by clicking on the map.'));
         if(cb) cb();
       });
     };
@@ -406,7 +408,7 @@
           lastDate = offsetedLastDate;
         }
 
-        console.log(event);
+        console.log('release date',releasing);
         $scope.eventInfo.date = firstDate.toDate();
         $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
         $scope.eventInfo.toDate = lastDate.toDate();
@@ -415,7 +417,7 @@
         $scope.eventInfo.city = event.city;
         $scope.eventInfo.position = event.position;
         $scope.eventInfo.chooseReleaseTime = event.chooseReleaseTime;
-        $scope.eventInfo.releaseDate = event.releaseDate;
+        $scope.eventInfo.releaseDate = new Date(event.releaseDate);
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
@@ -529,7 +531,6 @@
 
       console.log("inside submit? ");
       usSpinnerService.spin('create-event-spinner');
-      console.log(eventInfo.chooseReleaseTime);
 
       if($scope.googleMaps && $scope.googleMaps.marker) {
         var eventPosition = {
