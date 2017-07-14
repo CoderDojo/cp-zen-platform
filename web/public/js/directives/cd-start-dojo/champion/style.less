@@ -1,0 +1,65 @@
+cd-sad-champion {
+  display: block;
+}
+.cd-sad-champion {
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  flex-wrap: wrap;
+  & > * {
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+  &__intro {
+    width: 100%;
+  }
+  &__video {
+    flex: 1;
+    text-align: center;
+    flex-basis: 400px;
+    &-container {
+      width: 100%;
+    }
+  }
+  &__side-form {
+    flex: 1;
+    flex-basis: @screen-xs-min;
+    flex-wrap: wrap;
+  }
+  &__bottom-form {
+    flex: 1;
+    flex-basis: 100%;
+  }
+  &__reference {
+    &-label {
+      display: block;
+    }
+    &-choice {
+      padding-left: 0px;
+    }
+  }
+  &__social-network {
+    flex-wrap: wrap;
+  }
+  &__sliders {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: center;
+    margin-bottom: @form-group-margin;
+    & .rz-tick-legend {
+      white-space: nowrap;
+    }
+  }
+  &__slider {
+    margin-bottom: 20px;
+    & .rzslider {
+      max-width: 300px;
+      & .rz-selection, & .rz-pointer, .rz-tick.rz-selected{
+        background-color: @cd-blue;
+      }
+    }
+  }
+
+}

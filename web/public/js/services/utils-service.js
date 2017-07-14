@@ -118,13 +118,14 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 
     if(obj && obj.place) {
       if(!obj.placeName) obj.placeName = obj.place.name || obj.place.toponymName || obj.place.nameWithHierarchy;
       var address = obj.placeName;
+      var country = obj.countryName || obj.country.countryName;
       for (var adminidx=4; adminidx >= 1; adminidx--) {
         if (obj['admin'+adminidx+'Name']) {
           address = address + ', ' + obj['admin'+adminidx+'Name'];
         }
       }
       var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
-      address = address + ', ' + obj.countryName;
+      address = address + ', ' + country;
       Geocoder.latLngForAddress(addr1 + address).then(function (data) {
         deferred.resolve(data);
       }, function (err) {

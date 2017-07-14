@@ -8,14 +8,22 @@
       bindings: {
         header: '@',
         tabs: '<',
-        baseState: '@'
+        tabHeader: '<',
+        baseState: '@',
+        actions: '<',
+        viewData: '='
       },
       restrict: 'E',
-      transclude: true,
+      transclude: {
+        'actions': '?cdSidebarActions'
+      },
       templateUrl: '/directives/tpl/cd-sidebar',
       controller: ['$state', '$scope', function ($state, $scope) {
         var ctrl = this;
 
+        ctrl.$onInit = function () {
+          ctrl.listVisible = true;
+        };
         ctrl.getUiSrefForTab = function (tab) {
           // Needed to use ui-sref so we can use ui-sref-active
           // ui-sref expects a value of `state-name({param1: 'val1'})`

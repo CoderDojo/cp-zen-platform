@@ -1,2 +1,2 @@
 <div class="cd-banner-background col-xs-12"></div>
-<div ng-transclude class="col-md-offset-1 col-md-11 cd-banner-background__inner"></div>
+<div ng-transclude ng-class="centered ?'col-md-10 ': 'col-md-11 '" class="col-md-offset-1 cd-banner-background__inner"></div>

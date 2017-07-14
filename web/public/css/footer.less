@@ -20,4 +20,11 @@
     display: block;
     text-align: right;
   }
+  .cd-footer {
+    @media print {
+      &__i18n, &__links {
+        display: none;
+      }
+    }
+  }
 }

@@ -1,0 +1,34 @@
+cd-start-dojo {
+  .cd-sidebar {
+    &__headers {
+
+      & > * {
+        color: @cd-white;
+      }
+      background-color: @cd-light-purple;
+    }
+
+    &__header {
+      background-color: @cd-purple;
+    }
+
+    &__tab-header {
+      color: @cd-white;
+    }
+  }
+  form.cd-validate {
+    & .ng-invalid-required {
+      border-color: @red-invalid;
+    }
+  }
+  // TODO : recover any reusable sub-part of content (side + video + btn-group)
+}
+.cd-start-dojo {
+  &__bottom-bar {
+    display: block;
+    & .cd-sidebar-actions {
+      background-color: @cd-light-purple;
+      padding: 8px;
+    }
+  }
+}

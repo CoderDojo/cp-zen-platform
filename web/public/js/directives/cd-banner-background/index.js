@@ -5,6 +5,7 @@ function cdBannerBackground(){
     return {
       scope: {
         src: '=?',
+        centered: '=?'
       },
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-banner-background',

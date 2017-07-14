@@ -1,0 +1,44 @@
+cd-sad-review {
+  display: block;
+}
+.cd-sad-review {
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+  flex-wrap: wrap;
+  & > * {
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+  &__step {
+    box-shadow: @cd-box-shadow;
+    flex: 1;
+    margin: 3%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 30%;
+    max-width: 320px;
+    h3 {
+      flex: 1;
+      padding: 8px;
+      margin-top: 10px;
+    }
+    &-icon {
+      margin-left: 8px;
+      .fa {
+        width: 24px;
+        font-size: 2em;
+        text-align: center;
+      }
+    }
+    &-icon--navigate {
+      font-size: 4em;
+      margin-bottom: 5px;
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+cd-application-card {
+  display: block;
+  margin : 16px;
+  &::before {
+    background: @cd-purple;
+    height: 5px;
+    width: 100%;
+    content: '';
+    position: relative;
+    display: block;
+  }
+}
+.cd-application-card {
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: @cd-box-shadow;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16px 0;
+  .cd-rounded-image {
+    @img-size: 130px;
+    img {
+      min-width: @img-size;
+      min-height: @img-size;
+    }
+  }
+
+  &__placeholder {
+    text-align: center;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__header-text {
+    flex: 1;
+    padding: 16px;
+  }
+  &__info {
+    flex-shrink: 0;
+    & > span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  &__timing {
+    flex-shrink: 0;
+    display: flex;
+    flex-flow: column;
+    flex-basis: 320px;
+    align-items: center;
+    &-link {
+      .fa {
+        margin-left: 1em;
+      }
+    }
+    &-status {
+      .fa {
+        margin-right: 12px;
+      }
+    }
+  }
+}

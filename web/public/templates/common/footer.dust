@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row cd-footer__i18n">
     <div class="col-md-4 col-sm-6">
       <span class="fa fa-language fa-2x language-picker-icon"></span>{>"common/components/cdgm-lang-bar" /}
     </div>

@@ -28,7 +28,7 @@ var cdfLogin = function(){
               if (_.includes(user.roles, 'cdf-admin')) {
                 if (!$scope.referer && !$scope.next) {
                   //  TODO: dashboard for cdf
-                  $scope.referer = $state.href('polls');
+                  $scope.referer = $state.href('dashboard');
                 }
                 $window.location.href = $scope.referer || $scope.next;
               }

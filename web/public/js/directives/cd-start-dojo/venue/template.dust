@@ -1,0 +1,99 @@
+<form class="cd-sad-venue" name="$ctrl.venueForm"  no-validate="" ng-class="{'cd-validate': $ctrl.venue.visited}" focus-invalid>
+  <div class="cd-sad-venue__video">
+    <iframe class="cd-sad-venue__video-container" width="560" height="315"
+     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+  </div>
+  <div class="cd-sad-venue__side-form">
+    <p class="help-block">
+      {@i18n key="The venue is where the Dojo takes place."/}&nbsp;
+      {@i18n key="It should be a safe, accessible and fun space."/}&nbsp;
+      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+    </p>
+    <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
+    <h4 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h4>
+    <div class="cd-sad-venue__venue-choice-group">
+      <div class="cd-sad-venue__venue-choice"
+        ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
+        ng-click="$ctrl.venue.isFound = true">
+        <input type="radio" ng-model="$ctrl.venue.isFound"
+          class="cd-sad-venue__venue-choice-selector"
+          name="isFound"
+          ng-value="true"/>
+        <div class="cd-sad-venue__venue-choice-action">
+          <i class="fa fa-at fa-2x"></i>
+          <p>{@i18n key="I have a venue"/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-venue__venue-choice"
+        ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}"
+        ng-click="$ctrl.venue.isFound = false; $ctrl.displayInfo();">
+        <input type="radio" ng-model="$ctrl.venue.isFound"
+          class="cd-sad-venue__venue-choice-selector"
+          name="isFound"
+          ng-value="false"/>
+        <div class="cd-sad-venue__venue-choice-action">
+          <i class="fa fa-search fa-2x"></i>
+          <p>{@i18n key="I'm looking for a venue"/}</p>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="$ctrl.venue.isFound === true" class="cd-sad-venue__container">
+      <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+        set-location="$ctrl.setLocation"
+        map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
+      <div class="form-group">
+        <label>{@i18n key="Where is your venue located?"/}</label>
+        <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
+        <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
+        <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" set-location="$ctrl.setLocation"></cd-dojo-form-map>
+      </div>
+      <div class="form-group">
+        <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
+        <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
+          required="true">
+          <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
+            {{ option.name }}
+          </option>
+        </select>
+        <div ng-show="($ctrl.venue.type === 'other')">
+          {@i18n key="Other (please detail)"/}
+          <input type="text" class="form-control" name="alternativeType"
+            placeholder="Please detail"
+            ng-required="$ctrl.venue.type === 'other'"
+            ng-model="$ctrl.venue.alternativeType"></input>
+        </div>
+      </div>
+      <div class="form-group" ng-show="$ctrl.venue.type === 'office'">
+        <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
+        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" ng-required="$ctrl.venue.type === 'office'">
+          <option ng-repeat="option in $ctrl.corporateList" value="{{ option.id }}">
+            {{ option.name }}
+          </option>
+        </select>
+        <div ng-show="($ctrl.venue.corporate === 'other')" >
+          {@i18n key="Other (please detail)"/}
+          <input type="text" class="form-control"
+            name="alternativeCorporate"
+            ng-required="$ctrl.venue.corporate === 'other'"
+            ng-model="$ctrl.venue.alternativeCorporate"></input>
+        </div>
+      </div>
+      <div class="form-group">
+        {@i18n key="What is the maximum amount of people can your venue hold?"/}
+        <input type="number" name="capacity"
+          required="required"
+          placeholder="42"
+          ng-model="$ctrl.venue.capacity" class="form-control"></input>
+      </div>
+    </div>
+    <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
+      <div>
+        <a href="http://kata.coderdojo.com/wiki/Template_Letter_for_Mentor_Acquisition"
+         name="downloadTemplate" target="_blank">{@i18n key="Download a template letter to send to potential venues here"/}</a>
+      </div>
+    </div>
+  </div>
+</form>

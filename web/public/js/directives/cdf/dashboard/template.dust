@@ -1,0 +1,7 @@
+<div class="row">
+  <ul class="nav nav-pills nav-justified" role="tablist">
+    <li role="presentation"><a ui-sref="polls">Polls</a></li>
+    <li role="presentation"><a ui-sref="orgs">Organisations</a></li>
+  </ul>
+</div>
+<ui-view></ui-view>
