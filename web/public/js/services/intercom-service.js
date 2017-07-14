@@ -34,14 +34,9 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
     $window.Intercom('boot', userData);
   }
 
-  intercomService.updateIntercom = function (dojoId) {
-    if(!$localStorage.dojoIds){
-      $localStorage.dojoIds = '';
-    }
-
-    $localStorage.dojoIds = $localStorage.dojoIds.concat(',', dojoId);
-    $window.Intercom('update', {"dojos": $localStorage.dojoIds});
-  }
+  intercomService.update = function (dojoIds) {
+    $window.Intercom('update', {"dojos": dojoIds});
+  };
 
   intercomService.shutDown = function () {
     $window.Intercom('shutdown');
@@ -59,5 +54,8 @@ angular.module('cpZenPlatform').factory('intercomService', function ($localStora
     });
   };
 
+  intercomService.show = function () {
+    $window.Intercom('show');
+  };
   return intercomService;
 });

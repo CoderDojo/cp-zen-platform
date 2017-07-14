@@ -7,7 +7,7 @@
             <cd-expanding-dojo-card-events dojo="$ctrl.dojo" is-ticketing-admin="$ctrl.isTicketingAdmin"></cd-expanding-dojo-card-events>
         </div>
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-resources">
-            <cd-expanding-dojo-card-resources dojo="$ctrl.dojo"></cd-expanding-dojo-card-resources>
+            <cd-expanding-dojo-card-resources></cd-expanding-dojo-card-resources>
         </div>
     </div>
     <div class="cd-expanding-dojo-card__view-edit-buttons btn-group" role="group" aria-hidden="true">

@@ -1,0 +1,24 @@
+<div class="input-group cd-sign-charter text-center">
+  <!-- TODO: translation -->
+  <div class="cd-sign-charter__final" ng-show="$ctrl.ngModel">
+    <p class="h4"> On the {{ ($ctrl.currentDate || $ctrl.ngModel.agreementDate) | date }}, I, {{ $ctrl.ngModel.fullName }} agreed to the charter.</p>
+  </div>
+  <div class="cd-sign-charter__name input-group" ng-if="!$ctrl.isValid">
+    <div class="checkbox cd-checkbox checkbox-primary">
+      <input type="checkbox" ng-model="$ctrl.agreed" required
+        required-message="'{@i18n key="You must accept the charter"/}'" name="agreed">
+      <label for="agreed">{@i18n key="I have read and accepted the above charter"/}</label>
+    </div>
+    <input type="text" name="fullName"
+      ng-model="$ctrl.ngModel.fullName" class="form-control"
+      placeholder="{@i18n key="Full Name"/}"></input>
+    <div class="cd-sign-charter__button-group input-group-btn">
+      <button class="btn btn-secondary" ng-click="$ctrl.print()"><i class="fa fa-print"> {@i18n key="Print"/}</i></button>
+    </div>
+    <!-- NOTE : Submit action -->
+    <button class="btn btn-primary cd-sign-charter__submit"
+      ng-if="$ctrl.accept" ng-click="$ctrl.accept()" ng-disabled="!$ctrl.agreed || !$ctrl.ngModel.fullName">
+      {@i18n key="Submit"/}
+    </button>
+  </div>
+</div>

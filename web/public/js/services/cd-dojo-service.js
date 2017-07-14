@@ -15,19 +15,14 @@
       list: function(query, win, fail){
         return cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
-      myDojos: function (search, win, fail) {
+      joinedDojos: function (query, win, fail) {
         return $q(function(resolve, reject) {
-          cdApi.post('dojos/my-dojos', {search: search}, resolve, reject);
+          cdApi.post('user/dojos', {query: query}, resolve, reject);
         });
       },
       search: function(query) {
         return $q(function(resolve, reject) {
           cdApi.post('dojos/search', {query: query}, resolve, reject);
-        });
-      },
-      manageDojos: function(query) {
-        return $q(function(resolve, reject) {
-          cdApi.post('dojos/manage-dojos', {query: query}, resolve, reject);
         });
       },
       save: function(dojo, win, fail) {
@@ -84,29 +79,31 @@
       getStats: function(win, fail){
         return cdApi.post('dojos/stats', {}, win,  fail || topfail);
       },
-      saveDojoLead: function(dojoLead, win, fail) {
-        if(dojoLead.id) {
-          cdApi.put('dojos/update-dojo-lead/' + dojoLead.id, { dojoLead: dojoLead }, win, fail || topfail);
-        } else {
-          cdApi.post('dojos/save-dojo-lead', { dojoLead: dojoLead }, win, fail || topfail);
-        }
+      // LEADS
+      saveDojoLead: function(lead, win, fail) {
+        return cdApi.post('dojos/lead', { lead: lead }, win, fail || topfail);
       },
-      loadUserDojoLead: function(userId, win, fail) {
-        return cdApi.get('dojos/user-dojo-lead/' + userId, win, fail || topfail);
+      submitDojoLead: function (id, lead, win, fail) {
+        return cdApi.put('dojos/lead/' + id, { lead: lead });
+      },
+      verify: function (id, verified) {
+        return cdApi.patch('dojos/' + id + '/verified', {verified: verified});
       },
       loadDojoLead: function(id, win, fail) {
-        return cdApi.get('dojos/dojo-lead/' + id, win, fail || topfail);
+        return cdApi.get('dojos/lead/' + id, win, fail || topfail);
+      },
+      searchDojoLeads: function(query) {
+        return cdApi.post('dojos/leads/search', {query: query});
+      },
+      deleteDojoLeads: function (id) {
+        return cdApi.delete('dojos/lead/' + id);
       },
       loadSetupDojoSteps: function(win, fail) {
         return cdApi.get('dojos/setup-steps', win, fail || topfail);
       },
+      //
       getUsersDojos: function(query, win, fail) {
         return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
-      },
-      searchDojoLeads: function(query) {
-        return $q(function(resolve, reject) {
-          cdApi.post('dojos/search-dojo-leads', {query: query}, resolve, reject);
-        });
       },
       getUsersDojosPromise: function(query){
         var deferred = $q.defer();

@@ -1,14 +1,14 @@
 'use strict';
 /* global google */
 
-function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
+function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
                         $state, $q, $translate, utilsService, currentUser, cdUsersService,
                         $localStorage, $ngBootbox, dojoUtils) {
 
   dojoUtils.isHavingPerm(currentUser.data, $state.params.id, 'dojo-admin').then(function (isDojoAdmin) {
     $scope.isDojoAdmin = isDojoAdmin;
   })
-  .catch(function(){
+  .catch(function () {
     $scope.isDojoAdmin = false;
     $state.go('error-404-no-headers');
   });
@@ -23,11 +23,10 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
 
   $scope.getIsDojoAdmin = function () {
     return $scope.isDojoAdmin;
-  }
+  };
 
   $scope.dojo = dojo;
-  $scope.model = {};
-  $scope.markers = [];
+  $scope.model = { markers: [] };
   $scope.markerPlaced = false;
   $scope.buttonText = $translate.instant('Update Dojo');
   $scope.hideUserSelect = true;
@@ -74,10 +73,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     }, function () {
       return done($translate.instant('Failed to load Dojo'));
     });
-
-
   }, function (prevFounder, done) {
-
     if (_.isEmpty(prevFounder)) {
       return done();
     }
@@ -137,18 +133,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       $scope.founder.dojoId = $scope.dojo.id;
     }
   };
-
-  function loadDojoMap() {
-    $scope.$watch('model.map', function (map) {
-      if (map) {
-        var marker = new google.maps.Marker({
-          map: $scope.model.map,
-          position: new google.maps.LatLng(latitude, longitude)
-        });
-        $scope.markers.push(marker);
-      }
-    });
-
+  function loadDojoMap () {
     if (gmap) {
       $scope.mapLoaded = true;
 
@@ -168,6 +153,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        $scope.addMarker(null, [{latLng: $scope.mapOptions.center}]);
       } else if ($scope.dojo.geoPoint && $scope.dojo.geoPoint.lat && $scope.dojo.geoPoint.lon) {
         //add map using coordinates from geopoint if possible
         $scope.mapOptions = {
@@ -175,7 +161,8 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-      } else { //add empty map
+        $scope.addMarker(null, [{latLng: $scope.mapOptions.center}]);
+      } else { // add empty map
         cdDojoService.loadCountriesLatLongData(function (countries) {
           var country = countries[$scope.dojo.alpha2];
           $scope.mapOptions = {
@@ -183,33 +170,19 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
-        })
+        });
       }
     }
     $scope.dojoPageReady = true;
   }
 
-  function updateFromLocalStorage() {
+  function updateFromLocalStorage () {
     if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id] && $scope.isDojoAdmin) {
       alertService.showAlert($translate.instant('There are unsaved changes on this page'));
       var lsed = $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
       if (lsed.name) $scope.dojo.name = lsed.name;
       if (lsed.email) $scope.dojo.email = lsed.email;
       if (lsed.time) $scope.dojo.time = lsed.time;
-      if (lsed.country) {
-        $scope.dojo.country = lsed.country;
-        $scope.setCountry($scope.dojo, lsed.country);
-      }
-      if (lsed.place) {
-        $scope.dojo.place = lsed.place;
-        $scope.setPlace($scope.dojo, lsed.place);
-      }
-      if (lsed.country && lsed.place && !lsed.coordinates) {
-        $scope.getLocationFromAddress();
-      }
-      if (lsed.address1) $scope.dojo.address1 = lsed.address1;
-      if (lsed.coordinates) $scope.dojo.coordinates = lsed.coordinates;
-      if (lsed.geoPoint) $scope.dojo.geoPoint = lsed.geoPoint;
       if (lsed.needMentors) $scope.dojo.needMentors = lsed.needMentors;
       if (lsed.stage) $scope.dojo.stage = lsed.stage;
       if (lsed.private) $scope.dojo.private = lsed.private;
@@ -223,50 +196,17 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
     }
   }
 
-  cdDojoService.listCountries(function (countries) {
-    $scope.countries = countries;
-  });
-
-  $scope.getPlaces = function (countryCode, $select) {
-    return utilsService.getPlaces(countryCode, $select).then(function (data) {
-      $scope.places = data;
-    }, function (err) {
-      $scope.places = [];
-      console.error(err);
-    });
-  };
-
-  $scope.setCountry = function (dojo, country) {
-    dojo.countryName = country.countryName;
-    dojo.countryNumber = country.countryNumber;
-    dojo.continent = country.continent;
-    dojo.alpha2 = country.alpha2;
-    dojo.alpha3 = country.alpha3;
-  };
-
-  $scope.setPlace = function (dojo, place, form) {
-    dojo.placeName = place.name || place.nameWithHierarchy;
-    dojo.placeGeonameId = place.geonameId;
-    dojo.county = {};
-    dojo.state = {};
-    dojo.city = {};
-    for (var adminidx = 1; adminidx <= 4; adminidx++) {
-      dojo['admin' + adminidx + 'Code'] = place['admin' + adminidx + 'Code'];
-      dojo['admin' + adminidx + 'Name'] = place['admin' + adminidx + 'Name'];
-    }
-  };
-
   $scope.clearPlace = function (dojo) {
-    dojo.placeName = "";
-    dojo.placeGeonameId = "";
+    dojo.placeName = '';
+    dojo.placeGeonameId = '';
     dojo.county = {};
     dojo.state = {};
     dojo.city = {};
     for (var adminidx = 1; adminidx <= 4; adminidx++) {
-      dojo['admin' + adminidx + 'Code'] = "";
-      dojo['admin' + adminidx + 'Name'] = "";
+      dojo['admin' + adminidx + 'Code'] = '';
+      dojo['admin' + adminidx + 'Name'] = '';
     }
-    $scope.dojo.place = "";
+    $scope.dojo.place = '';
   };
 
   $scope.updateLocalStorage = function (localObj, item, value) {
@@ -286,15 +226,14 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
   };
 
   var deleteLocalStorage = function (localObj) {
-    if ($scope.user && $state.current.name === "edit-dojo") {
+    if ($scope.user && $state.current.name === 'edit-dojo') {
       if ($localStorage[$scope.user.id] && $localStorage[$scope.user.id].editDojo && $localStorage[$scope.user.id].editDojo[$scope.dojo.id]) {
-        delete $localStorage[$scope.user.id].editDojo[$scope.dojo.id]
+        delete $localStorage[$scope.user.id].editDojo[$scope.dojo.id];
       }
     }
   };
 
   $scope.save = function (dojo) {
-
     if ($scope.changedLocation && !$scope.markerPlaced) {
       $scope.getLocationFromAddress(finish);
     } else {
@@ -309,7 +248,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
           cdDojoService.updateFounder($scope.founder, function (response) {
-            alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
+            alertService.showAlert($translate.instant('Your Dojo has been successfully saved'), function () {
               deleteLocalStorage('editDojoListing');
               $state.go('manage-dojos');
               $scope.$apply();
@@ -318,7 +257,7 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
             alertService.showError($translate.instant('An error has occurred while saving'));
           });
         } else {
-          alertService.showAlert($translate.instant("Your Dojo has been successfully saved"), function () {
+          alertService.showAlert($translate.instant('Your Dojo has been successfully saved'), function () {
             deleteLocalStorage('editDojoListing');
             $state.go('my-dojos');
             $scope.$apply();
@@ -375,57 +314,6 @@ function cdEditDojoCtrl($scope, dojo, cdDojoService, alertService, gmap, auth,
         alertService.showAlert($translate.instant('You do not have permission to update this Dojo.'));
       });
     }
-  };
-
-  $scope.addMarker = function ($event, $params, dojo) {
-    $scope.markerPlaced = true;
-    angular.forEach($scope.markers, function (marker) {
-      marker.setMap(null);
-    });
-    $scope.markers.push(new google.maps.Marker({
-      map: $scope.model.map,
-      position: $params[0].latLng
-    }));
-    dojo.geoPoint = {
-      lat: $params[0].latLng.lat(),
-      lon: $params[0].latLng.lng()
-    };
-    dojo.coordinates = dojo.geoPoint.lat + ', ' + dojo.geoPoint.lon;
-    $scope.updateLocalStorage('dojoListing', 'geoPoint', dojo.geoPoint);
-    $scope.updateLocalStorage('dojoListing', 'coordinates', dojo.coordinates);
-    $scope.updateLocalStorage('dojoListing', 'markerPlaced', $scope.markerPlaced);
-  };
-
-  $scope.getLocationFromAddress = function (cb) {
-    var dojo = $scope.dojo;
-    utilsService.getLocationFromAddress(dojo).then(function (data) {
-      $scope.markerPlaced = false;
-      $scope.mapOptions.center = new google.maps.LatLng(data.lat, data.lng);
-      $scope.model.map.panTo($scope.mapOptions.center);
-      angular.forEach($scope.markers, function (marker) {
-        marker.setMap(null);
-      });
-      $scope.markers.push(new google.maps.Marker({
-        map: $scope.model.map,
-        position: $scope.mapOptions.center
-      }));
-      dojo.geoPoint = {
-        lat: data.lat,
-        lon: data.lng
-      };
-      dojo.coordinates = data.lat + ', ' + data.lng;
-      if (_.isFunction(cb)) cb();
-    }, function () {
-      if ($scope.dojo.coordinates) {
-        if (_.isFunction(cb)) {
-          alertService.confirm($translate.instant('We could not determine a location from this address. Your previous location marker has been retained.'), cb);
-        } else {
-          alertService.showAlert($translate.instant('We could not determine a location from this address. Your previous location marker has been retained.'));
-        }
-      } else {
-        alertService.showError($translate.instant('Please add your location manually by clicking on the map.'));
-      }
-    });
   };
 
   $scope.upload = function (file) {

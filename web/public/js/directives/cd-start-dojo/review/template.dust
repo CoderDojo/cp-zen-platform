@@ -1,0 +1,11 @@
+<form class="cd-sad-review" >
+  <div class="cd-sad-review__step" ng-repeat="(key, step) in $ctrl.steps" ui-sref="{{ step.state }}">
+    <h3>{{ step.name }}</h3>
+    <span class="cd-sad-review__step-icon">
+      <i class="fa"
+        ng-class="$ctrl.application[key].isValid ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'">
+      </i>
+    </span>
+    <i class="fa fa-angle-right pull-right cd-sad-review__step-icon--navigate h3"></i>
+  </div>
+</form>

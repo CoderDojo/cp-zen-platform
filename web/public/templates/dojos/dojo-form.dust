@@ -26,6 +26,12 @@
       </div>
       <div cd-dojo-form-activity class="col-md-10 col-md-offset-1"></div>
       <div cd-dojo-form-contact class="col-md-10 col-md-offset-1"></div>
+      <div class="col-md-10 col-md-offset-1">
+        <h3 class="cd-section-header"><a id="location"></a><a href="#location">{@i18n key="Location"/}</a></h3>
+        <cd-dojo-form-map ng-model="dojo" model="model"
+          map-options="mapOptions" add-marker="addMarker"></cd-dojo-form-map>
+        <cd-dojo-map model="model" map="gmap" add-marker="addMarker" map-options="mapOptions"></cd-dojo-map>
+      </div>
       <div cd-dojo-form-map class="col-md-10 col-md-offset-1"></div>
       <div cd-dojo-form-status class="col-md-10 col-md-offset-1"></div>
     </form>

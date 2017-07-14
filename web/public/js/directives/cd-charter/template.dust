@@ -1,0 +1,6 @@
+<h1>{@i18n key="Charter"/}</h1>
+<p class="help-block">
+  {@i18n key="All Dojos are required to agree with the below CoderDojo Charter. This Charter encompasses the basic ethos and core aspects of the CoderDojo movement, which all Dojos are founded on. The introduction of the Charter was announced by co-founder James Whelton to the CoderDojo Organisers Group on the 3rd of December 2013."/}
+</p>
+<cd-charter-content></cd-charter-content>
+<cd-sign-charter accept="$ctrl.save" ng-model="$ctrl.agreement" is-valid="$ctrl.isValid()"></cd-sign-charter>

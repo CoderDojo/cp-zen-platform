@@ -14,7 +14,7 @@
     scriptTag = doc.createElement('script');
     scriptTag.id = scriptId;
     scriptTag.setAttribute('src',
-      'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=mapReady&key=AIzaSyC3xF9XV91bS2R14Gjmx3UQaKbGgAfHbE4');
+      'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=mapReady&key=AIzaSyC3xF9XV91bS2R14Gjmx3UQaKbGgAfHbE4');
     doc.head.appendChild(scriptTag);
     $window.mapReady = (function(dfd) {
       return function() {
@@ -149,15 +149,6 @@
     },
     badgeCategories: function(cdBadgesService) {
       return cdBadgesService.loadBadgeCategoriesPromise().then(winCb, failCb);
-    },
-    agreement: function(cdAgreementsService, $stateParams, $window, auth){
-      return auth.get_loggedin_user_promise().then(function (user) {
-        if (user) {
-          return cdAgreementsService.loadUserAgreementPromise(user.id).then(winCb, failCb);
-        } else {
-          winCb(void 0);
-        }
-      });
     },
     dojoAdminsForUser: function ($stateParams, cdUsersService, $q) {
       if ($stateParams.userId) {
@@ -300,13 +291,15 @@
           controller: 'stats-controller'
         })
         .state("review-champion-application", {
-          url: "/champion-applications/:id",
+          url: "/lead/:id",
           parent: 'dashboard',
-          templateUrl: '/champion/template/review-application',
+          template: '<cd-dojo-lead id="id"></cd-dojo-lead>',
           params: {
-            pageTitle: 'Review Champion Application'
+            pageTitle: 'Review Application'
           },
-          controller: 'review-champion-application-controller'
+          controller: function ($scope, $state) {
+            $scope.id = $state.params.id;
+          }
         })
         .state("manage-dojo-users", {
           url: "/my-dojos/:id/users",
@@ -379,11 +372,10 @@
         .state("manage-dojos", {
           url: "/manage-dojos",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/manage-dojos',
+          template: '<cd-dojos-manage></cd-dojos-manage>',
           params: {
             pageTitle: 'Manage Dojos'
-          },
-          controller: 'manage-dojo-controller'
+          }
         })
         .state("my-dojos", {
           url: "/my-dojos",
@@ -610,18 +602,105 @@
             pageTitle: 'Dojo Map'
           },
         })
-        .state("start-dojo", {
-          url: "/start-dojo",
-          templateUrl: '/dojos/template/start-dojo-wizard/wizard',
-          params:{
+        .state('start-dojo', {
+          parent: 'dashboard',
+          url: '/start-dojo?id',
+          redirectTo: 'start-dojo.champion',
+          template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
+          params: {
             referer: 'start-dojo',
             pageTitle: 'Start a Dojo'
           },
           resolve: {
+            currentUser: resolves.loggedInUser
+          },
+          controller: function (currentUser, $scope) {
+            $scope.currentUser = currentUser.data;
+          }
+        })
+        .state('start-dojo.champion', {
+          url: '/champion',
+          parent: 'start-dojo',
+          template: '<cd-sad-champion ' +
+           'champion="$ctrl.viewData.champion" class="cd-sidebar__content--padded"></cd-sad-champion>',
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo',
+            skip: false
+          }
+        })
+        .state('start-dojo.information', {
+          url: '/information',
+          parent: 'start-dojo',
+          template: '<cd-sad-information ' +
+          'dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-information>',
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo',
+            skip: false
+          }
+        })
+        .state('start-dojo.venue', {
+          url: '/venue',
+          parent: 'start-dojo',
+          template: '<cd-sad-venue ' +
+            'venue="$ctrl.viewData.venue" gmap="gmap" class="cd-sidebar__content--padded" ></cd-sad-venue>',
+          resolve: {
             gmap: gmap
           },
-          controller: 'start-dojo-wizard-controller'
+          controller: function ($scope, gmap) {
+            $scope.gmap = gmap;
+          },
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo',
+            skip: false
+          }
         })
+        .state('start-dojo.team', {
+          url: '/team',
+          parent: 'start-dojo',
+          template: '<cd-sad-team ' +
+          'team="$ctrl.viewData.team" dojo="$ctrl.viewData.dojo" class="cd-sidebar__content--padded"></cd-sad-team>',
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo',
+            skip: false
+          }
+        })
+        .state('start-dojo.charter', {
+          url: '/charter',
+          parent: 'start-dojo',
+          template: '<cd-sad-charter ' +
+          'charter="$ctrl.viewData.charter" user="$ctrl.user" class="cd-sidebar__content--padded"></cd-sad-charter>',
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo',
+            skip: false
+          }
+        })
+        .state('start-dojo.review', {
+          url: '/review',
+          parent: 'start-dojo',
+          template: '<cd-sad-review ' +
+          'application="$ctrl.viewData" class="cd-sidebar__content--padded" ></cd-sad-review>',
+          params: {
+            referer: 'start-dojo',
+            pageTitle: 'Start a Dojo'
+          }
+        })
+        // .state("start-dojo", {
+        //   url: "/start-dojo",
+        //   templateUrl: '/dojos/template/start-dojo-wizard/wizard',
+        //   params:{
+        //     referer: 'start-dojo',
+        //     pageTitle: 'Start a Dojo'
+        //   },
+        //   resolve: {
+        //     gmap: gmap
+        //   },
+        //   controller: 'start-dojo-wizard-controller'
+        // })
         .state("terms-and-conditions", {
           url: "/terms-and-conditions",
           templateUrl: '/templates/terms-and-conditions',
@@ -640,22 +719,18 @@
         })
         .state('charter',{
           url: '/charter',
-          templateUrl: '/charter/template/charter-info',
+          template: '<cd-charter></cd-charter>',
           params: {
             pageTitle: 'Charter',
           }
         })
+        // TODO: ask Daniel : keep 2 pages & differenciate with content/no-signup or one for both ?
         .state('charter-page', {
           url: '/charter',
           parent: 'dashboard',
-          templateUrl: '/charter/template/index',
-          controller: 'charter-controller',
-          resolve: {
-            currentUser: resolves.loggedInUser
-          },
+          template: '<cd-charter></cd-charter>',
           params: {
             pageTitle: 'Charter',
-            showBannerMessage: null
           }
         })
         .state('approve-invite-ninja', {
@@ -711,7 +786,7 @@
         })
         .state('my-children.add', {
           url: '/add',
-          template: '<cd-add-child parent-profile-data="parentProfileData"></cd-add-child>',
+          template: '<cd-add-child parent-profile-data="parentProfileData" class="cd-sidebar__content--padded"></cd-add-child>',
           controller: ['$scope', 'ownProfile', function ($scope, ownProfile) {
             $scope.parentProfileData = ownProfile;
           }]
@@ -733,7 +808,6 @@
             usersDojos: resolves.usersDojos,
             hiddenFields: resolves.hiddenFields,
             initUserTypes: resolves.initUserTypes,
-            agreement: resolves.agreement ,
             championsForUser: resolves.championsForUser,
             parentsForUser: resolves.parentsForUser,
             badgeCategories: resolves.badgeCategories,
@@ -755,7 +829,6 @@
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
             hiddenFields: resolves.hiddenFields,
-            agreement: resolves.agreement ,
             championsForUser: resolves.championsForUser,
             parentsForUser: resolves.parentsForUser,
             badgeCategories: resolves.badgeCategories,
@@ -788,7 +861,6 @@
             profile: resolves.ownProfile,
             loggedInUser: resolves.loggedInUser,
             hiddenFields: resolves.hiddenFields,
-            agreement: resolves.agreement ,
             championsForUser: resolves.championsForLoggedInUser,
             parentsForUser: resolves.parentsForLoggedInUser,
             badgeCategories: resolves.badgeCategories,
@@ -826,7 +898,6 @@
             profile: resolves.profile,
             loggedInUser: resolves.loggedInUser,
             hiddenFields: resolves.hiddenFields,
-            agreement: resolves.agreement ,
             championsForUser: resolves.championsForUser,
             parentsForUser: resolves.parentsForUser,
             badgeCategories: resolves.badgeCategories,
@@ -1031,7 +1102,7 @@
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if (toState.redirectTo) {
           event.preventDefault();
-          $state.go(toState.redirectTo, toParams);
+          $state.go(toState.redirectTo, toParams, {location: 'replace'});
         }
       });
 

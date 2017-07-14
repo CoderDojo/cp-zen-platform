@@ -168,8 +168,7 @@
         })
         .state("dashboard", {
           url: "/dashboard",
-          abstract: 'true',
-          template: '<ui-view></ui-view>',
+          template: '<cdf-dashboard></cdf-dashboard>',
           resolve: {
             isSessionValid: resolves.isSessionValid
           },
@@ -197,6 +196,16 @@
           parent: 'dashboard',
           url: "/polls/:pollId/results",
           template: '<cdf-poll-details></cdf-poll-details>',
+        })
+        .state("orgs", {
+          parent: 'dashboard',
+          url: "/orgs",
+          template: '<cdf-org-list></cdf-org-list>',
+        })
+        .state("org-users", {
+          parent: 'dashboard',
+          url: "/orgs/:orgId/users",
+          template: '<cdf-org-user-list></cdf-org-user-list>',
         });
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise(function ($injector, $location) {

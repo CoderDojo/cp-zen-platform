@@ -1,0 +1,80 @@
+cd-sad-venue {
+  display: block;
+}
+.cd-sad-venue {
+  display: flex;
+  align-items: flex-start;
+  align-content: space-around;
+  flex-wrap: wrap;
+  & > * {
+    @media (min-width: @screen-sm-min) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+  &__video {
+    flex: 1;
+    text-align: center;
+    flex-basis: 400px;
+    & > img {
+      width: 100%;
+    }
+    cd-dojo-map {
+      display: block;
+      padding-top: 16px;
+    }
+  }
+  &__container {
+    margin-top: 16px;
+  }
+  &__button-group {
+    text-align: center;
+  }
+  &__side-form {
+    flex: 1;
+    flex-basis: @screen-xs-min;
+    flex-wrap: wrap;
+  }
+  &__bottom-form {
+    flex: 1;
+    flex-basis: 100%;
+  }
+  &__venue-choice {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: @cd-box-shadow;
+    padding: 8px;
+    margin: 8px;
+    flex-basis: 200px;
+    min-height: 100px;
+    &-selected {
+      flex: 2;
+      flex-basis: 250px;
+    }
+    &-selector {
+      align-self: flex-start;
+      transform: scale(1.5);
+      &[aria-checked="true"] {
+        transform: scale(2);
+      }
+    }
+    &-action {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+    }
+    &-not-selected {
+      background-color: @cd-very-light-grey;
+      flex-basis: 100px;
+    }
+    &-group {
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
