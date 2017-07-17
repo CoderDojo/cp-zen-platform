@@ -15,7 +15,7 @@
     <div class="cd-sad-venue__venue-choice-group">
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
-        ng-click="$ctrl.venue.isFound = true">
+        ng-click="$ctrl.venue.isFound = true; $ctrl.refreshMap()">
         <input type="radio" ng-model="$ctrl.venue.isFound"
           class="cd-sad-venue__venue-choice-selector"
           name="isFound"
