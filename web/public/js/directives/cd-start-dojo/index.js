@@ -58,6 +58,7 @@ angular
           }
         ];
         function setStatusIcon () {
+          console.log(this.validity);
           return $sce.trustAsHtml(this.validity);
         }
 
@@ -164,7 +165,7 @@ angular
           if (ctrl.leadId) lead.id = ctrl.leadId;
           return lead;
         };
-        ctrl.isValid = ctrl.actions.submitReadonly = ctrl.actions.saveVisible = function () {
+        ctrl.isValid = ctrl.actions.isValid = function () {
           var validities = _.map(ctrl.application, function (step) {
             return step.formValidity ||// Current form validity
               step.isValid; // saved validity
@@ -284,7 +285,7 @@ angular
                   visited: false
                 },
                 dojo: {startTime: moment({minutes: 0}), endTime: moment({minutes: 0}), visited: false, isValid: false},
-                venue: {visited: false, isValid: false},
+                venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });
             }

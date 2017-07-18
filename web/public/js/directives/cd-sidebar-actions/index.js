@@ -8,13 +8,9 @@
         save: '=',
         saveVisible: '=',
         submit: '<',
-        submitReadonly: '='
+        submitVisible: '='
       },
       restrict: 'E',
-      templateUrl: '/directives/tpl/cd-sidebar-actions',
-      controller: ['$state', '$scope', function ($state, $scope) {
-        var ctrl = this;
-
-      }]
+      templateUrl: '/directives/tpl/cd-sidebar-actions'
     });
 }());

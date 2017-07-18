@@ -9,9 +9,12 @@ angular
         var blacklist = ['coderdojo', 'dojo'];
 
         function setValidity (value) {
-          var valid = _.every(blacklist, function (keyword) { return value.toLowerCase().indexOf(keyword) === -1; });
-          ngModel.$setValidity('blacklist', valid);
-          return valid || undefined;
+          var valid;
+          if (value) {
+             valid = _.every(blacklist, function (keyword) { return value.toLowerCase().indexOf(keyword) === -1; });
+            ngModel.$setValidity('blacklist', valid);
+          }
+          return (value && valid) || undefined;
         }
         ngModel.$parsers.unshift(function (value) {
           return setValidity(value) ? value : undefined;
