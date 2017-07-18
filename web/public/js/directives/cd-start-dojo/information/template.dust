@@ -7,9 +7,9 @@
     <input type="text" class="form-control" name="name" ng-model="$ctrl.dojo.name"
       placeholder="{@i18n key="Kings Cross, London @ Microsoft"/}"
       cd-dojo-name required></input>
-    <div ng-messages="$ctrl.dojo.form.name.$error">
+    <div ng-messages="$ctrl.dojoForm.name.$error">
       <!-- That's not how it's supposed to work, but eh i'm giving up on that one -->
-      <div ng-show="$ctrl.dojo.form.name.$error.pattern">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</div>
+      <label ng-show="$ctrl.dojoForm.name.$error.blacklist" class="control-label has-error validationMessage">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</label>
     </div>
     <p class="help-block">
       {@i18n key="The Dojo Name should be formatted as [City/Town/State]@ [Sponsor/Venue Name] or in a large city [Neighbourhood/Area], [City] @ [Sponsor/Venue Name]"/}
