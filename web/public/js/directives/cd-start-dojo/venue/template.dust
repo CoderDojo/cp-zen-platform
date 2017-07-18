@@ -16,10 +16,12 @@
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
         ng-click="$ctrl.venue.isFound = true; $ctrl.refreshMap()">
-        <input type="radio" ng-model="$ctrl.venue.isFound"
-          class="cd-sad-venue__venue-choice-selector"
-          name="isFound"
-          ng-value="true"/>
+        <span class="radio cd-sad-venue__venue-choice-selector">
+          <input type="radio" ng-model="$ctrl.venue.isFound"
+            name="isFound"
+            ng-value="true"/>
+          <label for="isFound"></label>
+        </span>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-at fa-2x"></i>
           <p>{@i18n key="I have a venue"/}</p>
@@ -28,10 +30,12 @@
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}"
         ng-click="$ctrl.venue.isFound = false; $ctrl.displayInfo();">
-        <input type="radio" ng-model="$ctrl.venue.isFound"
-          class="cd-sad-venue__venue-choice-selector"
-          name="isFound"
-          ng-value="false"/>
+        <span class="radio cd-sad-venue__venue-choice-selector">
+          <input type="radio" ng-model="$ctrl.venue.isFound"
+            name="isFound"
+            ng-value="false"/>
+          <label for="isFound"></label>
+        </span>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-search fa-2x"></i>
           <p>{@i18n key="I'm looking for a venue"/}</p>
