@@ -15,7 +15,7 @@
     </p>
     <p class="help-block">
       {@i18n key="Dojo must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
-      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global sefguarding e-learning course</a>"/}
+      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global safeguarding e-learning course</a>"/}
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
@@ -71,7 +71,7 @@
         <p>
           {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/} &nbsp;
           {@i18n key="Your Dojo will grow and it’s always good to have extra hands."/}&nbsp;
-          {@i18n key="You can find more tips on finding volunteers <a href=\"\">here.</a>"/}
+          {@i18n key="You can find more tips on finding volunteers <a href=\"https://hwf.zendesk.com/hc/en-us/articles/115003582283\">here.</a>"/}
         </p>
       </div>
     </div>
