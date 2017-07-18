@@ -58,7 +58,6 @@ angular
           }
         ];
         function setStatusIcon () {
-          console.log(this.validity);
           return $sce.trustAsHtml(this.validity);
         }
 
