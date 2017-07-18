@@ -5,7 +5,7 @@
   <div class="form-group">
     <label for="name">{@i18n key="Name your Dojo"/}</label>
     <input type="text" class="form-control" name="name" ng-model="$ctrl.dojo.name"
-      placeholder="{@i18n key="Kings Cross, London @ Dogpath Labs"/}"
+      placeholder="{@i18n key="Kings Cross, London @ Microsoft"/}"
       cd-dojo-name required></input>
     <div ng-messages="$ctrl.dojo.form.name.$error">
       <!-- That's not how it's supposed to work, but eh i'm giving up on that one -->
