@@ -46,7 +46,7 @@ function focusInvalid () {
       };
       // Continue or die condition when an element is found
       function checkElementValidity (prevV, newV, prev2, new2) {
-        if (controller[invalidElement.name].$valid) {
+        if (invalidElement.name && controller[invalidElement.name].$valid) {
           invalidElement = void 0;
           if (elementValidityWatcher) elementValidityWatcher();
         }
