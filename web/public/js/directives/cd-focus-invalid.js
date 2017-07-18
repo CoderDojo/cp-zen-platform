@@ -39,7 +39,6 @@ function focusInvalid () {
 
       // Generic removal of any watcher set by this function
       var clearWatchers = function () {
-        console.log('off');
         if (invalidElement) $(invalidElement).off('blur.focusInvalid');
         if (validityWatcher) validityWatcher();
         if (elementValidityWatcher) elementValidityWatcher();
