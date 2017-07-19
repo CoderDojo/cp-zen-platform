@@ -1,6 +1,6 @@
 ;(function() {
   'use strict';
-
+  /* global google */
 angular
     .module('cpZenPlatform')
     .component('cdSadVenue', {
@@ -11,7 +11,7 @@ angular
         venue: '='
       },
       //TODO : dep injection array
-      controller: function ($translate, Geocoder, atomicNotifyService, $scope) {
+      controller: function ($translate, Geocoder, atomicNotifyService, $scope, $timeout) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
@@ -89,6 +89,11 @@ angular
         $scope.$on('$destroy', function () {
           validityWatcher();
         });
+        ctrl.refreshMap = function () {
+          $timeout(function () {
+            google.maps.event.trigger(ctrl.model.map, 'resize');
+          });
+        };
       }
     });
 }());

@@ -15,7 +15,7 @@
     </p>
     <p class="help-block">
       {@i18n key="Dojo must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
-      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global sefguarding e-learning course</a>"/}
+      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global safeguarding e-learning course</a>"/}
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
@@ -23,12 +23,13 @@
       <div class="cd-sad-team__team-choice"
         ng-class="{'cd-sad-team__team-choice-selected' : $ctrl.team.status == 'exists', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'exists'}"
         ng-click="$ctrl.setTeamStatus('exists')">
-        <input type="radio" ng-model="$ctrl.team.status"
-          class="cd-sad-team__team-choice-selector"
-          ng-value="'exists'"
-          name="status"
-          ng-required="!$ctrl.team.status"
-          />
+        <span class="radio cd-sad-team__team-choice-selector">
+          <input type="radio" ng-model="$ctrl.team.status"
+            ng-value="'exists'"
+            name="status"
+            ng-required="!$ctrl.team.status"/>
+          <label for="status"></label>
+        </span>
         <div class="cd-sad-team__team-choice-action" >
           <i class="fa fa-users fa-3x"></i>
           <p>{@i18n key="I have volunteers to help run my Dojo."/}</p>
@@ -37,12 +38,13 @@
       <div class="cd-sad-team__team-choice"
         ng-class="{'cd-sad-team__team-choice-selected':$ctrl.team.status == 'solo', 'cd-sad-team__team-choice-not-selected': $ctrl.team.status && $ctrl.team.status != 'solo'}"
         ng-click="$ctrl.setTeamStatus('solo')">
-        <input type="radio" ng-model="$ctrl.team.status"
-          class="cd-sad-team__team-choice-selector"
-          ng-value="'solo'"
-          name="status"
-          ng-required="!$ctrl.team.status"
-          />
+        <span class="radio cd-sad-team__team-choice-selector">
+          <input type="radio" ng-model="$ctrl.team.status"
+            ng-value="'solo'"
+            name="status"
+            ng-required="!$ctrl.team.status"/>
+          <label for="status"></label>
+        </span>
         <div class="cd-sad-team__team-choice-action">
           <i class="fa fa-user fa-3x"></i>
           <p>{@i18n key="I intend to run the Dojo by myself."/}</p>
@@ -71,7 +73,7 @@
         <p>
           {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/} &nbsp;
           {@i18n key="Your Dojo will grow and it’s always good to have extra hands."/}&nbsp;
-          {@i18n key="You can find more tips on finding volunteers <a href=\"\">here.</a>"/}
+          {@i18n key="You can find more tips on finding volunteers <a href=\"https://hwf.zendesk.com/hc/en-us/articles/115003582283\">here.</a>"/}
         </p>
       </div>
     </div>

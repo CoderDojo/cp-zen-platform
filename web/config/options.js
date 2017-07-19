@@ -20,8 +20,6 @@ module.exports = {
     forumModerators: forumModerators()
   },
 
-  'agreement-version' : 2,
-
   hapi: {
     connections: {
       routes: {

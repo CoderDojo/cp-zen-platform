@@ -15,11 +15,13 @@
     <div class="cd-sad-venue__venue-choice-group">
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected' : $ctrl.venue.isFound == true, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != true}"
-        ng-click="$ctrl.venue.isFound = true">
-        <input type="radio" ng-model="$ctrl.venue.isFound"
-          class="cd-sad-venue__venue-choice-selector"
-          name="isFound"
-          ng-value="true"/>
+        ng-click="$ctrl.venue.isFound = true; $ctrl.refreshMap()">
+        <span class="radio cd-sad-venue__venue-choice-selector">
+          <input type="radio" ng-model="$ctrl.venue.isFound"
+            name="isFound"
+            ng-value="true"/>
+          <label for="isFound"></label>
+        </span>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-at fa-2x"></i>
           <p>{@i18n key="I have a venue"/}</p>
@@ -28,10 +30,12 @@
       <div class="cd-sad-venue__venue-choice"
         ng-class="{'cd-sad-venue__venue-choice-selected':$ctrl.venue.isFound == false, 'cd-sad-venue__venue-choice-not-selected': $ctrl.venue.isFound != undefined && $ctrl.venue.isFound != false}"
         ng-click="$ctrl.venue.isFound = false; $ctrl.displayInfo();">
-        <input type="radio" ng-model="$ctrl.venue.isFound"
-          class="cd-sad-venue__venue-choice-selector"
-          name="isFound"
-          ng-value="false"/>
+        <span class="radio cd-sad-venue__venue-choice-selector">
+          <input type="radio" ng-model="$ctrl.venue.isFound"
+            name="isFound"
+            ng-value="false"/>
+          <label for="isFound"></label>
+        </span>
         <div class="cd-sad-venue__venue-choice-action">
           <i class="fa fa-search fa-2x"></i>
           <p>{@i18n key="I'm looking for a venue"/}</p>
@@ -40,9 +44,6 @@
     </div>
 
     <div ng-show="$ctrl.venue.isFound === true" class="cd-sad-venue__container">
-      <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
-        set-location="$ctrl.setLocation"
-        map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
@@ -80,13 +81,23 @@
             ng-required="$ctrl.venue.corporate === 'other'"
             ng-model="$ctrl.venue.alternativeCorporate"></input>
         </div>
+        <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
+          set-location="$ctrl.setLocation"
+          map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
       </div>
-      <div class="form-group">
-        {@i18n key="What is the maximum amount of people can your venue hold?"/}
-        <input type="number" name="capacity"
-          required="required"
-          placeholder="42"
-          ng-model="$ctrl.venue.capacity" class="form-control"></input>
+      <div class="form-group cd-simple-flex-grid">
+        <div class="cd-simple-flex-grid__flex-1 checkbox cd-checkbox checkbox-primary">
+          <input type="checkbox" name="private"
+            ng-model="$ctrl.venue.private" class="form-control"></input>
+          <label for="private"> {@i18n key="Will your dojo be private?"/}</label>
+        </div>
+        <div class="cd-simple-flex-grid__flex-1">
+          <label for="capacity"> {@i18n key="What is the maximum number of people can your venue hold?"/}</label>
+          <input type="number" name="capacity"
+            required="required"
+            placeholder="42"
+            ng-model="$ctrl.venue.capacity" class="form-control"></input>
+        </div>
       </div>
     </div>
     <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
