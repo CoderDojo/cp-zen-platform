@@ -5,7 +5,9 @@ RUN apk add --update git make gcc g++ python && \
     mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ADD . /usr/src/app/
+ENV DEP_VERSION=latest
 RUN npm install && \
+    npm install cp-zen-frontend@$DEP_VERSION cp-translations@$DEP_VERSION && \
     node_modules/.bin/bower install --allow-root && \
     npm run lint-lib && \
     npm run gulp && \
