@@ -1,8 +1,9 @@
 .git
 .gitignore
 *.md
-Dockerfile
+*Dockerfile
 *.sh
+!docker-entrypoint.sh
 deploy
 test
 example
