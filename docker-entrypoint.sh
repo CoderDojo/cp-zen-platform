@@ -10,3 +10,4 @@ npm link cp-translations && \
 npm link cp-zen-frontend && \
 ./node_modules/.bin/bower install --allow-root
 npm run dev
+
