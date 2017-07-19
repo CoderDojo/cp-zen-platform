@@ -1,0 +1,8 @@
+web/.build/* # Build folder
+web/public/* # ignore all public resources
+.[^.]*       # any hidden (dot) files
+*.md         # Markdown files
+*.css        # CSS files
+test         # test files
+node_modules # dependencies
+*.yml        # yml files
