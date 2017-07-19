@@ -8,3 +8,4 @@ web/public/css        # ignore less files, handled by gulp
 test                  # test files
 node_modules          # dependencies
 *.yml                 # yml files
+
