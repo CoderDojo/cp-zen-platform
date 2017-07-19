@@ -5,11 +5,11 @@
   <div class="form-group">
     <label for="name">{@i18n key="Name your Dojo"/}</label>
     <input type="text" class="form-control" name="name" ng-model="$ctrl.dojo.name"
-      placeholder="{@i18n key="Kings Cross, London @ Dogpath Labs"/}"
+      placeholder="{@i18n key="Kings Cross, London @ Microsoft"/}"
       cd-dojo-name required></input>
-    <div ng-messages="$ctrl.dojo.form.name.$error">
+    <div ng-messages="$ctrl.dojoForm.name.$error">
       <!-- That's not how it's supposed to work, but eh i'm giving up on that one -->
-      <div ng-show="$ctrl.dojo.form.name.$error.pattern">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</div>
+      <label ng-show="$ctrl.dojoForm.name.$error.blacklist" class="control-label has-error validationMessage">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</label>
     </div>
     <p class="help-block">
       {@i18n key="The Dojo Name should be formatted as [City/Town/State]@ [Sponsor/Venue Name] or in a large city [Neighbourhood/Area], [City] @ [Sponsor/Venue Name]"/}
@@ -79,8 +79,14 @@
         </div>
       </div>
       <div class="cd-sad-information__time-picker-hour">
-        <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
-        <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
+        <span>
+          <label for="startTime">{@i18n key="Start time"/}</label>
+          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
+        </span>
+        <span>
+          <label for="startTime">{@i18n key="End time"/}</label>
+          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian"  required></div>
+        </span>
       </div>
     </div>
   </div>
@@ -95,10 +101,12 @@
       <div class="cd-sad-information__email-choice"
         ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false && $ctrl.dojo.requestEmail != undefined }"
         ng-click="$ctrl.dojo.requestEmail = false">
-        <input type="radio" ng-model="$ctrl.dojo.requestEmail"
-          name="requestEmail"
-          class="cd-sad-information__email-choice-selector"
-          ng-required ng-value="false"/>
+        <span class="radio cd-sad-information__email-choice-selector">
+          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+            name="requestEmail"
+            ng-required ng-value="false"/>
+          <label for="requestEmail"></label>
+        </span>
         <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-at fa-2x"></i>
           <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
@@ -107,10 +115,12 @@
       <div class="cd-sad-information__email-choice"
         ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail == true, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != true}"
         ng-click="$ctrl.dojo.requestEmail = true">
-        <input type="radio" ng-model="$ctrl.dojo.requestEmail"
-          name="requestEmail"
-          class="cd-sad-information__email-choice-selector"
-          ng-required ng-value="true"/>
+        <span class="radio cd-sad-information__email-choice-selector">
+          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+            name="requestEmail"
+            ng-required ng-value="true"/>
+          <label for="requestEmail"></label>
+        </span>
         <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-magic fa-2x"></i>
           <p>{@i18n key="I want a coderdojo.com email set up"/}</p>

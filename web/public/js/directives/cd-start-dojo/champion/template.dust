@@ -39,8 +39,7 @@
           ng-required="true" required-message="'{@i18n key="Date of birth is empty"/}'"
           ng-click="$ctrl.toggle($event)"
           current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
-          close-text="{@i18n key="Done"/}"
-          placeholder="{@i18n key="You must be over 18 years old..."/}" />
+          close-text="{@i18n key="Done"/}" />
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>

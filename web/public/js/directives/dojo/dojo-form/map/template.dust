@@ -79,12 +79,13 @@
 
 <div class="form-group">
   <label for="place">{@i18n key="CityTown"/}</label>
-  <ui-select name="place" ng-model="$ctrl.ngModel.place" on-select="$ctrl.setPlace($item)" required>
+  <ui-select name="place" ng-model="$ctrl.ngModel.place" on-select="$ctrl.setPlace($item)" required ng-disabled="!$ctrl.ngModel.country">
     <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
     <ui-select-choices repeat="place in $ctrl.places" refresh="$ctrl.getPlaces($select)" refresh-delay="500">
       <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
     </ui-select-choices>
   </ui-select>
+  <p class="help-block" ng-show="!$ctrl.ngModel.country">{@i18n key="Please select a country beforehand"/}</p>
 </div>
 
 <div class="form-group">

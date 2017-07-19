@@ -26,7 +26,7 @@ angular
             stepsArray: [
               {value: 1, legend: 'Not very'},
               {value: 2},
-              {value: 3, legend: 'Moderatly'},
+              {value: 3, legend: 'Slightly'},
               {value: 4},
               {value: 5, legend: 'Very'}
             ]
