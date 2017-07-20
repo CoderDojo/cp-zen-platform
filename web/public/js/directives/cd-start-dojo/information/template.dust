@@ -57,7 +57,7 @@
     <div class="cd-sad-information__time-picker">
       <div class="cd-sad-information__time-picker-wrapper">
         <div class="cd-sad-information__time-picker-description">
-          <label for="day">{@i18n key="When will our dojo run?"/}</label>
+          <label for="day">{@i18n key="When will your dojo run?"/}</label>
           <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
         </div>
         <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">

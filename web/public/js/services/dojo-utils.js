@@ -95,5 +95,40 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     }
     return deferred.promise;
   }
+
+  dojoUtils.getFrequencyStrings = function () {
+    var strings = {};
+    strings.frequencies = [
+      { id: '2/w',
+      name: $translate.instant('Twice Weekly')},
+      { id: '1/w',
+      name: $translate.instant('Weekly')},
+      { id: '2/m',
+      name: $translate.instant('Bi-weekly/Fortnightly/Every two weeks')},
+      { id: '1/m',
+      name: $translate.instant('Monthly')},
+      { id: 'other',
+      name: $translate.instant('Other')}
+    ];
+    strings.monthlyFrequencies = [
+      {id: 'first', name: $translate.instant('First')},
+      {id: '2nd', name: $translate.instant('Second')},
+      {id: '3rd', name: $translate.instant('Third')},
+      {id: 'last', name: $translate.instant('Last')}
+    ];
+    // ISO 8601 based, no Sunday as 1
+    // We don't use moment data because we want to handle more than the locale,
+    // and that would force us to preload the data for day/dates/etc, meaning 2 different processes for the same thing
+    strings.days = [
+      {id: 1, name: $translate.instant('Monday')},
+      {id: 2, name: $translate.instant('Tuesday')},
+      {id: 3, name: $translate.instant('Wednesday')},
+      {id: 4, name: $translate.instant('Thursday')},
+      {id: 5, name: $translate.instant('Friday')},
+      {id: 6, name: $translate.instant('Saturday')},
+      {id: 7, name: $translate.instant('Sunday')}
+    ];
+    return strings;
+  }
   return dojoUtils;
 }]);

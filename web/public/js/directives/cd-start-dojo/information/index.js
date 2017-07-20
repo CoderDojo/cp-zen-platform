@@ -10,7 +10,7 @@ angular
         dojo: '='
       },
       // TODO : dep injection array
-      controller: function ($translate, $scope, utilsService) {
+      controller: function ($translate, $scope, utilsService, dojoUtils) {
         var ctrl = this;
         ctrl.$onInit = function () {
           var initialDate = new Date();
@@ -21,36 +21,7 @@ angular
             initDate: initialDate
           };
           ctrl.picker = {opened: false};
-          ctrl.frequencies = [
-            { id: '2/w',
-            name: $translate.instant('Twice Weekly')},
-            { id: '1/w',
-            name: $translate.instant('Weekly')},
-            { id: '2/m',
-            name: $translate.instant('Bi-weekly/Fortnightly/Every two weeks')},
-            { id: '1/m',
-            name: $translate.instant('Monthly')},
-            { id: 'other',
-            name: $translate.instant('Other')}
-          ];
-          ctrl.monthlyFrequencies = [
-            {id: 'first', name: $translate.instant('First')},
-            {id: '2nd', name: $translate.instant('Second')},
-            {id: '3rd', name: $translate.instant('Third')},
-            {id: 'last', name: $translate.instant('Last')}
-          ];
-          // ISO 8601 based, no Sunday as 1
-          // We don't use moment data because we want to handle more than the locale,
-          // and that would force us to preload the data for day/dates/etc, meaning 2 different processes for the same thing
-          ctrl.days = [
-            {id: 1, name: $translate.instant('Monday')},
-            {id: 2, name: $translate.instant('Tuesday')},
-            {id: 3, name: $translate.instant('Wednesday')},
-            {id: 4, name: $translate.instant('Thursday')},
-            {id: 5, name: $translate.instant('Friday')},
-            {id: 6, name: $translate.instant('Saturday')},
-            {id: 7, name: $translate.instant('Sunday')}
-          ];
+          _.extend(ctrl, dojoUtils.getFrequencyStrings());
           ctrl.initContent = "<p>" +
             $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
             "<ul><li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +

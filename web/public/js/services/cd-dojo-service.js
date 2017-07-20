@@ -30,9 +30,6 @@
         if (dojo.id) {
           return cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
         }
-        else {
-          return cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
-        }
       },
       uploadAvatar: function (dojoId, file){
         return Upload.upload({
