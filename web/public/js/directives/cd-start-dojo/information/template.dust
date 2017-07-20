@@ -104,7 +104,7 @@
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
             name="requestEmail"
-            ng-required ng-value="false"/>
+            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
           <label for="requestEmail"></label>
         </span>
         <div class="cd-sad-information__email-choice-action">
@@ -118,7 +118,7 @@
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
             name="requestEmail"
-            ng-required ng-value="true"/>
+            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="true"/>
           <label for="requestEmail"></label>
         </span>
         <div class="cd-sad-information__email-choice-action">
