@@ -8,7 +8,7 @@ module.exports.register = function (server, options, next) {
     server.expose(handler, require('./' + handler));
   });
   // Add all the server routes from the controllers.
-  server.ext('onPreResponse', function (request, reply) {
+  server.ext('onPreHandler', function (request, reply) {
     if (_.isObject(request.route.settings.plugins.senecaPreloader) &&
       _.isString(request.route.settings.plugins.senecaPreloader.handler)) {
       var handler = request.route.settings.plugins.senecaPreloader.handler;
