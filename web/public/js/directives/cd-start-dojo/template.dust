@@ -1,5 +1,5 @@
 <cd-sidebar header="{{ 'Start a Dojo' | translateFromKey }}" tab-header="$ctrl.tabHeader()" actions="$ctrl.actions"
-  tabs="$ctrl.tabs || []" base-state="start-dojo" view-data="$ctrl.application">
+  tabs="$ctrl.tabs || []" base-state="start-dojo" view-data="$ctrl.application" base-state-menu="false">
   <span spinner-key="start-dojo-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
   <cd-sidebar-actions submit="$ctrl.actions.submit" save="$ctrl.actions.save"
     submit-visible="$ctrl.actions.isValid() && $ctrl.actions.isLastTab()"
