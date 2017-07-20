@@ -71,11 +71,14 @@
   <div class="cd-sad-champion__bottom-form">
     <h3>{@i18n key="Contact"/}</h3>
     <div class="form-group">
+
       <label for="phone">{@i18n key="Phone number"/}</label>
       <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
         utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js"
-        required required-message="'{@i18n key="Telephone Number is empty"/}'"
-        ng-enter="noop()" international-phone-number ng-model="$ctrl.champion.phone">
+         required cd-phone-validator international-phone-number ng-model="$ctrl.champion.phone">
+        <div ng-messages="$ctrl.championForm.phone.$error" ng-show="$ctrl.championForm.phone.$touched">
+          <label ng-show="!$ctrl.championForm.phone.$valid" class="control-label has-error validationMessage">{@i18n key="Telephone number is not valid"/}</label>
+        </div>
     </div>
     <div class="cd-sad-champion__social-network cd-simple-flex-grid">
       <div class="form-group cd-simple-flex-grid__flex-1">
