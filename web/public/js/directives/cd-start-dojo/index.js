@@ -148,13 +148,13 @@ angular
           var currentStep = _.find(ctrl.tabs, {state: $state.current.name});
           _.each(application, function (step, key, application) {
             if (currentStep.name === key) { // We modify only the current step
-              application[key].isValid = step.isValid ? step.isValid : (!_.isUndefined(step.formValidity) ? step.formValidity : false) ;
+              application[key].isValid = !_.isUndefined(step.formValidity) ? step.formValidity : (step.isValid ? step.isValid  : false) ;
               // Flag to display missing field : it's a returning user to this page
               application[key].visited = true;
             }
             delete step.form;
             delete step.formValidity;
-            application[key] = _.omitBy(step, _.isNil); // Remove null keys to avoid validations errors
+            application[key] = _.omitBy(step, function (val) {return _.isNil(val) || val === '';}); // Remove null keys to avoid validations errors
           });
           var lead = {
             userId: ctrl.userId,
