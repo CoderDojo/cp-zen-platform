@@ -47,7 +47,6 @@
       <div class="form-group">
         <label>{@i18n key="Where is your venue located?"/}</label>
         <p class="help-block">{@i18n key="Please provide detailed information below. This location should appear on Google maps."/}</p>
-        <!-- NOTE: All this is copied from dojo-form-map, but the other is unusable : redo ?-->
         <cd-dojo-form-map ng-model="$ctrl.venue" model="$ctrl.model"
           map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" set-location="$ctrl.setLocation"></cd-dojo-form-map>
       </div>
