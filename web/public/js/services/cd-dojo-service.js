@@ -16,9 +16,7 @@
         return cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
       joinedDojos: function (query, win, fail) {
-        return $q(function(resolve, reject) {
-          cdApi.post('user/dojos', {query: query}, resolve, reject);
-        });
+        return cdApi.post('user/dojos', {query: query}, win, fail || topfail);
       },
       search: function(query) {
         return $q(function(resolve, reject) {
@@ -90,7 +88,7 @@
         return cdApi.get('dojos/lead/' + id, win, fail || topfail);
       },
       searchDojoLeads: function(query) {
-        return cdApi.post('dojos/leads/search', {query: query});
+        return cdApi.post('dojos/leads/', {query: query});
       },
       deleteDojoLeads: function (id) {
         return cdApi.delete('dojos/lead/' + id);
@@ -144,9 +142,6 @@
       },
       getUserTypes: function(win, fail) {
         return cdApi.get('dojos/user-types', win, fail || topfail);
-      },
-      uncompletedDojos: function(win, fail){
-        return cdApi.get('dojos/uncompleted', win, fail || topfail);
       },
       getDojoConfig: function(win, fail) {
         return cdApi.get('dojos/config', win, fail || topfail);
