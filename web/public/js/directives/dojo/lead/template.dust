@@ -168,13 +168,24 @@
           <div><label>Started at</label><span ng-bind="::$ctrl.dojo.created | date: 'MM/dd/yyyy HH:mm'"></span></div>
           <div>
             <label>Submitted at</label>
-            <span ng-if="$ctrl.lead.completed" ng-bind="::$ctrl.lead.submittedAt | date: 'MM/dd/yyyy HH:mm'"></span>
+            <span ng-if="$ctrl.lead.completed" ng-bind="::$ctrl.lead.completedAt | date: 'MM/dd/yyyy HH:mm'"></span>
             <span ng-if="!$ctrl.lead.completed" class="label label-warning">Not submitted yet</span>
           </div>
           <!-- <div><label>Latest update</label><span ng-bind="::$ctrl.dojo.updatedAt | date: 'MM/dd/yyyy HH:mm'"></span></div> -->
           <div ng-if="$ctrl.dojo.verified"><label>Verified At</label><i class="fa fa-check"></i><span ng-bind="::$ctrl.dojo.verifiedAt | date: 'MM/dd/yyyy HH:mm'"></span></div>
           <div> <label>Planned first session</label> <span ng-bind="::$ctrl.lead.application.dojo.firstSession | date: 'MM/dd/yyyy HH:mm'"></span></div>
-          <div> <label>Frequency </label> <span ng-bind="::$ctrl.dojo.frequency"> on </span><span ng-bind="::$ctrl.days[$ctrl.dojo.day]"></span></div>
+          <div>
+             <label>Frequency </label>
+              <span ng-if="$ctrl.dojo.frequency !== 'other'">
+                Every&nbsp;
+                <span ng-if="$ctrl.dojo.alternativeFrequency && $ctrl.dojo.frequency='1/m'" ng-bind="::$ctrl.dojo.alternativeFrequency"></span>
+                <span ng-bind="::$ctrl.days[$ctrl.dojo.day]"></span> <span ng-bind="::$ctrl.dojo.frequency"></span>
+              </span>
+              <span ng-if="$ctrl.dojo.alternativeFrequency && $ctrl.dojo.frequency === 'other'" ng-bind="::$ctrl.dojo.alternativeFrequency"></span>
+              &nbsp;at&nbsp;
+              <span ng-bind="::$ctrl.dojo.startTime"></span>-
+              <span ng-bind="::$ctrl.dojo.endTime"></span>
+            </div>
         </div>
       </div>
     </div>
@@ -184,8 +195,8 @@
       <div class="cd-dojo-lead__culture_comparison">
         <div class="cd-dojo-lead__culture--champion">
           <div><label>Reference </label>
-            <span ng-if="$ctrl.champion.reference != 'other'" ng-bind="::$ctrl.champion.reference"></span>
-            <span ng-if="$ctrl.champion.reference == 'other'" class="label label-warning" ng-bind="::$ctrl.champion.alternativeReference"></span>
+            <span ng-if="$ctrl.champion.reference !== 'other'" ng-bind="::$ctrl.champion.reference"></span>
+            <span ng-if="$ctrl.champion.reference === 'other'" class="label label-warning" ng-bind="::$ctrl.champion.alternativeReference"></span>
           </div>
           <div><span ng-bind-html="::$ctrl.profile.projects"></span></div>
         </div>

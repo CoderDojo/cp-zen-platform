@@ -14,7 +14,7 @@ angular
       var ctrl = this;
       ctrl.days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       ctrl.verify = function () {
-        cdDojoService.verify(ctrl.dojo.id, true)
+        cdDojoService.verify(ctrl.dojo.id, 1)
         .then(function (res) {
           _.assign(ctrl.dojo, res.data);
           atomicNotifyService.info('Verified !', 1000);

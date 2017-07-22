@@ -61,10 +61,8 @@
       dojosByCountry: function(query, win, fail) {
         return cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
       },
-      bulkUpdate: function(dojos) {
-        return $q(function(resolve, reject) {
-          cdApi.post('dojos/bulk-update', {dojos: dojos}, resolve, reject);
-        });
+      bulkVerify: function(dojos, win, fail) {
+        return cdApi.patch('dojos/verified', {dojos: dojos}, win, fail || topfail);
       },
       bulkDelete: function(dojos){
         return $q(function(resolve, reject) {
