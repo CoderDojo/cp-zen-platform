@@ -246,8 +246,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       lDojo.editDojoFlag = true;
       delete lDojo.eventbriteConnected;
       delete lDojo.time; // backward compat : remove previous frequency format
-      lDojo.startTime = moment($scope.startTime).utc().format('HH:mm:SSZZ');
-      lDojo.endTime = moment($scope.endTime).utc().format('HH:mm:SSZZ');
+      lDojo.startTime = moment($scope.startTime).format('HH:mm:SS');
+      lDojo.endTime = moment($scope.endTime).format('HH:mm:SS');
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
           cdDojoService.updateFounder($scope.founder, function (response) {

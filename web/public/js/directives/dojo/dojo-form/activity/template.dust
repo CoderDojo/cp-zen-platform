@@ -33,8 +33,6 @@
             </div>
           </span>
         </div>
-      </div>
-      <div class="cd-sad-information__time-picker">
         <div class="cd-sad-information__time-picker-wrapper">
           <div class="cd-sad-information__time-picker-description">
             <label for="day">{@i18n key="When is your dojo running?"/}</label>

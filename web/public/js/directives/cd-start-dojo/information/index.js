@@ -43,24 +43,24 @@ angular
         });
         var setterStartTimeWatcher = $scope.$watch('$ctrl.dojo.startTime', function () {
           if (ctrl.dojo && !_.isUndefined(ctrl.dojo.startTime)) {
-            ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm:SSZZ').toDate();
+            ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm:SS').toDate();
             setterStartTimeWatcher();
           }
         });
         var setterEndTimeWatcher = $scope.$watch('$ctrl.dojo.endTime', function () {
           if (ctrl.dojo && !_.isUndefined(ctrl.dojo.endTime)) {
-            ctrl.endTime = moment(ctrl.dojo.endTime, 'HH:mm:SSZZ').toDate();
+            ctrl.endTime = moment(ctrl.dojo.endTime, 'HH:mm:SS').toDate();
             setterEndTimeWatcher();
           }
         });
         var startTimeWatcher = $scope.$watch('$ctrl.startTime', function () {
           if (!_.isUndefined(ctrl.startTime)) {
-            ctrl.dojo.startTime = moment(ctrl.startTime).utc().format('HH:mm:SSZZ');
+            ctrl.dojo.startTime = moment(ctrl.startTime).format('HH:mm:SS');
           }
         });
         var endTimeWatcher = $scope.$watch('$ctrl.endTime', function () {
           if (!_.isUndefined(ctrl.endTime)) {
-            ctrl.dojo.endTime = moment(ctrl.endTime).utc().format('HH:mm:SSZZ');
+            ctrl.dojo.endTime = moment(ctrl.endTime).format('HH:mm:SS');
           }
         });
         var notesWatcher = $scope.$watch('$ctrl.dojo.notes', function () {
