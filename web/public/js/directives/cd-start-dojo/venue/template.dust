@@ -51,13 +51,22 @@
           map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" set-location="$ctrl.setLocation"></cd-dojo-form-map>
       </div>
       <div class="form-group">
-        <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
-        <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
-          required="true">
-          <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
-            {{ option.name }}
-          </option>
-        </select>
+        <div class="cd-simple-flex-grid">
+          <div class="cd-simple-flex-grid__flex-1">
+            <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
+            <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
+              required="true">
+              <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+          <div class="cd-simple-flex-grid__flex-1 checkbox cd-checkbox checkbox-primary cd-sad-venue__private">
+            <input type="checkbox" name="private"
+              ng-model="$ctrl.venue.private" class="form-control"></input>
+            <label for="private"> {@i18n key="Will your dojo be private?"/}</label>
+          </div>
+        </div>
         <div ng-show="($ctrl.venue.type === 'other')">
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control" name="alternativeType"
@@ -85,20 +94,6 @@
         <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
         set-location="$ctrl.setLocation"
         map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" ng-show="$ctrl.venue.isFound == true"></cd-dojo-map>
-      </div>
-      <div class="form-group cd-simple-flex-grid">
-        <div class="cd-simple-flex-grid__flex-1 checkbox cd-checkbox checkbox-primary">
-          <input type="checkbox" name="private"
-            ng-model="$ctrl.venue.private" class="form-control"></input>
-          <label for="private"> {@i18n key="Will your dojo be private?"/}</label>
-        </div>
-        <div class="cd-simple-flex-grid__flex-1">
-          <label for="capacity"> {@i18n key="What is the maximum number of people can your venue hold?"/}</label>
-          <input type="number" name="capacity"
-            required="required"
-            placeholder="42"
-            ng-model="$ctrl.venue.capacity" class="form-control"></input>
-        </div>
       </div>
     </div>
     <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
