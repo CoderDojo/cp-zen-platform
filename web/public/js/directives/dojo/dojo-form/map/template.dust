@@ -27,5 +27,5 @@
   </span>
   <textarea class="form-control" rows="5" required required-message="'{@i18n key="Address is Empty"/}'"
     ng-model="$ctrl.ngModel.address1" name="address1" id="address" placeholder="{@i18n key="Enter street level address"/}"
-    ng-blur="$ctrl.getLocationFromAddress()"></textarea>
+    ng-blur="$ctrl.getLocationFromAddress(15)"></textarea>
 </div>
