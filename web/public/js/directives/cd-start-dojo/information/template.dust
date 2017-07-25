@@ -58,11 +58,11 @@
       <div class="cd-sad-information__time-picker-hour">
         <span>
           <label for="startTime">{@i18n key="Start time"/}</label>
-          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
+          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="false" required></div>
         </span>
         <span>
-          <label for="startTime">{@i18n key="End time"/}</label>
-          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
+          <label for="endTime">{@i18n key="End time"/}</label>
+          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="false" required></div>
         </span>
       </div>
       <div class="cd-sad-information__time-date-session">
