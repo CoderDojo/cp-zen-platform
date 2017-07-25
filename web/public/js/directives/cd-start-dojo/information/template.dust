@@ -18,7 +18,54 @@
 
   <div class="form-group cd-sad-information__time">
     <div class="cd-sad-information__time-date cd-simple-flex-grid">
-      <div class="cd-sad-information__time-date-session cd-simple-flex-grid__flex-1">
+      <div class="cd-sad-information__time-picker-wrapper cd-simple-flex-grid__flex-1">
+        <div class="cd-sad-information__time-picker-description">
+          <label for="day">{@i18n key="When will your dojo run?"/}</label>
+          <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
+        </div>
+        <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">
+          <div ng-show="$ctrl.dojo.frequency === '1/m'" class="cd-simple-flex-grid__flex-1">
+            <select ng-model="$ctrl.dojo.alternativeFrequency" class="form-control" name="alternativeFrequency">
+              <option ng-repeat="option in $ctrl.monthlyFrequencies" value="{{ option.id }}"> {{ option.name }}</option>
+            </select>
+          </div>
+          <div class="cd-sad-information__time-picker-day-select cd-simple-flex-grid__flex-1">
+            <select ng-model="$ctrl.dojo.day" class="form-control"
+              ng-options="value.id as value.name for (key, value) in $ctrl.days"
+              name="day" required>
+              <option value="" disabled>{@i18n key="Select a day"/}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <span class="cd-sad-information__time-date-frequency--main cd-simple-flex-grid__flex-1">
+        <label>{@i18n key="How often will your Dojo run?"/}</label>
+        <p class="help-block">
+          {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
+        </p>
+        <select ng-model="$ctrl.dojo.frequency" class="form-control" name="frequency" required>
+          <option ng-repeat="option in $ctrl.frequencies" value="{{ option.id }}"> {{ option.name }}</option>
+        </select>
+      </span>
+      <span class="cd-sad-information__time-date-frequency--alternative" ng-show="$ctrl.dojo.frequency === 'other'">
+        <input type="text" class="form-control" name="alternativeFrequency"
+        placeholder="{@i18n key="Please detail"/}"
+        ng-required="$ctrl.dojo.frequency === 'other'"
+        ng-model="$ctrl.dojo.alternativeFrequency"></input>
+      </span>
+    </div>
+    <div class="cd-sad-information__time-picker">
+      <div class="cd-sad-information__time-picker-hour">
+        <span>
+          <label for="startTime">{@i18n key="Start time"/}</label>
+          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
+        </span>
+        <span>
+          <label for="startTime">{@i18n key="End time"/}</label>
+          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
+        </span>
+      </div>
+      <div class="cd-sad-information__time-date-session">
         <label for="firstDate">{@i18n key="When will your first session be?"/}</label>
         <div class="input-group">
           <input id="firstDate" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
@@ -33,60 +80,6 @@
             <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </div>
-      </div>
-      <div class="cd-sad-information__time-date-frequency cd-simple-flex-grid__flex-1">
-        <span class="cd-sad-information__time-date-frequency--main">
-          <label>{@i18n key="How often will your Dojo run?"/}</label>
-          <select ng-model="$ctrl.dojo.frequency" class="form-control" name="frequency" required>
-            <option ng-repeat="option in $ctrl.frequencies" value="{{ option.id }}"> {{ option.name }}</option>
-          </select>
-          <p class="help-block">
-            {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
-          </p>
-        </span>
-        <span class="cd-sad-information__time-date-frequency--alternative">
-          <div ng-show="$ctrl.dojo.frequency === 'other'">
-            <input type="text" class="form-control" name="alternativeFrequency"
-            placeholder="{@i18n key="Please detail"/}"
-            ng-required="$ctrl.dojo.frequency === 'other'"
-            ng-model="$ctrl.dojo.alternativeFrequency"></input>
-          </div>
-        </span>
-      </div>
-    </div>
-    <div class="cd-sad-information__time-picker">
-      <div class="cd-sad-information__time-picker-wrapper">
-        <div class="cd-sad-information__time-picker-description">
-          <label for="day">{@i18n key="When will your dojo run?"/}</label>
-          <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
-        </div>
-        <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">
-          <div ng-show="$ctrl.dojo.frequency === '1/m'" class="cd-simple-flex-grid__flex-1">
-            <select ng-model="$ctrl.dojo.alternativeFrequency" class="form-control" name="alternativeFrequency">
-              <option ng-repeat="option in $ctrl.monthlyFrequencies" value="{{ option.id }}"> {{ option.name }}</option>
-            </select>
-            <p class="help-block">
-              {@i18n key="Give some insight on when it happens"/}
-            </p>
-          </div>
-          <div class="cd-simple-flex-grid__flex-1">
-            <select ng-model="$ctrl.dojo.day" class="form-control"
-              ng-options="value.id as value.name for (key, value) in $ctrl.days"
-              name="day" required>
-              <option value="" disabled>{@i18n key="Select a day"/}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="cd-sad-information__time-picker-hour">
-        <span>
-          <label for="startTime">{@i18n key="Start time"/}</label>
-          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
-        </span>
-        <span>
-          <label for="startTime">{@i18n key="End time"/}</label>
-          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="$ctrl.isMeridian" pad-hours="!$ctrl.isMeridian" required></div>
-        </span>
       </div>
     </div>
   </div>

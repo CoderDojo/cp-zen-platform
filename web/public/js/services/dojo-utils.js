@@ -111,6 +111,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
       name: $translate.instant('Other')}
     ];
     strings.monthlyFrequencies = [
+      {id: '', name: ''},
       {id: 'first', name: $translate.instant('First')},
       {id: '2nd', name: $translate.instant('Second')},
       {id: '3rd', name: $translate.instant('Third')},
