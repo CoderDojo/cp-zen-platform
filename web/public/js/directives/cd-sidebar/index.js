@@ -24,7 +24,7 @@
 
         ctrl.$onInit = function () {
           ctrl.currentState = $state.current.name;
-          ctrl.deployableMenu = $window.innerWidth <= 768;
+          ctrl.collapsibleMenu = $window.innerWidth <= 768;
         };
         ctrl.getUiSrefForTab = function (tab) {
           // Needed to use ui-sref so we can use ui-sref-active

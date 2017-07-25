@@ -62,7 +62,7 @@
         return cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
       },
       bulkVerify: function(dojos, win, fail) {
-        return cdApi.patch('dojos/verified', {dojos: dojos}, win, fail || topfail);
+        return cdApi.post('dojos/verified', {dojos: dojos}, win, fail || topfail);
       },
       bulkDelete: function(dojos){
         return $q(function(resolve, reject) {

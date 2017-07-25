@@ -94,7 +94,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
       deferred.reject();
     }
     return deferred.promise;
-  }
+  };
 
   dojoUtils.getFrequencyStrings = function () {
     var strings = {};
@@ -115,6 +115,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
       {id: 'first', name: $translate.instant('First')},
       {id: '2nd', name: $translate.instant('Second')},
       {id: '3rd', name: $translate.instant('Third')},
+      {id: '4th', name: $translate.instant('Fourth')},
       {id: 'last', name: $translate.instant('Last')}
     ];
     // ISO 8601 based, no Sunday as 1
@@ -130,6 +131,6 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
       {id: 7, name: $translate.instant('Sunday')}
     ];
     return strings;
-  }
+  };
   return dojoUtils;
 }]);
