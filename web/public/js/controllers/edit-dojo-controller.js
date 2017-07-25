@@ -245,6 +245,9 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       lDojo.emailSubject = 'We created a new Google Email for your Dojo';
       lDojo.editDojoFlag = true;
       delete lDojo.eventbriteConnected;
+      delete lDojo.time; // backward compat : remove previous frequency format
+      lDojo.startTime = moment($scope.startTime).format('HH:mm:SS');
+      lDojo.endTime = moment($scope.endTime).format('HH:mm:SS');
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
           cdDojoService.updateFounder($scope.founder, function (response) {

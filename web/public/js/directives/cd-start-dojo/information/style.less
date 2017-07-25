@@ -28,6 +28,12 @@ cd-sad-information {
   }
   &__social-network {
     flex-wrap: wrap;
+    .form-group {
+      .input-group-addon {
+        background-color: @cd-alt-white;
+        padding: 6px 6px;
+      }
+    }
   }
 
   #cke_dojoNotes .cke_contents {
@@ -43,13 +49,31 @@ cd-sad-information {
       flex-basis: 100%;
       flex-wrap: wrap;
       justify-content: space-between;
+      margin-bottom: 15px;
       &-session {
         flex: 1;
+        flex-direction: column;
+        display: flex;
         min-width: 320px;
-        max-width: 45%;
+        justify-content: center;
       }
       &-frequency {
         flex: 1;
+        min-width: 320px;
+        &--main {
+          order: 2;
+          @media (max-width: @screen-sm-min) {
+            order: 1;
+          }
+        }
+        &--alternative {
+          flex-basis: 100%;
+          margin-top: 15px;
+          order: 3;
+          @media (max-width: @screen-sm-min) {
+            order: 2;
+          }
+        }
       }
     }
     &-picker {
@@ -62,6 +86,11 @@ cd-sad-information {
         flex: 1;
         min-width: 320px;
         flex-wrap: wrap;
+        display: flex;
+        order: 1;
+        @media (max-width: @screen-sm-min) {
+          order: 3;
+        }
       }
       &-description {
         flex: 1;
@@ -69,7 +98,7 @@ cd-sad-information {
         flex-wrap: wrap;
       }
       &-day {
-        flex: 1;
+        align-self: flex-end;;
       }
       &-hour {
         display: flex;

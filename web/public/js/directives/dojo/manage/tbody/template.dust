@@ -22,7 +22,7 @@
     <button class="btn btn-link" ng-if="dojo.id && (!dojo.deleted || dojo.deleted===0)" ng-click="$ctrl.editDojo(dojo)">{@i18n key="Edit"/}</button></td>
   <td>
     <span ng-if="dojo.verified === 1">{{ dojo.verifiedAt | date:'yyyy/MM/dd' }}</span>
-    <span ng-if="dojo.verified === 0">{{ dojo.completedAt | date:'yyyy/MM/dd' }}</span>
+    <span ng-if="!dojo.verified">{{ dojo.completedAt | date:'yyyy/MM/dd' }}</span>
   </td>
   <td>
     <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" ng-if="dojo.id">

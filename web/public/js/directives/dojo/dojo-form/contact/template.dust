@@ -45,8 +45,16 @@
           <span><i class="fa fa-twitter" title="{@i18n key="Twitter"/}"></i></span>
         </label>
         <div class="col-lg-8">
-          <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.twitter" name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="e.g. @CoderDojo"/}" ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)"
-            uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}" popover-trigger="focus">
+          <span class="input-group">
+            <span class="input-group-addon">
+              https://www.twitter.com/
+            </span>
+            <input type="text" class="form-control" form="createDojoForm" ng-model="dojo.twitter"
+              name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="CoderDojo"/}"
+              ng-pattern="/^[a-z0-9_]{1,15}$/i"
+              ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)" popover-trigger="focus"
+              uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}">
+          </span>
         </div>
       </div>
     </div>
@@ -57,12 +65,17 @@
           <span><i class="fa fa-facebook" title="Facebook"></i></span>
         </label>
         <div class="col-lg-8">
-          <input type="text" class="form-control" ng-model="dojo.facebook"
-            cd-input-prefix="https://www.facebook.com/"
-            name="dojoFacebook" id="dojoFacebook" placeholder="{@i18n key="e.g. https://www.facebook.com/Coderdojo"/}"
-            ng-change="updateLocalStorage('dojoListing', 'facebook', dojo.facebook)"
-            uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
-            popover-trigger="focus">
+          <span class="input-group">
+            <span class="input-group-addon">
+              https://www.facebook.com/
+            </span>
+            <input type="text" class="form-control" ng-model="dojo.facebook"
+              name="dojoFacebook" id="dojoFacebook" placeholder="{@i18n key="Coderdojo"/}"
+              ng-pattern="/^[a-z0-9\.]{1,}$/i"
+              ng-change="updateLocalStorage('dojoListing', 'facebook', dojo.facebook)"
+              uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
+              popover-trigger="focus">
+          </span>
         </div>
       </div>
     </div>

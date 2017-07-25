@@ -74,23 +74,35 @@
       <label for="phone">{@i18n key="Phone number"/}</label>
       <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
         utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js"
-        required required-message="'{@i18n key="Telephone Number is empty"/}'"
-        ng-enter="noop()" international-phone-number ng-model="$ctrl.champion.phone">
+         required cd-phone-validator international-phone-number ng-model="$ctrl.champion.phone">
+        <div ng-messages="$ctrl.championForm.phone.$error" ng-show="$ctrl.championForm.phone.$touched && !$ctrl.championForm.phone.$valid">
+          <label class="control-label has-error validationMessage">{@i18n key="Telephone number is not valid"/}</label>
+        </div>
     </div>
     <div class="cd-sad-champion__social-network cd-simple-flex-grid">
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="twitter">{@i18n key="Twitter"/}</label>
         <span class="pull-right">{@i18n key="(optional)"/}</span>
-        <input type="text" class="form-control" ng-model="$ctrl.champion.twitter"
-          cd-input-prefix="https://www.twitter.com/"
-          name="twitter" id="twitter" placeholder="{@i18n key="e.g. https://www.twitter.com/SuperMario"/}">
+        <span class="input-group">
+          <span class="input-group-addon">
+            https://www.twitter.com/
+          </span>
+          <input type="text" class="form-control" ng-model="$ctrl.champion.twitter"
+            ng-pattern="/^[a-z0-9_]{1,15}$/i"
+            name="twitter" id="twitter" placeholder="{@i18n key="SuperMario"/}">
+        </span>
       </div>
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="phone">{@i18n key="LinkedIn"/}</label>
         <span class="pull-right">{@i18n key="(optional)"/}</span>
-        <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
-          cd-input-prefix="https://www.linkedin.com/in/"
-          name="linkedin" id="linkedin" placeholder="{@i18n key="e.g. https://www.linkedin.com/in/SuperMario"/}">
+        <span class="input-group">
+          <span class="input-group-addon">
+            https://www.linkedin.com/in/
+          </span>
+          <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
+            ng-pattern="/^[a-z0-9\-]{1,}$/i"
+            name="linkedin" id="linkedin" placeholder="{@i18n key="SuperMario"/}">
+        </span>
       </div>
     </div>
 

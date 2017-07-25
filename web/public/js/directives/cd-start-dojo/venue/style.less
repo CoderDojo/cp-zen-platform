@@ -13,15 +13,10 @@ cd-sad-venue {
     }
   }
   &__video {
-    flex: 1;
+    width: 100%;
     text-align: center;
-    flex-basis: 400px;
-    & > img {
-      width: 100%;
-    }
-    cd-dojo-map {
-      display: block;
-      padding-top: 16px;
+    &-container {
+      width: 80%;
     }
   }
   &__container {
@@ -29,11 +24,6 @@ cd-sad-venue {
   }
   &__button-group {
     text-align: center;
-  }
-  &__side-form {
-    flex: 1;
-    flex-basis: @screen-xs-min;
-    flex-wrap: wrap;
   }
   &__bottom-form {
     flex: 1;
@@ -74,5 +64,8 @@ cd-sad-venue {
       display: flex;
       flex-wrap: wrap;
     }
+  }
+  &__private {
+    align-self: center;
   }
 }

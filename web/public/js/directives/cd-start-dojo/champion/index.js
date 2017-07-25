@@ -10,7 +10,7 @@ angular
         champion: '='
       },
       // TODO : dep injection array
-      controller: function (userUtils, $state, cdDojoService, $translate, $scope) {
+      controller: function (userUtils, $state, cdDojoService, $translate, $scope, $timeout) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.dateFormat = 'dd-MMMM-yyyy';
@@ -70,6 +70,22 @@ angular
           ctrl.getAge();
           ctrl.formatDoB();
         }, true);
+
+        var phoneWatcher = $scope.$watch('$ctrl.champion.phone', function () {
+          if (ctrl.champion && ctrl.champion.phone) {
+            $timeout(function () {
+              // Force reload of value with async loading of data
+              var element = $('input[name="phone"]');
+              if (element && ctrl.championForm && ctrl.championForm.phone) {
+                element.intlTelInput('setNumber', ctrl.champion.phone);
+                ctrl.championForm.phone.$setViewValue(element.val());
+                ctrl.championForm.phone.$commitViewValue();
+                ctrl.championForm.phone.$validate();
+              }
+            });
+            phoneWatcher();
+          }
+        });
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
         };
@@ -85,6 +101,7 @@ angular
         $scope.$on('$destroy', function () {
           validityWatcher();
           dobWatcher();
+          phoneWatcher();
         });
       }
     });

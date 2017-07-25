@@ -189,10 +189,10 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         return cdDojoService.searchDojoLeads({completed: true, id: {in$: _.map(ctrl.dojos, 'dojoLeadId')}})
         .then(function (res) {
           var leads = res.data;
-          _.each(ctrl.dojos, function (dojo) {
+          _.each(ctrl.dojos, function (dojo, index) {
             var lead = _.find(leads, function (lead) { return lead.id === dojo.dojoLeadId });
             if (lead) {
-              _.merge(lead, dojo);
+              ctrl.dojos[index] = _.merge({}, lead, dojo); // order matter, we want in priority the dojo fields
             }
           });
           return $q.resolve();
@@ -252,7 +252,13 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       if (!_.isUndefined(dojo)) {
         dojo.origVerified = dojo.verified;
         dojo.country = dojo.alpha2 ? dojo.alpha2.toLowerCase() : '';
-        dojo.path = dojo.urlSlug ? dojo.urlSlug.split('/').splice(0, 1).join('/') : '';
+        // No, it's not chainable.
+        if (dojo.urlSlug) {
+          var path = dojo.urlSlug.split('/');
+          path.splice(0, 1);
+          path = path.join('/');
+          dojo.path = path;
+        }
       } else {
         return {};
       }
@@ -292,16 +298,15 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       if (_.isEmpty(ctrl.dojosToBeUpdated)) {
         return cb();
       }
-      var dojosToBeUpdated = _.map(ctrl.dojosToBeUpdated, function (dojo) {
+      var dojosToBeVerified = _.map(ctrl.dojosToBeUpdated, function (dojo) {
         return {
           id: dojo.id,
-          verified: dojo.verified,
-          dojoLeadId: dojo.dojoLeadId
-        }
+          verified: dojo.verified
+        };
       });
-      cdDojoService.bulkUpdate(dojosToBeUpdated)
+      cdDojoService.bulkVerify(dojosToBeVerified)
       .then(function (response) {
-        alertService.showAlert($translate.instant('Dojo has been successfully updated'));
+        alertService.showAlert($translate.instant('Dojos have been successfully (un)verified'));
         cb();
       })
       .catch(function (err) {

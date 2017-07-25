@@ -16,9 +16,7 @@
         return cdApi.post('dojos', {query:query}, win, fail || topfail);
       },
       joinedDojos: function (query, win, fail) {
-        return $q(function(resolve, reject) {
-          cdApi.post('user/dojos', {query: query}, resolve, reject);
-        });
+        return cdApi.post('user/dojos', {query: query}, win, fail || topfail);
       },
       search: function(query) {
         return $q(function(resolve, reject) {
@@ -29,9 +27,6 @@
         dojo = angular.copy(dojo);
         if (dojo.id) {
           return cdApi.put('dojos/' + dojo.id, { dojo: dojo }, win, fail);
-        }
-        else {
-          return cdApi.post('dojos/create', { dojo: dojo }, win, fail || topfail);
         }
       },
       uploadAvatar: function (dojoId, file){
@@ -66,10 +61,8 @@
       dojosByCountry: function(query, win, fail) {
         return cdApi.post('dojos/by-country', {query: query}, win, fail || topfail);
       },
-      bulkUpdate: function(dojos) {
-        return $q(function(resolve, reject) {
-          cdApi.post('dojos/bulk-update', {dojos: dojos}, resolve, reject);
-        });
+      bulkVerify: function(dojos, win, fail) {
+        return cdApi.post('dojos/verified', {dojos: dojos}, win, fail || topfail);
       },
       bulkDelete: function(dojos){
         return $q(function(resolve, reject) {
@@ -93,7 +86,7 @@
         return cdApi.get('dojos/lead/' + id, win, fail || topfail);
       },
       searchDojoLeads: function(query) {
-        return cdApi.post('dojos/leads/search', {query: query});
+        return cdApi.post('dojos/leads/', {query: query});
       },
       deleteDojoLeads: function (id) {
         return cdApi.delete('dojos/lead/' + id);
@@ -147,9 +140,6 @@
       },
       getUserTypes: function(win, fail) {
         return cdApi.get('dojos/user-types', win, fail || topfail);
-      },
-      uncompletedDojos: function(win, fail){
-        return cdApi.get('dojos/uncompleted', win, fail || topfail);
       },
       getDojoConfig: function(win, fail) {
         return cdApi.get('dojos/config', win, fail || topfail);

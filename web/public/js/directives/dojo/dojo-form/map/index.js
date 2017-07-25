@@ -54,7 +54,7 @@ angular
       };
 
       ctrl.setCountry = function (country) {
-        ctrl.ngModel.country = _.pick(country, ['countryName', 'continent', 'alpha2', 'alpha3']);
+        ctrl.ngModel.country = _.pick(country, ['countryName', 'continent', 'alpha2', 'alpha3', 'countryNumber']);
       };
 
       ctrl.getBoundariesFromCountry = function () {
