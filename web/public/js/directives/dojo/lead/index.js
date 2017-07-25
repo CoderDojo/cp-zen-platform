@@ -7,15 +7,20 @@ angular
     },
     restrict: 'EA',
     templateUrl: '/directives/tpl/dojo/lead',
-    controller: ['cdDojoService', 'utilsService', 'cdUsersService', 'userUtils', '$http', 'dojoUtils', 'cdAgreementsService', '$q', 'atomicNotifyService',
-    function (cdDojoService, utilsService, cdUsersService, userUtils, $http, dojoUtils, cdAgreementsService, $q, atomicNotifyService) {
+    controller: ['cdDojoService', 'utilsService', 'cdUsersService', 'userUtils',
+    '$http', 'dojoUtils', 'cdAgreementsService', '$q', 'atomicNotifyService', '$state',
+    function (cdDojoService, utilsService, cdUsersService, userUtils,
+      $http, dojoUtils, cdAgreementsService, $q, atomicNotifyService, $state) {
       var ctrl = this;
       ctrl.days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       ctrl.verify = function () {
-        cdDojoService.verify(ctrl.dojo.id, true)
-        .then(function (dojo) {
-          ctrl.dojo = dojo;
-          atomicNotifyService.info('Verified !');
+        cdDojoService.verify(ctrl.dojo.id, 1)
+        .then(function (res) {
+          _.assign(ctrl.dojo, res.data);
+          atomicNotifyService.info('Verified !', 1000);
+        })
+        .catch(function (err) {
+          atomicNotifyService.error('Oops : ' + err, 3000);
         });
       };
       function getDojo () {
@@ -82,6 +87,9 @@ angular
           ctrl.lead = response.data;
           ctrl.champion = ctrl.lead.application.champion;
           ctrl.champion.age = userUtils.getAge(ctrl.champion.dob);
+        })
+        .catch(function () {
+          $state.go('error-404-no-headers');
         })
         .then(function () {
           return $q.all([

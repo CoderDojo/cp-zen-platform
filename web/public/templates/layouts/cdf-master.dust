@@ -23,7 +23,7 @@
     </style>
 
     <!-- Lato font -->
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,400" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,400,700" type="text/css">
 
     <!-- Bootstrap core CSS -->
     <link href="/components/angular-loading/angular-loading.css" rel="stylesheet">

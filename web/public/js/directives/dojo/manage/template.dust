@@ -108,6 +108,9 @@
                 <span ng-click="$ctrl.toggleSort($event, 'completedAt')"
                  ng-class="$ctrl.getSortClass(sort.completedAt)">&nbsp;</span>{@i18n key="Submitted at"/}
               </span>
+              <span ng-if="$ctrl.filter.verified !== 0 && $ctrl.filter.verified !== 1" >
+                <span>&nbsp;</span>{@i18n key="Last action at"/}
+              </span>
              </th>
             <th>{@i18n key="Verified"/}</th>
             <th>{@i18n key="Delete"/}</th>

@@ -11,18 +11,20 @@
         tabHeader: '<',
         baseState: '@',
         actions: '<',
-        viewData: '='
+        viewData: '=',
+        baseStateMenu: '<?'
       },
       restrict: 'E',
       transclude: {
         'actions': '?cdSidebarActions'
       },
       templateUrl: '/directives/tpl/cd-sidebar',
-      controller: ['$state', '$scope', function ($state, $scope) {
+      controller: ['$state', '$scope', '$window', function ($state, $scope, $window) {
         var ctrl = this;
 
         ctrl.$onInit = function () {
-          ctrl.listVisible = true;
+          ctrl.currentState = $state.current.name;
+          ctrl.collapsibleMenu = $window.innerWidth <= 768;
         };
         ctrl.getUiSrefForTab = function (tab) {
           // Needed to use ui-sref so we can use ui-sref-active
@@ -31,12 +33,14 @@
           return tab.state + '(tab.stateParams)';
         };
 
-        ctrl.currentState = $state.current.name;
 
         $scope.$watch(function () {
           return $state.current.name;
         }, function () {
           ctrl.currentState = $state.current.name;
+          ctrl.isBaseState = ctrl.baseState === ctrl.currentState;
+          ctrl.baseStateMenu = !ctrl.baseStateMenu && ctrl.isBaseState;
+          ctrl.listVisible = $window.innerWidth <= 768 ? ctrl.isBaseState : true;
         });
       }]
     });
