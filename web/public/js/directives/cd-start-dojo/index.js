@@ -14,7 +14,6 @@ angular
         atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
         cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
         var ctrl = this;
-        usSpinnerService.spin('start-dojo-spinner');
         ctrl.tabs = [
           {
             name: 'champion',
@@ -74,6 +73,7 @@ angular
         ctrl.actions.submit = function () {
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
+          usSpinnerService.spin('start-dojo-spinner');
           var lead = ctrl.prepareSavePayload();
           lead.completed = ctrl.isValid();
           return cdDojoService.submitDojoLead(ctrl.leadId, lead)
@@ -214,6 +214,7 @@ angular
         });
 
         ctrl.$onInit = function () {
+          usSpinnerService.spin('start-dojo-spinner');
           var leadQuery = {userId: ctrl.currentUser.id, completed: false};
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
