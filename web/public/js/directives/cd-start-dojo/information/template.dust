@@ -160,7 +160,7 @@
         </span>
         <input type="text" class="form-control" ng-model="$ctrl.dojo.twitter"
           ng-pattern="/^[a-z0-9_]{1,15}$/i"
-          name="twitter" placeholder="{@i18n key="MyLittleDojo"/}">
+          name="twitter" placeholder="{@i18n key="KingCrossDojo"/}">
       </span>
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
@@ -172,7 +172,7 @@
         </span>
         <input type="text" class="form-control" ng-model="$ctrl.dojo.facebook"
           ng-pattern="/^[a-z0-9\.]{1,}$/i"
-          name="facebook" placeholder="{@i18n key="MyLittleDojo"/}">
+          name="facebook" placeholder="{@i18n key="KingCrossDojo"/}">
       </span>
     </div>
   </div>
