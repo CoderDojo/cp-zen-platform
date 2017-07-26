@@ -11,11 +11,11 @@
     </p>
     <p class="help-block">
       {@i18n key="Volunteers can also help out by setting up the Dojo, chechin in attendees, managing ticketing or social media, etc."/}&nbsp;
-      {@i18n key="You can learn more about Mentors and Volunteers at Dojos in this short <a href=\"\">e-learning course.</a>"/}
+      {@i18n key="You can learn more about Mentors and Volunteers at Dojos in this short <a target=\"_blank\" href=\"/dashboard/profile/lms\">e-learning course.</a>"/}
     </p>
     <p class="help-block">
       {@i18n key="Dojo must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
-      {@i18n key="You can learn more about global safeguarding requirements<a href=\"\"> here </a> or by completing our <a href=\"\">global safeguarding e-learning course</a>"/}
+      {@i18n key="You can learn more about global safeguarding requirements<a target=\"_blank\" href=\"http://kata.coderdojo.com/wiki/Child_Protection_Global\"> here </a> or by completing our <a target=\"_blank\" href=\"/dashboard/profile/lms\">global safeguarding e-learning course</a>"/}
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">
@@ -73,7 +73,7 @@
         <p>
           {@i18n key="It’s ok to run the Dojo by yourself, but we’d advise trying to find volunteers to help you."/} &nbsp;
           {@i18n key="Your Dojo will grow and it’s always good to have extra hands."/}&nbsp;
-          {@i18n key="You can find more tips on finding volunteers <a href=\"https://hwf.zendesk.com/hc/en-us/articles/115003582283\">here.</a>"/}
+          {@i18n key="You can find more tips on finding volunteers <a target=\"_blank\" href=\"https://hwf.zendesk.com/hc/en-us/articles/115003582283\">here.</a>"/}
         </p>
       </div>
     </div>

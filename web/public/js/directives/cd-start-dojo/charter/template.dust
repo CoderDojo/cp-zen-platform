@@ -5,7 +5,7 @@
       {@i18n key="To become a verified Dojo you must agree to follow all principles in the CoderDojo Charter."/}&nbsp;
 
       {@i18n key="It’s important that, as part of the CoderDojo community, you and your volunteers understand the CoderDojo Ethos."/}&nbsp;
-      {@i18n key="To make it easier to understand and implement in your Dojo we have created a short E-Learning module <a href=\"?\">which you can find here.</a>"/}&nbsp;
+      {@i18n key="To make it easier to understand and implement in your Dojo we have created a short E-Learning module <a target=\"_blank\" href=\"/dashboard/profile/lms\">which you can find here.</a>"/}&nbsp;
       {@i18n key="You should encourage all volunteers to take the CoderDojo E-Learning modules."/}
   </p>
   <div class="cd-sad-charter__container">
