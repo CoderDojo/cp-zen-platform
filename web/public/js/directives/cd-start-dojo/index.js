@@ -300,7 +300,7 @@ angular
               agreement.version = response.data.version;
             })
             .then(function () {
-              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.id)
+              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.userId)
               .then(function (response) {
                 if (response.data) {
                   agreement = response.data;
