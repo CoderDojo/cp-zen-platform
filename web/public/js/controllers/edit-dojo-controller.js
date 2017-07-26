@@ -242,8 +242,6 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
 
     function saveDojo () {
       var lDojo = _.clone(dojo);
-      lDojo.emailSubject = 'We created a new Google Email for your Dojo';
-      lDojo.editDojoFlag = true;
       delete lDojo.eventbriteConnected;
       delete lDojo.time; // backward compat : remove previous frequency format
       lDojo.startTime = moment($scope.startTime).format('HH:mm:SS');
