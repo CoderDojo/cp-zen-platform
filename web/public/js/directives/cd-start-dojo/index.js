@@ -87,6 +87,8 @@ angular
           })
           .catch(function () {
             // This should not happen and be caught by the front before submitting
+            alertService.showError($translate.instant('Something went wrong while submitting your application, please contact support'));
+            intercomService.show();
           });
         };
         ctrl.actions.save = function () {
@@ -215,7 +217,7 @@ angular
 
         ctrl.$onInit = function () {
           usSpinnerService.spin('start-dojo-spinner');
-          var leadQuery = {userId: ctrl.currentUser.id, completed: false};
+          var leadQuery = {userId: ctrl.currentUser.id};
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
             // By passing an id, we allow ourselves to bypass the restriction regarding the completion
