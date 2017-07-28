@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "migrate": "node_modules/.bin/migrate",
-    "start": "node web/index.js",
+    "start": "node service.js",
     "postinstall": "bower install",
     "test": "./node_modules/.bin/gulp",
     "jshint-check": "./node_modules/.bin/gulp jshint",
     "lint-lib": "./node_modules/.bin/gulp semistandard",
     "gulp": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp dev",
+    "dev": "./node_modules/.bin/gulp dev & nodemon service.js",
     "build": "npm run gulp"
   },
   "pre-commit": [
@@ -96,6 +96,7 @@
     "karma-phantomjs-launcher": "1.0.1",
     "karma-sinon-chai": "1.0.0",
     "mocha": "1.20.1",
+    "nodemon": "^1.11.0",
     "pre-commit": "1.0.7",
     "semistandard": "7.0.3",
     "supertest": "0.9.0"
