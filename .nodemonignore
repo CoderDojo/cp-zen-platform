@@ -1,8 +1,10 @@
-web/.build/* # Build folder
-web/public/* # ignore all public resources
-.[^.]*       # any hidden (dot) files
-*.md         # Markdown files
-*.css        # CSS files
-test         # test files
-node_modules # dependencies
-*.yml        # yml files
+web/.build/*          # Build folder
+web/public/components # ignore all bower dep
+web/public/dist       # ignore compiled resources
+web/public/css        # ignore less files, handled by gulp
+.[^.]*                # any hidden (dot) files
+*.md                  # Markdown files
+*.css                 # CSS files
+test                  # test files
+node_modules          # dependencies
+*.yml                 # yml files
