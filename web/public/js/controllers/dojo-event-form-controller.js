@@ -164,9 +164,9 @@
     $scope.datepickerTo.minDate = now;
     $scope.hasAccess = true;
 
-    $scope.datepicker2 = {};
-    $scope.datepicker2.minDate = now;
-    $scope.datepicker2.maxDate = now;
+    $scope.datepickerReleaseDate = {};
+    $scope.datepickerReleaseDate.minDate = now;
+    $scope.datepickerReleaseDate.maxDate = now;
     //description editor
     $scope.editorOptions = utilsService.getCKEditorConfig({
       height: '100px',
@@ -177,7 +177,7 @@
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
       // Force min selectable date for "To" date to be after "From" date
       $scope.datepickerTo.minDate = $scope.eventInfo.date;
-      $scope.datepicker2.maxDate = $scope.eventInfo.date;
+      $scope.datepickerReleaseDate.maxDate = $scope.eventInfo.date;
     });
 
     $scope.$watch('eventInfo.toDate', function (toDate) {
@@ -187,7 +187,9 @@
     $scope.$watch('eventInfo.startTime', function (startTime) {
       $scope.eventInfo.fixedStartDateTime = fixEventTime(startTime, $scope.eventInfo.fixedStartDateTime);
       $scope.eventInfo.fixedStartDateTime = fixEventDates(date, $scope.eventInfo.fixedStartDateTime);
-
+      if($scope.eventInfo.endTime < $scope.eventInfo.startTime){
+        $scope.eventInfo.endTime = $scope.eventInfo.startTime;
+      }
     });
 
     $scope.$watch('eventInfo.endTime', function (endTime) {
@@ -200,10 +202,10 @@
       $event.stopPropagation();
       $scope.datepicker[isOpen] = !$scope.datepicker[isOpen];
     };
-    $scope.toggleDatepicker2 = function($event, isOpen) {
+    $scope.toggledatepickerReleaseDate = function($event, isOpen) {
       $event.preventDefault();
       $event.stopPropagation();
-      $scope.datepicker2[isOpen] = !$scope.datepicker2[isOpen];
+      $scope.datepickerReleaseDate[isOpen] = !$scope.datepickerReleaseDate[isOpen];
     };
 
     $scope.updateLocalStorage = function (item, value) {
@@ -257,6 +259,7 @@
     $scope.timepicker.hstep = 1;
     $scope.timepicker.mstep = 15;
     $scope.timepicker.ismeridian = true;
+    $scope.timepicker.min = $scope.eventInfo.startTime;
 
     $scope.weekdayPicker = {};
     $scope.weekdayPicker.weekdays = [{
@@ -384,10 +387,7 @@
         var utcOffset = moment().utcOffset();
         var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
-
-        //Not sure about this..
         var now = moment().utc();
-
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
@@ -408,7 +408,6 @@
           lastDate = offsetedLastDate;
         }
 
-        console.log('release date',releasing);
         $scope.eventInfo.date = firstDate.toDate();
         $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
         $scope.eventInfo.toDate = lastDate.toDate();
@@ -804,6 +803,7 @@
         event.endTime = moment(endTime).subtract(endUtcOffset, 'minutes').toDate();
         event.createdAt = new Date(event.createdAt);
         event.date = event.startTime;
+        event.releaseDate = new Date(event.releaseDate);
 
         var lastEventOcurrance = _.last(event.dates).startTime || moment.utc().toISOString();
         event.toDate = new Date(lastEventOcurrance.replace(/-/g, '\/').replace(/T.+/, ''));
@@ -812,9 +812,6 @@
         $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, function (dayObject) {
           return dayObject.name === $translate.instant(eventDay);
         });
-
-        event.releaseDate = new Date(event.releaseDate);
-
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
@@ -860,13 +857,9 @@
         if(localStorage.address) $scope.eventInfo.address = localStorage.address;
         if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
         if(localStorage.position) $scope.eventInfo.position = localStorage.position;
-
         if(localStorage.releaseDate) $scope.eventInfo.releaseDate = localStorage.releaseDate;
         if(localStorage.chooseReleaseDate) $scope.eventInfo.chooseReleaseDate = localStorage.chooseReleaseDate;
-
-
       }
-
 
       $scope.$watch('eventInfo.sessions', function (sessions) {
         sessions = _.without(sessions, _.find(sessions, {name: null}))
