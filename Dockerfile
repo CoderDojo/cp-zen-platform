@@ -1,7 +1,7 @@
 FROM mhart/alpine-node:0.10.48
 MAINTAINER butlerx <butlerx@notthe.cloud>
 ARG DEP_VERSION=latest
-RUN if [ "$SOURCE_BRANCH" = "staging" ]; then DEP_VERSION=staging fi && \
+RUN if [ "$SOURCE_BRANCH" = "staging" ]; then DEP_VERSION=staging; fi && \
     apk add --update git make gcc g++ python && \
     mkdir -p /usr/src/app
 WORKDIR /usr/src/app
