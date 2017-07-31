@@ -3,14 +3,13 @@
   <div class="cd-sad-team__video">
     <iframe class="cd-sad-team__video-container" width="560" height="315"
      src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    <p class="help-block">{@i18n key="Building a dedicated team of Mentors will help to ensure a sustainable Dojo."/}</p>
   </div>
   <div class="cd-sad-team__side-form" >
     <p class="help-block">
       {@i18n key="A CoderDojo Mentor is someone who guides Dojo attendees (Ninjas) and facilitate their learning."/}
     </p>
     <p class="help-block">
-      {@i18n key="Volunteers can also help out by setting up the Dojo, chechin in attendees, managing ticketing or social media, etc."/}&nbsp;
+      {@i18n key="Volunteers can also help out by setting up the Dojo, checking in attendees, managing ticketing or social media, etc."/}&nbsp;
       {@i18n key="You can learn more about Mentors and Volunteers at Dojos in this short <a target=\"_blank\" href=\"/dashboard/profile/lms\">e-learning course.</a>"/}
     </p>
     <p class="help-block">
