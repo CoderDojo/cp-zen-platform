@@ -88,8 +88,8 @@
   <div class="form-group">
     <label>{@i18n key="Provide your Dojo email address"/}</label>
     <p class="help-block">
-      {@i18n key="You will need a specific email for your Dojo that can be shared with your team."/}
-      {@i18n key="You can set up your own Dojo email address (e.g.docklandsdojo@gmail.com) or we can create a coderdojo.com email up on your behalf"/}
+      {@i18n key="You will need a specific email for your Dojo that can be shared with your team."/} &nbsp;
+      {@i18n key="You can set up your own Dojo email address (e.g.docklandsdojo@gmail.com) or we can create a coderdojo.com email up on your behalf."/}
     </p>
     <div class="cd-sad-information__email-choice-group">
       <div class="cd-sad-information__email-choice"
