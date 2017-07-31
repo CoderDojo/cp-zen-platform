@@ -609,7 +609,6 @@
         .state('start-dojo', {
           parent: 'dashboard',
           url: '/start-dojo?id',
-          redirectTo: 'start-dojo.champion',
           template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
           params: {
             referer: 'start-dojo',
@@ -623,6 +622,7 @@
               $state.go('login', _.extend($state.current.params, {referer: '/start-dojo'}), {replace: true});
             }
             $scope.currentUser = currentUser.data;
+            $state.go('start-dojo.champion', $state.current.params, {replace: true});
           }
         })
         .state('start-dojo.champion', {
