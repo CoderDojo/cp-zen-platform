@@ -1,0 +1,15 @@
+<div class="row text-center" ng-show="$ctrl.saving">
+  <i class="fa fa-spinner fa-3x"></i>
+</div>
+<div class="row cd-input-row" ng-hide="$ctrl.saving">
+  <label class="col-lg-4 cd-form-label1">EventBrite</label>
+  <div class="col-lg-8">
+    <button type="button" class="btn btn-default"
+      name="authorizeOAuthEventBrite"
+      ng-click="$ctrl.authorizeOAuthEventBrite()">{{ $ctrl.eventbriteText }}</button>
+    <button type="button" class="btn btn-danger"
+      name="deauthorizeOAuthEventBrite" ng-show="$ctrl.dojo.eventbriteConnected"
+      ng-click="$ctrl.removeAuthorization()">{@i18n key="Disconnect"/}</button>
+    <span class="help-block">{@i18n key="All your events will be visible on your Dojo page"/}</span>
+  </div>
+</div>

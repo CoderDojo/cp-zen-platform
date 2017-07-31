@@ -176,7 +176,6 @@
               <div class="col-sm-3">
                 <h5>{@i18n key="Ticket Type"/} <i class="fa fa-info-circle event-tooltip" aria-hidden="true" uib-tooltip-html="ticketTypesTooltip"></i></h5>
               </div>
-
               <div class="col-sm-2">
                 <h5>{@i18n key="Ticket Quantity"/}</h5>
               </div>
@@ -184,14 +183,14 @@
             <div class="row ticket-row" ng-repeat="ticket in session.tickets" ng-init="ticketIndex = $index" >
               <cd-ticket-form></cd-ticket-form>
             </div>
-            <div class="well clearfix ticket-controls">
-              <button type="button" ng-disabled="pastEvent" ng-hide="lastTicket(session)" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
-              <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
-              <div class="pull-right">
-                <label class="icon-group">{@i18n key="Add ticket type"/}</label>
-                <button type="button" ng-disabled="pastEvent" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
+          <div class="well clearfix ticket-controls">
+            <button type="button" ng-disabled="pastEvent" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
+            <div class="pull-right">
+              <label class="icon-group">{@i18n key="Add ticket type"/}</label>
+              <button type="button" ng-disabled="pastEvent" ng-click="addTicket(session)" class="btn btn-success margin-top-point-5-em">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@
     <h4>{@i18n key="Sessions/rooms:"/}</h4>
   </div>
   <div class="col-xs-12">
-    <div class="row flex-row cd-event-apply__session" ng-repeat="session in event.sessions">
+    <div class="row flex-row cd-event-apply__session" ng-repeat="session in event.sessions" ng-if="!event.eventbriteId">
       <div class="col-xs-12 col-sm-8">
         <div class="h4" ng-bind="::session.name"></div>
         <p ng-bind-html="::session.description">{@i18n key="No description available"/}</p>
@@ -20,6 +20,9 @@
         <button class="btn btn-block btn-secondary disabled" ng-if="event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Booking closed"/}</a>
         <button ng-disabled="true" class="btn btn-block btn-secondary disabled" ng-if="!event.ticketsReleased && !event.isPast"><i class="fa fa-ticket"></i>{@i18n key="Tickets Not Released yet"/}</a>
       </div>
+    </div>
+    <div ng-if="event.eventbriteId">
+      <a type="button" ng-href="{{ event.eventbriteUrl }}" class="btn btn-warning col-xs-12">{@i18n key="Book"/}</a>
     </div>
   </div>
 </div>

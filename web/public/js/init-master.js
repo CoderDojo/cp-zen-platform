@@ -431,6 +431,14 @@
           },
           controller: 'dojo-detail-controller'
         })
+        .state("edit-dojo-eventbrite", {
+          url: "/edit-dojo-eventbrite?code",
+          parent: 'dashboard',
+          template: '<cd-eventbrite-integration class="col-xs-12"></cd-eventbrite-integration>',
+          params: {
+            pageTitle: 'Edit Dojo',
+          }
+        })
         .state("edit-dojo", {
           url: "/edit-dojo/:id",
           parent: 'dashboard',

@@ -1,0 +1,14 @@
+.git
+.gitignore
+*.md
+*Dockerfile
+*.sh
+!docker-entrypoint.sh
+deploy
+test
+example
+*.yml
+*.yaml
+node_modules
+web/public/components
+.bower
