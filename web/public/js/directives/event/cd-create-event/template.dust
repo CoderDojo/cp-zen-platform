@@ -209,7 +209,7 @@
       <div class="row controls">
         <div class="col-md-6">
           <div ng-if="eventInfo.type !== 'recurring'" class="cd-create-event__release-date">
-            <label> Ticket release </label>
+            <label> {@i18n key="Ticket release"/} </label>
               <div class="checkbox checkbox-block" >
                 <input ng-disabled="pastEvent || eventInfo.ticketsReleased" type="checkbox" id="choosingReleaseTime" ng-model="eventInfo.chooseReleaseTime">
                 <label ng-if="!eventInfo.ticketsReleased" for="choosingReleaseTime">{@i18n key="Ticket release"/}</label>
