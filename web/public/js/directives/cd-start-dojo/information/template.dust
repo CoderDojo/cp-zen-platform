@@ -18,7 +18,7 @@
 
   <div class="form-group cd-sad-information__time">
     <div class="cd-sad-information__time-date cd-simple-flex-grid">
-      <div class="cd-sad-information__time-picker-wrapper cd-simple-flex-grid__flex-1">
+      <div class="cd-sad-information__time-picker-wrapper cd-simple-flex-grid__flex-1" ng-show="$ctrl.dojo.frequency !== 'other'">
         <div class="cd-sad-information__time-picker-description">
           <label for="day">{@i18n key="When will your dojo run?"/}</label>
           <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
@@ -32,14 +32,15 @@
           <div class="cd-sad-information__time-picker-day-select cd-simple-flex-grid__flex-1">
             <select ng-model="$ctrl.dojo.day" class="form-control"
               ng-options="value.id as value.name for (key, value) in $ctrl.days"
-              name="day" required>
+              name="day" ng-required="$ctrl.dojo.frequency !== 'other'">
               <option value="" disabled>{@i18n key="Select a day"/}</option>
             </select>
           </div>
         </div>
       </div>
       <span class="cd-sad-information__time-date-frequency--main cd-simple-flex-grid__flex-1">
-        <label>{@i18n key="How often will your Dojo run?"/}</label>
+        <label ng-if="$ctrl.dojo.frequency !== 'other'">{@i18n key="How often will your Dojo run?"/}</label>
+        <label ng-if="$ctrl.dojo.frequency === 'other'">{@i18n key="When will your Dojo run?"/}</label>
         <p class="help-block">
           {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
         </p>
@@ -55,14 +56,14 @@
       </span>
     </div>
     <div class="cd-sad-information__time-picker">
-      <div class="cd-sad-information__time-picker-hour">
+      <div class="cd-sad-information__time-picker-hour" ng-show="$ctrl.dojo.frequency !== 'other'">
         <span>
           <label for="startTime">{@i18n key="Start time"/}</label>
-          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="false" required></div>
+          <div name="startTime" uib-timepicker ng-model="$ctrl.startTime" hour-step="1" minute-step="15" show-meridian="false" ng-required="$ctrl.dojo.frequency !== 'other'"></div>
         </span>
         <span>
           <label for="endTime">{@i18n key="End time"/}</label>
-          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="false" required></div>
+          <div name="endTime" uib-timepicker ng-model="$ctrl.endTime" hour-step="1" minute-step="15" show-meridian="false" ng-required="$ctrl.dojo.frequency !== 'other'"></div>
         </span>
       </div>
       <div class="cd-sad-information__time-date-session">
@@ -93,10 +94,11 @@
     <div class="cd-sad-information__email-choice-group">
       <div class="cd-sad-information__email-choice"
         ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false && $ctrl.dojo.requestEmail != undefined }"
-        ng-click="$ctrl.dojo.requestEmail = false">
+        ng-click="$ctrl.setEmail()">
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
             name="requestEmail"
+            ng-change="$ctrl.setEmail()"
             ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
           <label for="requestEmail"></label>
         </span>
@@ -107,10 +109,11 @@
       </div>
       <div class="cd-sad-information__email-choice"
         ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail == true, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != true}"
-        ng-click="$ctrl.dojo.requestEmail = true">
+        ng-click="$ctrl.requestEmail()">
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
             name="requestEmail"
+            ng-change="$ctrl.requestEmail()"
             ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="true"/>
           <label for="requestEmail"></label>
         </span>
