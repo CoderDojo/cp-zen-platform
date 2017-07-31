@@ -65,6 +65,7 @@
             <input type="checkbox" name="private"
               ng-model="$ctrl.venue.private" class="form-control" ng-true-value="1" ng-false-value="0"></input>
             <label for="private"> {@i18n key="Will your dojo be private?"/}</label>
+            <p class="help-block"> {@i18n key="Private Dojos are ones which are only open to specific people within an organisation. e.g. Dojo hosted in a school and only open to pupils of the school."/}</label>
           </div>
         </div>
         <div ng-show="($ctrl.venue.type === 'other')">
