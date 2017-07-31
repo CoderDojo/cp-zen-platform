@@ -231,6 +231,30 @@ angular
             return $q.resolve();
           })
           .then(function () {
+            // Filter finished leads for its creator.
+            if (ctrl.leads.length > 0) {
+              var ids = _.filter(_.map(ctrl.leads, 'application.dojo.id'), _.identity);
+              if (ids.length > 0) {
+                var query = {verified : 1, id: {in$: ids}};
+                return cdDojoService.list(query)
+                .then(function (res) {
+                  var dojos = res.data;
+                  ctrl.leads = _.filter(ctrl.leads, function (lead) {
+                    var matchingLead = _.find(dojos, function (dojo) {
+                      return dojo.dojoLeadId === lead.id;
+                    });
+                    return !matchingLead;
+                  });
+                  return $q.resolve();
+                });
+              } else {
+                return $q.resolve();
+              }
+            } else {
+              return $q.resolve();
+            }
+          })
+          .then(function () {
             return cdOrganisationsService.loadUserOrgs(ctrl.currentUser.id)
             .then(function (res) {
               ctrl.orgs = res.data;
@@ -288,7 +312,7 @@ angular
                   isValid: false,
                   visited: false
                 },
-                dojo: {startTime: moment({minutes: 0}), endTime: moment({minutes: 0}), visited: false, isValid: false},
+                dojo: {startTime: moment({minutes: 0}).format('HH:mm:SS'), endTime: moment({minutes: 0}).format('HH:mm:SS'), visited: false, isValid: false},
                 venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });
