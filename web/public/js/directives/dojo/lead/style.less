@@ -1,82 +1,42 @@
 .cd-dojo-lead {
-
-  &__header {
-    display: flex;
-    margin: 0 -16px;
-
-    @media (max-width: @screen-xs-max) {
-      flex-direction: column;
-    }
+  &__link,  &__time {
+    text-align: center;
   }
-  h2.text-center:after {
-    content: "";
-    background:linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(0, 0, 0) 50%, rgba(255, 255, 255, 0) 80%);
-    height: 1px;
-    left: 30%;
-    width: 50%;
-    top: 2em;
-    display: block;
-    position: absolute;
+  &__actions {
+    text-align: right;
   }
-  &__social, &__knowledge_comparison, &__timing_comparison,
-   &__location_comparison, &__culture_comparison, &__validity-status {
+  &__application, &__time {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    .fa {
-      padding: 1em;
+    &-status {
+      text-align: center;
+      &.btn {
+        cursor: pointer;
+      }
     }
-    label {
-      margin-right: 1em;
-    }
-  }
-  &__dojo-name {
-    justify-content: flex-end;
-  }
-  &__champion-name {
-    justify-content: flex-start;
-  }
-  &__champion, &__dojo {
-    &-avatar {
-      flex: 1;
-      max-width: 200px;
-      margin: 0 16px;
-      @media (max-width: @screen-xs-max) {
-        margin: 0 auto;
+    table {
+      border-spacing: 8px 8px;
+      th {
+        text-align: center;
+      }
+      tr {
+        td:first-child:not(:empty), td:nth-child(3):not(:empty) {
+          background-color: @cd-very-light-grey;
+        }
+        td {
+          padding: 5px;
+          &.cd-dojo-lead__title-cell {
+            background: repeating-linear-gradient(
+              45deg,
+              @cd-white,
+              @cd-white 10px,
+              @cd-very-light-grey 10px,
+              @cd-very-light-grey 20px
+            );
+          }
+        }
       }
     }
 
-    &-name {
-      flex: 3;
-      margin: 0 16px;
-      align-items: center;
-      display: flex;
-      a {
-        color: @cd-white;
-      }
-    }
-  }
-  &__knowledge {
-    &-sources {
-      text-align: left;
-      ul {
-        display: inline-block;
-      }
-    }
-    &--team {
-      & .fa {
-        padding: 0.1em;
-        display: block;
-      }
-    }
-  }
-  &__culture {
-    &_comparison {
-      > div {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-      }
-    }
   }
 }

@@ -83,9 +83,11 @@ angular
           ctrl.dojo.requestEmail = true;
           delete ctrl.dojo.email;
           ctrl.dojoForm.email.$setPristine();
+          ctrl.dojoForm.$pristine = false;
         };
         ctrl.setEmail = function () {
-          delete ctrl.dojo.requestEmail;
+          ctrl.dojo.requestEmail = false;
+          ctrl.dojoForm.$pristine = false;
         };
         // We don't watch over validity, but over the fact it's touched, so that it refreshes even when the status of validity is the same
         var validityWatcher = $scope.$watchGroup(['$ctrl.dojoForm.$pristine', '$ctrl.dojoForm.$valid'], function () {

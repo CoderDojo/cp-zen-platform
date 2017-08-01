@@ -25,6 +25,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
     return $scope.isDojoAdmin;
   };
 
+
   $scope.dojo = dojo;
   $scope.model = { markers: [] };
   $scope.markerPlaced = false;
@@ -33,11 +34,11 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
   $scope.changedLocation = false;
   $scope.disableDojoCountryChange = false;
   $scope.dojoImageUrl = $scope.dojoImageUrl || 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/';
-
   $scope.isCDFAdmin = currentUser && currentUser.data && _.includes(currentUser.data.roles, 'cdf-admin');
-
+  $scope.times = {};
+  $scope.times.startTime = moment(dojo.startTime, 'HH:mm:SS').isValid() ? moment(dojo.startTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
+  $scope.times.endTime = moment(dojo.endTime, 'HH:mm:SS').isValid() ? moment(dojo.endTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
   var DEFAULT_COORDS = '53.3478,6.2597';
-
   auth.get_loggedin_user(function (user) {
     $scope.user = user;
   });
@@ -243,9 +244,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
     function saveDojo () {
       var lDojo = _.clone(dojo);
       delete lDojo.eventbriteConnected;
-      delete lDojo.time; // backward compat : remove previous frequency format
-      lDojo.startTime = moment($scope.startTime).format('HH:mm:SS');
-      lDojo.endTime = moment($scope.endTime).format('HH:mm:SS');
+      lDojo.startTime = moment($scope.times.startTime).isValid() ? moment($scope.times.startTime).format('HH:mm:SS') : null;
+      lDojo.endTime = moment($scope.times.endTime).isValid() ? moment($scope.times.endTime).format('HH:mm:SS') : null;
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
           cdDojoService.updateFounder($scope.founder, function (response) {
@@ -327,4 +327,5 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'dojo', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', 'dojoUtils', cdEditDojoCtrl]);
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', 'dojoUtils',
+     cdEditDojoCtrl]);

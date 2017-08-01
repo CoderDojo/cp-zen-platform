@@ -602,10 +602,13 @@
             pageTitle: 'Dojo Map'
           },
         })
+        .state('old-start-dojo', {
+          url: '/start-dojo?id',
+          redirectTo: 'start-dojo'
+        })
         .state('start-dojo', {
           parent: 'dashboard',
           url: '/start-dojo?id',
-          redirectTo: 'start-dojo.champion',
           template: '<cd-start-dojo current-user="currentUser"></cd-start-dojo>',
           params: {
             referer: 'start-dojo',
@@ -614,8 +617,12 @@
           resolve: {
             currentUser: resolves.loggedInUser
           },
-          controller: function (currentUser, $scope) {
+          controller: function (currentUser, $scope, $state) {
+            if (!currentUser.data) {
+              $state.go('login', _.extend($state.current.params, {referer: '/start-dojo'}), {replace: true});
+            }
             $scope.currentUser = currentUser.data;
+            $state.go('start-dojo.champion', $state.current.params, {replace: true});
           }
         })
         .state('start-dojo.champion', {
@@ -689,18 +696,6 @@
             pageTitle: 'Start a Dojo'
           }
         })
-        // .state("start-dojo", {
-        //   url: "/start-dojo",
-        //   templateUrl: '/dojos/template/start-dojo-wizard/wizard',
-        //   params:{
-        //     referer: 'start-dojo',
-        //     pageTitle: 'Start a Dojo'
-        //   },
-        //   resolve: {
-        //     gmap: gmap
-        //   },
-        //   controller: 'start-dojo-wizard-controller'
-        // })
         .state("terms-and-conditions", {
           url: "/terms-and-conditions",
           templateUrl: '/templates/terms-and-conditions',
@@ -1120,7 +1115,9 @@
                 $cookieStore.put('verifyProfileComplete', true);
               }
             }, function (err) {
-              alertService.showError($translate.instant('An error has occured verifying your profile.'));
+              if (err.message !== 'User not found.') {
+                alertService.showError($translate.instant('An error has occured verifying your profile.'));
+              }
             });
           }
         }

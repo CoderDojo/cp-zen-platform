@@ -56,22 +56,15 @@ angular
           ctrl.otherDojos = [];
           var dojos = _.omitBy(ctrl.profile.dojos, function (dojo) { return dojo.id === ctrl.dojo.id; });
           // Lookup previous experience, even if deleted
-          if (dojos.length) {
+          if (_.keys(dojos).length) {
             return cdDojoService.getUsersDojos({dojoId: {in$: _.map(dojos, 'id')}, userId: ctrl.lead.userId})
             .then(function (res) {
               var userDojos = res.data;
-              var setDojo = function (dojo) {
-                var userDojo = _.find(userDojos, function (uD) {return dojo.id === uD.dojoId});
-                cdDojoService.getAvatar(dojo.id)
-                .then(function (url) {
-                  ctrl.otherDojos.push({
-                    href: dojoUtils.getDojoURL(dojo),
-                    caption: userDojo.userTypes.join(', ') + ' @ ' + dojo.name,
-                    picture: url
-                  });
-                });
+              var setUserDojoRole = function (dojo) {
+                var userDojo = _.find(userDojos, function (uD) { return dojo.id === uD.dojoId; });
+                ctrl.otherDojos.push(userDojo.userTypes.join(', ') + ' @ ' + dojo.name);
               };
-              _.each(dojos, setDojo);
+              _.each(dojos, setUserDojoRole);
             });
           }
         });

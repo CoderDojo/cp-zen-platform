@@ -36,7 +36,7 @@ angular
       var initMarker2 = $scope.$watchGroup(['$ctrl.ngModel.geoPoint', '$ctrl.mapOptions'], function () {
         if (_.isEmpty(ctrl.model.markers) && !ctrl.geoPointSet) {
           if (!_.isUndefined(ctrl.mapOptions) && !_.isUndefined(ctrl.ngModel) && !_.isUndefined(ctrl.ngModel.geoPoint)) {
-            ctrl.setPoint(ctrl.ngModel.geoPoint);
+            ctrl.setPoint(ctrl.ngModel.geoPoint, 2);
           }
         } else {
           initMarker2();
@@ -61,7 +61,6 @@ angular
         Geocoder.boundsForCountry(ctrl.ngModel.country.countryName)
         .then(function (bounds) {
           $timeout(function () {
-            console.log('fitBounds');
             ctrl.model.map.fitBounds(bounds);
           });
         });
@@ -72,26 +71,28 @@ angular
           lat: latLng.lat(),
           lon: latLng.lng()
         };
-        ctrl.setPoint(ctrl.ngModel.geoPoint);
+        ctrl.setPoint(ctrl.ngModel.geoPoint, 15);
       };
 
       ctrl.setPlace = function (place) {
         ctrl.ngModel.place = _.omit(place, '$$hashKey');
         if (!ctrl.model.markers.length && !_.isUndefined(ctrl.ngModel.place)) {
-          ctrl.getLocationFromAddress();
+          ctrl.getLocationFromAddress(10);
         }
       };
 
-      ctrl.setPoint = function (geoPoint) {
+      ctrl.setPoint = function (geoPoint, zoom) {
         ctrl.mapOptions.center = new google.maps.LatLng(geoPoint.lat, geoPoint.lon);
+        ctrl.mapOptions.zoom = zoom;
         $timeout(function () {
           ctrl.model.map.panTo(ctrl.mapOptions.center);
+          ctrl.model.map.setZoom(ctrl.mapOptions.zoom);
         });
         ctrl.addMarker(null, [{latLng: ctrl.mapOptions.center}]);
         ctrl.geoPointSet = true;
       };
 
-      ctrl.getLocationFromAddress = function () {
+      ctrl.getLocationFromAddress = function (zoom) {
         //the extend is a hack for backward compat
         utilsService.getLocationFromAddress(_.cloneDeep(ctrl.ngModel))
         .then(function (data) {
@@ -99,7 +100,7 @@ angular
             lat: data.lat,
             lon: data.lng
           };
-          ctrl.setPoint(ctrl.ngModel.geoPoint);
+          ctrl.setPoint(ctrl.ngModel.geoPoint, zoom);
         }, function (err) {
           //Ask user to add location manually if google geocoding can't find location.
           ctrl.geoPointSet = false;
