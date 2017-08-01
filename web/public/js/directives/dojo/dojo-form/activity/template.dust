@@ -16,7 +16,8 @@
       <div class="col-lg-8">
         <div class="cd-simple-flex-grid__flex-1">
           <span>
-            <label>{@i18n key="How often is your Dojo running?"/}</label>
+            <label ng-if="dojo.frequency !== 'other'">{@i18n key="How often is your Dojo running?"/}</label>
+            <label ng-if="dojo.frequency === 'other'">{@i18n key="When is your Dojo running?"/}</label>
             <select ng-model="dojo.frequency" class="form-control" name="frequency" required>
               <option ng-repeat="option in frequencies" value="{{ option.id }}"> {{ option.name }}</option>
             </select>
@@ -33,7 +34,7 @@
             </div>
           </span>
         </div>
-        <div class="cd-sad-information__time-picker-wrapper">
+        <div class="cd-sad-information__time-picker-wrapper" ng-if="dojo.frequency !== 'other'">
           <div class="cd-sad-information__time-picker-description">
             <label for="day">{@i18n key="When is your dojo running?"/}</label>
           </div>
@@ -42,27 +43,27 @@
               <select ng-model="dojo.alternativeFrequency" class="form-control" name="alternativeFrequency">
                 <option ng-repeat="option in monthlyFrequencies" value="{{ option.id }}"> {{ option.name }}</option>
               </select>
-              <p class="help-block">
-                {@i18n key="Give some insight on when it happens"/}
-              </p>
             </div>
             <div class="cd-simple-flex-grid__flex-1">
               <select ng-model="dojo.day" class="form-control"
                 ng-options="value.id as value.name for (key, value) in days"
-                name="day" required>
+                name="day" ng-required="dojo.frequency !== 'other'">
                 <option value="" disabled>{@i18n key="Select a day"/}</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="cd-sad-information__time-picker-hour">
+
+        <div class="cd-sad-information__time-picker-hour" ng-if="dojo.frequency !== 'other'">
           <span>
             <label for="startTime">{@i18n key="Start time"/}</label>
-            <div name="startTime" uib-timepicker ng-model="startTime" hour-step="1" minute-step="15" show-meridian="isMeridian" required></div>
+            <div uib-timepicker ng-model="times.startTime" hour-step="1"
+              minute-step="15" show-meridian="false" ng-required="dojo.frequency !== 'other'"></div>
           </span>
           <span>
-            <label for="startTime">{@i18n key="End time"/}</label>
-            <div name="endTime" uib-timepicker ng-model="endTime" hour-step="1" minute-step="15" show-meridian="isMeridian" required></div>
+            <label for="endTime">{@i18n key="End time"/}</label>
+            <div uib-timepicker ng-model="times.endTime" hour-step="1"
+              minute-step="15" show-meridian="false" ng-required="dojo.frequency !== 'other'"></div>
           </span>
         </div>
       </div>

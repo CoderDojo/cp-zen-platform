@@ -14,7 +14,6 @@ angular
         atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
         cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
         var ctrl = this;
-        usSpinnerService.spin('start-dojo-spinner');
         ctrl.tabs = [
           {
             name: 'champion',
@@ -74,6 +73,7 @@ angular
         ctrl.actions.submit = function () {
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
+          usSpinnerService.spin('start-dojo-spinner');
           var lead = ctrl.prepareSavePayload();
           lead.completed = ctrl.isValid();
           return cdDojoService.submitDojoLead(ctrl.leadId, lead)
@@ -87,6 +87,8 @@ angular
           })
           .catch(function () {
             // This should not happen and be caught by the front before submitting
+            alertService.showError($translate.instant('Something went wrong while submitting your application, please contact support'));
+            intercomService.show();
           });
         };
         ctrl.actions.save = function () {
@@ -214,7 +216,8 @@ angular
         });
 
         ctrl.$onInit = function () {
-          var leadQuery = {userId: ctrl.currentUser.id, completed: false};
+          usSpinnerService.spin('start-dojo-spinner');
+          var leadQuery = {userId: ctrl.currentUser.id};
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
             // By passing an id, we allow ourselves to bypass the restriction regarding the completion
@@ -226,6 +229,30 @@ angular
           .then(function (leads) {
             ctrl.leads = leads.data;
             return $q.resolve();
+          })
+          .then(function () {
+            // Filter finished leads for its creator.
+            if (ctrl.leads.length > 0) {
+              var ids = _.filter(_.map(ctrl.leads, 'application.dojo.id'), _.identity);
+              if (ids.length > 0) {
+                var query = {verified : 1, id: {in$: ids}};
+                return cdDojoService.list(query)
+                .then(function (res) {
+                  var dojos = res.data;
+                  ctrl.leads = _.filter(ctrl.leads, function (lead) {
+                    var matchingLead = _.find(dojos, function (dojo) {
+                      return dojo.dojoLeadId === lead.id;
+                    });
+                    return !matchingLead;
+                  });
+                  return $q.resolve();
+                });
+              } else {
+                return $q.resolve();
+              }
+            } else {
+              return $q.resolve();
+            }
           })
           .then(function () {
             return cdOrganisationsService.loadUserOrgs(ctrl.currentUser.id)
@@ -285,7 +312,7 @@ angular
                   isValid: false,
                   visited: false
                 },
-                dojo: {startTime: moment({minutes: 0}), endTime: moment({minutes: 0}), visited: false, isValid: false},
+                dojo: {startTime: moment({minutes: 0}).format('HH:mm:SS'), endTime: moment({minutes: 0}).format('HH:mm:SS'), visited: false, isValid: false},
                 venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });
@@ -299,7 +326,7 @@ angular
               agreement.version = response.data.version;
             })
             .then(function () {
-              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.id)
+              return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.userId)
               .then(function (response) {
                 if (response.data) {
                   agreement = response.data;
