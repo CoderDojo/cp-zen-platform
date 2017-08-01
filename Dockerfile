@@ -10,7 +10,7 @@ ENV DEP_VERSION=latest
 RUN npm install && \
     npm install cp-zen-frontend@$DEP_VERSION cp-translations@$DEP_VERSION && \
     node_modules/.bin/bower install --allow-root && \
-    npm build && \
+    npm run build && \
     apk del make gcc g++ python && \
     rm -rf /tmp/* /root/.npm /root/.node-gyp
 EXPOSE 8000
