@@ -3,7 +3,7 @@
 
 function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
                         $state, $q, $translate, utilsService, currentUser, cdUsersService,
-                        $localStorage, $ngBootbox, dojoUtils, $timeout) {
+                        $localStorage, $ngBootbox, dojoUtils) {
 
   dojoUtils.isHavingPerm(currentUser.data, $state.params.id, 'dojo-admin').then(function (isDojoAdmin) {
     $scope.isDojoAdmin = isDojoAdmin;
@@ -38,7 +38,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
   $scope.times = {};
   $scope.times.startTime = moment(dojo.startTime, 'HH:mm:SS').isValid() ? moment(dojo.startTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
   $scope.times.endTime = moment(dojo.endTime, 'HH:mm:SS').isValid() ? moment(dojo.endTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
-    var DEFAULT_COORDS = '53.3478,6.2597';
+  var DEFAULT_COORDS = '53.3478,6.2597';
   auth.get_loggedin_user(function (user) {
     $scope.user = user;
   });
@@ -327,5 +327,5 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
 
 angular.module('cpZenPlatform')
   .controller('edit-dojo-controller', ['$scope', 'dojo', 'cdDojoService', 'alertService', 'gmap', 'auth',
-    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', 'dojoUtils', '$timeout',
+    '$state', '$q', '$translate', 'utilsService', 'currentUser', 'cdUsersService', '$localStorage', '$ngBootbox', 'dojoUtils',
      cdEditDojoCtrl]);
