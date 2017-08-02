@@ -139,8 +139,8 @@
   </div>
   <div class="row">
     <div class="col-md-12 text-center">
-      <uib-pagination total-items="totalItems" ng-change="$ctrl.pageChanged()" items-per-page="itemsPerPage"
-                  ng-model="pageNo"
+      <uib-pagination total-items="$ctrl.totalItems" ng-change="$ctrl.pageChanged()" items-per-page="$ctrl.itemsPerPage"
+                  ng-model="$ctrl.pageNo"
                   first-text="{@i18n key="First" /}"
                   previous-text="{@i18n key="Previous" /}"
                   next-text="{@i18n key="Next" /}"
