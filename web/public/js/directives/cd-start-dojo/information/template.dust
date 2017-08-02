@@ -155,7 +155,7 @@
   </div>
   <div class="cd-sad-information__social-network cd-simple-flex-grid">
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="twitter">{@i18n key="Twitter"/}</label>
+      <label for="twitter">Twitter</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">
@@ -167,7 +167,7 @@
       </span>
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="phone">{@i18n key="Facebook"/}</label>
+      <label for="phone">Facebook</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">

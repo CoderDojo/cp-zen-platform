@@ -6,11 +6,11 @@ angular
     .component('cdSadTeam', {
       restrict: 'EA',
       templateUrl: '/directives/tpl/cd-start-dojo/team/',
-      bindings : {
+      bindings: {
         team: '='
       },
-      //TODO : dep injection array
-      controller: function ($translate, cdDojoService, atomicNotifyService, $scope) {
+      controller: ['$translate', 'cdDojoService', 'atomicNotifyService', '$scope',
+      function ($translate, cdDojoService, atomicNotifyService, $scope) {
         var ctrl = this;
         ctrl.$onInit = function () {
           // Ids must be synchronized with Joi payload validation
@@ -40,6 +40,6 @@ angular
           ctrl.teamForm.status.$commitViewValue();
           ctrl.teamForm.status.$render();
         };
-      }
+      }]
     });
 }());

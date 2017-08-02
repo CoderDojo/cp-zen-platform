@@ -9,8 +9,8 @@ angular
       bindings: {
         champion: '='
       },
-      // TODO : dep injection array
-      controller: function (userUtils, $state, cdDojoService, $translate, $scope, $timeout) {
+      controller: ['userUtils', '$state', 'cdDojoService', '$translate', '$scope', '$timeout',
+      function (userUtils, $state, cdDojoService, $translate, $scope, $timeout) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.dateFormat = 'dd-MMMM-yyyy';
@@ -24,11 +24,11 @@ angular
             showSelectionBar: true,
             showTicksValues: true,
             stepsArray: [
-              {value: 1, legend: 'Not very'},
+              {value: 1, legend: $translate.instant('Not very')},
               {value: 2},
-              {value: 3, legend: 'Slightly'},
+              {value: 3, legend: $translate.instant('Slightly')},
               {value: 4},
-              {value: 5, legend: 'Very'}
+              {value: 5, legend: $translate.instant('Very')}
             ]
           };
           // TODO : cd-cdf
@@ -104,5 +104,5 @@ angular
           phoneWatcher();
         });
       }
-    });
+    ]});
 }());

@@ -9,8 +9,10 @@ angular
         currentUser: '='
       },
       templateUrl: '/directives/tpl/cd-start-dojo',
-      //TODO : dep injection array
-      controller: function ($rootScope, $translate, usSpinnerService,
+      controller: [ '$rootScope', '$translate', 'usSpinnerService',
+        'atomicNotifyService', '$state', '$window', '$q', '$sce', 'cdDojoService', 'alertService',
+        'cdAgreementsService', 'cdUsersService', 'intercomService', 'cdOrganisationsService',
+      function ($rootScope, $translate, usSpinnerService,
         atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
         cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
         var ctrl = this;
@@ -347,6 +349,6 @@ angular
         ctrl.$onDestroy = function () {
           saveOnStateChange();
         };
-      }
+      }]
     });
 }());
