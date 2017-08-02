@@ -30,7 +30,6 @@
     "tg-angular-validator": "https://github.com/turinggroup/angular-validator.git#v1.2.9",
     "js-marker-clusterer": "https://github.com/googlemaps/js-marker-clusterer.git#gh-pages",
     "angular-truncate": "*",
-    "angular-wizard": "https://github.com/david-cahill/angular-wizard.git#master",
     "slug": "0.9.1",
     "checklist-model": "0.10.0",
     "angular-sb-date-select": "0.3.7",
