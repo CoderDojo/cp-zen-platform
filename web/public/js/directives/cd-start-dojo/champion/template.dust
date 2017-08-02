@@ -3,7 +3,7 @@
     <p>{@i18n key="Please answer the following questions correctly so that our community team can verify all new Champions are real people."/}</p>
   </div>
   <div class="cd-sad-champion__video" >
-    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/qWU4hObrgq0?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     <p class="help-block">{@i18n key="Congratulations on registering as a CoderDojo Champion!"/}</p>
     <p class="help-block">{@i18n key="A Champion is an individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
     <p class="help-block">{@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}</p>
