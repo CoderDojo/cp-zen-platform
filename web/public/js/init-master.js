@@ -385,6 +385,14 @@
           },
           controller: reloadPage
         })
+        .state("dojos-detail", {
+          url: "/dojos/{country:[a-zA-Z]{2}}/{path:nonURIEncoded}",
+          template: '<div></div>',
+          params: {
+            pageTitle: 'Dojo'
+          },
+          controller: reloadPage
+        })
         .state("dojo-detail-alt", {
           url: "/dojo/{legacyId:[0-9]+}",
           templateUrl: '/dojos/template/dojo-detail',
