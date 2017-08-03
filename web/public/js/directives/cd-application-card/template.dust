@@ -1,6 +1,6 @@
 <div class="cd-application-card">
   <div class="cd-application-card__header">
-    <cd-rounded-image src="{{ $ctrl.dojo.img }}" size="130"></cd-rounded-image>
+    <cd-rounded-image src="{{ $ctrl.dojoImage }}" size="130"></cd-rounded-image>
     <h2 class="cd-application-card__header-text" ng-bind="::$ctrl.dojo.name"></h2>
   </div>
   <span class="cd-application-card__info">
