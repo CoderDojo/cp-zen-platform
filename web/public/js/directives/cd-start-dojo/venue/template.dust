@@ -1,14 +1,14 @@
 <form class="cd-sad-venue" name="$ctrl.venueForm"  no-validate="" ng-class="{'cd-validate': $ctrl.venue.visited}" focus-invalid>
   <div class="cd-sad-venue__video">
     <iframe class="cd-sad-venue__video-container" height="315"
-     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+     src="https://www.youtube.com/embed/Pi7btleuKnM?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
   </div>
   <div class="cd-sad-venue__side-form">
     <p class="help-block">
       {@i18n key="The venue is where the Dojo takes place."/}&nbsp;
       {@i18n key="It should be a safe, accessible and fun space."/}&nbsp;
-      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars, etc."/}
     </p>
     <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
     <h4 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h4>

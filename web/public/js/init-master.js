@@ -336,15 +336,6 @@
             pageTitle: 'Manage Dojo Pending Users'
           }
         })
-        .state("setup-dojo", {
-          url: "/setup-dojo/:id",
-          parent: 'dashboard',
-          templateUrl: '/dojos/template/setup-dojo',
-          params: {
-            pageTitle: 'Setup Dojo'
-          },
-          controller: 'setup-dojo-controller'
-        })
         .state("dojo-list", {
           url: "/dojo-list?search",
           parent: 'dashboard',

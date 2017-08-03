@@ -31,7 +31,6 @@
   "./web/public/components/angular-truncate/src/truncate.js",
   "./web/public/components/ng-ckeditor/ng-ckeditor.js",
   "./web/public/components/js-marker-clusterer/src/markerclusterer.js",
-  "./web/public/components/angular-wizard/dist/angular-wizard.min.js",
   "./web/public/components/checklist-model/checklist-model.js",
   "./web/public/components/angular-sb-date-select/src/sb-date-select.js",
   "./web/public/components/jquery-cookie-disclaimer/dist/jquery-cookie/jquery.cookie.js",

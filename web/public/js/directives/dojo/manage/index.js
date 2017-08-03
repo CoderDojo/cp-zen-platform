@@ -77,7 +77,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     };
     var baseFields = {
       dojo: _.keys(payload),
-      lead: ['email', 'deleted', 'skip$']
+      lead: ['email', 'deleted', 'skip$', 'limit$']
     };
     var selectedFields = baseFields[target];
     var query = _.omitBy(payload, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
@@ -144,10 +144,10 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         ctrl.dojos = ctrl.formatDojos(result);
         if (ctrl.dojos.length > 0) {
           return cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
-            ctrl.totalItems = result.length;
+            ctrl._dojoLength = result.length;
           });
         } else {
-          ctrl.totalItems = 0;
+          ctrl._dojoLength = 0;
           return $q.resolve();
         }
       }, function (err) {
@@ -157,26 +157,42 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     }
     function getUncompletedLeads () {
       // We only display uncompleted leads when the unverified filter is set manually
-      if (ctrl.filter.verified === 0) {
-        var query = _.extend(ctrl.buildQuery('lead'), {completed: false});
+      if (ctrl.filter.verified === 0 &&
+         (!ctrl.filter.name && !ctrl.filter.email && !ctrl.filter.creatorEmail && !ctrl.filter.country)) {
+        var query = _.extend(ctrl.buildQuery('lead'), {completed: false, sort$: { updatedAt: -1 }});
         return cdDojoService.searchDojoLeads(query)
         .then(function (res) {
-          var leads = res.data;
-          var leadsIds = _.map(leads, 'id');
-          ctrl.dojos = _.omitBy(ctrl.dojos, function (dojo) {
-            return leadsIds.indexOf(dojo.dojoLeadId) > -1;
-          });
-          ctrl.leads = ctrl.formatDojos(_.map(leads, function (lead) {
-            return _.extend(lead.application.dojo, lead.application.venue, {
-              dojoLeadId: lead.id,
-              creator: lead.userId,
-              creators: [{email: lead.email, id: lead.userId}],
-              deleted: lead.deleted,
-              completed: lead.completed,
-              completedAt: lead.completedAt
+          var filteredLeads = res.data;
+          return $q.resolve(filteredLeads);
+        })
+        .then(function (filteredLeads) {
+          // Set pagination
+          if (filteredLeads) {
+            return cdDojoService.searchDojoLeads(_.omit(query, ['limit$', 'skip$', 'sort$']))
+            .then(function (res) {
+              var leads = res.data;
+              ctrl._leadLength = leads.length;
+              // Filter uncompleted leads
+              var leadsIds = _.map(leads, 'id');
+              ctrl.dojos = _.omitBy(ctrl.dojos, function (dojo) {
+                return leadsIds.indexOf(dojo.dojoLeadId) > -1;
+              });
+              ctrl.leads = ctrl.formatDojos(_.map(filteredLeads, function (lead) {
+                return _.extend(lead.application.dojo, lead.application.venue, {
+                  dojoLeadId: lead.id,
+                  creator: lead.userId,
+                  creators: [{email: lead.email, id: lead.userId}],
+                  deleted: lead.deleted,
+                  completed: lead.completed,
+                  completedAt: lead.completedAt
+                });
+              }));
+              return $q.resolve();
             });
-          }));
-          return $q.resolve();
+          } else {
+            ctrl._leadLength = 0;
+            return $q.resolve();
+          }
         });
       } else {
         return $q.resolve();
@@ -237,13 +253,16 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     }
     getDojos()
     .then(function () {
-      return $q.all(
+      return $q.all([
         getUncompletedLeads(),
         getRelatedLeads(),
         getUserOrg(),
         getOrgs(),
-        getCharters()
-      );
+        getCharters()]);
+    })
+    .then(function () {
+      // Set pagination
+      ctrl.totalItems = _.max([ctrl._dojoLength, ctrl._leadLength]);
     });
   };
 

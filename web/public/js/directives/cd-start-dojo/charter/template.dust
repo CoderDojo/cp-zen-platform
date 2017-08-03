@@ -1,7 +1,7 @@
 <form class="cd-sad-charter" novalidate="" name="$ctrl.charterForm" ng-class="{'cd-validate': $ctrl.charter.visited}" focus-invalid>
   <p class="cd-sad-charter__disclaimer help-block">
       {@i18n key="All global Dojos follow a common ethos and principles, such as always being free for children, and encouraging them to work together."/}&nbsp;
-      {@i18n key="All of these principles are  documented in the CoderDojo Charter."/}&nbsp;
+      {@i18n key="All of these principles are documented in the CoderDojo Charter."/}&nbsp;
       {@i18n key="To become a verified Dojo you must agree to follow all principles in the CoderDojo Charter."/}&nbsp;
 
       {@i18n key="It’s important that, as part of the CoderDojo community, you and your volunteers understand the CoderDojo Ethos."/}&nbsp;

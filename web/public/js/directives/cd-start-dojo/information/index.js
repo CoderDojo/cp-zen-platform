@@ -9,8 +9,8 @@ angular
       bindings : {
         dojo: '='
       },
-      // TODO : dep injection array
-      controller: function ($translate, $scope, utilsService, dojoUtils) {
+      controller: ['$translate', '$scope', 'utilsService', 'dojoUtils',
+        function ($translate, $scope, utilsService, dojoUtils) {
         var ctrl = this;
         ctrl.$onInit = function () {
           var initialDate = new Date();
@@ -27,12 +27,9 @@ angular
             "<ul><li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +
             "<li><b>" + $translate.instant('A parent! (Very important). If you are 12 or under, your parent must stay with you during the session.') + "</b></li>" +
             "</ul></p>";
-          ctrl.isMeridian = false;
           var language = ($translate.use() || $translate.storage.get($translate.storageKey()));
           var locale = moment.localeData(language);
           if (locale) {
-            // Check if meridian is supported
-            if (locale.longDateFormat('LT').toLowerCase().indexOf('a') > -1) ctrl.isMeridian = true;
             // Check if hebrew Calendar, hence switch days order while keeping ids
             if (locale.firstDayOfWeek() === 1 && locale.firstDayOfYear() === 4) ctrl.days.unshift(ctrl.days.pop());
           }
@@ -43,24 +40,24 @@ angular
         });
         var setterStartTimeWatcher = $scope.$watch('$ctrl.dojo.startTime', function () {
           if (ctrl.dojo && !_.isUndefined(ctrl.dojo.startTime)) {
-            ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm:SS').toDate();
+            ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm').toDate();
             setterStartTimeWatcher();
           }
         });
         var setterEndTimeWatcher = $scope.$watch('$ctrl.dojo.endTime', function () {
           if (ctrl.dojo && !_.isUndefined(ctrl.dojo.endTime)) {
-            ctrl.endTime = moment(ctrl.dojo.endTime, 'HH:mm:SS').toDate();
+            ctrl.endTime = moment(ctrl.dojo.endTime, 'HH:mm').toDate();
             setterEndTimeWatcher();
           }
         });
         var startTimeWatcher = $scope.$watch('$ctrl.startTime', function () {
           if (!_.isUndefined(ctrl.startTime)) {
-            ctrl.dojo.startTime = moment(ctrl.startTime).format('HH:mm:SS');
+            ctrl.dojo.startTime = moment(ctrl.startTime).format('HH:mm');
           }
         });
         var endTimeWatcher = $scope.$watch('$ctrl.endTime', function () {
           if (!_.isUndefined(ctrl.endTime)) {
-            ctrl.dojo.endTime = moment(ctrl.endTime).format('HH:mm:SS');
+            ctrl.dojo.endTime = moment(ctrl.endTime).format('HH:mm');
           }
         });
         var notesWatcher = $scope.$watch('$ctrl.dojo.notes', function () {
@@ -100,6 +97,6 @@ angular
           startTimeWatcher();
           endTimeWatcher();
         });
-      }
+      }]
     });
 }());

@@ -9,8 +9,10 @@ angular
         currentUser: '='
       },
       templateUrl: '/directives/tpl/cd-start-dojo',
-      //TODO : dep injection array
-      controller: function ($rootScope, $translate, usSpinnerService,
+      controller: [ '$rootScope', '$translate', 'usSpinnerService',
+        'atomicNotifyService', '$state', '$window', '$q', '$sce', 'cdDojoService', 'alertService',
+        'cdAgreementsService', 'cdUsersService', 'intercomService', 'cdOrganisationsService',
+      function ($rootScope, $translate, usSpinnerService,
         atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
         cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
         var ctrl = this;
@@ -80,7 +82,7 @@ angular
           .then(function () {
             atomicNotifyService.info(
               $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '\n' +
-              $translate.instant('We will will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
+              $translate.instant('We will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
             );
             saveOnStateChange();
             $state.go('my-dojos');
@@ -312,7 +314,7 @@ angular
                   isValid: false,
                   visited: false
                 },
-                dojo: {startTime: moment({minutes: 0}).format('HH:mm:SS'), endTime: moment({minutes: 0}).format('HH:mm:SS'), visited: false, isValid: false},
+                dojo: {startTime: moment({minutes: 0}).format('HH:mm'), endTime: moment({minutes: 0}).format('HH:mm'), visited: false, isValid: false},
                 venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });
@@ -347,6 +349,6 @@ angular
         ctrl.$onDestroy = function () {
           saveOnStateChange();
         };
-      }
+      }]
     });
 }());

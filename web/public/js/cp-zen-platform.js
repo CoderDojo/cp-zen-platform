@@ -14,7 +14,6 @@
     'ngSanitize',
     'ui.map',
     'truncate',
-    'mgo-angular-wizard',
     'checklist-model',
     'sbDateSelect',
     'angular-alert-banner',
