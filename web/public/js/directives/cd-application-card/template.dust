@@ -10,7 +10,7 @@
       <a href="http://kata.coderdojo.com/wiki/Home_Page" target="_blank" class="cd-expanding-dojo-card-resources btn btn-secondary">{@i18n key="View Available Resources"/}</a>
     </span>
     <span ng-if="!$ctrl.lead.completed">
-      <h3>{@i18n key="You didn't finish your application"/}</h3>
+      <h3>{@i18n key="Your application is incomplete"/}</h3>
       <button ng-click="$ctrl.openIntercom()" class="btn btn-sm btn-secondary">{@i18n key="Contact us if you have a question"/}</button>
     </span>
   </span>
@@ -20,7 +20,7 @@
       {{ $ctrl.dateKey | translateFromKey: {date: ($ctrl.date | date: 'yyyy-MM-dd HH:mm')}  }}
     </span>
     <span ng-if="$ctrl.lead.completed">
-      <p class="help-block">{@i18n key="Expect a 2 day response time"/}</p>
+      <p class="help-block">{@i18n key="Expect a response within 48 hours from our community team."/}</p>
       <span ng-if="$ctrl.timesUp">
         <p>{@i18n key="No response yet?"/}</p>
         <button ng-click="$ctrl.openIntercom()" class="btn btn-xs btn-secondary">Click here to contact us</button>

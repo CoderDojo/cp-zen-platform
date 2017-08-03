@@ -22,7 +22,7 @@
               <option ng-repeat="option in frequencies" value="{{ option.id }}"> {{ option.name }}</option>
             </select>
             <p class="help-block">
-              {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
+              {@i18n key="Each Dojo can choose how often they run whether it be weekly, once every two weeks, or monthly."/}
             </p>
           </span>
           <span>

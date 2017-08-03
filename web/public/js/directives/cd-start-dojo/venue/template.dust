@@ -8,7 +8,7 @@
     <p class="help-block">
       {@i18n key="The venue is where the Dojo takes place."/}&nbsp;
       {@i18n key="It should be a safe, accessible and fun space."/}&nbsp;
-      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars etc."/}
+      {@i18n key="Dojos cannot be held in a private residence or in venues inappropriate for young people; for example betting offices, bars, etc."/}
     </p>
     <input type="hidden" name="venueIsFound" ng-model="$ctrl.venue.isFound"/>
     <h4 class="text-center" ng-show="!$ctrl.venue || $ctrl.venue.isFound === undefined">{@i18n key="Do you have a venue?"/}</h4>
