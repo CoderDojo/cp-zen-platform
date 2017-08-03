@@ -99,12 +99,10 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
   dojoUtils.getFrequencyStrings = function () {
     var strings = {};
     strings.frequencies = [
-      { id: '2/w',
-      name: $translate.instant('Twice Weekly')},
       { id: '1/w',
       name: $translate.instant('Weekly')},
       { id: '2/m',
-      name: $translate.instant('Bi-weekly/Fortnightly/Every two weeks')},
+      name: $translate.instant('Every two weeks')},
       { id: '1/m',
       name: $translate.instant('Monthly')},
       { id: 'other',

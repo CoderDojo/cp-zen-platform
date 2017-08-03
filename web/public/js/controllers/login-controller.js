@@ -2,11 +2,11 @@
 
 angular.module('cpZenPlatform').controller('login', ['$state', '$stateParams', '$scope', '$rootScope', '$location', '$window',
   'auth', 'alertService', '$translate', 'cdUsersService', 'cdConfigService', 'utilsService', 'vcRecaptchaService',
-  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', 'WizardHandler', 'userUtils', 'atomicNotifyService', loginCtrl]);
+  'usSpinnerService', '$cookieStore', 'cdDojoService', '$q', 'dojoUtils', 'userUtils', 'atomicNotifyService', loginCtrl]);
 
 function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   auth, alertService, $translate, cdUsersService, cdConfigService, utilsService, vcRecaptchaService,
-  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, WizardHandler, userUtils, atomicNotifyService) {
+  usSpinnerService, $cookieStore, cdDojoService, $q, dojoUtils, userUtils, atomicNotifyService) {
 
   $scope.noop = angular.noop;
   var refererUrl = $state.params.referer || $state.params.next;

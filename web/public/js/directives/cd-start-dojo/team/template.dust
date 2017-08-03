@@ -2,7 +2,7 @@
 
   <div class="cd-sad-team__video">
     <iframe class="cd-sad-team__video-container" width="560" height="315"
-     src="https://www.youtube.com/embed/eh7lp9umG2I?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      src="https://www.youtube.com/embed/-Pl0CCJFm1A?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="cd-sad-team__side-form" >
     <p class="help-block">
@@ -13,7 +13,7 @@
       {@i18n key="You can learn more about Mentors and Volunteers at Dojos in this short <a target=\"_blank\" href=\"/dashboard/profile/lms\">e-learning course.</a>"/}
     </p>
     <p class="help-block">
-      {@i18n key="Dojo must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
+      {@i18n key="Dojos must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
       {@i18n key="You can learn more about global safeguarding requirements<a target=\"_blank\" href=\"http://kata.coderdojo.com/wiki/Child_Protection_Global\"> here </a> or by completing our <a target=\"_blank\" href=\"/dashboard/profile/lms\">global safeguarding e-learning course</a>"/}
     </p>
   </div>

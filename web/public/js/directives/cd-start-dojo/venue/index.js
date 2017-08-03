@@ -10,8 +10,8 @@ angular
         gmap: '=?',
         venue: '='
       },
-      //TODO : dep injection array
-      controller: function ($translate, Geocoder, atomicNotifyService, $scope, $timeout) {
+      controller: ['$translate', 'Geocoder', 'atomicNotifyService', '$scope', '$timeout',
+       function ($translate, Geocoder, atomicNotifyService, $scope, $timeout) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.model = { markers: [] };
@@ -43,34 +43,34 @@ angular
           ];
           ctrl.corporateList = [
             { id: 'accenture',
-              name: $translate.instant('Accenture')
+              name: 'Accenture'
             },
             { id: 'salesforce',
-              name: $translate.instant('Salesforce')
+              name: 'Salesforce'
             },
             { id: 'microsoft',
-              name: $translate.instant('Microsoft')
+              name: 'Microsoft'
             },
             { id: 'dell',
-              name: $translate.instant('Dell')
+              name: 'Dell'
             },
             { id: 'boi',
-              name: $translate.instant('Bank of Ireland')
+              name: 'Bank of Ireland'
             },
             { id: 'intel',
-              name: $translate.instant('Intel')
+              name: 'Intel'
             },
             { id: 'symantec',
-              name: $translate.instant('Symantec')
+              name: 'Symantec'
             },
             { id: 'oracle',
-              name: $translate.instant('Oracle')
+              name: 'Oracle'
             },
             { id: 'murex',
-              name: $translate.instant('Murex')
+              name: 'Murex'
             },
             { id: 'HP',
-              name: $translate.instant('HP')
+              name: 'HP'
             },
             { id: 'other',
               name: $translate.instant('Other')
@@ -94,6 +94,6 @@ angular
             google.maps.event.trigger(ctrl.model.map, 'resize');
           });
         };
-      }
+      }]
     });
 }());

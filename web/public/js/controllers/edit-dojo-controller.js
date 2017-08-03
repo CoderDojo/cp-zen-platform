@@ -36,8 +36,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
   $scope.dojoImageUrl = $scope.dojoImageUrl || 'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/';
   $scope.isCDFAdmin = currentUser && currentUser.data && _.includes(currentUser.data.roles, 'cdf-admin');
   $scope.times = {};
-  $scope.times.startTime = moment(dojo.startTime, 'HH:mm:SS').isValid() ? moment(dojo.startTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
-  $scope.times.endTime = moment(dojo.endTime, 'HH:mm:SS').isValid() ? moment(dojo.endTime, 'HH:mm:SS').toDate() : moment({minutes: 0}).toDate();
+  $scope.times.startTime = moment(dojo.startTime, 'HH:mm').isValid() ? moment(dojo.startTime, 'HH:mm').toDate() : moment({minutes: 0}).toDate();
+  $scope.times.endTime = moment(dojo.endTime, 'HH:mm').isValid() ? moment(dojo.endTime, 'HH:mm').toDate() : moment({minutes: 0}).toDate();
   var DEFAULT_COORDS = '53.3478,6.2597';
   auth.get_loggedin_user(function (user) {
     $scope.user = user;
@@ -244,8 +244,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
     function saveDojo () {
       var lDojo = _.clone(dojo);
       delete lDojo.eventbriteConnected;
-      lDojo.startTime = moment($scope.times.startTime).isValid() ? moment($scope.times.startTime).format('HH:mm:SS') : null;
-      lDojo.endTime = moment($scope.times.endTime).isValid() ? moment($scope.times.endTime).format('HH:mm:SS') : null;
+      lDojo.startTime = moment($scope.times.startTime).isValid() ? moment($scope.times.startTime).format('HH:mm') : null;
+      lDojo.endTime = moment($scope.times.endTime).isValid() ? moment($scope.times.endTime).format('HH:mm') : null;
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
           cdDojoService.updateFounder($scope.founder, function (response) {

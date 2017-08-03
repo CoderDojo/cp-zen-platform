@@ -2,7 +2,7 @@
 <div class="dojo-list-dashboard">
   <div class="cd-create-dojo-container row cd-dojo-form">
     <form id="createDojoForm" novalidate angular-validator angular-validator-submit="save(dojo)" name="createDojoForm" class="col-xs-12">
-      <button class="btn-fab btn btn-primary cd-wizard-submit" ng-click="scrollToInvalid(createDojoForm)" type="submit"><i alt="{@i18n key="{{ buttonText }}"/}" class="fa fa-save"></i></button>
+      <button class="btn-fab btn btn-primary" ng-click="scrollToInvalid(createDojoForm)" type="submit"><i alt="{@i18n key="{{ buttonText }}"/}" class="fa fa-save"></i></button>
       <div class="row">
         <div class="col-xs-12">
           <div cd-banner-background class="row"  ng-enter="noop()">

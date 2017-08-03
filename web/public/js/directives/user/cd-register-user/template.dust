@@ -46,7 +46,7 @@
 
   <div class="row cd-btn-row">
     <div class="form-group" ng-class="buttonSize? buttonSize : 'col-xs-12 col-sm-offset-2 col-sm-4'">
-      <button class="btn btn-primary btn-block cd-wizard-submit" type="submit">{@i18n key="Next"/}</button>
+      <button class="btn btn-primary btn-block" type="submit">{@i18n key="Next"/}</button>
     </div>
   </div>
 </form>

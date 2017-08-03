@@ -31,9 +31,6 @@
     <!-- Angular UI Select -->
     <link href="/components/angular-ui-select/dist/select.min.css" rel="stylesheet">
 
-    <!-- Angular Wizard -->
-    <link href="/components/angular-wizard/dist/angular-wizard.min.css" rel="stylesheet">
-
     <!-- Awesome Bootstrap Checkbox -->
     <link href="/components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css"
     rel="stylesheet">

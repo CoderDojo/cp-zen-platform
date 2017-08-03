@@ -12,7 +12,7 @@
       <label ng-show="$ctrl.dojoForm.name.$error.blacklist" class="control-label has-error validationMessage">{@i18n key="Please avoid using the words “CoderDojo” or “Dojo” when naming your Dojo."/}</label>
     </div>
     <p class="help-block">
-      {@i18n key="The Dojo Name should be formatted as [City/Town/State]@ [Sponsor/Venue Name] or in a large city [Neighbourhood/Area], [City] @ [Sponsor/Venue Name]"/}
+      {@i18n key="The Dojo Name should be formatted as [City/Town/State]@[Sponsor/Venue Name] or in a large city [Neighbourhood/Area], [City] @ [Sponsor/Venue Name]"/}
     </p>
   </div>
 
@@ -20,7 +20,7 @@
     <div class="cd-sad-information__time-date cd-simple-flex-grid">
       <div class="cd-sad-information__time-picker-wrapper cd-simple-flex-grid__flex-1" ng-show="$ctrl.dojo.frequency !== 'other'">
         <div class="cd-sad-information__time-picker-description">
-          <label for="day">{@i18n key="When will your dojo run?"/}</label>
+          <label for="day">{@i18n key="When will your Dojo run?"/}</label>
           <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
         </div>
         <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">
@@ -42,7 +42,7 @@
         <label ng-if="$ctrl.dojo.frequency !== 'other'">{@i18n key="How often will your Dojo run?"/}</label>
         <label ng-if="$ctrl.dojo.frequency === 'other'">{@i18n key="When will your Dojo run?"/}</label>
         <p class="help-block">
-          {@i18n key="Each Dojo can choose how often they run whether it be weekly, bi-weekly, or monthly."/}
+          {@i18n key="Each Dojo can choose how often they run whether it be weekly, once every two weeks, or monthly."/}
         </p>
         <select ng-model="$ctrl.dojo.frequency" class="form-control" name="frequency" required>
           <option ng-repeat="option in $ctrl.frequencies" value="{{ option.id }}"> {{ option.name }}</option>
@@ -132,7 +132,7 @@
         <p class="help-block">{@i18n key="It must be different from your personal email."/}</p>
       </div>
       <div ng-show="$ctrl.dojo.requestEmail == true" class="cd-sad-information__email-answer">
-        <p class="help-block">{@i18n key="You'll receive the credentials once the dojo has been verified"/}</p>
+        <p class="help-block">{@i18n key="You'll receive the credentials once the Dojo has been verified"/}</p>
       </div>
     </div>
     <p class="help-block">
@@ -155,7 +155,7 @@
   </div>
   <div class="cd-sad-information__social-network cd-simple-flex-grid">
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="twitter">{@i18n key="Twitter"/}</label>
+      <label for="twitter">Twitter</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">
@@ -167,7 +167,7 @@
       </span>
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="phone">{@i18n key="Facebook"/}</label>
+      <label for="phone">Facebook</label>
       <span class="pull-right">{@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">
