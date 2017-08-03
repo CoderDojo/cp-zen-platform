@@ -91,9 +91,6 @@
       deleteDojoLeads: function (id) {
         return cdApi.delete('dojos/lead/' + id);
       },
-      loadSetupDojoSteps: function(win, fail) {
-        return cdApi.get('dojos/setup-steps', win, fail || topfail);
-      },
       //
       getUsersDojos: function(query, win, fail) {
         return cdApi.post('dojos/users', {query: query}, win, fail || topfail);
