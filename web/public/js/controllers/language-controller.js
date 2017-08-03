@@ -17,6 +17,11 @@ var languageCtrl = function($scope, cdLanguagesService, alertService, $cookies, 
       }
 
       $scope.selectedLanguage = language;
+      var momentLocale = language.replace('_', '-').toLowerCase();
+      var setMomentLocale = moment.locale(momentLocale);
+      if (momentLocale.indexOf(setMomentLocale) !== 0) {
+        moment.locale('en');
+      }
 
     })
     .error(function(){
