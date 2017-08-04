@@ -618,10 +618,10 @@
           },
           controller: function (currentUser, $scope, $state) {
             if (!currentUser.data) {
-              $state.go('login', _.extend($state.current.params, {referer: '/start-dojo'}), {replace: true});
+              return $state.go('login', _.extend($state.current.params, {referer: '/start-dojo'}), {replace: true});
             }
             $scope.currentUser = currentUser.data;
-            $state.go('start-dojo.champion', $state.current.params, {replace: true});
+            return $state.go('start-dojo.champion', $state.current.params, {replace: true});
           }
         })
         .state('start-dojo.champion', {
