@@ -268,6 +268,11 @@ server.register(dojos, function (err) {
   checkHapiPluginError('dojos')(err);
 });
 
+var leads = require('../lib/leads.js');
+server.register(leads, function (err) {
+  checkHapiPluginError('leads')(err);
+});
+
 var cdUsers = require('../lib/users.js');
 server.register(cdUsers, function (err) {
   checkHapiPluginError('users')(err);
