@@ -96,7 +96,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         return $q.resolve(res.data);
       })
       .then(function (applications) {
-        if (applications) {
+        if (applications && applications.length > 0) {
           var query = {verified: 1, dojoLeadId: {in$: _.map(applications, 'id')}};
           return cdDojoService.list(query)
           .then(function (res) {

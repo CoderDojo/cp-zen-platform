@@ -2,7 +2,7 @@
   <div class="row">
     <div class="my-dojos">
       <h1>{@i18n key="My Dojos"/}</h1>
-      <div ng-hide="myDojos.length !== 0 || applications.length !== 0">
+      <div ng-hide=" (myDojos && myDojos.length !== 0) || (applications && applications.length !== 0)">
         <span spinner-key="my-dojos-spinner" us-spinner="{radius:30, width:8, length: 16}" spinner-start-active="true"></span>
         <p><a ui-sref="dojo-list">{@i18n key="Alternatively, click here to search for Dojos"/}</a></p>
         <p><a ui-sref="start-dojo">{@i18n key="Or, click here to start a dojo."/}</a></p>
