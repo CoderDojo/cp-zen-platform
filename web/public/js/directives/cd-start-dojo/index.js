@@ -219,7 +219,7 @@ angular
 
         ctrl.$onInit = function () {
           usSpinnerService.spin('start-dojo-spinner');
-          var leadQuery = {userId: ctrl.currentUser.id};
+          var leadQuery = {userId: ctrl.currentUser.id, deleted: 0};
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
             // By passing an id, we allow ourselves to bypass the restriction regarding the completion

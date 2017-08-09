@@ -93,7 +93,19 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
       return cdDojoService.searchDojoLeads(query)
       .then(function (res) {
         usSpinnerService.stop('my-dojos-spinner');
-        $scope.applications = res.data;
+        return $q.resolve(res.data);
+      })
+      .then(function (applications) {
+        if (applications) {
+          var query = {verified: 1, dojoLeadId: {in$: _.map(applications, 'id')}};
+          return cdDojoService.list(query)
+          .then(function (res) {
+            var dojos = res.data;
+            $scope.applications = _.filter(applications, function (application) {
+              return !_.find(dojos, {dojoLeadId: application.id});
+            });
+          });
+        }
       });
     };
     getVerifiedDojos()
