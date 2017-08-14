@@ -1,4 +1,4 @@
-<div>
+<div class="cd-dojo-form__contact">
   <h3 class="cd-section-header"><a id="contact"></a><a href="#contact">{@i18n key="Contact"/}</a></h3>
 
     <div class="row cd-input-row" ng-enter="noop()">
@@ -44,7 +44,7 @@
         <label for="dojoTwitter" class="col-lg-4 cd-form-label1">
           <span><i class="fa fa-twitter" title="{@i18n key="Twitter"/}"></i></span>
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-8 cd-dojo-form__contact-twitter">
           <span class="input-group">
             <span class="input-group-addon">
               https://www.twitter.com/
@@ -53,8 +53,15 @@
               name="dojoTwitter" id="dojoTwitter" placeholder="{@i18n key="KingCrossDojo"/}"
               ng-pattern="/^[a-z0-9_]{1,15}$/i"
               ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)" popover-trigger="focus"
-              uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}">
+              uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
+              angular-validator-quiet>
           </span>
+          <div ng-if="createDojoForm.submitted && createDojoForm.dojoTwitter.$invalid"
+           ng-messages="createDojoForm.dojoTwitter.$error" ng-cloak="">
+            <label class="control-label has-error validationMessage" ng-message="pattern">
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -64,18 +71,25 @@
         <label for="dojoFacebook" class="col-lg-4 cd-form-label1">
           <span><i class="fa fa-facebook" title="Facebook"></i></span>
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-8 cd-dojo-form__contact-facebook">
           <span class="input-group">
             <span class="input-group-addon">
               https://www.facebook.com/
             </span>
-            <input type="text" class="form-control" ng-model="dojo.facebook"
+            <input type="text" class="form-control" ng-model="dojo.facebook" form="createDojoForm"
               name="dojoFacebook" id="dojoFacebook" placeholder="{@i18n key="KingCrossDojo"/}"
               ng-pattern="/^[a-z0-9\.]{1,}$/i"
               ng-change="updateLocalStorage('dojoListing', 'facebook', dojo.facebook)"
               uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
-              popover-trigger="focus">
+              popover-trigger="focus"
+              angular-validator-quiet>
           </span>
+          <div ng-if="createDojoForm.submitted && createDojoForm.dojoFacebook.$invalid"
+           ng-messages="createDojoForm.dojoFacebook.$error" ng-cloak="">
+            <label class="control-label has-error validationMessage" ng-message="pattern">
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            </label>
+          </div>
         </div>
       </div>
     </div>

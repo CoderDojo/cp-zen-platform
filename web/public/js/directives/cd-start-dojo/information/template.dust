@@ -163,8 +163,14 @@
         </span>
         <input type="text" class="form-control" ng-model="$ctrl.dojo.twitter"
           ng-pattern="/^[a-z0-9_]{1,15}$/i"
-          name="twitter" placeholder="{@i18n key="KingCrossDojo"/}">
+          name="twitter" placeholder="{@i18n key="KingCrossDojo"/}" angular-validator-quiet>
       </span>
+      <div ng-if="$ctrl.dojoForm.twitter.$invalid"
+       ng-messages="$ctrl.dojoForm.twitter.$error" ng-cloak="">
+        <label class="control-label has-error validationMessage" ng-message="pattern">
+          <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+        </label>
+      </div>
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
       <label for="phone">Facebook</label>
@@ -175,8 +181,14 @@
         </span>
         <input type="text" class="form-control" ng-model="$ctrl.dojo.facebook"
           ng-pattern="/^[a-z0-9\.]{1,}$/i"
-          name="facebook" placeholder="{@i18n key="KingCrossDojo"/}">
+          name="facebook" placeholder="{@i18n key="KingCrossDojo"/}" angular-validator-quiet>
       </span>
+      <div ng-if="$ctrl.dojoForm.facebook.$invalid"
+       ng-messages="$ctrl.dojoForm.facebook.$error" ng-cloak="">
+        <label class="control-label has-error validationMessage" ng-message="pattern">
+          <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+        </label>
+      </div>
     </div>
   </div>
 

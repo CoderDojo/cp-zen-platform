@@ -16,6 +16,15 @@
     from { opacity:0; }
     to { opacity:1; }
   }
+
+  &__contact {
+    &-facebook, &-twitter {
+      & .has-error .input-group-addon {
+        border-color: 1px solid #ccc;
+        background-color: #eee;
+      }
+    }
+  }
 }
 
 .cd-create-dojo-container {
@@ -38,32 +47,6 @@
     p {
       padding-top: 0;
       color: #C09853;
-    }
-  }
-
-  .setup-dojo-icons {
-    position: relative;
-    display: inline-block;
-    transform: translateY(25%);
-
-    .tooltip {
-        .tooltip-inner {
-          width: 30em;
-        }
-    }
-
-    .setup-dojo-info-btn {
-      font-size: 2em;
-      margin-left: 10px;
-      vertical-align: 6%;
-    }
-
-    .setup-dojo-tao-btn {
-      background: url("../../img/cdtao.png") no-repeat right center;
-      margin-left: 10px;
-      width: 51px;
-      height: 24px;
-      display: inline-block;
     }
   }
 }

@@ -1,5 +1,6 @@
 
-<form id="generalInfoForm" name="generalInfoForm" class="form-horizontal"  novalidate angular-validator angular-validator-submit="save(profile)"
+<form id="generalInfoForm" name="forms.generalInfoForm" class="form-horizontal"
+  novalidate ng-submit="save(profile)"
   role="form" ng-if="canEdit">
   <h3 class="cd-section-header"><a id="details"></a><a href="#details">{@i18n key="Your Details"/}</a></h3>
   <div class="panel-body">
@@ -31,7 +32,7 @@
           <label for="dateOfBirth" class="col-sm-4 text-right">{@i18n key="Date of Birth"/}*</label>
           <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
             <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="dobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="profile.dob" name="dateOfBirth" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="profile.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your date of birth here..."/}" ng-click="open($event, profile)" />
-            <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
+            <span class="input-group-btn" ng-class="{'topValign':forms.generalInfoForm.$submitted && forms.generalInfoForm.dateOfBirth.$error.required}">
               <button type="button" class="btn btn-default" ng-click="open($event, profile)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </div>
@@ -39,7 +40,7 @@
 
         <div class="form-group" ng-enter="noop()">
           <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
-          <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.country.$error.required}">
+          <div class="col-sm-8" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.country.$error.required}">
             <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)" required>
               <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
               <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
@@ -47,13 +48,13 @@
               </ui-select-choices>
             </ui-select>
             <label class="control-label has-error validationMessage"
-              ng-show="generalInfoForm.$submitted && generalInfoForm.country.$error.required">{@i18n key="Select a country"/}</label>
+              ng-show="forms.generalInfoForm.$submitted && forms.generalInfoForm.country.$error.required">{@i18n key="Select a country"/}</label>
           </div>
         </div>
 
         <div class="form-group" ng-enter="noop()">
           <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
-          <div class="col-sm-8" ng-class="{'has-error': generalInfoForm.$submitted && generalInfoForm.place.$error.required}">
+          <div class="col-sm-8" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.place.$error.required}">
             <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
               <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
               <ui-select-choices repeat="place in places"
@@ -63,7 +64,7 @@
               </ui-select-choices>
             </ui-select>
             <label class="control-label has-error validationMessage"
-                   ng-show="generalInfoForm.$submitted && generalInfoForm.place.$error.required">{@i18n key="Select a place"/}</label>
+                   ng-show="forms.generalInfoForm.$submitted && forms.generalInfoForm.place.$error.required">{@i18n key="Select a place"/}</label>
           </div>
         </div>
 
@@ -95,15 +96,41 @@
 
         <div class="form-group" ng-enter="noop()" ng-show="initialForm()">
           <label for="linkedin" class="col-sm-4 control-label">{@i18n key="Linkedin"/} </label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="linkedin" placeholder="{@i18n key="e.g. linkedin.com/company/coderdojo"/}" ng-model="profile.linkedin">
+          <div class="col-sm-8 cd-profile__general-info-linkedin">
+            <div class="input-group">
+              <span class="input-group-addon">
+                https://www.linkedin.com/in/
+              </span>
+              <input type="text" class="form-control" ng-model="profile.linkedin"
+                ng-pattern="/^[a-z0-9\-]{1,}$/i"
+                name="linkedin" id="linkedin" placeholder="{@i18n key="SuperMario"/}" angular-validator-quiet>
+            </div>
+          </div>
+          <div ng-show="forms.generalInfoForm.linkedin.$invalid"
+           ng-messages="forms.generalInfoForm.linkedin.$error" ng-cloak="" class="col-sm-8 col-sm-offset-4">
+            <label class="control-label has-error validationMessage" ng-message="pattern">
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            </label>
           </div>
         </div>
 
         <div class="form-group" ng-enter="noop()" ng-show="initialForm()">
           <label for="twitter" class="col-sm-4 control-label">{@i18n key="Twitter"/} </label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="twitter" placeholder="{@i18n key="e.g. twitter.com/@CoderDojo"/}" ng-model="profile.twitter">
+          <div class="col-sm-8 cd-profile__general-info-twitter">
+            <div class="input-group">
+              <span class="input-group-addon">
+                https://www.twitter.com/
+              </span>
+              <input type="text" class="form-control" ng-model="profile.twitter"
+                ng-pattern="/^[a-z0-9_]{1,15}$/i"
+                name="twitter" id="linkedin" placeholder="{@i18n key="SuperMario"/}" angular-validator-quiet>
+            </div>
+          </div>
+          <div ng-show="forms.generalInfoForm.twitter.$invalid"
+           ng-messages="forms.generalInfoForm.twitter.$error" ng-cloak="" class="col-sm-8 col-sm-offset-4">
+            <label class="control-label has-error validationMessage" ng-message="pattern">
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            </label>
           </div>
         </div>
       </div>
@@ -215,7 +242,7 @@
               <label for="childDateOfBirth" class="col-sm-4 text-right">{@i18n key="Child Date of Birth"/}*</label>
               <div class="input-group col-sm-8" style="padding-right: 15px; padding-left: 15px;">
                 <input type="text" class="form-control" readonly uib-datepicker-popup="{{ fullDateFormat }}" datepicker-options="childDobDateOptions" min-date="'1900-01-01'" max-date="today" ng-model="child.dateOfBirth" name="childDateOfBirth-{{ $index }}" required-message="'{@i18n key="Date of birth is empty"/}'" is-open="child.isOpen" required current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}" close-text="{@i18n key="Done"/}" placeholder="{@i18n key="Enter your childs date of birth here..."/}" ng-click="open($event, child)" />
-                <span class="input-group-btn" ng-class="{'topValign':generalInfoForm.$submitted && generalInfoForm.dateOfBirth.$error.required}">
+                <span class="input-group-btn" ng-class="{'topValign':forms.generalInfoForm.$submitted && forms.generalInfoForm.dateOfBirth.$error.required}">
                   <button type="button" class="btn btn-default" ng-click="open($event, child)"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </div>
@@ -289,7 +316,7 @@
         </div>
 
         <br>
-        <button type="submit" class="btn btn-primary pull-right" ng-click="scrollToInvalid(generalInfoForm)">{@i18n key="Save"/}</button>
+        <button type="submit" class="btn btn-primary pull-right" ng-click="scrollToInvalid(forms.generalInfoForm)">{@i18n key="Save"/}</button>
     </div>
   </div>
 </form>

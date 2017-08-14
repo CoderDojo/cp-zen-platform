@@ -29,6 +29,9 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   $scope.editMode = false;
   $scope.publicMode = false;
   $scope.publicChampion = false;
+  $scope.countries = [];
+  $scope.places = [];
+  $scope.forms = {};
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
@@ -288,6 +291,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.save = function(profile){
+    if ($scope.forms.generalInfoForm.$invalid) return;
     _.each(['http://', 'https://', 'www.'], function(prefix){
       _.each(['linkedin', 'twitter'], function(field){
         // if prefixed, remove prefix
@@ -691,7 +695,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.scrollToInvalid = function (form) {
     if (form.$invalid) {
-      angular.element('form[name=' + form.$name + '] .ng-invalid')[0].scrollIntoView();
+      angular.element('form[name="' + form.$name + '"] .ng-invalid')[0].scrollIntoView();
     }
   };
 
