@@ -291,7 +291,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   }
 
   $scope.save = function(profile){
-    if ($scope.forms.generalInfoForm.$invalid) return;
     _.each(['http://', 'https://', 'www.'], function(prefix){
       _.each(['linkedin', 'twitter'], function(field){
         // if prefixed, remove prefix

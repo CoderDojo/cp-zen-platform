@@ -94,7 +94,7 @@
         <div ng-if="$ctrl.championForm.twitter.$invalid"
          ng-messages="$ctrl.championForm.twitter.$error" ng-cloak="">
           <label class="control-label has-error validationMessage" ng-message="pattern">
-            <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username (without ending slash)"/}
           </label>
         </div>
       </div>
@@ -107,12 +107,12 @@
           </span>
           <input type="text" class="form-control" ng-model="$ctrl.champion.linkedin"
             ng-pattern="/^[a-z0-9\-]{1,}$/i"
-            name="linkedin" id="linkedin" placeholder="{@i18n key="SuperMario"/}" angular-validator-quiet>
+            name="linkedin" id="linkedin" placeholder="{@i18n key="SuperMario"/}">
         </span>
         <div ng-if="$ctrl.championForm.linkedin.$invalid"
          ng-messages="$ctrl.championForm.linkedin.$error" ng-cloak="">
           <label class="control-label has-error validationMessage" ng-message="pattern">
-            <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+            <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username (without ending slash)"/}
           </label>
         </div>
       </div>

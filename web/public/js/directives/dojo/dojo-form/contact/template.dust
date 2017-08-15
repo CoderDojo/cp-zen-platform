@@ -54,12 +54,12 @@
               ng-pattern="/^[a-z0-9_]{1,15}$/i"
               ng-change="updateLocalStorage('dojoListing','twitter', dojo.twitter)" popover-trigger="focus"
               uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
-              angular-validator-quiet>
+              >
           </span>
-          <div ng-if="createDojoForm.submitted && createDojoForm.dojoTwitter.$invalid"
+          <div ng-if="createDojoForm.dojoTwitter.$invalid"
            ng-messages="createDojoForm.dojoTwitter.$error" ng-cloak="">
             <label class="control-label has-error validationMessage" ng-message="pattern">
-              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username (without ending slash)"/}
             </label>
           </div>
         </div>
@@ -82,12 +82,12 @@
               ng-change="updateLocalStorage('dojoListing', 'facebook', dojo.facebook)"
               uib-popover="{@i18n key="Again, a useful way for sharing information and being found. We can also help share messages to followers."/}"
               popover-trigger="focus"
-              angular-validator-quiet>
+              >
           </span>
-          <div ng-if="createDojoForm.submitted && createDojoForm.dojoFacebook.$invalid"
+          <div ng-if="createDojoForm.dojoFacebook.$invalid"
            ng-messages="createDojoForm.dojoFacebook.$error" ng-cloak="">
             <label class="control-label has-error validationMessage" ng-message="pattern">
-              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username"/}
+              <i class="fa fa-times icon-group"></i>{@i18n key="Provide only your username (without ending slash)"/}
             </label>
           </div>
         </div>
