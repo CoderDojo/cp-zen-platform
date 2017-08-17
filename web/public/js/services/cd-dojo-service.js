@@ -82,11 +82,14 @@
       verify: function (id, verified) {
         return cdApi.patch('dojos/' + id + '/verified', {verified: verified});
       },
-      loadDojoLead: function(id, win, fail) {
+      loadDojoLead: function (id, win, fail) {
         return cdApi.get('dojos/lead/' + id, win, fail || topfail);
       },
-      searchDojoLeads: function(query) {
+      searchLeads: function (query) {
         return cdApi.post('dojos/leads/', {query: query});
+      },
+      searchDojoleads: function(query) {
+        return cdApi.post('dojoleads/', {query: query});
       },
       deleteDojoLeads: function (id) {
         return cdApi.delete('dojos/lead/' + id);

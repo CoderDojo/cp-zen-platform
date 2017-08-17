@@ -1,6 +1,9 @@
 <tr ng-repeat="dojo in $ctrl.dojos" ng-style="$ctrl.setStyle(dojo)">
-  <td><a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})"
-    ng-bind="dojo.name"></a></td>
+  <td>
+    <a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})"
+      ng-bind="dojo.name" ng-if="dojo.country && dojo.path"></a>
+    <span ng-bind="dojo.name" ng-if="!dojo.country || !dojo.path"></span>
+  </td>
   <td><span ng-show="$ctrl.allSigned(dojo) && (dojo.origVerified === 1)"
      class="green-text glyphicon glyphicon-ok-sign"></span></td>
   <td>{{ $ctrl.getDojoStageLabel(dojo.stage) }}</td>
@@ -22,10 +25,11 @@
     <button class="btn btn-link" ng-if="dojo.id && (!dojo.deleted || dojo.deleted===0)" ng-click="$ctrl.editDojo(dojo)">{@i18n key="Edit"/}</button></td>
   <td>
     <span ng-if="dojo.verified === 1">{{ dojo.verifiedAt | date:'yyyy/MM/dd' }}</span>
-    <span ng-if="!dojo.verified">{{ dojo.completedAt | date:'yyyy/MM/dd' }}</span>
+    <span ng-if="dojo.verified === 0 && dojo.completed">{{ (dojo.completedAt) | date:'yyyy/MM/dd' }}</span>
+    <span ng-if="!dojo.completed && !dojo.verified">{{ (dojo.updatedAt) | date:'yyyy/MM/dd' }}</span>
   </td>
   <td>
-    <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" ng-if="dojo.id">
+    <div class="checkbox cd-checkbox checkbox-primary manage-table-checkbox" ng-if="dojo.id && (dojo.completed || dojo.verified)">
       <input type="checkbox" ng-model="dojo.verified" ng-true-value="1" ng-false-value="0" id="{{dojo.id + 'verifiedCheckbox'}}" ng-change="$ctrl.pushChangedDojo(dojo)">
       <label class="awesome-label" for="{{dojo.id + 'checkbox-primary'}}"></label>
     </div>

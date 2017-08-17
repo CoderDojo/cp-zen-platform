@@ -118,14 +118,25 @@
         </thead>
         <tbody class="cd-dojos-manage__dojos">
           <tr cd-dojos-manage-tbody data-dojos="$ctrl.dojos"></tr>
-          <tr ng-show="$ctrl.dojos && $ctrl.dojos.length == 0"><td>No Dojo found</td></tr>
+          <tr ng-show="$ctrl.dojos && $ctrl.dojos.length === 0"><td>No Dojo found</td></tr>
         </tbody>
         <tbody ng-show="$ctrl.filter.verified === 0">
-          <tr><td>Leads</td></tr>
+          <tr>
+            <td>Leads</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Last update</td>
+          </tr>
         </tbody>
         <tbody class="cd-dojos-manage__unverified-leads" ng-show="$ctrl.filter.verified === 0">
           <tr cd-dojos-manage-tbody data-dojos="$ctrl.leads"></tr>
-          <tr ng-show="$ctrl.leads && $ctrl.leads.length == 0"><td>No Lead found</td></tr>
+          <tr ng-show="$ctrl.leads && $ctrl.leads.length === 0"><td>No Lead found</td></tr>
         </tbody>
       </table>
     </div>
