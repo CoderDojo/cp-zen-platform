@@ -1061,18 +1061,24 @@
         'https://s3-eu-west-1.amazonaws.com/zen-dojo-images/**'
       ]);
     }])
-    .run(['$window', '$cookieStore', 'tmhDynamicLocale', 'Analytics', function ($window, $cookieStore, tmhDynamicLocale, Analytics) {
+    .run(['$window', '$cookieStore', 'tmhDynamicLocale', 'Analytics', '$translate',
+    function ($window, $cookieStore, tmhDynamicLocale, Analytics, $translate) {
       var doc = $window.document;
       var googleCaptchaScriptId = 'loadCaptchaService';
       var googleCaptchaScriptTag = doc.getElementById(googleCaptchaScriptId);
       googleCaptchaScriptTag = doc.createElement('script');
       googleCaptchaScriptTag.id = googleCaptchaScriptId;
-      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
-      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
+      var userLocality = (($cookieStore.get('NG_TRANSLATE_LANG_KEY') || $translate.proposedLanguage()).replace(/%22/g, '')) || 'en_US';
+      var userLangCode = userLocality ? userLocality.split('_')[0] : 'en';
       googleCaptchaScriptTag.setAttribute('src',
         'https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=' + userLangCode);
       doc.head.appendChild(googleCaptchaScriptTag);
       tmhDynamicLocale.set(userLangCode);
+      var momentLocale = userLocality ? userLocality.replace('_', '-').toLowerCase() : 'en-us';
+      var setMomentLocale = moment.locale(momentLocale);
+      if (momentLocale.indexOf(setMomentLocale) !== 0) {
+        moment.locale('en');
+      }
     }])
     .run(['$rootScope', '$filter', '$state', 'embedder', '$cookieStore', '$document', 'verifyProfileComplete', 'alertService', '$translate', '$location',
      function($rootScope, $filter, $state, embedder, $cookieStore, $document, verifyProfileComplete, alertService, $translate, $location){
@@ -1177,11 +1183,6 @@
         cookieDisclaimerListener();
       });
     }])
-    .run(function ($window, $cookieStore, tmhDynamicLocale) {
-      var userLocality = $cookieStore.get('NG_TRANSLATE_LANG_KEY') || 'en_US';
-      var userLangCode = userLocality ? userLocality.replace(/%22/g, '').split('_')[0] : 'en';
-      tmhDynamicLocale.set(userLangCode);
-    })
     .factory('verifyProfileComplete', ['cdUsersService', 'auth', '$q', function (cdUsersService, auth, $q) {
       return function () {
         var deferred = $q.defer();
