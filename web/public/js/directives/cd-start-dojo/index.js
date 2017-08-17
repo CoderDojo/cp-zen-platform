@@ -227,7 +227,7 @@ angular
           }
           // We use the generic version of search as we don't know yet who's the owner for sure
           // It can be a CDF viewing, which means we don't want to overwrite the owner of the lead
-          return cdDojoService.searchDojoLeads(leadQuery)
+          return cdDojoService.searchLeads(leadQuery)
           .then(function (leads) {
             ctrl.leads = leads.data;
             return $q.resolve();

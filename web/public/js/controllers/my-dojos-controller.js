@@ -90,7 +90,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
          skip$: loadPageData.skip, limit$: $scope.itemsPerPage,
          sort$: {createdAt: 1}};
       if ($scope.myDojos.length > 0) query.id = {nin$: _.map($scope.myDojos, 'dojoLeadId')};
-      return cdDojoService.searchDojoLeads(query)
+      return cdDojoService.searchLeads(query)
       .then(function (res) {
         usSpinnerService.stop('my-dojos-spinner');
         return $q.resolve(res.data);

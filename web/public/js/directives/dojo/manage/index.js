@@ -63,25 +63,25 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     ctrl.loadPage(ctrl.filter, false);
   };
   ctrl.buildQuery = function (target) {
+    var _query = {};
     var payload = {
-      name: ctrl.filter.name,
       verified: ctrl.filter.verified,
-      email: ctrl.filter.email,
-      creatorEmail: ctrl.filter.creatorEmail,
       deleted: ctrl.filter.deleted,
+      dojoName: ctrl.filter.name,
+      dojoEmail: ctrl.filter.email,
+      email: ctrl.filter.creatorEmail,
       stage: ctrl.filter.stages,
-      alpha2: ctrl.filter.country && ctrl.filter.country.alpha2,
-      limit$: ctrl.itemsPerPage,
-      skip$: ctrl.skip,
-      sort$: ctrl.sort
+      alpha2: ctrl.filter.country && ctrl.filter.country.alpha2
     };
     var baseFields = {
-      dojo: _.keys(payload),
-      lead: ['email', 'deleted', 'skip$', 'limit$']
+      dojo: ['verified', 'email', 'stage', 'alpha2', 'deleted'],
+      lead: ['email', 'deleted'],
+      dojolead: _.keys(payload)
     };
     var selectedFields = baseFields[target];
-    var query = _.omitBy(payload, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
-    return _.pick(query, selectedFields);
+    _query = _.omitBy(payload, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+
+    return _.pick(_query, selectedFields);
   };
 
   ctrl.getDojoStageLabel = function(stage) {
@@ -129,54 +129,87 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
   ctrl.loadPage = function (filter, resetFlag) {
     //sort ascending = 1
     //sort descending = -1
-    ctrl.sort = ctrl.sort ? ctrl.sort : { created: -1 };
+    ctrl.sort = ctrl.sort ? ctrl.sort : { createdAt: -1 };
     ctrl.dojos = [];
-    function getDojos () {
-      var loadPageData = tableUtils.loadPage(resetFlag, ctrl.itemsPerPage, ctrl.pageNo, query);
-      ctrl.pageNo = loadPageData.pageNo;
-      ctrl.skip = loadPageData.skip;
-      var query = ctrl.buildQuery('dojo');
-      return cdDojoService.search(query).then(function (result) {
-        if(!_.isUndefined(result.ok) && result.ok === false){
-          $state.go('error-404-no-headers');
-          return $q.reject();
-        }
-        ctrl.dojos = ctrl.formatDojos(result);
-        if (ctrl.dojos.length > 0) {
-          return cdDojoService.list(_.omit(query, ['limit$', 'skip$', 'sort$']), function (result) {
-            ctrl._dojoLength = result.length;
-          });
-        } else {
-          ctrl._dojoLength = 0;
-          return $q.resolve();
-        }
-      }, function (err) {
-        alertService.showError($translate.instant('An error has occurred while loading Dojos'));
-        return $q.reject(err);
+    var loadPageData = tableUtils.loadPage(resetFlag, ctrl.itemsPerPage, ctrl.pageNo);
+    ctrl.pageNo = loadPageData.pageNo;
+    ctrl.skip = loadPageData.skip;
+    function getDojoLeads () {
+      var query = ctrl.buildQuery('dojolead');
+      query.limit$ = ctrl.itemsPerPage;
+      query.skip$ = ctrl.skip;
+      query.sort$ = ctrl.sort;
+      if (ctrl.filter.verified === 0) query.completed = true;
+      query = _.omitBy(query, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+      return cdDojoService.searchDojoleads(query)
+      .then(function (res) {
+        ctrl.res = res.data;
+        if (!ctrl.res) return $q.reject();
       });
     }
-    function getUncompletedLeads () {
-      // We only display uncompleted leads when the unverified filter is set manually
-      if (ctrl.filter.verified === 0 &&
-         (!ctrl.filter.name && !ctrl.filter.email && !ctrl.filter.creatorEmail && !ctrl.filter.country)) {
-        var query = _.extend(ctrl.buildQuery('lead'), {completed: false, sort$: { updatedAt: -1 }});
-        return cdDojoService.searchDojoLeads(query)
-        .then(function (res) {
-          var filteredLeads = res.data;
-          return $q.resolve(filteredLeads);
+    function getDojos () {
+      var query = ctrl.buildQuery('dojo');
+      if (ctrl.res && ctrl.res.length > 0) {
+        query.dojoLeadId = {in$: _.map(ctrl.res, 'id')};
+        query.name = ctrl.filter.name;
+        query.email = ctrl.filter.email;
+        query.creatorEmail = ctrl.filter.creatorEmail;
+        query = _.omitBy(query, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+        return cdDojoService.search(query)
+        .then(function (result) {
+          if(!_.isUndefined(result.ok) && result.ok === false){
+            $state.go('error-404-no-headers');
+            return $q.reject();
+          }
+          ctrl.dojos = ctrl.formatDojos(result);
+          _.each(ctrl.dojos, function (dojo, index) {
+            var lead = _.find(ctrl.res, function (lead) { return lead.id === dojo.dojoLeadId });
+            if (lead) {
+              ctrl.dojos[index] = _.merge({}, lead, dojo); // order matter, we want in priority the dojo fields
+            }
+          });
+          return $q.resolve();
         })
-        .then(function (filteredLeads) {
-          // Set pagination
-          if (filteredLeads) {
-            return cdDojoService.searchDojoLeads(_.omit(query, ['limit$', 'skip$', 'sort$']))
+        .then(function () {
+          if (ctrl.dojos.length > 0) {
+            var _query = ctrl.buildQuery('dojolead');
+            if (ctrl.filter.verified === 0) _query.completed = true;
+            return cdDojoService.searchDojoleads(_query)
+            .then(function (result) {
+              ctrl._dojoLength = result.data.length;
+            });
+          } else {
+            ctrl._dojoLength = 0;
+            return $q.resolve();
+          }
+        })
+        .catch(function (err) {
+          alertService.showError($translate.instant('An error has occurred while loading Dojos'));
+          return $q.reject(err);
+        });
+      } else {
+        ctrl._dojoLength = 0;
+      }
+    }
+    function getUncompletedLeads () {
+      var query;
+      // We only display uncompleted leads when the unverified filter is set manually
+      if (ctrl.filter.verified === 0) {
+        query = _.extend(ctrl.buildQuery('dojolead'), {completed: false, sort$: { updatedAt: -1 }});
+        query.limit$ = ctrl.itemsPerPage;
+        query.skip$ = ctrl.skip;
+        query.sort$ = ctrl.sort;
+        query = _.omitBy(query, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
+        return cdDojoService.searchDojoleads(query)
+        .then(function (res) {
+          return $q.resolve(res.data);
+        })
+        .then(function (leads) {
+          if (leads.length > 0) {
+            var query = {id: {in$: _.map(leads, 'id')}};
+            return cdDojoService.searchLeads(query)
             .then(function (res) {
-              var leads = res.data;
-              ctrl._leadLength = leads.length;
-              // Filter uncompleted leads
-              var leadsIds = _.map(leads, 'id');
-              ctrl.dojos = _.omitBy(ctrl.dojos, function (dojo) {
-                return leadsIds.indexOf(dojo.dojoLeadId) > -1;
-              });
+              var filteredLeads = res.data;
               ctrl.leads = ctrl.formatDojos(_.map(filteredLeads, function (lead) {
                 return _.extend(lead.application.dojo, lead.application.venue, {
                   dojoLeadId: lead.id,
@@ -184,9 +217,24 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
                   creators: [{email: lead.email, id: lead.userId}],
                   deleted: lead.deleted,
                   completed: lead.completed,
-                  completedAt: lead.completedAt
+                  completedAt: lead.completedAt,
+                  updatedAt: lead.updatedAt
                 });
               }));
+              return $q.resolve();
+            });
+          } else {
+            ctrl.leads = [];
+          }
+        })
+        .then(function () {
+          // Set pagination
+          if (ctrl.leads && ctrl.leads.length > 0) {
+            return cdDojoService.searchDojoleads(_.extend(ctrl.buildQuery('dojolead'), {completed: false}))
+            .then(function (res) {
+              var leads = res.data;
+              ctrl._leadLength = leads.length;
+              // Filter uncompleted leads
               return $q.resolve();
             });
           } else {
@@ -198,30 +246,11 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         return $q.resolve();
       }
     }
-    function getRelatedLeads () {
-      // We only need to extend definition when we don't have enough info
-      // which is to say, when it's an uncomplete lead
-      if (ctrl.filter.verified !== 1 && ctrl.dojos.length > 0) {
-        return cdDojoService.searchDojoLeads({completed: true, id: {in$: _.map(ctrl.dojos, 'dojoLeadId')}})
-        .then(function (res) {
-          var leads = res.data;
-          _.each(ctrl.dojos, function (dojo, index) {
-            var lead = _.find(leads, function (lead) { return lead.id === dojo.dojoLeadId });
-            if (lead) {
-              ctrl.dojos[index] = _.merge({}, lead, dojo); // order matter, we want in priority the dojo fields
-            }
-          });
-          return $q.resolve();
-        });
-      } else {
-        return $q.resolve();
-      }
-    }
     function getUserOrg () {
       var userIds = _.compact(_.map(ctrl.dojos, 'creator').concat(_.map(ctrl.leads), 'userId'));
       return cdOrganisationsService.loadUsersOrg({userIds: userIds})
       .then(function (userOrgs) {
-        ctrl.userOrg = {};
+        ctrl.userOrgs = {};
         _.each(userOrgs.data, function (userOrg) {
           ctrl.userOrgs[userOrg.userId] = userOrg;
         });
@@ -251,11 +280,11 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         return $q.resolve();
       }
     }
-    getDojos()
+    getDojoLeads()
+    .then(getDojos)
     .then(function () {
       return $q.all([
         getUncompletedLeads(),
-        getRelatedLeads(),
         getUserOrg(),
         getOrgs(),
         getCharters()]);
@@ -270,6 +299,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     return _.map(map, function (dojo) {
       if (!_.isUndefined(dojo)) {
         dojo.origVerified = dojo.verified;
+        dojo.alpha2 = dojo.alpha2 || (dojo.country ? dojo.country.alpha2.toUpperCase() : '');
         dojo.country = dojo.alpha2 ? dojo.alpha2.toLowerCase() : '';
         // No, it's not chainable.
         if (dojo.urlSlug) {
