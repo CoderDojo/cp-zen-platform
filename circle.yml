@@ -1,3 +1,4 @@
+---
 machine:
   node:
     version: 0.10.40
@@ -28,14 +29,5 @@ deployment:
         deployment_config: CodeDeployDefault.OneAtATime
   staging:
     branch: staging
-    codedeploy:
-      cp-zen-platform-staging:
-        application_root: /
-        region: eu-west-1
-        revision_location:
-          revision_type: S3
-          s3_location:
-            bucket: zen-deployments
-            key_pattern: staging/applications/cp-zen-platform-staging-{SHORT_COMMIT}-{BUILD_NUM}.zip
-        deployment_group: staging-zen
-        deployment_config: CodeDeployDefault.OneAtATime
+    commands:
+      - ./deploy/kube.sh
