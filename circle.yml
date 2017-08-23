@@ -2,6 +2,8 @@
 machine:
   node:
     version: 0.10.40
+  services:
+    - docker
   environment:
     LANG: en_US.utf8
 dependencies:
