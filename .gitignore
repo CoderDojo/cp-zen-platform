@@ -41,6 +41,8 @@ dist/
 .nodemon-find-ref
 *~
 
+.pkg.sha1
+
 # i18n dictionaries from crowdin, except en_US
 web/locale/*
 !web/locale/en_US
