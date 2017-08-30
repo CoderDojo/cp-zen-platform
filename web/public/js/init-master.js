@@ -405,13 +405,8 @@
         })
         .state("dojo-detail-id", {
           url: "/dojo/:id",
-          templateUrl: '/dojos/template/dojo-detail',
-          resolve: {
-            dojo: resolveDojo,
-            gmap: gmap,
-            currentUser: resolves.loggedInUser
-          },
-          controller: 'dojo-detail-controller'
+          template: '<div></div>',
+          controller: reloadPage
         })
         .state("edit-dojo-eventbrite", {
           url: "/edit-dojo-eventbrite?code",
