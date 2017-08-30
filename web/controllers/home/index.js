@@ -91,9 +91,9 @@ var controller = module.exports = [
 
   {
     method: 'GET',
-    path: '/dojo/{legacyId}',
+    path: '/dojo/{id}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.redirect('/dojos/' + request.params.id);
     }
   },
 
