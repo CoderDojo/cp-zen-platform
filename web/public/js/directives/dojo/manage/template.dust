@@ -87,26 +87,26 @@
       <table id="manageDojos" class="table cd-grid-table">
         <thead>
           <tr>
-            <th><span ng-click="$ctrl.toggleSort($event, 'name')" ng-class="$ctrl.getSortClass(sort.name)">&nbsp;</span>{@i18n key="Dojo"/}</th>
+            <th><span ng-click="$ctrl.toggleSort($event, 'dojoName')" ng-class="$ctrl.getSortClass($ctrl.sort.dojoName)">&nbsp;</span>{@i18n key="Dojo"/}</th>
             <th></th>
             <th class="ten-percent-width"><span ng-click="$ctrl.toggleSort($event, 'stage')"
-               ng-class="$ctrl.getSortClass(sort.stage)">&nbsp;</span>{@i18n key="Stage"/}</th>
+               ng-class="$ctrl.getSortClass($ctrl.sort.stage)">&nbsp;</span>{@i18n key="Stage"/}</th>
             <th class="ten-percent-width"><span ng-click="$ctrl.toggleSort($event, 'alpha2')"
-               ng-class="$ctrl.getSortClass(sort.alpha2)">&nbsp;</span>{@i18n key="Country"/}</th>
-            <th><span ng-click="$ctrl.toggleSort($event, 'email')"
-               ng-class="$ctrl.getSortClass(sort.email)">&nbsp;</span>{@i18n key="Dojo Email"/}</th>
-            <th>{@i18n key="Group"/}</th>
+               ng-class="$ctrl.getSortClass($ctrl.sort.alpha2)">&nbsp;</span>{@i18n key="Country"/}</th>
+            <th><span ng-click="$ctrl.toggleSort($event, 'dojoEmail')"
+               ng-class="$ctrl.getSortClass($ctrl.sort.dojoEmail)">&nbsp;</span>{@i18n key="Dojo Email"/}</th>
+            {! <th>{@i18n key="Group"/}</th> !}
             <th>{@i18n key="User"/}</th>
             <th>{@i18n key="Application"/}</th>
             <th>{@i18n key="Edit"/}</th>
             <th>
               <span ng-if="$ctrl.filter.verified === 1">
                 <span ng-click="$ctrl.toggleSort($event, 'verifiedAt')"
-                 ng-class="$ctrl.getSortClass(sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}
+                 ng-class="$ctrl.getSortClass($ctrl.sort.verifiedAt)">&nbsp;</span>{@i18n key="Verified At"/}
               </span>
               <span ng-if="$ctrl.filter.verified === 0">
                 <span ng-click="$ctrl.toggleSort($event, 'completedAt')"
-                 ng-class="$ctrl.getSortClass(sort.completedAt)">&nbsp;</span>{@i18n key="Submitted at"/}
+                 ng-class="$ctrl.getSortClass($ctrl.sort.completedAt)">&nbsp;</span>{@i18n key="Submitted at"/}
               </span>
               <span ng-if="$ctrl.filter.verified !== 0 && $ctrl.filter.verified !== 1" >
                 <span>&nbsp;</span>{@i18n key="Last action at"/}
@@ -126,7 +126,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            {! <td></td> !}
             <td></td>
             <td></td>
             <td></td>

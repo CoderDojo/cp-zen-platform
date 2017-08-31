@@ -1,22 +1,27 @@
-<tr ng-repeat="dojo in $ctrl.dojos" ng-style="$ctrl.setStyle(dojo)">
+<tr ng-repeat="dojo in $ctrl.dojos" ng-style="dojo.style">
   <td>
     <a class="pointer" ui-sref="dojo-detail({country: dojo.country, path: dojo.path})"
       ng-bind="dojo.name" ng-if="dojo.country && dojo.path"></a>
     <span ng-bind="dojo.name" ng-if="!dojo.country || !dojo.path"></span>
   </td>
-  <td><span ng-show="$ctrl.allSigned(dojo) && (dojo.origVerified === 1)"
+  <td>
+    <span ng-show="dojo.allSigned && (dojo.origVerified === 1)"
      class="green-text glyphicon glyphicon-ok-sign"></span></td>
   <td>{{ $ctrl.getDojoStageLabel(dojo.stage) }}</td>
   <td>{{ dojo.alpha2 }}</td>
   <td><a title="{{ dojo.email }}" href="mailto:{{ dojo.email }}">{{ dojo.email | characters:20  }}</a></td>
-  <td>
+  {! <td>
     <a ng-if="dojo.org" href="org/{{ $ctrl.orgs[$ctrl.userOrgs[user.id].orgId] }}"> {{ org.name }}</a>
-  </td>
+  </td> !}
   <td>
-    <ul ng-repeat="creator in dojo.creators">
-      <li>
-        <a title="{{ creator.email }}" href="mailto:{{ creator.email }}" >{{ creator.email | characters:20 }}</a>
-        <span ng-show="creator.agreements.length < 1">&nbsp;({@i18n key="unsigned"/})</span>
+    <span>
+      <a title="{{ dojo.creatorEmail }}" href="mailto:{{ dojo.creatorEmail }}">
+        <i class="fa fa-star"></i>{{ dojo.creatorEmail | characters: 10 }}
+      </a></span>
+    <ul>
+      <li ng-repeat="owner in dojo.owners">
+        <a title="{{ owner.email }}" href="mailto:{{ owner.email }}" >{{ owner.email | characters:20 }}</a>
+        <span ng-show="owner.agreements.length < 1">&nbsp;({@i18n key="unsigned"/})</span>
       </li>
     </ul>
   </td>

@@ -91,21 +91,21 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
   };
 
   ctrl.setStyle = function (dojo) {
-    var signed = !allSigned(dojo);
+    var signed = allSigned(_.isEmpty(dojo.owners) ? [dojo.creator] : dojo.owners);
     var deleted = isDeleted(dojo);
-    return signed || deleted ? {'background-color': 'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
+    return !signed || deleted ? {'background-color': 'rgba(255, 0, 0, 0.05)'} : {'background-color': 'white'};
   };
 
   function isDeleted (dojo) {
     return dojo.deleted === 1;
   }
 
-  function allSigned (dojo) {
-    var currentAgreementVersion = 2;
-    var signed = _.find(ctrl.agreements, function (agreement) {
-      return agreement.userId === dojo.creator;
-    });
-    return _.identity(signed);
+  function allSigned (owners) {
+    if (ctrl.agreements) {
+      return _.every(owners, function (owner) {
+        return _.find(ctrl.agreements, {'userId': owner.id});
+      });
+    }
   }
 
   ctrl.allSigned = allSigned;
@@ -129,7 +129,18 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
   ctrl.loadPage = function (filter, resetFlag) {
     //sort ascending = 1
     //sort descending = -1
-    ctrl.sort = ctrl.sort ? ctrl.sort : { createdAt: -1 };
+    var orderKeys = ['verifiedAt', 'completedAt'];
+    var orderKeyIndex = ctrl.filter.verified === 1 ? 0 : 1;
+    var orderKey = orderKeys[orderKeyIndex];
+    var order = {}; order[orderKey] = -1;
+    var alternativeKey = orderKeys[Number(!orderKeyIndex)];
+    if (ctrl.sort && ctrl.sort[alternativeKey]) {
+      delete ctrl.sort[alternativeKey];
+    }
+    if (!ctrl.sort || !_.has(ctrl.sort, orderKey)) {
+      // Only one of those can be set at a time
+      ctrl.sort = _.extend({}, ctrl.sort, order);
+    }
     ctrl.dojos = [];
     var loadPageData = tableUtils.loadPage(resetFlag, ctrl.itemsPerPage, ctrl.pageNo);
     ctrl.pageNo = loadPageData.pageNo;
@@ -150,10 +161,20 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     function getDojos () {
       var query = ctrl.buildQuery('dojo');
       if (ctrl.res && ctrl.res.length > 0) {
-        query.dojoLeadId = {in$: _.map(ctrl.res, 'id')};
+        var ids = _.map(ctrl.res, 'id');
+        query.dojoLeadId = {in$: ids};
         query.name = ctrl.filter.name;
         query.email = ctrl.filter.email;
         query.creatorEmail = ctrl.filter.creatorEmail;
+        query.sort$ = (function () { // We need to map dojoleads fields to dojos's structure
+          var sort = {};
+          if (ctrl.sort.dojoEmail) sort.email = ctrl.sort.dojoEmail;
+          if (ctrl.sort.dojoName) sort.name = ctrl.sort.dojoName;
+          if (ctrl.sort.verifiedAt) sort.verifiedAt = ctrl.sort.verifiedAt;
+          if (ctrl.sort.createdAt) sort.created = ctrl.sort.createdAt;
+          if (ctrl.sort.country) sort.country = ctrl.sort.country;
+          return _.isEmpty(sort) ? {ctid: -1} : sort;
+        })();
         query = _.omitBy(query, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
         return cdDojoService.search(query)
         .then(function (result) {
@@ -167,6 +188,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
             if (lead) {
               ctrl.dojos[index] = _.merge({}, lead, dojo); // order matter, we want in priority the dojo fields
             }
+            ctrl.dojos[index].owners = dojo.creators;
           });
           return $q.resolve();
         })
@@ -195,10 +217,14 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       var query;
       // We only display uncompleted leads when the unverified filter is set manually
       if (ctrl.filter.verified === 0) {
-        query = _.extend(ctrl.buildQuery('dojolead'), {completed: false, sort$: { updatedAt: -1 }});
+        query = _.extend(ctrl.buildQuery('dojolead'), {completed: false});
         query.limit$ = ctrl.itemsPerPage;
         query.skip$ = ctrl.skip;
-        query.sort$ = ctrl.sort;
+        query.sort$ = (function () {
+          var sort = _.clone(ctrl.sort);
+          delete sort.completedAt;
+          return _.extend(sort,{ updatedAt: ctrl.sort.completedAt || -1 });
+        })();
         query = _.omitBy(query, function (value) { return value === '' || _.isNull(value) || _.isUndefined(value) });
         return cdDojoService.searchDojoleads(query)
         .then(function (res) {
@@ -214,7 +240,8 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
                 return _.extend(lead.application.dojo, lead.application.venue, {
                   dojoLeadId: lead.id,
                   creator: lead.userId,
-                  creators: [{email: lead.email, id: lead.userId}],
+                  creatorEmail: lead.email,
+                  owners: [], // You can't have anybody but self
                   deleted: lead.deleted,
                   completed: lead.completed,
                   completedAt: lead.completedAt,
@@ -269,7 +296,8 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
     }
     function getCharters () {
       // NOTE: This may be wrong : should we get the owner instead ?
-      var userIds = _.compact(_.map(ctrl.dojos, 'creator').concat(_.map(ctrl.leads, 'application.champion.userId')));
+      var userIds = _.compact(_.map(_.flatten(_.map(ctrl.dojos, 'owners')), 'id').concat(_.map(ctrl.leads, 'creator')));
+      if (userIds.length === 0) userIds = _.compact(_.flatten(_.map(ctrl.dojos, 'creator')));
       if (userIds.length > 0) {
         return cdAgreementsService.search({userId: {in$: userIds}, agreementVersion: 2})
         .then(function (res) {
@@ -280,6 +308,16 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         return $q.resolve();
       }
     }
+    function setStyling () {
+      _.each(ctrl.leads, function (lead, index) {
+        ctrl.leads[index].style = ctrl.setStyle(lead);
+      });
+      _.each(ctrl.dojos, function (dojo, index) {
+        ctrl.dojos[index].allSigned = ctrl.allSigned(dojo.owners);
+        ctrl.dojos[index].style = ctrl.setStyle(dojo);
+      });
+      return $q.resolve();
+    }
     getDojoLeads()
     .then(getDojos)
     .then(function () {
@@ -289,6 +327,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
         getOrgs(),
         getCharters()]);
     })
+    .then(setStyling)
     .then(function () {
       // Set pagination
       ctrl.totalItems = _.max([ctrl._dojoLength, ctrl._leadLength]);
@@ -370,7 +409,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       var dojos = _.map(ctrl.dojosToBeDeleted, function (dojo) {
         return {
           id: dojo.id,
-          creator: dojo.creator,
+          creator: dojo.creator.id,
           dojoLeadId: dojo.dojoLeadId
         };
       });
@@ -452,7 +491,6 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       var result = className.indexOf(DOWN);
       return result > -1 ? true : false;
     }
-
     className = $($event.target).attr('class');
 
     descFlag = isDesc(className);
