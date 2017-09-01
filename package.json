@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node_modules/.bin/migrate",
     "start": "node service.js",
-    "postinstall": "bower install",
+    "postinstall": "bower install --allow-root",
     "test": "./node_modules/.bin/gulp",
     "jshint-check": "./node_modules/.bin/gulp jshint",
     "lint-lib": "./node_modules/.bin/gulp semistandard",
