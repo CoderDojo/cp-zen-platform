@@ -1,22 +1,22 @@
-'use strict';
+const dust = require('dustjs-linkedin');
+const _ = require('lodash');
 
-var dust = require('dustjs-linkedin');
-var _ = require('lodash');
+module.exports = () => {
+  dust.helpers.setMeta = (chunk, { stack }) => {
+    let metas = '';
+    const applyMeta = (value, key) => {
+      if (_.isString(value)) {
+        metas += `<meta property="og:${key}" content="${value}"/>`;
+      } else {
+        _.each(value, (arrValue) => {
+          metas += `<meta property="og:${key}" content="${arrValue}"/>`;
+        });
+      }
+    };
 
-dust.helpers.setMeta = function (chunk, context, bodies, params) {
-  var metas = '';
-  var applyMeta = function (value, key) {
-    if (_.isString(value)) {
-      metas += '<meta property="og:' + key + '" content="' + value + '"/>';
-    } else {
-      _.each(value, function (arrValue) {
-        metas += '<meta property="og:' + key + '" content="' + arrValue + '"/>';
-      });
+    if (stack.head.context.preload) {
+      _.each(stack.head.context.preload, applyMeta);
     }
+    return chunk.write(metas);
   };
-
-  if (context.stack.head.context.preload) {
-    _.each(context.stack.head.context.preload, applyMeta);
-  }
-  return chunk.write(metas);
 };

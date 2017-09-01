@@ -1,51 +1,51 @@
-'use strict';
+const cacheTimes = require('../../config/cache-times');
+const auth = require('../../../lib/authentications');
 
-var cacheTimes = require('../../config/cache-times');
-var auth = require('../../../lib/authentications');
-
-var handler = function (request, reply) {
-    reply.view('cdf', request.locals);
+const handler = ({ locals }, reply) => {
+  reply.view('cdf', locals);
 };
-var overrideAuth = {
+const overrideAuth = {
   'hapi-auth-cookie': {
-    redirectTo: '/cdf/login'
-  }
+    redirectTo: '/cdf/login',
+  },
 };
 
-module.exports = [{
-  method: 'GET',
-  path: '/cdf/dashboard/{anything*}',
-  config: {
+module.exports = [
+  {
+    method: 'GET',
+    path: '/cdf/dashboard/{anything*}',
+    config: {
       auth: auth.cdfAdmin,
-      plugins: overrideAuth
+      plugins: overrideAuth,
+    },
+    handler,
   },
-  handler: handler
-},
-{
-  method: 'GET',
-  path: '/cdf/login',
-  config: {
-    cache: {
-      expiresIn: cacheTimes.short
-    }
+  {
+    method: 'GET',
+    path: '/cdf/login',
+    config: {
+      cache: {
+        expiresIn: cacheTimes.short,
+      },
+    },
+    handler({ locals }, reply) {
+      reply.view('cdf', locals);
+    },
   },
-  handler: function (request, reply) {
-      reply.view('cdf', request.locals);
-  }
-},
-{
-  method: 'GET',
-  path: '/cdf',
-  config: { cache: { expiresIn: cacheTimes.short } },
-  handler: function (request, reply) {
-    reply.redirect('/cdf/login');
-  }
-},
-{
-  method: 'GET',
-  path: '/cdf/',
-  config: { cache: { expiresIn: cacheTimes.short } },
-  handler: function (request, reply) {
-    reply.redirect('/cdf/login');
-  }
-}];
+  {
+    method: 'GET',
+    path: '/cdf',
+    config: { cache: { expiresIn: cacheTimes.short } },
+    handler(request, reply) {
+      reply.redirect('/cdf/login');
+    },
+  },
+  {
+    method: 'GET',
+    path: '/cdf/',
+    config: { cache: { expiresIn: cacheTimes.short } },
+    handler(request, reply) {
+      reply.redirect('/cdf/login');
+    },
+  },
+];

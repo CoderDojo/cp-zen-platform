@@ -1,18 +1,14 @@
-'use strict';
+const _ = require('lodash');
+const path = require('path');
+const requireindex = require('requireindex');
+const cacheTimes = require('../config/cache-times');
 
-var _ = require('lodash');
-var path = require('path');
-var requireindex = require('requireindex');
-var controllers = requireindex(__dirname);
-var cacheTimes = require('../config/cache-times');
+const controllers = requireindex(__dirname);
 
-// Remove package.json, it's not a controller.  All other non-index files/directories should be.
-delete controllers.package;
-
-module.exports.register = function (server, options, next) {
+module.exports.register = (server) => {
   // Add all the server routes from the controllers.
 
-  _.each(controllers, function (controller) {
+  _.each(controllers, (controller) => {
     server.route(controller);
   });
 
@@ -23,9 +19,9 @@ module.exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       file: {
-        path: path.join(__dirname, '../public/favicon.ico')
-      }
-    }
+        path: path.join(__dirname, '../public/favicon.ico'),
+      },
+    },
   });
 
   server.route({
@@ -34,9 +30,9 @@ module.exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/components')
-      }
-    }
+        path: path.join(__dirname, '../public/components'),
+      },
+    },
   });
 
   server.route({
@@ -45,9 +41,9 @@ module.exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/img')
-      }
-    }
+        path: path.join(__dirname, '../public/img'),
+      },
+    },
   });
 
   server.route({
@@ -55,17 +51,17 @@ module.exports.register = function (server, options, next) {
     path: '/js/{filename*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/js')
-      }
-    }
+        path: path.join(__dirname, '../public/js'),
+      },
+    },
   });
 
   server.route({
     method: 'GET',
     path: '/directives/tpl/{name*}',
-    handler: function (request, reply) {
-      reply.view('directives/' + request.params.name + '/template.dust', request.locals);
-    }
+    handler({ params, locals }, reply) {
+      reply.view(`directives/${params.name}/template.dust`, locals);
+    },
   });
 
   server.route({
@@ -73,12 +69,15 @@ module.exports.register = function (server, options, next) {
     path: '/dist/{filename*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/dist')
-      }
-    }
+        path: path.join(__dirname, '../public/dist'),
+      },
+    },
   });
 };
 
 module.exports.register.attributes = {
-  pkg: require('./package')
+  pkg: {
+    name: 'controllers',
+    version: '0.0.0',
+  },
 };

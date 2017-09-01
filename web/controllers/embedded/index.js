@@ -1,38 +1,36 @@
-'use strict';
-
-var controller = module.exports = [
+module.exports = [
   {
     method: 'GET',
     path: '/embedded/event/{eventId}',
     config: {
-      handler: function (request, reply) {
-        reply.view('embedded', request.locals);
+      handler({ locals }, reply) {
+        reply.view('embedded', locals);
       },
       plugins: {
         blankie: false,
         senecaPreloader: {
-          handler: 'seneca-event-preloader'
-        }
+          handler: 'seneca-event-preloader',
+        },
       },
       security: {
-        xframe: false
-      }
-    }
+        xframe: false,
+      },
+    },
   },
 
   {
     method: 'GET',
     path: '/embedded/dojos-map/lat/{lat}/lon/{lon}',
     config: {
-      handler: function (request, reply) {
-        reply.view('embedded', request.locals);
+      handler({ locals }, reply) {
+        reply.view('embedded', locals);
       },
       plugins: {
-        blankie: false
+        blankie: false,
       },
       security: {
-        xframe: false
-      }
-    }
+        xframe: false,
+      },
+    },
   },
 ];
