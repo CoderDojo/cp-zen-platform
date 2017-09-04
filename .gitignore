@@ -50,3 +50,4 @@ web/locale/*
 # Bower
 web/public/components
 .bower
+.yarn.sha1
