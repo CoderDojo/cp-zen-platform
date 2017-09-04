@@ -5,12 +5,11 @@ RUN if [ "$SOURCE_BRANCH" = "staging" ]; then DEP_VERSION=staging; fi && \
     apk add --update git make gcc g++ python && \
     mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-ADD . /usr/src/app/
-ENV DEP_VERSION=latest
+COPY . /usr/src/app/
 RUN npm install && \
     npm install cp-zen-frontend@$DEP_VERSION cp-translations@$DEP_VERSION && \
     node_modules/.bin/bower install --allow-root && \
-    npm build && \
+    npm run build && \
     apk del make gcc g++ python && \
     rm -rf /tmp/* /root/.npm /root/.node-gyp
 EXPOSE 8000
