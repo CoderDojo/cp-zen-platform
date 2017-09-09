@@ -1,12 +1,12 @@
 'use strict';
-var auth = require('../../../lib/authentications');
+var auth = require('../../lib/authentications');
 
 var controller = module.exports = [
   {
     method: 'GET',
     path: '/login',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -14,7 +14,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/reset',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -22,7 +22,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/register',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -30,7 +30,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/create-dojo',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -38,7 +38,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/start-dojo',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -46,7 +46,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/charter',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -54,7 +54,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/dojo-list-index',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -62,7 +62,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/terms-and-conditions',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -70,7 +70,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/privacy-statement',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -101,7 +101,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/dojo/{dojoId}/event/{eventId}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     },
     config: {
       plugins: {
@@ -116,7 +116,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/event/{eventId}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     },
     config: {
       plugins: {
@@ -139,7 +139,7 @@ var controller = module.exports = [
       }
     },
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -155,7 +155,7 @@ var controller = module.exports = [
       }
     },
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -171,7 +171,7 @@ var controller = module.exports = [
       }
     },
     handler: function (request, reply){
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -179,7 +179,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/profile/{userId}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -187,7 +187,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/reset_password/{token}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -195,7 +195,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/badges',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -203,7 +203,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/poll/{pollId}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -211,7 +211,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/poll/{pollId}/dojo/{dojoId}',
     handler: function (request, reply) {
-      reply.view('index', request.locals);
+      reply.view('index', request.app);
     }
   },
 
@@ -219,7 +219,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/templates/login',
     handler: function (request, reply) {
-      reply.view('accounts/login', request.locals);
+      reply.view('accounts/login', request.app);
     }
   },
 
@@ -227,7 +227,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/templates/register',
     handler: function (request, reply) {
-      reply.view('accounts/register', request.locals);
+      reply.view('accounts/register', request.app);
     }
   },
 
@@ -235,7 +235,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/templates/terms-and-conditions',
     handler: function (request, reply) {
-      reply.view('accounts/terms-and-conditions', request.locals);
+      reply.view('accounts/terms-and-conditions', request.app);
     }
   },
 
@@ -243,7 +243,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/templates/privacy-statement',
     handler: function (request, reply) {
-      reply.view('privacy-statement/privacy-statement', request.locals);
+      reply.view('privacy-statement/privacy-statement', request.app);
     }
   },
 
@@ -251,7 +251,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/templates/reset_password',
     handler: function (request, reply) {
-      reply.view('accounts/reset_password', request.locals);
+      reply.view('accounts/reset_password', request.app);
     }
   }
 ];

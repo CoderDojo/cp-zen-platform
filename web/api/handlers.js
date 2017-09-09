@@ -43,7 +43,8 @@ module.exports = function (server, role) {
 
     debug('handlers.doAct', msg);
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
-    var covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges', 'cd-events', 'cd-eventbrite', 'cp-organisations'];
+    // var covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges', 'cd-events', 'cd-eventbrite', 'cp-organisations'];
+    var covered = [];
     if (_.includes(covered, msg.role)) {
       checkPerms(request, msg, function (err, response) {
         if (err) {

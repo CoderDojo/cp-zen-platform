@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Joi = require('joi');
-var authentications = require('./authentications');
+var authentications = require('../lib/authentications');
 
 exports.register = function (server, options, next) {
   options = _.extend({ basePath: '/api/2.0' }, options);
@@ -89,5 +89,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-agreements'
+  name: 'api-agreements',
+  dependencies: 'cd-auth',
 };

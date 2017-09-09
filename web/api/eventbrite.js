@@ -2,7 +2,7 @@
 
 var Joi = require('joi');
 var _ = require('lodash');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 exports.register = function (server, options, next) {
   options = _.extend({ basePath: '/api/2.0' }, options);
   var handlers = require('./handlers.js')(server, 'cd-eventbrite');
@@ -80,5 +80,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-eventbrite'
+  name: 'api-eventbrite',
+  dependencies: 'cd-auth',
 };

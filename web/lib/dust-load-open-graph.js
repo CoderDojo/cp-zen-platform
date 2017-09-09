@@ -15,7 +15,7 @@ dust.helpers.setMeta = function (chunk, context, bodies, params) {
     }
   };
 
-  if (context.stack.head.context.preload) {
+  if (context.stack.head.context && context.stack.head.context.preload) {
     _.each(context.stack.head.context.preload, applyMeta);
   }
   return chunk.write(metas);

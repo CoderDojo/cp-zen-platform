@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 var Joi = require('joi');
 
 exports.register = function (server, options, next) {
@@ -174,5 +174,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-events'
+  name: 'api-events',
+  dependencies: 'cd-auth',
 };

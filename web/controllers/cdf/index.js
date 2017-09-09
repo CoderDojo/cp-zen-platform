@@ -1,10 +1,10 @@
 'use strict';
 
 var cacheTimes = require('../../config/cache-times');
-var auth = require('../../../lib/authentications');
+var auth = require('../../lib/authentications');
 
 var handler = function (request, reply) {
-    reply.view('cdf', request.locals);
+    reply.view('cdf', request.app);
 };
 var overrideAuth = {
   'hapi-auth-cookie': {
@@ -30,7 +30,7 @@ module.exports = [{
     }
   },
   handler: function (request, reply) {
-      reply.view('cdf', request.locals);
+      reply.view('cdf', request.app);
   }
 },
 {

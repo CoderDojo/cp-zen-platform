@@ -11,7 +11,7 @@ var controller = module.exports = [
     method: 'GET',
     path: '/locale/data',
     handler: function (request, reply) {
-    	var locale = (request.query && request.query.lang) || (request.locals && request.locals.context && request.locals.context.locality) || 'en_US';
+    	var locale = (request.query && request.query.lang) || (request.app && request.app.context && request.app.context.locality) || 'en_US';
       locale = formatLocaleCode(locale);
       if (!fs.existsSync(CpTranslations.getPoFilePath('messages.po', locale))) {
         locale = 'en_US';

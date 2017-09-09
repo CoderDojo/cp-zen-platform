@@ -1,8 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var cacheTimes = require('../web/config/cache-times');
-var auth = require('./authentications');
+var cacheTimes = require('../config/cache-times');
+var auth = require('../lib/authentications');
 
 exports.register = function (server, options, next) {
   options = _.extend({ basePath: '/api/2.0/users' }, options);
@@ -329,7 +329,7 @@ exports.register = function (server, options, next) {
         if (err) return reply(err);
         if (out.ok) {
           out.login = cleanUser(out.login);
-          request.auth.session.set({token: out.login.token, target: target});
+          request.cookieAuth.set({token: out.login.token, target: target});
         }
         reply(out);
       });
@@ -375,7 +375,7 @@ exports.register = function (server, options, next) {
     var msg = {role: 'user', cmd: 'logout', token: session.token};
     request.seneca.act(msg, function (err, resp) {
       if (err) return reply(err);
-      request.auth.session.clear();
+      request.cookieAuth.clear();
       delete request.user;
       reply(resp);
     });
@@ -445,5 +445,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-cd-users-service'
+  name: 'api-cd-users-service',
+  dependencies: 'cd-auth',
 };

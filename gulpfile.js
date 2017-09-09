@@ -131,7 +131,7 @@
       .pipe(gulp.dest(relativePath('./web/public/dist/')));
   });
 
-  gulp.task('build', ['clean', 'semistandard', 'jshint', 'build-less', 'build-dependencies'], function () {
+  gulp.task('build', ['clean', 'build-less', 'build-dependencies'], function () {
     var _app = Array.from(app);
     for (var index in cdfApp) {
       _app.push('!' + cdfApp[index]);

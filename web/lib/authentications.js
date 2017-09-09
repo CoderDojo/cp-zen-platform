@@ -1,5 +1,5 @@
 'use strict';
-//  NOTE : should we split rules for api from rules for navigation ?
+//  NOTE : Permissions post-auth is handled by the act itself, not by hapijs
 module.exports = {
   //  Navigation
   basicUser: {

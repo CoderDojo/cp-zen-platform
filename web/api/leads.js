@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Joi = require('joi');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 var joiValidator = require('./validations/dojos')();
 
 exports.register = function (server, options, next) {
@@ -173,5 +173,6 @@ exports.register = function (server, options, next) {
   next();
 };
 exports.register.attributes = {
-  name: 'api-leads'
+  name: 'api-leads',
+  dependencies: 'cd-auth',
 };

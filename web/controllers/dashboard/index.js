@@ -1,7 +1,7 @@
 'use strict';
 
 var cacheTimes = require('../../config/cache-times');
-var auth = require('../../../lib/authentications');
+var auth = require('../../lib/authentications');
 
 var controller = module.exports = [{
   method: 'GET',
@@ -16,6 +16,6 @@ var controller = module.exports = [{
     auth: auth.basicUser
   },
   handler: function (request, reply) {
-    reply.view('index', request.locals);
+    reply.view('index', request.app);
   }
 }];

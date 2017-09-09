@@ -52,7 +52,7 @@ module.exports = {
     ]
   },
 
-  client: [
+  clients: [
     {type: 'web', host: process.env.CD_DOJOS || 'localhost', port: 10301, pin: 'role:cd-dojos,cmd:*'},
     {type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-users,cmd:*'},
     {type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-agreements,cmd:*'},

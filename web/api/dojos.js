@@ -1,9 +1,9 @@
 'use strict';
 
 var _ = require('lodash');
-var cacheTimes = require('../web/config/cache-times');
+var cacheTimes = require('../config/cache-times');
 var Joi = require('joi');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 var joiValidator = require('./validations/dojos')();
 
 exports.register = function (server, options, next) {
@@ -899,7 +899,7 @@ exports.register = function (server, options, next) {
       },
       validate: {
         payload: Joi.object({
-          userIds: Joi.array(Joi.string()),
+          userIds: Joi.array().items(Joi.string()),
           data: {
             subject: Joi.string().required(),
             content: Joi.string().required()
@@ -961,5 +961,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-dojos'
+  name: 'api-dojos',
+  dependencies: 'cd-auth',
 };

@@ -7,6 +7,6 @@ module.exports = [{
   path: '/errors/template/{name*}',
   config: { cache: { expiresIn: cacheTimes.long } },
   handler: function (request, reply) {
-    reply.view('errors/' + request.params.name, request.locals);
+    reply.view('errors/' + request.params.name, request.app);
   }
 }];

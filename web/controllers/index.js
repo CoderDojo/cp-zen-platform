@@ -1,15 +1,16 @@
 'use strict';
 
-var _ = require('lodash');
-var path = require('path');
-var requireindex = require('requireindex');
-var controllers = requireindex(__dirname);
-var cacheTimes = require('../config/cache-times');
+const _ = require('lodash');
+const path = require('path');
+const requireindex = require('requireindex');
+const controllers = requireindex(__dirname);
+const cacheTimes = require('../config/cache-times');
+const pkg = require('./package');
 
 // Remove package.json, it's not a controller.  All other non-index files/directories should be.
 delete controllers.package;
 
-module.exports.register = function (server, options, next) {
+exports.register = function (server, options, next) {
   // Add all the server routes from the controllers.
 
   _.each(controllers, function (controller) {
@@ -64,7 +65,7 @@ module.exports.register = function (server, options, next) {
     method: 'GET',
     path: '/directives/tpl/{name*}',
     handler: function (request, reply) {
-      reply.view('directives/' + request.params.name + '/template.dust', request.locals);
+      reply.view('directives/' + request.params.name + '/template.dust', request.app);
     }
   });
 
@@ -77,8 +78,11 @@ module.exports.register = function (server, options, next) {
       }
     }
   });
+  next();
 };
 
-module.exports.register.attributes = {
-  pkg: require('./package')
+exports.register.attributes = {
+  pkg: pkg,
+  name: 'cd-routes',
+  dependencies: ['cd-auth', 'cd-vision', 'senecaPreloader'],
 };

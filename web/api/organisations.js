@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 var Joi = require('joi');
 
 exports.register = function (server, options, next) {
@@ -98,7 +98,7 @@ exports.register = function (server, options, next) {
       tags: ['api', 'users'],
       validate: {
         payload: {
-          userIds: Joi.array(Joi.string().guid())
+          userIds: Joi.array().items(Joi.string().guid())
         }
       }
     }
@@ -140,5 +140,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-orgs'
+  name: 'api-orgs',
+  dependencies: 'cd-auth',
 };

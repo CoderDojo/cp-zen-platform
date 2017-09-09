@@ -1,11 +1,11 @@
 'use strict';
 
 var _ = require('lodash');
-var cacheTimes = require('../web/config/cache-times');
+var cacheTimes = require('../config/cache-times');
 var fs = require('fs');
 var path = require('path');
-var defaultImage = new Buffer(fs.readFileSync(path.join(__dirname, '/../web/public/img/avatars/avatar.png'), 'base64'), 'base64');
-var auth = require('./authentications');
+var defaultImage = new Buffer(fs.readFileSync(path.join(__dirname, '/../public/img/avatars/avatar.png'), 'base64'), 'base64');
+var auth = require('../lib/authentications');
 
 exports.register = function (server, options, next) {
   options = _.extend({ basePath: '/api/2.0' }, options);
@@ -186,5 +186,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-profiles'
+  name: 'api-profiles',
+  dependencies: 'cd-auth',
 };

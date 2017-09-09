@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Joi = require('joi');
-var auth = require('./authentications');
+var auth = require('../lib/authentications');
 // NOTE: Remember that every of those calls NEED a permission model defined in the associated µs elswhat it'll be freely available by anyone
 exports.register = function (server, options, next) {
   options = _.extend({ basePath: '/api/2.0' }, options);
@@ -300,5 +300,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  name: 'api-polls'
+  name: 'api-polls',
+  dependencies: 'cd-auth',
 };
