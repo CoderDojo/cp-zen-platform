@@ -208,7 +208,7 @@ angular
               return step.isValid; // Only saved validity matter
             })).length / _.keys(ctrl.application).length * 100;
           }
-          return Math.trunc(header) + '% completed';
+          return Math.floor(header) + '% completed';
         };
 
         var saveOnStateChange = $rootScope.$on('$stateChangeStart', function (event, nextState, nextParams, fromState) {
