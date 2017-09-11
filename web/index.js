@@ -64,7 +64,7 @@ exports.start = function () {
       {register: vision},
       {register: inert},
       {register: blipp},
-      {register: ip2country ,
+      {register: ip2country,
         routes: {
           prefix: '/api/2.0/ip-country-details'
         }
@@ -81,7 +81,6 @@ exports.start = function () {
       {register: controllers},
       {register: cpZenFrontend},
     ],
-
   )
   .then(() => {
     server.start((err) => {

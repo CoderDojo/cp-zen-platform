@@ -12,7 +12,7 @@ exports.register = function (server, options, next) {
         path: '/',
         clearInvalid: true,
         appendNext: true, // Redirect is not set here, but relative to the routes
-        isSecure: true,
+        isSecure: process.env.NODE_ENV === 'production',
         validateFunc: function (request, session, callback) {
           var token = session.token;
           var cdfPath = request.route.settings.auth && // hasAuth
