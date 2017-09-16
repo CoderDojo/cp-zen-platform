@@ -521,12 +521,16 @@
         .state("event",{
           url: "/event/:eventId",
           template: '<cd-event-detail></cd-event-detail>',
-          controller: function($scope, event, sessions, profile){
+          controller: function($scope, event, sessions, profile, cdDojoService){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
             if(profile){
               $scope.profile = profile.data;
             }
+            return cdDojoService.load($scope.event.dojoId)
+            .then(function (dojo) {
+              $scope.dojo = dojo.data;
+            });
           },
           params: {
             pageTitle: 'Event details',
