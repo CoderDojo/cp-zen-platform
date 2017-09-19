@@ -1,12 +1,13 @@
 const vision = require('vision');
 const dust = require('hapi-dust');
 const path = require('path');
+
 exports.register = function (server, options, next) {
-  server.register(vision, function (err) {
+  server.register(vision, (err) => {
     if (err) throw err;
     // root: https://github.com/hapijs/vision/issues/94
     server.root.views({
-      engines: { dust: dust },
+      engines: { dust },
       path: [path.join(__dirname, './../../public/templates'), path.join(__dirname, './../../public/js/')],
       partialsPath: path.join(__dirname, './../../public/templates'),
       compileMode: 'async',

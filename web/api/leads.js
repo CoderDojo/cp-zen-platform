@@ -1,18 +1,19 @@
-'use strict';
 
-var _ = require('lodash');
-var Joi = require('joi');
-var auth = require('../lib/authentications');
-var joiValidator = require('./validations/dojos')();
-var handlerFactory = require('./handlers.js');
+
+const _ = require('lodash');
+const Joi = require('joi');
+const auth = require('../lib/authentications');
+const joiValidator = require('./validations/dojos')();
+const handlerFactory = require('./handlers.js');
+
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
-  var handlers = handlerFactory(server, 'cd-dojos');
+  const handlers = handlerFactory(server, 'cd-dojos');
 
   server.route([{
     method: 'POST',
-    path: options.basePath + '/dojos/lead',
-    handler: handlers.actHandlerNeedsUser('save', null, null, {ctrl: 'lead'}),
+    path: `${options.basePath}/dojos/lead`,
+    handler: handlers.actHandlerNeedsUser('save', null, null, { ctrl: 'lead' }),
     config: {
       auth: auth.apiUser,
       description: 'lead',
@@ -21,23 +22,23 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 400, message: 'Bad Request'},
-            {code: 200, message: 'OK'}]
-        }
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' }],
+        },
       },
       validate: {
         payload: Joi.object({ lead: {
           id: joiValidator.guid().optional(),
           application: joiValidator.application(),
           userId: joiValidator.guid().optional(),
-          completed: Joi.boolean().valid(false)
-        }})
-      }
-    }
+          completed: Joi.boolean().valid(false),
+        } }),
+      },
+    },
   }, {
     method: 'PUT',
-    path: options.basePath + '/dojos/lead/{leadId}',
-    handler: handlers.actHandlerNeedsUser('submit', null, null, {ctrl: 'lead'}),
+    path: `${options.basePath}/dojos/lead/{leadId}`,
+    handler: handlers.actHandlerNeedsUser('submit', null, null, { ctrl: 'lead' }),
     config: {
       auth: auth.apiUser,
       description: 'lead',
@@ -46,22 +47,22 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 400, message: 'Bad Request'},
-            {code: 200, message: 'OK'}]
-        }
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' }],
+        },
       },
       validate: {
         payload: Joi.object({ lead: {
           id: joiValidator.guid().optional(),
           application: joiValidator.application(true).required(),
           userId: joiValidator.guid().required(),
-          completed: Joi.boolean().valid(true)
-        }})
-      }
-    }
+          completed: Joi.boolean().valid(true),
+        } }),
+      },
+    },
   }, {
     method: 'GET',
-    path: options.basePath + '/dojos/lead/{id}',
+    path: `${options.basePath}/dojos/lead/{id}`,
     handler: handlers.actHandlerNeedsUser('load_dojo_lead', 'id'),
     config: {
       auth: auth.apiUser,
@@ -71,20 +72,20 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 200, message: 'OK'}
-          ]
-        }
+            { code: 200, message: 'OK' },
+          ],
+        },
       },
       validate: {
         params: {
-          id: Joi.string().required()
-        }
-      }
-    }
+          id: Joi.string().required(),
+        },
+      },
+    },
   }, {
     method: 'DELETE',
-    path: options.basePath + '/dojos/lead/{id}',
-    handler: handlers.actHandlerNeedsUser('delete', 'id', null, {ctrl: 'lead'}),
+    path: `${options.basePath}/dojos/lead/{id}`,
+    handler: handlers.actHandlerNeedsUser('delete', 'id', null, { ctrl: 'lead' }),
     config: {
       auth: auth.apiUser,
       description: 'dojo lead',
@@ -93,20 +94,20 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 200, message: 'OK'}
-          ]
-        }
+            { code: 200, message: 'OK' },
+          ],
+        },
       },
       validate: {
         params: {
-          id: Joi.string().required()
-        }
-      }
-    }
+          id: Joi.string().required(),
+        },
+      },
+    },
   }, {
     method: 'POST',
-    path: options.basePath + '/dojoleads/',
-    handler: handlers.actHandlerNeedsUser('search', null, null, {ctrl: 'dojolead'}),
+    path: `${options.basePath}/dojoleads/`,
+    handler: handlers.actHandlerNeedsUser('search', null, null, { ctrl: 'dojolead' }),
     config: {
       auth: auth.apiUser,
       description: 'Search dojo leads',
@@ -115,10 +116,10 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 400, message: 'Bad Request'},
-            {code: 200, message: 'OK'}
-          ]
-        }
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
       },
       validate: {
         payload: Joi.object({ query: {
@@ -134,14 +135,14 @@ exports.register = function (server, eOptions, next) {
           alpha2: joiValidator.alpha2().optional().description('two capital letters representing the country'),
           skip$: Joi.alternatives(Joi.number(), Joi.object()),
           limit$: Joi.alternatives(Joi.number(), Joi.object()),
-          sort$: Joi.alternatives(Joi.number(), Joi.object())
-        }})
-      }
-    }
+          sort$: Joi.alternatives(Joi.number(), Joi.object()),
+        } }),
+      },
+    },
   }, {
     method: 'POST',
-    path: options.basePath + '/dojos/leads/',
-    handler: handlers.actHandlerNeedsUser('search', null, null, {ctrl: 'lead'}),
+    path: `${options.basePath}/dojos/leads/`,
+    handler: handlers.actHandlerNeedsUser('search', null, null, { ctrl: 'lead' }),
     config: {
       auth: auth.apiUser,
       description: 'Search dojo leads',
@@ -150,10 +151,10 @@ exports.register = function (server, eOptions, next) {
       plugins: {
         'hapi-swagger': {
           responseMessages: [
-            {code: 400, message: 'Bad Request'},
-            {code: 200, message: 'OK'}
-          ]
-        }
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
       },
       validate: {
         payload: Joi.object({ query: {
@@ -164,10 +165,10 @@ exports.register = function (server, eOptions, next) {
           deleted: Joi.number().integer().optional(),
           skip$: Joi.alternatives(Joi.number(), Joi.object()),
           limit$: Joi.alternatives(Joi.number(), Joi.object()),
-          sort$: Joi.alternatives(Joi.number(), Joi.object())
-        }})
-      }
-    }
+          sort$: Joi.alternatives(Joi.number(), Joi.object()),
+        } }),
+      },
+    },
   }]);
 
   next();

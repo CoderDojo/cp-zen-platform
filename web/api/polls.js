@@ -1,19 +1,19 @@
-'use strict';
 
-var _ = require('lodash');
-var Joi = require('joi');
-var auth = require('../lib/authentications');
-var handlerFactory = require('./handlers.js');
+
+const _ = require('lodash');
+const Joi = require('joi');
+const auth = require('../lib/authentications');
+const handlerFactory = require('./handlers.js');
 // NOTE: Remember that every of those calls NEED a permission model defined in the associated µs
 //  elswhat it'll be freely available by anyone
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
-  var handlers = handlerFactory(server, 'cd-dojos');
+  const handlers = handlerFactory(server, 'cd-dojos');
 
   server.route([
     {
       method: 'GET',
-      path: options.basePath + '/poll/{pollId}',
+      path: `${options.basePath}/poll/{pollId}`,
       handler: handlers.actHandler('get_poll_setup', 'pollId'),
       config: {
         description: 'get poll configuration',
@@ -22,19 +22,19 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           params: {
-            pollId: Joi.string()
-          }
-        }
-      }
+            pollId: Joi.string(),
+          },
+        },
+      },
     },
     { method: 'POST',
-      path: options.basePath + '/poll/save',
+      path: `${options.basePath}/poll/save`,
       handler: handlers.actHandlerNeedsUser('save_poll_setup'),
       config: {
         auth: auth.apiUser,
@@ -44,9 +44,9 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: Joi.object({ poll: {
@@ -54,14 +54,14 @@ exports.register = function (server, eOptions, next) {
             question: Joi.string().required(),
             valueUnity: Joi.string().required(),
             maxAnswers: Joi.number().required(),
-            endDate: Joi.date().optional()
-          }})
-        }
-      }
+            endDate: Joi.date().optional(),
+          } }),
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll',
+      path: `${options.basePath}/poll`,
       handler: handlers.actHandler('get_poll_setup'),
       config: {
         auth: auth.userIfPossible,
@@ -71,20 +71,20 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: Joi.object({ query: {
-            pollId: Joi.string().optional()
-          }})
-        }
-      }
+            pollId: Joi.string().optional(),
+          } }),
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/results',
+      path: `${options.basePath}/poll/results`,
       handler: handlers.actHandler('get_poll_results'),
       config: {
         description: 'get poll results',
@@ -93,22 +93,22 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: Joi.object({ query: {
             pollId: Joi.string(),
             dojoId: Joi.string().optional(),
-            createdAt: Joi.alternatives().try(Joi.object(), Joi.date())
-          }})
-        }
-      }
+            createdAt: Joi.alternatives().try(Joi.object(), Joi.date()),
+          } }),
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/results/save',
+      path: `${options.basePath}/poll/results/save`,
       handler: handlers.actHandler('save_poll_result'),
       config: {
         auth: auth.userIfPossible,
@@ -118,23 +118,23 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: Joi.object({ poll: {
             id: Joi.string().optional(),
             pollId: Joi.string(),
             dojoId: Joi.string(),
-            value: Joi.number()
-          }})
-        }
-      }
+            value: Joi.number(),
+          } }),
+        },
+      },
     },
     {
       method: 'DELETE',
-      path: options.basePath + '/poll/results/{resultId}',
+      path: `${options.basePath}/poll/results/{resultId}`,
       handler: handlers.actHandlerNeedsUser('remove_poll_result', 'resultId'),
       config: {
         auth: auth.apiUser,
@@ -144,18 +144,18 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
-          params: Joi.object({ resultId: Joi.string().required() })
-        }
-      }
+          params: Joi.object({ resultId: Joi.string().required() }),
+        },
+      },
     },
     {
       method: 'GET',
-      path: options.basePath + '/poll/{pollId}/results/count',
+      path: `${options.basePath}/poll/{pollId}/results/count`,
       handler: handlers.actHandler('poll_count', 'pollId'),
       config: {
         description: 'get Poll total value',
@@ -164,20 +164,20 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           params: {
-            pollId: Joi.string()
-          }
-        }
-      }
+            pollId: Joi.string(),
+          },
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/{pollId}/results/count/expected',
+      path: `${options.basePath}/poll/{pollId}/results/count/expected`,
       handler: handlers.actHandler('get_polled_list', 'pollId'),
       config: {
         auth: auth.userIfPossible,
@@ -187,23 +187,23 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           params: {
-            pollId: Joi.string()
+            pollId: Joi.string(),
           },
           payload: {
-            dryRun: Joi.boolean().invalid(false)
-          }
-        }
-      }
+            dryRun: Joi.boolean().invalid(false),
+          },
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/wh/sms',
+      path: `${options.basePath}/poll/wh/sms`,
       handler: handlers.actHandler('save_sms_poll_result', '', 'xml'),
       config: {
         description: 'Save sms response',
@@ -212,18 +212,18 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
-          payload: Joi.object().required()
-        }
-      }
+          payload: Joi.object().required(),
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/test',
+      path: `${options.basePath}/poll/test`,
       handler: handlers.actHandlerNeedsUser('send_test_email_poll'),
       config: {
         auth: auth.apiUser,
@@ -233,21 +233,21 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: {
             pollId: Joi.string().required(),
-            email: Joi.string().required()
-          }
-        }
-      }
+            email: Joi.string().required(),
+          },
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/email',
+      path: `${options.basePath}/poll/email`,
       handler: handlers.actHandlerNeedsUser('queue_email_poll'),
       config: {
         auth: auth.apiUser,
@@ -257,24 +257,24 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: {
             query: {
               id: Joi.string().required(),
-              limit$: Joi.number().required().max(1)
+              limit$: Joi.number().required().max(1),
             },
-            pollId: Joi.string().required()
-          }
-        }
-      }
+            pollId: Joi.string().required(),
+          },
+        },
+      },
     },
     {
       method: 'POST',
-      path: options.basePath + '/poll/start',
+      path: `${options.basePath}/poll/start`,
       handler: handlers.actHandlerNeedsUser('start_poll'),
       config: {
         auth: auth.apiUser,
@@ -284,18 +284,18 @@ exports.register = function (server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [
-              {code: 200, message: 'OK'}
-            ]
-          }
+              { code: 200, message: 'OK' },
+            ],
+          },
         },
         validate: {
           payload: {
             pollId: Joi.string().required(),
-            query: Joi.object().optional()
-          }
-        }
-      }
-    }
+            query: Joi.object().optional(),
+          },
+        },
+      },
+    },
   ]);
 
   next();

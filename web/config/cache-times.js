@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {};
 const times = module.exports;

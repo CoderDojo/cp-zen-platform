@@ -1,7 +1,7 @@
-'use strict';
 
-var cacheTimes = require('../../config/cache-times');
-var auth = require('../../lib/authentications');
+
+const cacheTimes = require('../../config/cache-times');
+const auth = require('../../lib/authentications');
 
 module.exports = [{
   method: 'GET',
@@ -10,12 +10,12 @@ module.exports = [{
     cache: { expiresIn: cacheTimes.medium },
     plugins: {
       'hapi-auth-cookie': {
-        redirectTo: '/login'
-      }
+        redirectTo: '/login',
+      },
     },
-    auth: auth.basicUser
+    auth: auth.basicUser,
   },
-  handler: function (request, reply) {
+  handler(request, reply) {
     reply.view('index', request.app);
-  }
+  },
 }];

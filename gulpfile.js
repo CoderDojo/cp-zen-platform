@@ -50,8 +50,8 @@
 
   gulp.task('lint', () =>
     gulp
-      .src(relativePath(['**/*.js', '!node_modules/**', '!web/public/**', '!gulpfile.js', '!build.js']))
-      .pipe(eslint({fix: true}))
+      .src(relativePath(['**/*.js']))
+      .pipe(eslint())
       .pipe(eslint.format())
       .pipe(eslint.failAfterError()),
    );

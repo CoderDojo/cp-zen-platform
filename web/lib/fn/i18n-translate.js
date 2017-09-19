@@ -1,15 +1,16 @@
-'use strict';
 
-var I18NHelper = require('cp-i18n-lib');
-var CpTranslations = require('cp-translations');
-var i18nHelper = new I18NHelper({
+
+const I18NHelper = require('cp-i18n-lib');
+const CpTranslations = require('cp-translations');
+
+const i18nHelper = new I18NHelper({
   poFilePath: CpTranslations.getPoFilePath(),
   poFileName: 'messages.po',
-  domain: 'coder-dojo-platform'
+  domain: 'coder-dojo-platform',
 });
 
 module.exports = function (locale, params) {
-  var translation = i18nHelper.getClosestTranslation(locale, params.key);
+  let translation = i18nHelper.getClosestTranslation(locale, params.key);
   if (translation) {
     if (params.context) {
       translation = translation.withContext(params.context);

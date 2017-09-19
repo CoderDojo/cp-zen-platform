@@ -1,66 +1,67 @@
-'use strict';
-var Joi = require('joi');
+
+const Joi = require('joi');
+
 module.exports = function () {
-  let joiValidator = {
-    latitude: function () {
+  const joiValidator = {
+    latitude() {
       return Joi.number().min(-90).max(90);
     },
-    longitude: function () {
+    longitude() {
       return Joi.number().min(-180).max(180);
     },
-    mail: function () {
+    mail() {
       return Joi.string().email();
     },
-    alpha2: function () {
+    alpha2() {
       return Joi.string().length(2).regex(/[A-Z]{2}/);
     },
-    alpha3: function () {
+    alpha3() {
       return Joi.string().length(3).regex(/[A-Z]{3}/);
     },
-    continent: function () {
+    continent() {
       return Joi.string().length(2).regex(/[A-Z]{2}/);
     },
-    twitter: function () {
+    twitter() {
       return Joi.string().regex(/^[a-z0-9_]{1,15}$/i).allow('').allow(null);
     },
-    facebook: function () {
+    facebook() {
       return Joi.string().regex(/^[a-z0-9.]{1,}$/i).allow('').allow(null);
     },
-    linkedin: function () {
+    linkedin() {
       return Joi.string().regex(/^[a-z0-9-]{1,}$/i).allow('').allow(null);
     },
-    uri: function () {
+    uri() {
       return Joi.alternatives().try(Joi.string().uri(), Joi.string());
     },
-    optionalUri: function () {
+    optionalUri() {
       return Joi.alternatives().try(joiValidator.uri(), Joi.string().empty(''), Joi.string().valid(null));
     },
-    country: function () {
+    country() {
       return Joi.object().keys({
         countryName: Joi.string().required(),
         countryNumber: Joi.alternatives().try(Joi.string(), Joi.number()),
         continent: joiValidator.continent(),
         alpha2: joiValidator.alpha2(),
-        alpha3: joiValidator.alpha3()
+        alpha3: joiValidator.alpha3(),
       });
     },
-    phone: function () {
+    phone() {
       return Joi.string();
     },
-    place: function () {
+    place() {
       return Joi.object().keys({
         nameWithHierarchy: Joi.string(),
-        toponymName: Joi.string()
+        toponymName: Joi.string(),
       });
     },
-    frequency: function () {
+    frequency() {
       return Joi.string().only(['1/w', '1/m', '2/m', 'other']);
     },
-    day: function () {
+    day() {
       return Joi.number().only([1, 2, 3, 4, 5, 6, 7]);
     },
-    champion: function (required) {
-      var valid = {
+    champion(required) {
+      const valid = {
         firstName: Joi.string(),
         lastName: Joi.string(),
         email: joiValidator.mail(),
@@ -76,21 +77,21 @@ module.exports = function () {
         reference: Joi.string().only(['search_engine', 'volunteers', 'organisations', 'developpers', 'events', 'word_of_mouth', 'family', 'media', 'other']),
         alternativeReference: Joi.string().optional(),
         isValid: Joi.boolean().required(),
-        visited: Joi.boolean().required()
+        visited: Joi.boolean().required(),
       };
-      var schema = Joi.object().keys(valid);
+      let schema = Joi.object().keys(valid);
       if (required) {
         schema = schema.requiredKeys('firstName', 'lastName', 'email', 'dob', 'address',
-         'phone', 'confidentCoding', 'confidentMentoring', 'reference');
+          'phone', 'confidentCoding', 'confidentMentoring', 'reference');
       } else {
         schema = schema.optionalKeys('firstName', 'lastName', 'email', 'dob', 'address',
-         'phone', 'confidentCoding', 'confidentMentoring', 'reference');
+          'phone', 'confidentCoding', 'confidentMentoring', 'reference');
       }
       return schema;
     },
     // Even though it's a dojo, the name dojoLead is to differenciate from a finished dojo
-    dojoLead: function (required) {
-      var valid = {
+    dojoLead(required) {
+      const valid = {
         id: joiValidator.guid(),
         name: Joi.string(), // TODO: exclude Dojo from name
         firstSession: Joi.date(),
@@ -106,28 +107,28 @@ module.exports = function () {
         twitter: joiValidator.twitter(),
         facebook: joiValidator.facebook(),
         isValid: Joi.boolean().required(),
-        visited: Joi.boolean().required()
+        visited: Joi.boolean().required(),
       };
-      var schema = Joi.object().keys(valid);
-      var keys = ['name', 'firstSession', 'frequency', 'notes', 'requestEmail'];
+      let schema = Joi.object().keys(valid);
+      const keys = ['name', 'firstSession', 'frequency', 'notes', 'requestEmail'];
       if (required) {
         keys.push('id');
         keys.push('isValid');
         schema = schema.requiredKeys(keys);
       } else {
         schema = schema.optionalKeys(keys)
-        .requiredKeys('isValid');
+          .requiredKeys('isValid');
       }
       return schema;
     },
-    venue: function (required) {
-      var valid = {
+    venue(required) {
+      const valid = {
         isFound: Joi.boolean(),
         country: joiValidator.country(),
         place: joiValidator.place(),
         geoPoint: Joi.object({
           lat: Joi.number(),
-          lon: Joi.number()
+          lon: Joi.number(),
         }),
         address1: Joi.string(),
         type: Joi.string().only(['office', 'public_space', 'tech_hub', 'library', 'maker_space', 'school', 'university', 'other']).allow(null),
@@ -136,21 +137,21 @@ module.exports = function () {
         alternativeCorporate: Joi.string().optional(),
         private: Joi.number().only(0, 1),
         isValid: Joi.boolean().required(),
-        visited: Joi.boolean().required()
+        visited: Joi.boolean().required(),
       };
-      var schema = Joi.object().keys(valid);
-      var keys = ['isFound', 'country', 'geoPoint', 'type', 'address1', 'country', 'place'];
+      let schema = Joi.object().keys(valid);
+      const keys = ['isFound', 'country', 'geoPoint', 'type', 'address1', 'country', 'place'];
 
       if (required) {
         keys.push('isValid');
         schema = schema.requiredKeys(keys);
       } else {
         schema = schema.optionalKeys(keys)
-        .requiredKeys('isValid');
+          .requiredKeys('isValid');
       }
       return schema;
     },
-    team: function () {
+    team() {
       return Joi.object().keys({
         status: Joi.string(),
         src: Joi.object().keys({
@@ -161,33 +162,33 @@ module.exports = function () {
           staff: Joi.boolean().allow(true),
           youth: Joi.boolean().allow(true),
           parents: Joi.boolean().allow(true),
-          other: Joi.boolean().allow(true)
+          other: Joi.boolean().allow(true),
         }),
         alternativeSrc: Joi.string(),
         isValid: Joi.boolean().required(),
-        visited: Joi.boolean().required()
+        visited: Joi.boolean().required(),
       });
     },
-    charter: function () {
-      var valid = {
+    charter() {
+      const valid = {
         id: Joi.string(),
         fullName: Joi.string(),
         isValid: Joi.boolean().required(),
-        visited: Joi.boolean().required()
+        visited: Joi.boolean().required(),
       };
       return Joi.object().keys(valid);
     },
-    application: function (required) {
-      var application = {
+    application(required) {
+      const application = {
         champion: required ? joiValidator.champion(required).required() : joiValidator.champion(),
         dojo: required ? joiValidator.dojoLead(required).required() : joiValidator.dojoLead(),
         venue: required ? joiValidator.venue(required).required() : joiValidator.venue(),
         team: required ? joiValidator.team(required).required() : joiValidator.team(),
-        charter: required ? joiValidator.charter(required).required() : joiValidator.charter()
+        charter: required ? joiValidator.charter(required).required() : joiValidator.charter(),
       };
       return Joi.object().keys(application);
     },
-    user: function () {
+    user() {
       return Joi.object().keys({
         id: joiValidator.guid().required(),
         nick: Joi.string(),
@@ -212,17 +213,17 @@ module.exports = function () {
         banReason: Joi.any(),
         initUserType: Joi.object().keys({
           name: Joi.string(),
-          title: Joi.string()
+          title: Joi.string(),
         }),
         joinRequests: Joi.any(),
         lastLogin: Joi.date(),
         lmsId: Joi.any(),
-        profileId: Joi.any()
+        profileId: Joi.any(),
       });
     },
-    guid: function () {
+    guid() {
       return Joi.alternatives().try(Joi.string().guid(), Joi.string());
-    }
+    },
   };
   return joiValidator;
 };

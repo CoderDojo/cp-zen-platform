@@ -14,18 +14,18 @@ const polls = require('../../api/polls.js');
 const orgs = require('../../api/organisations.js');
 
 exports.register = function (server, options, next) {
-  const apis = [sys, {register: configRoute, options: options.webclient},
+  const apis = [sys, { register: configRoute, options: options.webclient },
     dojos, leads, users, profiles, oauth2, agreements,
     badges, events, eventbrite, polls, orgs];
-  function errHandler (err) {
+  function errHandler(err) {
     next(err);
-  };
-  apis.forEach(function (api) {
+  }
+  apis.forEach((api) => {
     server.register(api, errHandler);
   });
   next();
 };
 
 exports.register.attributes = {
-  name: 'cd-apis'
+  name: 'cd-apis',
 };

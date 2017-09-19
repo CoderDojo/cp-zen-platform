@@ -1,19 +1,19 @@
-'use strict';
 
-var dust = require('dustjs-linkedin');
-var _ = require('lodash');
+
+const dust = require('dustjs-linkedin');
+const _ = require('lodash');
 
 dust.helpers.setMeta = function (chunk, context) {
-  var metas = '';
-  function applyMeta (value, key) {
+  let metas = '';
+  function applyMeta(value, key) {
     if (_.isString(value)) {
-      metas += '<meta property="og:' + key + '" content="' + value + '"/>';
+      metas += `<meta property="og:${key}" content="${value}"/>`;
     } else {
-      _.each(value, function (arrValue) {
-        metas += '<meta property="og:' + key + '" content="' + arrValue + '"/>';
+      _.each(value, (arrValue) => {
+        metas += `<meta property="og:${key}" content="${arrValue}"/>`;
       });
     }
-  };
+  }
 
   if (context.stack.head.context && context.stack.head.context.preload) {
     _.each(context.stack.head.context.preload, applyMeta);

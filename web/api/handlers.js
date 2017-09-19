@@ -1,14 +1,14 @@
-'use strict';
 
-var _ = require('lodash');
+
+const _ = require('lodash');
 _.mixin(require('lodash-deep'));
-var debug = require('debug')('cp-zen-platform:handlers');
+const debug = require('debug')('cp-zen-platform:handlers');
 
 module.exports = function (server, role) {
-  function checkPerms (request, act, callback) {
+  function checkPerms(request, act, callback) {
     //  TODO : return a token instead to ensure that there is no possible bypass of cp-zen
-    var base = ['role', 'zenHostname', 'locality', 'user', 'cmd'];
-    var msg = _.pick(act, base);
+    const base = ['role', 'zenHostname', 'locality', 'user', 'cmd'];
+    const msg = _.pick(act, base);
     msg.act = act.cmd;
     msg.params = _.omit(act, _.extend(base, ['user', 'login', 'ok']));
     msg.cmd = 'check_permissions';
@@ -16,9 +16,9 @@ module.exports = function (server, role) {
   }
 
   function callAct(request, reply, msg, type) {
-    return request.seneca.act(msg, function (err, resp) { // eslint-disable-line consistent-return
+    return request.seneca.act(msg, (err, resp) => { // eslint-disable-line consistent-return
       if (err) return reply(err).code(500);
-      var code = 200;
+      let code = 200;
       // This is a legacy seneca-web response
       if (resp && resp.http$) {
         if (resp.http$.status) code = resp.http$.status;
@@ -31,12 +31,12 @@ module.exports = function (server, role) {
         return reply(resp).code(code);
       }
     });
-  };
+  }
 
-  function doAct (request, reply, cmd, param, user, type, msgDefault) {
-    var msg = {cmd: cmd, role: role, locality: server.methods.locality(request)};
+  function doAct(request, reply, cmd, param, user, type, msgDefault) {
+    let msg = { cmd, role, locality: server.methods.locality(request) };
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
-    var covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges',
+    const covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges',
       'cd-events', 'cd-eventbrite', 'cp-organisations'];
 
     if (msgDefault) _.extend(msg, msgDefault);
@@ -49,9 +49,9 @@ module.exports = function (server, role) {
     }
 
     if (param) {
-      var paramsMsg = {};
-      var params = _.isArray(param) ? param : [param];
-      _.each(params, function (p) {
+      const paramsMsg = {};
+      const params = _.isArray(param) ? param : [param];
+      _.each(params, (p) => {
         if (request.params[p]) paramsMsg[p] = request.params[p];
       });
       msg = _.defaults(msg, paramsMsg);
@@ -65,35 +65,33 @@ module.exports = function (server, role) {
 
     debug('handlers.doAct', msg);
     if (_.includes(covered, msg.role)) {
-      return checkPerms(request, msg, function (err, response) {
+      return checkPerms(request, msg, (err, response) => {
         if (err) {
           // Even if it's a 500, we hide our validator is broken, sshhhh :D
-          request.log(['error', '50x'], {status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response}, Date.now());
+          request.log(['error', '50x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
           return reply(null).code(403);
         }
         if (response && response.allowed && _.isBoolean(response.allowed)) {
           return callAct(request, reply, msg, type);
-        } else {
-          request.log(['error', '40x'], {status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response}, Date.now());
-          return reply(null).code(403);
         }
+        request.log(['error', '40x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
+        return reply(null).code(403);
       });
-    } else {
-      return callAct(request, reply, msg, type);
     }
+    return callAct(request, reply, msg, type);
   }
 
-  function actHandler (cmd, param, type, msgDefault) {
+  function actHandler(cmd, param, type, msgDefault) {
     return function (request, reply) {
       doAct(request, reply, cmd, param, null, type, msgDefault);
     };
-  };
+  }
 
   // If the act is having a specific rule on check_permissions, it needs to use this handler
-  function actHandlerNeedsUser (cmd, param, opts, msgDefault) {
+  function actHandlerNeedsUser(cmd, param, opts, msgDefault) {
     return function (request, reply) {
       // Note: request.user is set in onPostAuthHandler
-      var user = request.user;
+      const user = request.user;
       if (!user) {
         if (!opts || (opts && !opts.soft)) {
           return reply('Not logged in').code(401);
@@ -101,41 +99,41 @@ module.exports = function (server, role) {
       }
 
       if (opts && opts.checkCdfAdmin === true) {
-        var roles = _.deepHas(user, 'user.roles') ? user.user.roles : [];
+        const roles = _.deepHas(user, 'user.roles') ? user.user.roles : [];
         if (!_.contains(roles, 'cdf-admin')) {
           // Note: a 200 status code is still returned here (should be 403 by right)
-          return reply({ok: false, why: 'You must be a cdf admin to access this data'});
+          return reply({ ok: false, why: 'You must be a cdf admin to access this data' });
         }
       }
 
       if (opts && opts.isOwn === true) {
-        var requestedId = request.params[param];
+        const requestedId = request.params[param];
         if (user.user.id !== requestedId) {
           // Note: a 200 status code is still returned here (should be 403 by right)
-          return reply({ok: false, why: 'You do not have sufficient permissions to access this feature'});
+          return reply({ ok: false, why: 'You do not have sufficient permissions to access this feature' });
         }
       }
 
       return doAct(request, reply, cmd, param, user,
-         opts && opts.type ? opts.type : null, msgDefault);
+        opts && opts.type ? opts.type : null, msgDefault);
     };
-  };
+  }
 
-  function actHandlerNeedsCdfAdmin (cmd, param, msgDefault) {
-    return actHandlerNeedsUser(cmd, param, {checkCdfAdmin: true}, msgDefault);
-  };
+  function actHandlerNeedsCdfAdmin(cmd, param, msgDefault) {
+    return actHandlerNeedsUser(cmd, param, { checkCdfAdmin: true }, msgDefault);
+  }
 
   // Check if the user is a dojo Admin OR a cdfAdmin
-  function actHandlerNeedsDojoAdmin (cmd, param, type, msgDefault) {
+  function actHandlerNeedsDojoAdmin(cmd, param, type, msgDefault) {
     return function (request, reply) {
       // Note: request.user is set in onPostAuthHandler
-      var user = request.user;
+      const user = request.user;
       if (!user) return reply('Not logged in').code(401);
 
-      var msg = {
+      let msg = {
         cmd: 'user_is_dojo_admin',
         role: 'cd-dojos',
-        locality: server.methods.locality(request)
+        locality: server.methods.locality(request),
       };
 
       if (request.payload) {
@@ -146,9 +144,9 @@ module.exports = function (server, role) {
       }
 
       if (param) {
-        var paramsMsg = {};
-        var params = _.isArray(param) ? param : [param];
-        _.each(params, function (p) {
+        const paramsMsg = {};
+        const params = _.isArray(param) ? param : [param];
+        _.each(params, (p) => {
           if (request.params[p]) paramsMsg[p] = request.params[p];
         });
         msg = _.defaults(msg, paramsMsg);
@@ -160,28 +158,28 @@ module.exports = function (server, role) {
         msg = _.defaults(msg, request.user);
       }
 
-      return request.seneca.act(msg, function (err, resp) {
+      return request.seneca.act(msg, (err, resp) => {
         if (err) return reply(err).code(500);
-        var isCDFAdmin = false;
-        var code = 200;
-        var roles = _.deepHas(user, 'user.roles') ? request.user.user.roles : [];
+        let isCDFAdmin = false;
+        let code = 200;
+        const roles = _.deepHas(user, 'user.roles') ? request.user.user.roles : [];
         if (_.contains(roles, 'cdf-admin')) {
           isCDFAdmin = true;
         }
         if (!resp.userIsDojoAdmin && !isCDFAdmin) {
           code = 401;
-          return reply({ok: false, why: 'You must be a dojo admin or ticketing admin to access this data'}).code(code);
+          return reply({ ok: false, why: 'You must be a dojo admin or ticketing admin to access this data' }).code(code);
         }
         return doAct(request, reply, cmd, param, user, type, msgDefault);
       });
     };
-  };
+  }
 
   return {
-    doAct: doAct,
-    actHandler: actHandler,
-    actHandlerNeedsUser: actHandlerNeedsUser,
-    actHandlerNeedsCdfAdmin: actHandlerNeedsCdfAdmin,
-    actHandlerNeedsDojoAdmin: actHandlerNeedsDojoAdmin
+    doAct,
+    actHandler,
+    actHandlerNeedsUser,
+    actHandlerNeedsCdfAdmin,
+    actHandlerNeedsDojoAdmin,
   };
 };

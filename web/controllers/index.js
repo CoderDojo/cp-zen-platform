@@ -3,6 +3,7 @@ const _ = require('lodash');
 const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const requireindex = require('requireindex');
+
 const controllers = requireindex(__dirname);
 const cacheTimes = require('../config/cache-times');
 const pkg = require('./package');
@@ -13,7 +14,7 @@ delete controllers.package;
 exports.register = function (server, options, next) {
   // Add all the server routes from the controllers.
 
-  _.each(controllers, function (controller) {
+  _.each(controllers, (controller) => {
     server.route(controller);
   });
 
@@ -24,9 +25,9 @@ exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       file: {
-        path: path.join(__dirname, '../public/favicon.ico')
-      }
-    }
+        path: path.join(__dirname, '../public/favicon.ico'),
+      },
+    },
   });
 
   server.route({
@@ -35,9 +36,9 @@ exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/components')
-      }
-    }
+        path: path.join(__dirname, '../public/components'),
+      },
+    },
   });
 
   server.route({
@@ -46,9 +47,9 @@ exports.register = function (server, options, next) {
     config: { cache: { privacy: 'public', expiresIn: cacheTimes.long } },
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/img')
-      }
-    }
+        path: path.join(__dirname, '../public/img'),
+      },
+    },
   });
 
   server.route({
@@ -56,17 +57,17 @@ exports.register = function (server, options, next) {
     path: '/js/{filename*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/js')
-      }
-    }
+        path: path.join(__dirname, '../public/js'),
+      },
+    },
   });
 
   server.route({
     method: 'GET',
     path: '/directives/tpl/{name*}',
-    handler: function (request, reply) {
-      reply.view('directives/' + request.params.name + '/template.dust', request.app);
-    }
+    handler(request, reply) {
+      reply.view(`directives/${request.params.name}/template.dust`, request.app);
+    },
   });
 
   server.route({
@@ -74,15 +75,15 @@ exports.register = function (server, options, next) {
     path: '/dist/{filename*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../public/dist')
-      }
-    }
+        path: path.join(__dirname, '../public/dist'),
+      },
+    },
   });
   next();
 };
 
 exports.register.attributes = {
-  pkg: pkg,
+  pkg,
   name: 'cd-routes',
   dependencies: ['cd-auth', 'cd-vision', 'senecaPreloader'],
 };
