@@ -1,6 +1,7 @@
 const good = require('good');
 const goodFile = require('good-file');
 const goodHttp = require('good-http');
+const fs = require('fs');
 exports.register = (server, options, next) => {
   if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
     let goodOptions = {

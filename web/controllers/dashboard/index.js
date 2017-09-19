@@ -3,7 +3,7 @@
 var cacheTimes = require('../../config/cache-times');
 var auth = require('../../lib/authentications');
 
-var controller = module.exports = [{
+module.exports = [{
   method: 'GET',
   path: '/dashboard/{followin*}',
   config: {

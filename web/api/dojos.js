@@ -5,10 +5,11 @@ var cacheTimes = require('../config/cache-times');
 var Joi = require('joi');
 var auth = require('../lib/authentications');
 var joiValidator = require('./validations/dojos')();
+var handlerFactory = require('./handlers.js');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-dojos');
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-dojos');
 
   server.route([{
     method: 'GET',

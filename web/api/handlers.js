@@ -15,8 +15,30 @@ module.exports = function (server, role) {
     request.seneca.act(msg, callback);
   }
 
+  function callAct(request, reply, msg, type) {
+    return request.seneca.act(msg, function (err, resp) { // eslint-disable-line consistent-return
+      if (err) return reply(err).code(500);
+      var code = 200;
+      // This is a legacy seneca-web response
+      if (resp && resp.http$) {
+        if (resp.http$.status) code = resp.http$.status;
+        if (resp.http$.redirect) return reply.redirect(resp.http$.redirect);
+      }
+      if (type && ['csv', 'xml'].indexOf(type) > -1) {
+        if (type === 'csv') return reply(resp.data).header('Content-Type', 'application/csv').header('Content-Disposition');
+        if (type === 'xml') return reply(resp.data).header('Content-Type', 'application/xml').header('Content-Disposition');
+      } else {
+        return reply(resp).code(code);
+      }
+    });
+  };
+
   function doAct (request, reply, cmd, param, user, type, msgDefault) {
     var msg = {cmd: cmd, role: role, locality: server.methods.locality(request)};
+    //  TODO: check others calls to request.seneca.act which doesn't go through doAct
+    var covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges',
+      'cd-events', 'cd-eventbrite', 'cp-organisations'];
+
     if (msgDefault) _.extend(msg, msgDefault);
     debug('handlers.doAct', request.url.path);
     if (request.payload) {
@@ -42,58 +64,33 @@ module.exports = function (server, role) {
     }
 
     debug('handlers.doAct', msg);
-    //  TODO: check others calls to request.seneca.act which doesn't go through doAct
-    // var covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges', 'cd-events', 'cd-eventbrite', 'cp-organisations'];
-    var covered = [];
     if (_.includes(covered, msg.role)) {
-      checkPerms(request, msg, function (err, response) {
+      return checkPerms(request, msg, function (err, response) {
         if (err) {
           // Even if it's a 500, we hide our validator is broken, sshhhh :D
           request.log(['error', '50x'], {status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response}, Date.now());
           return reply(null).code(403);
         }
         if (response && response.allowed && _.isBoolean(response.allowed)) {
-          callAct(request, reply, msg, type);
+          return callAct(request, reply, msg, type);
         } else {
           request.log(['error', '40x'], {status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response}, Date.now());
           return reply(null).code(403);
         }
       });
     } else {
-      callAct(request, reply, msg, type);
+      return callAct(request, reply, msg, type);
     }
   }
 
-  var callAct = function (request, reply, msg, type) {
-    request.seneca.act(msg, function (err, resp) {
-      if (err) return reply(err).code(500);
-      var code = 200;
-      // This is a legacy seneca-web response
-      if (resp && resp.http$) {
-        if (resp.http$.status) code = resp.http$.status;
-        if (resp.http$.redirect) return reply.redirect(resp.http$.redirect);
-      }
-      if (type && ['csv', 'xml'].indexOf(type) > -1) {
-        if (type === 'csv') reply(resp.data).header('Content-Type', 'application/csv').header('Content-Disposition');
-        if (type === 'xml') reply(resp.data).header('Content-Type', 'application/xml').header('Content-Disposition');
-      } else {
-        reply(resp).code(code);
-      }
-    });
-  };
-
-  var actHandler = function (cmd, param, type, msgDefault) {
+  function actHandler (cmd, param, type, msgDefault) {
     return function (request, reply) {
       doAct(request, reply, cmd, param, null, type, msgDefault);
     };
   };
 
-  var actHandlerNeedsCdfAdmin = function (cmd, param, msgDefault) {
-    return actHandlerNeedsUser(cmd, param, {checkCdfAdmin: true}, msgDefault);
-  };
-
   // If the act is having a specific rule on check_permissions, it needs to use this handler
-  var actHandlerNeedsUser = function (cmd, param, opts, msgDefault) {
+  function actHandlerNeedsUser (cmd, param, opts, msgDefault) {
     return function (request, reply) {
       // Note: request.user is set in onPostAuthHandler
       var user = request.user;
@@ -119,12 +116,17 @@ module.exports = function (server, role) {
         }
       }
 
-      doAct(request, reply, cmd, param, user, opts && opts.type ? opts.type : null, msgDefault);
+      return doAct(request, reply, cmd, param, user,
+         opts && opts.type ? opts.type : null, msgDefault);
     };
   };
 
+  function actHandlerNeedsCdfAdmin (cmd, param, msgDefault) {
+    return actHandlerNeedsUser(cmd, param, {checkCdfAdmin: true}, msgDefault);
+  };
+
   // Check if the user is a dojo Admin OR a cdfAdmin
-  var actHandlerNeedsDojoAdmin = function (cmd, param, type, msgDefault) {
+  function actHandlerNeedsDojoAdmin (cmd, param, type, msgDefault) {
     return function (request, reply) {
       // Note: request.user is set in onPostAuthHandler
       var user = request.user;
@@ -158,7 +160,7 @@ module.exports = function (server, role) {
         msg = _.defaults(msg, request.user);
       }
 
-      request.seneca.act(msg, function (err, resp) {
+      return request.seneca.act(msg, function (err, resp) {
         if (err) return reply(err).code(500);
         var isCDFAdmin = false;
         var code = 200;
@@ -170,7 +172,7 @@ module.exports = function (server, role) {
           code = 401;
           return reply({ok: false, why: 'You must be a dojo admin or ticketing admin to access this data'}).code(code);
         }
-        doAct(request, reply, cmd, param, user, type, msgDefault);
+        return doAct(request, reply, cmd, param, user, type, msgDefault);
       });
     };
   };

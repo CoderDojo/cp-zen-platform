@@ -5,6 +5,7 @@ module.exports = function (server) {
   return function (request, reply) {
     var response = request.response;
     var status = _.get(response, 'output.payload.statusCode', undefined);
+    var msg = '';
     if (!status) status = _.get(response, 'statusCode', 500);
 
     if (status >= 400) {
@@ -14,14 +15,14 @@ module.exports = function (server) {
       } else {
         switch (status) {
           case 400:
-            var msg = _.get(response, 'output.payload.message', undefined);
+            msg = _.get(response, 'output.payload.message', undefined);
             return reply(Boom.badRequest(msg));
-            break;
+            break; // eslint-disable-line no-unreachable
           case 401:
           case 403:
           case 410:
             return reply.continue();
-            break;
+            break; // eslint-disable-line no-unreachable
           default:
             return reply(Boom.badImplementation());
         }

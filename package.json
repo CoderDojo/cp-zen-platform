@@ -68,11 +68,11 @@
     "seneca": "0.7.2",
     "serve-static": "1.4.0",
     "slug": "0.9.1",
-    "vision": "4.x"
+    "vision": "4.x",
+    "catbox-memory": "1.1.1"
   },
   "devDependencies": {
     "bower": "1.4.1",
-    "catbox-memory": "1.1.1",
     "del": "^2.2.1",
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^12.0.0",

@@ -12,7 +12,7 @@ module.exports = function () {
     if (_.isArray(translateCookie)) {
       translateCookie = translateCookie[0];
     }
-    var localesFormReq = (translateCookie && translateCookie.replace(/\"/g, '')) || req.headers['accept-language'];
+    var localesFormReq = (translateCookie && translateCookie.replace(/"/g, '')) || req.headers['accept-language'];
 
     var requestLocales = new locale.Locales(localesFormReq);
 

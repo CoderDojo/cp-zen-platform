@@ -3,7 +3,7 @@
 var cacheTimes = require('../../config/cache-times');
 var auth = require('../../lib/authentications');
 
-var handler = function (request, reply) {
+function handler (request, reply) {
     reply.view('cdf', request.app);
 };
 var overrideAuth = {

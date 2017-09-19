@@ -13,7 +13,7 @@ module.exports = function (request, cb) {
 
   request.seneca.act({role: 'cd-events', cmd: 'getEvent', id: request.params['eventId']},
     function (err, event) {
-      if (err || !event) return cb(); // If metadata fails to load, continue loading the page normally
+      if (err || !event) return cb(); // continue loading if metadata fails to load (non-fatal)
       var now = new Date();
       _.some(event.dates, function (date) {
         var x = moment.utc(date.startTime);
@@ -25,10 +25,11 @@ module.exports = function (request, cb) {
         }
       });
       request.seneca.act({role: 'cd-dojos', cmd: 'load', id: event.dojoId},
-        function (err, dojo) {
-          if (err || !dojo) return cb();
+        function (dErr, dojo) {
+          if (dErr || !dojo) return cb();
           var localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
-          var locale = (localesFromCountry && localesFromCountry[0].langCultureName) || defaultLanguage;
+          var locale = (localesFromCountry && localesFromCountry[0].langCultureName) ||
+                        defaultLanguage;
           locale = locale.replace('-', '_');
           preloaded.title = translater(locale, {key: '%1s | CoderDojo',
             var: dojo.name});

@@ -4,6 +4,7 @@ function forumModerators() {
   return moderators.split(',');
 }
 
+const catboxMemory = require('catbox-memory');
 module.exports = {
   actcache: {
     active:false
@@ -45,7 +46,7 @@ module.exports = {
     cache: [
       {
         name: 'cd-cache',
-        engine: require('catbox-memory'),
+        engine: catboxMemory,
         host: '127.0.0.1',
         partition: 'cache'
       }

@@ -3,10 +3,12 @@
 var _ = require('lodash');
 var Joi = require('joi');
 var auth = require('../lib/authentications');
-// NOTE: Remember that every of those calls NEED a permission model defined in the associated µs elswhat it'll be freely available by anyone
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-dojos');
+var handlerFactory = require('./handlers.js');
+// NOTE: Remember that every of those calls NEED a permission model defined in the associated µs
+//  elswhat it'll be freely available by anyone
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-dojos');
 
   server.route([
     {

@@ -1,7 +1,7 @@
 'use strict';
 var auth = require('../../lib/authentications');
 
-var controller = module.exports = [
+module.exports = [
   {
     method: 'GET',
     path: '/login',

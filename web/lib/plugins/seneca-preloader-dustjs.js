@@ -1,10 +1,13 @@
 'use strict';
 
 var _ = require('lodash');
+var preloaders = {};
+preloaders['seneca-event-preloader'] = require('./seneca-event-preloader');
+preloaders['seneca-dojo-preloader'] = require('./seneca-dojo-preloader');
 
 exports.register = function (server, options, next) {
   _.each(options.handlers, function (handler) {
-    server.expose(handler, require('./' + handler));
+    server.expose(handler, preloaders[handler]);
   });
   // Add all the server routes from the controllers.
   server.ext('onPreHandler', function (request, reply) {

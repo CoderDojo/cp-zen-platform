@@ -17,7 +17,7 @@ exports.register = function (server, options, next) {
   const apis = [sys, {register: configRoute, options: options.webclient},
     dojos, leads, users, profiles, oauth2, agreements,
     badges, events, eventbrite, polls, orgs];
-  var errHandler = function (err) {
+  function errHandler (err) {
     next(err);
   };
   apis.forEach(function (api) {

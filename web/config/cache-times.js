@@ -1,6 +1,7 @@
 'use strict';
 
-var times = module.exports = {};
+module.exports = {};
+const times = module.exports;
 
 times.msec = 1;
 times.sec = 1000 * times.msec;

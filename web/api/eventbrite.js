@@ -3,9 +3,11 @@
 var Joi = require('joi');
 var _ = require('lodash');
 var auth = require('../lib/authentications');
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-eventbrite');
+var handlerFactory = require('./handlers.js');
+
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-eventbrite');
 
   server.route([{
     method: 'POST',

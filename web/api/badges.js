@@ -2,10 +2,11 @@
 
 var _ = require('lodash');
 var auth = require('../lib/authentications');
+var handlerFactory = require('./handlers.js');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-badges');
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-badges');
 
   server.route([{
     method: 'GET',

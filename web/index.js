@@ -1,40 +1,38 @@
 'use strict';
+var env = process.env.NODE_ENV || 'development';
+if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic'); // eslint-disable-line global-require
+var _ = require('lodash');
+var hapi = require('hapi');
+// Plugins
+var inert = require('inert');
+var blipp = require('blipp');
+var cpZenFrontend = require('cp-zen-frontend');
+var hapiEtags = require('hapi-etags');
+var ip2country = require('hapi-ip2country-plugin');
+var vision = require('./lib/plugins/vision');
+var cdAuth = require('./lib/plugins/auth');
+var scooterAndBlankie = require('./lib/plugins/scooterAndBlankie');
+var controllers = require('./controllers');
+var senecaPreloaders = require('./lib/plugins/seneca-preloader-dustjs');
+var chairo = require('./lib/plugins/chairo');
+var apis = require('./lib/plugins/apis');
+var logging = require('./lib/plugins/good');
+var swagger = require('./lib/plugins/swagger');
+// Libs
+var options = require('./config/options.js');
+var locale = require('locale');
+var languages = require('./config/languages.js');
+var cuid = require('cuid');
+var crypto = require('crypto');
+var os = require('os');
+var debug = require('debug')('cp-zen-platform:index');
+var errorHandlers = require('./lib/http-error-handler');
+
+require('./lib/dust-i18n.js');
+require('./lib/dust-loadjs.js');
+require('./lib/dust-load-open-graph.js');
 
 exports.start = function () {
-
-  if (process.env.NEW_RELIC_ENABLED === "true") require('newrelic');
-
-  var env = process.env.NODE_ENV || 'development';
-
-  var _ = require('lodash');
-  var hapi = require('hapi');
-  // Plugins
-  var inert = require('inert');
-  var blipp = require('blipp');
-  var cpZenFrontend = require('cp-zen-frontend');
-  var hapiEtags = require('hapi-etags');
-  var ip2country = require('hapi-ip2country-plugin');
-  var vision = require('./lib/plugins/vision');
-  var cdAuth = require('./lib/plugins/auth');
-  var scooterAndBlankie = require('./lib/plugins/scooterAndBlankie');
-  var controllers = require('./controllers');
-  var senecaPreloaders = require('./lib/plugins/seneca-preloader-dustjs');
-  var chairo = require('./lib/plugins/chairo');
-  var apis = require('./lib/plugins/apis');
-  var logging = require('./lib/plugins/good');
-  var swagger = require('./lib/plugins/swagger');
-  // Libs
-  var options = require('./config/options.js');
-  var locale = require('locale');
-  var languages = require('./config/languages.js');
-  var cuid = require('cuid');
-  var crypto = require('crypto');
-  var os = require('os');
-  var debug = require('debug')('cp-zen-platform:index');
-
-  require('./lib/dust-i18n.js');
-  require('./lib/dust-loadjs.js');
-  require('./lib/dust-load-open-graph.js');
 
   var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
   var server = new hapi.Server(options.hapi);
@@ -92,8 +90,8 @@ exports.start = function () {
     throw err;
   });
 
-  var locality = function(request) {
-    var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/\"/g, ''))
+  function locality (request) {
+    var localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/"/g, ''))
       || request.headers['accept-language'];
 
     var requestLocales = new locale.Locales(localesFormReq);
@@ -106,19 +104,20 @@ exports.start = function () {
   // TODO : check if redir is not done by AWS
   if ('production' === env || 'staging' === env) {
     server.ext('onRequest', function(request, reply) {
-      if (request.headers['x-forwarded-proto'] != 'https') {
+      if (request.headers['x-forwarded-proto'] !== 'https') {
         return reply.redirect('https://' + request.headers.host + request.path);
       }
-      reply.continue();
+      return reply.continue();
     });
   }
 
   server.ext('onPreAuth', function (request, reply) {
-    var translateCookie = request.state && request.state.NG_TRANSLATE_LANG_KEY;
-    if (_.isArray(translateCookie)) {
-      translateCookie = translateCookie[0];
+    const arrTranslateCookie = request.state && request.state.NG_TRANSLATE_LANG_KEY;
+    let translateCookie = arrTranslateCookie;
+    if (_.isArray(arrTranslateCookie)) {
+      [ translateCookie ] = arrTranslateCookie;
     }
-    var localesFormReq = (translateCookie && translateCookie.replace(/\"/g, ''))
+    var localesFormReq = (translateCookie && translateCookie.replace(/"/g, ''))
       || request.headers['accept-language'];
 
     var requestLocales = new locale.Locales(localesFormReq);
@@ -172,5 +171,5 @@ exports.start = function () {
   });
 
   // Handler for 500
-  server.ext('onPreResponse', require('./lib/http-error-handler')(server));
+  server.ext('onPreResponse', errorHandlers(server));
 };

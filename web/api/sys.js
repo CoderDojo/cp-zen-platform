@@ -1,8 +1,12 @@
 'use strict';
 var _ = require('lodash');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0/sys' }, options);
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0/sys' }, eOptions);
+
+  function pingHandler (request, reply) {
+    reply({status: 'ok'});
+  }
 
   server.route([{
     method: 'GET',
@@ -14,10 +18,6 @@ exports.register = function (server, options, next) {
       tags: ['api']
     }
   }]);
-
-  function pingHandler (request, reply) {
-    reply({status: 'ok'});
-  }
 
   next();
 };

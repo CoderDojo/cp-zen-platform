@@ -1,7 +1,7 @@
-'use strict';
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 const _ = require('lodash');
 const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const requireindex = require('requireindex');
 const controllers = requireindex(__dirname);
 const cacheTimes = require('../config/cache-times');

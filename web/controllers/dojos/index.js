@@ -1,6 +1,6 @@
 'use strict';
 
-var controller = module.exports = [{
+module.exports = [{
   method: 'GET',
   path: '/dojos/template/{name*}',
   handler: function (request, reply) {

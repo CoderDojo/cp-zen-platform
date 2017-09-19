@@ -3,8 +3,19 @@
 var _ = require('lodash');
 var joi = require('joi');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+
+  function getConfigHandler (request, reply) {
+    const { key } = request.query;
+    if (!options[key]) {
+      reply('Config key not found').code(404);
+    } else {
+      var ret = {};
+      ret[key] = options[key];
+      reply(ret);
+    }
+  }
 
   server.route([{
     method: 'GET',
@@ -18,17 +29,6 @@ exports.register = function (server, options, next) {
       }
     }
   }]);
-
-  function getConfigHandler (request, reply) {
-    var key = request.query.key;
-    if (!options[key]) {
-      reply('Config key not found').code(404);
-    } else {
-      var ret = {};
-      ret[key] = options[key];
-      reply(ret);
-    }
-  }
 
   next();
 };

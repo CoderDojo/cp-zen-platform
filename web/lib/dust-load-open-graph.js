@@ -3,9 +3,9 @@
 var dust = require('dustjs-linkedin');
 var _ = require('lodash');
 
-dust.helpers.setMeta = function (chunk, context, bodies, params) {
+dust.helpers.setMeta = function (chunk, context) {
   var metas = '';
-  var applyMeta = function (value, key) {
+  function applyMeta (value, key) {
     if (_.isString(value)) {
       metas += '<meta property="og:' + key + '" content="' + value + '"/>';
     } else {

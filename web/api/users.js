@@ -3,10 +3,136 @@
 var _ = require('lodash');
 var cacheTimes = require('../config/cache-times');
 var auth = require('../lib/authentications');
+const handlerFactory = require('./handlers.js');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0/users' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-users');
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-users');
+
+  function cleanUser (_user) {
+    let user = _user;
+    if (user) {
+      delete user.pass;
+      delete user.salt;
+      delete user.active;
+      delete user.accounts;
+      delete user.confirmcode;
+    }
+    return user;
+  }
+
+  function handleLogin (target) {
+    return function (request, reply) {
+      var args = {email: request.payload.email, password: request.payload.password};
+      var cmd = target ? target + '_login' : 'login';
+      var msg = _.defaults({role: 'user', cmd: cmd}, args);
+      return request.seneca.act(msg, function (err, out) {
+        if (err) return reply(err);
+        let res = out;
+        if (res.ok) {
+          res.login = cleanUser(res.login);
+          request.cookieAuth.set({token: res.login.token, target: target});
+        }
+        return reply(res);
+      });
+    };
+  }
+
+  function handleInstance (userType) {
+    return function (request, reply) {
+      if (!request.user) {
+        return reply({user: null, login: null, ok: true});
+      }
+
+      var user = (request.user.user && request.seneca.util.clean(request.user.user)) || null;
+      var login = (request.user.login && request.seneca.util.clean(request.user.login)) || null;
+
+      if (user) {
+        user = cleanUser(user);
+      }
+
+      // Filter to limit the handleInstance to admin
+      if (userType && user.roles.indexOf(userType) < 0) {
+        return reply({user: null, login: null, ok: false});
+      }
+
+      return request.seneca.act({role: 'cd-profiles', cmd: 'load_user_profile', userId: user.id}, function (err, profile) {
+        if (err) return reply({user: null, login: null, ok: false});
+
+        if (!profile || !profile.userId) {
+          return reply({user: null, login: null, ok: false});
+        }
+        user.profileId = profile.id;
+        return reply({user: user, login: login, ok: true});
+      });
+    };
+  }
+
+  function handleLogout (request, reply) {
+    var session = request.state['seneca-login'];
+    if (!session || (session && !session.token)) {
+      return reply({ok: true});
+    }
+
+    var msg = {role: 'user', cmd: 'logout', token: session.token};
+    return request.seneca.act(msg, function (err, resp) {
+      if (err) return reply(err);
+      request.cookieAuth.clear();
+      delete request.user;
+      return reply(resp);
+    });
+  }
+
+  function handleRegister (request, reply) {
+    var msg = _.defaults({role: 'cd-users', cmd: 'register'}, request.payload);
+    return request.seneca.act(msg, function (err, _resp) {
+      if (err) return reply(err).code(500);
+      let resp = _resp;
+      if (resp.user) {
+        resp.user = cleanUser(_resp.user);
+      }
+      return reply(resp);
+    });
+  }
+
+  /**
+   * Handler to pre-verify the LMS webhook by comparing
+   * the hash of the certificate as a string+pkey to the received hash
+   * @param  {Object} request HapiJS request, data is raw (non-parsed)
+   * @param  {Object} reply   Hapijs response
+   */
+  function actHandlerAwardBadge (request, reply) {
+    //  NOTE : This is deactivated until LearnUpon fixes their checksum
+    //  TODO : poll their closed source support to know if they fixed it
+    // var certif = request.payload.toString();
+    // console.log('certif', certif);
+    // var rx = /,"signature":"(\w{32})"/g;
+    // var signature = rx.exec(certif);
+    // // we inverse the position of the comma in case it became the first item..
+    // if (_.isEmpty(signature)) {
+    //   rx = /"signature":"(\w{32})",/g;
+    //   signature = rx.exec(certif);
+    // }
+    // var checksumCertif = certif.replace(rx, '');
+    // // We check we caught the good regex group (md5length = 32)
+    // if (signature[1] && signature[1].length === 32) {
+    //   var checkValMsg = {role: 'cd-users', cmd: 'check_lms_certificate_authenticity',
+    //   certif: checksumCertif, signature: signature[1]};
+    //   request.seneca.act(checkValMsg, function (err, resp) {
+    //     if (err) return reply(err).code(500);
+    //     if (!resp.ok) return reply().code(403);
+
+    var msg = _.defaults({role: 'cd-users', cmd: 'award_lms_badge'}, JSON.parse(request.payload));
+    request.seneca.act(msg, function (err, resp) {
+      if (err || (resp && resp.ok === false)) return reply(err || resp.why).code(500);
+      reply(resp).code(200);
+    });
+    //   });
+    // } else {
+    //   // No signature found
+    //   reply().code(500);
+    // }
+  }
 
   server.route([{
     method: 'POST',
@@ -48,7 +174,8 @@ exports.register = function (server, options, next) {
     path: options.basePath + '/instance',
     handler: handleInstance(),
     config: {
-      auth: auth.userIfPossible, // Should be apiUser, but this function is misused to check if loggedIn in f-end
+      auth: auth.userIfPossible, // Should be apiUser,
+      // but this function is misused to check if loggedIn in f-end
       description: 'Return an logged user',
       tags: ['api'],
       plugins: {
@@ -320,127 +447,6 @@ exports.register = function (server, options, next) {
     }
   }]);
 
-  function handleLogin (target) {
-    return function (request, reply) {
-      var args = {email: request.payload.email, password: request.payload.password};
-      var cmd = target ? target + '_login' : 'login';
-      var msg = _.defaults({role: 'user', cmd: cmd}, args);
-      request.seneca.act(msg, function (err, out) {
-        if (err) return reply(err);
-        if (out.ok) {
-          out.login = cleanUser(out.login);
-          request.cookieAuth.set({token: out.login.token, target: target});
-        }
-        reply(out);
-      });
-    };
-  }
-
-  function handleInstance (userType) {
-    return function (request, reply) {
-      if (!request.user) {
-        return reply({user: null, login: null, ok: true});
-      }
-
-      var user = request.user.user && request.seneca.util.clean(request.user.user) || null;
-      var login = request.user.login && request.seneca.util.clean(request.user.login) || null;
-
-      if (user) {
-        user = cleanUser(user);
-      }
-
-      // Filter to limit the handleInstance to admin
-      if (userType && user.roles.indexOf(userType) < 0) {
-        return reply({user: null, login: null, ok: false});
-      }
-
-      request.seneca.act({role: 'cd-profiles', cmd: 'load_user_profile', userId: user.id}, function (err, profile) {
-        if (err) return reply({user: null, login: null, ok: false});
-
-        if (!profile || !profile.userId) {
-          return reply({user: null, login: null, ok: false});
-        }
-        user.profileId = profile.id;
-        reply({user: user, login: login, ok: true});
-      });
-    };
-  }
-
-  function handleLogout (request, reply) {
-    var session = request.state['seneca-login'];
-    if (!session || session && !session.token) {
-      return reply({ok: true});
-    }
-
-    var msg = {role: 'user', cmd: 'logout', token: session.token};
-    request.seneca.act(msg, function (err, resp) {
-      if (err) return reply(err);
-      request.cookieAuth.clear();
-      delete request.user;
-      reply(resp);
-    });
-  }
-
-  function handleRegister (request, reply) {
-    var msg = _.defaults({role: 'cd-users', cmd: 'register'}, request.payload);
-    request.seneca.act(msg, function (err, resp) {
-      if (err) return reply(err).code(500);
-      if (resp.user) {
-        resp.user = cleanUser(resp.user);
-      }
-      reply(resp);
-    });
-  }
-
-  /**
-   * Handler to pre-verify the LMS webhook by comparing
-   * the hash of the certificate as a string+pkey to the received hash
-   * @param  {Object} request HapiJS request, data is raw (non-parsed)
-   * @param  {Object} reply   Hapijs response
-   */
-  function actHandlerAwardBadge (request, reply) {
-    //  NOTE : This is deactivated until LearnUpon fixes their checksum
-    //  TODO : poll their closed source support to know if they fixed it
-    // var certif = request.payload.toString();
-    // console.log('certif', certif);
-    // var rx = /,"signature":"(\w{32})"/g;
-    // var signature = rx.exec(certif);
-    // // we inverse the position of the comma in case it became the first item..
-    // if (_.isEmpty(signature)) {
-    //   rx = /"signature":"(\w{32})",/g;
-    //   signature = rx.exec(certif);
-    // }
-    // var checksumCertif = certif.replace(rx, '');
-    // // We check we caught the good regex group (md5length = 32)
-    // if (signature[1] && signature[1].length === 32) {
-    //   var checkValMsg = {role: 'cd-users', cmd: 'check_lms_certificate_authenticity',
-    //   certif: checksumCertif, signature: signature[1]};
-    //   request.seneca.act(checkValMsg, function (err, resp) {
-    //     if (err) return reply(err).code(500);
-    //     if (!resp.ok) return reply().code(403);
-
-    var msg = _.defaults({role: 'cd-users', cmd: 'award_lms_badge'}, JSON.parse(request.payload));
-    request.seneca.act(msg, function (err, resp) {
-      if (err || (resp && resp.ok === false)) return reply(err || resp.why).code(500);
-      reply(resp).code(200);
-    });
-    //   });
-    // } else {
-    //   // No signature found
-    //   reply().code(500);
-    // }
-  }
-
-  function cleanUser (user) {
-    if (user) {
-      delete user.pass;
-      delete user.salt;
-      delete user.active;
-      delete user.accounts;
-      delete user.confirmcode;
-    }
-    return user;
-  }
   next();
 };
 

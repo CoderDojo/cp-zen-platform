@@ -4,12 +4,27 @@ var _ = require('lodash');
 var cacheTimes = require('../config/cache-times');
 var fs = require('fs');
 var path = require('path');
-var defaultImage = new Buffer(fs.readFileSync(path.join(__dirname, '/../public/img/avatars/avatar.png'), 'base64'), 'base64');
+var defaultImage = Buffer.from(fs.readFileSync(path.join(__dirname, '/../public/img/avatars/avatar.png'), 'base64'), 'base64');
 var auth = require('../lib/authentications');
+const handlerFactory = require('./handlers.js');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-profiles');
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  var handlers = handlerFactory(server, 'cd-profiles');
+
+  function handleAvatarImage (request, reply) {
+    var user = request.user ? request.user.user : null;
+    var msg = _.defaults({user: user, role: 'cd-profiles', cmd: 'get_avatar', id: request.params.id}, request.payload);
+    request.seneca.act(msg, function (err, res) {
+      if (err || !res) {
+        // send default profile pic
+        return reply(defaultImage).header('Content-Type', 'image/png').header('Content-Length', defaultImage.length);
+      }
+
+      var buf = Buffer.from(res.imageData, 'base64');
+      return reply(buf).header('Content-Type', 'image/png').header('Content-Length', buf.length);
+    });
+  }
 
   server.route([{
     method: 'POST',
@@ -167,20 +182,6 @@ exports.register = function (server, options, next) {
       tags: ['api', 'users']
     }
   }]);
-
-  function handleAvatarImage (request, reply) {
-    var user = request.user ? request.user.user : null;
-    var msg = _.defaults({user: user, role: 'cd-profiles', cmd: 'get_avatar', id: request.params.id}, request.payload);
-    request.seneca.act(msg, function (err, res) {
-      if (err || !res) {
-        // send default profile pic
-        return reply(defaultImage).header('Content-Type', 'image/png').header('Content-Length', defaultImage.length);
-      }
-
-      var buf = new Buffer(res.imageData, 'base64');
-      return reply(buf).header('Content-Type', 'image/png').header('Content-Length', buf.length);
-    });
-  }
 
   next();
 };
