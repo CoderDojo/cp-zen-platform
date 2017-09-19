@@ -1,25 +1,22 @@
-'use strict';
+const locale = require('locale');
+const _ = require('lodash');
+const languages = require('../config/languages.js');
 
-var locale = require('locale');
-var languages = require('../config/languages.js');
-var _ = require('lodash');
+const availableLocales = new locale.Locales(_.pluck(languages, 'code'));
 
-var availableLocales = new locale.Locales(_.pluck(languages, 'code'));
+module.exports = () => ({ cookies, headers }, { locals }, next) => {
+  let translateCookie = cookies.NG_TRANSLATE_LANG_KEY;
+  if (_.isArray(translateCookie)) {
+    translateCookie = translateCookie[0];
+  }
+  const localesFormReq =
+    (translateCookie && translateCookie.replace(/"/g, '')) || headers['accept-language'];
 
-module.exports = function () {
-  return function (req, res, next) {
-    var translateCookie = req.cookies['NG_TRANSLATE_LANG_KEY'];
-    if (_.isArray(translateCookie)) {
-      translateCookie = translateCookie[0];
-    }
-    var localesFormReq = (translateCookie && translateCookie.replace(/\"/g, '')) || req.headers['accept-language'];
+  const requestLocales = new locale.Locales(localesFormReq);
 
-    var requestLocales = new locale.Locales(localesFormReq);
-
-    res.locals.context = {
-      locality: requestLocales.best(availableLocales).code
-    };
-
-    next();
+  locals.context = {
+    locality: requestLocales.best(availableLocales).code,
   };
+
+  next();
 };

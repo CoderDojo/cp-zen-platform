@@ -1,18 +1,27 @@
-'use strict';
+const dust = require('dustjs-linkedin');
+const translater = require('./fn/i18n-translate');
 
-var dust = require('dustjs-linkedin');
-var translater = require('./fn/i18n-translate');
+module.exports = () => {
+  dust.helpers.i18n = (chunk, { stack }, bodies, params) => {
+    const defaultLanguage = 'en_US';
 
-dust.helpers.i18n = function (chunk, context, bodies, params) {
-  var defaultLanguage = 'en_US';
-
-  //get the current language from context
-  var locale = (context.stack && context.stack.head && context.stack.head.context && context.stack.head.context.locality)
-      || (context.stack && context.stack.tail && context.stack.tail.head && context.stack.tail.head.context && context.stack.tail.head.context.locality)
-      || (context.stack && context.stack.tail && context.stack.tail.tail && context.stack.tail.tail.head && context.stack.tail.tail.head.context && context.stack.tail.tail.head.context.locality)
-      || defaultLanguage;
-
-  var translation = translater(locale, params);
-
-  return chunk.write(translation);
+    // get the current language from context
+    const headLocale = stack && stack.head && stack.head.context && stack.head.context.locality;
+    const tailLocale =
+      stack &&
+      stack.tail &&
+      stack.tail.head &&
+      stack.tail.head.context &&
+      stack.tail.head.context.locality;
+    const tailTailLocale =
+      stack &&
+      stack.tail &&
+      stack.tail.tail &&
+      stack.tail.tail.head &&
+      stack.tail.tail.head.context &&
+      stack.tail.tail.head.context.locality;
+    const locale = headLocale || tailLocale || tailTailLocale || defaultLanguage;
+    const translation = translater(locale, params);
+    return chunk.write(translation);
+  };
 };
