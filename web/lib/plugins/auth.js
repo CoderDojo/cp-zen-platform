@@ -7,7 +7,6 @@ exports.register = function (server, options, next) {
       // TODO : change COOKIE_SECRET in prod to 32+ char
       password: process.env.COOKIE_SECRET || 'SecretsNeverLastLongAndThisOneNeedsToBe32Char',
       cookie: 'seneca-login',
-      // // TODO - what's the ttl on the express cookie??
       ttl: 2 * 24 * 60 * 60 * 1000, // two days
       path: '/',
       clearInvalid: true,

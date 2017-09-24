@@ -26,9 +26,8 @@ exports.register = function (server, eOptions, next) {
       const args = { email: request.payload.email, password: request.payload.password };
       const cmd = target ? `${target}_login` : 'login';
       const msg = _.defaults({ role: 'user', cmd }, args);
-      return request.seneca.act(msg, (err, out) => {
+      return request.seneca.act(msg, (err, res) => {
         if (err) return reply(err);
-        const res = out;
         if (res.ok) {
           res.login = cleanUser(res.login);
           request.cookieAuth.set({ token: res.login.token, target });
@@ -85,11 +84,10 @@ exports.register = function (server, eOptions, next) {
 
   function handleRegister(request, reply) {
     const msg = _.defaults({ role: 'cd-users', cmd: 'register' }, request.payload);
-    return request.seneca.act(msg, (err, _resp) => {
+    return request.seneca.act(msg, (err, resp) => {
       if (err) return reply(err).code(500);
-      const resp = _resp;
       if (resp.user) {
-        resp.user = cleanUser(_resp.user);
+        resp.user = cleanUser(resp.user);
       }
       return reply(resp);
     });
@@ -174,8 +172,8 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/instance`,
     handler: handleInstance(),
     config: {
-      auth: auth.userIfPossible, // Should be apiUser,
-      // but this function is misused to check if loggedIn in f-end
+      // Should be apiUser, but this function is misused to check if loggedIn in f-end
+      auth: auth.userIfPossible,
       description: 'Return an logged user',
       tags: ['api'],
       plugins: {

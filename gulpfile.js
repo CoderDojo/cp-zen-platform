@@ -48,13 +48,12 @@
       .pipe(jshint.reporter('fail'));
   });
 
-  gulp.task('lint', () =>
-    gulp
-      .src(relativePath(['**/*.js']))
+  gulp.task('lint', function() {
+    return gulp.src(relativePath(['**/*.js']))
       .pipe(eslint())
       .pipe(eslint.format())
-      .pipe(eslint.failAfterError()),
-   );
+      .pipe(eslint.failAfterError());
+  });
 
   gulp.task('validateHTML', function () {
     var currentFile = void 0;

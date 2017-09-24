@@ -4,7 +4,7 @@
   "description": "cp-zen-platform",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/gulp dev",
+    "dev": "./node_modules/.bin/gulp dev && nodemon",
     "migrate": "node_modules/.bin/migrate",
     "start": "node service.js",
     "postinstall": "bower install --allow-root",
@@ -75,7 +75,6 @@
     "bower": "1.4.1",
     "del": "^2.2.1",
     "eslint": "^4.5.0",
-    "eslint-config-airbnb-base": "^12.0.0",
     "eslint-config-coderdojo": "^1.0.6",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "eslint-plugin-import": "^2.7.0",

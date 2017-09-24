@@ -1,8 +1,5 @@
 
-
-module.exports = {};
-const times = module.exports;
-
+const times = {};
 times.msec = 1;
 times.sec = 1000 * times.msec;
 times.min = 60 * times.sec;
@@ -13,3 +10,5 @@ times.yr = 365 * times.day;
 times.short = times.hr;
 times.medium = 30 * times.day;
 times.long = times.yr;
+
+module.exports = times;

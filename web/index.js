@@ -79,12 +79,12 @@ exports.start = function () {
       { register: cpZenFrontend },
     ],
   )
-    .then(() => {
-      server.start((err) => {
-        if (err) throw err;
-        console.log('[%s] Listening on http://localhost:%d', env, port);
-      });
-    })
+    .then(() => (
+      server.start()
+        .then(() => {
+          console.log('[%s] Listening on http://localhost:%d', env, port);
+        })
+    ))
     .catch((err) => {
       throw err;
     });
@@ -100,7 +100,6 @@ exports.start = function () {
 
   server.method('locality', locality, {});
 
-  // TODO : check if redir is not done by AWS
   if (env === 'production' || env === 'staging') {
     server.ext('onRequest', (request, reply) => {
       if (request.headers['x-forwarded-proto'] !== 'https') {

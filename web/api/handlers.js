@@ -16,7 +16,7 @@ module.exports = function (server, role) {
   }
 
   function callAct(request, reply, msg, type) {
-    return request.seneca.act(msg, (err, resp) => { // eslint-disable-line consistent-return
+    request.seneca.act(msg, (err, resp) => {
       if (err) return reply(err).code(500);
       let code = 200;
       // This is a legacy seneca-web response
@@ -158,7 +158,7 @@ module.exports = function (server, role) {
         msg = _.defaults(msg, request.user);
       }
 
-      return request.seneca.act(msg, (err, resp) => {
+      request.seneca.act(msg, (err, resp) => {
         if (err) return reply(err).code(500);
         let isCDFAdmin = false;
         let code = 200;
