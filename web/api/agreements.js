@@ -1,16 +1,17 @@
-'use strict';
 
-var _ = require('lodash');
-var Joi = require('joi');
-var authentications = require('./authentications');
 
-exports.register = function (server, options, next) {
-  options = _.extend({ basePath: '/api/2.0' }, options);
-  var handlers = require('./handlers.js')(server, 'cd-agreements');
+const _ = require('lodash');
+const Joi = require('joi');
+const authentications = require('../lib/authentications');
+const handlerFactory = require('./handlers.js');
+
+exports.register = function (server, eOptions, next) {
+  const options = _.extend({ basePath: '/api/2.0' }, eOptions);
+  const handlers = handlerFactory(server, 'cd-agreements');
 
   server.route([{
     method: 'POST',
-    path: options.basePath + '/agreements',
+    path: `${options.basePath}/agreements`,
     handler: handlers.actHandlerNeedsUser('save'),
     config: {
       auth: authentications.apiUser,
@@ -19,22 +20,22 @@ exports.register = function (server, options, next) {
       validate: {
         payload: {
           agreement: {
-            fullName: Joi.string().required()
-          }
-        }
-      }
-    }
+            fullName: Joi.string().required(),
+          },
+        },
+      },
+    },
   }, {
     method: 'POST',
-    path: options.basePath + '/agreements/count',
+    path: `${options.basePath}/agreements/count`,
     handler: handlers.actHandler('count'),
     config: {
       description: 'Count the number of agreements',
-      tags: ['api', 'users']
-    }
+      tags: ['api', 'users'],
+    },
   }, {
     method: 'GET',
-    path: options.basePath + '/agreements/version/{version}/users/{userId}',
+    path: `${options.basePath}/agreements/version/{version}/users/{userId}`,
     handler: handlers.actHandler('loadUserAgreement', ['version', 'userId']),
     config: {
       description: 'Load user agreement',
@@ -42,13 +43,13 @@ exports.register = function (server, options, next) {
       validate: {
         params: {
           userId: Joi.string().required(),
-          version: Joi.string().required()
-        }
-      }
-    }
+          version: Joi.string().required(),
+        },
+      },
+    },
   }, {
     method: 'GET',
-    path: options.basePath + '/agreements/{id}',
+    path: `${options.basePath}/agreements/{id}`,
     handler: handlers.actHandler('load', ['id']),
     config: {
       auth: authentications.apiUser,
@@ -56,13 +57,13 @@ exports.register = function (server, options, next) {
       tags: ['api', 'users'],
       validate: {
         params: {
-          id: Joi.string().guid().required()
-        }
-      }
-    }
+          id: Joi.string().guid().required(),
+        },
+      },
+    },
   }, {
     method: 'POST',
-    path: options.basePath + '/agreements/',
+    path: `${options.basePath}/agreements/`,
     handler: handlers.actHandler('list', ['id']),
     config: {
       auth: authentications.apiUser,
@@ -71,23 +72,24 @@ exports.register = function (server, options, next) {
       validate: {
         params: {
           userId: Joi.alternatives(Joi.object(), Joi.string().guid()).optional(),
-          agreementVersion: Joi.number()
-        }
-      }
-    }
+          agreementVersion: Joi.number(),
+        },
+      },
+    },
   }, {
     method: 'GET',
-    path: options.basePath + '/agreements/version',
+    path: `${options.basePath}/agreements/version`,
     handler: handlers.actHandler('getVersion'),
     config: {
       description: 'Get current agreement version',
-      tags: ['api', 'users']
-    }
+      tags: ['api', 'users'],
+    },
   }]);
 
   next();
 };
 
 exports.register.attributes = {
-  name: 'api-agreements'
+  name: 'api-agreements',
+  dependencies: 'cd-auth',
 };

@@ -3,14 +3,13 @@
   "maxerr": 100,
 
   "browser": true,
-  "node": true,
 
   "predef": [
     "angular"
   ],
 
   "debug": false,
-  "devel": false,
+  "devel": true,
 
   "strict": true,
   "globalstrict": true,
@@ -56,7 +55,6 @@
   "quotmark": false,
 
   "globals": {
-    "seneca": true,
     "_": true,
     "async": true,
     "moment": true,

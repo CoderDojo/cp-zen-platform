@@ -1,21 +1,21 @@
-'use strict';
 
-var cacheTimes = require('../../config/cache-times');
-var auth = require('../../../lib/authentications');
 
-var controller = module.exports = [{
+const cacheTimes = require('../../config/cache-times');
+const auth = require('../../lib/authentications');
+
+module.exports = [{
   method: 'GET',
   path: '/dashboard/{followin*}',
   config: {
     cache: { expiresIn: cacheTimes.medium },
     plugins: {
       'hapi-auth-cookie': {
-        redirectTo: '/login'
-      }
+        redirectTo: '/login',
+      },
     },
-    auth: auth.basicUser
+    auth: auth.basicUser,
   },
-  handler: function (request, reply) {
-    reply.view('index', request.locals);
-  }
+  handler(request, reply) {
+    reply.view('index', request.app);
+  },
 }];
