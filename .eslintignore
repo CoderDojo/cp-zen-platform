@@ -1,0 +1,4 @@
+node_modules/**
+web/public/**
+gulpfile.js
+build.js
