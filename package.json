@@ -4,19 +4,18 @@
   "description": "cp-zen-platform",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/gulp dev && nodemon",
+    "dev": "./node_modules/.bin/gulp dev & nodemon service.js",
     "migrate": "node_modules/.bin/migrate",
     "start": "node service.js",
     "postinstall": "bower install --allow-root",
     "test": "./node_modules/.bin/gulp",
     "jshint": "./node_modules/.bin/gulp jshint",
     "lint": "./node_modules/.bin/gulp lint",
+    "fix": "eslint . --fix",
     "gulp": "./node_modules/.bin/gulp",
     "build": "npm run gulp"
   },
-  "pre-commit": [
-    "test"
-  ],
+  "pre-commit": ["test"],
   "repository": {
     "type": "git",
     "url": "https://github.com/CoderDojo/cp-zen-platform.git"

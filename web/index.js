@@ -1,4 +1,3 @@
-
 const env = process.env.NODE_ENV || 'development';
 if (process.env.NEW_RELIC_ENABLED === 'true') require('newrelic'); // eslint-disable-line global-require
 const _ = require('lodash');
@@ -32,7 +31,7 @@ require('./lib/dust-i18n.js');
 require('./lib/dust-loadjs.js');
 require('./lib/dust-load-open-graph.js');
 
-exports.start = function () {
+exports.start = () => {
   const availableLocales = new locale.Locales(_.pluck(languages, 'code'));
   const server = new hapi.Server(options.hapi);
   const port = process.env.PORT || 8000;
@@ -52,16 +51,20 @@ exports.start = function () {
     // would be sent for 200 when a 304 (Not Modified) is sent.
     routes: {
       cache: { statuses: [200, 304] },
-      cors: { origin: [hostWithPort, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'], credentials: true },
+      cors: {
+        origin: [hostWithPort, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'],
+        credentials: true,
+      },
     },
   });
 
-  server.register(
-    [
+  server
+    .register([
       { register: vision },
       { register: inert },
       { register: blipp },
-      { register: ip2country,
+      {
+        register: ip2country,
         routes: {
           prefix: '/api/2.0/ip-country-details',
         },
@@ -73,25 +76,28 @@ exports.start = function () {
       { register: swagger },
       { register: chairo, options },
       { register: apis },
-      { register: senecaPreloaders,
-        options: { handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'] } },
+      {
+        register: senecaPreloaders,
+        options: { handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'] },
+      },
       { register: controllers },
       { register: cpZenFrontend },
-    ],
-  )
-    .then(() => (
-      server.start()
-        .then(() => {
-          console.log('[%s] Listening on http://localhost:%d', env, port);
-        })
-    ))
+    ])
+    .then(() =>
+      server.start().then(() => {
+        console.log('[%s] Listening on http://localhost:%d', env, port);
+      }),
+    )
     .catch((err) => {
       throw err;
     });
 
   function locality(request) {
-    const localesFormReq = (request.state && request.state.NG_TRANSLATE_LANG_KEY && request.state.NG_TRANSLATE_LANG_KEY.replace(/"/g, ''))
-      || request.headers['accept-language'];
+    const localesFormReq =
+      (request.state &&
+        request.state.NG_TRANSLATE_LANG_KEY &&
+        request.state.NG_TRANSLATE_LANG_KEY.replace(/"/g, '')) ||
+      request.headers['accept-language'];
 
     const requestLocales = new locale.Locales(localesFormReq);
 
@@ -115,8 +121,8 @@ exports.start = function () {
     if (_.isArray(arrTranslateCookie)) {
       [translateCookie] = arrTranslateCookie;
     }
-    const localesFormReq = (translateCookie && translateCookie.replace(/"/g, ''))
-      || request.headers['accept-language'];
+    const localesFormReq =
+      (translateCookie && translateCookie.replace(/"/g, '')) || request.headers['accept-language'];
 
     const requestLocales = new locale.Locales(localesFormReq);
 
@@ -134,10 +140,26 @@ exports.start = function () {
     if (_.has(request.response, 'header')) request.response.header('cp-host', hostUid);
     if (_.has(request.response, 'output')) request.response.output.headers['cp-host'] = hostUid;
 
-    const status = _.has(request, 'response.output.statusCode') ? request.response.output.statusCode : 200;
+    const status = _.has(request, 'response.output.statusCode')
+      ? request.response.output.statusCode
+      : 200;
 
     if (status === 400) {
-      request.log(['error', '400'], { status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details') ? request.response.data.details : request.response.output }, Date.now());
+      request.log(
+        ['error', '400'],
+        {
+          status,
+          host: server.methods.getUid(),
+          payload: request.payload,
+          params: request.params,
+          url: request.url,
+          user: request.user,
+          error: _.has(request.response, 'data.details')
+            ? request.response.data.details
+            : request.response.output,
+        },
+        Date.now(),
+      );
     }
     // if it's an api call, continue as normal..
     if (request.url.path.indexOf('/api/2.0') === 0) {
@@ -148,10 +170,13 @@ exports.start = function () {
     // Others routes are handled by the default redirect of auth-cookie
     // Or should not be handled (403 permissions)
     if (status === 403) {
-      if (request.route.settings.auth &&
+      if (
+        request.route.settings.auth &&
         request.route.settings.auth.access.length > 0 &&
-        request.route.settings.auth.access[0].scope.selection.length > 0) {
-        const cdfPath = request.route.settings.auth.access[0].scope.selection.indexOf('cdf-admin') > -1;
+        request.route.settings.auth.access[0].scope.selection.length > 0
+      ) {
+        const cdfPath =
+          request.route.settings.auth.access[0].scope.selection.indexOf('cdf-admin') > -1;
         if (cdfPath) {
           return reply.redirect(`/cdf/login?next=${request.url.path}`);
         }
@@ -163,7 +188,21 @@ exports.start = function () {
       return reply.continue();
     }
 
-    request.log(['error', '40x'], { status, host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: _.has(request.response, 'data.details') ? request.response.data.details : request.response.output }, Date.now());
+    request.log(
+      ['error', '40x'],
+      {
+        status,
+        host: server.methods.getUid(),
+        payload: request.payload,
+        params: request.params,
+        url: request.url,
+        user: request.user,
+        error: _.has(request.response, 'data.details')
+          ? request.response.data.details
+          : request.response.output,
+      },
+      Date.now(),
+    );
     debug('onPreResponse', 'showing 404 errors page');
     return reply.view('index', request.app);
   });

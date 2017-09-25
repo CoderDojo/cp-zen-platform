@@ -1,7 +1,7 @@
 const blankie = require('blankie');
 const scooter = require('scooter');
 
-exports.register = function (server, options, next) {
+exports.register = (server, options, next) => {
   server.register(scooter, (err) => {
     if (err) return next(err);
     server.register({ register: blankie,

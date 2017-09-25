@@ -1,10 +1,9 @@
+const catboxMemory = require('catbox-memory');
 
 function forumModerators() {
   const moderators = process.env.FORUM_MODS || '';
   return moderators.split(',');
 }
-
-const catboxMemory = require('catbox-memory');
 
 module.exports = {
   actcache: {
@@ -19,7 +18,7 @@ module.exports = {
   webclient: {
     adultforum: process.env.ADULT_FORUM || 'http://localhost:4567',
     youthforum: process.env.YOUTH_FORUM || 'http://localhost:4567',
-    forumModerators: forumModerators(),
+    forumModerators,
   },
 
   hapi: {
@@ -55,18 +54,62 @@ module.exports = {
   },
 
   clients: [
-    { type: 'web', host: process.env.CD_DOJOS || 'localhost', port: 10301, pin: 'role:cd-dojos,cmd:*' },
-    { type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-users,cmd:*' },
-    { type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-agreements,cmd:*' },
-    { type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-profiles,cmd:*' },
-    { type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:cd-oauth2,cmd:*' },
+    {
+      type: 'web',
+      host: process.env.CD_DOJOS || 'localhost',
+      port: 10301,
+      pin: 'role:cd-dojos,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_USERS || 'localhost',
+      port: 10303,
+      pin: 'role:cd-users,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_USERS || 'localhost',
+      port: 10303,
+      pin: 'role:cd-agreements,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_USERS || 'localhost',
+      port: 10303,
+      pin: 'role:cd-profiles,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_USERS || 'localhost',
+      port: 10303,
+      pin: 'role:cd-oauth2,cmd:*',
+    },
     { type: 'web', host: process.env.CD_USERS || 'localhost', port: 10303, pin: 'role:user,cmd:*' },
-    { type: 'web', host: process.env.CD_BADGES || 'localhost', port: 10305, pin: 'role:cd-badges,cmd:*' },
-    { type: 'web', host: process.env.CD_EVENTS || 'localhost', port: 10306, pin: 'role:cd-events,cmd:*' },
-    { type: 'web', host: process.env.CD_EVENTBRITE || 'localhost', port: 10307, pin: 'role:cd-eventbrite, cmd:*' },
-    { type: 'web', host: process.env.CD_ORGANISATIONS || 'localhost', port: 10309, pin: 'role:cd-organisations, cmd:*' },
+    {
+      type: 'web',
+      host: process.env.CD_BADGES || 'localhost',
+      port: 10305,
+      pin: 'role:cd-badges,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_EVENTS || 'localhost',
+      port: 10306,
+      pin: 'role:cd-events,cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_EVENTBRITE || 'localhost',
+      port: 10307,
+      pin: 'role:cd-eventbrite, cmd:*',
+    },
+    {
+      type: 'web',
+      host: process.env.CD_ORGANISATIONS || 'localhost',
+      port: 10309,
+      pin: 'role:cd-organisations, cmd:*',
+    },
   ],
 
   timeout: 120000,
-
 };
