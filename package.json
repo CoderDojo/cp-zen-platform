@@ -96,7 +96,7 @@
     "karma-phantomjs-launcher": "1.0.1",
     "karma-sinon-chai": "1.0.0",
     "mocha": "1.20.1",
-    "nodemon": "^1.11.0",
+    "nodemon": "1.11.0",
     "pre-commit": "1.0.7",
     "semistandard": "7.0.3",
     "supertest": "0.9.0"
