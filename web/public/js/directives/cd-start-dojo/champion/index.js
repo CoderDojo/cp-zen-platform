@@ -9,8 +9,8 @@ angular
       bindings: {
         champion: '='
       },
-      controller: ['userUtils', '$state', 'cdDojoService', '$translate', '$scope', '$timeout',
-      function (userUtils, $state, cdDojoService, $translate, $scope, $timeout) {
+      controller: ['userUtils', '$state', 'cdDojoService', '$translate', '$scope', '$timeout', 'dojoUtils',
+      function (userUtils, $state, cdDojoService, $translate, $scope, $timeout, dojoUtils) {
         var ctrl = this;
         ctrl.$onInit = function () {
           ctrl.dateFormat = 'dd-MMMM-yyyy';
@@ -31,27 +31,7 @@ angular
               {value: 5, legend: $translate.instant('Very')}
             ]
           };
-          // TODO : cd-cdf
-          ctrl.sources = [
-            { id: 'search_engine',
-              name: $translate.instant('Search Engine')},
-            { id: 'volunteers',
-              name: $translate.instant('Other CoderDojo Volunteers')},
-            { id: 'organisations',
-              name: $translate.instant('Other Coding Organisations')},
-            { id: 'developpers',
-              name: $translate.instant('Development Community')},
-            { id: 'events',
-              name: $translate.instant('Events')},
-            { id: 'word_of_mouth',
-              name: $translate.instant('Word of Mouth')},
-            { id: 'family',
-              name: $translate.instant('Family/Friends')},
-            { id: 'media',
-              name: $translate.instant('Media (newspaper/radio)')},
-            { id: 'other',
-              name: $translate.instant('Other')}
-          ];
+          ctrl.sources = dojoUtils.startingDojoSrcs;
           ctrl.isKid = false;
         };
 

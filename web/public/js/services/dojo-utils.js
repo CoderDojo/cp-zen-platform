@@ -130,5 +130,26 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     ];
     return strings;
   };
+
+  dojoUtils.startingDojoSrcs = [
+    { id: 'search_engine',
+      name: $translate.instant('Search Engine')},
+    { id: 'volunteers',
+      name: $translate.instant('Other CoderDojo Volunteers')},
+    { id: 'organisations',
+      name: $translate.instant('Other Coding Organisations')},
+    { id: 'developpers',
+      name: $translate.instant('Development Community')},
+    { id: 'events',
+      name: $translate.instant('Events')},
+    { id: 'word_of_mouth',
+      name: $translate.instant('Word of Mouth')},
+    { id: 'family',
+      name: $translate.instant('Family/Friends')},
+    { id: 'media',
+      name: $translate.instant('Media (newspaper/radio)')},
+    { id: 'other',
+      name: $translate.instant('Other')}
+  ];
   return dojoUtils;
 }]);

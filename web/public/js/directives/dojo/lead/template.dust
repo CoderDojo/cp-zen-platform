@@ -96,7 +96,7 @@
             <tr>
               <td>Where did you hear from us ?</td>
               <td>
-                <span ng-if="$ctrl.champion.reference !== 'other'" ng-bind="::$ctrl.champion.reference"></span>
+                <span ng-if="$ctrl.champion.reference !== 'other'" ng-bind="$ctrl.getReferenceValue($ctrl.champion.reference)"></span>
                 <span ng-if="$ctrl.champion.reference === 'other'">Other: <span class="label label-warning" ng-bind="::$ctrl.champion.alternativeReference"></span></span>
               </td>
             </tr>
