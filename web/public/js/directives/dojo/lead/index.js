@@ -13,6 +13,9 @@ angular
       $http, dojoUtils, cdAgreementsService, $q, atomicNotifyService, $state) {
       var ctrl = this;
       ctrl.days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      ctrl.getReferenceValue = function (id) {
+        return _.find(dojoUtils.startingDojoSrcs, {'id': id}).name;
+      };
       ctrl.verify = function () {
         cdDojoService.verify(ctrl.dojo.id, 1)
         .then(function (res) {
