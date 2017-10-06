@@ -51,6 +51,7 @@ exports.start = () => {
     // would be sent for 200 when a 304 (Not Modified) is sent.
     routes: {
       cache: { statuses: [200, 304] },
+      log: true,
       cors: {
         origin: [hostWithPort, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'],
         credentials: true,
