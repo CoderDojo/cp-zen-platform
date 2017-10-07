@@ -39,7 +39,7 @@
         <span class="col-md-2"><b>{@i18n key="Attending"/}:</b> {{ sessionStats[session.id].attending }}</span>
         <span class="col-md-2"><b>{@i18n key="Waitlist"/}:</b> {{ sessionStats[session.id].waitlist }}</span>
         <span class="col-md-2 text-center">
-          <button type="button" ng-disabled="session.status === 'cancelled'" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
+          <button type="button" ng-disabled="session.status === 'cancelled' || !dojo.verified" class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>
         </span>
       </div>
       <div ng-if="applications.length === 0">
@@ -133,5 +133,7 @@
       </div>
     </uib-accordion-group>
   </uib-accordion>
-  <cd-share-event share-event="event"></cd-share-event>
+  <div ng-show="dojo.verified">
+    <cd-share-event share-event="event"></cd-share-event>
+  </div>
 </div>
