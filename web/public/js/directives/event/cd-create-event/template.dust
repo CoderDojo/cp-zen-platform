@@ -15,7 +15,7 @@
         <h5>{@i18n key="Duplicate Existing Event"/}</h5>
       </div>
       <div class="col-md-4">
-        <ui-select ng-model="dupEventPicker.selected" name="dupEventPicker" id="dupEventPicker" ng-change="copyEvent(dupEventPicker.selected)">
+        <ui-select ng-model="dupEventPicker.selected" name="dupEventPicker" id="dupEventPicker" ng-change="copyEvent(dupEventPicker.selected)" ng-show="dupEventPicker.events.length > 0">
           <ui-select-match placeholder="{@i18n key="Copy from an existing event"/}">
             {{ $select.selected.name }}
           </ui-select-match>
@@ -201,7 +201,7 @@
             </div>
           </div>
           <div class="well clearfix ticket-controls">
-            <button type="button" ng-disabled="pastEvent" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <button type="button" ng-disabled="pastEvent || !dojo.verified" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
             <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
             <div class="pull-right">
               <label class="icon-group">{@i18n key="Add ticket type"/}</label>

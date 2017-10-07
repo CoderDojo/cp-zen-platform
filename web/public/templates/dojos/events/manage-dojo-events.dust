@@ -57,7 +57,7 @@
           {@i18n key="This Dojo currently has no active events"/}
         </div>
         <div class="inline pull-right">
-          <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()">{@i18n key="Notify all Members"/}</button>
+          <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()" ng-disabled="!dojo.verified">{@i18n key="Notify all Members"/}</button>
           <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
         </div>
       </div>

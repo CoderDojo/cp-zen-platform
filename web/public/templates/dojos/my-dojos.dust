@@ -11,9 +11,15 @@
   </div>
   <cd-expanding-dojo-card ng-repeat="dojo in myDojos" dojo="dojo" user="currentUser" start-expanded="{{ myDojos.length === 1 }}">
   </cd-expanding-dojo-card>
-  <cd-application-card ng-repeat="lead in applications" lead="lead" class="cd-application-card-container"
-   user="currentUser">
-  </cd-application-card>
+  <h2 ng-if="applications.length > 0">{@i18n key="Pending applications"/}</h2>
+  <div ng-repeat="lead in applications">
+    <cd-expanding-dojo-card ng-if="lead.completed"
+      dojo="lead.dojo" user="currentUser" start-expanded="true">
+    </cd-expanding-dojo-card>
+    <cd-application-card ng-if="!lead.completed" lead="lead" class="cd-application-card-container"
+     user="currentUser">
+    </cd-application-card>
+  </div>
   <div class="row" ng-show="myDojos.length || applications.length">
     <div class="col-md-12 text-center">
       <uib-pagination total-items="totalItems" ng-change="pageChanged()" items-per-page="itemsPerPage" ng-model="pagination.pageNo"
