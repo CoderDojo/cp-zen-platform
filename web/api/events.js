@@ -71,18 +71,18 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'GET',
-    path: options.basePath + '/user/event/{eventId}/applications',
-    handler: handlers.actHandlerNeedsUser('list', 'eventId', null, {ctrl: 'applications'}),
+    path: `${options.basePath}/user/event/{eventId}/applications`,
+    handler: handlers.actHandlerNeedsUser('list', 'eventId', null, { ctrl: 'applications' }),
     config: {
       auth: auth.apiUser,
       description: 'Load user\'s applications for this event',
       tags: ['api', 'events'],
       validate: {
         params: {
-          eventId: Joi.string().guid().required()
-        }
-      }
-    }
+          eventId: Joi.string().guid().required(),
+        },
+      },
+    },
   }, {
     method: 'POST',
     path: `${options.basePath}/events/applications/search`,
