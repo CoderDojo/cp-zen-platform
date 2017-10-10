@@ -68,7 +68,7 @@ module.exports = function () {
         dob: Joi.date(),
         parentEmail: joiValidator.mail(),
         parentName: Joi.string(),
-        address: Joi.string(),
+        address: Joi.string(), // deprecated, see #151839836
         phone: joiValidator.phone(),
         twitter: joiValidator.twitter(),
         linkedin: joiValidator.linkedin(),
@@ -81,10 +81,10 @@ module.exports = function () {
       };
       let schema = Joi.object().keys(valid);
       if (required) {
-        schema = schema.requiredKeys('firstName', 'lastName', 'email', 'dob', 'address',
+        schema = schema.requiredKeys('firstName', 'lastName', 'email', 'dob',
           'phone', 'confidentCoding', 'confidentMentoring', 'reference');
       } else {
-        schema = schema.optionalKeys('firstName', 'lastName', 'email', 'dob', 'address',
+        schema = schema.optionalKeys('firstName', 'lastName', 'email', 'dob',
           'phone', 'confidentCoding', 'confidentMentoring', 'reference');
       }
       return schema;

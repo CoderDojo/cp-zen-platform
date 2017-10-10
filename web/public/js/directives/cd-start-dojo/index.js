@@ -310,7 +310,6 @@ angular
                   phone: ctrl.profile.phone,
                   twitter: ctrl.profile.twitter,
                   linkedin: ctrl.profile.linkedin,
-                  address: ctrl.profile.address,
                   isValid: false,
                   visited: false
                 },

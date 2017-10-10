@@ -61,12 +61,6 @@
           ng-model="$ctrl.champion.parentName" placeholder="{@i18n key="Parent Name"/}">
       </div>
     </div>
-    <div class="form-group">
-      <label for="address">{@i18n key="Home address"/}</label>
-      <input type="text" class="form-control" id="address"
-        required="required" name="address"
-        ng-model="$ctrl.champion.address" placeholder="{@i18n key="Home address"/}">
-    </div>
   </div>
   <div class="cd-sad-champion__bottom-form">
     <h3>{@i18n key="Contact"/}</h3>
