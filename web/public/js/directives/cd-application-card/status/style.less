@@ -1,0 +1,23 @@
+.cd-application-card {
+  &__timing {
+    flex-shrink: 0;
+    display: flex;
+    flex-flow: column;
+    flex-basis: 320px;
+    align-items: left;
+    &-link {
+      .fa {
+        margin-left: 1em;
+      }
+    }
+    &-status {
+      .fa {
+        margin-right: 12px;
+      }
+    }
+    &-status, &-actions {
+      text-align: center;
+      align-self: center;
+    }
+  }
+}

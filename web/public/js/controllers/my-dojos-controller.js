@@ -96,6 +96,7 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         return $q.resolve(res.data);
       })
       .then(function (applications) {
+        // Separate verified dojos from ongoing applications
         if (applications && applications.length > 0) {
           var query = {dojoLeadId: {in$: _.map(applications, 'id')}};
           return cdDojoService.list(query)
@@ -104,9 +105,12 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
             var filteredApplications = [];
             _.each(applications, function (application) {
               var dojosLead = _.find(dojos, {dojoLeadId: application.id});
-              if (!dojosLead.verified) {
+              if (dojosLead && !dojosLead.verified) { // submitted application
                 application.dojo = dojosLead;
                 application.dojo.updatedAt = application.updatedAt;
+                filteredApplications.push(application);
+              }
+              if (!dojosLead) { // ongoing application
                 filteredApplications.push(application);
               }
             });

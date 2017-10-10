@@ -1,18 +1,22 @@
   <div class="cd-application-card__timing">
-    <h3>{@i18n key="Planning"/}</h3>
-    <span class="cd-application-card__timing-status">
+    <h3 class="cd-no-margin" ng-show="$ctrl.completed">{@i18n key="Planning"/}</h3>
+    <span class="cd-application-card__timing-status lead">
       <i class="fa fa-clock-o"></i>
       {{ $ctrl.dateKey | translateFromKey: {date: ($ctrl.date | date: 'yyyy-MM-dd HH:mm')}  }}
     </span>
-    <span ng-if="$ctrl.lead.completed">
-      <p class="help-block">{@i18n key="Expect a response within 48 hours from our community team."/}</p>
-      <span ng-if="$ctrl.timesUp">
-        <p>{@i18n key="No response yet?"/}</p>
-        <button ng-click="$ctrl.openIntercom()" class="btn btn-xs btn-secondary">Click here to contact us</button>
+    <div class="cd-application-card__timing-actions">
+      <span ng-if="$ctrl.completed">
+        <p class="lead cd-lead-sml">{@i18n key="Expect a response within 48 hours from our community team."/}</p>
+        <span ng-if="$ctrl.timesUp">
+          <p>{@i18n key="No response yet?"/}</p>
+          <button ng-click="$ctrl.openIntercom()" class="btn btn-xs btn-secondary">Click here to contact us</button>
+        </span>
+        <a class="cd-application-card__timing-link btn btn-secondary" ui-sref="start-dojo({id: $ctrl.id})">{@i18n key="Edit your application"/}</a>
       </span>
-      <a class="cd-application-card__timing-link" ui-sref="start-dojo({id: $ctrl.lead.id})">{@i18n key="Edit your application"/}</a>
-    </span>
-    <span ng-if="!$ctrl.lead.completed">
-      <a class="cd-application-card__timing-link" ui-sref="start-dojo({id: $ctrl.lead.id})">{@i18n key="Continue your application"/}<i class="fa fa-chevron-right"></i></a>
-    </span>
+      <span ng-if="!$ctrl.completed">
+        <a class="cd-application-card__timing-link btn btn-primary" ui-sref="start-dojo({id: $ctrl.id})">
+          {@i18n key="Continue your application"/}
+        </a>
+      </span>
+    </div>
   </div>

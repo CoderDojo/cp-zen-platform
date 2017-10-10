@@ -3,16 +3,9 @@
     <cd-rounded-image src="{{ $ctrl.dojoImage }}" size="130"></cd-rounded-image>
     <h2 class="cd-application-card__header-text" ng-bind="::$ctrl.dojo.name"></h2>
   </div>
-  <span class="cd-application-card__info">
-    <span ng-if="$ctrl.lead.completed">
-      <h3>{@i18n key="Prepare yourself"/}</h3>
-      <p>{@i18n key="While waiting for your verification, familiarise yourself with our content!"/}</p>
-      <a href="http://kata.coderdojo.com/wiki/Home_Page" target="_blank" class="cd-expanding-dojo-card-resources btn btn-secondary">{@i18n key="View Available Resources"/}</a>
-    </span>
-    <span ng-if="!$ctrl.lead.completed">
-      <h3>{@i18n key="Your application is incomplete"/}</h3>
-      <button ng-click="$ctrl.openIntercom()" class="btn btn-sm btn-secondary">{@i18n key="Contact us if you have a question"/}</button>
-    </span>
-  </span>
-  <cd-application-card-status date="$ctrl.lead.updatedAt" completed="false"></cd-application-card-status>
+  <div class="cd-application-card__info" ng-if="!$ctrl.lead.completed">
+    <h3 class="cd-application-card__info-title">{@i18n key="Your application is incomplete"/}</h3>
+    <button ng-click="$ctrl.openIntercom()" class="btn btn-sm btn-secondary">{@i18n key="Contact us if you have a question"/}</button>
+  </div>
+  <cd-application-card-status date="$ctrl.lead.updatedAt" completed="false" lead-id="$ctrl.lead.id" class="cd-application-card__status"></cd-application-card-status>
 </div>

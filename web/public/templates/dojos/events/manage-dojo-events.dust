@@ -57,7 +57,10 @@
           {@i18n key="This Dojo currently has no active events"/}
         </div>
         <div class="inline pull-right">
-          <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()" ng-disabled="!dojo.verified">{@i18n key="Notify all Members"/}</button>
+          <div tooltip-enable="!dojo.verified" uib-tooltip="{@i18n key="Your Dojo must ve verified in order to use that functionnality"/}" ng-class="!dojo.verified? 'btn-wrapper-tooltip': ''" class="inline-block">
+            <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()" ng-disabled="!dojo.verified">
+                {@i18n key="Notify all Members"/}</button>
+          </div>
           <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <cd-expanding-card main-title="{{ $ctrl.dojo.name }}" sub-title-1="{{ $ctrl.address }}" round-image="https://s3-eu-west-1.amazonaws.com/zen-dojo-images/{{ $ctrl.dojo.id }}" round-image-fallback="/img/avatars/dojo-default-logo.png" start-expanded="{{ $ctrl.startExpanded }}">
     <div class="cd-expanding-dojo-card">
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__lead-status" ng-if="!$ctrl.dojo.verified">
-          <cd-application-card-status date="$ctrl.dojo.updatedAt" completed="true"></cd-application-card-status>
+          <cd-application-card-status date="$ctrl.dojo.updatedAt" completed="true" lead-id="$ctrl.dojo.dojoLeadId"></cd-application-card-status>
         </div>
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-show="$ctrl.isDojoAdmin && $ctrl.dojo.verified">
             <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>
