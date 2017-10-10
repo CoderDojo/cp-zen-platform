@@ -538,63 +538,29 @@
         usSpinnerService.stop('create-event-spinner');
         return;
       }
-
-      if(!$scope.dojoInfo) {
-        loadDojo(function(err){
-          if(err) {
-            alertService.showError($translate.instant('An error has occurred while loading Dojo') + ' ' + err);
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-          if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-            cdEventsService.saveEvent(
-              eventInfo,
-              function (response) {
-                if(response.ok === false) {
-                  alertService.showError($translate.instant(response.why));
-                } else {
-                  deleteLocalStorage();
-                }
-                if(response.dojoId && response.id) {
-                  goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-                } else {
-                  goToManageDojoEvents($state, usSpinnerService, dojoId)
-                }
-              },
-              function(err){
-                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-                goToMyDojos($state, usSpinnerService, dojoId)
-              }
-            );
-          } else {
-            alertService.showError($translate.instant('Error setting up event'));
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-        })
-      } else {
-        if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-          cdEventsService.saveEvent(
-            eventInfo,
-            function (response) {
-              if(response.ok === false) {
-                alertService.showError($translate.instant(response.why));
-              } else {
-                deleteLocalStorage();
-              }
-              if(response.dojoId && response.id) {
-                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-              } else {
-                goToManageDojoEvents($state, usSpinnerService, dojoId)
-              }
-            },
-            function (err){
-              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-              goToMyDojos($state, usSpinnerService, dojoId)
+      if ($scope.dojoInfo.stage !== 4) {
+        cdEventsService.saveEvent(
+          eventInfo,
+          function (response) {
+            if(response.ok === false) {
+              alertService.showError($translate.instant(response.why));
+            } else {
+              deleteLocalStorage();
             }
-          );
-        } else {
-          alertService.showError($translate.instant('Error setting up event'));
-          goToMyDojos($state, usSpinnerService, dojoId)
-        }
+            if(response.dojoId && response.id) {
+              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+            } else {
+              goToManageDojoEvents($state, usSpinnerService, dojoId)
+            }
+          },
+          function (err){
+            alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+        );
+      } else {
+        alertService.showError($translate.instant('Error setting up event'));
+        goToMyDojos($state, usSpinnerService, dojoId)
       }
     };
 
@@ -832,6 +798,7 @@
 
       return async.series([
         validateEventRequest,
+        loadDojo,
         loadDojoUsers,
         loadUserTypes,
         loadEvent,

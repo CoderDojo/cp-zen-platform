@@ -11,7 +11,11 @@
   </div>
   <cd-expanding-dojo-card ng-repeat="dojo in myDojos" dojo="dojo" user="currentUser" start-expanded="{{ myDojos.length === 1 }}">
   </cd-expanding-dojo-card>
-  <h2 ng-if="applications.length > 0">{@i18n key="Pending applications"/}</h2>
+  <div class="row" ng-if="applications.length > 0">
+    <div class="my-dojos">
+      <h2>{@i18n key="Pending applications"/}</h2>
+    </div>
+  </div>
   <div ng-repeat="lead in applications">
     <cd-expanding-dojo-card ng-if="lead.completed"
       dojo="lead.dojo" user="currentUser" start-expanded="true">

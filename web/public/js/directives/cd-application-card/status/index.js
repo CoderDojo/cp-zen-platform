@@ -4,8 +4,9 @@ angular
     .module('cpZenPlatform')
     .component('cdApplicationCardStatus', {
       bindings: {
-          date: '<',
-          completed : '<',
+        id: '<leadId',
+        date: '<',
+        completed : '<',
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-application-card/status',
