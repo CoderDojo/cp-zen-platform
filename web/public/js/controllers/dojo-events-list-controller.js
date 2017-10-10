@@ -121,7 +121,7 @@
       $scope.loadEvents($scope.filter, true);
     }
     $scope.canBook = function ($event) {
-      return eventUtils.canBook($event.public, $scope.private, $scope.isMember);
+      return eventUtils.canBook($event.public, $scope.private, $scope.isMember, $scope.verified);
     };
   }
 

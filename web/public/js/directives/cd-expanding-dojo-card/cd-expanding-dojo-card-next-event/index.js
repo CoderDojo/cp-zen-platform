@@ -24,7 +24,7 @@ angular
           ctrl.event = events[0];
         });
         ctrl.canBook = function () {
-          return eventUtils.canBook(ctrl.event.public, ctrl.dojo.private, true);
+          return eventUtils.canBook(ctrl.event.public, ctrl.dojo.private, true, ctrl.dojo.verified);
         }
       }]
     });
