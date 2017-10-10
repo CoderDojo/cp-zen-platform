@@ -508,14 +508,10 @@
         .state("user-events", {
           url: "/dojos/events/user-events",
           parent: 'dashboard',
-          templateUrl: '/dojos/template/events/user-events',
-          controller: 'user-events-controller',
+          template: '<div></div>',
+          controller: reloadPage,
           params: {
             pageTitle: 'My Events'
-          },
-          resolve: {
-            currentUser: resolves.loggedInUser,
-            usersDojos: resolves.usersDojos
           }
         })
         .state("event",{
