@@ -92,12 +92,14 @@ angular.module('cpZenPlatform').factory('eventUtils', ['$translate', function($t
     return event;
   }
 
-  eventUtils.canBook = function (publicEvent, privateDojo, isDojoMember) {
+  eventUtils.canBook = function (publicEvent, privateDojo, isDojoMember, isDojoVerified) {
     var bookable = false;
-    if (privateDojo) { // The dojo is private, only members can join
-      bookable = isDojoMember;
-    } else { // Public event are freely joinable, private events requires you to be a member
-      bookable = publicEvent || isDojoMember;
+    if (isDojoVerified) {
+      if (privateDojo) { // The dojo is private, only members can join
+        bookable = isDojoMember;
+      } else { // Public event are freely joinable, private events requires you to be a member
+        bookable = publicEvent || isDojoMember;
+      }
     }
     return bookable;
   };

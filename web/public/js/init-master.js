@@ -576,7 +576,7 @@
             }
             $scope.canBook = function () {
               if ($scope.event && $scope.dojo) {
-                return eventUtils.canBook($scope.event.public, $scope.dojo.private, $scope.isMember);
+                return eventUtils.canBook($scope.event.public, $scope.dojo.private, $scope.isMember, $scope.dojo.verified);
               }
             };
           },
