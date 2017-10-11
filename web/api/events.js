@@ -70,6 +70,20 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
     },
   }, {
+    method: 'GET',
+    path: `${options.basePath}/user/events/{eventId}/applications`,
+    handler: handlers.actHandlerNeedsUser('list', 'eventId', null, { ctrl: 'applications' }),
+    config: {
+      auth: auth.apiUser,
+      description: 'Load user\'s applications (and its children) for this event',
+      tags: ['api', 'events'],
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+        },
+      },
+    },
+  }, {
     method: 'POST',
     path: `${options.basePath}/events/applications/search`,
     handler: handlers.actHandlerNeedsUser('searchApplications'),
