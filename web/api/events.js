@@ -71,11 +71,11 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'GET',
-    path: `${options.basePath}/user/event/{eventId}/applications`,
+    path: `${options.basePath}/user/events/{eventId}/applications`,
     handler: handlers.actHandlerNeedsUser('list', 'eventId', null, { ctrl: 'applications' }),
     config: {
       auth: auth.apiUser,
-      description: 'Load user\'s applications for this event',
+      description: 'Load user\'s applications (and its children) for this event',
       tags: ['api', 'events'],
       validate: {
         params: {
