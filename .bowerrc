@@ -6,5 +6,6 @@
     "packages": ".bower/cache",
     "registry": ".bower/registry"
   },
+  "registry": "https://registry.bower.io",
   "tmp": ".bower/tmp"
 }
