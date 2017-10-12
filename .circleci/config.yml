@@ -50,6 +50,9 @@ jobs:
     docker:
       - image: node:8.4
     steps:
+      - add-ssh-keys:
+          fingerprints:
+            - "9d:83:fa:15:02:53:c4:e5:c4:5b:dc:1f:0a:90:82:5e"
       - checkout
       - run:
           name: Install latest cp-zen-frontend
