@@ -1527,9 +1527,9 @@ cp-translations@^1.0.4:
   version "1.0.78"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.78.tgz#773dedb4ed0facb2a8788cc12b90ce40b140c19e"
 
-cp-zen-frontend@^1.0.2:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.7.tgz#4176c113196a068d501cd8edbb9109768eb4b31b"
+cp-zen-frontend@staging:
+  version "1.0.8-a95b1cd"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.8-a95b1cd.tgz#f21afc8b11bb1120a1ce1b480833c6576efce8b1"
   dependencies:
     "@coderdojo/cd-common" "1.1.7"
     bootstrap "^3.3.7"
@@ -1544,11 +1544,13 @@ cp-zen-frontend@^1.0.2:
     vue-awesome "^2.3.1"
     vue-dob-picker "^1.0.8"
     vue-i18n "^7.0.3"
+    vue-pagination-2 "^0.3.2"
     vue-recaptcha "^0.4.0"
     vue-resource "^1.3.3"
     vue-router "^2.5.3"
     vue-static-map "^2.0.0"
     vue2-google-maps "^0.7.9"
+    vuex "^2.3.1"
     webdriverio "^4.8.0"
 
 crc32-stream@^2.0.0:
@@ -5487,7 +5489,7 @@ node-uuid@~1.4.0:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
 
-nodemon@^1.11.0:
+nodemon@1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.11.0.tgz#226c562bd2a7b13d3d7518b49ad4828a3623d06c"
   dependencies:
@@ -7942,6 +7944,13 @@ vue-i18n@^7.0.3:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.2.0.tgz#849d496affc3dbdfb5f6ad675b79e86448bce14e"
 
+vue-pagination-2@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/vue-pagination-2/-/vue-pagination-2-0.3.2.tgz#3b2815b1717c490c7abf917ff7bb6c6914af4d0c"
+  dependencies:
+    vue ">=2.0.0"
+    vuex "^2.0.0"
+
 vue-recaptcha@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-0.4.0.tgz#1ad80e5ceb66b83131d3edb079221eb26fc74bf0"
@@ -7970,9 +7979,17 @@ vue2-google-maps@^0.7.9:
     babel-runtime "^5.8.0"
     marker-clusterer-plus "^2.1.4"
 
+vue@>=2.0.0:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
+
 vue@^2.2.6, vue@^2.3.3:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
+
+vuex@^2.0.0, vuex@^2.3.1:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.5.0.tgz#20f0265ade6c9a5ac6724a405d3ffdb4726c9741"
 
 walkdir@^0.0.11:
   version "0.0.11"
