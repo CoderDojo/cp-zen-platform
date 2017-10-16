@@ -485,7 +485,7 @@
 
     function notifyEventCreated () {
       if (!$scope.dojoInfo.verified) {
-        atomicNotifyService.info($translate.instant('Your event has been successfully created. However it\'ll not be publicly visible until your dojo is verified'), 2000);
+        atomicNotifyService.info($translate.instant('Congratulations on creating your event. When your Dojo is verified by the CoderDojo team, it will appear on your public listing.'), 2000);
       }
     }
 
