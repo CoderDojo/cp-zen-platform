@@ -58,7 +58,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('manage-dojo-events', {
+    return $state.go('manage-dojo-events', {
       dojoId: dojoId
     });
   }
@@ -67,7 +67,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('manage-applications', {
+    return $state.go('manage-applications', {
       dojoId: dojoId,
       eventId: eventId
     });
@@ -97,7 +97,7 @@
 
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser, eventUtils) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils, atomicNotifyService) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -548,9 +548,15 @@
               deleteLocalStorage();
             }
             if(response.dojoId && response.id) {
-              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
+              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id)
+              .then(function () {
+                 atomicNotifyService.info($translate.instant('Your event has been successfully created. However'))
+              });
             } else {
               goToManageDojoEvents($state, usSpinnerService, dojoId)
+              .then(function () {
+                atomicNotifyService.info($translate.instant('Your event has been successfully created. However'))
+              });
             }
           },
           function (err){
@@ -855,6 +861,7 @@
       'ticketTypes',
       'currentUser',
       'eventUtils',
+      'atomicNotifyService',
       dojoEventFormCtrl
     ]);
 })();
