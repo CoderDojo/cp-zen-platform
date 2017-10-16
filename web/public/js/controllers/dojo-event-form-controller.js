@@ -483,6 +483,11 @@
         }
     };
 
+    function notifyEventCreated () {
+      if (!$scope.dojoInfo.verified) {
+        atomicNotifyService.info($translate.instant('Your event has been successfully created. However it\'ll not be publicly visible until your dojo is verified'), 2000);
+      }
+    }
 
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
@@ -549,14 +554,10 @@
             }
             if(response.dojoId && response.id) {
               goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id)
-              .then(function () {
-                 atomicNotifyService.info($translate.instant('Your event has been successfully created. However'))
-              });
+              .then(notifyEventCreated);
             } else {
               goToManageDojoEvents($state, usSpinnerService, dojoId)
-              .then(function () {
-                atomicNotifyService.info($translate.instant('Your event has been successfully created. However'))
-              });
+              .then(notifyEventCreated);
             }
           },
           function (err){
