@@ -3,6 +3,7 @@
 const _ = require('lodash');
 _.mixin(require('lodash-deep'));
 const debug = require('debug')('cp-zen-platform:handlers');
+const Boom = require('boom');
 
 module.exports = function (server, role) {
   function checkPerms(request, act, callback) {
@@ -17,7 +18,7 @@ module.exports = function (server, role) {
 
   function callAct(request, reply, msg, type) {
     request.seneca.act(msg, (err, resp) => {
-      if (err) return reply(err).code(500);
+      if (err) return reply(Boom.badImplementation(err));
       let code = 200;
       // This is a legacy seneca-web response
       if (resp && resp.http$) {
@@ -69,13 +70,13 @@ module.exports = function (server, role) {
         if (err) {
           // Even if it's a 500, we hide our validator is broken, sshhhh :D
           request.log(['error', '50x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
-          return reply(null).code(403);
+          return reply(Boom.forbidden());
         }
         if (response && response.allowed && _.isBoolean(response.allowed)) {
           return callAct(request, reply, msg, type);
         }
         request.log(['error', '40x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
-        return reply(null).code(403);
+        return reply(Boom.forbidden());
       });
     }
     return callAct(request, reply, msg, type);
@@ -94,7 +95,7 @@ module.exports = function (server, role) {
       const user = request.user;
       if (!user) {
         if (!opts || (opts && !opts.soft)) {
-          return reply('Not logged in').code(401);
+          return reply(Boom.unauthorized('Not logged in'));
         }
       }
 
@@ -128,7 +129,7 @@ module.exports = function (server, role) {
     return function (request, reply) {
       // Note: request.user is set in onPostAuthHandler
       const user = request.user;
-      if (!user) return reply('Not logged in').code(401);
+      if (!user) return reply(Boom.unauthorized('Not logged in'));
 
       let msg = {
         cmd: 'user_is_dojo_admin',
@@ -159,7 +160,7 @@ module.exports = function (server, role) {
       }
 
       request.seneca.act(msg, (err, resp) => {
-        if (err) return reply(err).code(500);
+        if (err) return reply(Boom.badImplementation());
         let isCDFAdmin = false;
         let code = 200;
         const roles = _.deepHas(user, 'user.roles') ? request.user.user.roles : [];

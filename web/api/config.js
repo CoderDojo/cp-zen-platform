@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const joi = require('joi');
+const Boom = require('boom');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
@@ -9,7 +10,7 @@ exports.register = function (server, eOptions, next) {
   function getConfigHandler(request, reply) {
     const { key } = request.query;
     if (!options[key]) {
-      reply('Config key not found').code(404);
+      reply(Boom.notFound('Config key not found', key));
     } else {
       const ret = {};
       ret[key] = options[key];
