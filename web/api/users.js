@@ -4,6 +4,7 @@ const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
+const Boom = require('boom');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
@@ -85,7 +86,7 @@ exports.register = function (server, eOptions, next) {
   function handleRegister(request, reply) {
     const msg = _.defaults({ role: 'cd-users', cmd: 'register' }, request.payload);
     return request.seneca.act(msg, (err, resp) => {
-      if (err) return reply(err).code(500);
+      if (err) return reply(Boom.badImplementation(err));
       if (resp.user) {
         resp.user = cleanUser(resp.user);
       }
@@ -122,7 +123,7 @@ exports.register = function (server, eOptions, next) {
 
     const msg = _.defaults({ role: 'cd-users', cmd: 'award_lms_badge' }, JSON.parse(request.payload));
     request.seneca.act(msg, (err, resp) => {
-      if (err || (resp && resp.ok === false)) return reply(err || resp.why).code(500);
+      if (err || (resp && resp.ok === false)) return reply(Boom.badImplementation(err || resp.why));
       reply(resp).code(200);
     });
     //   });
