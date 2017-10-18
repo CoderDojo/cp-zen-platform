@@ -119,16 +119,17 @@
           </div>
         </div>
       </div>
-      <div class="form-group form-inline full-width" ng-show="!eventInfo.status">
+      <div class="form-group form-inline full-width">
         <div class="checkbox checkbox-block">
-          <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
+          <input type="checkbox" id="prefill-address" ng-model="eventInfo.useDojoAddress"
+            ng-click="prefillDojoAddress()" ng-disabled="pastEvent"/>
           <label for="prefill-address">{@i18n key="Use Dojo listing address"/}</label>
           <i uib-tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="top" tooltip-trigger="click" class="info-button fa fa-info-circle event-tooltip"></i>
         </div>
       </div>
       <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
         <label for="city">{@i18n key="City"/}*:</label>
-        <ui-select ng-model="eventInfo.city" ng-disabled="pastEvent" ng-readonly="eventInfo.prefillAddress" name="city" id="city" ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null" required>
+        <ui-select ng-model="eventInfo.city" ng-disabled="pastEvent || eventInfo.useDojoAddress" ng-readonly="eventInfo.useDojoAddress" name="city" id="city" ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null" required>
           <ui-select-match placeholder="{@i18n key="Add a city name"/}">
             {{ $select.selected.nameWithHierarchy }}
           </ui-select-match>
@@ -140,7 +141,7 @@
       </div>
       <div class="form-group">
         <label for="address">{@i18n key="Address"/}*:</label>
-        <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+        <textarea rows="3" ng-readonly="pastEvent || eventInfo.useDojoAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
       </div>
     </cd-expanding-card>
     <cd-expanding-card main-title="{@i18n key="Event Tickets"/}" sub-title-1="{@i18n key="Ticket Type"/}">

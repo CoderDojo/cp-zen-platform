@@ -117,11 +117,12 @@
 
     $scope.ticketTypesTooltip = $sce.trustAsHtml($scope.ticketTypesTooltip);
 
+    $scope.originalEvent = {};
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
     $scope.eventInfo.type = 'one-off';
-    $scope.eventInfo.prefillAddress = true;
+    $scope.eventInfo.useDojoAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
@@ -260,21 +261,22 @@
       }
     };
 
-    $scope.prefillDojoAddress = function() {
-      if($scope.eventInfo.prefillAddress) {
+    $scope.prefillDojoAddress = function (done) {
+      if ($scope.eventInfo.useDojoAddress) {
+        $scope.originalEvent.city = $scope.eventInfo.city;
+        $scope.originalEvent.address = $scope.eventInfo.address;
+
         $scope.eventInfo.city = $scope.eventInfo.dojoCity;
         $scope.eventInfo.address = $scope.eventInfo.dojoAddress;
 
         $scope.updateLocalStorage('city', $scope.eventInfo.dojoCity);
         $scope.updateLocalStorage('address', $scope.eventInfo.dojoAddress);
-        $scope.updateLocalStorage('prefillAddress', true);
-        return;
+        $scope.updateLocalStorage('useDojoAddress', true);
+      } else if ($scope.originalEvent.city && $scope.originalEvent.address) { // we restore to previous data
+        $scope.eventInfo.city = $scope.originalEvent.city;
+        $scope.eventInfo.address = $scope.originalEvent.address;
       }
-
-      $scope.updateLocalStorage('prefillAddress', false);
-      $scope.eventInfo.city = $scope.eventInfo.address = null;
-      $scope.updateLocalStorage('city', null);
-      $scope.updateLocalStorage('address', null);
+      if (done) return done();
     };
 
     $scope.eventInfo.invites = [];
@@ -398,8 +400,9 @@
           $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, {id: startingDay});
         }
 
-        $scope.eventInfo.prefillAddress = _.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
-          $scope.eventInfo.address === $scope.dojoInfo.address1;
+        $scope.eventInfo.useDojoAddress = (_.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
+          $scope.eventInfo.address === $scope.dojoInfo.address1) || // Backward compat before introduction of saved useDojoAddress
+          $scope.eventInfo.useDojoAddress;
         //remove processed info coming from the db,
         //which are normally not created by the front-end submit process
         delete $scope.eventInfo.dates;
@@ -665,10 +668,6 @@
         $scope.eventInfo.dojoAddress  = dojo.address1;
         $scope.eventInfo.dojoCity = dojo.place;
 
-        if(!$scope.isEditMode){
-          $scope.prefillDojoAddress();
-        }
-
         var position = [];
         if(dojo.coordinates) {
           position = dojo.coordinates.split(',');
@@ -743,7 +742,6 @@
 
     function loadEvent(done) {
       var eventId = $stateParams.eventId;
-      $scope.eventInfo.prefillAddress = false;
       cdEventsService.load(eventId, function(event) {
         var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
@@ -801,7 +799,7 @@
         if(localStorage.name) $scope.eventInfo.name = localStorage.name;
         if(localStorage.description) $scope.eventInfo.description = localStorage.description;
         if(localStorage.public) $scope.eventInfo.public = localStorage.public;
-        if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
+        if(localStorage.useDojoAddress) $scope.eventInfo.useDojoAddress = localStorage.useDojoAddress;
         if(localStorage.type) $scope.eventInfo.type = localStorage.type;
         if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
         if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
@@ -832,9 +830,11 @@
 
       return async.series([
         validateEventRequest,
+        loadDojo,
         loadDojoUsers,
         loadUserTypes,
         loadEvent,
+        $scope.prefillDojoAddress,
         loadSessions
       ], function(err, results) {
         if (err) {
@@ -855,6 +855,7 @@
     async.parallel([
       validateEventRequest,
       loadDojo,
+      $scope.prefillDojoAddress,
       loadPreviousEvents,
       loadCurrentUser,
       loadDojoUsers,
