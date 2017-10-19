@@ -381,7 +381,7 @@
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
 
-        cdEventsService.searchSessions({eventId : event.id}, function(sessions) {
+        cdEventsService.searchSessions({eventId : event.id, status: 'active'}, function(sessions) {
             $scope.eventInfo.sessions = sessions;
             _.map($scope.eventInfo.sessions, function(session){
               delete session.id;
@@ -402,7 +402,7 @@
 
         $scope.eventInfo.useDojoAddress = (_.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
           $scope.eventInfo.address === $scope.dojoInfo.address1) || // Backward compat before introduction of saved useDojoAddress
-          $scope.eventInfo.useDojoAddress;
+          event.useDojoAddress;
         //remove processed info coming from the db,
         //which are normally not created by the front-end submit process
         delete $scope.eventInfo.dates;
@@ -854,8 +854,12 @@
 
     async.parallel([
       validateEventRequest,
-      loadDojo,
-      $scope.prefillDojoAddress,
+      function (pCb) {
+        async.waterfall([
+          loadDojo,
+          $scope.prefillDojoAddress,
+        ], pCb);
+      },
       loadPreviousEvents,
       loadCurrentUser,
       loadDojoUsers,
