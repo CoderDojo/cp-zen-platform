@@ -56,7 +56,9 @@ jobs:
       - checkout
       - run:
           name: Install latest cp-zen-frontend
-          command: yarn add cp-zen-frontend@"${CP_ZEN_FRONTEND_NPM_TAG}"
+          command: |
+            yarn add cp-zen-frontend@"$CP_ZEN_FRONTEND_NPM_TAG" --cache-folder ./ycache
+            rm -rf ./ycache
       - run:
           name: Commit and push updated package.json + yarn.lock
           command: |
