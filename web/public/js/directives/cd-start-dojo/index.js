@@ -298,7 +298,6 @@ angular
           .then(function () {
             // NOTE : this starts to get quite big
             if (ctrl.leads.length === 0 || (!_.isEmpty(ctrl.orgs) && !$state.params.id)) {
-              intercomService.InitIntercom();
               ctrl.userId = ctrl.currentUser.id;
               // Merge is used here to avoid overwriting data set by substate ctrllers (ie forms)
               ctrl.application = _.merge(ctrl.application, {
@@ -342,6 +341,7 @@ angular
           })
           .then(function () {
             usSpinnerService.stop('start-dojo-spinner');
+            intercomService.InitIntercom();
             // We go to the next invalid step when the application has been previously started
             if (ctrl.leadId) ctrl.goToNextStep();
           });
