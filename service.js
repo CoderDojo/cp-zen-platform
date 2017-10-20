@@ -7,7 +7,6 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 
 var util = require('util');
 var cluster = require('cluster');
-//var heapdump = require('heapdump');
 var server;
 
 // Show 'starting' message
@@ -24,24 +23,14 @@ process.on('uncaughtException', function (err) {
    console.error(util.inspect(err.stack));
   }
   console.trace();
-  cleanShutdown();  // exit on uncaught exception
+  cleanShutdown(); // exit on uncaught exception
 });
 
-/*
-process.on('SIGUSR2', function() {
-  var snapshot = '/tmp/cp-zen-platform-' + Date.now() + '.heapsnapshot'
-  console.log('Got SIGUSR2, creating heap snapshot: ', snapshot);
-  heapdump.writeSnapshot(snapshot, function(err, filename) {
-    if (err) console.error('Error creating snapshot:', err);
-    console.log('dump written to', filename);
-  });
-});
-*/
 // Array of Worker processes
 var workers = [];
 
 // clean shut down - note cb is optional here (used in testsuite)
-var cleanShutdown = function(cb) {
+function cleanShutdown() {
   if (cluster.isMaster) {
     // shutdown all our workers - exit when all workers have exited..
     console.log("Master, got shutdown signal, shutting down workers..");
@@ -51,16 +40,17 @@ var cleanShutdown = function(cb) {
       else if (worker.kill) worker.kill();
       else if (worker.process && worker.process.kill) worker.process.kill();
     }
-  }else {
+  } else {
     console.log("Worker: " + cluster.worker.id + ' exiting');
     process.exit(0);
   }
-};
+}
 
 // handle process signals
 process.on('SIGTERM', cleanShutdown);
 process.on('SIGHUP', cleanShutdown);
 process.on('INT', cleanShutdown);
+process.on('SIGUSR2', cleanShutdown);
 
 // start worker
 function startWorker() {
