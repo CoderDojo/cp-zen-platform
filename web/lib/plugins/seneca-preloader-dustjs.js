@@ -12,10 +12,12 @@ module.exports.register = function (server, options, next) {
     if (_.isObject(request.route.settings.plugins.senecaPreloader) &&
       _.isString(request.route.settings.plugins.senecaPreloader.handler)) {
       var handler = request.route.settings.plugins.senecaPreloader.handler;
-      server.plugins.senecaPreloader[handler](request, function (preloaded) {
-        request.locals.context.preload = preloaded;
-        request.locals.context.preload.url = request.connection.info.protocol + '://' + request.info.host + request.url.path;
-        request.locals.context.preload.image.push('https://zen.coderdojo.com/components/cd-common/images/coderdojo-logo-light-bg.svg');
+      server.plugins.senecaPreloader[handler](request, function (err, preloaded) {
+        if (!err && preloaded) {
+          request.locals.context.preload = preloaded;
+          request.locals.context.preload.url = request.connection.info.protocol + '://' + request.info.host + request.url.path;
+          request.locals.context.preload.image.push('https://zen.coderdojo.com/components/cd-common/images/coderdojo-logo-light-bg.svg');
+        }
         reply.continue();
       });
     } else {
