@@ -59,7 +59,7 @@ exports.start = () => {
     },
   });
 
-  server
+  const registration = server
     .register([
       { register: vision },
       { register: inert },
@@ -210,4 +210,5 @@ exports.start = () => {
 
   // Handler for 500
   server.ext('onPreResponse', errorHandlers(server));
+  return registration;
 };
