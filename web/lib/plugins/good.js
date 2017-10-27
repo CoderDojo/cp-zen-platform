@@ -32,7 +32,7 @@ exports.register = (server, options, next) => {
     }
 
     server.register({ register: good, options: goodOptions }, () => {
-      server.log(['info'], { uid: server.methods.getUid() }, Date.now());
+      server.log(['info'], { uid: server.app.hostUid }, Date.now());
       next();
     });
   } else {

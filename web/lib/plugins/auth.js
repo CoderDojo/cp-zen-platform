@@ -29,7 +29,7 @@ exports.register = function (server, options, next) {
             }
             return callback(null, true, { scope: 'basic-user' }); // They're a `user`
           }
-          if (uErr) request.log(['error', '40x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: uErr }, Date.now());
+          if (uErr) request.log(['error', '40x'], { status: '403', host: server.app.hostUid, payload: request.payload, params: request.params, url: request.url, user: request.user, error: uErr }, Date.now());
           return callback(null, false);
         });
       },

@@ -1,32 +1,63 @@
-const expect = require('chai').expect;
+const chai = require('chai');
 const lab = require('lab').script();
-const server = require('../web/index');
+const serverFactory = require('../web/index');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
+const expect = chai.expect;
+chai.use(sinonChai);
 exports.lab = lab;
 lab.experiment('setup server', () => {
-  lab.before(() => {
-    console.log('before');
-    return server.start();
+  let server;
+  lab.before((done) => {
+    serverFactory.start()
+    .then((_server) => {
+      server = _server;
+      done();
+    });
   });
-  lab.test('should load plugins', () => {
-    expect(server.options.plugins).to.be.an('array');
-    return expect(server.options.plugins.length).to.be.equal(14);
+  lab.test('should load plugins', (done) => {
+    expect(Object.keys(server.registrations).length).to.be.equal(35);
+    done();
   });
-  lab.test('should start server');
-  lab.test('should set cors');
-  lab.test('should define locality');
-  lab.test('should set locale onPreAuth');
-  lab.describe('onPreResponse', () => {
-    lab.test('should set headers for cp-host');
-    lab.test('should log on 400');
-    lab.test('should continue for any api endpoint');
-    lab.test('should continue for anything that is not a 404 or a 401');
-    lab.test('should redirect to cdf login');
-    lab.test('should log');
-    lab.test('ultimately should render the index view');
+  lab.test('should set cors', (done) => {
+    server.inject('/', (res) => {
+      expect(res.headers['access-control-allow-credentials']).to.equal(true);
+      expect(res.headers['access-control-allow-headers']).to.equal('Authorization,Content-Type,If-None-Match');
+      expect(res.headers['access-control-allow-methods']).to.equal('GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS');
+      expect(res.headers['access-control-allow-origin']).to.include('https://changex.org https://coderdojo.com http://localhost');
+      expect(res.headers['access-control-expose-headers']).to.equal('WWW-Authenticate,Server-Authorization');
+      expect(res.headers['access-control-max-age']).to.equal('86400');
+      done();
+    });
   });
 
-  lab.describe('onPreResponse 2', () => {
-    lab.test('should call http-error-handler');
+  // lab.describe('onRequest', () => {
+  //   lab.test('should set onRequest if env is prod or staging');
+  //   lab.test('should not set onRequest');
+  // });
+
+  lab.describe('methods', () => {
+    lab.test('should define locality', (done) => {
+      expect(server.methods.locality).to.be.a('function');
+      done();
+    });
   });
+  lab.describe('server.app constants', () => {
+    lab.test('should set hostUid', (done) => {
+      expect(server.app.hostUid).to.be.a('string');
+      done();
+    });
+  });
+  // lab.test('should register onPreAuth', (done) => {
+  //   done();
+  // });
+  //
+  // lab.test('should register onPreResponse', (done) => {
+  //   done();
+  // });
+  //
+  // lab.test('shoud register http-error-handler onPreResponse-2', (done) => {
+  //   done();
+  // });
 });

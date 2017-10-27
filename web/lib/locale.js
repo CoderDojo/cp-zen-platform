@@ -1,5 +1,3 @@
-
-
 const locale = require('locale');
 const languages = require('../config/languages.js');
 const _ = require('lodash');

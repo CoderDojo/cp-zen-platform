@@ -20,6 +20,7 @@ exports.register = function (server, options, next) {
   function errHandler(err) {
     next(err);
   }
+  console.log('cors2 :', server.settings.connections.routes.cors);
   apis.forEach((api) => {
     server.register(api, errHandler);
   });
