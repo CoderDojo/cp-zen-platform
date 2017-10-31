@@ -49,7 +49,6 @@
     "good-http": "5.0.x",
     "hapi": "16.x",
     "hapi-auth-cookie": "7.x",
-    "hapi-cors-headers": "^1.0.0",
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
     "hapi-ip2country-plugin": "^1.0.1",
