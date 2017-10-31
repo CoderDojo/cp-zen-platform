@@ -1,6 +1,7 @@
 const chai = require('chai');
 const lab = require('lab').script();
 const serverFactory = require('../web/index');
+const sinon = require('sinon');
 
 const expect = chai.expect;
 exports.lab = lab;
@@ -10,12 +11,22 @@ lab.experiment('setup server', () => {
     serverFactory.start()
       .then((_server) => {
         server = _server;
+        server.seneca.act = function (args, cb) { cb(null, {}); };
         done();
       });
   });
   lab.describe('should load plugins', () => {
     lab.test('to be always the same length', (done) => {
-      expect(Object.keys(server.registrations).length).to.be.equal(35);
+      let expectedQty = 34;
+      // Set up good
+      if(process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
+        expectedQty ++;
+      }
+      // Set up onRequest x-forwarded-proto
+      if(process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+        expectedQty ++;
+      }
+      expect(Object.keys(server.registrations).length).to.be.equal(expectedQty);
       done();
     });
     // lab.test('should set onRequest if env is prod or staging');
@@ -47,7 +58,6 @@ lab.experiment('setup server', () => {
         url: '/api/2.0/dojos/stats',
         headers: { origin: 'http://google.com' } }, (res) => {
         // Should have headers because different domain
-        expect(res.headers['access-control-allow-credentials']).to.be.equal('true');
         expect(res.headers).to.have.any.keys('access-control-allow-origin');
         // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
         done();

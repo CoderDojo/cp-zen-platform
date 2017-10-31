@@ -8,6 +8,7 @@ const fn = require('../../../web/lib/plugins/seneca-event-preloader');
 const expect = chai.expect;
 chai.use(sinonChai);
 exports.lab = lab;
+// NOTE : if those test fails, you may be missing translations
 lab.describe('seneca-event-preloader', () => {
   lab.test('should use next event date', (done) => {
     // If you work past 23pm, blame yourself for the test not passing
@@ -27,7 +28,7 @@ lab.describe('seneca-event-preloader', () => {
     };
     const expectedPreloaded = {
       title: 'Do-Joe | CoderDojo',
-      description: `Event1 at Do-Joe on ${formattedStartTime}`,
+      description: `Event1 à Do-Joe, le ${formattedStartTime}`,
       image: ['https://s3-eu-west-1.amazonaws.com/zen-dojo-images/42'],
       'image:width': 300,
       'image:height': 300,
@@ -68,7 +69,7 @@ lab.describe('seneca-event-preloader', () => {
     };
     const expectedPreloaded = {
       title: 'Do-Joe | CoderDojo',
-      description: `Event1 at Do-Joe on ${formattedStartTime}`,
+      description: `Event1 à Do-Joe, le ${formattedStartTime}`,
       image: ['https://s3-eu-west-1.amazonaws.com/zen-dojo-images/42'],
       'image:width': 300,
       'image:height': 300,

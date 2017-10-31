@@ -8,7 +8,7 @@
     "migrate": "node_modules/.bin/migrate",
     "start": "node service.js",
     "postinstall": "bower install --allow-root",
-    "test": "sh -c 'source ./web/config/development.env;lab test/ -P spec'",
+    "test": "sh -c '. ./web/config/development.env;./node_modules/.bin/lab test/ -P spec'",
     "jshint": "./node_modules/.bin/gulp jshint",
     "lint": "./node_modules/.bin/gulp lint",
     "fix": "eslint . --fix",

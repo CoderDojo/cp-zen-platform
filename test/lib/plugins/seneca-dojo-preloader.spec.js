@@ -15,7 +15,7 @@ lab.describe('seneca-dojo-preloader', () => {
     };
     const expectedPreloaded = {
       title: 'Do-Joe | CoderDojo',
-      description: 'Do-Joe in France',
+      description: 'Do-Joe en France',
       image: ['https://s3-eu-west-1.amazonaws.com/zen-dojo-images/1'],
       'image:width': 300,
       'image:height': 300,
