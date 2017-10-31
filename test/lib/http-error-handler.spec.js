@@ -11,14 +11,19 @@ lab.describe('http-error-handler', () => {
   const server = {};
   let fn;
   const boomMock = {
-    badImplementation: sinon.spy(),
-    badRequest: sinon.spy(),
+    badImplementation: sinon.stub().returns('badImplementation'),
+    badRequest: sinon.stub().returns('badRequest'),
   };
   lab.before((done) => {
     server.app = {};
     fn = proxy('../../web/lib/http-error-handler.js',
       { boom: boomMock },
     );
+    done();
+  });
+  lab.beforeEach((done) => {
+    boomMock.badImplementation.resetHistory();
+    boomMock.badRequest.resetHistory();
     done();
   });
   lab.test('should default statusCode to 500 and transform into a badImplementation', (done) => {
@@ -33,6 +38,7 @@ lab.describe('http-error-handler', () => {
     const replyMock = sinon.spy();
     fn(server)(reqMock, replyMock);
     expect(replyMock).to.have.been.calledOnce;
+    expect(replyMock).to.have.been.calledWith('badImplementation');
     expect(boomMock.badImplementation).to.have.been.calledOnce;
     done();
   });
@@ -67,6 +73,7 @@ lab.describe('http-error-handler', () => {
     const replyMock = sinon.spy();
     fn(server)(reqMock, replyMock);
     expect(replyMock).to.have.been.calledOnce;
+    expect(replyMock).to.have.been.calledWith('badRequest');
     expect(boomMock.badRequest).to.have.been.calledOnce;
     expect(boomMock.badRequest).to
       .have.been.calledWith(reqMock.response.output.payload.message);

@@ -16,6 +16,10 @@ lab.describe('dust-i18n', () => {
     });
     done();
   });
+  lab.beforeEach((done) => {
+    translaterSpy.resetHistory();
+    done();
+  });
   lab.test('should get default locale', (done) => {
     const chunk = {
       write: sinon.spy(),
@@ -23,9 +27,7 @@ lab.describe('dust-i18n', () => {
     const context = {
       stack: { head: {} },
     };
-    let bodies;
-    let params;
-    fn(chunk, context, bodies, params);
+    fn(chunk, context);
     expect(translaterSpy).to.have.been.calledWith('en_US');
     expect(chunk.write).to.have.been.calledWith('a');
     done();
@@ -38,9 +40,7 @@ lab.describe('dust-i18n', () => {
     const context = {
       stack: { head: { context: { locality: 'fr_FR' } } },
     };
-    let bodies;
-    let params;
-    fn(chunk, context, bodies, params);
+    fn(chunk, context);
     expect(translaterSpy).to.have.been.calledWith('fr_FR');
     expect(chunk.write).to.have.been.calledWith('a');
     done();
@@ -53,9 +53,7 @@ lab.describe('dust-i18n', () => {
     const context = {
       stack: { tail: { head: { context: { locality: 'jp_JP' } } } },
     };
-    let bodies;
-    let params;
-    fn(chunk, context, bodies, params);
+    fn(chunk, context);
     expect(translaterSpy).to.have.been.calledWith('jp_JP');
     expect(chunk.write).to.have.been.calledWith('a');
     done();
@@ -68,10 +66,21 @@ lab.describe('dust-i18n', () => {
     const context = {
       stack: { tail: { tail: { head: { context: { locality: 'de_DE' } } } } },
     };
-    let bodies;
-    let params;
-    fn(chunk, context, bodies, params);
+    fn(chunk, context);
     expect(translaterSpy).to.have.been.calledWith('de_DE');
+    expect(chunk.write).to.have.been.calledWith('a');
+    done();
+  });
+  lab.test('should pass down params to translater', (done) => {
+    const params = 'b';
+    const chunk = {
+      write: sinon.spy(),
+    };
+    const context = {
+      stack: { tail: { tail: { head: { context: { locality: 'de_DE' } } } } },
+    };
+    fn(chunk, context, null, params);
+    expect(translaterSpy).to.have.been.calledWith('de_DE', 'b');
     expect(chunk.write).to.have.been.calledWith('a');
     done();
   });

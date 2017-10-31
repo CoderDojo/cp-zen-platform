@@ -10,7 +10,7 @@ lab.experiment('setup server', () => {
     serverFactory.start()
       .then((_server) => {
         server = _server;
-        server.seneca.act = function (args, cb) { cb(null, {}); };
+        server.seneca.act = function (args, cb) { if (cb) { cb(null, {}); } };
         done();
       });
   });
@@ -43,21 +43,29 @@ lab.experiment('setup server', () => {
     // });
   });
   lab.describe('should set cors', () => {
-    lab.test('when on same domain, no headers', (done) => {
-      server.inject('/api/2.0/dojos/stats', (res) => {
-        // Should have no headers because same domain
+    lab.test('when GET on same domain, no headers', (done) => {
+      server.inject('/api/2.0/dojos/user-permissions', (res) => {
         expect(res.headers).not.to.have.keys('access-control-allow-origin');
         expect(res.headers).not.to.have.keys('access-control-allow-credentials');
         // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
         done();
       });
     });
-    lab.test('when on different domain, should block with CORS', (done) => {
+    lab.test('when POST on same domain, no headers', (done) => {
+      server.inject({ method: 'POST', url: '/api/2.0/dojos/dojo-stats' }, (res) => {
+        expect(res.headers).not.to.have.keys('access-control-allow-origin');
+        expect(res.headers).not.to.have.keys('access-control-allow-credentials');
+        // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
+        done();
+      });
+    });
+    lab.test('when on different domain, should block with no CORS', (done) => {
       server.inject({ method: 'GET',
-        url: '/api/2.0/dojos/stats',
+        url: '/api/2.0/dojos/user-permissions',
         headers: { origin: 'http://google.com' } }, (res) => {
-        // Should have headers because different domain
-        expect(res.headers).to.have.any.keys('access-control-allow-origin');
+        // Should have no headers because different domain which is not a valid one
+        expect(res.headers).to.not.have.keys('access-control-allow-origin');
+        expect(res.headers).to.not.have.keys('access-control-allow-credentials');
         // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
         done();
       });

@@ -31,6 +31,17 @@ lab.describe('dust-load-open-graph', () => {
     expect(chunk.write).to.have.been.calledWith('<meta property="og:title" content="a"/><meta property="og:title" content="b"/>');
     done();
   });
+  lab.test('should apply multiple different opengraph tags based on context', (done) => {
+    const chunk = {
+      write: sinon.spy(),
+    };
+    const context = {
+      stack: { head: { context: { preload: { title: ['a', 'b'], doubidou: 'a' } } } },
+    };
+    fn(chunk, context);
+    expect(chunk.write).to.have.been.calledWith('<meta property="og:title" content="a"/><meta property="og:title" content="b"/><meta property="og:doubidou" content="a"/>');
+    done();
+  });
   lab.test('should leave the chunk untouched if no context', (done) => {
     const chunk = {
       write: sinon.spy(),
