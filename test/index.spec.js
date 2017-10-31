@@ -1,7 +1,6 @@
 const chai = require('chai');
 const lab = require('lab').script();
 const serverFactory = require('../web/index');
-const sinon = require('sinon');
 
 const expect = chai.expect;
 exports.lab = lab;
@@ -19,12 +18,12 @@ lab.experiment('setup server', () => {
     lab.test('to be always the same length', (done) => {
       let expectedQty = 34;
       // Set up good
-      if(process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
-        expectedQty ++;
+      if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
+        expectedQty += 1;
       }
       // Set up onRequest x-forwarded-proto
-      if(process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
-        expectedQty ++;
+      if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+        expectedQty += 1;
       }
       expect(Object.keys(server.registrations).length).to.be.equal(expectedQty);
       done();
