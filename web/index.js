@@ -10,7 +10,6 @@ const hapiEtags = require('hapi-etags');
 const ip2country = require('hapi-ip2country-plugin');
 const vision = require('./lib/plugins/vision');
 const cdAuth = require('./lib/plugins/auth');
-const hapiCors = require('hapi-cors-headers');
 const scooterAndBlankie = require('./lib/plugins/scooterAndBlankie');
 const controllers = require('./controllers');
 const senecaPreloaders = require('./lib/plugins/seneca-preloader-dustjs');
@@ -35,19 +34,9 @@ require('./lib/dust-load-open-graph.js');
 
 exports.start = () => {
   const port = process.env.PORT || 8000;
-  const host = process.env.HOSTNAME || '127.0.0.1';
-  const protocol = process.env.PROTOCOL || 'http';
-  const hostWithPort = `${protocol}://${host}:${port}`;
   const uid = cuid();
   const hasher = crypto.createHash('sha256');
   hasher.update(os.hostname());
-  options.hapi.connections.routes.cors = {
-    // origin: ['*']
-    // origin: ['https://changex.org'],
-    origin: [hostWithPort], //, 'https://changex.org', 'https://coderdojo.com', 'http://localhost'],
-    // additionalHeaders: ['Cache-Control', 'x-forwarded-proto', 'Accept-Language', 'Accept-Encoding', 'Content-Length', 'Connection', 'Cookie', 'Host', 'Origin', 'Pragma'],
-    credentials: true,
-  };
   const server = new hapi.Server(options.hapi);
   server.app.availableLocales = new locale.Locales(_.pluck(languages, 'code'));
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;
@@ -89,7 +78,6 @@ exports.start = () => {
     ])
     .then(() =>
       server.start().then(() => {
-        console.log('cors :', server.settings.connections.routes.cors);
         console.log('[%s] Listening on http://localhost:%d', env, port);
       }),
     )
@@ -123,7 +111,6 @@ exports.start = () => {
   server.ext('onPreAuth', onPreAuth(server));
 
   //  TODO: merge onPreResponses cause they conflict
-  // server.ext('onPreResponse', hapiCors);
   // Handler for 404/401
   server.ext('onPreResponse', onPreResponse(server));
 

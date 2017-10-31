@@ -12,7 +12,7 @@ exports.register = (server, options, next) => {
       responsePayload: true,
       reporters: [],
     };
-    if (process.env.HAPI_DEBUG) {
+    if (process.env.HAPI_DEBUG === 'true') {
       const goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
       goodOptions.reporters.push({
         reporter: goodFile,
