@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:carbon-alpine
 MAINTAINER butlerx <butlerx@notthe.cloud>
 ARG DEP_VERSION=latest
 RUN apk add --update git make gcc g++ python && \
