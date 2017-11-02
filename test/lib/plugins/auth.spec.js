@@ -8,20 +8,19 @@ const expect = chai.expect;
 chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('auth', () => {
+  const sandbox = sinon.sandbox.create();
   const serverStub = {
     register: (plugin, cb) => cb(), // We manually bypass plugin reg
     auth: {
-      strategy: sinon.spy(),
+      strategy: sandbox.spy(),
     },
   };
-  const nextStub = sinon.spy();
-  const registerSpy = sinon.spy(serverStub, 'register');
+  const nextStub = sandbox.spy();
+  const registerSpy = sandbox.spy(serverStub, 'register');
   const getUser = fn.register.attributes.fns.getUser;
   const validateFunc = fn.register.attributes.fns.validateFunc;
   lab.beforeEach((done) => {
-    serverStub.auth.strategy.reset();
-    nextStub.reset();
-    registerSpy.reset();
+    sandbox.reset();
     done();
   });
   lab.test('should register hapi-auth-cookie', (done) => {
@@ -34,6 +33,7 @@ lab.describe('auth', () => {
     fn.register(serverStub, {}, nextStub);
     expect(serverStub.auth.strategy).to.have.been
       .calledWith('seneca-login', 'cookie', sinon.match.object);
+    expect(nextStub).to.have.been.calledOnce;
     done();
   });
   lab.test('should get the user if there is a token', (done) => {
@@ -50,6 +50,22 @@ lab.describe('auth', () => {
     expect(cbSpy).to.have.been.calledWith(null, { ok: true });
     done();
   });
+
+  lab.test('should fail if the token doesnt exists', (done) => {
+    const reqMock = {
+      seneca: {
+        act: (args, cb) => cb(null, { ok: false }),
+      },
+    };
+    const senecaActSpy = sinon.spy(reqMock.seneca, 'act');
+    const cbSpy = sinon.spy();
+    getUser(reqMock, 'tokenMock', cbSpy);
+    expect(senecaActSpy).to.have.been
+      .calledWith({ role: 'user', cmd: 'auth', token: 'tokenMock' }, sinon.match.func);
+    expect(cbSpy).to.have.been.calledWith('login not ok');
+    done();
+  });
+
   lab.test('should skip the retrieval of user if there is no token', (done) => {
     const reqMock = {
       seneca: {
