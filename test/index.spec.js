@@ -28,6 +28,9 @@ lab.experiment('setup server', () => {
       expect(Object.keys(server.registrations).length).to.be.equal(expectedQty);
       done();
     });
+    // Tests are commented out as mocking server is a pain
+    // Probably doable, but not a priority right now as most of what we wanted is tested out
+
     // lab.test('should set onRequest if env is prod or staging');
     // lab.test('should not set onRequest');
     // lab.test('should register onPreAuth', (done) => {
