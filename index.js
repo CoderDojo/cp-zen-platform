@@ -30,9 +30,10 @@ function cleanShutdown() {
 }
 
 // Show 'starting' message
-let starting = `Starting ${TITLE}`;
-if (cluster.isWorker) starting += ` Worker Id: ${cluster.worker.id} pid: ${process.pid}`;
-else starting = `${starting} Master: ${process.pid}`;
+let starting = `Starting ${TITLE} `;
+starting += cluster.isWorker
+  ? `Worker Id: ${cluster.worker.id} pid: ${process.pid}`
+  : `Master: ${process.pid}`;
 console.log(starting);
 
 // handle uncaught exceptions
