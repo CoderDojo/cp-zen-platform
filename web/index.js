@@ -38,7 +38,8 @@ exports.start = () => {
   const hasher = crypto.createHash('sha256');
   hasher.update(os.hostname());
   const server = new hapi.Server(options.hapi);
-  server.app.availableLocales = new locale.Locales(_.pluck(languages, 'code'));
+  server.app.defaultLanguage = 'en_US';
+  server.app.availableLocales = new locale.Locales(_.pluck(languages, 'code'), server.app.defaultLanguage);
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;
   // Set up HAPI
   server.connection({
