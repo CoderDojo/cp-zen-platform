@@ -7,7 +7,6 @@
       uglify = require('gulp-uglify'),
       jshint = require('gulp-jshint'),
       eslint = require('gulp-eslint'),
-      KarmaServer = require('karma').Server,
       dependencies = require('./web/public/dependencies.json'),
       app = require('./web/public/app.json'),
       cdfApp = require('./web/public/cdf-app.json'),

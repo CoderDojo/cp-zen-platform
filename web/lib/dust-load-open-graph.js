@@ -1,5 +1,3 @@
-
-
 const dust = require('dustjs-linkedin');
 const _ = require('lodash');
 
@@ -20,3 +18,4 @@ dust.helpers.setMeta = function (chunk, context) {
   }
   return chunk.write(metas);
 };
+module.exports = dust.helpers.setMeta;
