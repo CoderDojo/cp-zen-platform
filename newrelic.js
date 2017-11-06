@@ -10,6 +10,7 @@
 exports.config = {
   app_name: ['cp-zen-platform'],
   agent_enabled: false, // set via NEW_RELIC_ENABLED for production
+  capture_params: true,
   license_key: '', // set via NEW_RELIC_LICENSE_KEY
   filepath: '/tmp/newrelic_agent_zenplatform.log',
 };
