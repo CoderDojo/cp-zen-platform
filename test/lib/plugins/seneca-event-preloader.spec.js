@@ -51,7 +51,7 @@ lab.experiment('seneca-event-preloader', () => {
       .calledWith({ role: 'cd-events', cmd: 'getEvent', id: 1 }, sinon.match.func);
     expect(reqMock.seneca.act).to.have.been
       .calledWith({ role: 'cd-dojos', cmd: 'load', id: 42 }, sinon.match.func);
-    expect(cbSpy).to.have.been.calledWith(expectedPreloaded);
+    expect(cbSpy).to.have.been.calledWith(null, expectedPreloaded);
     done();
   });
 
@@ -86,7 +86,7 @@ lab.experiment('seneca-event-preloader', () => {
       .calledWith({ role: 'cd-events', cmd: 'getEvent', id: 1 }, sinon.match.func);
     expect(reqMock.seneca.act).to.have.been
       .calledWith({ role: 'cd-dojos', cmd: 'load', id: 42 }, sinon.match.func);
-    expect(cbSpy).to.have.been.calledWith(expectedPreloaded);
+    expect(cbSpy).to.have.been.calledWith(null, expectedPreloaded);
     done();
   });
   lab.test('should not return anything if dojo data is not found', (done) => {
@@ -105,14 +105,14 @@ lab.experiment('seneca-event-preloader', () => {
             endTime: tomorrow.format('YYYY-MM-DDTHH:mm:ssZ') }] });
     reqMock.seneca.act
       .onCall(1)
-      .callsArgWith(1, null, null);
+      .callsArgWith(1, 'err', null);
     fn(reqMock, cbSpy);
     expect(reqMock.seneca.act).to.have.been
       .calledWith({ role: 'cd-events', cmd: 'getEvent', id: 1 }, sinon.match.func);
     expect(reqMock.seneca.act).to.have.been
       .calledWith({ role: 'cd-dojos', cmd: 'load', id: 42 }, sinon.match.func);
     expect(cbSpy).to.have.been.calledOnce;
-    expect(cbSpy.getCall(0).args.length).to.equal(0);
+    expect(cbSpy).to.have.been.calledWith('err');
     done();
   });
   lab.test('should not return anything if event data is not found', (done) => {
@@ -123,12 +123,12 @@ lab.experiment('seneca-event-preloader', () => {
     const cbSpy = sinon.spy();
     reqMock.seneca.act
       .onCall(0)
-      .callsArgWith(1, null, null);
+      .callsArgWith(1, 'err', null);
     fn(reqMock, cbSpy);
     expect(reqMock.seneca.act).to.have.been
       .calledWith({ role: 'cd-events', cmd: 'getEvent', id: 1 }, sinon.match.func);
     expect(cbSpy).to.have.been.calledOnce;
-    expect(cbSpy.getCall(0).args.length).to.equal(0);
+    expect(cbSpy).to.have.been.calledWith('err');
     done();
   });
 });

@@ -30,7 +30,7 @@ lab.describe('seneca-dojo-preloader', () => {
         urlSlug: '1/FR',
       } },
     sinon.match.func);
-    expect(cbSpy).to.have.been.calledWith(expectedPreloaded);
+    expect(cbSpy).to.have.been.calledWith(null, expectedPreloaded);
     done();
   });
   lab.test('should skip if no dojo found', (done) => {
@@ -40,7 +40,7 @@ lab.describe('seneca-dojo-preloader', () => {
     };
     const cbSpy = sinon.spy();
     fn(reqMock, cbSpy);
-    reqMock.seneca.act.callArgWith(1, null, null);
+    reqMock.seneca.act.callArgWith(1, 'err', null);
     expect(reqMock.seneca.act).to.have.been.calledWith({ role: 'cd-dojos',
       cmd: 'find',
       query: {
@@ -48,7 +48,7 @@ lab.describe('seneca-dojo-preloader', () => {
       } },
     sinon.match.func);
     expect(cbSpy).to.have.been.calledOnce;
-    expect(cbSpy.getCall(0).args.length).to.equal(0);
+    expect(cbSpy).to.have.been.calledWith('err');
     done();
   });
 });

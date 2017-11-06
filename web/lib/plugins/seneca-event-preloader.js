@@ -28,7 +28,7 @@ module.exports = function (request, cb) {
       });
       request.seneca.act({ role: 'cd-dojos', cmd: 'load', id: event.dojoId },
         (dErr, dojo) => {
-          if (err || !dojo) return cb(err);
+          if (dErr || !dojo) return cb(dErr);
           const localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
           let locale = (localesFromCountry && localesFromCountry[0].langCultureName) ||
                         defaultLanguage;
