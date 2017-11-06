@@ -10,7 +10,6 @@ module.exports = server => (request, reply) => {
   const localesFormReq =
     (translateCookie && translateCookie.replace(/"/g, '')) || request.headers['accept-language'];
   const requestLocales = new locale.Locales(localesFormReq);
-
   request.app.context = {
     locality: requestLocales.best(server.app.availableLocales).code,
   };

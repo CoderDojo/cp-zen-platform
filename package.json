@@ -58,7 +58,7 @@
     "jed": "1.0.2",
     "joi": "10.x",
     "less": "2.7.1",
-    "locale": "0.0.20",
+    "locale": "0.1.0",
     "localizr": "0.1.0",
     "lodash": "3.7.0",
     "lodash-deep": "1.6.0",
