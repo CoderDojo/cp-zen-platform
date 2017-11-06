@@ -15,7 +15,8 @@ module.exports = function (request, cb) {
 
   request.seneca.act({ role: 'cd-events', cmd: 'getEvent', id: request.params.eventId },
     (err, event) => {
-      if (err || !event) return cb(err); // If metadata fails to load, continue loading the page normally
+      // If metadata fails to load, continue loading the page normally
+      if (err || !event) return cb(err);
       const now = new Date();
       _.some(event.dates, (date) => {
         const x = moment.utc(date.startTime);

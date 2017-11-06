@@ -16,7 +16,7 @@ lab.describe('auth', () => {
     },
   };
   const nextStub = sandbox.spy();
-  const registerSpy = sandbox.spy(serverStub, 'register');
+  sandbox.spy(serverStub, 'register');
   const getUser = fn.register.attributes.fns.getUser;
   const validateFunc = fn.register.attributes.fns.validateFunc;
   lab.beforeEach((done) => {

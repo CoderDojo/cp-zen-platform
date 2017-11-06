@@ -24,7 +24,6 @@ function cleanShutdown() {
       else if (worker.process && worker.process.kill) worker.process.kill();
     }
   } else {
-
     console.log(`Worker: ${cluster.worker.id} exiting`);
     process.exit(0);
   }

@@ -13,7 +13,8 @@ module.exports = function (request, cb) {
     cmd: 'find',
     query: { urlSlug: `${request.params.id}/${request.params.alpha2}` } },
   (err, dojo) => {
-    if (err || !dojo) return cb(err); // If metadata fails to load, continue loading the page normally
+    // If metadata fails to load, continue loading the page normally
+    if (err || !dojo) return cb(err);
     const localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
     let locale = (localesFromCountry && localesFromCountry[0].langCultureName) || defaultLanguage;
     locale = locale.replace('-', '_');

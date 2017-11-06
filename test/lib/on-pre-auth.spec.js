@@ -14,7 +14,7 @@ lab.describe('onPreAuth', () => {
   const server = {};
   lab.before((done) => {
     server.app = {
-      availableLocales: new locale.Locales(_.pluck(languages, 'code'), 'en_US')
+      availableLocales: new locale.Locales(_.pluck(languages, 'code'), 'en_US'),
     };
     done();
   });
