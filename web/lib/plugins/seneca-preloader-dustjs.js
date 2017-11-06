@@ -1,12 +1,10 @@
-
-
 const _ = require('lodash');
 
 const preloaders = {};
 preloaders['seneca-event-preloader'] = require('./seneca-event-preloader');
 preloaders['seneca-dojo-preloader'] = require('./seneca-dojo-preloader');
 
-exports.register = function (server, options, next) {
+exports.register = (server, options, next) => {
   _.each(options.handlers, (handler) => {
     server.expose(handler, preloaders[handler]);
   });

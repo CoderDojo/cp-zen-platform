@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const glob = require('glob');
 const dust = require('dustjs-linkedin');
@@ -15,7 +13,6 @@ const confs = {};
 confs.production = require('../config/web-production.js');
 confs.staging = require('../config/web-staging.js');
 confs.development = require('../config/web-development.js');
-
 
 function preparePaths(globs) {
   let localScripts = [];
@@ -42,15 +39,15 @@ if (process.env.UIDEBUG === 'true') {
   scripts = preparePaths(appGlobs);
   let cloneAppGlobs = appGlobs.slice(0);
   cloneAppGlobs = cloneAppGlobs.concat(cdfAppGlobs);
-  for (const appIndex in cloneAppGlobs) { // eslint-disable-line no-restricted-syntax
-    if (cloneAppGlobs[appIndex].indexOf('init-master') > -1) {
-      cloneAppGlobs.splice(appIndex, 1);
+  cloneAppGlobs.forEach((appGlob, index) => {
+    if (appGlob.includes('init-master')) {
+      cloneAppGlobs.splice(index, 1);
     }
-  }
+  });
   cdfScripts = preparePaths(cloneAppGlobs);
 }
 
-dust.helpers.loadJS = function (chunk, context, bodies, params) {
+dust.helpers.loadJS = (chunk, context, bodies, params) => {
   let scriptTags = '';
   let conf;
   let js = 'window.zenConf = {};';
@@ -61,12 +58,11 @@ dust.helpers.loadJS = function (chunk, context, bodies, params) {
   } else {
     conf = confs.development;
   }
-  // eslint-disable-next-line guard-for-in
-  for (const variable in conf) { // eslint-disable-line no-restricted-syntax
-    js += `window.zenConf.${variable} = '${conf[variable]}';`;
-  }
+  Object.entries(conf).forEach(([key, variable]) => {
+    js += `window.zenConf.${key} = '${variable}';`;
+  });
   scriptTags = `<script>${js}</script>`;
-  const localScripts = params.src.indexOf('cdf') > -1 ? cdfScripts : scripts;
+  const localScripts = params.src.includes('cdf') ? cdfScripts : scripts;
   for (let i = 0; i < localScripts.length; i += 1) {
     scriptTags += `<script src="${localScripts[i]}"></script>`;
   }

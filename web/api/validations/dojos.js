@@ -1,7 +1,7 @@
 
 const Joi = require('joi');
 
-module.exports = function () {
+module.exports = () => {
   const joiValidator = {
     latitude() {
       return Joi.number().min(-90).max(90);

@@ -7,7 +7,7 @@ const defaultImage = Buffer.from(fs.readFileSync(path.join(__dirname, '/../publi
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
 
-exports.register = function (server, eOptions, next) {
+exports.register = (server, eOptions, next) => {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
   const handlers = handlerFactory(server, 'cd-profiles');
 

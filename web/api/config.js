@@ -4,7 +4,7 @@ const _ = require('lodash');
 const joi = require('joi');
 const Boom = require('boom');
 
-exports.register = function (server, eOptions, next) {
+exports.register = (server, eOptions, next) => {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
 
   function getConfigHandler(request, reply) {

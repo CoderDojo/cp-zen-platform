@@ -1,5 +1,3 @@
-
-
 module.exports = [{
   method: 'GET',
   path: '/champion/template/{name*}',

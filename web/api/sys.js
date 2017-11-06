@@ -1,7 +1,7 @@
 
 const _ = require('lodash');
 
-exports.register = function (server, eOptions, next) {
+exports.register = (server, eOptions, next) => {
   const options = _.extend({ basePath: '/api/2.0/sys' }, eOptions);
 
   function pingHandler(request, reply) {

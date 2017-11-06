@@ -7,15 +7,16 @@ const i18nHelper = new I18NHelper({
   domain: 'coder-dojo-platform',
 });
 
-module.exports = function (locale, params) {
+module.exports = (locale, params) => {
   let translation = i18nHelper.getClosestTranslation(locale, params.key);
   if (translation) {
     if (params.context) {
       translation = translation.withContext(params.context);
     }
-    translation = params.count // eslint-disable-line no-nested-ternary
+    const paramsVar = params.var ? translation.fetch(params.var) : translation.fetch();
+    translation = params.count
       ? translation.ifPlural(params.count, params.key).fetch(params.count)
-      : params.var ? translation.fetch(params.var) : translation.fetch();
+      : paramsVar;
   } else {
     // Uncomment this to track down missing messages.po entries used in templates
     // console.log('Missing translation', params.key);

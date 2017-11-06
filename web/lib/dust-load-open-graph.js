@@ -1,7 +1,7 @@
 const dust = require('dustjs-linkedin');
 const _ = require('lodash');
 
-dust.helpers.setMeta = function (chunk, context) {
+dust.helpers.setMeta = (chunk, context) => {
   let metas = '';
   function applyMeta(value, key) {
     if (_.isString(value)) {

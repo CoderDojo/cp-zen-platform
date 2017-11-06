@@ -8,7 +8,7 @@ const _ = require('lodash');
 const languages = require('country-language');
 const moment = require('moment');
 
-module.exports = function (request, cb) {
+module.exports = (request, cb) => {
   const preloaded = {};
   const defaultLanguage = 'en_US';
 

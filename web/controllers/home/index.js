@@ -1,4 +1,3 @@
-
 const auth = require('../../lib/authentications');
 
 module.exports = [

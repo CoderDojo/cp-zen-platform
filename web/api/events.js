@@ -5,7 +5,7 @@ const auth = require('../lib/authentications');
 const Joi = require('joi');
 const handlerFactory = require('./handlers.js');
 
-exports.register = function (server, eOptions, next) {
+exports.register = (server, eOptions, next) => {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
   const handlers = handlerFactory(server, 'cd-events');
 

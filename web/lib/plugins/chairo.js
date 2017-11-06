@@ -1,7 +1,7 @@
 const chairo = require('chairo');
 const cache = require('chairo-cache');
 
-exports.register = function (server, options, next) {
+exports.register = (server, options, next) => {
   server.register({ register: chairo, options }, (err) => {
     if (err) return next(err);
 

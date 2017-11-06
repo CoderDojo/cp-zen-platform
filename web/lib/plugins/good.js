@@ -13,7 +13,9 @@ exports.register = (server, options, next) => {
       reporters: [],
     };
     if (process.env.HAPI_DEBUG === 'true') {
-      const goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
+      const goodLogFile = fs.existsSync('/var/log/zen')
+        ? '/var/log/zen/hapi-zen-platform.log'
+        : '/tmp/hapi-zen-platform.log';
       goodOptions.reporters.push({
         reporter: goodFile,
         events: { log: '*', response: '*' },

@@ -1,5 +1,3 @@
-
-
 const cacheTimes = require('../../config/cache-times');
 const auth = require('../../lib/authentications');
 

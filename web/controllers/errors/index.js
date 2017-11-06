@@ -1,5 +1,3 @@
-
-
 const cacheTimes = require('../../config/cache-times');
 
 module.exports = [{

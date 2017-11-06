@@ -6,7 +6,7 @@ const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
 const Boom = require('boom');
 
-exports.register = function (server, eOptions, next) {
+exports.register = (server, eOptions, next) => {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
   const handlers = handlerFactory(server, 'cd-users');
 
@@ -23,7 +23,7 @@ exports.register = function (server, eOptions, next) {
   }
 
   function handleLogin(target) {
-    return function (request, reply) {
+    return (request, reply) => {
       const args = { email: request.payload.email, password: request.payload.password };
       const cmd = target ? `${target}_login` : 'login';
       const msg = _.defaults({ role: 'user', cmd }, args);
@@ -39,7 +39,7 @@ exports.register = function (server, eOptions, next) {
   }
 
   function handleInstance(userType) {
-    return function (request, reply) {
+    return (request, reply) => {
       if (!request.user) {
         return reply({ user: null, login: null, ok: true });
       }
@@ -52,7 +52,7 @@ exports.register = function (server, eOptions, next) {
       }
 
       // Filter to limit the handleInstance to admin
-      if (userType && user.roles.indexOf(userType) < 0) {
+      if (userType && !user.roles.includes(userType)) {
         return reply({ user: null, login: null, ok: false });
       }
 

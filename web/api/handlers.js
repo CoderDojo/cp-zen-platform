@@ -5,7 +5,7 @@ _.mixin(require('lodash-deep'));
 const debug = require('debug')('cp-zen-platform:handlers');
 const Boom = require('boom');
 
-module.exports = function (server, role) {
+module.exports = (server, role) => {
   function checkPerms(request, act, callback) {
     //  TODO : return a token instead to ensure that there is no possible bypass of cp-zen
     const base = ['role', 'zenHostname', 'locality', 'user', 'cmd'];
@@ -25,7 +25,7 @@ module.exports = function (server, role) {
         if (resp.http$.status) code = resp.http$.status;
         if (resp.http$.redirect) return reply.redirect(resp.http$.redirect);
       }
-      if (type && ['csv', 'xml'].indexOf(type) > -1) {
+      if (type && ['csv', 'xml'].includes(type)) {
         if (type === 'csv') return reply(resp.data).header('Content-Type', 'application/csv').header('Content-Disposition');
         if (type === 'xml') return reply(resp.data).header('Content-Type', 'application/xml').header('Content-Disposition');
       } else {
@@ -83,14 +83,14 @@ module.exports = function (server, role) {
   }
 
   function actHandler(cmd, param, type, msgDefault) {
-    return function (request, reply) {
+    return (request, reply) => {
       doAct(request, reply, cmd, param, null, type, msgDefault);
     };
   }
 
   // If the act is having a specific rule on check_permissions, it needs to use this handler
   function actHandlerNeedsUser(cmd, param, opts, msgDefault) {
-    return function (request, reply) {
+    return (request, reply) => {
       // Note: request.user is set in onPostAuthHandler
       const user = request.user;
       if (!user) {
@@ -126,7 +126,7 @@ module.exports = function (server, role) {
 
   // Check if the user is a dojo Admin OR a cdfAdmin
   function actHandlerNeedsDojoAdmin(cmd, param, type, msgDefault) {
-    return function (request, reply) {
+    return (request, reply) => {
       // Note: request.user is set in onPostAuthHandler
       const user = request.user;
       if (!user) return reply(Boom.unauthorized('Not logged in'));

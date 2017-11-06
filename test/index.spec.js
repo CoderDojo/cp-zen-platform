@@ -7,12 +7,13 @@ exports.lab = lab;
 lab.experiment('setup server', () => {
   let server;
   lab.before((done) => {
-    serverFactory.start()
-      .then((_server) => {
-        server = _server;
-        server.seneca.act = function (args, cb) { if (cb) { cb(null, {}); } };
-        done();
-      });
+    serverFactory.start().then((_server) => {
+      server = _server;
+      server.seneca.act = (args, cb) => {
+        if (cb) cb(null, {});
+      };
+      done();
+    });
   });
   lab.describe('should load plugins', () => {
     lab.test('to be always the same length', (done) => {
@@ -63,37 +64,54 @@ lab.experiment('setup server', () => {
       });
     });
     lab.test('when on different domain, should block with no CORS', (done) => {
-      server.inject({ method: 'GET',
-        url: '/api/2.0/dojos/user-permissions',
-        headers: { origin: 'http://google.com' } }, (res) => {
-        // Should have no headers because different domain which is not a valid one
-        expect(res.headers).to.not.have.keys('access-control-allow-origin');
-        expect(res.headers).to.not.have.keys('access-control-allow-credentials');
-        // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
-        done();
-      });
+      server.inject(
+        {
+          method: 'GET',
+          url: '/api/2.0/dojos/user-permissions',
+          headers: { origin: 'http://google.com' },
+        },
+        (res) => {
+          // Should have no headers because different domain which is not a valid one
+          expect(res.headers).to.not.have.keys('access-control-allow-origin');
+          expect(res.headers).to.not.have.keys('access-control-allow-credentials');
+          // expect(res.statusCode).to.be.equal(401); // Inject does not apply browser restrictions
+          done();
+        },
+      );
     });
     lab.test('overwrite CORS to *', (done) => {
-      server.inject({ method: 'POST',
-        url: '/api/2.0/dojos',
-        headers: { origin: 'http://localhost:8000' } },
-      (res) => {
-        expect(res.headers['access-control-allow-credentials']).to.be.undefined;
-        expect(res.headers['access-control-allow-origin']).to.equal('http://localhost:8000');
-        expect(res.headers['access-control-expose-headers']).to.equal('WWW-Authenticate,Server-Authorization,cp-host');
-        done();
-      });
+      server.inject(
+        {
+          method: 'POST',
+          url: '/api/2.0/dojos',
+          headers: { origin: 'http://localhost:8000' },
+        },
+        (res) => {
+          expect(res.headers['access-control-allow-credentials']).to.be.undefined;
+          expect(res.headers['access-control-allow-origin']).to.equal('http://localhost:8000');
+          expect(res.headers['access-control-expose-headers']).to.equal(
+            'WWW-Authenticate,Server-Authorization,cp-host',
+          );
+          done();
+        },
+      );
     });
     lab.test('should allow external domains', (done) => {
-      server.inject({ method: 'POST',
-        url: '/api/2.0/dojos/load-dojo-users',
-        headers: { origin: 'https://changex.org' } },
-      (res) => {
-        expect(res.headers['access-control-allow-credentials']).to.be.equal('true');
-        expect(res.headers['access-control-allow-origin']).to.equal('https://changex.org');
-        expect(res.headers['access-control-expose-headers']).to.equal('WWW-Authenticate,Server-Authorization,cp-host');
-        done();
-      });
+      server.inject(
+        {
+          method: 'POST',
+          url: '/api/2.0/dojos/load-dojo-users',
+          headers: { origin: 'https://changex.org' },
+        },
+        (res) => {
+          expect(res.headers['access-control-allow-credentials']).to.be.equal('true');
+          expect(res.headers['access-control-allow-origin']).to.equal('https://changex.org');
+          expect(res.headers['access-control-expose-headers']).to.equal(
+            'WWW-Authenticate,Server-Authorization,cp-host',
+          );
+          done();
+        },
+      );
     });
   });
 

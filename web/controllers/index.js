@@ -1,17 +1,11 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const _ = require('lodash');
 const path = require('path');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const requireindex = require('requireindex');
 
 const controllers = requireindex(__dirname);
 const cacheTimes = require('../config/cache-times');
-const pkg = require('./package');
 
-// Remove package.json, it's not a controller.  All other non-index files/directories should be.
-delete controllers.package;
-
-exports.register = function (server, options, next) {
+exports.register = (server, options, next) => {
   // Add all the server routes from the controllers.
 
   _.each(controllers, (controller) => {
@@ -83,7 +77,10 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-  pkg,
+  pkg: {
+    name: 'controllers',
+    version: '0.0.0',
+  },
   name: 'cd-routes',
   dependencies: ['cd-auth', 'cd-vision', 'senecaPreloader'],
 };
