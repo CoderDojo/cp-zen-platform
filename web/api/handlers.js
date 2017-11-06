@@ -69,13 +69,13 @@ module.exports = function (server, role) {
       return checkPerms(request, msg, (err, response) => {
         if (err) {
           // Even if it's a 500, we hide our validator is broken, sshhhh :D
-          request.log(['error', '50x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
+          request.log(['error', '50x'], { status: '403', host: server.app.hostUid, payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
           return reply(Boom.forbidden());
         }
         if (response && response.allowed && _.isBoolean(response.allowed)) {
           return callAct(request, reply, msg, type);
         }
-        request.log(['error', '40x'], { status: '403', host: server.methods.getUid(), payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
+        request.log(['error', '40x'], { status: '403', host: server.app.hostUid, payload: request.payload, params: request.params, url: request.url, user: request.user, error: response }, Date.now());
         return reply(Boom.forbidden());
       });
     }

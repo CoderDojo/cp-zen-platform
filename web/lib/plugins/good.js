@@ -12,7 +12,7 @@ exports.register = (server, options, next) => {
       responsePayload: true,
       reporters: [],
     };
-    if (process.env.HAPI_DEBUG) {
+    if (process.env.HAPI_DEBUG === 'true') {
       const goodLogFile = fs.existsSync('/var/log/zen') ? '/var/log/zen/hapi-zen-platform.log' : '/tmp/hapi-zen-platform.log';
       goodOptions.reporters.push({
         reporter: goodFile,
@@ -32,7 +32,7 @@ exports.register = (server, options, next) => {
     }
 
     server.register({ register: good, options: goodOptions }, () => {
-      server.log(['info'], { uid: server.methods.getUid() }, Date.now());
+      server.log(['info'], { uid: server.app.hostUid }, Date.now());
       next();
     });
   } else {

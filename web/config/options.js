@@ -1,5 +1,10 @@
 const catboxMemory = require('catbox-memory');
 
+const port = process.env.PORT || 8000;
+const host = process.env.HOSTNAME || '127.0.0.1';
+const protocol = process.env.PROTOCOL || 'http';
+const hostWithPort = `${protocol}://${host}:${port}`;
+
 function forumModerators() {
   const moderators = process.env.FORUM_MODS || '';
   return moderators.split(',');
@@ -40,6 +45,12 @@ module.exports = {
         },
         payload: {
           maxBytes: 5242880,
+        },
+        cors: {
+          origin: [hostWithPort, 'https://changex.org', 'https://www.changex.org', 'https://coderdojo.com', `http://localhost:${port}`],
+          additionalExposedHeaders: ['cp-host'],
+          additionalHeaders: ['X-Requested-With', 'Cache-Control', 'X-Forwarded-Proto', 'Accept-Language', 'Accept-Encoding', 'Accept', 'Authorization', 'Content-Type', 'Content-Length', 'Connection', 'Cookie', 'Host', 'Pragma', 'User-Agent', 'Referer'],
+          credentials: true,
         },
       },
     },
