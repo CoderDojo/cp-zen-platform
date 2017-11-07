@@ -6,8 +6,7 @@
       ngAnnotate = require('gulp-ng-annotate'),
       uglify = require('gulp-uglify'),
       jshint = require('gulp-jshint'),
-      semistandard = require('gulp-semistandard'),
-      KarmaServer = require('karma').Server,
+      eslint = require('gulp-eslint'),
       dependencies = require('./web/public/dependencies.json'),
       app = require('./web/public/app.json'),
       cdfApp = require('./web/public/cdf-app.json'),
@@ -42,25 +41,17 @@
   });
 
   gulp.task('jshint', function () {
-    return gulp.src(relativePath([
-        './web/controllers/**/*.js',
-        './lib/**/*.js',
-        './web/models/!**!/!*.js',
-        './web/public/js/**/*.js'
-      ]))
+    return gulp.src(relativePath(['./web/public/**/*.js', '!./web/public/components/**', '!./web/public/dist/**']))
       .pipe(jshint())
       .pipe(jshint.reporter('default'))
       .pipe(jshint.reporter('fail'));
   });
 
-  gulp.task('semistandard', function () {
-    return gulp.src(relativePath([
-        './lib/**/*.js'
-      ]))
-      .pipe(semistandard())
-      .pipe(semistandard.reporter('default', {
-        breakOnError: true
-      }));
+  gulp.task('lint', function() {
+    return gulp.src(relativePath(['**/*.js']))
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
   });
 
   gulp.task('validateHTML', function () {
@@ -131,7 +122,7 @@
       .pipe(gulp.dest(relativePath('./web/public/dist/')));
   });
 
-  gulp.task('build', ['clean', 'semistandard', 'jshint', 'build-less', 'build-dependencies'], function () {
+  gulp.task('build', ['clean', 'jshint', 'lint', 'build-less', 'build-dependencies'], function () {
     var _app = Array.from(app);
     for (var index in cdfApp) {
       _app.push('!' + cdfApp[index]);
