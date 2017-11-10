@@ -2,9 +2,9 @@
 
 angular.module('cpZenPlatform').factory('userUtils',
 ['$location', '$window', '$translate', '$state', '$rootScope', 'cdDojoService',
-  'cdUsersService', 'auth', 'usSpinnerService', 'alertService', 'permissionService',
+  'cdUsersService', 'auth', 'usSpinnerService', 'alertService', 'permissionService', 'Analytics',
   function($location, $window, $translate, $state, $rootScope, cdDojoService,
-     cdUsersService, auth, usSpinnerService, alertService, permissionService){
+     cdUsersService, auth, usSpinnerService, alertService, permissionService, Analytics){
   var userUtils = {};
 
   var approvalRequired = ['mentor', 'champion'];
@@ -27,6 +27,7 @@ angular.module('cpZenPlatform').factory('userUtils',
   userUtils.doRegister = function (userFormData) {
     if(!userFormData.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
     delete userFormData.passwordConfirm;
+    var isAdult = false;
 
     // We need to know if the user is registering as a champion to create a dojo.
     // This is primarily for Salesforce on the backend.
@@ -39,6 +40,7 @@ angular.module('cpZenPlatform').factory('userUtils',
 
     if (this.getAge(userFormData.profile.dob) >= 18) {
       userFormData.user.initUserType = {'title':'Parent/Guardian','name':'parent-guardian'};
+      isAdult = true;
     } else if (this.getAge(userFormData.profile.dob) >= 13) {
       userFormData.user.initUserType = {'title':'Youth Over 13','name':'attendee-o13'};
     } else {
@@ -46,6 +48,7 @@ angular.module('cpZenPlatform').factory('userUtils',
     }
     var user = userFormData.user;
     auth.register(userFormData, function(data) {
+      Analytics.trackEvent($state.current.name, 'click', 'register' + (isAdult ? '_adult' : '_kid'));
       userFormData.referer = userFormData.referer && userFormData.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + userFormData.referer : userFormData.referer;
       if(data.ok) {
         auth.login(user, function(data) {
