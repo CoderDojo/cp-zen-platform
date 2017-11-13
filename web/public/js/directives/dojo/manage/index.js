@@ -274,7 +274,7 @@ var ctrller = function ($state, alertService, auth, tableUtils, cdDojoService,
       }
     }
     function getUserOrg () {
-      var userIds = _.compact(_.map(ctrl.dojos, 'creator').concat(_.map(ctrl.leads), 'userId'));
+      var userIds = _.compact(_.map(ctrl.dojos, 'creator').concat(_.map(ctrl.leads, 'userId')));
       return cdOrganisationsService.loadUsersOrg({userIds: userIds})
       .then(function (userOrgs) {
         ctrl.userOrgs = {};
