@@ -96,14 +96,26 @@ function cdMyDojosCtrl($q, $rootScope, $scope, $state, $stateParams, $cookieStor
         return $q.resolve(res.data);
       })
       .then(function (applications) {
+        // Separate verified dojos from ongoing applications
         if (applications && applications.length > 0) {
-          var query = {verified: 1, dojoLeadId: {in$: _.map(applications, 'id')}};
+          var query = {dojoLeadId: {in$: _.map(applications, 'id')}};
           return cdDojoService.list(query)
           .then(function (res) {
             var dojos = res.data;
-            $scope.applications = _.filter(applications, function (application) {
-              return !_.find(dojos, {dojoLeadId: application.id});
+            var filteredApplications = [];
+            _.each(applications, function (application) {
+              var dojosLead = _.find(dojos, {dojoLeadId: application.id});
+              if (dojosLead && !dojosLead.verified) { // submitted application
+                application.dojo = dojosLead;
+                application.dojo.updatedAt = application.updatedAt;
+                filteredApplications.push(application);
+              }
+              if (!dojosLead) { // ongoing application
+                filteredApplications.push(application);
+              }
             });
+            // Assign after so that the front-end detect changes
+            $scope.applications = filteredApplications;
           });
         }
       });

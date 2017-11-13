@@ -9,13 +9,10 @@ angular
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-application-card',
-      controller: ['cdDojoService', 'dojoUtils', '$q', 'intercomService',
-      function (cdDojoService, dojoUtils, $q, intercomService) {
+      controller: ['cdDojoService', 'dojoUtils', '$q',
+      function (cdDojoService, dojoUtils, $q) {
         var ctrl = this;
         ctrl.application = ctrl.lead.application;
-        ctrl.date = ctrl.lead.completed ? ctrl.lead.updatedAt : ctrl.lead.createdAt;
-        ctrl.dateKey = ctrl.lead.completed ? 'Last updated on {{ date }}' : 'Started on {{ date }}';
-        ctrl.timesUp = moment(ctrl.date).diff(moment(), 'days') > 2;
         ctrl.$onInit = function () {
           if (ctrl.application.dojo) {
             return $q.all((function () {
@@ -32,7 +29,6 @@ angular
             }()));
           }
         };
-        ctrl.openIntercom = intercomService.InitIntercom;
       }]
     });
 }());
