@@ -2,7 +2,7 @@
   'use strict';
 
   function cdSessionModalCtrl($scope, $uibModalInstance, $translate, $state, cdEventsService,
-   dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer, cdDojoService) {
+   dojoId, session, event, applyForModel, usSpinnerService, currentUser, referer, cdDojoService, Analytics) {
     $scope.dojoId = dojoId;
     $scope.session = angular.copy(session);
     $scope.sessionQuantities = _.range(2);
@@ -110,6 +110,7 @@
         'pending': 'Your childs ticket request for %1$s is pending approval'
       };
       //bulkApplyApplications handles the creation of payloads for the email(s) and sends them
+      Analytics.trackEvent($state.current.name, 'click', 'book_tickets');
       cdEventsService.bulkApplyApplications(applications, function (response) {
         usSpinnerService.stop('dojo-session-spinner');
         $uibModalInstance.close(response);
@@ -131,6 +132,6 @@
 
   angular.module('cpZenPlatform')
     .controller('session-modal-controller', ['$scope', '$uibModalInstance', '$translate', '$state', 'cdEventsService',
-     'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', 'cdDojoService', cdSessionModalCtrl]);
+     'dojoId', 'session', 'event', 'applyForModel', 'usSpinnerService', 'currentUser', 'referer', 'cdDojoService', 'Analytics', cdSessionModalCtrl]);
 
 })();
