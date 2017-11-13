@@ -10,7 +10,7 @@
 
 <div class="col-sm-5 cd-date">
   <div class="cd-date__content">
-    <cd-share-event share-event="cdELI.event" class="pull-right cd-share-event" ng-if="!cdELI.isEmbedded"></cd-share-event>
+    <cd-share-event share-event="cdELI.event" class="pull-right cd-share-event" ng-if="!cdELI.isEmbedded && cdELI.canBook"></cd-share-event>
     <div ng-switch="cdELI.event.type">
       <div class="cd-date__content__date" ng-switch-when="recurring">
         <div ng-click="cdELI.datesExpanded = !cdELI.datesExpanded">

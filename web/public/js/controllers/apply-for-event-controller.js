@@ -40,7 +40,7 @@
     };
 
     $scope.canBook = function () {
-      return eventUtils.canBook($scope.event.public, $scope.dojo.private, $scope.isMember);
+      return eventUtils.canBook($scope.event.public, $scope.dojo.private, $scope.isMember, $scope.dojo.verified);
     };
 
     $scope.showSessionDetails = function (session) {

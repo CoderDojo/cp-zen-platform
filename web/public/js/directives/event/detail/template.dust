@@ -1,11 +1,11 @@
 <div class="cd-event-detail row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
     <div class="row">
-      <cd-join-dojo ng-class="{'hidden': dojoMember || loggedOut}"></cd-join-dojo>
+      <cd-join-dojo ng-class="{'hidden': dojoMember || loggedOut || !dojo.verified}"></cd-join-dojo>
       <h2 class="cd-event-detail__title">
         <span ng-bind="::event.name"></span>
       </h2>
-      <cd-share-event share-event="event"></cd-share-event>
+      <cd-share-event share-event="event" ng-show="dojo.verified"></cd-share-event>
       <span class="cd-event-detail__date col-xs-12">
         <i class="fa fa-clock-o"></i>
         <h3 ng-if="event.type === 'one-off'"><span ng-bind="::event.formattedDate"></span></h3>
