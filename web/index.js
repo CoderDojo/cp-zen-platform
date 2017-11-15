@@ -39,7 +39,10 @@ exports.start = () => {
   hasher.update(os.hostname());
   const server = new hapi.Server(options.hapi);
   server.app.defaultLanguage = 'en_US';
-  server.app.availableLocales = new locale.Locales(_.pluck(languages, 'code'), server.app.defaultLanguage);
+  server.app.availableLocales = new locale.Locales(
+    _.pluck(languages, 'code'),
+    server.app.defaultLanguage,
+  );
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;
   // Set up HAPI
   server.connection({
@@ -56,7 +59,7 @@ exports.start = () => {
     .register([
       { register: vision },
       { register: inert },
-      { register: blipp },
+      { register: blipp, options: { showAuth: true, showStart: false } },
       {
         register: ip2country,
         routes: {
@@ -79,7 +82,10 @@ exports.start = () => {
     ])
     .then(() =>
       server.start().then(() => {
-        console.log('[%s] Listening on http://localhost:%d', env, port);
+        if (env !== 'production' && env !== 'staging' && env !== 'test') {
+          console.log(server.plugins.blipp.text()); // eslint-disable-line no-console
+        }
+        console.log('[%s] Listening on http://localhost:%d', env, port); // eslint-disable-line no-console
       }),
     )
     .catch((err) => {
