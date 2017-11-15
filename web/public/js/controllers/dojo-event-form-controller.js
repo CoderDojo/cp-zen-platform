@@ -97,7 +97,7 @@
 
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser, eventUtils, atomicNotifyService) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils, atomicNotifyService, Analytics) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -555,6 +555,12 @@
             } else {
               deleteLocalStorage();
             }
+            // NOTE: the current status changes between new event and edition of event, but it all lands in this ctrller
+            if ($scope.dojoInfo.verified) {
+              Analytics.trackEvent($state.current.name, 'click', eventInfo.status + '_event');
+            } else {
+              Analytics.trackEvent($state.current.name, 'click', 'unverified_' + eventInfo.status + '_event');
+            }
             if(response.dojoId && response.id) {
               goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id)
               .then(notifyEventCreated);
@@ -867,6 +873,7 @@
       'currentUser',
       'eventUtils',
       'atomicNotifyService',
+      'Analytics',
       dojoEventFormCtrl
     ]);
 })();
