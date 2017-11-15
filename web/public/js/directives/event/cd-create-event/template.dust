@@ -10,7 +10,7 @@
   </div>
   <form name="eventForm" novalidate angular-validator angular-validator-submit="submit(eventInfo)" class="row">
     <div ng-if="pastEvent" class="alert alert-info">{@i18n key="You are viewing a past event which is not possible to edit."/}</div>
-    <div ng-if="!isEditMode" class="row controls">
+    <div ng-if="!isEditMode" ng-show="dupEventPicker.events.length > 0" class="row controls">
       <div class="col-md-2 col-md-offset-6">
         <h5>{@i18n key="Duplicate Existing Event"/}</h5>
       </div>
@@ -119,16 +119,17 @@
           </div>
         </div>
       </div>
-      <div class="form-group form-inline full-width" ng-show="!eventInfo.status">
+      <div class="form-group form-inline full-width">
         <div class="checkbox checkbox-block">
-          <input type="checkbox" id="prefill-address" ng-model="eventInfo.prefillAddress" ng-click="prefillDojoAddress()" ng-init="prefillDojoAddress()">
+          <input type="checkbox" id="prefill-address" ng-model="eventInfo.useDojoAddress"
+            ng-click="prefillDojoAddress()" ng-disabled="pastEvent"/>
           <label for="prefill-address">{@i18n key="Use Dojo listing address"/}</label>
           <i uib-tooltip="{@i18n key="Use Dojos listing address. This will pre-fill the address fields."/}" tooltip-placement="top" tooltip-trigger="click" class="info-button fa fa-info-circle event-tooltip"></i>
         </div>
       </div>
       <div class="form-group" ng-class="{'has-error': eventForm.$submitted && eventForm.city.$error.required}">
         <label for="city">{@i18n key="City"/}*:</label>
-        <ui-select ng-model="eventInfo.city" ng-disabled="pastEvent" ng-readonly="eventInfo.prefillAddress" name="city" id="city" ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null" required>
+        <ui-select ng-model="eventInfo.city" ng-disabled="pastEvent || eventInfo.useDojoAddress" ng-readonly="eventInfo.useDojoAddress" name="city" id="city" ng-change="updateLocalStorage('city', eventInfo.city); eventInfo.address = null" required>
           <ui-select-match placeholder="{@i18n key="Add a city name"/}">
             {{ $select.selected.nameWithHierarchy }}
           </ui-select-match>
@@ -140,7 +141,7 @@
       </div>
       <div class="form-group">
         <label for="address">{@i18n key="Address"/}*:</label>
-        <textarea rows="3" ng-readonly="pastEvent || eventInfo.prefillAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
+        <textarea rows="3" ng-readonly="pastEvent || eventInfo.useDojoAddress" required required-message="'{@i18n key="Address is empty"/}'" ng-change="updateLocalStorage('address', eventInfo.address)" name="address" id="address" class="form-control" ng-model="eventInfo.address" placeholder="{@i18n key="Add the address to the event"/}"></textarea>
       </div>
     </cd-expanding-card>
     <cd-expanding-card main-title="{@i18n key="Event Tickets"/}" sub-title-1="{@i18n key="Ticket Type"/}">
@@ -201,7 +202,10 @@
             </div>
           </div>
           <div class="well clearfix ticket-controls">
-            <button type="button" ng-disabled="pastEvent" ng-click="inviteDojoMembers(session)" class="btn btn-primary pull-left">{@i18n key="Invite Dojo Members"/}</button>
+            <div tooltip-enable="!dojoInfo.verified && !pastEvent" uib-tooltip="{@i18n key="Your Dojo must ve verified in order to use that functionnality"/}" ng-class="!dojoInfo.verified && !pastEvent? 'btn-wrapper-tooltip': ''" class="pull-left">
+              <button type="button" ng-disabled="pastEvent || !dojoInfo.verified" ng-click="inviteDojoMembers(session)"
+                class="btn btn-primary">{@i18n key="Invite Dojo Members"/}</button>
+            </div>
             <h5 ng-show="session.tickets.length" class="text-right"><strong>{@i18n key="Session/room capacity"/}</strong>: {{ totalSessionCapacity(session) }} </h5>
             <div class="pull-right">
               <label class="icon-group">{@i18n key="Add ticket type"/}</label>

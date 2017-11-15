@@ -1,10 +1,10 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 const TITLE = 'cp-zen-platform';
 process.env.component = TITLE;
 
 process.setMaxListeners(0);
 require('events').EventEmitter.prototype._maxListeners = 100; // eslint-disable-line no-underscore-dangle
-
 
 const util = require('util');
 const cluster = require('cluster');
@@ -37,11 +37,17 @@ console.log(starting);
 
 // handle uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.error(`${new Date().toString()} FATAL: UncaughtException, please report: ${util.inspect(err)}`);
-  if (err !== undefined && err.stack !== undefined) {
-    console.error(util.inspect(err.stack));
+  if (err !== undefined) {
+    const error = {
+      date: new Date().toString(),
+      msg:
+        err.stack !== undefined
+          ? `FATAL: UncaughtException, please report: ${util.inspect(err.stack)}`
+          : 'FATAL: UncaughtException, no stack trace',
+      err: util.inspect(err),
+    };
+    console.error(JSON.stringify(error));
   }
-  console.trace();
   cleanShutdown(); // exit on uncaught exception
 });
 
@@ -60,7 +66,7 @@ function startWorker() {
 // will result in the worker process being restarted by the master.
 function start() {
   if (cluster.isMaster) {
-    const numCPUs = 1;// require('os').cpus().length;
+    const numCPUs = 1; // require('os').cpus().length;
     // Fork workers.
     for (let i = 0; i < numCPUs; i += 1) {
       const worker = cluster.fork();
@@ -88,29 +94,3 @@ function start() {
 }
 
 start();
-
-
-/*
-var pm2 = require('pm2');
-
-pm2.connect(function() {
-  pm2.start({
-    script    : 'web/index.js',         // Script to be run
-    exec_mode : 'cluster',        // Allow your app to be clustered
-    instances : 0
-  }, function(err, apps) {
-    if (err) return console.error(err);
-       pm2.streamLogs('all', 0, false, 'HH:mm:ss', false);
-  });
-});
-
-process.on('SIGINT', function() {
-  console.log('Got SIGINT, exiting');
-  pm2.kill();
-});
-
-process.on('SIGTERM', function() {
-  console.log('Got SIGTERM, exiting');
-  pm2.kill();
-});
-*/

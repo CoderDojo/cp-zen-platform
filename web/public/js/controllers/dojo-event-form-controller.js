@@ -58,7 +58,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('manage-dojo-events', {
+    return $state.go('manage-dojo-events', {
       dojoId: dojoId
     });
   }
@@ -67,7 +67,7 @@
     if(usSpinnerService) {
       usSpinnerService.stop('create-event-spinner');
     }
-    $state.go('manage-applications', {
+    return $state.go('manage-applications', {
       dojoId: dojoId,
       eventId: eventId
     });
@@ -97,7 +97,7 @@
 
   function dojoEventFormCtrl($scope, $stateParams, $state, $sce, $localStorage, $uibModal, cdEventsService,
                             cdDojoService, cdUsersService, auth, $translate, cdLanguagesService, usSpinnerService,
-                            alertService, utilsService, ticketTypes, currentUser, eventUtils) {
+                            alertService, utilsService, ticketTypes, currentUser, eventUtils, atomicNotifyService, Analytics) {
     var dojoId = $stateParams.dojoId;
     var now = moment.utc().toDate();
     var defaultEventTime = moment.utc(now).add(2, 'hours').toDate();
@@ -117,11 +117,12 @@
 
     $scope.ticketTypesTooltip = $sce.trustAsHtml($scope.ticketTypesTooltip);
 
+    $scope.originalEvent = {};
     $scope.eventInfo = {};
     $scope.eventInfo.dojoId = dojoId;
     $scope.eventInfo.public = true;
     $scope.eventInfo.type = 'one-off';
-    $scope.eventInfo.prefillAddress = true;
+    $scope.eventInfo.useDojoAddress = true;
     $scope.eventInfo.recurringType = 'weekly';
     $scope.eventInfo.sessions = [{name: null, tickets:[{name: null, type: null, quantity: 0}]}];
 
@@ -260,21 +261,22 @@
       }
     };
 
-    $scope.prefillDojoAddress = function() {
-      if($scope.eventInfo.prefillAddress) {
+    $scope.prefillDojoAddress = function (done) {
+      if ($scope.eventInfo.useDojoAddress) {
+        $scope.originalEvent.city = $scope.eventInfo.city;
+        $scope.originalEvent.address = $scope.eventInfo.address;
+
         $scope.eventInfo.city = $scope.eventInfo.dojoCity;
         $scope.eventInfo.address = $scope.eventInfo.dojoAddress;
 
         $scope.updateLocalStorage('city', $scope.eventInfo.dojoCity);
         $scope.updateLocalStorage('address', $scope.eventInfo.dojoAddress);
-        $scope.updateLocalStorage('prefillAddress', true);
-        return;
+        $scope.updateLocalStorage('useDojoAddress', true);
+      } else if ($scope.originalEvent.city && $scope.originalEvent.address) { // we restore to previous data
+        $scope.eventInfo.city = $scope.originalEvent.city;
+        $scope.eventInfo.address = $scope.originalEvent.address;
       }
-
-      $scope.updateLocalStorage('prefillAddress', false);
-      $scope.eventInfo.city = $scope.eventInfo.address = null;
-      $scope.updateLocalStorage('city', null);
-      $scope.updateLocalStorage('address', null);
+      if (done) return done();
     };
 
     $scope.eventInfo.invites = [];
@@ -379,7 +381,7 @@
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
         $scope.eventInfo.type = event.type;
 
-        cdEventsService.searchSessions({eventId : event.id}, function(sessions) {
+        cdEventsService.searchSessions({eventId : event.id, status: 'active'}, function(sessions) {
             $scope.eventInfo.sessions = sessions;
             _.map($scope.eventInfo.sessions, function(session){
               delete session.id;
@@ -398,8 +400,9 @@
           $scope.weekdayPicker.selection = _.find($scope.weekdayPicker.weekdays, {id: startingDay});
         }
 
-        $scope.eventInfo.prefillAddress = _.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
-          $scope.eventInfo.address === $scope.dojoInfo.address1;
+        $scope.eventInfo.useDojoAddress = (_.isEqual($scope.eventInfo.city, $scope.dojoInfo.place) &&
+          $scope.eventInfo.address === $scope.dojoInfo.address1) || // Backward compat before introduction of saved useDojoAddress
+          event.useDojoAddress;
         //remove processed info coming from the db,
         //which are normally not created by the front-end submit process
         delete $scope.eventInfo.dates;
@@ -483,6 +486,11 @@
         }
     };
 
+    function notifyEventCreated () {
+      if (!$scope.dojoInfo.verified) {
+        atomicNotifyService.info($translate.instant('Congratulations on creating your event. When your Dojo is verified by the CoderDojo team, it will appear on your public listing.'), 2000);
+      }
+    }
 
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
@@ -538,63 +546,37 @@
         usSpinnerService.stop('create-event-spinner');
         return;
       }
-
-      if(!$scope.dojoInfo) {
-        loadDojo(function(err){
-          if(err) {
-            alertService.showError($translate.instant('An error has occurred while loading Dojo') + ' ' + err);
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-          if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-            cdEventsService.saveEvent(
-              eventInfo,
-              function (response) {
-                if(response.ok === false) {
-                  alertService.showError($translate.instant(response.why));
-                } else {
-                  deleteLocalStorage();
-                }
-                if(response.dojoId && response.id) {
-                  goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-                } else {
-                  goToManageDojoEvents($state, usSpinnerService, dojoId)
-                }
-              },
-              function(err){
-                alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-                goToMyDojos($state, usSpinnerService, dojoId)
-              }
-            );
-          } else {
-            alertService.showError($translate.instant('Error setting up event'));
-            goToMyDojos($state, usSpinnerService, dojoId)
-          }
-        })
-      } else {
-        if ($scope.dojoInfo.verified === 1 && $scope.dojoInfo.stage !== 4) {
-          cdEventsService.saveEvent(
-            eventInfo,
-            function (response) {
-              if(response.ok === false) {
-                alertService.showError($translate.instant(response.why));
-              } else {
-                deleteLocalStorage();
-              }
-              if(response.dojoId && response.id) {
-                goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id);
-              } else {
-                goToManageDojoEvents($state, usSpinnerService, dojoId)
-              }
-            },
-            function (err){
-              alertService.showError($translate.instant('Error setting up event') + ' ' + err);
-              goToMyDojos($state, usSpinnerService, dojoId)
+      if ($scope.dojoInfo.stage !== 4) {
+        cdEventsService.saveEvent(
+          eventInfo,
+          function (response) {
+            if(response.ok === false) {
+              alertService.showError($translate.instant(response.why));
+            } else {
+              deleteLocalStorage();
             }
-          );
-        } else {
-          alertService.showError($translate.instant('Error setting up event'));
-          goToMyDojos($state, usSpinnerService, dojoId)
-        }
+            // NOTE: the current status changes between new event and edition of event, but it all lands in this ctrller
+            if ($scope.dojoInfo.verified) {
+              Analytics.trackEvent($state.current.name, 'click', eventInfo.status + '_event');
+            } else {
+              Analytics.trackEvent($state.current.name, 'click', 'unverified_' + eventInfo.status + '_event');
+            }
+            if(response.dojoId && response.id) {
+              goToManageDojoEvent($state, usSpinnerService, response.dojoId, response.id)
+              .then(notifyEventCreated);
+            } else {
+              goToManageDojoEvents($state, usSpinnerService, dojoId)
+              .then(notifyEventCreated);
+            }
+          },
+          function (err){
+            alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+            goToMyDojos($state, usSpinnerService, dojoId)
+          }
+        );
+      } else {
+        alertService.showError($translate.instant('Error setting up event'));
+        goToMyDojos($state, usSpinnerService, dojoId)
       }
     };
 
@@ -664,10 +646,6 @@
         $scope.eventInfo.country = dojo.country;
         $scope.eventInfo.dojoAddress  = dojo.address1;
         $scope.eventInfo.dojoCity = dojo.place;
-
-        if(!$scope.isEditMode){
-          $scope.prefillDojoAddress();
-        }
 
         var position = [];
         if(dojo.coordinates) {
@@ -743,7 +721,6 @@
 
     function loadEvent(done) {
       var eventId = $stateParams.eventId;
-      $scope.eventInfo.prefillAddress = false;
       cdEventsService.load(eventId, function(event) {
         var startTime = _.head(event.dates).startTime || moment.utc().toISOString();
         var endTime = _.last(event.dates).endTime || moment.utc().toISOString();
@@ -801,7 +778,7 @@
         if(localStorage.name) $scope.eventInfo.name = localStorage.name;
         if(localStorage.description) $scope.eventInfo.description = localStorage.description;
         if(localStorage.public) $scope.eventInfo.public = localStorage.public;
-        if(localStorage.prefillAddress) $scope.eventInfo.prefillAddress = localStorage.prefillAddress;
+        if(localStorage.useDojoAddress) $scope.eventInfo.useDojoAddress = localStorage.useDojoAddress;
         if(localStorage.type) $scope.eventInfo.type = localStorage.type;
         if(localStorage.recurringType) $scope.eventInfo.recurringType = localStorage.recurringType;
         if(localStorage.weekdaySelection) $scope.weekdayPicker.selection = localStorage.weekdaySelection;
@@ -832,9 +809,11 @@
 
       return async.series([
         validateEventRequest,
+        loadDojo,
         loadDojoUsers,
         loadUserTypes,
         loadEvent,
+        $scope.prefillDojoAddress,
         loadSessions
       ], function(err, results) {
         if (err) {
@@ -854,7 +833,12 @@
 
     async.parallel([
       validateEventRequest,
-      loadDojo,
+      function (pCb) {
+        async.waterfall([
+          loadDojo,
+          $scope.prefillDojoAddress,
+        ], pCb);
+      },
       loadPreviousEvents,
       loadCurrentUser,
       loadDojoUsers,
@@ -888,6 +872,8 @@
       'ticketTypes',
       'currentUser',
       'eventUtils',
+      'atomicNotifyService',
+      'Analytics',
       dojoEventFormCtrl
     ]);
 })();
