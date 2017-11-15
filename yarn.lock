@@ -1056,8 +1056,8 @@ countryjs@^1.8.0:
     po2json "^0.4.2"
 
 cp-translations@^1.0.4:
-  version "1.0.78"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.78.tgz#773dedb4ed0facb2a8788cc12b90ce40b140c19e"
+  version "1.0.81"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.81.tgz#f3bcaca60207c7aae88c375cab8bead94205957c"
 
 cp-zen-frontend@1.0.13-dc4a698:
   version "1.0.13-dc4a698"
