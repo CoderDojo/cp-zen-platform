@@ -1059,9 +1059,9 @@ cp-translations@^1.0.4:
   version "1.0.81"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.81.tgz#f3bcaca60207c7aae88c375cab8bead94205957c"
 
-cp-zen-frontend@1.0.13-f3da565:
-  version "1.0.13-f3da565"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.13-f3da565.tgz#6f5e014ac1a0d1fb812c2fb178a3af21c8b7189a"
+cp-zen-frontend@1.0.13-822a15b:
+  version "1.0.13-822a15b"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.13-822a15b.tgz#35a7d08541aa8371cf79f8ab5d66a08c09001150"
   dependencies:
     "@coderdojo/cd-common" "1.1.8"
     bootstrap "^3.3.7"
