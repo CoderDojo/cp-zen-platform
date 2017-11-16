@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@coderdojo/cd-common@1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@coderdojo/cd-common/-/cd-common-1.1.7.tgz#ace27dafda85e1f631a55c332ee63c4f053b20f3"
+"@coderdojo/cd-common@1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@coderdojo/cd-common/-/cd-common-1.1.8.tgz#a7013a4d8d32d871fc1702006f5531c5a5f1a64e"
 
 "@newrelic/native-metrics@^2.1.0":
   version "2.1.2"
@@ -1059,11 +1059,11 @@ cp-translations@^1.0.4:
   version "1.0.81"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.81.tgz#f3bcaca60207c7aae88c375cab8bead94205957c"
 
-cp-zen-frontend@1.0.13-fcf19c2:
-  version "1.0.13-fcf19c2"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.13-fcf19c2.tgz#ae70f5fc16ceda5752131e5d687fb3c4124e3240"
+cp-zen-frontend@1.0.13-f3da565:
+  version "1.0.13-f3da565"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.13-f3da565.tgz#6f5e014ac1a0d1fb812c2fb178a3af21c8b7189a"
   dependencies:
-    "@coderdojo/cd-common" "1.1.7"
+    "@coderdojo/cd-common" "1.1.8"
     bootstrap "^3.3.7"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
