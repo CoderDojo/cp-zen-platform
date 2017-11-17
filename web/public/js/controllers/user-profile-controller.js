@@ -303,13 +303,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
     var profileCopy = angular.copy(profile);
 
-    profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',
+    profileCopy = _.omit(profileCopy, ['ownProfileFlag', 'widget', 'dojos',
       'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
       'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion', 'requestingOwnProfile',
        'isOpen']);
 
-    var childrenCopy = _.omit(profileCopy, ['address','alpha3','avatar','badges','countryname',
-      'countrynumber','email','entity$','gender','userId','languageSpoken','lastEdited','linkedin','ninjaInvites',
+    var childrenCopy = _.omit(profileCopy, ['avatar','badges',
+      'email','entity$','gender','userId','languageSpoken','lastEdited','linkedin','ninjaInvites',
       'notes','optionalHiddenFields','parentInvites','phone','projects','state','twitter','userType','userTypes',
       'parents', 'requiredFieldsComplete', 'id', 'children']);
 
@@ -446,14 +446,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     datepickerMode: 'year'
   };
 
-  $scope.setCountry = function(profile, country) {
-    profile.countryName = country.countryName;
-    profile.countryNumber = country.countryNumber;
-    profile.continent = country.continent;
-    profile.alpha2 = country.alpha2;
-    profile.alpha3 = country.alpha3;
-  };
-
   /** Define for template usage if the email address is a required field based upon userType
   **/
   $scope.isEmailRequired = function(){
@@ -471,18 +463,6 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
       $scope.places = [];
       console.error(err);
     });
-  };
-
-  $scope.setPlace = function(profile, place) {
-    profile.placeName = place.name;
-    profile.placeGeonameId = place.geonameId;
-    profile.county = {};
-    profile.state = {};
-    profile.city = {};
-    for (var adminidx=1; adminidx<=4; adminidx++) {
-      profile['admin'+ adminidx + 'Code'] = place['admin'+ adminidx + 'Code'];
-      profile['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
-    }
   };
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];

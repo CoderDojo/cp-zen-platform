@@ -149,15 +149,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     datepickerMode: 'year'
   };
 
-  $scope.setCountry = function(country) {
-    $scope.userFormData.profile.countryname = country.countryName;
-    $scope.userFormData.profile.countrynumber = country.countryNumber;
-    $scope.userFormData.profile.continent = country.continent;
-    $scope.userFormData.profile.alpha2 = country.alpha2;
-    $scope.userFormData.profile.alpha3 = country.alpha3;
-  };
-
-
   $scope.getPlaces = function (countryCode, $select) {
     return utilsService.getPlaces(countryCode, $select).then(function (data) {
       $scope.places = data;
@@ -165,18 +156,6 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       $scope.places = [];
       console.error(err);
     });
-  };
-
-  $scope.setPlace = function(place) {
-    $scope.userFormData.profile.placeName = place.name;
-    $scope.userFormData.profile.placeGeonameId = place.geonameId;
-    $scope.userFormData.profile.county = {};
-    $scope.userFormData.profile.state = {};
-    $scope.userFormData.profile.city = {};
-    for (var adminidx=1; adminidx<=4; adminidx++) {
-      $scope.userFormData.profile['admin'+ adminidx + 'Code'] = place['admin'+ adminidx + 'Code'];
-      $scope.userFormData.profile['admin'+ adminidx + 'Name'] = place['admin'+ adminidx + 'Name'];
-    }
   };
 
   $scope.doRegister = function() {

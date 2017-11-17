@@ -41,7 +41,7 @@
         <div class="form-group" ng-enter="noop()">
           <label for="country" class="col-sm-4 text-right">{@i18n key="Country"/}*</label>
           <div class="col-sm-8" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.country.$error.required}">
-            <ui-select name="country" ng-model="profile.country" on-select="setCountry(profile, $item)" required>
+            <ui-select name="country" ng-model="profile.country" required>
               <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
               <ui-select-choices repeat="country in countries | filter: { countryName: $select.search }">
                 <span ng-bind-html="country.countryName | highlight: $select.search"></span>
@@ -52,28 +52,6 @@
           </div>
         </div>
 
-        <div class="form-group" ng-enter="noop()">
-          <label for="place" class="col-sm-4 text-right">{@i18n key="CityTown"/}*</label>
-          <div class="col-sm-8" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.place.$error.required}">
-            <ui-select name="place" ng-disabled="!profile.country" ng-model="profile.place" on-select="setPlace(profile, $item)" required>
-              <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
-              <ui-select-choices repeat="place in places"
-                  refresh="getPlaces(profile.country.alpha2, $select)"
-                  refresh-delay="500">
-                <span ng-bind-html="place.nameWithHierarchy | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-            <label class="control-label has-error validationMessage"
-                   ng-show="forms.generalInfoForm.$submitted && forms.generalInfoForm.place.$error.required">{@i18n key="Select a place"/}</label>
-          </div>
-        </div>
-
-        <div class="form-group" ng-show="initialForm()">
-          <label for="address" class="col-sm-4 control-label">{@i18n key="Address"/}{{hasAccess(profile.userTypes, ['champion']) ? "*" : ""}} </label>
-          <div class="col-sm-8">
-            <textarea rows="5" name="address"  ng-required="hasAccess(profile.userTypes, ['champion'])" required-message="'{@i18n key="Address is required"/}'" class="form-control" id="address" placeholder="{@i18n key="Address"/}" ng-model="profile.address"></textarea>
-          </div>
-        </div>
       </div>
     </div>
 
