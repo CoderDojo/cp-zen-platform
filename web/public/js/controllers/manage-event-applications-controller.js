@@ -228,7 +228,10 @@
       var loadPageData = tableUtils.loadPage(resetFlag, $scope.pagination.itemsPerPage, $scope.pagination.pageNo, query);
       $scope.pagination.pageNo = loadPageData.pageNo;
       $scope.applications = [];
-
+      cdDojoService.load($scope.dojoId)
+      .then(function (res) {
+        $scope.dojo = res.data;
+      });
       cdEventsService.searchApplications(_.extend({sessionId: sessionId, deleted: false}, $scope.filter), function (result) {
         $scope.pagination.totalItems = result.length;
         $scope.sessionStats[sessionId].attending = 0;
