@@ -470,6 +470,7 @@
 
         inviteDojoMembersModalInstance.result.then(function (result) {
           if(result.ok === false) return alertService.showError($translate.instant(result.why));
+          Analytics.trackEvent($state.current.name, 'click', 'invite_tickets');
           alertService.showAlert($translate.instant('Dojo members successfully added to invite list. They will be notified of the invite when you publish this event.'));
         }, null);
         return done();

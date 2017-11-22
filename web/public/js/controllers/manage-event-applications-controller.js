@@ -3,7 +3,7 @@
   /*global $*/
 
   function manageEventApplicationsCtrl($scope, $stateParams, $state, $translate, $uibModal, alertService, cdEventsService, tableUtils,
-    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event, $timeout, eventUtils) {
+    cdDojoService, cdUsersService, AlertBanner, usSpinnerService, currentUser, auth, event, $timeout, eventUtils, Analytics) {
 
     $scope.strings = {
       deleteUserCheckedIn: $translate.instant('User must not be checked in to be deleted')
@@ -516,6 +516,7 @@
 
         newApplicantModalInstance.result.then(function (result) {
           if(result.ok === false) return alertService.showError($translate.instant(result.why));
+          Analytics.trackEvent($state.current.name, 'click', 'create_applicant');
           alertService.showAlert($translate.instant('New applicants successfully added.'));
           $scope.loadPage(session.id, true);
         }, null);
@@ -538,6 +539,6 @@
 
   angular.module('cpZenPlatform')
     .controller('manage-event-applications-controller', ['$scope', '$stateParams', '$state', '$translate', '$uibModal', 'alertService', 'cdEventsService',
-      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', '$timeout', 'eventUtils', manageEventApplicationsCtrl]);
+      'tableUtils', 'cdDojoService', 'cdUsersService', 'AlertBanner', 'usSpinnerService', 'currentUser', 'auth', 'event', '$timeout', 'eventUtils', 'Analytics', manageEventApplicationsCtrl]);
 
 })();
