@@ -29,6 +29,12 @@ const os = require('os');
 const errorHandlers = require('./lib/http-error-handler');
 const onPreResponse = require('./lib/on-pre-response');
 const onPreAuth = require('./lib/on-pre-auth');
+const { logger, log } = require('cp-logs-lib')({
+  name: 'cp-zen-platform',
+  level: env === 'production' ? 'warn' : 'info',
+});
+
+options.log = log;
 
 require('./lib/dust-i18n.js');
 require('./lib/dust-loadjs.js');
@@ -86,11 +92,9 @@ exports.start = () => {
     ])
     .then(() =>
       server.start().then(() => {
-        if (env !== 'production' && env !== 'staging' && env !== 'test') {
-          console.log(server.plugins.blipp.text()); // eslint-disable-line no-console
-        }
+        logger.info(server.plugins.blipp.text());
         server.plugins.sitemap.fetch();
-        console.log('[%s] Listening on http://localhost:%d', env, port); // eslint-disable-line no-console
+        logger.info('[%s] Listening on http://localhost:%d', env, port);
       }),
     )
     .catch((err) => {
