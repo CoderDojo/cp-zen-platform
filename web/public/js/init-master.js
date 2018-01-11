@@ -1003,15 +1003,17 @@
         .useSanitizeValueStrategy('sanitizeParameters')
         .uniformLanguageTag('java')
         .registerAvailableLanguageKeys(
-          ['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
+          [ 'en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
             'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
             'hi_IN', 'ja_JP', 'ro_RO', 'es_AR', 'fr_FR', 'uk_UK',
-          'sl_SL', 'sk_SK'],
+            'sl_SL', 'sk_SK', 'fil_PH', 'zh_TW', 'zh_CN', 'id_ID', 
+            'si_LK', 'ur_PK' ],
           {
            'en': 'en_US', 'nl': 'nl_NL', 'de': 'de_DE', 'it': 'it_IT', 'pl': 'pl_PL', 'mt': 'mt_MT',
            'pt': 'pt_PT', 'es': 'es_ES', 'tr': 'tr_TR', 'bg': 'bg_BG', 'el': 'el_GR', 'et': 'et_EE',
            'hi': 'hi_IN', 'ja': 'ja_JP', 'ro': 'ro_RO', 'fr': 'fr_FR', 'uk': 'uk_UK',
-           'sl': 'sl_SL', 'sk': 'sk_SK', '*': 'en_US'
+           'sl': 'sl_SL', 'sk': 'sk_SK', 'fil': 'fil_PH', 'id': 'id_ID', 'si': 'si_LK',
+           'ur': 'ur_PK', '*': 'en_US'
         })
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
