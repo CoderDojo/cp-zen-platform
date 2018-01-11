@@ -99,4 +99,34 @@ module.exports = [
     code: 'uk_UK',
     country: 'Україна',
   },
+  {
+    name: 'Filipino',
+    code: 'fil_PH',
+    country: 'Filipino',
+  },
+  {
+    name: '繁體中文',
+    code: 'zh_TW',
+    country: '台灣',
+  },
+  {
+    name: '简体中文',
+    code: 'zh_CN',
+    country: '中国',
+  },
+  {
+    name: 'Bahasa Indonesia',
+    code: 'id_ID',
+    country: 'Indonesia',
+  },
+  {
+    name: 'සිංහල',
+    code: 'si_LK',
+    country: 'ශ්‍රී ලංකා',
+  },
+  {
+    name: 'اُردُو‬‎',
+    code: 'ur_PK',
+    country: 'پاکستان',
+  },
 ];
