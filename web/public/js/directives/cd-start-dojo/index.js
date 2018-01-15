@@ -62,20 +62,26 @@ angular
           return $sce.trustAsHtml(this.validity);
         }
 
+        ctrl.loading = true;
+
         ctrl.save = function () {
-          var lead = ctrl.prepareSavePayload();
-          lead.completed = false;
-          return cdDojoService.saveDojoLead(lead)
-            .then(function (lead) {
-              ctrl.leadId = lead.data.id;
-              ctrl.application = lead.data.application;
-            });
+          if (!ctrl.loading) {
+            ctrl.loading = true;
+            var lead = ctrl.prepareSavePayload();
+            lead.completed = false;
+            return cdDojoService.saveDojoLead(lead)
+              .then(function (lead) {
+                ctrl.leadId = lead.data.id;
+                ctrl.application = lead.data.application;
+                ctrl.loading = false;
+              });
+          }
         };
         ctrl.actions = {};
         ctrl.actions.submit = function () {
+          ctrl.loading = true;
           // Submit dojoLead upgrade an existing lead
           // So we presubmit it in case an user went all the way down to the last step in one run
-          usSpinnerService.spin('start-dojo-spinner');
           var lead = ctrl.prepareSavePayload();
           lead.completed = ctrl.isValid();
           return cdDojoService.submitDojoLead(ctrl.leadId, lead)
@@ -85,10 +91,12 @@ angular
               $translate.instant('We will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
             );
             saveOnStateChange();
+            ctrl.loading = false;
             $state.go('my-dojos');
           })
           .catch(function () {
             // This should not happen and be caught by the front before submitting
+            ctrl.loading = false;
             alertService.showError($translate.instant('Something went wrong while submitting your application, please contact support'));
             intercomService.show();
           });
@@ -218,7 +226,6 @@ angular
         });
 
         ctrl.$onInit = function () {
-          usSpinnerService.spin('start-dojo-spinner');
           var leadQuery = {userId: ctrl.currentUser.id, deleted: 0};
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
@@ -339,7 +346,7 @@ angular
             });
           })
           .then(function () {
-            usSpinnerService.stop('start-dojo-spinner');
+            ctrl.loading = false;
             intercomService.InitIntercom();
             // We go to the next invalid step when the application has been previously started
             if (ctrl.leadId) ctrl.goToNextStep();

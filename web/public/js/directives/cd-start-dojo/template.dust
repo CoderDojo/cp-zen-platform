@@ -1,10 +1,14 @@
-<cd-sidebar header="{{ 'Start a Dojo' | translateFromKey }}" tab-header="$ctrl.tabHeader()" actions="$ctrl.actions"
-  tabs="$ctrl.tabs || []" base-state="start-dojo" view-data="$ctrl.application" base-state-menu="false">
-  <cd-sidebar-actions submit="$ctrl.actions.submit" save="$ctrl.actions.save"
+<div ng-show="$ctrl.loading" style="height: 300px; position: relative;">
+  <cd-loading-scrim></cd-loading-scrim>
+</div>
+<div ng-hide="$ctrl.loading">
+  <cd-sidebar header="{{ 'Start a Dojo' | translateFromKey }}" tab-header="$ctrl.tabHeader()" actions="$ctrl.actions"
+    tabs="$ctrl.tabs || []" base-state="start-dojo" view-data="$ctrl.application" base-state-menu="false">
+    <cd-sidebar-actions submit="$ctrl.actions.submit" save="$ctrl.actions.save"
+      submit-visible="$ctrl.actions.isValid() && $ctrl.actions.isLastTab()"
+      save-visible="!$ctrl.actions.isLastTab()"></cd-sidebar-actions>
+  </cd-sidebar>
+  <cd-sidebar-actions class="cd-start-dojo__bottom-bar row" submit="$ctrl.actions.submit" save="$ctrl.actions.save"
     submit-visible="$ctrl.actions.isValid() && $ctrl.actions.isLastTab()"
     save-visible="!$ctrl.actions.isLastTab()"></cd-sidebar-actions>
-</cd-sidebar>
-<span spinner-key="start-dojo-spinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-<cd-sidebar-actions class="cd-start-dojo__bottom-bar row" submit="$ctrl.actions.submit" save="$ctrl.actions.save"
-  submit-visible="$ctrl.actions.isValid() && $ctrl.actions.isLastTab()"
-  save-visible="!$ctrl.actions.isLastTab()"></cd-sidebar-actions>
+</div>
