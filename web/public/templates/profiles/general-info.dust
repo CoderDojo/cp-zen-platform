@@ -215,19 +215,22 @@
 
         <h4 ng-if="abilityToAddChildren()" ng-show="afterForm()" >{@i18n key="Got a child? Add them below"/}</h4>
         <div ng-show="afterForm()">
-          <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()" ng-show="profile.children.length > 0">
-            <span class="icon-group">Remove child</span>
-            <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this child?"/}" ng-bootbox-confirm-action="removeChild($index)" class="btn btn-danger margin-point-5-em session-expand-button">
-              <span class="glyphicon glyphicon-minus"></span>
-            </button>
-          </div>
-
           <div class="margin-top-point-5-em clearfix" ng-repeat="child in profile.children" ng-init="childIndex = $index" ng-if="abilityToAddChildren()">
+            <div class="margin-top-point-5-em" ng-if="abilityToAddChildren()" ng-show="profile.children.length > 0">
+              <span class="icon-group">Remove child</span>
+              <button type="button" ng-bootbox-confirm="{@i18n key="Are you sure you want to remove this child?"/}" ng-bootbox-confirm-action="removeChild($index)" class="btn btn-danger margin-point-5-em session-expand-button">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </div>
+
             <label> Childrens details </label>
             <div class="form-group" ng-enter="noop()">
               <label for="childName" class="col-sm-4 control-label">{@i18n key="Child Name"/}* </label>
-              <div class="col-sm-8">
-                <input name="childFullname-{{ $index }}" type="text" required required-message="'{@i18n key="Name is required"/}'"class="form-control" id="childFullname" placeholder="{@i18n key="Name"/}" ng-model="child.name">
+              <div class="col-sm-4">
+                <input name="childFirstName-{{ $index }}" type="text" required required-message="'{@i18n key="First name is required"/}'"class="form-control" placeholder="{@i18n key="First Name"/}" ng-model="child.firstName">
+              </div>
+              <div class="col-sm-4">
+                <input name="childLastName-{{ $index }}" type="text" required required-message="'{@i18n key="Surname is required"/}'"class="form-control" placeholder="{@i18n key="Surname"/}" ng-model="child.lastName">
               </div>
             </div>
 
@@ -248,7 +251,7 @@
               </div>
             </div>
 
-            <div class="form-group" ng-enter="noop()">
+            <div class="form-group" ng-enter="noop()" ng-show="isOver13(child.dateOfBirth)">
               <label for="email" class="col-sm-4 control-label">
                  {@i18n key="Email"/}
                </label>
