@@ -40,7 +40,7 @@
               if (resp.data && resp.data.error) {
                 var reason;
                 if (resp.data.error === 'email-exists') {
-                  reason = $translate.instant('Email is already associated with an account. Use a new email or leave it blank.');
+                  reason = $translate.instant('Email is already associated with an account. Use a new email or leave it blank to receive all correspondence on their behalf.');
                 }
                 alertService.showError(reason || $translate.instant(resp.data.error));
               } else {

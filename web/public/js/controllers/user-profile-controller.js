@@ -380,7 +380,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
                   error_string = result.payload.alias + ': ' + $translate.instant('Alias already exists.');
                 }
                 if (result.error === 'email-exists') {
-                  error_string = result.payload.email + ': ' + $translate.instant('Email is already associated with an account. Use a new email or leave it blank.');
+                  error_string = result.payload.email + ': ' + $translate.instant('Email is already associated with an account. Use a new email or leave it blank to receive all correspondence on their behalf.');
                 }
                 messages.push($translate.instant('An error has occurred while saving youth profile') + ': ' + error_string);
                 errorous = true;
