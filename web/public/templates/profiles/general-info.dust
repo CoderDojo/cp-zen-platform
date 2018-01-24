@@ -226,8 +226,10 @@
             <label> Childrens details </label>
             <div class="form-group" ng-enter="noop()">
               <label for="childName" class="col-sm-4 control-label">{@i18n key="Child Name"/}* </label>
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                 <input name="childFirstName-{{ $index }}" type="text" required required-message="'{@i18n key="First name is required"/}'"class="form-control" placeholder="{@i18n key="First Name"/}" ng-model="child.firstName">
+              </div>
+              <div class="col-sm-4">
                 <input name="childLastName-{{ $index }}" type="text" required required-message="'{@i18n key="Surname is required"/}'"class="form-control" placeholder="{@i18n key="Surname"/}" ng-model="child.lastName">
               </div>
             </div>
