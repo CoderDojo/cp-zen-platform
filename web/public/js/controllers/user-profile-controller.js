@@ -17,6 +17,13 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   $scope.getDojoURL = dojoUtils.getDojoURL;
 
+  $scope.isOver13 = function (age) {
+    if (age) {
+      return userUtils.getAge(age) >= 13;
+    }
+    return false;
+  }
+
 
   if ($stateParams.showBannerMessage) {
     atomicNotifyService.info($translate.instant('Please complete your profile before continuing.'), 5000);
@@ -332,7 +339,8 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
           if($scope.profile.children !== null && !$scope.profile.resolvedChildren) {
             localStorage.setItem('children', 'true');
             async.mapSeries($scope.profile.children, function(child, doneChild){
-              childrenCopy.name = child.name;
+              childrenCopy.firstName = child.firstName;
+              childrenCopy.lastName = child.lastName;
               childrenCopy.alias = child.alias;
               childrenCopy.dob = child.dateOfBirth;
               childrenCopy.gender = child.gender;
