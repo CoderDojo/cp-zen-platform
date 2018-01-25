@@ -1060,8 +1060,8 @@ cp-translations@1.0.84:
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.84.tgz#fa29c8d10ded7dffe52c843fa8911b5f1918b325"
 
 cp-translations@^1.0.4:
-  version "1.0.81"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.81.tgz#f3bcaca60207c7aae88c375cab8bead94205957c"
+  version "1.0.85"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.85.tgz#1e4d530cc5b0d4fe9ce4172714da2c80fba0f103"
 
 cp-zen-frontend@1.0.22:
   version "1.0.22"

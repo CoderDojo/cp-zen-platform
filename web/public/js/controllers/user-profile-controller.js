@@ -311,11 +311,12 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     var profileCopy = angular.copy(profile);
 
     profileCopy = _.omit(profileCopy, ['countryName', 'countryNumber', 'ownProfileFlag', 'widget', 'dojos',
-      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin',
+      'passwordConfirm', 'myChild', 'resolvedChildren', 'resolvedParents', 'isTicketingAdmin', 'children',
       'formattedDateOfBirth', 'userTypeTitle', 'requestingUserIsDojoAdmin', 'requestingUserIsChampion', 'requestingOwnProfile',
        'isOpen']);
 
     var childrenCopy = _.omit(profileCopy, ['address','alpha3','avatar','badges','countryname',
+      'user',
       'countrynumber','email','entity$','gender','userId','languageSpoken','lastEdited','linkedin','ninjaInvites',
       'notes','optionalHiddenFields','parentInvites','phone','projects','state','twitter','userType','userTypes',
       'parents', 'requiredFieldsComplete', 'id', 'children']);
@@ -329,7 +330,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
             if($state.params.parentId && !_.includes(profileCopy.parents, $state.params.parentId)){
               profileCopy.parents.push($state.params.parentId);
             }
-            saveYouthViaParent(profileCopy, callback);
+            saveYouthViaParent(profileCopy, undefined, callback);
           }else{
             saveDirect(profileCopy, callback);
           }
@@ -338,20 +339,25 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
           // This condition is only valid (save children) when on the quick reg process
           if($scope.profile.children !== null && !$scope.profile.resolvedChildren) {
             localStorage.setItem('children', 'true');
+            // mapSeries is used as it's the only one collecting results from async
             async.mapSeries($scope.profile.children, function(child, doneChild){
+              var index = $scope.profile.children.indexOf(child);
+              if (child.id) {
+                childrenCopy.id = child.id;
+                childrenCopy.userId = child.userId;
+              }
               childrenCopy.firstName = child.firstName;
               childrenCopy.lastName = child.lastName;
               childrenCopy.alias = child.alias;
               childrenCopy.dob = child.dateOfBirth;
               childrenCopy.gender = child.gender;
               childrenCopy.email = child.email;
-              childrenCopy.parents = [profileCopy.id];
               if(getAge(child.dateOfBirth) >=13){
                 childrenCopy.userTypes = ['attendee-o13'];
               } else {
                 childrenCopy.userTypes = ['attendee-u13'];
               }
-              saveYouthViaParent(childrenCopy, doneChild);
+              saveYouthViaParent(childrenCopy, index, doneChild);
             }, function(err, results){
               callback(err, results);
             });
@@ -369,22 +375,26 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
             var errorous = false;
             _.each( results, function (result) {
               if(result && result.error){
-                var error_string = "";
-                error_string = result.error === 'nick-exists' ? $translate.instant('Alias already exists.') : result.error;
+                var error_string = result.error;
+                if (result.error === 'nick-exists') {
+                  error_string = result.payload.alias + ': ' + $translate.instant('Alias already exists.');
+                }
+                if (result.error === 'email-exists') {
+                  error_string = result.payload.email + ': ' + $translate.instant('Email is already associated with an account. Use a new email or leave it blank to receive all correspondence on their behalf.');
+                }
                 messages.push($translate.instant('An error has occurred while saving youth profile') + ': ' + error_string);
                 errorous = true;
               }
               if (result && result.ok === false) {
                 messages.push($translate.instant(result.why));
                 errorous = true;
-              } else {
-                messages.push($translate.instant('Profile(s) have been saved successfully'));
               }
             });
             var message = _.uniq(messages).join('</br>');
             if(errorous){
               return alertService.showError(message);
             } else {
+              message = $translate.instant('Profile(s) have been saved successfully');
               $scope.profile = profile;
               $scope.profile.private =  $scope.profile.private ? "true" : "false";
               alertService.showAlert(message);
@@ -402,11 +412,11 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
   };
 
-  function saveYouthViaParent(profile, callback){
+  function saveYouthViaParent(profile, index, callback){
     profile = _.omit(profile, ['dojos']);
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
-    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
+    cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}, profile, index), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){
@@ -415,9 +425,14 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
     profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
     profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
 
-    cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}), saveProfileFailed.bind({callback: callback}));
+    cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}, profile, undefined), saveProfileFailed.bind({callback: callback}));
   }
-  function saveProfileWorked (response){
+  function saveProfileWorked (profile, index, response){
+    if (response.id && index) {
+      $scope.profile.children[index].id = response.id; // set the profile id in case of necessary update (failure of another kid in the list)
+      $scope.profile.children[index].userId = response.userId; // profile must be complete enough to be used by cp-perms
+    }
+    response.payload = profile; // set the original payload so we can complement the message on error with the related info (email, alias)
     this.callback(null, response);
   }
   function saveProfileFailed (err){
