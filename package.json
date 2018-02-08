@@ -70,6 +70,7 @@
     "scooter": "3.x",
     "seneca": "0.7.2",
     "serve-static": "1.4.0",
+    "sitemap": "^1.13.0",
     "slug": "0.9.1",
     "vision": "4.x"
   },

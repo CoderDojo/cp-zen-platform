@@ -16,7 +16,7 @@ lab.experiment('setup server', () => {
   });
   lab.describe('should load plugins', () => {
     lab.test('to be always the same length', (done) => {
-      let expectedQty = 34;
+      let expectedQty = 35;
       // Set up good
       if (process.env.HAPI_DEBUG === 'true' || process.env.LOGENTRIES_ENABLED === 'true') {
         expectedQty += 1;
