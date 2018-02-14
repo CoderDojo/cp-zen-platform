@@ -216,33 +216,6 @@ exports.register = function (server, eOptions, next) {
     },
   },
   {
-    method: 'PATCH',
-    path: `${options.basePath}/dojos/{id}/verified`,
-    handler: handlers.actHandlerNeedsUser('verify', 'id', null, { ctrl: 'dojo' }),
-    config: {
-      auth: auth.apiUser,
-      description: 'Update the verification of a dojo',
-      notes: 'Update',
-      tags: ['api', 'dojos', 'verification'],
-      plugins: {
-        'hapi-swagger': {
-          responseMessages: [
-            { code: 400, message: 'Bad Request' },
-            { code: 200, message: 'OK' },
-          ],
-        },
-      },
-      validate: {
-        params: {
-          id: Joi.string().guid().required(),
-        },
-        payload: Joi.object({
-          verified: Joi.number().valid(0).valid(1),
-        }),
-      },
-    },
-  },
-  {
     method: 'POST',
     path: `${options.basePath}/dojos/verified`,
     handler: handlers.actHandlerNeedsUser('bulkVerify'),

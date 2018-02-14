@@ -15,6 +15,7 @@ const controllers = require('./controllers');
 const senecaPreloaders = require('./lib/plugins/seneca-preloader-dustjs');
 const chairo = require('./lib/plugins/chairo');
 const apis = require('./lib/plugins/apis');
+const mastermindApis = require('./lib/plugins/mastermind-api');
 const logging = require('./lib/plugins/good');
 const swagger = require('./lib/plugins/swagger');
 // Libs
@@ -73,6 +74,7 @@ exports.start = () => {
       { register: swagger },
       { register: chairo, options },
       { register: apis },
+      { register: mastermindApis },
       {
         register: senecaPreloaders,
         options: { handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'] },
