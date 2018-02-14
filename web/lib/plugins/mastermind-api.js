@@ -5,7 +5,7 @@ exports.register = function (server, options, next) {
   const apis = [dojo];
 
   apis.forEach((api) => {
-    server.register(api, (err) => next(err));
+    server.register(api, err => next(err));
   });
 
   server.ext('onPreResponse', senecaWebErrorHandler, { sandbox: 'plugin' });

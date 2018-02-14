@@ -18,7 +18,7 @@ lab.describe('seneca-web-error-handler', () => {
   });
   const replyWithRedirect = {
     redirect: sandbox.stub(),
-  }
+  };
   lab.afterEach((done) => {
     req.response = {};
     sandbox.reset();
@@ -39,7 +39,7 @@ lab.describe('seneca-web-error-handler', () => {
   });
 
   lab.test('it should redirect to a specific page', (done) => {
-    req.response.http$ = { redirect: 'http://google.com' }; 
+    req.response.http$ = { redirect: 'http://google.com' };
     fn(req, replyWithRedirect);
     expect(replyWithRedirect.redirect).to.have.been.calledOnce;
     expect(replyWithRedirect.redirect).to.have.been.calledWith(req.response.http$.redirect);

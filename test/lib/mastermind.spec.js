@@ -3,7 +3,6 @@ const lab = require('lab').script();
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const proxyquire = require('proxyquire');
-const fn = require('../../web/lib/mastermind.js');
 const boom = require('boom');
 
 const expect = chai.expect;
@@ -27,12 +26,12 @@ lab.describe('masterMind', () => {
   });
   lab.beforeEach((done) => {
     reply = sandbox.stub();
-    firstStep = sandbox.stub().callsFake((req, reply, cb) => cb());
-    secondStep = sandbox.stub().callsFake((req, reply, cb) => reply());
-    failingStep = sandbox.stub().callsFake((req, reply, cb) => cb(error));
+    firstStep = sandbox.stub().callsFake((_req, _reply, _cb) => _cb());
+    secondStep = sandbox.stub().callsFake((_req, _reply) => _reply());
+    failingStep = sandbox.stub().callsFake((_req, _reply, _cb) => _cb(error));
     finalHandler = sandbox.stub();
     fn = proxyquire('../../web/lib/mastermind.js', {
-      'boom': boomSpy,
+      'boom': boomSpy, // eslint-disable-line quote-props
     });
     done();
   });
