@@ -52,6 +52,7 @@ exports.register = function (server, options, next) {
       clearInvalid: true,
       appendNext: true, // Redirect is not set here, but relative to the routes
       isSecure: process.env.NODE_ENV === 'production',
+      isSameSite: 'Lax',
       validateFunc: validateFunc(server),
     });
     next();
