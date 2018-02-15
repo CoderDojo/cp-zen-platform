@@ -14,7 +14,20 @@ lab.describe('dojo handler', () => {
   const sandbox = sinon.sandbox.create();
   const user = { id: 'user1' };
   const seneca = { act: sinon.stub() };
-  const req = { params: { id: 1 }, payload: { verified: 1 }, user, seneca };
+  const sitemapRefreshStub = sandbox.stub();
+  const req = {
+    params: { id: 1 },
+    payload: { verified: 1 },
+    user,
+    seneca,
+    server: {
+      plugins: {
+        sitemap: {
+          refresh: sitemapRefreshStub,
+        },
+      },
+    },
+  };
   const reply = sandbox.stub();
   const code = sandbox.stub();
   const cb = sandbox.stub();
@@ -46,11 +59,11 @@ lab.describe('dojo handler', () => {
         verified: 1,
         user,
       }, sinon.match.func);
-      expect(cb).to.not.have.been.called;
       expect(reply).to.have.been.calledOnce;
       expect(reply).to.have.been.calledWith(dojo);
       expect(code).to.have.been.calledOnce;
       expect(code).to.have.been.calledWith(200);
+      expect(cb).to.have.been.called;
       done();
     });
     lab.test('it should call cb on error', (done) => {
@@ -66,6 +79,12 @@ lab.describe('dojo handler', () => {
       }, sinon.match.func);
       expect(cb).to.have.been.calledOnce;
       expect(reply).to.not.have.been.called;
+      done();
+    });
+    lab.test('it should call refresh on sitemap and cb', (done) => {
+      fn.verify()[1](req, reply, cb);
+      expect(sitemapRefreshStub).to.have.been.calledOnce;
+      expect(cb).to.have.been.calledOnce;
       done();
     });
   });

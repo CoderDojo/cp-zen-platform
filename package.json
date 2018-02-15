@@ -35,6 +35,7 @@
     "chairo-cache": "0.5.2",
     "country-language": "^0.1.7",
     "cp-i18n-lib": "git+https://github.com/CoderDojo/cp-i18n-lib.git#1.0.0",
+    "cp-permissions-plugin": "https://github.com/CoderDojo/cp-permissions-plugin.git",
     "cp-translations": "^1.0.86",
     "cp-zen-frontend": "1.0.22",
     "cuid": "1.3.8",
@@ -68,6 +69,7 @@
     "scooter": "3.x",
     "seneca": "0.7.2",
     "serve-static": "1.4.0",
+    "sitemap": "^1.13.0",
     "slug": "0.9.1",
     "vision": "4.x"
   },

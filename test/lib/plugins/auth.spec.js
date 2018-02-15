@@ -73,14 +73,11 @@ lab.describe('auth', () => {
       },
     };
     const senecaActSpy = sinon.spy(reqMock.seneca, 'act');
-    const cbSpy = sinon.spy();
-    const clock = sinon.useFakeTimers();
-    getUser(reqMock, '', cbSpy);
-    expect(senecaActSpy).to.not.have.been.called;
-    clock.tick(1000);
-    expect(cbSpy).to.have.been.calledOnce;
-    expect(cbSpy.getCall(0).args.length).to.be.equal(0);
-    done();
+    getUser(reqMock, '', (...args) => {
+      expect(senecaActSpy).to.not.have.been.called;
+      expect(args.length).to.be.equal(0);
+      done();
+    });
   });
   lab.test('should validate a token and set the cdf scope', (done) => {
     const serverMock = {};

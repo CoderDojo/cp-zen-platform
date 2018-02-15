@@ -2,29 +2,35 @@ const chai = require('chai');
 const lab = require('lab').script();
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
-const fn = require('../../web/lib/seneca-web-error-handler.js');
+const proxy = require('proxyquire');
 
 const expect = chai.expect;
 chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('seneca-web-error-handler', () => {
+  let fn;
   const sandbox = sinon.sandbox.create();
   const req = {
     response: {},
   };
-  const code = sandbox.stub();
-  const reply = sandbox.stub().returns({
-    code,
-  });
+  const reply = sandbox.stub();
   const replyWithRedirect = {
     redirect: sandbox.stub(),
   };
+  const BoomMock = {
+    boomify: msg => `Boom! ${msg}`,
+  };
+
+  lab.before((done) => {
+    fn = proxy('../../web/lib/seneca-web-error-handler.js', {
+      boom: BoomMock,
+    });
+    done();
+  });
+
   lab.afterEach((done) => {
     req.response = {};
     sandbox.reset();
-    reply.returns({
-      code,
-    });
     done();
   });
   lab.test('it should format the response with an error code', (done) => {
@@ -32,9 +38,7 @@ lab.describe('seneca-web-error-handler', () => {
     req.response.data = 'Not allowed';
     fn(req, reply);
     expect(reply).to.have.been.calledOnce;
-    expect(reply).to.have.been.calledWith('Not allowed');
-    expect(code).to.have.been.calledOnce;
-    expect(code).to.have.been.calledWith(404);
+    expect(reply).to.have.been.calledWith('Boom! Not allowed');
     done();
   });
 
@@ -49,8 +53,6 @@ lab.describe('seneca-web-error-handler', () => {
     fn(req, reply);
     expect(reply).to.have.been.calledOnce;
     expect(reply).to.have.been.calledWith(req.response);
-    expect(code).to.have.been.calledOnce;
-    expect(code).to.have.been.calledWith(200);
     done();
   });
 });

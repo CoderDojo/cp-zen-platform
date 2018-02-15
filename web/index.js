@@ -18,6 +18,7 @@ const apis = require('./lib/plugins/apis');
 const mastermindApis = require('./lib/plugins/mastermind-api');
 const logging = require('./lib/plugins/good');
 const swagger = require('./lib/plugins/swagger');
+const sitemap = require('./lib/plugins/sitemap');
 // Libs
 const options = require('./config/options.js');
 const locale = require('locale');
@@ -81,12 +82,14 @@ exports.start = () => {
       },
       { register: controllers },
       { register: cpZenFrontend },
+      { register: sitemap },
     ])
     .then(() =>
       server.start().then(() => {
         if (env !== 'production' && env !== 'staging' && env !== 'test') {
           console.log(server.plugins.blipp.text()); // eslint-disable-line no-console
         }
+        server.plugins.sitemap.fetch();
         console.log('[%s] Listening on http://localhost:%d', env, port); // eslint-disable-line no-console
       }),
     )

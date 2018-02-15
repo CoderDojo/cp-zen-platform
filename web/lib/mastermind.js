@@ -7,8 +7,8 @@ const stepHandler = (step, cb, req, reply) => step(req, reply, cb);
 const errorHandler = (err, reply) => {
   if (err) return reply(Boom.boomify(err));
 };
-// Note : to be investigated : 
-//  - generic json handler with callback being able to bypass a part of the cb chain 
+// Note : to be investigated :
+//  - generic json handler with callback being able to bypass a part of the cb chain
 //        to reach the finalHandler
 //    - avoid to call reply
 //    - ensure reply is called once and only once
@@ -20,6 +20,6 @@ module.exports = (cbs, formatter) => {
     eachSeries(
       cbs,
       partialRight(stepHandler, req, reply),
-      partialRight(finalCb, reply),
+      partialRight(finalCb, partialRight.placeholder, reply),
     );
 };

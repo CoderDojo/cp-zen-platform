@@ -10,8 +10,13 @@ const verify = params => // eslint-disable-line no-unused-vars
       return req.seneca.act({ role, ctrl: 'dojo', cmd: 'verify', id, verified, user },
         (err, res) => {
           if (err) return cb(err);
-          return reply(res).code(200);
+          reply(res).code(200);
+          cb();
         });
+    },
+    (req, reply, cb) => {
+      req.server.plugins.sitemap.refresh();
+      cb();
     },
   ]);
 
