@@ -172,6 +172,7 @@ gulp.task('watch-less', ['build-cdf'], () =>
 
 gulp.task('dev', ['watch-less'], () => {
   nodemon({
+    ignore: [relativePath('./web/public/components/*')],
     script: 'index.js',
     ext: 'js dust json',
   });
