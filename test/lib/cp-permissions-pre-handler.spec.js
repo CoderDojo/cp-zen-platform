@@ -95,7 +95,7 @@ lab.describe('cp-permissions preHandler', () => {
         key1: 'qval1',
         key2: 'payload_val2',
         key3: 'payload_val3',
-        key4: 'params_val4',
+        key4: 'payload_val4',
         key5: 'params_val5',
       },
       user: {
@@ -186,6 +186,46 @@ lab.describe('cp-permissions preHandler', () => {
 
     // ASSERT
     expect(reply.continue).to.have.been.calledOnce;
+    done();
+  });
+
+  lab.test('should remove disallowed params', (done) => {
+    // ARRANGE
+    req = Object.assign(req, {
+      query: {
+        q1: 'q1',
+        role: 'role',
+        zenHostname: 'zenHostname',
+      },
+      payload: {
+        payload1: 'payload1',
+        locality: 'locality',
+        user: 'user',
+        cmd: 'cmd',
+      },
+      params: {
+        param1: 'param1',
+        login: 'login',
+        ok: 'ok',
+      },
+    });
+    const expectedMsg = {
+      params: {
+        q1: 'q1',
+        payload1: 'payload1',
+        param1: 'param1',
+      },
+      user: {
+        name: 'some user',
+      },
+    };
+
+    // ACT
+    fn(req, reply);
+
+    // ASSERT
+    expect(checkProfilesMock).to.have.been.calledOnce;
+    expect(checkProfilesMock).to.have.been.calledWith([], expectedMsg, sinon.match.func);
     done();
   });
 });

@@ -1,15 +1,18 @@
 const { checkProfiles } = require('cp-permissions-plugin');
+const { defaults, omit } = require('lodash');
 const Boom = require('boom');
+
+const disallowedParams = ['role', 'zenHostname', 'locality', 'user', 'cmd', 'login', 'ok'];
 
 module.exports = (request, reply) => {
   const permsConfig = request.route.settings.plugins.cpPermissions;
   if (permsConfig && permsConfig.profiles) {
     const msg = Object.assign({
-      params: Object.assign({},
-        request.query,
+      params: omit(defaults({},
         request.payload,
+        request.query,
         request.params,
-      ),
+      ), disallowedParams),
     }, request.user);
     checkProfiles.call(request.seneca, permsConfig.profiles, msg, (err, response) => {
       if (err) {
