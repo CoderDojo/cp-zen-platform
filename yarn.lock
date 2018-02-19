@@ -1120,9 +1120,9 @@ countryjs@^1.8.0:
     jed "^1.1.0"
     po2json "^0.4.2"
 
-"cp-permissions-plugin@https://github.com/CoderDojo/cp-permissions-plugin.git":
-  version "1.0.4"
-  resolved "https://github.com/CoderDojo/cp-permissions-plugin.git#9490f27a8fa89da484a78fe3ac0ec80b127e1314"
+cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
+  version "1.0.5"
+  resolved "https://codeload.github.com/CoderDojo/cp-permissions-plugin/tar.gz/4d401a9a13fa90971b99430ee2894953fdf1a7a0"
   dependencies:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"

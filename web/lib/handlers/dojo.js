@@ -20,6 +20,24 @@ const verify = params => // eslint-disable-line no-unused-vars
     },
   ]);
 
+const update = params => // eslint-disable-line no-unused-vars
+  mastermind([
+    (req, reply, cb) => {
+      const dojo = req.payload.dojo;
+      return req.seneca.act({ role, ctrl: 'dojo', cmd: 'save', dojo },
+        (err, res) => {
+          if (err) return cb(err);
+          reply(res).code(200);
+          cb();
+        });
+    },
+    (req, reply, cb) => {
+      req.server.plugins.sitemap.refresh();
+      cb();
+    },
+  ]);
+
 module.exports = {
   verify,
+  update,
 };

@@ -23,7 +23,7 @@ module.exports = (request, reply) => {
             params: request.params,
             url: request.url,
             user: request.user,
-            error: response,
+            error: err,
           },
           Date.now());
         return reply(Boom.forbidden());

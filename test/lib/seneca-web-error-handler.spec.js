@@ -14,6 +14,7 @@ lab.describe('seneca-web-error-handler', () => {
     response: {},
   };
   const reply = sandbox.stub();
+  reply.continue = sandbox.stub();
   const replyWithRedirect = {
     redirect: sandbox.stub(),
   };
@@ -51,8 +52,7 @@ lab.describe('seneca-web-error-handler', () => {
   });
   lab.test('it should use the current info', (done) => {
     fn(req, reply);
-    expect(reply).to.have.been.calledOnce;
-    expect(reply).to.have.been.calledWith(req.response);
+    expect(reply.continue).to.have.been.calledOnce;
     done();
   });
 });

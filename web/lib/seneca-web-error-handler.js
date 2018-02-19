@@ -10,5 +10,5 @@ module.exports = (req, reply) => {
     if (resp.http$.redirect) return reply.redirect(resp.http$.redirect);
     return reply(Boom.boomify(resp.data, { statusCode }));
   }
-  return reply(resp);
+  return reply.continue();
 };

@@ -98,26 +98,6 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Change avatar',
       tags: ['api', 'users'],
-      plugins: {
-        cpPermissions: {
-          profiles: [
-            {
-              role: 'basic-user',
-              customValidator: [{
-                role: 'cd-profiles',
-                cmd: 'is_own_profile',
-              }],
-            },
-            {
-              role: 'basic-user',
-              customValidator: [{
-                role: 'cd-users',
-                cmd: 'is_parent_of',
-              }],
-            },
-          ],
-        },
-      },
     },
   }, {
     method: 'GET',

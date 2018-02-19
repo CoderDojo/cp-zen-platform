@@ -12,27 +12,19 @@ exports.register = (server, options, next) => {
     urls: [],
   };
   const staticUrls = [
-    {
-      url: '/charter',
-      changefreq: 'monthly',
-      priority: 0.1,
-    },
-    {
-      url: '/terms-and-conditions',
-      changefreq: 'monthly',
-      priority: 0.1,
-    },
-    {
-      url: '/privacy-statement',
-      changefreq: 'monthly',
-      priority: 0.1,
-    },
-    {
-      url: '/badges',
-      changefreq: 'weekly',
-      priority: 0.3,
-    },
-  ];
+    '/charter',
+    '/terms-and-conditions',
+    '/privacy-statement',
+  ].map(url => ({
+    url,
+    changefreq: 'monthly',
+    priority: 0.1,
+  }));
+  staticUrls.push({
+    url: '/badges',
+    changefreq: 'weekly',
+    priority: 0.3,
+  });
 
   // Route handler for /sitemap.xml
   const handler = (req, reply) => reply(currentSitemap).header('Content-Type', 'application/xml');
