@@ -58,8 +58,8 @@ var cdEventbriteIntegration = {
       if (!_.isUndefined(token)) {
         cdE.saving = true;
         delete $localStorage.eventbriteDojo;
+        var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
-          var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
           cdEventbriteService.authorize(cdE.dojoId, {code: token})
           .then(function () {
             $state.go('edit-dojo', {id: cdE.dojoId});
