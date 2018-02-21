@@ -48,7 +48,7 @@ jobs:
   update-frontend:
     working_directory: ~/cp-zen-platform
     docker:
-      - image: node:8.4
+      - image: node:carbon
     steps:
       - add-ssh-keys:
           fingerprints:
