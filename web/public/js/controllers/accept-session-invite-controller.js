@@ -29,8 +29,9 @@
         $state.go('dojo-list');
       }
     }, function (err) {
-      if(err) {
-        console.error(err);
+      if (err.status === 410) {
+        alertService.showError($translate.instant('Full up'));
+      } else {
         alertService.showError($translate.instant('Invalid session invitation.'));
       }
     })
