@@ -30,7 +30,7 @@
       }
     }, function (err) {
       if (err.status === 410) {
-        alertService.showError($translate.instant('Full up'));
+        alertService.showError($translate.instant('The event is fully booked, please wait for the next event or look for other Dojos in your area.'));
       } else {
         alertService.showError($translate.instant('Invalid session invitation.'));
       }
