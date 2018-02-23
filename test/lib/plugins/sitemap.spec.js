@@ -27,7 +27,7 @@ lab.describe('sitemap', () => {
     { urlSlug: 'fr/Lyon' },
     { urlSlug: 'ie/Dublin' },
   ];
-  const host = `${process.env.PROTOCOL || 'http'}://${process.env.HOSTNAME || 'localhost'}:${process.env.PORT || 8000}`;
+  const host = 'http://127.0.0.1:8000';
   const staticUrls = [
     {
       url: `${host}/charter`,

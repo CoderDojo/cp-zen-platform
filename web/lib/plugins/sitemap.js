@@ -1,9 +1,9 @@
 const sitemap = require('sitemap');
 
 exports.register = (server, options, next) => {
-  const port = process.env.PORT || 8000;
-  const host = process.env.HOSTNAME || '127.0.0.1';
-  const protocol = process.env.PROTOCOL || 'http';
+  const port = process.env.ZEN_PORT || 8000;
+  const host = process.env.ZEN_HOSTNAME || '127.0.0.1';
+  const protocol = process.env.ZEN_PROTOCOL || 'http';
   const hostWithPort = `${protocol}://${host}:${port}`;
   let currentSitemap;
   const skeleton = {
