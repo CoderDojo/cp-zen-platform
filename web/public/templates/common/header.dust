@@ -1,16 +1,12 @@
-<header class="header">
-  <div class="cd-menu cd-menu__desktop-nav">
+<header class="cd-menu header">
+  <div class="cd-menu__desktop-nav">
     <div class="cd-menu__first-row">
       <a href="/">
         <img src="/components/cd-common/dist/coderdojo-logo-light-bg.svg" width="120" height="44" />
       </a>
-      <a href="https://coderdojo.com/donate/" class="cd-menu__donate-button">{@i18n key="Donate"/}</a>
-      <form class="cd-menu__search" role="search" action="https://coderdojo.com/">
-        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/} name="s" />
-        <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
-      </form>
       <div class="cd-menu__flex-spacer"></div>
       <div class="cd-menu__account">
+        <a class="emphasis" href="https://help.coderdojo.com">{@i18n key="Help"/}</a>
         <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
@@ -69,11 +65,8 @@
       <span class="cd-menu__close-button">&times;</span>
     </div>
     <div class="cd-menu__content">
-      <div class="cd-menu__content-block cd-menu__search">
-        <input class="cd-menu__search-input" type="text" placeholder={@i18n key="Search..."/}>
-        <button class="cd-menu__search-button" type="button"><span class="fa fa-search fa-2x"></span></button>
-      </div>
       <div class="cd-menu__content-block cd-menu__account">
+        <a class="emphasis" href="https://help.coderdojo.com">{@i18n key="Help"/}</a>
         <a href="/register/user">{@i18n key="Register"/}</a>
         <a href="/login">{@i18n key="Login"/}</a>
       </div>
@@ -137,7 +130,6 @@
             </div>
           </div>
         </li>
-        <li><a href="https://coderdojo.com/donate/">{@i18n key="Donate"/}</a></li>
       </ul>
     </div>
   </nav>
