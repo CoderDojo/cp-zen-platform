@@ -19,6 +19,7 @@
       <p><a href="/charter">{@i18n key="Charter"/}</a></p>
       <p><a href="/privacy-statement">{@i18n key="Privacy Statement"/}</a></p>
       <p><a href="http://github.coderdojo.com">{@i18n key="Contribute"/}</a></p>
+      <p><a href="https://coderdojo.com/donate/">{@i18n key="Donate"/}</a></p>
       <p class="cd-footer__social-icons">
         <a href="https://twitter.com/coderdojo" target="_blank">
           <span class="fa-stack fa-lg">
