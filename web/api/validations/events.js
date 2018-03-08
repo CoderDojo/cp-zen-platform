@@ -9,7 +9,7 @@ const definitions = {
   dateAfter: Joi.date().timestamp(),
   utcOffset: Joi.number(),
 };
-module.exports = { 
+module.exports = {
   base: query.base,
   definitions,
   fields,

@@ -110,7 +110,7 @@ lab.describe('onPreResponse', () => {
     expect(replyMock.continue).to.have.been.calledOnce;
     done();
   });
-  
+
   lab.test('should continue for any api 3.0 endpoint', (done) => {
     const reqMock = {
       url: { path: '/api/3.0/dojos' },

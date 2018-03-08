@@ -10,7 +10,7 @@ exports.lab = lab;
 lab.describe('event handler', () => {
   const sandbox = sinon.sandbox.create();
   const Event = {
-    get: sandbox.stub(), 
+    get: sandbox.stub(),
   };
   const fn = proxy('../../../web/lib/handlers/event.js', {
     '../mastermind': cbs => cbs,
@@ -57,12 +57,12 @@ lab.describe('event handler', () => {
       Event.get.rejects(err);
       try {
         await fn.get()[0](req, reply, cb);
-      } catch(err) {
+      } catch (_err) {
         expect(Event.get).to.have.been.calledWith({
           'query[dojoId]': 1,
           'query[status]': 'published',
         });
-        expect(err.message).to.equal('fake err');
+        expect(_err.message).to.equal('fake err');
         // reply will be called by mastermind, in a boomified manner
         expect(reply).to.not.have.been.called;
       }

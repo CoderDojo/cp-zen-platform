@@ -3,7 +3,7 @@ const lab = require('lab').script();
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const request = require('request-promise-native');
-const fn = require('../../../web/lib/transports/http');
+const Fn = require('../../../web/lib/transports/http');
 
 const expect = chai.expect;
 chai.use(sinonChai);
@@ -19,7 +19,8 @@ lab.describe('HTTP transport', () => {
     const payload = {
       baseUrl: 'http://google.com',
     };
-    const http = new fn(payload);
+    // eslint-disable-next-line no-new
+    new Fn(payload);
     expect(spy).to.have.been.calledOnce;
     expect(spy).to.have.been.calledWith(payload);
     done();

@@ -15,7 +15,7 @@ lab.describe('event handler', () => {
   const transportFactory = sandbox.stub().returns(transport);
 
   const fn = proxy('../../../web/lib/models/event.js', {
-    '../transports/http': transportFactory, 
+    '../transports/http': transportFactory,
   });
   lab.afterEach((done) => {
     sandbox.reset();
