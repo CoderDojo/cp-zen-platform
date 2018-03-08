@@ -1849,6 +1849,48 @@ eslint@4.5.x:
     table "^4.0.1"
     text-table "~0.2.0"
 
+eslint@4.7.x:
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.2.tgz#ff6f5f5193848a27ee9b627be3e73fb9cb5e662e"
+  dependencies:
+    ajv "^5.2.0"
+    babel-code-frame "^6.22.0"
+    chalk "^2.1.0"
+    concat-stream "^1.6.0"
+    cross-spawn "^5.1.0"
+    debug "^3.0.1"
+    doctrine "^2.0.0"
+    eslint-scope "^3.7.1"
+    espree "^3.5.1"
+    esquery "^1.0.0"
+    estraverse "^4.2.0"
+    esutils "^2.0.2"
+    file-entry-cache "^2.0.0"
+    functional-red-black-tree "^1.0.1"
+    glob "^7.1.2"
+    globals "^9.17.0"
+    ignore "^3.3.3"
+    imurmurhash "^0.1.4"
+    inquirer "^3.0.6"
+    is-resolvable "^1.0.0"
+    js-yaml "^3.9.1"
+    json-stable-stringify "^1.0.1"
+    levn "^0.3.0"
+    lodash "^4.17.4"
+    minimatch "^3.0.2"
+    mkdirp "^0.5.1"
+    natural-compare "^1.4.0"
+    optionator "^0.8.2"
+    path-is-inside "^1.0.2"
+    pluralize "^7.0.0"
+    progress "^2.0.0"
+    require-uncached "^1.0.3"
+    semver "^5.3.0"
+    strip-ansi "^4.0.0"
+    strip-json-comments "~2.0.1"
+    table "^4.0.1"
+    text-table "~0.2.0"
+
 eslint@^4.0.0, eslint@^4.5.0:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.1.tgz#849804136953ebe366782f9f8611e2cbd1b54681"
@@ -3692,14 +3734,14 @@ lab@^14.2.0:
     source-map-support "0.4.x"
     supports-color "4.4.x"
 
-lab@^14.3.1:
-  version "14.3.1"
-  resolved "https://registry.yarnpkg.com/lab/-/lab-14.3.1.tgz#542b284927a9a4e50dfda8bca0dd5d3331c5067c"
+lab@^14.3.2:
+  version "14.3.2"
+  resolved "https://registry.yarnpkg.com/lab/-/lab-14.3.2.tgz#77dc567043bebffaaa2e20630a1bc45bcaf95eec"
   dependencies:
     bossy "3.x.x"
     code "4.1.x"
     diff "3.3.x"
-    eslint "4.5.x"
+    eslint "4.7.x"
     eslint-config-hapi "10.x.x"
     eslint-plugin-hapi "4.x.x"
     espree "3.5.x"
@@ -3711,7 +3753,7 @@ lab@^14.3.1:
     json-stringify-safe "5.x.x"
     mkdirp "0.5.x"
     seedrandom "2.4.x"
-    source-map "0.5.x"
+    source-map "0.6.x"
     source-map-support "0.4.x"
     supports-color "4.4.x"
 
@@ -5879,6 +5921,10 @@ source-map-url@~0.3.0:
 source-map@0.5.x, source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
+
+source-map@0.6.x:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
 source-map@^0.1.38, source-map@~0.1.7:
   version "0.1.43"
