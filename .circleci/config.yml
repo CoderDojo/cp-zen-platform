@@ -7,6 +7,7 @@ jobs:
       - image: node:carbon
         environment:
           NODE_ENV: testing
+          EVENT_SERVICE: events2 
     steps:
       - checkout
       - restore_cache:
