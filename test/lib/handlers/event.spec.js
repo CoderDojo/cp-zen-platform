@@ -24,7 +24,6 @@ lab.describe('event handler', () => {
   };
   const reply = sandbox.stub();
   const code = sandbox.stub();
-  const cb = sandbox.stub();
   lab.beforeEach((done) => {
     reply.returns({
       code,
@@ -40,24 +39,24 @@ lab.describe('event handler', () => {
       sandbox.reset();
       done();
     });
-    lab.test('it should return the events', async () => {
+    lab.test('it should return the events', (done) => {
       Event.get.resolves([]);
-      await fn.get()[0](req, reply, cb);
-      expect(Event.get).to.have.been.calledWith({
-        'query[dojoId]': 1,
-        'query[status]': 'published',
+      fn.get()[0](req, reply, () => {
+        expect(Event.get).to.have.been.calledWith({
+          'query[dojoId]': 1,
+          'query[status]': 'published',
+        });
+        expect(reply).to.have.been.calledOnce;
+        expect(reply).to.have.been.calledWith([]);
+        expect(code).to.have.been.calledOnce;
+        expect(code).to.have.been.calledWith(200);
+        done();
       });
-      expect(reply).to.have.been.calledOnce;
-      expect(reply).to.have.been.calledWith([]);
-      expect(code).to.have.been.calledOnce;
-      expect(code).to.have.been.calledWith(200);
     });
-    lab.test('it should call cb on error', async () => {
+    lab.test('it should call cb on error', (done) => {
       const err = new Error('fake err');
       Event.get.rejects(err);
-      try {
-        await fn.get()[0](req, reply, cb);
-      } catch (_err) {
+      fn.get()[0](req, reply, (_err) => {
         expect(Event.get).to.have.been.calledWith({
           'query[dojoId]': 1,
           'query[status]': 'published',
@@ -65,7 +64,8 @@ lab.describe('event handler', () => {
         expect(_err.message).to.equal('fake err');
         // reply will be called by mastermind, in a boomified manner
         expect(reply).to.not.have.been.called;
-      }
+        done();
+      });
     });
   });
 });

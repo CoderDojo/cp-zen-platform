@@ -28,7 +28,7 @@
     "url": "https://github.com/CoderDojo/community-platform/issues"
   },
   "dependencies": {
-    "async": "0.9.2",
+    "async": "^2.6.0",
     "blankie": "1.1.1",
     "blipp": "2.3.0",
     "boom": "6.x",
