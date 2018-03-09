@@ -1,12 +1,13 @@
 const queryFields = require('./query');
 const Joi = require('joi');
 
-const fields = ['dateBefore', 'dateAfter', 'status'];
+const fields = ['beforeDate', 'afterDate', 'status'];
 const query = queryFields(fields);
 const definitions = {
   status: Joi.string().valid('draft', 'published', 'canceled'),
-  dateBefore: Joi.date().timestamp(),
-  dateAfter: Joi.date().timestamp(),
+  beforeDate: Joi.date().timestamp().raw(),
+  afterDate: Joi.date().timestamp().raw(),
+  public: Joi.number().valid(0, 1),
   utcOffset: Joi.number(),
 };
 module.exports = {

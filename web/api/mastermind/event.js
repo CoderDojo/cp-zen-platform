@@ -4,7 +4,7 @@ const validation = require('../validations/events');
 const eventHandlers = require('../../lib/handlers/event');
 
 const basePath = '/api/3.0';
-const { dateBefore, dateAfter, status } = validation.definitions;
+const { beforeDate, afterDate, status, public, utcOffset } = validation.definitions;
 
 module.exports = [
   {
@@ -30,8 +30,10 @@ module.exports = [
         },
         query: validation.base.keys({
           'query[status]': status,
-          'query[dateBefore]': dateBefore,
-          'query[dateAfter]': dateAfter,
+          'query[public]': public,
+          'query[beforeDate]': beforeDate,
+          'query[afterDate]': afterDate,
+          'query[utcOffset]': utcOffset,
         }),
       },
     },

@@ -27,16 +27,17 @@ lab.describe('event handler', () => {
       done();
     });
     lab.test('it should proxy the GET call', async () => {
-      const params = {
+      const qs = {
         'query[dojoId]': 1,
         'query[status]': 'published',
       };
       transport.get.resolves([]);
-      await fn.get(params);
+      await fn.get(qs);
       expect(transportFactory).to.have.been.calledWith({
         baseUrl: 'http://events2:3000/',
+        json: true,
       });
-      expect(transport.get).to.have.been.calledWith('events', { params });
+      expect(transport.get).to.have.been.calledWith('events', { qs });
     });
   });
 });
