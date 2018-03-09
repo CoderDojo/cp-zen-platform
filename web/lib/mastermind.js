@@ -5,7 +5,10 @@ const Boom = require('boom');
 const stepHandler = (step, cb, req, reply) => step(req, reply, cb);
 
 const errorHandler = (err, reply) => {
-  if (err) return reply(Boom.boomify(err));
+  if (err) {
+    const { statusCode, message } = err;
+    return reply(Boom.boomify(err, { statusCode, message }));
+  }
 };
 // Note : to be investigated :
 //  - generic json handler with callback being able to bypass a part of the cb chain
