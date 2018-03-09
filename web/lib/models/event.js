@@ -1,4 +1,4 @@
-const service = process.env.EVENT_SERVICE;
+const service = process.env.EVENTS_SERVICE;
 const Transport = require('../transports/http');
 
 class Event {
