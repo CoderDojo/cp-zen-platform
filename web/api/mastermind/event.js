@@ -12,7 +12,7 @@ module.exports = [
     path: `${basePath}/dojos/{dojoId}/events`,
     handler: eventHandlers.get(),
     config: {
-      auth: auth.apiUser,
+      auth: auth.userIfPossible,
       description: 'List events of a Dojo',
       notes: 'Dojo\'s events',
       tags: ['api', 'events'],
