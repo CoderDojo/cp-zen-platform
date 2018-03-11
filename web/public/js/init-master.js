@@ -247,7 +247,7 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          template: '<cd-register></cd-register>',
+          template: '<cd-register class="row"></cd-register>',
           abstract: true,
           params: {
             referer: null,
@@ -293,7 +293,7 @@
         .state("review-champion-application", {
           url: "/lead/:id",
           parent: 'dashboard',
-          template: '<cd-dojo-lead id="id"></cd-dojo-lead>',
+          template: '<cd-dojo-lead id="id" class="row"></cd-dojo-lead>',
           params: {
             pageTitle: 'Review Application'
           },
@@ -306,7 +306,7 @@
           parent: 'dashboard',
           // abstract: true, // Dropped to support redirection to default state, supported in uiRouter 1.0
           redirectTo: 'manage-dojo-active-users',
-          template: '<cd-manage-dojo-users></cd-manage-dojo-users>',
+          template: '<cd-manage-dojo-users class="row"></cd-manage-dojo-users>',
           controller: ['initUserTypes', 'currentUser', '$scope',
             function (initUserTypes, currentUser, $scope) {
               $scope.initUserTypes = initUserTypes;
@@ -363,7 +363,7 @@
         .state("manage-dojos", {
           url: "/manage-dojos",
           parent: 'dashboard',
-          template: '<cd-dojos-manage></cd-dojos-manage>',
+          template: '<cd-dojos-manage class="row"></cd-dojos-manage>',
           params: {
             pageTitle: 'Manage Dojos'
           }
@@ -525,7 +525,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          template: '<cd-event-detail></cd-event-detail>',
+          template: '<cd-event-detail class="row"></cd-event-detail>',
           controller: function($scope, event, sessions, profile, cdDojoService){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -717,7 +717,7 @@
         })
         .state('charter',{
           url: '/charter',
-          template: '<cd-charter></cd-charter>',
+          template: '<cd-charter class="row"></cd-charter>',
           params: {
             pageTitle: 'Charter',
           }
@@ -726,7 +726,7 @@
         .state('charter-page', {
           url: '/charter',
           parent: 'dashboard',
-          template: '<cd-charter></cd-charter>',
+          template: '<cd-charter class="row"></cd-charter>',
           params: {
             pageTitle: 'Charter',
           }
