@@ -1,4 +1,4 @@
-<div class="cd-container cd-color-2-underline">
+<div class="cd-container cd-color-2-underline row">
   <legend>{@i18n key="Zen Terms of Service"/}</legend>
   <p><strong>{@i18n key="INTRODUCTION"/}</strong></p>
   <p>{@i18n key="Welcome to 'Zen' the CoderDojo community platform hosted at zen.coderdojo.com."/} </p>

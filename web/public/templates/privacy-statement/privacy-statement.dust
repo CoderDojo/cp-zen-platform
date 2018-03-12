@@ -1,4 +1,4 @@
-<div class="cd-container cd-color-2-underline privacy-statement">
+<div class="cd-container cd-color-2-underline privacy-statement row">
   <legend>{@i18n key="Privacy Statement"/}</legend>
   <h1>{@i18n key="Privacy Statement"/}</h1>
     <ol>

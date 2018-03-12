@@ -1,4 +1,4 @@
-<div class="manage-event-applicants">
+<div class="manage-event-applicants row">
   <div class="row margin-bottom-15">
     <div class="col-md-8">
       <span class="col-md-4"><b>{@i18n key="Total event capacity"/}:</b> {{ event.capacity }}</span>
