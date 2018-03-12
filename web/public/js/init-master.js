@@ -482,7 +482,7 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          template: '<cd-event-detail></cd-event-detail>',
+          template: '<cd-event-detail class="row"></cd-event-detail>',
           controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
