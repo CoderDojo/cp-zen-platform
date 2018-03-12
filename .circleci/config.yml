@@ -7,7 +7,7 @@ jobs:
       - image: node:carbon
         environment:
           NODE_ENV: testing
-          EVENTS_SERVICE: events2 
+          EVENTS_SERVICE: events2
     steps:
       - checkout
       - restore_cache:
@@ -66,7 +66,7 @@ jobs:
             git config --global user.email "webteam@coderdojo.com"
             git config --global user.name "CoderDojo Foundation"
             git add package.json yarn.lock
-            git commit -m "[ci] Update frontend"
+            git commit -m "[ci] Update frontend" -n
             git push -u origin $CIRCLE_BRANCH
 workflows:
   version: 2
