@@ -5,5 +5,7 @@ module.exports = fields => ({
     orderBy: fields,
     page: Joi.number(),
     pageSize: Joi.number(),
+    direction: Joi.string(),
+    related: Joi.string(),
   }),
 });
