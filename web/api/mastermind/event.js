@@ -2,11 +2,65 @@ const Joi = require('joi');
 const auth = require('../../lib/authentications');
 const validation = require('../validations/events');
 const eventHandlers = require('../../lib/handlers/event');
+const applicationHandlers = require('../../lib/handlers/application');
 
 const basePath = '/api/3.0';
-const { beforeDate, afterDate, status, isPublic, utcOffset, related } = validation.definitions;
+const { beforeDate, afterDate, status, isPublic, utcOffset } = validation.definitions;
 
 module.exports = [
+  {
+    method: 'GET',
+    path: `${basePath}/dojos/{dojoId}/events/{eventId}/applications`,
+    handler: applicationHandlers.list(),
+    config: {
+      auth: auth.userIfPossible,
+      description: 'List applications of a Dojo',
+      notes: 'Events\'s applications',
+      tags: ['api', 'events', 'applications'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+        },
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: `${basePath}/dojos/{dojoId}/events/{eventId}`,
+    handler: eventHandlers.load(),
+    config: {
+      auth: auth.userIfPossible,
+      description: 'List events of a Dojo',
+      notes: 'Dojo\'s events',
+      tags: ['api', 'events'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+        },
+        query: Joi.object().keys({
+          related: Joi.string().valid(['sessions', 'sessions.tickets', 'sessions.tickets.applications']),
+        }),
+      },
+    },
+  },
   {
     method: 'GET',
     path: `${basePath}/dojos/{dojoId}/events`,
@@ -34,7 +88,7 @@ module.exports = [
           'query[beforeDate]': beforeDate,
           'query[afterDate]': afterDate,
           'query[utcOffset]': utcOffset,
-          related,
+          related: Joi.string().valid(['sessions', 'sessions.tickets']),
         }),
       },
     },

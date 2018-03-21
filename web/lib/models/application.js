@@ -1,7 +1,7 @@
 const service = process.env.EVENTS_SERVICE;
 const Transport = require('../transports/http');
 
-class Event {
+class Application {
   constructor() {
     this.transport = new Transport({
       baseUrl: `http://${service}:3000/`,
@@ -9,10 +9,7 @@ class Event {
     });
   }
   get(query) {
-    return this.transport.get('events', { qs: query });
-  }
-  load(eventId, query) {
-    return this.transport.get(`events/${eventId}`, { qs: query });
+    return this.transport.get('applications', { qs: query });
   }
 }
-module.exports = new Event();
+module.exports = new Application();

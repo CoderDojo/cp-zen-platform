@@ -8,7 +8,6 @@ const definitions = {
   beforeDate: Joi.date().timestamp().raw(),
   afterDate: Joi.date().timestamp().raw(),
   isPublic: Joi.number().valid(0, 1),
-  related: Joi.string().valid('sessions', 'sessions.tickets'),
   utcOffset: Joi.number().integer(),
 };
 module.exports = {

@@ -439,6 +439,15 @@
             pageTitle: 'Manage Dojo Events'
           },
         })
+        .state("event-applications", {
+          url: "/dojos/:dojoId/events/:eventId/applications",
+          parent: 'dashboard',
+          template: '<div></div>',
+          controller: reloadPage,
+          params: {
+            pageTitle: 'Event applications'
+          }
+        })
         .state("manage-applications", {
           url: "/my-dojos/:dojoId/events/:eventId/applications",
           parent: 'dashboard',
