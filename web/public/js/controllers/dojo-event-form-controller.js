@@ -79,8 +79,8 @@
   }
 
   function fixEventDates(newDate, oldDate){
-    newDate = moment.utc(newDate);
-    oldDate = moment.utc(oldDate);
+    newDate = moment(newDate);
+    oldDate = moment(oldDate);
     return moment([ newDate.get('year'),newDate.get('month'), newDate.date(),
                         oldDate.get('hour'), oldDate.get('minute'), oldDate.get('second'), oldDate.get('millisecond') ]);
   }
@@ -89,8 +89,8 @@
     if (!newTime) {
       return date;
     }
-    newTime = moment.utc(newTime);
-    date = moment.utc(date);
+    newTime = moment(newTime);
+    date = moment(date);
     return moment([ date.get('year'), date.get('month'), date.date(),
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
@@ -347,10 +347,9 @@
     */
     $scope.copyEvent = function(event){
       cdEventsService.load(event.id, function(event){
-        var utcOffset = moment(_.head(event.dates).startTime).utcOffset();
-        var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
-        var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
-        var now = moment().utc();
+        var firstDate = moment.utc(_.head(event.dates).startTime);
+        var lastDate = moment.utc(_.last(event.dates).endTime);
+        var now = moment();
         var dayRange = lastDate.diff(firstDate, 'days');
         var startingDay = firstDate.day();
         var endingDay = lastDate.day();
@@ -371,9 +370,11 @@
           lastDate = offsetedLastDate;
         }
         $scope.eventInfo.date = firstDate.toDate();
-        $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = firstDate;
+        $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = 
+          moment([firstDate.year(), firstDate.month(), firstDate.date(), firstDate.hour(), firstDate.minute(), 0, 0]);
         $scope.eventInfo.toDate = lastDate.toDate();
-        $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = lastDate;
+        $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = 
+          moment([lastDate.year(), lastDate.month(), lastDate.date(), lastDate.hour(), lastDate.minute(), 0, 0]);
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
         $scope.eventInfo.position = event.position;
