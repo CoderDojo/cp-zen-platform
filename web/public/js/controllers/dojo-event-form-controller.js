@@ -81,7 +81,7 @@
   function fixEventDates(newDate, oldDate){
     newDate = moment.utc(newDate);
     oldDate = moment.utc(oldDate);
-    return moment.utc([ newDate.get('year'),newDate.get('month'), newDate.date(),
+    return moment([ newDate.get('year'),newDate.get('month'), newDate.date(),
                         oldDate.get('hour'), oldDate.get('minute'), oldDate.get('second'), oldDate.get('millisecond') ]);
   }
 
@@ -91,7 +91,7 @@
     }
     newTime = moment.utc(newTime);
     date = moment.utc(date);
-    return moment.utc([ date.get('year'), date.get('month'), date.date(),
+    return moment([ date.get('year'), date.get('month'), date.date(),
       newTime.get('hour'), newTime.get('minute'), newTime.get('second'), newTime.get('millisecond') ]);
   }
 
@@ -347,7 +347,7 @@
     */
     $scope.copyEvent = function(event){
       cdEventsService.load(event.id, function(event){
-        var utcOffset = moment().utcOffset();
+        var utcOffset = moment(_.head(event.dates).startTime).utcOffset();
         var firstDate = moment(_.head(event.dates).startTime).subtract(utcOffset, 'minutes');
         var lastDate = moment(_.last(event.dates).endTime).subtract(utcOffset, 'minutes');
         var now = moment().utc();
@@ -789,6 +789,8 @@
         if(localStorage.address) $scope.eventInfo.address = localStorage.address;
         if(localStorage.sessions) $scope.eventInfo.sessions = localStorage.sessions;
         if(localStorage.position) $scope.eventInfo.position = localStorage.position;
+        if(localStorage.startTime) $scope.eventInfo.startTime = localStorage.startTime;
+        if(localStorage.endTime) $scope.eventInfo.endTime = localStorage.endTime;
       }
 
 
