@@ -11,7 +11,7 @@ lab.describe('seneca-dojo-preloader', () => {
   lab.test('should search for a dojo based on urlSlug', (done) => {
     const reqMock = {
       seneca: { act: sinon.spy() },
-      params: { id: 1, alpha2: 'FR' },
+      params: { id: '1', alpha2: 'FR' },
     };
     const expectedPreloaded = {
       title: 'Do-Joe | CoderDojo',
@@ -23,7 +23,7 @@ lab.describe('seneca-dojo-preloader', () => {
     const cbSpy = sinon.spy();
     fn(reqMock, cbSpy);
     reqMock.seneca.act.callArgWith(1, null,
-      { id: 1, alpha2: 'FR', name: 'Do-Joe', countryName: 'France' });
+      { id: '1', alpha2: 'FR', name: 'Do-Joe', countryName: 'France' });
     expect(reqMock.seneca.act).to.have.been.calledWith({ role: 'cd-dojos',
       cmd: 'find',
       query: {
@@ -36,11 +36,11 @@ lab.describe('seneca-dojo-preloader', () => {
   lab.test('should skip if no dojo found', (done) => {
     const reqMock = {
       seneca: { act: sinon.spy() },
-      params: { id: 1, alpha2: 'FR' },
+      params: { id: '1', alpha2: 'FR' },
     };
     const cbSpy = sinon.spy();
     fn(reqMock, cbSpy);
-    reqMock.seneca.act.callArgWith(1, 'err', null);
+    reqMock.seneca.act.callArgWith('1', 'err', null);
     expect(reqMock.seneca.act).to.have.been.calledWith({ role: 'cd-dojos',
       cmd: 'find',
       query: {
@@ -49,6 +49,18 @@ lab.describe('seneca-dojo-preloader', () => {
     sinon.match.func);
     expect(cbSpy).to.have.been.calledOnce;
     expect(cbSpy).to.have.been.calledWith('err');
+    done();
+  });
+  lab.test('should skip if the id starts with "id"', (done) => {
+    const reqMock = {
+      seneca: { act: sinon.spy() },
+      params: { id: 'id', alpha2: 'FR' },
+    };
+    const cbSpy = sinon.spy();
+    fn(reqMock, cbSpy);
+    expect(reqMock.seneca.act).to.not.have.been.called;
+    expect(cbSpy).to.have.been.calledOnce;
+    expect(cbSpy).to.have.been.calledWith(null);
     done();
   });
 });
