@@ -9,7 +9,7 @@ const languages = require('country-language');
 module.exports = function (request, cb) {
   const preloaded = {};
   const defaultLanguage = 'en_US';
-  if (request.params.id.substring(0,2) !== 'id') {
+  if (!request.params.id.startsWith('id')) {
     request.seneca.act({ role: 'cd-dojos',
       cmd: 'find',
       query: { urlSlug: `${request.params.id}/${request.params.alpha2}` } },
