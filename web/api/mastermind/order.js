@@ -13,7 +13,7 @@ module.exports = [
     handler: orderHandlers.get(),
     config: {
       auth: auth.apiUser,
-      description: 'List A User\'s Order',
+      description: 'Load The Current User\'s Order',
       notes: 'User\'s Order',
       tags: ['api', 'orders'],
       plugins: {
@@ -38,7 +38,7 @@ module.exports = [
     handler: orderHandlers.post(),
     config: {
       auth: auth.apiUser,
-      description: 'Add A User\'s Order',
+      description: 'Add An Order',
       notes: 'User\'s Order',
       tags: ['api', 'orders'],
       plugins: {
