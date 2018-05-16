@@ -9,14 +9,23 @@ const { applications } = validation.definitions;
 module.exports = [
   {
     method: 'GET',
-    path: `${basePath}/events/{eventId}/orders/{orderId}`,
+    path: `${basePath}/users/{userId}/orders`,
     handler: orderHandlers.get(),
     config: {
       auth: auth.apiUser,
-      description: 'Load The Current User\'s Order',
+      description: 'Load the specified user\'s orders',
       notes: 'User\'s Order',
       tags: ['api', 'orders'],
       plugins: {
+        cpPermissions: {
+          profiles: [{
+            role: 'basic-user',
+            customValidator: [{
+              role: 'cd-users',
+              cmd: 'is_self',
+            }],
+          }],
+        },
         'hapi-swagger': {
           responseMessages: [
             { code: 400, message: 'Bad Request' },
@@ -26,9 +35,11 @@ module.exports = [
       },
       validate: {
         params: {
-          eventId: Joi.string().guid().required(),
+          userId: Joi.string().guid().required(),
         },
-        query: validation.base,
+        query: validation.base.keys({
+          eventId: Joi.string().guid(),
+        }),
       },
     },
   },
