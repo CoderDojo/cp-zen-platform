@@ -53,14 +53,14 @@ const post = params => // eslint-disable-line no-unused-vars
     // Email ordering user about kids info
     async (req, reply, next) => {
       const { event, order, dojo, context } = req.app;
-      Email.sendAdultBooking(context.locale, req.user.user, event, order, dojo);
+      Email.sendAdultBooking(context.locality, req.user.user, event, order, dojo);
       return next();
     },
     // Email Dojo if required
     async (req, reply, next) => {
       const { event, order, dojo, context, isTicketingAdmin } = req.app;
       if (event.notifyOnApplicant && !isTicketingAdmin) {
-        Email.sendDojoNotification(context.locale, event, order, dojo);
+        Email.sendDojoNotification(context.locality, event, order, dojo);
       }
       return next();
     },
