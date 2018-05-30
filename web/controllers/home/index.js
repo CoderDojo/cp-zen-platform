@@ -4,14 +4,6 @@ const auth = require('../../lib/authentications');
 module.exports = [
   {
     method: 'GET',
-    path: '/login',
-    handler(request, reply) {
-      reply.view('index', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
     path: '/reset',
     handler(request, reply) {
       reply.view('index', request.app);

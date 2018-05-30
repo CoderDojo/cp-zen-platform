@@ -210,14 +210,9 @@
           abstract: true
         })
         .state("login", {
-          url: "/login?referer&next",
-          template: '<cd-login></cd-login>',
-          controller: 'login',
-          params: {
-            referer: null,
-            next: null,
-            pageTitle: 'Login'
-          }
+          url: "/login?referer&referrer",
+          template: '<div></div>',
+          controller: reloadPage, 
         })
         .state("logout", {
           url: "/logout?referer",
