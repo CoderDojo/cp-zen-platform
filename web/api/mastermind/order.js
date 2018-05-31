@@ -38,7 +38,7 @@ module.exports = [
           userId: Joi.string().guid().required(),
         },
         query: validation.base.keys({
-          eventId: Joi.string().guid(),
+          'query[eventId]': Joi.string().guid(),
         }),
       },
     },
