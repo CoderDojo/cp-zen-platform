@@ -42,7 +42,7 @@ module.exports = [
   {
     method: 'GET',
     path: `${basePath}/events/{eventId}`,
-    handler: eventHandlers.get(),
+    handler: eventHandlers.load(),
     config: {
       auth: auth.userIfPossible,
       description: 'Load an event',
