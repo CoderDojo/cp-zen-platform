@@ -39,4 +39,34 @@ module.exports = [
       },
     },
   },
+  {
+    method: 'GET',
+    path: `${basePath}/events/{eventId}`,
+    handler: eventHandlers.get(),
+    config: {
+      auth: auth.userIfPossible,
+      description: 'Load an event',
+      notes: 'An event',
+      tags: ['api', 'events'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+        },
+        query: validation.base.keys({
+          'query[beforeDate]': beforeDate,
+          'query[afterDate]': afterDate,
+          'query[utcOffset]': utcOffset,
+          related,
+        }),
+      },
+    },
+  },
 ];
