@@ -509,6 +509,15 @@
             pageTitle: 'My tickets'
           }
         })
+        .state("order-checkin", {
+          url: "/events/:eventId/orders/:orderId/checkin",
+          parent: 'dashboard',
+          template: '<div></div>',
+          controller: reloadPage,
+          params: {
+            pageTitle: 'Checkin'
+          }
+        })
         .state("user-events", {
           url: "/dojos/events/user-events",
           parent: 'dashboard',

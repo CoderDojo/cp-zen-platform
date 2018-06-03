@@ -80,4 +80,39 @@ module.exports = [
       },
     },
   },
+  {
+    method: 'PATCH',
+    // EventId is unused in the flow, but required for the permissions
+    path: `${basePath}/events/{eventId}/orders/{orderId}/attendance`,
+    handler: orderHandlers.patch(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Patch an order\'s attendance (check-in)',
+      notes: 'Checkin application from an order',
+      tags: ['api', 'orders'],
+      plugins: {
+        cpPermissions: {
+          profiles: [{
+            role: 'basic-user',
+            customValidator: [{
+              role: 'cd-events',
+              cmd: 'is_ticketing_admin',
+            }],
+          }],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+          orderId: Joi.string().guid().required(),
+        },
+      },
+    },
+  },
 ];

@@ -14,5 +14,8 @@ class Event {
   post(body) {
     return this.transport.post('orders', { body });
   }
+  patch(orderId) {
+    return this.transport.patch(`orders/${orderId}/checkin`);
+  }
 }
 module.exports = new Event();
