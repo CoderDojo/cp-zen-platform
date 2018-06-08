@@ -13,10 +13,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12" ng-if="profile.place.nameWithHierarchy || profile.country.countryName">
-      <b><i class="fa fa-location-arrow"></i>{@i18n key="Address"/}</b>
+    <div class="col-xs-12" ng-if="profile.country && profile.country.countryName">
+      <b><i class="fa fa-location-arrow"></i>{@i18n key="Country"/}</b>
       <div>
-        <span ng-bind="::profile.place.nameWithHierarchy"></span> &nbsp;
         <span ng-bind="::profile.country.countryName"></span>
       </div>
     </div>
