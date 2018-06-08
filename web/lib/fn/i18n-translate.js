@@ -1,5 +1,3 @@
-
-
 const I18NHelper = require('cp-i18n-lib');
 const CpTranslations = require('cp-translations');
 

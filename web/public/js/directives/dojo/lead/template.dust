@@ -153,7 +153,7 @@
               <td></td>
               <td></td>
               <td>Private</td>
-              <td ng-bind="::$ctrl.dojo.private | boolToString"></td>
+              <td ng-bind="$ctrl.dojo.private | boolToString"></td>
             </tr>
           </tbody>
           <thead>

@@ -37,7 +37,7 @@ exports.register = function (server, eOptions, next) {
           code: Joi.string().required(),
         }),
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().uuid().required(),
         },
       },
     },

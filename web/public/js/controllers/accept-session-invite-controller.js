@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function acceptSessionInviteCtrl($scope, $state, $stateParams, currentUser, $translate, alertService, usSpinnerService, cdEventsService) {
+  function acceptSessionInviteCtrl($scope, $state, $stateParams, currentUser, $translate, alertService, usSpinnerService, cdEventsService, Analytics) {
     var ticketId = $stateParams.ticketId;
     var invitedUserId = $stateParams.invitedUserId;
     usSpinnerService.spin('session-spinner');
@@ -21,6 +21,7 @@
 
     cdEventsService.validateTicketInvitation(invitation, function (response) {
       if(response.ok === true) {
+        Analytics.trackEvent($state.current.name, 'click', 'accept_ticket_invitation');
         alertService.showAlert($translate.instant('Invitation successfully validated. Your ticket has been sent to your email.'));
         $state.go('dojo-list');
       } else {
@@ -28,13 +29,14 @@
         $state.go('dojo-list');
       }
     }, function (err) {
-      if(err) {
-        console.error(err);
+      if (err.status === 410) {
+        alertService.showError($translate.instant('The event is fully booked, please wait for the next event or look for other Dojos in your area.'));
+      } else {
         alertService.showError($translate.instant('Invalid session invitation.'));
       }
     })
   }
 
   angular.module('cpZenPlatform')
-    .controller('accept-session-invite-controller', ['$scope', '$state', '$stateParams', 'currentUser', '$translate', 'alertService', 'usSpinnerService', 'cdEventsService', acceptSessionInviteCtrl]);
+    .controller('accept-session-invite-controller', ['$scope', '$state', '$stateParams', 'currentUser', '$translate', 'alertService', 'usSpinnerService', 'cdEventsService', 'Analytics', acceptSessionInviteCtrl]);
 })();

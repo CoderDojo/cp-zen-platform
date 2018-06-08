@@ -57,13 +57,25 @@ var cdEventbriteIntegration = {
       cdE.getConnectButtonText();
       if (!_.isUndefined(token)) {
         cdE.saving = true;
-        // Commented for testing purpose
         delete $localStorage.eventbriteDojo;
-        cdEventbriteService.authorize(cdE.dojoId, {code: token})
-        .then(function () {
-          $state.go('edit-dojo', {id: cdE.dojoId});
-          atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
-        });
+        var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
+        if (cdE.dojoId) {
+          cdEventbriteService.authorize(cdE.dojoId, {code: token})
+          .then(function () {
+            $state.go('edit-dojo', {id: cdE.dojoId});
+            atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
+          })
+          .catch(function (err) {
+            $state.go('my-dojos');
+            if (err.status === 403) {
+              errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
+            }
+            atomicNotifyService.warning($translate.instant(errMsg));
+          });
+        } else {
+          $state.go('my-dojos');
+          atomicNotifyService.warning($translate.instant(errMsg));
+        }
       }
     };
   }]

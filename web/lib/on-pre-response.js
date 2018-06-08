@@ -28,10 +28,10 @@ module.exports = server => (request, reply) => {
     );
   }
   // if it's an api call, continue as normal..
-  if (request.url.path.indexOf('/api/2.0') === 0) {
+  if (request.url.path.indexOf('/api/2.0') === 0
+      || request.url.path.indexOf('/api/3.0') === 0) {
     return reply.continue();
   }
-
   // Hapi-auth redirect on failure for cdf portal
   // Others routes are handled by the default redirect of auth-cookie
   // Or should not be handled (403 permissions)
@@ -44,7 +44,7 @@ module.exports = server => (request, reply) => {
       const cdfPath =
         request.route.settings.auth.access[0].scope.selection.indexOf('cdf-admin') > -1;
       if (cdfPath) {
-        return reply.redirect(`/cdf/login?next=${request.url.path}`);
+        return reply.redirect(`/cdf/login?referer=${request.url.path}`);
       }
     }
   }

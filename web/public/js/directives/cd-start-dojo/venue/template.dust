@@ -99,7 +99,7 @@
     </div>
     <div ng-show="$ctrl.venue.isFound === false" class="cd-sad-venue__container text-center">
       <div>
-        <a href="http://kata.coderdojo.com/wiki/Template_Letter_for_Mentor_Acquisition"
+        <a href="https://help.coderdojo.com/hc/en-us/articles/360000123506-Template-letter-for-contacting-a-venue"
          name="downloadTemplate" target="_blank">{@i18n key="Download a template letter to send to potential venues here"/}</a>
       </div>
     </div>

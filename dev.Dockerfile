@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:carbon-alpine
 MAINTAINER butlerx <butlerx@notthe.cloud>
 ENV NODE_ENV development
 RUN apk add --update git python build-base && \

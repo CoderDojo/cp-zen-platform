@@ -38,7 +38,11 @@
           cdUsersService.saveYouthProfile(_.defaults(ctrl.profile, _.pick(ctrl.parentProfileData.data, fieldsToCopy)))
             .then(function (resp) {
               if (resp.data && resp.data.error) {
-                alertService.showError($translate.instant(resp.data.error));
+                var reason;
+                if (resp.data.error === 'email-exists') {
+                  reason = $translate.instant('Email is already associated with an account. Use a new email or leave it blank to receive all correspondence on their behalf.');
+                }
+                alertService.showError(reason || $translate.instant(resp.data.error));
               } else {
                 if (resp.data && resp.data.userId) {
                   $state.go('my-children.child', {id: resp.data.userId});

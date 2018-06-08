@@ -89,9 +89,31 @@ lab.describe('onPreResponse', () => {
     done();
   });
 
-  lab.test('should continue for any api endpoint', (done) => {
+  lab.test('should continue for any api 2.0 endpoint', (done) => {
     const reqMock = {
       url: { path: '/api/2.0/dojos' },
+      response: {
+        output: {
+          statusCode: 500,
+          headers: {},
+        },
+      },
+      log: sinon.stub(),
+      app: { context: {} },
+      headers: {},
+    };
+    const replyMock = {
+      continue: sinon.spy(),
+    };
+
+    fn(server)(reqMock, replyMock);
+    expect(replyMock.continue).to.have.been.calledOnce;
+    done();
+  });
+
+  lab.test('should continue for any api 3.0 endpoint', (done) => {
+    const reqMock = {
+      url: { path: '/api/3.0/dojos' },
       response: {
         output: {
           statusCode: 500,
@@ -131,7 +153,7 @@ lab.describe('onPreResponse', () => {
 
     fn(server)(reqMock, replyMock);
     expect(replyMock.redirect).to.have.been.calledOnce;
-    expect(replyMock.redirect).to.have.been.calledWith('/cdf/login?next=/');
+    expect(replyMock.redirect).to.have.been.calledWith('/cdf/login?referer=/');
     expect(replyMock.redirect).to.have.returned(sinon.match.any);
     expect(replyMock.continue).to.not.have.been.called;
     done();

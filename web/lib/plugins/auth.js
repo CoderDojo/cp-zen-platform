@@ -50,8 +50,9 @@ exports.register = function (server, options, next) {
       ttl: 2 * 24 * 60 * 60 * 1000, // two days
       path: '/',
       clearInvalid: true,
-      appendNext: true, // Redirect is not set here, but relative to the routes
+      appendNext: 'referer', // Redirect is not set here, but relative to the routes
       isSecure: process.env.NODE_ENV === 'production',
+      isSameSite: 'Lax',
       validateFunc: validateFunc(server),
     });
     next();

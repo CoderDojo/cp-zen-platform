@@ -210,14 +210,9 @@
           abstract: true
         })
         .state("login", {
-          url: "/login?referer&next",
-          template: '<cd-login></cd-login>',
-          controller: 'login',
-          params: {
-            referer: null,
-            next: null,
-            pageTitle: 'Login'
-          }
+          url: "/login?referer&referrer",
+          template: '<div></div>',
+          controller: reloadPage, 
         })
         .state("logout", {
           url: "/logout?referer",
@@ -247,7 +242,7 @@
         })
         .state("register-account", {
           url: "/register?referer",
-          template: '<cd-register></cd-register>',
+          template: '<cd-register class="row"></cd-register>',
           abstract: true,
           params: {
             referer: null,
@@ -293,7 +288,7 @@
         .state("review-champion-application", {
           url: "/lead/:id",
           parent: 'dashboard',
-          template: '<cd-dojo-lead id="id"></cd-dojo-lead>',
+          template: '<cd-dojo-lead id="id" class="row"></cd-dojo-lead>',
           params: {
             pageTitle: 'Review Application'
           },
@@ -306,7 +301,7 @@
           parent: 'dashboard',
           // abstract: true, // Dropped to support redirection to default state, supported in uiRouter 1.0
           redirectTo: 'manage-dojo-active-users',
-          template: '<cd-manage-dojo-users></cd-manage-dojo-users>',
+          template: '<cd-manage-dojo-users class="row"></cd-manage-dojo-users>',
           controller: ['initUserTypes', 'currentUser', '$scope',
             function (initUserTypes, currentUser, $scope) {
               $scope.initUserTypes = initUserTypes;
@@ -363,7 +358,7 @@
         .state("manage-dojos", {
           url: "/manage-dojos",
           parent: 'dashboard',
-          template: '<cd-dojos-manage></cd-dojos-manage>',
+          template: '<cd-dojos-manage class="row"></cd-dojos-manage>',
           params: {
             pageTitle: 'Manage Dojos'
           }
@@ -482,7 +477,7 @@
         })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          template: '<cd-event-detail></cd-event-detail>',
+          template: '<cd-event-detail class="row"></cd-event-detail>',
           controller: function($scope, dojo, event, sessions, profile, currentUser){
             $scope.dojo = dojo;
             $scope.event = event.data;
@@ -525,7 +520,7 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          template: '<cd-event-detail></cd-event-detail>',
+          template: '<cd-event-detail class="row"></cd-event-detail>',
           controller: function($scope, event, sessions, profile, cdDojoService){
             $scope.event = event.data;
             $scope.sessions = sessions.data;
@@ -717,7 +712,7 @@
         })
         .state('charter',{
           url: '/charter',
-          template: '<cd-charter></cd-charter>',
+          template: '<cd-charter class="row"></cd-charter>',
           params: {
             pageTitle: 'Charter',
           }
@@ -726,7 +721,7 @@
         .state('charter-page', {
           url: '/charter',
           parent: 'dashboard',
-          template: '<cd-charter></cd-charter>',
+          template: '<cd-charter class="row"></cd-charter>',
           params: {
             pageTitle: 'Charter',
           }
@@ -1003,15 +998,17 @@
         .useSanitizeValueStrategy('sanitizeParameters')
         .uniformLanguageTag('java')
         .registerAvailableLanguageKeys(
-          ['en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
+          [ 'en_US', 'nl_NL', 'de_DE', 'it_IT', 'pl_PL', 'mt_MT',
             'pt_PT', 'es_ES', 'tr_TR', 'bg_BG', 'el_GR', 'et_EE',
             'hi_IN', 'ja_JP', 'ro_RO', 'es_AR', 'fr_FR', 'uk_UK',
-          'sl_SL', 'sk_SK'],
+            'sl_SL', 'sk_SK', 'fil_PH', 'zh_TW', 'zh_CN', 'id_ID', 
+            'si_LK', 'ur_PK' ],
           {
            'en': 'en_US', 'nl': 'nl_NL', 'de': 'de_DE', 'it': 'it_IT', 'pl': 'pl_PL', 'mt': 'mt_MT',
            'pt': 'pt_PT', 'es': 'es_ES', 'tr': 'tr_TR', 'bg': 'bg_BG', 'el': 'el_GR', 'et': 'et_EE',
            'hi': 'hi_IN', 'ja': 'ja_JP', 'ro': 'ro_RO', 'fr': 'fr_FR', 'uk': 'uk_UK',
-           'sl': 'sl_SL', 'sk': 'sk_SK', '*': 'en_US'
+           'sl': 'sl_SL', 'sk': 'sk_SK', 'fil': 'fil_PH', 'id': 'id_ID', 'si': 'si_LK',
+           'ur': 'ur_PK', '*': 'en_US'
         })
         .determinePreferredLanguage()
         .fallbackLanguage('en_US');
