@@ -39,4 +39,15 @@ module.exports = [
       },
     },
   },
+  // Legacy, needs migration to v3
+  { 
+    method: 'POST',
+    path: '/api/2.0/events/save',
+    handler: eventHandlers.post(), 
+    config: {
+      auth: auth.apiUser,
+      description: 'Save an event',
+      tags: ['api', 'events'],
+    },
+  },
 ];

@@ -10,15 +10,6 @@ exports.register = function (server, eOptions, next) {
   const handlers = handlerFactory(server, 'cd-events');
 
   server.route([{
-    method: 'POST',
-    path: `${options.basePath}/events/save`,
-    handler: handlers.actHandlerNeedsUser('saveEvent', ['eventInfo', 'eventId']),
-    config: {
-      auth: auth.apiUser,
-      description: 'Save an event',
-      tags: ['api', 'events'],
-    },
-  }, {
     method: 'GET',
     path: `${options.basePath}/events/{id}`,
     handler: handlers.actHandler('getEvent', 'id'),

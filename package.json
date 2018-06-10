@@ -48,6 +48,8 @@
     "good": "6.3.0",
     "good-file": "5.0.1",
     "good-http": "5.0.x",
+    "google-protobuf": "^3.5.0",
+    "grpc": "^1.12.2",
     "hapi": "16.x",
     "hapi-auth-cookie": "7.x",
     "hapi-dust": "2.0.0",
