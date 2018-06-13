@@ -475,29 +475,16 @@
           },
           controller: 'dojo-event-form-controller'
         })
+        .state("vue-event-booking", {
+          url: "/events/:eventId",
+          controller: reloadPage
+        })
         .state("dojo-event-details", {
           url: "/dojo/:dojoId/event/:eventId",
-          template: '<cd-event-detail class="row"></cd-event-detail>',
-          controller: function($scope, dojo, event, sessions, profile, currentUser){
-            $scope.dojo = dojo;
-            $scope.event = event.data;
-            $scope.sessions = sessions.data;
-            if (profile){
-              $scope.profile = profile.data;
-            }
-            $scope.currentUser = currentUser;
-          },
+          template: '<div></div>',
+          redirectTo: "vue-event-booking",
           params: {
             pageTitle: 'Event details',
-            joinDojo: false,
-            eventId: null
-          },
-          resolve: {
-            profile: resolves.ownProfile,
-            dojo: resolveDojo,
-            sessions: resolves.sessions,
-            event: resolves.event,
-            currentUser: resolves.loggedInUser
           },
         })
         .state("my-tickets", {
@@ -520,27 +507,10 @@
         })
         .state("event",{
           url: "/event/:eventId",
-          template: '<cd-event-detail class="row"></cd-event-detail>',
-          controller: function($scope, event, sessions, profile, cdDojoService){
-            $scope.event = event.data;
-            $scope.sessions = sessions.data;
-            if(profile){
-              $scope.profile = profile.data;
-            }
-            return cdDojoService.load($scope.event.dojoId)
-            .then(function (dojo) {
-              $scope.dojo = dojo.data;
-            });
-          },
+          template: '<div></div>',
+          redirectTo: "vue-event-booking",
           params: {
-            pageTitle: 'Event details',
-            joinDojo: false,
-            eventId: null
-          },
-          resolve: {
-            sessions: resolves.sessions,
-            event: resolves.event,
-            profile: resolves.ownProfile
+            pageTitle: 'Event',
           },
         })
         .state("embedded", {
