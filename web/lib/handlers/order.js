@@ -18,7 +18,7 @@ const get = params => // eslint-disable-line no-unused-vars
 const post = params => // eslint-disable-line no-unused-vars
   mastermind([
     // eslint-disable-next-line no-unused-vars
-    async (req, reply, next) => {
+    asyncify(async (req, reply, next) => {
       const userId = req.user.user.id;
       const eventId = req.params.eventId;
       const applications = req.payload.applications;
@@ -26,9 +26,10 @@ const post = params => // eslint-disable-line no-unused-vars
       req.app.order = await Order.post(body);
       reply(req.app.order).code(200);
       return next();
-    },
+    }),
     // Load Event
     async (req, reply, next) => {
+      // TODO : use a load to avoid the dependency on applications[0]
       req.app.event = (await Event.get({ 'query[id]': req.app.order.eventId, 'query[dojoId]': req.app.order.applications[0].dojoId, related: 'sessions' })).results[0];
       return next();
     },
@@ -39,7 +40,7 @@ const post = params => // eslint-disable-line no-unused-vars
           if (err) return next(err);
           req.app.dojo = res;
           return next();
-      });
+        });
     },
     async (req, reply, next) => {
       const event = req.app.event;
@@ -48,7 +49,7 @@ const post = params => // eslint-disable-line no-unused-vars
           if (err) return next(err);
           req.app.isTicketingAdmin = res.allowed;
           return next();
-      });
+        });
     },
     // Email ordering user about kids info
     async (req, reply, next) => {

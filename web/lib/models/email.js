@@ -9,9 +9,11 @@ class Email {
       json: true,
     });
   }
+  // eslint-disable-next-line class-methods-use-this
   formatTime(date) {
     return moment.utc(date).format('HH:mm');
   }
+  // eslint-disable-next-line class-methods-use-this
   formatDate(date) {
     return moment.utc(date).format('Do MMMM YY');
   }
@@ -19,4 +21,4 @@ class Email {
     return this.transport.post('email/send', { body });
   }
 }
-module.exports = Email; 
+module.exports = Email;
