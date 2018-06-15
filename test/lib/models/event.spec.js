@@ -40,4 +40,17 @@ lab.describe('event handler', () => {
       expect(transport.get).to.have.been.calledWith('events', { qs });
     });
   });
+  lab.describe('GET /:eventId', () => {
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should proxy the GET call', async () => {
+      const qs = {};
+      const id = '1234-5678';
+      transport.get.resolves({});
+      await fn.load(id, qs);
+      expect(transport.get).to.have.been.calledWith('events/1234-5678', { qs });
+    });
+  });
 });
