@@ -18,7 +18,7 @@ const get = params => // eslint-disable-line no-unused-vars
 const post = params => // eslint-disable-line no-unused-vars
   mastermind([
     // eslint-disable-next-line no-unused-vars
-    asyncify(async (req, reply, next) => {
+    async (req, reply, next) => {
       const userId = req.user.user.id;
       const eventId = req.params.eventId;
       const applications = req.payload.applications;
@@ -26,7 +26,7 @@ const post = params => // eslint-disable-line no-unused-vars
       req.app.order = await Order.post(body);
       reply(req.app.order).code(200);
       return next();
-    }),
+    },
     // Load Event
     async (req, reply, next) => {
       // TODO : use a load to avoid the dependency on applications[0]
