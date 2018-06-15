@@ -14,5 +14,8 @@ class Event {
   post(body) {
     return this.transport.post('orders', { body });
   }
+  put(id, body) {
+    return this.transport.put(`orders/${id}`, { body });
+  }
 }
 module.exports = new Event();

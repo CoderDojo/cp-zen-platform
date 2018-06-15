@@ -80,4 +80,45 @@ module.exports = [
       },
     },
   },
+  {
+    method: 'PUT',
+    path: `${basePath}/users/{userId}/orders/{orderId}`,
+    handler: orderHandlers.put(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Replace an order\'s application',
+      notes: 'User\'s Order',
+      tags: ['api', 'orders'],
+      plugins: {
+        cpPermissions: {
+          profiles: [{
+            role: 'basic-user',
+            customValidator: [{
+              role: 'cd-events',
+              cmd: 'can_order_for',
+            },
+            {
+              role: 'cd-events',
+              cmd: 'is_own_order',
+            }],
+          }],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+          orderId: Joi.string().guid().required(),
+        },
+        payload: validation.base.keys({
+          applications,
+        }),
+      },
+    },
+  },
 ];

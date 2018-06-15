@@ -12,6 +12,7 @@ lab.describe('order handler', () => {
   const Order = {
     get: sandbox.stub(),
     post: sandbox.stub(),
+    put: sandbox.stub(),
   };
   const fn = proxy('../../../web/lib/handlers/order.js', {
     '../mastermind': cbs => cbs,
@@ -80,6 +81,7 @@ lab.describe('order handler', () => {
       });
     });
   });
+
   lab.describe('POST', () => {
     lab.afterEach((done) => {
       sandbox.reset();
@@ -138,6 +140,35 @@ lab.describe('order handler', () => {
         expect(_err.message).to.equal('fake err');
         // reply will be called by mastermind, in a boomified manner
         expect(reply).to.not.have.been.called;
+        done();
+      });
+    });
+  });
+  lab.describe('PUT', () => {
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should send the order to be saved', (done) => {
+      Order.put.resolves({});
+      req = {
+        params: {
+          eventId: 'event1',
+          orderId: 'order1',
+        },
+        payload: {
+          applications: [],
+        },
+      };
+      fn.put()[0](req, reply, () => {
+        console.log(Order.put.getCall(0));
+        expect(Order.put).to.have.been.calledWith('order1', {
+          applications: [],
+        });
+        expect(reply).to.have.been.calledOnce;
+        expect(reply).to.have.been.calledWith({});
+        expect(code).to.have.been.calledOnce;
+        expect(code).to.have.been.calledWith(200);
         done();
       });
     });
