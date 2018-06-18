@@ -83,7 +83,7 @@ lab.describe('event handler', () => {
     lab.test('it should return the event', (done) => {
       Event.load.resolves({});
       fn.load()[0](req, reply, () => {
-        expect(Event.load).to.have.been.calledWith(1, {}); 
+        expect(Event.load).to.have.been.calledWith(1, {});
         expect(reply).to.have.been.calledOnce;
         expect(reply).to.have.been.calledWith({});
         expect(code).to.have.been.calledOnce;

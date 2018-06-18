@@ -11,7 +11,7 @@ class Event {
   get(query) {
     return this.transport.get('events', { qs: query });
   }
-  load (id, query) {
+  load(id, query) {
     return this.transport.get(`events/${id}`, { qs: query });
   }
 }
