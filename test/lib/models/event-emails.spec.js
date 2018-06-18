@@ -13,9 +13,11 @@ lab.describe('email handler', () => {
     post: sandbox.stub(),
   };
   const transportFactory = sandbox.stub().returns(transport);
+  const i18n = sandbox.stub();
 
   const fn = proxy('../../../web/lib/models/event-emails.js', {
     '../transports/http': transportFactory,
+    '../i18n-translate': i18n,
   });
   lab.afterEach((done) => {
     sandbox.reset();
@@ -24,22 +26,30 @@ lab.describe('email handler', () => {
   });
   lab.describe('formatEventTime', () => {
     lab.test('should return a HH:mm', (done) => {
+      const spy = sandbox.spy(fn, 'formatTime');
       expect(fn.formatEventTime({ startTime: '2018-01-01T16:50:00', endTime: '2018-01-01T18:00:00' })).to.equal('16:50 - 18:00');
+      expect(spy).to.have.been.calledTwice;
+      expect(spy.getCall(0)).to.have.been.calledWith('2018-01-01T16:50:00');
+      expect(spy.getCall(1)).to.have.been.calledWith('2018-01-01T18:00:00');
       done();
     });
   });
   lab.describe('formatEventDate', () => {
     lab.test('should return Do MMMM YY for one-off event', (done) => {
-      expect(fn.formatEventDate({ type: 'one-off', dates: [{ startTime: '2018-01-01T01:00:00', endTime: '2018-01-01T02:00:00' }] })).to.equal('1st January 18');
+      const spy = sandbox.spy(fn, 'formatDate');
+      expect(fn.formatEventDate({ type: 'one-off', dates: [{ startTime: '2018-01-01T01:00:00', endTime: '2018-01-01T02:00:00' }] }, 'fr_FR')).to.equal('1er janvier 18');
+      expect(spy).to.have.been.calledOnce;
+      expect(spy).to.have.been.calledWith('2018-01-01T01:00:00', 'fr_FR');
       done();
     });
     lab.test('should return Do MMMM YY for recurring event', (done) => {
       expect(fn.formatEventDate({
         type: 'recurring',
+        recurringType: 'weekly',
         dates: [
           { startTime: '2018-01-01T01:00:00', endTime: '2018-01-01T02:00:00' },
           { startTime: '2018-01-08T01:00:00', endTime: '2018-01-08T02:00:00' },
-        ] })).to.equal('1st January 18 - 8th January 18');
+        ] }, 'fr_FR')).to.equal('Chaque semaine le lundi');
       done();
     });
   });

@@ -14,7 +14,8 @@ class Email {
     return moment.utc(date).format('HH:mm');
   }
   // eslint-disable-next-line class-methods-use-this
-  formatDate(date) {
+  formatDate(date, locale) {
+    moment.locale(locale);
     return moment.utc(date).format('Do MMMM YY');
   }
   post(body) {

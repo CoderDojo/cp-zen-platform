@@ -1,15 +1,24 @@
+const moment = require('moment');
 const Email = require('./email');
+const i18n = require('../fn/i18n-translate');
 
 const port = process.env.ZEN_PORT || 8000;
 const host = process.env.ZEN_HOSTNAME || 'localhost';
 const protocol = process.env.ZEN_PROTOCOL || 'http';
 
 class EventEmail extends Email {
-  formatEventDate(event) {
+  formatEventDate(event, locale) {
     if (event.type === 'recurring') {
-      return `${this.formatDate(event.dates[0].startTime)} - ${this.formatDate(event.dates[event.dates.length - 1].startTime)}`;
+      const recurrences = {
+        biweekly: 'Every two weeks',
+        weekly: 'Weekly',
+      };
+      moment.locale(locale);
+      const dayName = moment(event.dates[0].startTime).utc().format('dddd');
+      const recurrence = recurrences[event.recurringType];
+      return `${i18n(locale, { key: recurrence })} ${i18n(locale, { key: 'on' })} ${dayName}`;
     }
-    return `${this.formatDate(event.dates[0].startTime)}`;
+    return `${this.formatDate(event.dates[0].startTime, locale)}`;
   }
   formatEventTime(event) {
     const startTime = this.formatTime(event.startTime);
@@ -24,7 +33,7 @@ class EventEmail extends Email {
       templateName,
       templateOptions: {
         applicationDate: order.createdAt,
-        eventDate: this.formatEventDate(event),
+        eventDate: this.formatEventDate(event, locale),
         eventTime: this.formatEventTime(event),
         applications: order.applications,
         event,
@@ -44,12 +53,12 @@ class EventEmail extends Email {
       language: locale,
       templateName,
       templateOptions: {
-        applicationDate: this.formatDate(order.createdAt),
+        applicationDate: this.formatDate(order.createdAt, locale),
         sessionName: event.sessions.find(s => s.id === application.sessionId).name,
         dojoName: dojo.name,
         dojoId: dojo.id,
         eventId: event.id,
-        eventDate: this.formatEventDate(event),
+        eventDate: this.formatEventDate(event, locale),
         applicationsLinkBase: `${protocol}://${host}:${port}/dashboard/my-dojos`,
         tickets: Object.values(order.applications.reduce((acc, appl) => {
           acc[appl.ticketId] = acc[appl.ticketId] ? acc[appl.ticketId] : {

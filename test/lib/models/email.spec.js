@@ -46,7 +46,7 @@ lab.describe('email handler', () => {
   });
   lab.describe('formatDate', () => {
     lab.test('should return Do MMMM YY', (done) => {
-      expect(fn.formatDate('2018-01-01T16:50:00')).to.equal('1st January 18');
+      expect(fn.formatDate('2018-01-01T16:50:00', 'fr_FR')).to.equal('1er janvier 18');
       done();
     });
   });
