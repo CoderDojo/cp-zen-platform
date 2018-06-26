@@ -28,7 +28,7 @@ lab.describe('email handler', () => {
       done();
     });
     lab.test('it should proxy the POST call with the proper categories', async () => {
-      const body = { emailOptions: { to: 'banana@example.com', from: 'me' }, templateName: "banana-template" };
+      const body = { emailOptions: { to: 'banana@example.com', from: 'me' }, templateName: 'banana-template' };
       transport.post.resolves([]);
       fn.options = { headers: { 'x-smtpapi': { category: ['events-service'] } } };
       await fn.post(body);
@@ -36,9 +36,9 @@ lab.describe('email handler', () => {
         baseUrl: 'http://email:3000/',
         json: true,
       });
-      const expectedPayload = { 
-        templateName: 'banana-template', 
-        emailOptions: { 
+      const expectedPayload = {
+        templateName: 'banana-template',
+        emailOptions: {
           to: 'banana@example.com',
           from: 'me',
           replyTo: 'me',
