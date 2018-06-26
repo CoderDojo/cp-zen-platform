@@ -27,7 +27,8 @@ const post = params => // eslint-disable-line no-unused-vars
       reply(req.app.order).code(200);
       return next();
     },
-  ].concat(sendBookingEmail));
+    ...sendBookingEmail,
+  ]);
 
 const put = params => // eslint-disable-line no-unused-vars
   mastermind([
@@ -39,7 +40,8 @@ const put = params => // eslint-disable-line no-unused-vars
       reply(req.app.order).code(200);
       return next();
     },
-  ].concat(sendBookingEmail));
+    ...sendBookingEmail,
+  ]);
 
 const sendBookingEmail = [ 
     // Load Event
