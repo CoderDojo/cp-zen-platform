@@ -81,4 +81,4 @@ class EventEmail extends Email {
     });
   }
 }
-module.exports = new EventEmail();
+module.exports = new EventEmail({ headers: { 'x-smtpapi': { category: ['events-service'] } } });

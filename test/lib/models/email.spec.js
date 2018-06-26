@@ -27,15 +27,25 @@ lab.describe('email handler', () => {
       sandbox.reset();
       done();
     });
-    lab.test('it should proxy the POST call', async () => {
-      const body = { to: 'banana@example.com' };
+    lab.test('it should proxy the POST call with the proper categories', async () => {
+      const body = { emailOptions: { to: 'banana@example.com', from: 'me' }, templateName: "banana-template" };
       transport.post.resolves([]);
+      fn.options = { headers: { 'x-smtpapi': { category: ['events-service'] } } };
       await fn.post(body);
       expect(transportFactory).to.have.been.calledWith({
         baseUrl: 'http://email:3000/',
         json: true,
       });
-      expect(transport.post).to.have.been.calledWith('email/send', { body });
+      const expectedPayload = { 
+        templateName: 'banana-template', 
+        emailOptions: { 
+          to: 'banana@example.com',
+          from: 'me',
+          replyTo: 'me',
+          headers: {
+            'x-smtpapi': '{"category":["events-service","banana-template"]}',
+          } } };
+      expect(transport.post).to.have.been.calledWith('email/send', { body: expectedPayload });
     });
   });
   lab.describe('formatTime', () => {

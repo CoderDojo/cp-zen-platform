@@ -27,6 +27,21 @@ const post = params => // eslint-disable-line no-unused-vars
       reply(req.app.order).code(200);
       return next();
     },
+  ].concat(sendBookingEmail));
+
+const put = params => // eslint-disable-line no-unused-vars
+  mastermind([
+    // eslint-disable-next-line no-unused-vars
+    async (req, reply, next) => {
+      const orderId = req.params.orderId;
+      const applications = req.payload.applications;
+      req.app.order = await Order.put(orderId, { applications });
+      reply(req.app.order).code(200);
+      return next();
+    },
+  ].concat(sendBookingEmail));
+
+const sendBookingEmail = [ 
     // Load Event
     async (req, reply, next) => {
       // TODO : use a load to avoid the dependency on applications[0]
@@ -65,18 +80,7 @@ const post = params => // eslint-disable-line no-unused-vars
       }
       return next();
     },
-  ]);
-
-const put = params => // eslint-disable-line no-unused-vars
-  mastermind([
-    // eslint-disable-next-line no-unused-vars
-    asyncify(async (req, reply, cb) => {
-      const orderId = req.params.orderId;
-      const applications = req.payload.applications;
-      const order = await Order.put(orderId, { applications });
-      return reply(order).code(200);
-    }),
-  ]);
+];
 
 module.exports = {
   get,

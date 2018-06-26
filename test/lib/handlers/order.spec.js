@@ -274,6 +274,7 @@ lab.describe('order handler', () => {
     lab.test('it should send the order to be saved', (done) => {
       Order.put.resolves({});
       req = {
+        app: {},
         params: {
           eventId: 'event1',
           orderId: 'order1',
@@ -283,7 +284,6 @@ lab.describe('order handler', () => {
         },
       };
       fn.put()[0](req, reply, () => {
-        console.log(Order.put.getCall(0));
         expect(Order.put).to.have.been.calledWith('order1', {
           applications: [],
         });
