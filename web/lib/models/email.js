@@ -1,13 +1,15 @@
 const service = process.env.EMAIL_SERVICE;
 const Transport = require('../transports/http');
 const moment = require('moment');
+const { cloneDeep } = require('lodash');
 
 class Email {
-  constructor() {
+  constructor(options) {
     this.transport = new Transport({
       baseUrl: `http://${service}:3000/`,
       json: true,
     });
+    this.options = options;
   }
   // eslint-disable-next-line class-methods-use-this
   formatTime(date) {
@@ -18,7 +20,12 @@ class Email {
     moment.locale(locale);
     return moment.utc(date).format('Do MMMM YY');
   }
-  post(body) {
+  post(payload) {
+    const options = cloneDeep(this.options);
+    options.headers['x-smtpapi'].category.push(payload.templateName);
+    options.headers['x-smtpapi'] = JSON.stringify(options.headers['x-smtpapi']);
+    options.replyTo = payload.emailOptions.from;
+    const body = { ...payload, emailOptions: { ...payload.emailOptions, ...options } };
     return this.transport.post('email/send', { body });
   }
 }
