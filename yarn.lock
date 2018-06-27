@@ -1164,17 +1164,13 @@ cp-translations@1.0.103:
   version "1.0.103"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.103.tgz#6aec11290ec0fa32282c7b1aa05378ae63af5f6d"
 
-cp-translations@1.0.95:
-  version "1.0.95"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.95.tgz#2598b732b25fc4c55ed4d0068745d734d9ced770"
-
-cp-zen-frontend@1.0.42:
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.42.tgz#3101cfd36410b8a36c499921f6b041d94154fd83"
+cp-zen-frontend@1.0.44:
+  version "1.0.44"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.44.tgz#3c0f921abbc8abb087e8cd64847086aa5b8656e2"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.95"
+    cp-translations "1.0.103"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
@@ -1193,6 +1189,7 @@ cp-zen-frontend@1.0.42:
     vue-recaptcha "^0.4.0"
     vue-resource "^1.3.3"
     vue-router "^2.5.3"
+    vue-router-multiguard "^1.0.3"
     vue-static-map "^2.0.0"
     vue2-google-maps "^0.7.9"
     vuex "^2.3.1"
@@ -6801,6 +6798,10 @@ vue-resource@^1.3.3:
   resolved "https://registry.yarnpkg.com/vue-resource/-/vue-resource-1.3.4.tgz#9fc0bdf6a2f5cab430129fc99d347b3deae7b099"
   dependencies:
     got "^7.0.0"
+
+vue-router-multiguard@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-router-multiguard/-/vue-router-multiguard-1.0.3.tgz#f700991719b40642fb22d5dd0baed6777cfecfaa"
 
 vue-router@^2.5.3:
   version "2.7.0"
