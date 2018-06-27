@@ -55,6 +55,9 @@ exports.start = () => {
       cache: { statuses: [200, 304] },
       log: true,
     },
+    router: {
+      stripTrailingSlash: true,
+    },
   });
 
   const registration = server
