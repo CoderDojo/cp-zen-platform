@@ -1160,9 +1160,9 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.88:
-  version "1.0.88"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.88.tgz#d082ed2d35d408917c335f0696e9ddee36fad9b0"
+cp-translations@1.0.102:
+  version "1.0.102"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.102.tgz#7f6655ab070b435b6e47f72e11db6eb7ce30b939"
 
 cp-translations@1.0.95:
   version "1.0.95"
