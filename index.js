@@ -52,6 +52,8 @@ process.on('uncaughtException', (err) => {
   cleanShutdown(); // exit on uncaught exception
 });
 
+process.on('unhandledRejection', r => console.log(r));
+
 // handle process signals
 process.on('SIGTERM', cleanShutdown);
 process.on('SIGHUP', cleanShutdown);
