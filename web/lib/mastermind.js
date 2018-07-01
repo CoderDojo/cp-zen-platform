@@ -2,12 +2,18 @@ const { eachSeries } = require('async');
 const { partialRight } = require('lodash');
 const Boom = require('boom');
 
-const stepHandler = (step, cb, req, reply) => step(req, reply, cb);
+const stepHandler = async (step, cb, req, reply) => {
+  try {
+    return await step(req, reply, cb);
+  } catch(e) {
+    return cb(e);
+  }
+}
 
 const errorHandler = (err, reply) => {
   if (err) {
-    const { statusCode, message } = err;
-    return reply(Boom.boomify(err, { statusCode, message }));
+    const { statusCode } = err;
+    return reply(Boom.boomify(err, { statusCode }));
   }
 };
 // Note : to be investigated :
