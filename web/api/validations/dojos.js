@@ -74,7 +74,7 @@ module.exports = function () {
         linkedin: joiValidator.linkedin(),
         confidentMentoring: Joi.number(),
         confidentCoding: Joi.number(),
-        reference: Joi.string().only(['search_engine', 'volunteers', 'organisations', 'developpers', 'events', 'word_of_mouth', 'family', 'media', 'other']),
+        reference: Joi.string().only(['search_engine', 'volunteers', 'organisations', 'future_learn', 'developpers', 'events', 'word_of_mouth', 'family', 'media', 'other']),
         alternativeReference: Joi.string().optional(),
         isValid: Joi.boolean().required(),
         visited: Joi.boolean().required(),

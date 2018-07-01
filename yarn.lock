@@ -1160,37 +1160,36 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.88:
-  version "1.0.88"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.88.tgz#d082ed2d35d408917c335f0696e9ddee36fad9b0"
+cp-translations@1.0.103:
+  version "1.0.103"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.103.tgz#6aec11290ec0fa32282c7b1aa05378ae63af5f6d"
 
-cp-translations@1.0.89:
-  version "1.0.89"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.89.tgz#5834f0f8d1d89cd81e6281449a386283e833bc5f"
-
-cp-zen-frontend@1.0.29:
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.29.tgz#b87e49fdfd423bc8d27a917bb1a32ceef61f5413"
+cp-zen-frontend@1.0.44:
+  version "1.0.44"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.44.tgz#3c0f921abbc8abb087e8cd64847086aa5b8656e2"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.89"
+    cp-translations "1.0.103"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
     lodash "^4.17.4"
     moment "^2.18.1"
     sanitize-html "^1.15.0"
-    vee-validate "2.0.0-rc.5"
+    uuid "^3.2.1"
+    vee-validate "^2.0.6"
     vue "^2.2.6"
     vue-analytics "^4.1.3"
     vue-awesome "^2.3.1"
-    vue-dob-picker "^1.0.8"
+    vue-dob-picker "^1.0.9"
     vue-i18n "^7.0.3"
+    vue-multiselect "^2.1.0"
     vue-pagination-2 "^0.3.2"
     vue-recaptcha "^0.4.0"
     vue-resource "^1.3.3"
     vue-router "^2.5.3"
+    vue-router-multiguard "^1.0.3"
     vue-static-map "^2.0.0"
     vue2-google-maps "^0.7.9"
     vuex "^2.3.1"
@@ -6666,7 +6665,7 @@ uuid@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
-uuid@^3.1.0:
+uuid@^3.1.0, uuid@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
@@ -6691,9 +6690,9 @@ validator@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-7.0.0.tgz#c74deb8063512fac35547938e6f0b1504a282fd2"
 
-vee-validate@2.0.0-rc.5:
-  version "2.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0-rc.5.tgz#1de41866ddab3f8bebae3f3db653ef2c1c782fa0"
+vee-validate@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.6.tgz#0a28046e3c80fb5b9b944da5f7771c7404f90a6a"
 
 verror@1.10.0:
   version "1.10.0"
@@ -6771,13 +6770,17 @@ vue-awesome@^2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-2.3.3.tgz#e83f976fe5c7f86d207c24ca33731bdc6e9906a9"
 
-vue-dob-picker@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/vue-dob-picker/-/vue-dob-picker-1.0.8.tgz#f2acb5cf185f1523e729f3932efe9384ad34b5a4"
+vue-dob-picker@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/vue-dob-picker/-/vue-dob-picker-1.0.9.tgz#2c6e9736a0b2d08e0accd3458b23bcddc515696d"
 
 vue-i18n@^7.0.3:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.2.0.tgz#849d496affc3dbdfb5f6ad675b79e86448bce14e"
+
+vue-multiselect@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-2.1.0.tgz#9e8ee7087658f029d06778cdb8da0b34ee3f1e28"
 
 vue-pagination-2@^0.3.2:
   version "0.3.2"
@@ -6795,6 +6798,10 @@ vue-resource@^1.3.3:
   resolved "https://registry.yarnpkg.com/vue-resource/-/vue-resource-1.3.4.tgz#9fc0bdf6a2f5cab430129fc99d347b3deae7b099"
   dependencies:
     got "^7.0.0"
+
+vue-router-multiguard@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-router-multiguard/-/vue-router-multiguard-1.0.3.tgz#f700991719b40642fb22d5dd0baed6777cfecfaa"
 
 vue-router@^2.5.3:
   version "2.7.0"

@@ -7,14 +7,15 @@ const proxy = require('proxyquire');
 const expect = chai.expect;
 chai.use(sinonChai);
 exports.lab = lab;
-lab.describe('event handler', () => {
+lab.describe('order handler', () => {
   const sandbox = sinon.sandbox.create();
   const transport = {
     get: sandbox.stub(),
+    post: sandbox.stub(),
   };
   const transportFactory = sandbox.stub().returns(transport);
 
-  const fn = proxy('../../../web/lib/models/event.js', {
+  const fn = proxy('../../../web/lib/models/order.js', {
     '../transports/http': transportFactory,
   });
   lab.afterEach((done) => {
@@ -28,8 +29,7 @@ lab.describe('event handler', () => {
     });
     lab.test('it should proxy the GET call', async () => {
       const qs = {
-        'query[dojoId]': 1,
-        'query[status]': 'published',
+        'query[eventId]': 1,
       };
       transport.get.resolves([]);
       await fn.get(qs);
@@ -37,20 +37,22 @@ lab.describe('event handler', () => {
         baseUrl: 'http://events2:3000/',
         json: true,
       });
-      expect(transport.get).to.have.been.calledWith('events', { qs });
+      expect(transport.get).to.have.been.calledWith('orders', { qs });
     });
   });
-  lab.describe('GET /:eventId', () => {
+  lab.describe('POST', () => {
     lab.afterEach((done) => {
       sandbox.reset();
       done();
     });
-    lab.test('it should proxy the GET call', async () => {
-      const qs = {};
-      const id = '1234-5678';
-      transport.get.resolves({});
-      await fn.load(id, qs);
-      expect(transport.get).to.have.been.calledWith('events/1234-5678', { qs });
+    lab.test('it should proxy the POST call', async () => {
+      const body = {
+        applications: [],
+      };
+      transport.post.resolves([]);
+      await fn.post(body);
+      expect(transportFactory).to.have.been.not.called;
+      expect(transport.post).to.have.been.calledWith('orders', { body });
     });
   });
 });

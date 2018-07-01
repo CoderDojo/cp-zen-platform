@@ -25,7 +25,7 @@ function cdAgreementsService(cdApi, $q){
       return deferred.promise;
     },
     search: function (query) {
-      return cdApi.post(base + '/', {query: query});
+      return cdApi.post(base + '/search', {query: query});
     },
     getCurrentCharterVersion: function () {
       return cdApi.get(base + '/version');

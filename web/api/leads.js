@@ -106,7 +106,7 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/dojoleads/`,
+    path: `${options.basePath}/dojoleads`,
     handler: handlers.actHandlerNeedsUser('search', null, null, { ctrl: 'dojolead' }),
     config: {
       auth: auth.apiUser,
@@ -141,7 +141,7 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/dojos/leads/`,
+    path: `${options.basePath}/dojos/leads`,
     handler: handlers.actHandlerNeedsUser('search', null, null, { ctrl: 'lead' }),
     config: {
       auth: auth.apiUser,

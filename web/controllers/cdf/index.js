@@ -40,12 +40,4 @@ module.exports = [{
   handler(request, reply) {
     reply.redirect('/cdf/login');
   },
-},
-{
-  method: 'GET',
-  path: '/cdf/',
-  config: { cache: { expiresIn: cacheTimes.short } },
-  handler(request, reply) {
-    reply.redirect('/cdf/login');
-  },
 }];

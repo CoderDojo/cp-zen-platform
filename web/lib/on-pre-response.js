@@ -44,7 +44,7 @@ module.exports = server => (request, reply) => {
       const cdfPath =
         request.route.settings.auth.access[0].scope.selection.indexOf('cdf-admin') > -1;
       if (cdfPath) {
-        return reply.redirect(`/cdf/login?next=${request.url.path}`);
+        return reply.redirect(`/cdf/login?referer=${request.url.path}`);
       }
     }
   }

@@ -9,10 +9,13 @@ class Event {
     });
   }
   get(query) {
-    return this.transport.get('events', { qs: query });
+    return this.transport.get('orders', { qs: query });
   }
-  load(id, query) {
-    return this.transport.get(`events/${id}`, { qs: query });
+  post(body) {
+    return this.transport.post('orders', { body });
+  }
+  put(id, body) {
+    return this.transport.put(`orders/${id}`, { body });
   }
 }
 module.exports = new Event();
