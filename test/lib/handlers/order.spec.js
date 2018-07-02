@@ -45,7 +45,7 @@ lab.describe('order handler', () => {
       sandbox.reset();
       done();
     });
-    lab.test('it should return the orders', (done) => {
+    lab.test('it should return the orders', async () => {
       Order.get.resolves([]);
       req = {
         params: {
@@ -55,19 +55,17 @@ lab.describe('order handler', () => {
           'query[eventId]': 'event1',
         },
       };
-      fn.get()[0](req, reply, () => {
-        expect(Order.get).to.have.been.calledWith({
-          'query[eventId]': 'event1',
-          'query[userId]': 'user1',
-        });
-        expect(reply).to.have.been.calledOnce;
-        expect(reply).to.have.been.calledWith([]);
-        expect(code).to.have.been.calledOnce;
-        expect(code).to.have.been.calledWith(200);
-        done();
+      await fn.get()[0](req, reply);
+      expect(Order.get).to.have.been.calledWith({
+        'query[eventId]': 'event1',
+        'query[userId]': 'user1',
       });
+      expect(reply).to.have.been.calledOnce;
+      expect(reply).to.have.been.calledWith([]);
+      expect(code).to.have.been.calledOnce;
+      expect(code).to.have.been.calledWith(200);
     });
-    lab.test('it should call cb on error', (done) => {
+    lab.test('it should call cb on error', async () => {
       const err = new Error('fake err');
       req = {
         params: {
@@ -78,16 +76,17 @@ lab.describe('order handler', () => {
         },
       };
       Order.get.rejects(err);
-      fn.get()[0](req, reply, (_err) => {
+      try {
+        await fn.get()[0](req, reply);
+      } catch(e) {
         expect(Order.get).to.have.been.calledWith({
           'query[eventId]': 'event1',
           'query[userId]': 'user1',
         });
-        expect(_err.message).to.equal('fake err');
+        expect(e.message).to.equal('fake err');
         // reply will be called by mastermind, in a boomified manner
         expect(reply).to.not.have.been.called;
-        done();
-      });
+      }
     });
   });
 
