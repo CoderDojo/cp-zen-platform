@@ -1,4 +1,3 @@
-const { asyncify } = require('async');
 const mastermind = require('../mastermind');
 const Order = require('../models/order');
 const Email = require('../models/event-emails');
@@ -7,12 +6,12 @@ const Event = require('../models/event');
 const get = params => // eslint-disable-line no-unused-vars
   mastermind([
     // eslint-disable-next-line no-unused-vars
-    asyncify(async (req, reply, next) => {
+    async (req, reply, next) => {
       const userId = req.params.userId;
       const query = Object.assign({}, req.query, { 'query[userId]': userId });
       const orders = await Order.get(query);
       return reply(orders).code(200);
-    }),
+    },
   ]);
 
 const post = params => // eslint-disable-line no-unused-vars
