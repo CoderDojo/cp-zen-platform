@@ -5,10 +5,10 @@ const Boom = require('boom');
 const stepHandler = async (step, cb, req, reply) => {
   try {
     return await step(req, reply, cb);
-  } catch(e) {
+  } catch (e) {
     return cb(e);
   }
-}
+};
 
 const errorHandler = (err, reply) => {
   if (err) {

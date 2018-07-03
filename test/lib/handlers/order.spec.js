@@ -78,7 +78,7 @@ lab.describe('order handler', () => {
       Order.get.rejects(err);
       try {
         await fn.get()[0](req, reply);
-      } catch(e) {
+      } catch (e) {
         expect(Order.get).to.have.been.calledWith({
           'query[eventId]': 'event1',
           'query[userId]': 'user1',
