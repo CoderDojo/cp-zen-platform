@@ -17,11 +17,11 @@ const get = params => // eslint-disable-line no-unused-vars
 const patch = params => // eslint-disable-line no-unused-vars
   mastermind([
     // eslint-disable-next-line no-unused-vars
-    asyncify(async (req, reply, cb) => {
+    async (req, reply, cb) => {
       const { orderId } = req.params;
       const order = await Order.patch(orderId);
       return reply(order).code(200);
-    }),
+    },
   ]);
 
 const post = params => // eslint-disable-line no-unused-vars

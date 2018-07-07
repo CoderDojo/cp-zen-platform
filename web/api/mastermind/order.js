@@ -112,6 +112,7 @@ module.exports = [
           eventId: Joi.string().guid().required(),
           orderId: Joi.string().guid().required(),
         },
+      },
     },
   },
   {
