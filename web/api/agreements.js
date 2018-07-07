@@ -63,7 +63,7 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/agreements/`,
+    path: `${options.basePath}/agreements/search`,
     handler: handlers.actHandler('list', ['id']),
     config: {
       auth: authentications.apiUser,
