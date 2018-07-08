@@ -2,6 +2,7 @@ const mastermind = require('../mastermind');
 const Order = require('../models/order');
 const Email = require('../models/event-emails');
 const Event = require('../models/event');
+const QrCode = require('../models/qr-code');
 
 const get = params => // eslint-disable-line no-unused-vars
   mastermind([
@@ -38,6 +39,11 @@ const post = params => // eslint-disable-line no-unused-vars
     },
     // eslint-disable-next-line no-use-before-define
     ...sendBookingEmail,
+    async (req, res) => {
+      console.log(req.app.order);
+      await QrCode.save(req.app.order.id, req.app.order.eventId);
+      return next();
+    },
   ]);
 
 
@@ -53,6 +59,11 @@ const put = params => // eslint-disable-line no-unused-vars
     },
     // eslint-disable-next-line no-use-before-define
     ...sendBookingEmail,
+    async (req, res, next) => {
+      console.log(req.app.order);
+      await QrCode.save(req.app.order.id, req.app.order.eventId);
+      return next();
+    },
   ]);
 
 const sendBookingEmail = [
