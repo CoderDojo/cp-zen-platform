@@ -10,7 +10,6 @@ class QrCode {
   }
   save(orderId, eventId) {
     const req = new messages.Order([orderId, eventId]);
-    console.log(req, eventId);
     const toS3 = promisify(this.transport.toS3).bind(this.transport); 
     return toS3(req);
   }
