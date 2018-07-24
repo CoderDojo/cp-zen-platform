@@ -1160,21 +1160,21 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.106:
-  version "1.0.106"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.106.tgz#40d8a9a529d4413f5df00deba24d4ed236bf002f"
-
 cp-translations@1.0.107:
   version "1.0.107"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.107.tgz#cf38c7589ee42e4b5ed6f969ae10855adafc934c"
 
-cp-zen-frontend@1.0.46:
-  version "1.0.46"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.46.tgz#c1553b5724d9be908f697a2218762957ee298c64"
+cp-translations@1.0.108:
+  version "1.0.108"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.108.tgz#9c6e89cb97742cdb60e2680dfac2c419e60129e9"
+
+cp-zen-frontend@1.0.48:
+  version "1.0.48"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.48.tgz#2498498d48cf96f022e6969737fc3f4a0f432b5b"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.106"
+    cp-translations "1.0.108"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
