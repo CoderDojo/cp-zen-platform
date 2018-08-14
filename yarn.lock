@@ -1164,17 +1164,17 @@ cp-translations@1.0.107:
   version "1.0.107"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.107.tgz#cf38c7589ee42e4b5ed6f969ae10855adafc934c"
 
-cp-translations@1.0.108:
-  version "1.0.108"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.108.tgz#9c6e89cb97742cdb60e2680dfac2c419e60129e9"
+cp-translations@1.0.110:
+  version "1.0.110"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.110.tgz#c21a672782061f10cb2dd2c23c4b3b859a962038"
 
-cp-zen-frontend@1.0.50:
-  version "1.0.50"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.50.tgz#c1ce30e7ab757577dee7094e41170668a2f1eb11"
+cp-zen-frontend@1.0.51:
+  version "1.0.51"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.51.tgz#7d9cd877eee9a88cba925eddc265f776b8fcdcf3"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.108"
+    cp-translations "1.0.110"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
