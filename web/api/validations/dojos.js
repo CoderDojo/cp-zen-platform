@@ -34,7 +34,7 @@ module.exports = function () {
       return Joi.alternatives().try(Joi.string().uri(), Joi.string());
     },
     optionalUri() {
-      return Joi.alternatives().try(joiValidator.uri(), Joi.string().empty(''), Joi.string().valid(null));
+      return Joi.alternatives().try(joiValidator.uri(), Joi.string().valid(null), Joi.string().allow(''));
     },
     country() {
       return Joi.object().keys({
