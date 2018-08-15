@@ -20,17 +20,6 @@ angular
             datepickerMode: 'year'
           };
           ctrl.picker = {opened: false};
-          ctrl.sliderOptions = {
-            showSelectionBar: true,
-            showTicksValues: true,
-            stepsArray: [
-              {value: 1, legend: $translate.instant('Not very')},
-              {value: 2},
-              {value: 3, legend: $translate.instant('Slightly')},
-              {value: 4},
-              {value: 5, legend: $translate.instant('Very')}
-            ]
-          };
           ctrl.sources = dojoUtils.startingDojoSrcs;
           ctrl.isKid = false;
         };

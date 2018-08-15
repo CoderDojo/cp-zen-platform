@@ -33,7 +33,6 @@
     'ngGeolocation',
     'angular-google-analytics',
     'ngAria',
-    'ngAnimate',
-    'rzModule'
+    'ngAnimate'
   ]);
 })();

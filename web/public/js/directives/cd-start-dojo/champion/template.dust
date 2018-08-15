@@ -111,23 +111,7 @@
         </div>
       </div>
     </div>
-
-    <h3>{@i18n key="Tell us your skills"/}</h3>
-    <p class="help-block">
-      {@i18n key="To become a Champion you do not need to have technical skills as you can find other volunteers with these skills or use our awesome learning content."/} &nbsp;
-      {@i18n key="Tell us how confident you feel in the following areas;" /}
-    </p>
-    <div class="cd-simple-flex-grid cd-sad-champion__sliders">
-      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <p>{@i18n key="How confident are you in mentoring young people?"/}</p>
-        <rzslider rz-slider-model="$ctrl.champion.confidentMentoring" rz-slider-options="$ctrl.sliderOptions"></rzslider>
-      </div>
-      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <p>{@i18n key="How confident are you in your coding and technology skills?"/}</p>
-        <rzslider rz-slider-model="$ctrl.champion.confidentCoding" rz-slider-options="$ctrl.sliderOptions"></rzslider>
-      </div>
-    </div>
-    <div class="form-group">
+    <div class="form-group cd-sad-champion__reference">
       <label for="reference" class="cd-sad-champion__reference-label">{@i18n key="How did you hear about CoderDojo?"/}</label>
       <div class="col-xs-12 col-md-6 cd-sad-champion__reference-choice">
         <select ng-model="$ctrl.champion.reference" name="reference"
