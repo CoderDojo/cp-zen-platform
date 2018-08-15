@@ -86,6 +86,18 @@ angular
         var validityWatcher = $scope.$watchGroup(['$ctrl.venueForm.$pristine', '$ctrl.venueForm.$valid'], function () {
           if (ctrl.venue && !ctrl.venueForm.$pristine) ctrl.venue.formValidity = ctrl.venueForm.$valid;
         });
+        ctrl.emptyOtherFields = function () {
+          if (ctrl.venue.type !== 'office') {
+            delete ctrl.venue.corporate;
+            delete ctrl.venue.alternativeCorporate;
+          }
+          if (ctrl.venue.type !== 'other') {
+            delete ctrl.venue.alternativeType;
+          }
+          if (ctrl.venue.type === 'office' && ctrl.venue.corporate !== 'other') {
+            delete ctrl.venue.alternativeCorporate;
+          }
+        }
         $scope.$on('$destroy', function () {
           validityWatcher();
         });
