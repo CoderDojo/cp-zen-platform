@@ -12,7 +12,6 @@ const verify = params => // eslint-disable-line no-unused-vars
           if (err) {
             const message = err.details.message;
             let _err = err;
-            console.log(_err, message);
             if (['Dojo not found', 'Dojo email is missing', 'Invalid verification scenario'].indexOf(message) > -1) {
               _err = new Error(message);
               _err.statusCode = 400;
