@@ -13,15 +13,8 @@ angular
         function ($translate, $scope, utilsService, dojoUtils) {
         var ctrl = this;
         ctrl.$onInit = function () {
-          var initialDate = new Date();
-          ctrl.firstDateOptions = {
-            formatYear: 'yyyy',
-            startingDay: 1,
-            datepickerMode: 'day',
-            initDate: initialDate
-          };
-          ctrl.picker = {opened: false};
           _.extend(ctrl, dojoUtils.getFrequencyStrings());
+          ctrl.nextDateOptions = dojoUtils.nextDateOptions;
           ctrl.initContent = "<p>" +
             $translate.instant('Suggested Notes:') + "<br><br>" + $translate.instant('Please bring:') +
             "<ul><li>" + $translate.instant('A laptop. Borrow one from somebody if needs be.') + "</li>" +
@@ -35,9 +28,6 @@ angular
           }
           ctrl.editorOptions = utilsService.getCKEditorConfig();
         };
-        var dateWatcher = $scope.$watch('$ctrl.dojo.firstSession', function () {
-          ctrl.formatFirstSessionDate();
-        });
         var setterStartTimeWatcher = $scope.$watch('$ctrl.dojo.startTime', function () {
           if (ctrl.dojo && !_.isUndefined(ctrl.dojo.startTime)) {
             ctrl.startTime = moment(ctrl.dojo.startTime, 'HH:mm').toDate();
@@ -68,11 +58,6 @@ angular
             notesWatcher();
           }
         });
-        ctrl.formatFirstSessionDate = function () {
-          if (ctrl.dojo && ctrl.dojo.firstSession && !_.isDate(ctrl.dojo.firstSession)) {
-            ctrl.dojo.firstSession = new Date(ctrl.dojo.firstSession);
-          }
-        };
         ctrl.toggle = function () {
           ctrl.picker.opened = !ctrl.picker.opened;
         };
@@ -93,7 +78,6 @@ angular
         $scope.$on('$destroy', function () {
           validityWatcher();
           notesWatcher();
-          dateWatcher();
           startTimeWatcher();
           endTimeWatcher();
         });

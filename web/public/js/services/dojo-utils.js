@@ -153,5 +153,10 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     { id: 'other',
       name: $translate.instant('Other')}
   ];
+  dojoUtils.nextDateOptions = [
+    { id: 'already-did', name: $translate.instant('We already had a session') },
+    { id: 'next-3-months', name: $translate.instant('In the next three months') },
+    { id: 'next-12-months', name: $translate.instant('In the next year') },
+  ];
   return dojoUtils;
 }]);
