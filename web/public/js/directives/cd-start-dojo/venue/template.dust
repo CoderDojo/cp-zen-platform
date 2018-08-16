@@ -55,7 +55,7 @@
           <div class="cd-simple-flex-grid__flex-1">
             <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
             <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
-              required="true">
+              required="true" ng-change="$ctrl.emptyOtherFields()">
               <option ng-repeat="option in $ctrl.venueTypes" value="{{ option.id }}">
                 {{ option.name }}
               </option>
@@ -78,7 +78,7 @@
       </div>
       <div class="form-group" ng-show="$ctrl.venue.type === 'office'">
         <label for="corporate">{@i18n key="If your venue has a corporate host what is the name of the company?"/}</label>
-        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" ng-required="$ctrl.venue.type === 'office'">
+        <select ng-model="$ctrl.venue.corporate" name="corporate" class="form-control" ng-required="$ctrl.venue.type === 'office'" ng-change="$ctrl.emptyOtherFields()" >
           <option ng-repeat="option in $ctrl.corporateList" value="{{ option.id }}">
             {{ option.name }}
           </option>
