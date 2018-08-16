@@ -1,5 +1,5 @@
 <form class="cd-sad-information" name="$ctrl.dojoForm" no-validate="" ng-class="{'cd-validate': $ctrl.dojo.visited}" focus-invalid>
-  <p class="help-block text-center">
+  <p class="cd-sad-information__intro text-center">
     {@i18n key="This information will be used to populate your Dojo's public profile page"/}
   </p>
   <div class="form-group">
