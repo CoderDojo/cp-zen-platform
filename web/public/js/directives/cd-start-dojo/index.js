@@ -319,7 +319,7 @@ angular
                   isValid: false,
                   visited: false
                 },
-                dojo: {startTime: moment({minutes: 0}).format('HH:mm'), endTime: moment({minutes: 0}).format('HH:mm'), visited: false, isValid: false},
+                dojo: {startTime: moment({minutes: 0}).format('HH:mm'), endTime: moment({minutes: 0}).format('HH:mm'), requestEmail: true, visited: false, isValid: false},
                 venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });

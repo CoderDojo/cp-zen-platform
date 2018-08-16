@@ -93,22 +93,7 @@
     </p>
     <div class="cd-sad-information__email-choice-group">
       <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false && $ctrl.dojo.requestEmail != undefined }"
-        ng-click="$ctrl.setEmail()">
-        <span class="radio cd-sad-information__email-choice-selector">
-          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
-            name="requestEmail"
-            ng-change="$ctrl.setEmail()"
-            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
-          <label for="requestEmail"></label>
-        </span>
-        <div class="cd-sad-information__email-choice-action">
-          <i class="fa fa-at fa-2x"></i>
-          <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
-        </div>
-      </div>
-      <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail == true, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != true}"
+        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail !== false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail == false}"
         ng-click="$ctrl.requestEmail()">
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
@@ -120,6 +105,21 @@
         <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-magic fa-2x"></i>
           <p>{@i18n key="I want a coderdojo.com email set up"/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-information__email-choice"
+        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false }"
+        ng-click="$ctrl.setEmail()">
+        <span class="radio cd-sad-information__email-choice-selector">
+          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+            name="requestEmail"
+            ng-change="$ctrl.setEmail()"
+            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
+          <label for="requestEmail"></label>
+        </span>
+        <div class="cd-sad-information__email-choice-action">
+          <i class="fa fa-at fa-2x"></i>
+          <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
         </div>
       </div>
     </div>
@@ -135,9 +135,6 @@
         <p class="help-block">{@i18n key="You'll receive the credentials once the Dojo has been verified"/}</p>
       </div>
     </div>
-    <p class="help-block">
-      {@i18n key="Once you have your email set up we advise you set up an auto-responder to all emails with more information about your Dojo so that parents know you are still active. Otherwise you can set up an auto-forwarder to your personal email so you don’t miss anything coming into your Dojo email."/}
-    </p>
   </div>
 
   <div class="form-group">
