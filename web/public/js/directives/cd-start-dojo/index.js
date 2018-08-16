@@ -25,13 +25,6 @@ angular
             tabTitle: $translate.instant('Champion Registration')
           },
           {
-            name: 'dojo',
-            state: 'start-dojo.information',
-            status: setStatusIcon,
-            validity: '',
-            tabTitle: $translate.instant('Dojo Information')
-          },
-          {
             name: 'venue',
             state: 'start-dojo.venue',
             status: setStatusIcon,
@@ -44,6 +37,13 @@ angular
             status: setStatusIcon,
             validity: '',
             tabTitle: $translate.instant('Gather your Team')
+          },
+          {
+            name: 'dojo',
+            state: 'start-dojo.information',
+            status: setStatusIcon,
+            validity: '',
+            tabTitle: $translate.instant('Dojo Information')
           },
           {
             name: 'charter',
