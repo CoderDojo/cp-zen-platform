@@ -78,6 +78,25 @@ lab.describe('dojo handler', () => {
         user,
       }, sinon.match.func);
       expect(cb).to.have.been.calledOnce;
+      expect(cb.getCall(0).args[0].statusCode).to.be.undefined;
+      expect(reply).to.not.have.been.called;
+      done();
+    });
+    lab.test('it should call cb on error with custom bypass for handled error', (done) => {
+      const _err = new Error('Dojo email is missing');
+      seneca.act.callsFake((args, _cb) => _cb(_err));
+      fn.verify()[0](req, reply, cb);
+      expect(seneca.act).to.have.been.calledWith({
+        role: 'cd-dojos',
+        ctrl: 'dojo',
+        cmd: 'verify',
+        id: 1,
+        verified: 1,
+        user,
+      }, sinon.match.func);
+      expect(cb).to.have.been.calledOnce;
+      expect(cb.getCall(0).args[0].statusCode).to.equal(400);
+      expect(cb.getCall(0).args[0].message).to.equal('Dojo email is missing');
       expect(reply).to.not.have.been.called;
       done();
     });
