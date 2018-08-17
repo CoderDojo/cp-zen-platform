@@ -12,12 +12,12 @@ const verify = params => // eslint-disable-line no-unused-vars
           if (err) {
             // Add support for some of seneca's error message
             const message = err.details ? err.details.message : err.message;
-            let _err = err;
+            let expectedErr = err;
             if (['Dojo not found', 'Dojo email is missing', 'Invalid verification scenario'].indexOf(message) > -1) {
-              _err = new Error(message);
-              _err.statusCode = 400;
+              expectedErr = new Error(message);
+              expectedErr.statusCode = 400;
             }
-            return cb(_err);
+            return cb(expectedErr);
           }
           reply(res).code(200);
           cb();

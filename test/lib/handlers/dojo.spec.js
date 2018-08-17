@@ -83,8 +83,8 @@ lab.describe('dojo handler', () => {
       done();
     });
     lab.test('it should call cb on error with custom bypass for handled error', (done) => {
-      const _err = new Error('Dojo email is missing');
-      seneca.act.callsFake((args, _cb) => _cb(_err));
+      const formattedErr = new Error('Dojo email is missing');
+      seneca.act.callsFake((args, _cb) => _cb(formattedErr));
       fn.verify()[0](req, reply, cb);
       expect(seneca.act).to.have.been.calledWith({
         role: 'cd-dojos',
