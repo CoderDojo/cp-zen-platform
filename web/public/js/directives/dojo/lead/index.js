@@ -16,6 +16,9 @@ angular
       ctrl.getReferenceValue = function (id) {
         return _.find(dojoUtils.startingDojoSrcs, {'id': id}).name;
       };
+      ctrl.getFirstSessionValue= function (id) {
+        return _.find(dojoUtils.nextDateOptions, {'id': id}).name;
+      };
       ctrl.verify = function () {
         cdDojoService.verify(ctrl.dojo.id, 1)
         .then(function (res) {

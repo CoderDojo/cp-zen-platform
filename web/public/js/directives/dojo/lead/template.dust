@@ -221,7 +221,7 @@
                 </div>
               </td>
               <td>Date of first session</td>
-              <td ng-bind="::$ctrl.lead.application.dojo.firstSession | date: 'MM/dd/yyyy'"></td>
+              <td> <span ng-bind="::$ctrl.getFirstSessionValue($ctrl.lead.application.dojo.firstSession)"></span></td>
             </tr>
             <tr>
               <td>Notes</td>

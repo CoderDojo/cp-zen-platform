@@ -68,19 +68,11 @@
       </div>
       <div class="cd-sad-information__time-date-session">
         <label for="firstDate">{@i18n key="When will your first session be?"/}</label>
-        <div class="input-group">
-          <input id="firstDate" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
-            datepicker-options="$ctrl.firstDateOptions" min-date="'1900-01-01'" max-date="today"
-            ng-model="$ctrl.dojo.firstSession" name="firstSession"
-            required required-message="'{@i18n key="First date is empty"/}'" is-open="$ctrl.picker.opened"
-            current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
-            close-text="{@i18n key="Done"/}"
-            ng-click="$ctrl.toggle($event)"/>
-          </p>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </div>
+        <select id="firstDate" type="select" class="form-control"
+          ng-model="$ctrl.dojo.firstSession" name="firstSession"
+          ng-options="value.id as value.name for (key, value) in $ctrl.nextDateOptions">
+            <option value="" disabled>{@i18n key="Indicate your first session"/}</option>
+        </select>
       </div>
     </div>
   </div>
