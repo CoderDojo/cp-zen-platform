@@ -72,8 +72,8 @@ module.exports = function () {
         phone: joiValidator.phone(),
         twitter: joiValidator.twitter(),
         linkedin: joiValidator.linkedin(),
-        confidentMentoring: Joi.number(),
-        confidentCoding: Joi.number(),
+        confidentMentoring: Joi.number(), // deprecated, GFE 15/08/2018
+        confidentCoding: Joi.number(), // deprecated, GFE 15/08/2018
         reference: Joi.string().only(['search_engine', 'volunteers', 'organisations', 'future_learn', 'developpers', 'events', 'word_of_mouth', 'family', 'media', 'other']),
         alternativeReference: Joi.string().optional(),
         isValid: Joi.boolean().required(),
@@ -82,10 +82,10 @@ module.exports = function () {
       let schema = Joi.object().keys(valid);
       if (required) {
         schema = schema.requiredKeys('firstName', 'lastName', 'email', 'dob',
-          'phone', 'confidentCoding', 'confidentMentoring', 'reference');
+          'phone', 'reference');
       } else {
         schema = schema.optionalKeys('firstName', 'lastName', 'email', 'dob',
-          'phone', 'confidentCoding', 'confidentMentoring', 'reference');
+          'phone', 'reference');
       }
       return schema;
     },

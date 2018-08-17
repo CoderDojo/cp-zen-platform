@@ -62,8 +62,7 @@
     "angular-animate": "1.5.7",
     "angular-touch": "1.5.7",
     "cd-common": "https://registry.npmjs.org/@coderdojo/cd-common/-/cd-common-1.1.11.tgz",
-    "jquery.inview": "https://github.com/protonet/jquery.inview.git#v1.1.2",
-    "angularjs-slider": "~6.1.1"
+    "jquery.inview": "https://github.com/protonet/jquery.inview.git#v1.1.2"
   },
   "devDependencies": {
     "angular-mocks": "1.5.7",

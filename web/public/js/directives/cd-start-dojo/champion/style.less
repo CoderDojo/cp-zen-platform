@@ -32,6 +32,7 @@ cd-sad-champion {
     flex-basis: 100%;
   }
   &__reference {
+    margin-top: 18px;
     &-label {
       display: block;
     }
@@ -48,23 +49,4 @@ cd-sad-champion {
       }
     }
   }
-  &__sliders {
-    flex-wrap: wrap;
-    justify-content: space-around;
-    text-align: center;
-    margin-bottom: @form-group-margin;
-    & .rz-tick-legend {
-      white-space: nowrap;
-    }
-  }
-  &__slider {
-    margin-bottom: 20px;
-    & .rzslider {
-      max-width: 300px;
-      & .rz-selection, & .rz-pointer, .rz-tick.rz-selected{
-        background-color: @cd-blue;
-      }
-    }
-  }
-
 }
