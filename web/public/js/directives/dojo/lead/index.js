@@ -26,7 +26,7 @@ angular
           atomicNotifyService.info('Verified !', 1000);
         })
         .catch(function (err) {
-          atomicNotifyService.error('Oops : ' + err, 3000);
+          atomicNotifyService.error('Oops : ' + err.data.message, 3000);
         });
       };
       function getDojo () {
