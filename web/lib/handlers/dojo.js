@@ -9,7 +9,16 @@ const verify = params => // eslint-disable-line no-unused-vars
       const user = req.user;
       return req.seneca.act({ role, ctrl: 'dojo', cmd: 'verify', id, verified, user },
         (err, res) => {
-          if (err) return cb(err);
+          if (err) {
+            // Add support for some of seneca's error message
+            const message = err.details ? err.details.message : err.message;
+            let expectedErr = err;
+            if (['Dojo not found', 'Dojo email is missing', 'Invalid verification scenario'].indexOf(message) > -1) {
+              expectedErr = new Error(message);
+              expectedErr.statusCode = 400;
+            }
+            return cb(expectedErr);
+          }
           reply(res).code(200);
           cb();
         });

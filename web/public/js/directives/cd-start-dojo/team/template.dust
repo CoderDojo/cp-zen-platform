@@ -54,7 +54,7 @@
     <div class="cd-simple-flex-grid cd-sad-team__team-block" >
       <div class="cd-simple-flex-grid_flex-1 cd-sad-team__team-block--exists"
         ng-show="$ctrl.team.status === 'exists'">
-        <label class="cd-sad-team__team-block-description">{@i18n key="Let us know where you found mentors for your Dojo."/}<span class="pull-right">(optional)</span></label>
+        <label class="cd-sad-team__team-block-description">{@i18n key="Let us know where you found mentors for your Dojo."/}<span> (optional)</span></label>
         <label ng-repeat="(id, src) in $ctrl.srcMentors" class="cd-sad-team__team-block-srcs">
           <input type="checkbox" ng-model="$ctrl.team.src[id]" name="{{ id }}" ng-value="{{ id }}"
             ng-change="$ctrl.setSrcMentorsValue(id)"/> {{ src.value }}

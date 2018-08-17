@@ -34,7 +34,7 @@ module.exports = function () {
       return Joi.alternatives().try(Joi.string().uri(), Joi.string());
     },
     optionalUri() {
-      return Joi.alternatives().try(joiValidator.uri(), Joi.string().empty(''), Joi.string().valid(null));
+      return Joi.alternatives().try(joiValidator.uri(), Joi.string().valid(null), Joi.string().allow(''));
     },
     country() {
       return Joi.object().keys({
@@ -94,7 +94,7 @@ module.exports = function () {
       const valid = {
         id: joiValidator.guid(),
         name: Joi.string(), // TODO: exclude Dojo from name
-        firstSession: Joi.date(),
+        firstSession: Joi.string(),
         frequency: joiValidator.frequency(),
         day: joiValidator.day().allow(null),
         startTime: Joi.string(),
@@ -110,7 +110,7 @@ module.exports = function () {
         visited: Joi.boolean().required(),
       };
       let schema = Joi.object().keys(valid);
-      const keys = ['name', 'firstSession', 'frequency', 'notes', 'requestEmail'];
+      const keys = ['name', 'frequency', 'notes', 'requestEmail'];
       if (required) {
         keys.push('id');
         keys.push('isValid');

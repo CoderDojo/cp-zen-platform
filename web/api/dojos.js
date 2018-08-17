@@ -242,7 +242,13 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       validate: {
         payload: Joi.alternatives().try(Joi.any(), Joi.object({ query: {
-          id: Joi.alternatives(Joi.string().guid(), Joi.object()),
+          id: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
           name: Joi.string(),
           verified: Joi.number().valid(0).valid(1),
           stage: Joi.number().integer(),
@@ -366,7 +372,14 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          dojoId: Joi.alternatives().try(joiValidator.guid(), Joi.object(), Joi.string().valid('')),
+          dojoId: Joi.alternatives().try(
+            joiValidator.guid(),
+            Joi.string().valid(''),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
           userId: joiValidator.guid(),
           deleted: Joi.number().valid(0).valid(1),
           owner: Joi.number().valid(1).valid(0),

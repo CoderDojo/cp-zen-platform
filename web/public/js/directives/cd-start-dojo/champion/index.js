@@ -13,13 +13,6 @@ angular
       function (userUtils, $state, cdDojoService, $translate, $scope, $timeout, dojoUtils) {
         var ctrl = this;
         ctrl.$onInit = function () {
-          ctrl.dateFormat = 'dd-MMMM-yyyy';
-          ctrl.dobDateOptions = {
-            formatYear: 'yyyy',
-            startingDay: 1,
-            datepickerMode: 'year'
-          };
-          ctrl.picker = {opened: false};
           ctrl.sources = dojoUtils.startingDojoSrcs;
           ctrl.isKid = false;
         };

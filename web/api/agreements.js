@@ -71,7 +71,13 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'users'],
       validate: {
         params: {
-          userId: Joi.alternatives(Joi.object(), Joi.string().guid()).optional(),
+          userId: Joi.alternatives(
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+            Joi.string().guid(),
+          ),
           agreementVersion: Joi.number(),
         },
       },
