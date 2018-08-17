@@ -373,7 +373,7 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: Joi.object({ query: {
           dojoId: Joi.alternatives().try(
-            joiValidator.guid(), 
+            joiValidator.guid(),
             Joi.string().valid(''),
             Joi.object().keys({
               nin$: Joi.array().items(Joi.string().guid()),

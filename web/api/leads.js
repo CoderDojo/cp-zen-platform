@@ -128,7 +128,7 @@ exports.register = function (server, eOptions, next) {
             Joi.object().keys({
               nin$: Joi.array().items(Joi.string().guid()),
               in$: Joi.array().items(Joi.string().guid()),
-            })
+            }),
           ),
           userId: joiValidator.guid(), // used for validation is-self
           email: Joi.string(), // to allow regex
@@ -169,7 +169,7 @@ exports.register = function (server, eOptions, next) {
             Joi.object().keys({
               nin$: Joi.array().items(Joi.string().guid()),
               in$: Joi.array().items(Joi.string().guid()),
-            })
+            }),
           ),
           userId: joiValidator.guid(), // used for validation is-self
           email: Joi.string(),
