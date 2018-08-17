@@ -73,8 +73,8 @@ exports.register = function (server, eOptions, next) {
         params: {
           userId: Joi.alternatives(
             Joi.object().keys({
-              'nin$': Joi.array().items(Joi.string().guid()),
-              'in$': Joi.array().items(Joi.string().guid()),
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
             }),
             Joi.string().guid()
           ),

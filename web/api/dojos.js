@@ -245,8 +245,8 @@ exports.register = function (server, eOptions, next) {
           id: Joi.alternatives(
             Joi.string().guid(),
             Joi.object().keys({
-              'nin$': Joi.array().items(Joi.string().guid()),
-              'in$': Joi.array().items(Joi.string().guid()),
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
             }),
           ),
           name: Joi.string(),
@@ -376,8 +376,8 @@ exports.register = function (server, eOptions, next) {
             joiValidator.guid(), 
             Joi.string().valid(''),
             Joi.object().keys({
-              'nin$': Joi.array().items(Joi.string().guid()),
-              'in$': Joi.array().items(Joi.string().guid()),
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
             }),
           ),
           userId: joiValidator.guid(),
