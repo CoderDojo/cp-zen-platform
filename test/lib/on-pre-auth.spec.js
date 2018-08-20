@@ -4,7 +4,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const languages = require('../../web/config/languages.js');
 const locale = require('locale');
-const _ = require('lodash');
 const fn = require('../../web/lib/on-pre-auth.js');
 
 const expect = chai.expect;

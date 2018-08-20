@@ -1,6 +1,5 @@
 const env = process.env.NODE_ENV || 'development';
 if (process.env.NEW_RELIC_ENABLED === 'true') require('newrelic'); // eslint-disable-line global-require
-const _ = require('lodash');
 const hapi = require('hapi');
 // Plugins
 const inert = require('inert');
