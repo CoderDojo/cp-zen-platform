@@ -42,7 +42,7 @@ exports.start = () => {
   const server = new hapi.Server(options.hapi);
   server.app.defaultLanguage = 'en_US';
   server.app.availableLocales = new locale.Locales(
-    _.pluck(languages, 'code'),
+    languages.map(l => l.code),
     server.app.defaultLanguage,
   );
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;

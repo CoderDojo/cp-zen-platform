@@ -101,7 +101,7 @@ module.exports = function (server, role) {
 
       if (opts && opts.checkCdfAdmin === true) {
         const roles = _.deepHas(user, 'user.roles') ? user.user.roles : [];
-        if (!_.contains(roles, 'cdf-admin')) {
+        if (!_.includes(roles, 'cdf-admin')) {
           // Note: a 200 status code is still returned here (should be 403 by right)
           return reply({ ok: false, why: 'You must be a cdf admin to access this data' });
         }
@@ -164,7 +164,7 @@ module.exports = function (server, role) {
         let isCDFAdmin = false;
         let code = 200;
         const roles = _.deepHas(user, 'user.roles') ? request.user.user.roles : [];
-        if (_.contains(roles, 'cdf-admin')) {
+        if (_.includes(roles, 'cdf-admin')) {
           isCDFAdmin = true;
         }
         if (!resp.userIsDojoAdmin && !isCDFAdmin) {
