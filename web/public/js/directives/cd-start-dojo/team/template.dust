@@ -14,7 +14,7 @@
     </p>
     <p class="help-block">
       {@i18n key="Dojos must ensure all volunteers are vetted and approved in compliance with local child safeguarding legislation."/}&nbsp;
-      {@i18n key="You can learn more about global safeguarding requirements<a target=\"_blank\" href=\"http://kata.coderdojo.com/wiki/Child_Protection_Global\"> here </a> or by completing our <a target=\"_blank\" href=\"/dashboard/profile/lms\">global safeguarding e-learning course</a>"/}
+      {@i18n key="You can learn more about global safeguarding requirements<a target=\"_blank\" href=\"https://help.coderdojo.com/hc/en-us/articles/360001245943-E-Learning-for-volunteers-child-safeguarding\"> here </a> or by completing our <a target=\"_blank\" href=\"/dashboard/profile/lms\">global safeguarding e-learning course</a>"/}
     </p>
   </div>
   <div class="cd-sad-team__bottom-form">

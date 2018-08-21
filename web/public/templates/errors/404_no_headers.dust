@@ -7,7 +7,6 @@
       <ul>
         <li><a href="http://zen.coderdojo.com">{@i18n key="Find your local Dojo"/}</a></li>
         <li><a href="http://forums.coderdojo.com">{@i18n key="Community Forums"/}</a></li>
-        <li><a href="http://kata.coderdojo.com">{@i18n key="Kata, our community wiki"/}</a></li>
         <li><a href="https://coderdojo.com/news/">{@i18n key="CoderDojo community news"/}</a></li>
       </ul>
     </div>
