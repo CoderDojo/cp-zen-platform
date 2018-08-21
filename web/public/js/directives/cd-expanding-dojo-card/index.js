@@ -48,8 +48,10 @@ angular
         ctrl.leaveDojo = function(dojoId) {
           if (confirm($translate.instant('Are you sure you want to leave this Dojo?') + '\n' +
               $translate.instant('You and your kids will stop being members of this Dojo and will not be notified of further events.'))) {
-            cdDojoService.removeUsersDojosLink({ dojoId: dojoId, userId: user.id }); 
-            $state.go('my-dojos', $state.params, { reload: true });
+            cdDojoService.removeUsersDojosLink({ dojoId: dojoId, userId: user.id, emailSubject: 'A user has left your Dojo' })
+            .then(() => {
+              $state.go('my-dojos', $state.params, { reload: true });
+            });
           }
         }
       }]
