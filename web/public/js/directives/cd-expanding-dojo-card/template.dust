@@ -13,8 +13,11 @@
             <cd-expanding-dojo-card-resources></cd-expanding-dojo-card-resources>
         </div>
     </div>
-    <div class="cd-expanding-dojo-card__view-edit-buttons btn-group" role="group" aria-hidden="true" ng-if="$ctrl.dojo.verified">
-        <a ui-sref="dojo-detail-id({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i> {@i18n key="View"/}</a>
-        <a ui-sref="edit-dojo({id: $ctrl.dojo.id})" ng-if="$ctrl.isDojoAdmin" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {@i18n key="Edit"/}</a>
+    <div class="cd-expanding-dojo-card__view-edit-buttons" ng-if="$ctrl.dojo.verified">
+        <span class="btn btn-danger cd-expanding-dojo-card__view-edit-buttons-leave" ng-click="$ctrl.leaveDojo($ctrl.dojo.id)">{@i18n key="Leave Dojo"/}</span>
+        <span class="btn-group" role="group" aria-hidden="true">
+          <a ui-sref="dojo-detail-id({id: $ctrl.dojo.id})" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i> {@i18n key="View"/}</a>
+          <a ui-sref="edit-dojo({id: $ctrl.dojo.id})" ng-if="$ctrl.isDojoAdmin" class="btn btn-secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {@i18n key="Edit"/}</a>
+        </span>
     </div>
 </cd-expanding-card>
