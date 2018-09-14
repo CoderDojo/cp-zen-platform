@@ -21,11 +21,10 @@ exports.register = (server, options, next) => {
         scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com http://www.google-analytics.com https://www.google-analytics.com http://www.googletagmanager.com https://www.googletagmanager.com https://maps.gstatic.com https://www.gstatic.com https://widget.intercom.io https://js.intercomcdn.com https://www.google.com https://apis.google.com http://cdn.optimizely.com/js/3847550948.js http://www.googleadservices.com/pagead/conversion.js ",
         styleSrc: "'self' 'unsafe-inline' http://fonts.googleapis.com https://fonts.googleapis.com",
       }
-    },
-      (regErr) => {
-        if (regErr) return next(regErr);
-        next();
-      });
+    }, (regErr) => {
+      if (regErr) return next(regErr);
+      next();
+    });
   });
 };
 
