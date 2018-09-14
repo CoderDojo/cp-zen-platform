@@ -415,6 +415,7 @@ exports.register = function (server, eOptions, next) {
             name: Joi.number().valid(-1).valid(1).optional(),
             email: Joi.number().valid(-1).valid(1).optional(),
           }),
+          fields: Joi.array().items('gender').optional(),
           userType: Joi.string(),
           name: Joi.string(),
         } }),
