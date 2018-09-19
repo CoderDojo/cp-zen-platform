@@ -1160,21 +1160,17 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.119:
-  version "1.0.119"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.119.tgz#78db5d293ee764fcc0aebeb8fd30d12c1883bde7"
-
 cp-translations@1.0.120:
   version "1.0.120"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.120.tgz#70a44d2fbf3a0618497d97545b731c100a974bfc"
 
-cp-zen-frontend@1.0.68:
-  version "1.0.68"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.68.tgz#5ee058b7b9e0502946e8180a8dd22424215fa26b"
+cp-zen-frontend@1.0.69:
+  version "1.0.69"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.69.tgz#c4d7d6439e21dbd50943bcafa17a2048dc084bda"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.119"
+    cp-translations "1.0.120"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
