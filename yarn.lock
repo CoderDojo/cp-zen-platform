@@ -1160,13 +1160,13 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.115:
-  version "1.0.115"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.115.tgz#2f9321e39d644dd01ae61533183daa24bec24d35"
-
 cp-translations@1.0.119:
   version "1.0.119"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.119.tgz#78db5d293ee764fcc0aebeb8fd30d12c1883bde7"
+
+cp-translations@1.0.120:
+  version "1.0.120"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.120.tgz#70a44d2fbf3a0618497d97545b731c100a974bfc"
 
 cp-zen-frontend@1.0.68:
   version "1.0.68"
