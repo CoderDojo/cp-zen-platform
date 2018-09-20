@@ -19,7 +19,7 @@ exports.register = function (server, options, next) {
         if (!err && preloaded) {
           request.app.context.preload = preloaded;
           request.app.context.preload.url = `${request.connection.info.protocol}://${request.info.host}${request.url.path}`;
-          request.app.context.preload.image.push('https://zen.coderdojo.com/components/cd-common/images/coderdojo-logo-light-bg.svg');
+          request.app.context.preload.image.push('https://static.coderdojo.com/images/coderdojo-roundel-light-bg.png');
         }
         reply.continue();
       });
