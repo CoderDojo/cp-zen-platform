@@ -14,7 +14,7 @@
     scriptTag = doc.createElement('script');
     scriptTag.id = scriptId;
     scriptTag.setAttribute('src',
-      'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=mapReady&key=AIzaSyC3xF9XV91bS2R14Gjmx3UQaKbGgAfHbE4');
+      'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=mapReady&key=AIzaSyA4Ih0ykeVb_W79W6Z1Ey-2DsM9b5KcQBM');
     doc.head.appendChild(scriptTag);
     $window.mapReady = (function(dfd) {
       return function() {
