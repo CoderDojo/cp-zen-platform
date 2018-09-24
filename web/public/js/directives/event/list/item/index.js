@@ -29,13 +29,11 @@ angular
             }
             cdELI.datesExpanded = false;
             cdELI.goTo = function() {
-              embedder.redirectWrapper( function () {
-                if (cdELI.event.eventbriteId) {
-                  $window.location.href = cdELI.event.eventbriteUrl;
-                } else {
-                  $state.go('dojo-event-details', {dojoId: cdELI.event.dojoId, eventId: cdELI.event.id});
-                }
-              })
+              if (cdELI.event.eventbriteId) {
+                window.open(cdELI.event.eventbriteUrl, '_blank');
+              } else {
+                $state.go('dojo-event-details', {dojoId: cdELI.event.dojoId, eventId: cdELI.event.id});
+              }
             }
             $scope.$on('$destroy', function () {
               visibilityWatcher();
