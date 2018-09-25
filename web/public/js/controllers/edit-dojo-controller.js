@@ -235,6 +235,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.save = function (dojo) {
+    dojo.placeName = dojo.place.nameWithHierarchy || dojo.place.toponymName || dojo.place.name;
     if ($scope.changedLocation && !$scope.markerPlaced) {
       $scope.getLocationFromAddress(finish);
     } else {
