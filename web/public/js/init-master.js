@@ -1071,9 +1071,16 @@
       };
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (embedder.isEmbedded(fromState)) {
+          var url = $state.href(toState, toParams);
+          window.open(url, '_blank');
+          event.preventDefault();
+          return;
+        }
         if (toState.redirectTo) {
           event.preventDefault();
           $state.go(toState.redirectTo, toParams, {location: 'replace'});
+          return ;
         }
       });
 
@@ -1099,13 +1106,6 @@
         }
       });
 
-      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        if (embedder.isEmbedded(fromState)) {
-          var url = $state.href(toState, toParams);
-          window.open(url, '_blank');
-          event.preventDefault();
-        }
-      });
       var firstLoad = true;
       //listen for navigations and accept cookie policy on navigation
       var cookieAcceptListener = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
