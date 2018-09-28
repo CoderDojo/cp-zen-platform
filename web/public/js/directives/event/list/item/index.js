@@ -32,7 +32,7 @@ angular
               if (cdELI.event.eventbriteId) {
                 window.open(cdELI.event.eventbriteUrl, '_blank');
               } else {
-                $state.go('dojo-event-details', {dojoId: cdELI.event.dojoId, eventId: cdELI.event.id});
+                $state.go('vue-event-booking', {eventId: cdELI.event.id});
               }
             }
             $scope.$on('$destroy', function () {
