@@ -72,6 +72,7 @@ const sendBookingEmail = [
   // Email ordering user about kids info
   async (req, reply, next) => {
     const { event, order, dojo, context } = req.app;
+    req.log(['log'], { ...order, email: req.user.user.email }, Date.now());
     Email.sendAdultBooking(context.locality, req.user.user, event, order, dojo);
     return next();
   },
