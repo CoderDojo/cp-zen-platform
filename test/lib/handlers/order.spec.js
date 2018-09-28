@@ -181,6 +181,7 @@ lab.describe('order handler', () => {
         event: { id: 'event1' },
         user: { id: 'user1' },
       };
+      req.log = sinon.stub();
       fn.post()[4](req, reply, () => {
         expect(Email.sendAdultBooking).to.have.been.calledOnce;
         expect(Email.sendAdultBooking).to.have.been.calledWith('fr_FR', { id: 'user1' }, { id: 'event1' }, { id: 'order1' }, { id: 'dojo1' });
