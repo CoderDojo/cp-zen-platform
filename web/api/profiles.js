@@ -13,7 +13,7 @@ exports.register = function (server, eOptions, next) {
 
   function handleAvatarImage(request, reply) {
     const user = request.user ? request.user.user : null;
-    const msg = _.defaults({ user, role: 'cd-profiles', cmd: 'get_avatar', id: request.params.id }, request.payload);
+    const msg = { role: 'cd-profiles', cmd: 'get_avatar', id: request.params.id, user };
     request.seneca.act(msg, (err, res) => {
       if (err || !res) {
         // send default profile pic
