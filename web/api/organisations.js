@@ -46,23 +46,8 @@ exports.register = function (server, eOptions, next) {
         },
       },
     },
-  }, {
-    method: 'PUT',
-    path: `${options.basePath}/organisation/{id}`,
-    handler: handlers.actHandlerNeedsUser('update', ['id'], null, { ctrl: 'org' }),
-    config: {
-      auth: auth.apiUser,
-      description: 'Accept badge',
-      tags: ['api', 'users'],
-      validate: {
-        payload: {
-          org: {
-            name: Joi.string().required(),
-          },
-        },
-      },
-    },
-  }, {
+  },
+  {
     method: 'GET',
     path: `${options.basePath}/organisations/{orgId}/users`,
     handler: handlers.actHandlerNeedsUser('list', ['orgId'], null, { ctrl: 'userOrg' }),
