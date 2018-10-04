@@ -75,13 +75,15 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       return done($translate.instant('Failed to load Dojo'));
     });
   }, function (prevFounder, done) {
-    if (_.isEmpty(prevFounder)) {
+    if (_.isEmpty(prevFounder) || !$scope.isCDFAdmin) {
       return done();
     }
-
+    
     cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
+      $scope.prevFounder = prevFounder;
+      $scope.founder = angular.copy(prevFounder);
 
       return done(null, prevFounder);
     }, function (err) {
@@ -104,8 +106,6 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
 
     $scope.originalDojoListing = angular.copy($scope.dojo);
     $scope.disableDojoCountryChange = ($scope.dojo.verified && !$scope.isCDFAdmin) === true;
-    $scope.prevFounder = prevFounder;
-    $scope.founder = angular.copy(prevFounder);
     updateFromLocalStorage();
     loadDojoMap();
   });
