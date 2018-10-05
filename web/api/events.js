@@ -93,15 +93,6 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
     },
   }, {
-    method: 'POST',
-    path: `${options.basePath}/events/application`,
-    handler: handlers.actHandlerNeedsUser('saveApplication'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Save an application',
-      tags: ['api', 'events'],
-    },
-  }, {
     method: 'GET',
     path: `${options.basePath}/events/tickets/types`,
     handler: handlers.actHandler('ticketTypes'),
