@@ -14,6 +14,7 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/organisations`,
     handler: handlers.actHandler('list', null, null, { ctrl: 'org' }),
     config: {
+      auth: auth.apiUser,
       description: 'List all possible organisations',
       tags: ['api', 'users'],
     },
@@ -22,6 +23,7 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/organisations/{id}`,
     handler: handlers.actHandler('load', ['id'], null, { ctrl: 'org' }),
     config: {
+      auth: auth.apiUser,
       description: 'Get organisation by id',
       tags: ['api', 'users'],
       validate: {

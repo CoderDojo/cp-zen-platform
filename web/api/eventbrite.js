@@ -69,6 +69,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       description: 'Recover public token for Eventbrite generic App',
       tags: ['api', 'dojos', 'eventbrite'],
+      auth: auth.apiUser,
       plugins: {
         'hapi-swagger': {
           responseMessages: [
