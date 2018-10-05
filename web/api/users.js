@@ -269,22 +269,6 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/is-champion`,
-    handler: handlers.actHandlerNeedsUser('is_champion'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Check if the user is a champion',
-      tags: ['api'],
-      plugins: {
-        'hapi-swagger': {
-          responseMessages: [
-            { code: 200, message: 'OK' },
-          ],
-        },
-      },
-    },
-  }, {
-    method: 'POST',
     path: `${options.basePath}/reset-password`,
     handler: handlers.actHandler('reset_password'),
     config: {
