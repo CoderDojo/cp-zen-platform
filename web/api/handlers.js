@@ -139,7 +139,7 @@ module.exports = function (server, role) {
         role: 'cd-dojos',
         locality: server.methods.locality(request),
       };
-      
+
       if (user) {
         msg = _.defaults(msg, user);
       } else if (request.user) {

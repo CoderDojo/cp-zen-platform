@@ -252,8 +252,8 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           email: Joi.string(),
-        }
-      }
+        },
+      },
     },
   }, {
     method: 'GET',

@@ -38,9 +38,9 @@ exports.register = function (server, eOptions, next) {
         payload: Joi.object({
           query: {
             userId: Joi.string().guid(),
-          }
-        })
-      }
+          },
+        }),
+      },
     },
   }, {
     method: 'POST',

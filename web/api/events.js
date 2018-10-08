@@ -61,7 +61,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
       validate: {
         payload: Joi.object(),
-      }
+      },
     },
   }, {
     method: 'GET',
@@ -96,7 +96,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
       validate: {
         payload: Joi.object(),
-      }
+      },
     },
   }, {
     method: 'DELETE',
@@ -154,7 +154,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
       validate: {
         payload: Joi.object(),
-      }
+      },
     },
   }, {
     method: 'POST',
