@@ -63,7 +63,7 @@ exports.register = function (server, eOptions, next) {
     {
       method: 'POST',
       path: `${options.basePath}/poll`,
-      handler: handlers.actHandler('get_poll_setup'),
+      handler: handlers.actHandlerNeedsCdfAdmin('get_poll_setup'),
       config: {
         auth: auth.apiUser,
         description: 'search polls setups',
