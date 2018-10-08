@@ -16,7 +16,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'List all possible organisations',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
     },
   }, {
     method: 'GET',
@@ -25,7 +25,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Get organisation by id',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         params: {
           id: Joi.string().required(),
@@ -39,7 +39,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Create organisation',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         payload: {
           org: {
@@ -56,7 +56,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Load organisation\'s users',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         params: {
           orgId: Joi.string().required(),
@@ -69,7 +69,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Load user\'s organisation\'s',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         params: {
           userId: Joi.string().guid().required(),
@@ -79,11 +79,11 @@ exports.register = function (server, eOptions, next) {
   }, {
     method: 'POST',
     path: `${options.basePath}/users/organisations`,
-    handler: handlers.actHandlerNeedsUser('list', null, null, { ctrl: 'userOrg' }),
+    handler: handlers.actHandlerNeedsCdfAdmin('list', null, null, { ctrl: 'userOrg' }),
     config: {
       auth: auth.apiUser,
       description: 'Load organisation\'s users',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         payload: {
           userIds: Joi.array().items(Joi.string().guid()),
@@ -97,7 +97,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Create organisation member',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         payload: {
           userOrg: {
@@ -114,7 +114,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Delete organisation member',
-      tags: ['api', 'users'],
+      tags: ['api', 'organisation'],
       validate: {
         params: {
           userId: Joi.string().required(),

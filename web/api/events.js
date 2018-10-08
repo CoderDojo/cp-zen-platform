@@ -59,6 +59,9 @@ exports.register = function (server, eOptions, next) {
       description: 'Search events',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object(),
+      }
     },
   }, {
     method: 'GET',
@@ -91,6 +94,9 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Search applications',
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object(),
+      }
     },
   }, {
     method: 'DELETE',
@@ -146,6 +152,9 @@ exports.register = function (server, eOptions, next) {
       description: 'Search a session',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object(),
+      }
     },
   }, {
     method: 'POST',
