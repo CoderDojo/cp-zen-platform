@@ -65,7 +65,7 @@ exports.register = function (server, eOptions, next) {
       path: `${options.basePath}/poll`,
       handler: handlers.actHandler('get_poll_setup'),
       config: {
-        auth: auth.userIfPossible,
+        auth: auth.apiUser,
         description: 'search polls setups',
         notes: 'Returns the polls setups',
         tags: ['api', 'dojos', 'polls'],
@@ -78,7 +78,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({ query: {
-            pollId: Joi.string().optional(),
+            id: Joi.string().optional(),
           } }),
         },
       },

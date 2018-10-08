@@ -42,6 +42,14 @@ module.exports = function (server, role) {
 
     if (msgDefault) _.extend(msg, msgDefault);
     debug('handlers.doAct', request.url.path);
+
+    // User must be set first, or the payload could overwrite it
+    if (user) {
+      msg = _.defaults(msg, user);
+    } else if (request.user) {
+      msg = _.defaults(msg, request.user);
+    }
+
     if (request.payload) {
       msg = _.defaults(msg, request.payload);
     }
@@ -58,11 +66,6 @@ module.exports = function (server, role) {
       msg = _.defaults(msg, paramsMsg);
     }
 
-    if (user) {
-      msg = _.defaults(msg, user);
-    } else if (request.user) {
-      msg = _.defaults(msg, request.user);
-    }
 
     debug('handlers.doAct', msg);
     if (_.includes(covered, msg.role)) {
@@ -136,6 +139,12 @@ module.exports = function (server, role) {
         role: 'cd-dojos',
         locality: server.methods.locality(request),
       };
+      
+      if (user) {
+        msg = _.defaults(msg, user);
+      } else if (request.user) {
+        msg = _.defaults(msg, request.user);
+      }
 
       if (request.payload) {
         msg = _.defaults(msg, request.payload);
@@ -151,12 +160,6 @@ module.exports = function (server, role) {
           if (request.params[p]) paramsMsg[p] = request.params[p];
         });
         msg = _.defaults(msg, paramsMsg);
-      }
-
-      if (user) {
-        msg = _.defaults(msg, user);
-      } else if (request.user) {
-        msg = _.defaults(msg, request.user);
       }
 
       request.seneca.act(msg, (err, resp) => {

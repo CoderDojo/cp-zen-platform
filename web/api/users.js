@@ -5,6 +5,7 @@ const cacheTimes = require('../config/cache-times');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
 const Boom = require('boom');
+const Joi = require('joi');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
@@ -248,6 +249,11 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        payload: {
+          email: Joi.string(),
+        }
+      }
     },
   }, {
     method: 'GET',

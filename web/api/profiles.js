@@ -2,6 +2,7 @@ const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
 const fs = require('fs');
 const path = require('path');
+const Joi = require('joi');
 
 const defaultImage = Buffer.from(fs.readFileSync(path.join(__dirname, '/../public/img/avatars/avatar.png'), 'base64'), 'base64');
 const auth = require('../lib/authentications');
@@ -33,6 +34,13 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Get user data',
       tags: ['api', 'users'],
+      validate: {
+        payload: Joi.object({
+          query: {
+            userId: Joi.string().guid(),
+          }
+        })
+      }
     },
   }, {
     method: 'POST',
