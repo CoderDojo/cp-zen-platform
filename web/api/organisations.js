@@ -79,7 +79,7 @@ exports.register = function (server, eOptions, next) {
   }, {
     method: 'POST',
     path: `${options.basePath}/users/organisations`,
-    handler: handlers.actHandlerNeedsCdfAdmin('list', null, null, { ctrl: 'userOrg' }),
+    handler: handlers.actHandlerNeedsCdfAdmin('list', null, { ctrl: 'userOrg' }),
     config: {
       auth: auth.apiUser,
       description: 'Load organisation\'s users',
