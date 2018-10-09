@@ -38,6 +38,7 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/agreements/version/{version}/users/{userId}`,
     handler: handlers.actHandler('loadUserAgreement', ['version', 'userId']),
     config: {
+      auth: authentications.apiUser,
       description: 'Load user agreement',
       tags: ['api', 'users'],
       validate: {
@@ -70,15 +71,17 @@ exports.register = function (server, eOptions, next) {
       description: 'Search users agreements',
       tags: ['api', 'users'],
       validate: {
-        params: {
-          userId: Joi.alternatives(
-            Joi.object().keys({
-              nin$: Joi.array().items(Joi.string().guid()),
-              in$: Joi.array().items(Joi.string().guid()),
-            }),
-            Joi.string().guid(),
-          ),
-          agreementVersion: Joi.number(),
+        payload: {
+          query: {
+            userId: Joi.alternatives(
+              Joi.object().keys({
+                nin$: Joi.array().items(Joi.string().guid()),
+                in$: Joi.array().items(Joi.string().guid()),
+              }),
+              Joi.string().guid(),
+            ),
+            agreementVersion: Joi.number(),
+          },
         },
       },
     },
