@@ -30,6 +30,7 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/agreements/count`,
     handler: handlers.actHandler('count'),
     config: {
+      auth: authentications.apiUser,
       description: 'Count the number of agreements',
       tags: ['api', 'users'],
     },
