@@ -252,7 +252,12 @@ exports.register = function (server, eOptions, next) {
           ids: Joi.array().items(Joi.string().guid()),
           name: Joi.string(),
           verified: Joi.number().valid(0).valid(1),
-          stage: Joi.number().integer(),
+          stage: Joi.alternatives(
+            Joi.number().integer(),
+            Joi.object({
+              ne$: Joi.number(),
+            }),
+          ),
           deleted: Joi.number().valid(0).valid(1),
           alpha2: joiValidator.alpha2(),
           fields$: Joi.array().items(Joi.string()),
