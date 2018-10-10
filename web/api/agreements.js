@@ -66,7 +66,7 @@ exports.register = function (server, eOptions, next) {
   }, {
     method: 'POST',
     path: `${options.basePath}/agreements/search`,
-    handler: handlers.actHandler('list', ['id']),
+    handler: handlers.actHandler('list'),
     config: {
       auth: authentications.apiUser,
       description: 'Search users agreements',
