@@ -44,15 +44,6 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/events`,
-    handler: handlers.actHandler('listEvents'),
-    config: {
-      description: 'List events',
-      cors: { origin: ['*'], credentials: false },
-      tags: ['api', 'events'],
-    },
-  }, {
-    method: 'POST',
     path: `${options.basePath}/events/search`,
     handler: handlers.actHandler('searchEvents'),
     config: {
@@ -105,24 +96,6 @@ exports.register = function (server, eOptions, next) {
     config: {
       auth: auth.apiUser,
       description: 'Remove an application of an event',
-      tags: ['api', 'events'],
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/events/application`,
-    handler: handlers.actHandlerNeedsUser('saveApplication'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Save an application',
-      tags: ['api', 'events'],
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/events/user-dojos-events`,
-    handler: handlers.actHandlerNeedsUser('userDojosEvents'),
-    config: {
-      auth: auth.apiUser,
-      description: 'User\'s events',
       tags: ['api', 'events'],
     },
   }, {
