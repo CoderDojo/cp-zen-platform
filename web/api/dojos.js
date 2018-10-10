@@ -73,8 +73,7 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       validate: {
         payload: Joi.object({ query: {
-          dojoLeadId: joiValidator.guid(),
-          urlSlug: Joi.string(),
+          urlSlug: Joi.string().required(),
         } }),
       },
     },
@@ -215,8 +214,8 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       validate: {
         payload: Joi.object({ query: {
-          verified: Joi.number().valid(0).valid(1),
-          deleted: Joi.number().valid(0).valid(1),
+          verified: Joi.number().valid(0).valid(1).required(),
+          deleted: Joi.number().valid(0).valid(1).required(),
           stage: Joi.alternatives(Joi.object(), Joi.number().integer()),
           alpha2: joiValidator.alpha2(),
           continent: joiValidator.continent(),
@@ -241,7 +240,7 @@ exports.register = function (server, eOptions, next) {
       },
       cors: { origin: ['*'], credentials: false },
       validate: {
-        payload: Joi.alternatives().try(Joi.any(), Joi.object({ query: {
+        payload: Joi.object({ query: {
           id: Joi.alternatives(
             Joi.string().guid(),
             Joi.object().keys({
@@ -249,13 +248,22 @@ exports.register = function (server, eOptions, next) {
               in$: Joi.array().items(Joi.string().guid()),
             }),
           ),
+          mysqlDojoId: Joi.string().guid(),
+          ids: Joi.array().items(Joi.string().guid()),
           name: Joi.string(),
           verified: Joi.number().valid(0).valid(1),
           stage: Joi.number().integer(),
           deleted: Joi.number().valid(0).valid(1),
           alpha2: joiValidator.alpha2(),
-          fields$: Joi.array(),
-        } })),
+          fields$: Joi.array().items(Joi.string()),
+          dojoLeadId: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          )
+        } }),
       },
     },
   }, {
@@ -352,6 +360,9 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        payload: {},
+      },
     },
   }, {
     method: 'POST',
@@ -407,7 +418,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          dojoId: joiValidator.guid(),
+          dojoId: joiValidator.guid().required(),
           deleted: Joi.number().valid(0).valid(1),
           limit$: Joi.alternatives().try(Joi.number().integer().min(0), Joi.string()),
           skip$: Joi.number().integer().min(0).optional(),

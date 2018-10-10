@@ -38,7 +38,7 @@ module.exports = function (server, role) {
     let msg = { cmd, role, locality: server.methods.locality(request) };
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
     const covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges',
-      'cd-events', 'cd-eventbrite', 'cd-organisations'];
+      'cd-events', 'cd-agreements', 'cd-eventbrite', 'cd-organisations'];
 
     if (msgDefault) _.extend(msg, msgDefault);
     debug('handlers.doAct', request.url.path);
