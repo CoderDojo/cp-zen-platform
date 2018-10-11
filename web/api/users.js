@@ -236,17 +236,11 @@ exports.register = function (server, eOptions, next) {
           }),
           profile: Joi.object({
             dob: Joi.date().required(),
-            country: Joi.object({
-              alpha2: joiValidator.alpha2(),
-              alpha3: joiValidator.alpha3(),
-              continent: Joi.string(),
-              countryName: Joi.string(),
-              countryNumber: Joi.number(),
-            }).required(),
+            country: joiValidator.country().required(),
           }),
           recaptchaResponse: Joi.string().required(),
-        })
-      }
+        }),
+      },
     },
   }, {
     method: 'PUT',

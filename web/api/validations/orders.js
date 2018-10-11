@@ -6,7 +6,6 @@ const query = queryFields(fields);
 const definitions = {
   applications: Joi.array().items(Joi.object().keys({
     id: Joi.string().guid(),
-    ticketId: Joi.string().guid(),
     name: Joi.string(),
     dateOfBirth: Joi.date(),
     eventId: Joi.string().guid(),

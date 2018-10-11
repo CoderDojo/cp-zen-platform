@@ -69,7 +69,9 @@ exports.register = function (server, eOptions, next) {
             dob: Joi.date().required(),
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
-            gender: Joi.string().valid('Male').valid('Female').valid('Undisclosed').optional(),
+            gender: Joi.string().valid('Male').valid('Female').valid('Undisclosed')
+              .allow(null)
+              .optional(),
             placeGeonameId: Joi.string().allow(null),
             userTypes: Joi.array().items(Joi.string().valid('attendee-u13').valid('attendee-o13')),
           },
@@ -100,7 +102,7 @@ exports.register = function (server, eOptions, next) {
             invitedParentEmail: Joi.string().email().required(),
             emailSubject: Joi.string().valid('You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.').required(),
           }),
-        }
+        },
       },
     },
   }, {
