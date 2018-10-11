@@ -350,9 +350,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: {
-          token: Joi.string().guid(),
-          password: Joi.string(),
-          repeat: Joi.string(),
+          token: Joi.string().guid().required(),
+          password: Joi.string().required(),
+          repeat: Joi.string().required(),
         },
       },
     },
