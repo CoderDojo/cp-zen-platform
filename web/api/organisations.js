@@ -107,7 +107,7 @@ exports.register = function (server, eOptions, next) {
         },
         params: {
           orgId: Joi.string().guid().required(),
-        }
+        },
       },
     },
   }, {
