@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
+const Joi = require('joi');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
@@ -34,6 +35,15 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Create badge application',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          applicationData: {
+            user: Joi.object().required(),
+            badge: Joi.object().required(),
+            emailSubject: Joi.string().valid('You have been awarded a new CoderDojo digital badge!').required(),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -79,6 +89,12 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Request a badge',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          userId: Joi.string().guid().optional(),
+          badge: Joi.object().required(),
+        },
+      },
     },
   }, {
     method: 'GET',

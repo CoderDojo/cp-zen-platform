@@ -143,6 +143,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Login',
       notes: 'Log passed user',
       tags: ['api'],
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+        },
+      },
     },
   },
   {
@@ -153,6 +159,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Login',
       notes: 'Log passed user',
       tags: ['api'],
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -168,6 +180,9 @@ exports.register = function (server, eOptions, next) {
             { code: 200, message: 'OK' },
           ],
         },
+      },
+      validate: {
+        payload: {},
       },
     },
   }, {
