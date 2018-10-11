@@ -4,6 +4,7 @@ const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
+const joiValidator = require('./validations/dojos')();
 const Boom = require('boom');
 const Joi = require('joi');
 
@@ -217,6 +218,29 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        payload: Joi.object({
+          user: Joi.object({
+            email: Joi.string().email().required(),
+            emailSubject: Joi.string().valid('Welcome to Zen, the CoderDojo community platform.').required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            password: Joi.string().required(),
+            'g-recaptcha-response': Joi.string().required(),
+            initUserType: Joi.object({
+              title: Joi.string().valid('Parent/Guardian').valid('Youth Over 13').required(),
+              name: Joi.string().valid('parent-guardian').valid('attendee-o13').required(),
+            }),
+            termsConditionsAccepted: Joi.boolean().valid(true).required(),
+            mailingList: Joi.boolean().valid(true).optional(),
+          }),
+          profile: Joi.object({
+            dob: Joi.date().required(),
+            country: joiValidator.country().required(),
+          }),
+          recaptchaResponse: Joi.string().required(),
+        }),
+      },
     },
   }, {
     method: 'PUT',
@@ -300,6 +324,13 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        payload: {
+          token: Joi.string().guid().required(),
+          password: Joi.string().required(),
+          repeat: Joi.string().required(),
         },
       },
     },

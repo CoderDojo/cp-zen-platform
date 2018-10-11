@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
+const joiValidator = require('./validations/dojos')();
 const fs = require('fs');
 const path = require('path');
 const Joi = require('joi');
@@ -59,6 +60,23 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Create a youth account',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          profile: {
+            alias: Joi.string().required(),
+            country: joiValidator.country(),
+            city: Joi.object(),
+            dob: Joi.date().required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            gender: Joi.string().valid('Male').valid('Female').valid('Undisclosed')
+              .allow(null)
+              .optional(),
+            placeGeonameId: Joi.string().allow(null),
+            userTypes: Joi.array().items(Joi.string().valid('attendee-u13').valid('attendee-o13')),
+          },
+        },
+      },
     },
   }, {
     method: 'PUT',
@@ -77,6 +95,15 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Invite a parent',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          data: Joi.object({
+            childId: Joi.string().guid().required(),
+            invitedParentEmail: Joi.string().email().required(),
+            emailSubject: Joi.string().valid('You have been invited to register as a parent/guardian on Zen, the CoderDojo community platform.').required(),
+          }),
+        },
+      },
     },
   }, {
     method: 'POST',
