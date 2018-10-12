@@ -44,7 +44,7 @@ angular
         }
       }
       function getCharter () {
-        if (ctrl.lead.application.charter) {
+        if (ctrl.lead.application.charter && ctrl.lead.application.charter.id) {
           return cdAgreementsService.load(ctrl.lead.application.charter.id)
           .then(function (res) {
             ctrl.charter = res.data;
