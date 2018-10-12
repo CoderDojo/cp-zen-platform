@@ -196,6 +196,14 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Invite child',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          ninjaData: {
+            ninjaEmail: Joi.string().email().required(),
+            emailSubject: Joi.string().valid('You have been invited to connect with a parent/guardian on Zen!').required(),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',

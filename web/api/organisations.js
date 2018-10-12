@@ -105,6 +105,9 @@ exports.register = function (server, eOptions, next) {
             orgId: Joi.string().required(),
           },
         },
+        params: {
+          orgId: Joi.string().guid().required(),
+        },
       },
     },
   }, {

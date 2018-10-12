@@ -455,10 +455,10 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({
-          email: joiValidator.mail().required(),
-          emailSubject: Joi.string(),
-          userType: Joi.string(),
-          dojoId: joiValidator.guid().required(),
+          email: Joi.string().email().required(),
+          emailSubject: Joi.string().valid('New Dojo Invitation').required(),
+          userType: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         }),
       },
     },
@@ -498,8 +498,8 @@ exports.register = function (server, eOptions, next) {
         payload: Joi.object({ data: {
           user: joiValidator.user().required(),
           dojoId: joiValidator.guid().required(),
-          userType: Joi.string(),
-          emailSubject: Joi.string(),
+          userType: Joi.string().required(),
+          emailSubject: Joi.string().valid('New Request to join your Dojo').required(),
         } }),
       },
     },
@@ -786,9 +786,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ data: {
-          dojoId: Joi.alternatives().try(joiValidator.guid(), Joi.string().valid('')),
-          eventId: Joi.alternatives().try(joiValidator.guid(), Joi.string().valid('')),
-          emailSubject: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+          emailSubject: Joi.string().valid('Tickets Now Available for %1$s').required(),
         } }),
       },
     },
@@ -809,7 +809,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({
-          userIds: Joi.array().items(Joi.string()),
+          userIds: Joi.array().items(Joi.string()).required(),
           data: {
             subject: Joi.string().required(),
             content: Joi.string().required(),
