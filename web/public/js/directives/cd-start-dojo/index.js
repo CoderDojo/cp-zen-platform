@@ -230,7 +230,11 @@ angular
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
             // By passing an id, we allow ourselves to bypass the restriction regarding the completion
-            leadQuery = {id: ctrl.leadId};
+            if (ctrl.currentUser.roles.includes('cdf-admin')) {
+              leadQuery = {id: ctrl.leadId};
+            } else {
+              leadQuery.id = ctrl.leadId;
+            }
           }
           // We use the generic version of search as we don't know yet who's the owner for sure
           // It can be a CDF viewing, which means we don't want to overwrite the owner of the lead
