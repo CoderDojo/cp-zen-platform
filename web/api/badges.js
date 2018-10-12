@@ -41,6 +41,7 @@ exports.register = function (server, eOptions, next) {
             user: Joi.object().required(),
             badge: Joi.object().required(),
             emailSubject: Joi.string().valid('You have been awarded a new CoderDojo digital badge!').required(),
+            evidence: Joi.string().optional(),
           },
         },
       },
