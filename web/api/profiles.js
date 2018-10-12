@@ -199,8 +199,8 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           ninjaData: {
-            ninjaEmail: Joi.string().email(),
-            emailSubject: Joi.string().valid('You have been invited to connect with a parent/guardian on Zen!'),
+            ninjaEmail: Joi.string().email().required(),
+            emailSubject: Joi.string().valid('You have been invited to connect with a parent/guardian on Zen!').required(),
           },
         },
       },
