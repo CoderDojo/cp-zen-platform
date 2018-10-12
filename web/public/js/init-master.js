@@ -331,6 +331,14 @@
             pageTitle: 'Manage Dojo Pending Users'
           }
         })
+        .state("find-dojos", {
+          url: "/find",
+          template: '<div></div>',
+          params: {
+            pageTitle: 'Dojo'
+          },
+          controller: reloadPage
+        })
         .state("dojo-list", {
           url: "/dojo-list?search",
           parent: 'dashboard',
