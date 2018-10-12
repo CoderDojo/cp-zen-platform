@@ -65,7 +65,7 @@ exports.register = function (server, eOptions, next) {
           profile: {
             alias: Joi.string().required(),
             country: joiValidator.country(),
-            city: Joi.object(),
+            city: Joi.object().allow(null),
             dob: Joi.date().required(),
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
