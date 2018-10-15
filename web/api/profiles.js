@@ -73,7 +73,7 @@ exports.register = function (server, eOptions, next) {
               .allow(null)
               .optional(),
             email: Joi.string().email().optional(),
-            password: Joi.string().email().optional(),
+            password: Joi.string().optional(),
             placeGeonameId: Joi.string().allow(null),
             userTypes: Joi.array().items(Joi.string().valid('attendee-u13').valid('attendee-o13')),
           },
