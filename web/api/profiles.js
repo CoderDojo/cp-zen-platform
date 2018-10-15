@@ -63,12 +63,13 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           profile: {
-            alias: Joi.string().required(),
+            alias: Joi.string().optional(),
             country: joiValidator.country(),
             city: Joi.object().allow(null),
             dob: Joi.date().required(),
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
+            name: Joi.string().optional(),
             gender: Joi.string().valid('Male').valid('Female').valid('Undisclosed')
               .allow(null)
               .optional(),
