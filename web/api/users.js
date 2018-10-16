@@ -326,6 +326,12 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          emailSubject: Joi.string().valid('CoderDojo Zen Password Reset Request').required(),
+        },
+      },
     },
   }, {
     method: 'POST',

@@ -51,6 +51,8 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Create/update a user profile',
       tags: ['api', 'users'],
+      // Validation is skipped because the payload is a monstruosity
+      // mixing sys_user && cd_profiles
     },
   }, {
     method: 'POST',
@@ -116,6 +118,14 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Accept to be a parent',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          data: {
+            inviteToken: Joi.string().required(),
+            childProfileId: Joi.string().guid().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -136,6 +146,14 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Change avatar',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          profileId: Joi.string().required(),
+          file: Joi.any().required(),
+          fileType: Joi.string().required(),
+          fileName: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -216,6 +234,14 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Approve child invitation',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          data: {
+            parentProfileId: Joi.string().guid().required(),
+            inviteTokenId: Joi.string().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'GET',
