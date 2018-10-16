@@ -237,7 +237,7 @@ exports.register = function (server, eOptions, next) {
         payload: Joi.object({
           user: Joi.object({
             email: Joi.string().email().required(),
-            emailSubject: Joi.string().valid('Welcome to Zen, the CoderDojo community platform.').required(),
+            emailSubject: Joi.string().valid('Welcome to Zen, the CoderDojo community platform.').optional(),
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
             password: Joi.string().required(),
@@ -252,6 +252,9 @@ exports.register = function (server, eOptions, next) {
           profile: Joi.object({
             dob: Joi.date().required(),
             country: joiValidator.country().required(),
+            email: Joi.string().email().optional(),
+            firstName: Joi.string().optional(),
+            lastName: Joi.string().optional(),
           }),
           recaptchaResponse: Joi.string(),
         }),
