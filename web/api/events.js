@@ -41,9 +41,9 @@ exports.register = function (server, eOptions, next) {
               .valid('saved').valid('published').valid('cancelled')
               .required(),
             sessions: Joi.array().items(Joi.object()).empty().required(),
-            ticketApproval: Joi.boolean().required(),
+            ticketApproval: Joi.boolean().allow(null), // can be null due to copy
             useDojoAddress: Joi.boolean(),
-            notifyOnApplicant: Joi.boolean(),
+            notifyOnApplicant: Joi.boolean().allow(null),
             userId: Joi.string().guid().optional(),
           }).unknown(),
         },
@@ -263,7 +263,7 @@ exports.register = function (server, eOptions, next) {
           invitation: {
             ticketId: Joi.string().guid().required(),
             userId: Joi.string().guid().required(),
-            emailSubject: Joi.string().required()
+            emailSubject: Joi.string()
               .valid('Your ticket request for %1$s has been received')
               .valid('Your ticket for %1$s has been booked')
               .valid('Your ticket request for %1$s is pending approval'),
