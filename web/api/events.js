@@ -263,7 +263,7 @@ exports.register = function (server, eOptions, next) {
           invitation: {
             ticketId: Joi.string().guid().required(),
             userId: Joi.string().guid().required(),
-            emailSubject: Joi.string().required()
+            emailSubject: Joi.string()
               .valid('Your ticket request for %1$s has been received')
               .valid('Your ticket for %1$s has been booked')
               .valid('Your ticket request for %1$s is pending approval'),
