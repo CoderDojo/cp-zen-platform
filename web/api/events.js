@@ -18,7 +18,7 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Save an event',
       tags: ['api', 'events'],
-      // Nothing is required as it can be drafted
+      // Not everything is required as it can be drafted
       // unknown is used as the payload is dirty from the ctrl
       validate: {
         payload: {
@@ -190,11 +190,11 @@ exports.register = function (server, eOptions, next) {
             }),
             eventId: Joi.string().guid().required(),
             sessionId: Joi.string().guid().required(),
-            ticketName: Joi.string(),
-            ticketType: Joi.string(),
+            ticketName: Joi.string().required(),
+            ticketType: Joi.string().required(),
             ticketId: Joi.string().guid().required(),
             userId: Joi.string().guid().required(),
-            notes: Joi.string().optional(),
+            notes: Joi.string().optional().allow(null),
             // Update
             attendance: Joi.array(),
             created: Joi.date(),
