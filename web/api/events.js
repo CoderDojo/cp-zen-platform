@@ -41,7 +41,7 @@ exports.register = function (server, eOptions, next) {
               .valid('saved').valid('published').valid('cancelled')
               .required(),
             sessions: Joi.array().items(Joi.object()).empty().required(),
-            ticketApproval: Joi.boolean().required(),
+            ticketApproval: Joi.boolean(), // can be null due to copy
             useDojoAddress: Joi.boolean(),
             notifyOnApplicant: Joi.boolean(),
             userId: Joi.string().guid().optional(),
