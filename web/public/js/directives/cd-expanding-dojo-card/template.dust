@@ -3,7 +3,7 @@
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__lead-status" ng-if="!$ctrl.dojo.verified">
           <cd-application-card-status date="$ctrl.dojo.updatedAt" completed="true" lead-id="$ctrl.dojo.dojoLeadId"></cd-application-card-status>
         </div>
-        <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-show="$ctrl.isDojoAdmin && $ctrl.dojo.verified">
+        <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-users" ng-if="$ctrl.isDojoAdmin && $ctrl.dojo.verified">
             <cd-expanding-dojo-card-users dojo="$ctrl.dojo"></cd-expanding-dojo-card-users>
         </div>
         <div class="cd-expanding-dojo-card__panel cd-expanding-dojo-card__dojo-events" ng-if="$ctrl.dojo.stage !== 4">
