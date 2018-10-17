@@ -33,7 +33,8 @@ const update = params => // eslint-disable-line no-unused-vars
   mastermind([
     (req, reply, cb) => {
       const dojo = req.payload.dojo;
-      return req.seneca.act({ role, ctrl: 'dojo', cmd: 'save', dojo },
+      const id = req.params.id;
+      return req.seneca.act({ role, ctrl: 'dojo', cmd: 'save', dojo: { id, ...dojo } },
         (err, res) => {
           if (err) return cb(err);
           reply(res).code(200);

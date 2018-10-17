@@ -140,7 +140,7 @@ module.exports = function () {
         visited: Joi.boolean().required(),
       };
       let schema = Joi.object().keys(valid);
-      const keys = ['isFound', 'country', 'geoPoint', 'type', 'address1', 'country', 'place'];
+      const keys = ['isFound', 'country', 'geoPoint', 'type', 'address1', 'place'];
 
       if (required) {
         keys.push('isValid');
