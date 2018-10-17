@@ -33,6 +33,9 @@ function getUser(request, token, cb) {
       if (resp.ok === false) {
         return cb('login not ok');
       }
+      if (resp.login && !resp.login.active) {
+        return cb(new Error('Outdated token'));
+      }
       return cb(null, resp);
     });
   } else {

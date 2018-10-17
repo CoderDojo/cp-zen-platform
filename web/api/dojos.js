@@ -471,6 +471,16 @@ exports.register = function (server, eOptions, next) {
       description: 'accept invite',
       notes: 'accept invite',
       tags: ['api', 'dojos'],
+      validate: {
+        payload: {
+          data: {
+            currentUserId: Joi.string().guid().required(),
+            currentUserEmail: Joi.string().email().allow(null).optional(), // unused
+            inviteToken: Joi.string().required(),
+            dojoId: Joi.string().guid().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -613,8 +623,16 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          userId: joiValidator.guid().required(),
-          dojoId: joiValidator.guid().required(),
+          userId: Joi.string().guid().required(),
+          dojoId: Joi.string().guid().required(),
+        },
+        payload: {
+          data: {
+            // userId and dojoId are required, but ignored. Only the params are being used
+            userId: Joi.string().guid().required(),
+            dojoId: Joi.string().guid().required(),
+            emailSubject: Joi.string().required(),
+          },
         },
       },
     },
