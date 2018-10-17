@@ -81,6 +81,9 @@ exports.register = function (server, eOptions, next) {
       if (err) return reply(err);
       request.cookieAuth.clear();
       delete request.user;
+      if (resp.user) {
+        resp.user = cleanUser(resp.user);
+      }
       return reply(resp);
     });
   }

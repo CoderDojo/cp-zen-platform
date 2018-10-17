@@ -47,15 +47,6 @@ exports.register = function (server, eOptions, next) {
       },
     },
   }, {
-    method: 'POST',
-    path: `${options.basePath}/badges/accept`,
-    handler: handlers.actHandlerNeedsUser('acceptBadge'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Accept badge',
-      tags: ['api', 'users'],
-    },
-  }, {
     method: 'GET',
     path: `${options.basePath}/badges/user/{userId}`,
     handler: handlers.actHandlerNeedsUser('loadUserBadges', 'userId'),
