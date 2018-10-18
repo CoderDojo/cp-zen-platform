@@ -128,6 +128,12 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Remove an application of an event',
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+          applicationId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
