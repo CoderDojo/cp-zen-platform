@@ -63,7 +63,7 @@ exports.register = function (server, eOptions, next) {
         },
       },
     },
-  }, { 
+  }, {
     method: 'GET',
     path: `${options.basePath}/user/{userId}/organisations`,
     handler: handlers.actHandlerNeedsUser('list', ['userId'], null, { ctrl: 'userOrg' }),
