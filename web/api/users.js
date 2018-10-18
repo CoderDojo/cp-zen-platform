@@ -261,22 +261,6 @@ exports.register = function (server, eOptions, next) {
       },
     },
   }, {
-    method: 'PUT',
-    path: `${options.basePath}/promote/{id}`,
-    handler: handlers.actHandlerNeedsUser('promote', 'id'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Promote an user',
-      tags: ['api'],
-      plugins: {
-        'hapi-swagger': {
-          responseMessages: [
-            { code: 200, message: 'OK' },
-          ],
-        },
-      },
-    },
-  }, {
     method: 'POST',
     path: `${options.basePath}/emails`,
     handler: handlers.actHandlerNeedsUser('get_users_by_emails'),
