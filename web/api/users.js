@@ -373,6 +373,11 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -435,6 +440,11 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
         },
       },
     },

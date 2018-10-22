@@ -213,6 +213,11 @@ exports.register = function (server, eOptions, next) {
     config: {
       description: 'Get avatar',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -223,6 +228,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Nodebb avatar',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -232,6 +242,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get avatar image',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -241,6 +256,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get parents for specified user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -250,6 +270,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get children for specified user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -259,6 +284,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Get user profile',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -302,6 +332,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Children for user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }]);
 
