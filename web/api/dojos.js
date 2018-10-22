@@ -170,6 +170,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.any().required(),
+        params: {
+          dojoId: Joi.string().guid().required(),
+        },
       },
     },
 
@@ -888,6 +891,8 @@ exports.register = function (server, eOptions, next) {
       validate: {
         params: {
           dojoId: Joi.string().required(),
+        },
+        query: {
           userType: Joi.string(),
           name: Joi.string(),
         },

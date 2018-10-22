@@ -58,6 +58,11 @@ exports.register = function (server, eOptions, next) {
       description: 'Load event',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -69,7 +74,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
       validate: {
         params: {
-          id: Joi.string().guid(),
+          id: Joi.string().guid().required(),
         },
       },
     },
@@ -82,7 +87,16 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
       validate: {
-        payload: Joi.object(),
+        payload: Joi.object({
+          query: {
+            dojoId: Joi.string(),
+            status: Joi.string(),
+            filterPastEvents: Joi.boolean(),
+            sort$: Joi.any(),
+            limit$: Joi.any(),
+            skip$: Joi.any(),
+          },
+        }),
       },
     },
   }, {
@@ -93,6 +107,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Load event applications',
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -117,7 +136,20 @@ exports.register = function (server, eOptions, next) {
       description: 'Search applications',
       tags: ['api', 'events'],
       validate: {
-        payload: Joi.object(),
+        payload: Joi.object({
+          query: {
+            eventId: Joi.string().guid(),
+            dojoId: Joi.string().guid(),
+            userId: Joi.string().guid(),
+            name: Joi.string().allow(null),
+            ticketType: Joi.string(),
+            sessionId: Joi.string(),
+            deleted: Joi.boolean(),
+            limit$: Joi.any(),
+            skip$: Joi.any(),
+            sort$: Joi.any(),
+          },
+        }),
       },
     },
   }, {
@@ -152,6 +184,16 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Export user list by event and status',
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+          status: Joi.string().required()
+            .valid('guest')
+            .valid('waiting')
+            .valid('full'),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -163,7 +205,12 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
       validate: {
-        payload: Joi.object(),
+        payload: Joi.object({
+          query: {
+            eventId: Joi.string().guid().required(),
+            status: Joi.string(),
+          },
+        }),
       },
     },
   }, {
