@@ -4,9 +4,7 @@ const _ = require('lodash');
 const Joi = require('joi');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
-/* NOTE: Remember that every of those calls NEED a permission model defined in the associated µs
-    otherwise it'll be freely available by anyone
-*/
+
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
   const handlers = handlerFactory(server, 'cd-dojos');
@@ -171,7 +169,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           params: {
-            pollId: Joi.string(),
+            pollId: Joi.string().guid().required(),
           },
         },
       },
@@ -194,7 +192,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           params: {
-            pollId: Joi.string(),
+            pollId: Joi.string().guid().required(),
           },
           payload: {
             dryRun: Joi.boolean().invalid(false),

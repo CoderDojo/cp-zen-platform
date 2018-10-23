@@ -26,6 +26,11 @@ exports.register = function (server, eOptions, next) {
       description: 'Get badge by slug',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          slug: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -54,6 +59,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Load user badges',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -72,6 +82,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Get Badge by Id',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          code: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -97,11 +112,7 @@ exports.register = function (server, eOptions, next) {
       description: 'Export User\'s badges',
       tags: ['api', 'users'],
     },
-  }, /* {  // TODO - this looks like it's not used - safe to remove?
-    method: 'GET',
-    path: options.basePath + '/verify_badge/{userId}/{badgeId}/assertion',
-    handler: handlers.actHandlerNeedsUser('verifyBadge', ['userId', 'badgeId'])
-  }, */{
+  }, {
     method: 'GET',
     path: `${options.basePath}/badges/kpi/number-of-badges-awarded`,
     handler: handlers.actHandlerNeedsCdfAdmin('kpiNumberOfBadgesAwarded'),

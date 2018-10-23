@@ -413,17 +413,57 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   };
 
   function saveYouthViaParent(profile, index, callback){
-    profile = _.omit(profile, ['dojos']);
-    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
-    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    profile.user = { mailingList: profile.user.mailingList };
+    profile = _.pick(profile, [
+      'id',
+      'country',
+      'dob',
+      'email',
+      'firstName',
+      'lastName',
+      'alias',
+      'gender',
+      'linkedin',
+      'twitter',
+      'notes',
+      'optionalHiddenFields',
+      'programmingLanguages',
+      'languagesSpoken',
+      'phone',
+      'private',
+      'projects',
+      'user']);
+
+    profile.programmingLanguages = (profile.programmingLanguages && utils.frTags(profile.programmingLanguages)) || [];
+    profile.languagesSpoken = (profile.languagesSpoken && utils.frTags(profile.languagesSpoken)) || [];
     cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}, profile, index), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){
-    profile = _.omit(profile, ['userTypes', 'dojos', 'children']);
+    profile.user = { mailingList: profile.user.mailingList };
+    profile = _.pick(profile, [
+      'id',
+      'userId',
+      'country',
+      'dob',
+      'email',
+      'firstName',
+      'lastName',
+      'alias',
+      'gender',
+      'linkedin',
+      'twitter',
+      'notes',
+      'optionalHiddenFields',
+      'programmingLanguages',
+      'languagesSpoken',
+      'phone',
+      'private',
+      'projects',
+      'user']);
 
-    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
-    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    profile.programmingLanguages = (profile.programmingLanguages && utils.frTags(profile.programmingLanguages)) || [];
+    profile.languagesSpoken = (profile.languagesSpoken && utils.frTags(profile.languagesSpoken)) || [];
 
     cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}, profile, undefined), saveProfileFailed.bind({callback: callback}));
   }

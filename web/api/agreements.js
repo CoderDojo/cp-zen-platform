@@ -33,6 +33,13 @@ exports.register = function (server, eOptions, next) {
       auth: authentications.apiUser,
       description: 'Count the number of agreements',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          query: {
+            agreement_version: Joi.number().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'GET',

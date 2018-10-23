@@ -51,8 +51,33 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Create/update a user profile',
       tags: ['api', 'users'],
-      // Validation is skipped because the payload is a monstruosity
-      // mixing sys_user && cd_profiles
+      validate: {
+        payload: {
+          profile: {
+            id: Joi.string().guid().required(),
+            userId: Joi.string().guid().required(),
+            country: Joi.object().allow(null),
+            dob: Joi.date().required(),
+            email: Joi.string().email().required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            alias: Joi.string().allow(null),
+            gender: Joi.string().allow(null),
+            languagesSpoken: Joi.array().items(Joi.string()).allow(null).allow(''),
+            linkedin: Joi.string().allow(null).allow(''),
+            notes: Joi.string().allow(null).allow(''),
+            optionalHiddenFields: Joi.object().allow(null),
+            phone: Joi.string().allow(null).allow(''),
+            private: Joi.string().allow(null),
+            programmingLanguages: Joi.array().items(Joi.string()).allow(null).allow(''),
+            user: {
+              mailingList: Joi.number().valid(1).valid(0).allow(null),
+            },
+            projects: Joi.string().allow(null).allow(''),
+            twitter: Joi.string().allow(null).allow(''),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -91,6 +116,32 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Update a youth profile',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          profile: {
+            id: Joi.string().guid().required(),
+            country: Joi.object().allow(null),
+            dob: Joi.date().required(),
+            email: Joi.string().email().allow(null),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            alias: Joi.string().allow(null),
+            gender: Joi.string().allow(null),
+            languagesSpoken: Joi.array().items(Joi.string()).allow(null).allow(''),
+            linkedin: Joi.string().allow(null).allow(''),
+            notes: Joi.string().allow(null).allow(''),
+            optionalHiddenFields: Joi.object().allow(null),
+            phone: Joi.string().allow(null).allow(''),
+            private: Joi.string().allow(null),
+            programmingLanguages: Joi.array().items(Joi.string()).allow(null).allow(''),
+            user: {
+              mailingList: Joi.number().valid(1).valid(0).allow(null),
+            },
+            projects: Joi.string().allow(null).allow(''),
+            twitter: Joi.string().allow(null).allow(''),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -162,6 +213,11 @@ exports.register = function (server, eOptions, next) {
     config: {
       description: 'Get avatar',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -172,6 +228,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Nodebb avatar',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -181,6 +242,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get avatar image',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -190,6 +256,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get parents for specified user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -199,6 +270,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.userIfPossible,
       description: 'Get children for specified user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -208,6 +284,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Get user profile',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -251,6 +332,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Children for user',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }]);
 
