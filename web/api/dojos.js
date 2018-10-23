@@ -194,7 +194,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         },
       },
     },
@@ -527,7 +527,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'dojos'],
       validate: {
         params: {
-          dojoId: Joi.string(),
+          dojoId: Joi.string().guid(),
           requestedByUser: Joi.string().required(),
           inviteToken: Joi.string().required(),
         },
@@ -545,7 +545,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'dojos'],
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
           requestedByUser: Joi.string().required(),
           inviteToken: Joi.string().required(),
         },
@@ -569,7 +569,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          id: Joi.string().required(),
+          id: Joi.string().guid().required(),
         },
       },
     },
@@ -866,7 +866,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         },
       },
     },
@@ -890,7 +890,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         },
         query: {
           userType: Joi.string(),
