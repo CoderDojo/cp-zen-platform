@@ -61,7 +61,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'users'],
       validate: {
         params: {
-          userId: Joi.string().required(),
+          userId: Joi.string().guid().required(),
         },
       },
     },
