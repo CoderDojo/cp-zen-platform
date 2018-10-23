@@ -272,8 +272,8 @@ exports.register = function (server, eOptions, next) {
             }),
           ),
           sort$: Joi.object({
-              name: Joi.number().valid(-1).valid(1),
-            }).optional(),
+            name: Joi.number().valid(-1).valid(1),
+          }).optional(),
         } }),
       },
     },
