@@ -268,6 +268,9 @@ exports.register = function (server, eOptions, next) {
               in$: Joi.array().items(Joi.string().guid()),
             }),
           ),
+          sort$: Joi.object({
+              name: Joi.number().valid(-1).valid(1),
+            }).optional(),
         } }),
       },
     },
