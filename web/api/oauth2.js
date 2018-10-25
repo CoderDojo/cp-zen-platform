@@ -21,7 +21,7 @@ exports.register = function (server, eOptions, next) {
         query: {
           response_type: Joi.string().valid('code').required(),
           redirect_uri: Joi.string().required(),
-          scope: Joi.string().allow(null),
+          scope: Joi.string().allow(null).allow(''),
           client_id: Joi.string().required(),
         },
       },
