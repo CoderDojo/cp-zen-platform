@@ -36,6 +36,10 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           code: Joi.string().required(),
+          grant_type: Joi.string().required(),
+          redirect_uri: Joi.string().required(),
+          client_id: Joi.string().required(),
+          client_secret: Joi.string().required(),
         },
       },
     },
