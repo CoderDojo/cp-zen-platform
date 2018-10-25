@@ -145,6 +145,9 @@ exports.register = function (server, eOptions, next) {
             ticketType: Joi.string(),
             sessionId: Joi.string(),
             deleted: Joi.boolean(),
+            status: Joi.object({
+              ne$: Joi.string().valid('cancelled'),
+            }).optional(),
             limit$: Joi.any(),
             skip$: Joi.any(),
             sort$: Joi.any(),
