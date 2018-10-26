@@ -68,7 +68,7 @@ exports.register = function (server, eOptions, next) {
             notes: Joi.string().allow(null).allow(''),
             optionalHiddenFields: Joi.object().allow(null),
             phone: Joi.string().allow(null).allow(''),
-            private: Joi.alternatives().try(Joi.string().allow(null), Joi.boolean()),
+            private: Joi.alternatives().try(Joi.string(), Joi.boolean()).allow(null),
             programmingLanguages: Joi.array().items(Joi.string()).allow(null).allow(''),
             user: {
               mailingList: Joi.number().valid(1).valid(0).allow(null),
@@ -97,7 +97,7 @@ exports.register = function (server, eOptions, next) {
             firstName: Joi.string().required(),
             lastName: Joi.string().required(),
             name: Joi.string().optional(),
-            gender: Joi.string().valid('Male').valid('Female').valid('Undisclosed')
+            gender: Joi.string()
               .allow(null)
               .optional(),
             email: Joi.string().email().optional(),
