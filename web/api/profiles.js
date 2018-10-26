@@ -68,7 +68,7 @@ exports.register = function (server, eOptions, next) {
             notes: Joi.string().allow(null).allow(''),
             optionalHiddenFields: Joi.object().allow(null),
             phone: Joi.string().allow(null).allow(''),
-            private: Joi.string().allow(null),
+            private: Joi.alternatives().try(Joi.string().allow(null), Joi.boolean()),
             programmingLanguages: Joi.array().items(Joi.string()).allow(null).allow(''),
             user: {
               mailingList: Joi.number().valid(1).valid(0).allow(null),
