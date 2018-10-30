@@ -52,6 +52,7 @@ module.exports = function () {
       return Joi.object().keys({
         nameWithHierarchy: Joi.string(),
         toponymName: Joi.string(),
+        $$hashKey: Joi.string().optional(),
       });
     },
     frequency() {
