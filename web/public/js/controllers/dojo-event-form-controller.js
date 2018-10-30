@@ -377,6 +377,7 @@
           moment([lastDate.year(), lastDate.month(), lastDate.date(), lastDate.hour(), lastDate.minute(), 0, 0]);
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
+        delete $scope.eventInfo.city.$$hashKey;
         $scope.eventInfo.position = event.position;
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
