@@ -530,7 +530,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'dojos'],
       validate: {
         params: {
-          dojoId: Joi.string().guid(),
+          dojoId: Joi.string().guid().allow('null'),
           requestedByUser: Joi.string().required(),
           inviteToken: Joi.string().required(),
         },
