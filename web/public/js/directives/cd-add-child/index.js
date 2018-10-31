@@ -35,7 +35,11 @@
             'placeName',
             'state'
           ];
-          cdUsersService.saveYouthProfile(_.defaults(ctrl.profile, _.pick(ctrl.parentProfileData.data, fieldsToCopy)))
+          var childProfile = _.defaults(ctrl.profile, _.pick(ctrl.parentProfileData.data, fieldsToCopy));
+          // We can't global omitBy as date is considered empty (non-enumerable prop)
+          if (_.isEmpty(childProfile.email)) delete childProfile.email;
+          if (_.isEmpty(childProfile.password)) delete childProfile.password;
+          cdUsersService.saveYouthProfile(childProfile)
             .then(function (resp) {
               if (resp.data && resp.data.error) {
                 var reason;
