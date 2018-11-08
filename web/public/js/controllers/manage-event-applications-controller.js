@@ -527,9 +527,10 @@
     $scope.cancelSession = function (session) {
       session.status = 'cancelled';
       session.emailSubject = 'Your ticket request for %1$s has been cancelled';
-      cdEventsService.cancelSession(session, function (response) {
-        $state.go('manage-dojo-events', {dojoId: dojoId});
-        alertService.showAlert($translate.instant('Session successfully cancelled.'));
+      cdEventsService.cancelSession({ id: session.id, emailSubject: session.emailSubject },
+        function (response) {
+          $state.go('manage-dojo-events', {dojoId: dojoId});
+          alertService.showAlert($translate.instant('Session successfully cancelled.'));
       }, function (err) {
         if(err) console.error(err);
       });

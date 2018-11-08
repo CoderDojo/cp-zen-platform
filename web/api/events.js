@@ -18,8 +18,6 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Save an event',
       tags: ['api', 'events'],
-      // Not everything is required as it can be drafted
-      // unknown is used as the payload is dirty from the ctrl
       validate: {
         payload: {
           eventInfo: Joi.object({
@@ -30,7 +28,7 @@ exports.register = function (server, eOptions, next) {
             dates: Joi.array().items(Joi.object({
               startTime: Joi.date().required(),
               endTime: Joi.date().required(),
-            })).empty(),
+            })).allow(''),
             description: Joi.string().required(),
             dojoId: Joi.string().guid().required(),
             name: Joi.string().required(),
@@ -40,12 +38,12 @@ exports.register = function (server, eOptions, next) {
             status: Joi.string()
               .valid('saved').valid('published').valid('cancelled')
               .required(),
-            sessions: Joi.array().items(Joi.object()).empty().required(),
+            sessions: Joi.array().items(Joi.object()).allow('').required(),
             ticketApproval: Joi.boolean().allow(null), // can be null due to copy
             useDojoAddress: Joi.boolean(),
             notifyOnApplicant: Joi.boolean().allow(null),
-            userId: Joi.string().guid().optional(),
-          }).unknown(),
+            emailSubject: Joi.string()
+          }),
         },
       },
     },
@@ -302,7 +300,7 @@ exports.register = function (server, eOptions, next) {
           session: Joi.object({
             id: Joi.string().required(),
             emailSubject: Joi.string().required().valid('Your ticket request for %1$s has been cancelled'),
-          }).unknown(),
+          }),
         },
       },
     },
