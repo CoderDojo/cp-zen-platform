@@ -691,7 +691,7 @@ exports.register = function (server, eOptions, next) {
             id: Joi.string().guid().required(),
             previousFounderId: Joi.string().guid().required(),
             dojoId: Joi.string().guid().required(),
-          }).unknown(),
+          }),
         },
       },
     },
