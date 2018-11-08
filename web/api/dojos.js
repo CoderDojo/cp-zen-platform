@@ -685,7 +685,6 @@ exports.register = function (server, eOptions, next) {
       notes: 'update founder',
       tags: ['api', 'dojos'],
       validate: {
-        // Unknown is used because the payload is tainted by angular
         payload: {
           founder: Joi.object({
             id: Joi.string().guid().required(),

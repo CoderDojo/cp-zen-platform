@@ -21,6 +21,7 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           eventInfo: Joi.object({
+            id: Joi.string().guid().optional(),
             address: Joi.string(),
             city: joiValidator.place(),
             country: joiValidator.country(),
@@ -38,11 +39,11 @@ exports.register = function (server, eOptions, next) {
             status: Joi.string()
               .valid('saved').valid('published').valid('cancelled')
               .required(),
-            sessions: Joi.array().items(Joi.object()).allow('').required(),
+            sessions: Joi.array().items(Joi.object()).allow(''),
             ticketApproval: Joi.boolean().allow(null), // can be null due to copy
             useDojoAddress: Joi.boolean(),
             notifyOnApplicant: Joi.boolean().allow(null),
-            emailSubject: Joi.string()
+            emailSubject: Joi.string(),
           }),
         },
       },
@@ -223,9 +224,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Update applications by bulk',
       tags: ['api', 'events'],
       validate: {
-        // Unknow used again due to dirty payload by angular scope
         payload: {
           applications: Joi.array().items(Joi.object({
+            id: Joi.string().guid().optional(),
+            entity$: Joi.string().optional(),
+            name: Joi.string().optional(),
+            $$hashKey: Joi.string().optional(),
             dojoId: Joi.string().guid().required(),
             parentEmailSubject: Joi.object({
               approved: Joi.string().valid('A ticket has been booked for your child for %1$s').valid('A ticket has been booked for your child for %1$s'),
@@ -264,7 +268,7 @@ exports.register = function (server, eOptions, next) {
               .valid('disapprove')
               .valid('checkin')
               .valid('delete'),
-          }).unknown()),
+          })),
         },
       },
     },

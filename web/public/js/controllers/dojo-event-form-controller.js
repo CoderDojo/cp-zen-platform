@@ -552,6 +552,7 @@
       if ($scope.dojoInfo.stage !== 4) {
         cdEventsService.saveEvent(
           {
+            id: eventInfo.id,
             address: eventInfo.address,
             city: eventInfo.city,
             country: eventInfo.country,
