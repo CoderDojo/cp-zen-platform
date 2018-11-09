@@ -728,7 +728,10 @@
             var user = $scope.selectedItems[0].userData;
             usSpinnerService.spin('manage-dojo-users-spinner');
             var applicationData = {
-              user: user,
+              user: {
+                id: user.id,
+                types: user.types,
+              },
               badge: selectedBadge,
               emailSubject: 'You have been awarded a new CoderDojo digital badge!'
             };
