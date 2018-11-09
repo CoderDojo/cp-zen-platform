@@ -74,6 +74,7 @@
           ticketApproval: event.ticketApproval,
           notifyOnApplicant: event.notifyOnApplicant,
           emailSubject: event.emailSubject,
+          sessions: event.sessions,
           dates: event.dates,
         }, function (response) {
         $scope.loadPage($scope.filter, true);
@@ -129,6 +130,7 @@
             });
 
             cdEventsService.searchSessions({eventId: event.id, status: 'active'}, function (sessions) {
+              event.sessions = sessions;
               _.each(sessions, function (session) {
                 _.each(session.tickets, function (ticket) {
                   if (ticket.type !== 'other') {
