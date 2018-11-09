@@ -73,6 +73,7 @@
           recurringType: event.recurringType,
           ticketApproval: event.ticketApproval,
           notifyOnApplicant: event.notifyOnApplicant,
+          emailSubject: event.emailSubject,
           dates: event.dates,
         }, function (response) {
         $scope.loadPage($scope.filter, true);
