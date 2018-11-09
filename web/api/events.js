@@ -18,11 +18,10 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Save an event',
       tags: ['api', 'events'],
-      // Not everything is required as it can be drafted
-      // unknown is used as the payload is dirty from the ctrl
       validate: {
         payload: {
           eventInfo: Joi.object({
+            id: Joi.string().guid().optional(),
             address: Joi.string(),
             city: joiValidator.place(),
             country: joiValidator.country(),
@@ -30,7 +29,7 @@ exports.register = function (server, eOptions, next) {
             dates: Joi.array().items(Joi.object({
               startTime: Joi.date().required(),
               endTime: Joi.date().required(),
-            })).empty(),
+            })).allow(''),
             description: Joi.string().required(),
             dojoId: Joi.string().guid().required(),
             name: Joi.string().required(),
@@ -40,12 +39,12 @@ exports.register = function (server, eOptions, next) {
             status: Joi.string()
               .valid('saved').valid('published').valid('cancelled')
               .required(),
-            sessions: Joi.array().items(Joi.object()).empty().required(),
+            sessions: Joi.array().items(Joi.object()).allow(''),
             ticketApproval: Joi.boolean().allow(null), // can be null due to copy
             useDojoAddress: Joi.boolean(),
             notifyOnApplicant: Joi.boolean().allow(null),
-            userId: Joi.string().guid().optional(),
-          }).unknown(),
+            emailSubject: Joi.string(),
+          }),
         },
       },
     },
@@ -225,9 +224,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Update applications by bulk',
       tags: ['api', 'events'],
       validate: {
-        // Unknow used again due to dirty payload by angular scope
         payload: {
           applications: Joi.array().items(Joi.object({
+            id: Joi.string().guid().optional(),
+            entity$: Joi.string().optional(),
+            name: Joi.string().optional(),
+            $$hashKey: Joi.string().optional(),
             dojoId: Joi.string().guid().required(),
             parentEmailSubject: Joi.object({
               approved: Joi.string().valid('A ticket has been booked for your child for %1$s').valid('A ticket has been booked for your child for %1$s'),
@@ -266,7 +268,7 @@ exports.register = function (server, eOptions, next) {
               .valid('disapprove')
               .valid('checkin')
               .valid('delete'),
-          }).unknown()),
+          })),
         },
       },
     },
@@ -302,7 +304,7 @@ exports.register = function (server, eOptions, next) {
           session: Joi.object({
             id: Joi.string().required(),
             emailSubject: Joi.string().required().valid('Your ticket request for %1$s has been cancelled'),
-          }).unknown(),
+          }),
         },
       },
     },

@@ -249,7 +249,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       lDojo.endTime = moment($scope.times.endTime).isValid() ? moment($scope.times.endTime).format('HH:mm') : null;
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
-          cdDojoService.updateFounder($scope.founder, function (response) {
+          cdDojoService.updateFounder({ id: $scope.founder.id, previousFounderId: $scope.founder.previousFounderId, dojoId: $scope.founder.dojoId },
+            function (response) {
             alertService.showAlert($translate.instant('Your Dojo has been successfully saved'), function () {
               deleteLocalStorage('editDojoListing');
               $state.go('manage-dojos');

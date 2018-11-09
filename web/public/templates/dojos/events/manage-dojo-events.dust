@@ -39,7 +39,7 @@
                     <a ui-sref="manage-applications({dojoId: dojoId, eventId:event.id})" ng-if="!event.eventbriteId">{@i18n key="Manage"/}</a>
                     <a ng-href="https://www.eventbrite.com/myevent?eid={{ event.eventbriteId }}" ng-if="event.eventbriteId">{@i18n key="Manage"/}</a>
                   </td>
-                  <td class="pointer" ng-if="!event.eventbriteId">
+                  <td class="pointer" ng-if="!event.eventbriteId && !!event.sessions">
                     <button ng-if="event.status === 'published' && isNotPast(event)" class="btn btn-danger" ng-bootbox-confirm="{@i18n key="Are you sure you want to cancel this event?"/}" ng-bootbox-confirm-action="updateEventStatus(event, 'cancelled')">{@i18n key="Cancel"/}</button>
                     <button ng-if="event.status === 'saved' && isNotPast(event)" class="btn btn-success" ng-click="updateEventStatus(event, 'published')">{@i18n key="Publish"/}</button>
                   </td>

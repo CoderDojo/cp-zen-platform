@@ -57,7 +57,26 @@
       if (event.status === 'cancelled') {
         event.emailSubject = 'Your ticket request for %1$s has been cancelled';
       }
-      cdEventsService.saveEvent(event, function (response) {
+      cdEventsService.saveEvent({
+          id: event.id,
+          address: event.address,
+          city: event.city,
+          country: event.country,
+          description: event.description,
+          dojoId: event.dojoId,
+          name: event.name,
+          position: event.country,
+          public: event.public,
+          status: event.status,
+          type: event.type,
+          useDojoAddress: event.useDojoAddress,
+          recurringType: event.recurringType,
+          ticketApproval: event.ticketApproval,
+          notifyOnApplicant: event.notifyOnApplicant,
+          emailSubject: event.emailSubject,
+          sessions: event.sessions,
+          dates: event.dates,
+        }, function (response) {
         $scope.loadPage($scope.filter, true);
       });
     };
@@ -111,6 +130,7 @@
             });
 
             cdEventsService.searchSessions({eventId: event.id, status: 'active'}, function (sessions) {
+              event.sessions = sessions;
               _.each(sessions, function (session) {
                 _.each(session.tickets, function (ticket) {
                   if (ticket.type !== 'other') {

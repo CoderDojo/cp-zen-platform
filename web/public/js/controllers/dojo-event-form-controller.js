@@ -551,7 +551,26 @@
       }
       if ($scope.dojoInfo.stage !== 4) {
         cdEventsService.saveEvent(
-          eventInfo,
+          {
+            id: eventInfo.id,
+            address: eventInfo.address,
+            city: eventInfo.city,
+            country: eventInfo.country,
+            description: eventInfo.description,
+            dojoId: eventInfo.dojoId,
+            name: eventInfo.name,
+            position: eventInfo.country,
+            public: eventInfo.public,
+            status: eventInfo.status,
+            type: eventInfo.type,
+            useDojoAddress: eventInfo.useDojoAddress,
+            recurringType: eventInfo.recurringType,
+            ticketApproval: eventInfo.ticketApproval,
+            notifyOnApplicant: eventInfo.notifyOnApplicant,
+            dates: eventInfo.dates,
+            sessions: eventInfo.sessions,
+            emailSubject: eventInfo.emailSubject
+          },
           function (response) {
             if(response.ok === false) {
               alertService.showError($translate.instant(response.why));

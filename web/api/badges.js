@@ -43,7 +43,10 @@ exports.register = function (server, eOptions, next) {
       validate: {
         payload: {
           applicationData: {
-            user: Joi.object().required(),
+            user: Joi.object().keys({
+              id: Joi.string().guid().required(),
+              types: Joi.array().items(Joi.string()).optional(),
+            }),
             badge: Joi.object().required(),
             emailSubject: Joi.string().valid('You have been awarded a new CoderDojo digital badge!').required(),
             evidence: Joi.string().optional(),
