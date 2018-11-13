@@ -41,8 +41,8 @@ class EventEmail extends Email {
         year: new Date().getFullYear(),
       },
       emailOptions: {
-        to: `${user.name} <${user.email}>`,
-        from: `${dojo.name} <${dojo.email}>`,
+        to: `"${user.name}" <${user.email}>`,
+        from: `"${dojo.name}" <${dojo.email}>`,
       },
     });
   }
@@ -75,8 +75,8 @@ class EventEmail extends Email {
         year: new Date().getFullYear(),
       },
       emailOptions: {
-        to: `${dojo.name} <${dojo.email}>`,
-        from: 'The CoderDojo Team <info@coderdojo.org>',
+        to: `"${dojo.name}" <${dojo.email}>`,
+        from: '"The CoderDojo Team" <info@coderdojo.org>',
       },
     });
   }
