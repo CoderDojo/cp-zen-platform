@@ -65,6 +65,22 @@ lab.describe('email handler', () => {
       expect(spy.getCall(0).args[0].templateName).to.be.equal('booking-confirmed');
       done();
     });
+    lab.test('it should set the dojo name quoted', (done) => {
+      const spy = sandbox.spy(fn, 'post');
+      fn.formatEventDate = sandbox.stub();
+      fn.formatEventTime = sandbox.stub();
+      fn.sendAdultBooking('fr_FR',
+        { id: 'user1', name: 'username', email: 'user@email.com' },
+        { id: 'event1', dates: [] },
+        { id: 'order1' },
+        { id: 'dojo1', name: 'Dojo1', email: 'dojo@email.com' });
+      expect(spy).to.have.been.calledOnce;
+      expect(fn.formatEventDate).to.have.been.calledOnce;
+      expect(fn.formatEventTime).to.have.been.calledOnce;
+      expect(spy.getCall(0).args[0].emailOptions.from).to.be.equal('"Dojo1" <dojo@email.com>');
+      expect(spy.getCall(0).args[0].emailOptions.to).to.be.equal('"username" <user@email.com>');
+      done();
+    });
   });
   lab.describe('sendDojoNotification', () => {
     lab.test('it should post the dojo email with the approved template', (done) => {
@@ -93,6 +109,19 @@ lab.describe('email handler', () => {
       expect(spy).to.have.been.calledOnce;
       expect(fn.formatEventDate).to.have.been.calledOnce;
       expect(spy.getCall(0).args[0].templateName).to.be.equal('ticket-application-received-to-dojo');
+      done();
+    });
+    lab.test('it should set the dojo name quoted', (done) => {
+      const spy = sandbox.spy(fn, 'post');
+      fn.formatEventDate = sandbox.stub();
+      fn.formatEventTime = sandbox.stub();
+      fn.sendDojoNotification('fr_FR',
+        { id: 'event1', dates: [], sessions: [{ id: 'session1', name: 'session1Name' }], ticketApproval: true },
+        { id: 'order1', applications: [{ sessionId: 'session1' }] },
+        { id: 'dojo1', name: 'Dojo1', email: 'dojo@email.com' });
+      expect(spy).to.have.been.calledOnce;
+      expect(fn.formatEventDate).to.have.been.calledOnce;
+      expect(spy.getCall(0).args[0].emailOptions.to).to.be.equal('"Dojo1" <dojo@email.com>');
       done();
     });
   });
