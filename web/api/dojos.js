@@ -251,7 +251,7 @@ exports.register = function (server, eOptions, next) {
               in$: Joi.array().items(Joi.string().guid()),
             }),
           ),
-          mysqlDojoId: Joi.string().guid(),
+          mysqlDojoId: Joi.alternatives(Joi.string(), Joi.number()),
           ids: Joi.array().items(Joi.string().guid()),
           name: Joi.string(),
           verified: Joi.number().valid(0).valid(1),
