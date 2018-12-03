@@ -240,7 +240,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
 
   if(loggedInUser.data && $stateParams.userId){
-
+    // This function only works for parent and the user himself
     cdDojoService.dojosForUser($stateParams.userId, function (response) {
       $scope.dojos = response;
       if(_.isEmpty($scope.dojos)) {
@@ -253,7 +253,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         findHighestUserType();
       }
     }, function (err) {
-      alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
+      // When a dojo admin see the profile, he will not rely on this function
     });
 
     if ($scope.profile.children && $scope.profile.children.length > 0) {
