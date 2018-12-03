@@ -43,6 +43,7 @@ exports.register = function (server, eOptions, next) {
             ticketApproval: Joi.boolean().allow(null), // can be null due to copy
             useDojoAddress: Joi.boolean(),
             notifyOnApplicant: Joi.boolean().allow(null),
+            notifyOnPublish: Joi.boolean().allow(null),
             emailSubject: Joi.string(),
           }),
         },
