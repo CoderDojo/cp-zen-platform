@@ -771,7 +771,7 @@
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
-        $scope.eventInfo.notifyOnPublish = !$scope.eventInfo.publishedAt;
+        $scope.eventInfo.notifyOnPublish = !$scope.eventInfo.publishedAt && $scope.eventInfo.status !== 'published';
 
         done(null, event);
       }, done);
