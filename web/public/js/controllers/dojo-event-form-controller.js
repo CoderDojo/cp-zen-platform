@@ -139,6 +139,7 @@
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
+    $scope.eventInfo.notifyOnPublish = false;
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
@@ -413,6 +414,7 @@
         delete $scope.eventInfo.id;
         delete $scope.eventInfo.createdAt;
         delete $scope.eventInfo.createdBy;
+        delete $scope.eventInfo.publishedAt;
       });
     };
 
@@ -569,7 +571,8 @@
             notifyOnApplicant: eventInfo.notifyOnApplicant,
             dates: eventInfo.dates,
             sessions: eventInfo.sessions,
-            emailSubject: eventInfo.emailSubject
+            emailSubject: eventInfo.emailSubject,
+            notifyOnPublish: eventInfo.notifyOnPublish,
           },
           function (response) {
             if(response.ok === false) {
@@ -768,6 +771,7 @@
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
+        $scope.eventInfo.notifyOnPublish = !$scope.eventInfo.publishedAt && $scope.eventInfo.status !== 'published';
 
         done(null, event);
       }, done);
@@ -849,6 +853,7 @@
         }
       });
     } else {
+      $scope.eventInfo.notifyOnPublish = true;
       cdEventsService.search({dojoId: dojoId, sort$: {createdAt: -1}, limit$: 1}).then(function (events) {
         var latestEvent = events[0];
         if(latestEvent) $scope.eventInfo.ticketApproval = latestEvent.ticketApproval;

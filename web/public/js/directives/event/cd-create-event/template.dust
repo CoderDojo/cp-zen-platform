@@ -246,6 +246,10 @@
           <label for="notifyOnApplicant">{@i18n key="Send me email notifications"/}</label>
           <i uib-tooltip="{@i18n key="Enabling this will send you an email when a new ticket application has been made."/}" tooltip-placement="top" class="fa fa-info-circle event-tooltip"></i>
         </div>
+        <div class="checkbox checkbox-block">
+          <input type="checkbox" ng-disabled="pastEvent" ng-model="eventInfo.notifyOnPublish" id="notifyOnApplicant">
+          <label for="notifyOnPublish">{@i18n key="Send all Dojo members a notification about this event when publishing"/}</label>
+        </div>
       </div>
       <div class="col-md-6 btn-toolbar">
         <button type="button" class="btn btn-danger pull-right" ng-click="cancel($event)">{@i18n key="Discard Changes"/}</button>
