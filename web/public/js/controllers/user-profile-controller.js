@@ -240,7 +240,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
 
 
   if(loggedInUser.data && $stateParams.userId){
-
+    // This function only works for parent and the user himself
     cdDojoService.dojosForUser($stateParams.userId, function (response) {
       $scope.dojos = response;
       if(_.isEmpty($scope.dojos)) {
@@ -253,7 +253,7 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
         findHighestUserType();
       }
     }, function (err) {
-      alertService.showError( $translate.instant('Error loading Dojos') + ' ' + err);
+      // When a dojo admin see the profile, he will not rely on this function
     });
 
     if ($scope.profile.children && $scope.profile.children.length > 0) {
@@ -413,17 +413,57 @@ function cdUserProfileCtrl($scope, $rootScope, $state, $window, auth, cdUsersSer
   };
 
   function saveYouthViaParent(profile, index, callback){
-    profile = _.omit(profile, ['dojos']);
-    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
-    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    profile.user = { mailingList: profile.user.mailingList };
+    profile = _.pick(profile, [
+      'id',
+      'country',
+      'dob',
+      'email',
+      'firstName',
+      'lastName',
+      'alias',
+      'gender',
+      'linkedin',
+      'twitter',
+      'notes',
+      'optionalHiddenFields',
+      'programmingLanguages',
+      'languagesSpoken',
+      'phone',
+      'private',
+      'projects',
+      'user']);
+
+    profile.programmingLanguages = (profile.programmingLanguages && utils.frTags(profile.programmingLanguages)) || [];
+    profile.languagesSpoken = (profile.languagesSpoken && utils.frTags(profile.languagesSpoken)) || [];
     cdUsersService.saveYouthProfile(profile, saveProfileWorked.bind({callback: callback}, profile, index), saveProfileFailed.bind({callback: callback}));
   }
 
   function saveDirect(profile, callback){
-    profile = _.omit(profile, ['userTypes', 'dojos', 'children']);
+    profile.user = { mailingList: profile.user.mailingList };
+    profile = _.pick(profile, [
+      'id',
+      'userId',
+      'country',
+      'dob',
+      'email',
+      'firstName',
+      'lastName',
+      'alias',
+      'gender',
+      'linkedin',
+      'twitter',
+      'notes',
+      'optionalHiddenFields',
+      'programmingLanguages',
+      'languagesSpoken',
+      'phone',
+      'private',
+      'projects',
+      'user']);
 
-    profile.programmingLanguages = profile.programmingLanguages && utils.frTags(profile.programmingLanguages);
-    profile.languagesSpoken = profile.languagesSpoken && utils.frTags(profile.languagesSpoken);
+    profile.programmingLanguages = (profile.programmingLanguages && utils.frTags(profile.programmingLanguages)) || [];
+    profile.languagesSpoken = (profile.languagesSpoken && utils.frTags(profile.languagesSpoken)) || [];
 
     cdUsersService.saveProfile(profile, saveProfileWorked.bind({callback: callback}, profile, undefined), saveProfileFailed.bind({callback: callback}));
   }

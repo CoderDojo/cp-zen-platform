@@ -1,4 +1,4 @@
 module.exports = {
-    "root": true,
-    "extends": "coderdojo"
+  "root": true,
+  "extends": "coderdojo"
 };

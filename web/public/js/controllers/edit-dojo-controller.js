@@ -75,13 +75,15 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       return done($translate.instant('Failed to load Dojo'));
     });
   }, function (prevFounder, done) {
-    if (_.isEmpty(prevFounder)) {
+    if (_.isEmpty(prevFounder) || !$scope.isCDFAdmin) {
       return done();
     }
-
+    
     cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
+      $scope.prevFounder = prevFounder;
+      $scope.founder = angular.copy(prevFounder);
 
       return done(null, prevFounder);
     }, function (err) {
@@ -104,8 +106,6 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
 
     $scope.originalDojoListing = angular.copy($scope.dojo);
     $scope.disableDojoCountryChange = ($scope.dojo.verified && !$scope.isCDFAdmin) === true;
-    $scope.prevFounder = prevFounder;
-    $scope.founder = angular.copy(prevFounder);
     updateFromLocalStorage();
     loadDojoMap();
   });
@@ -235,6 +235,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
   };
 
   $scope.save = function (dojo) {
+    dojo.placeName = dojo.place.nameWithHierarchy || dojo.place.toponymName || dojo.place.name;
     if ($scope.changedLocation && !$scope.markerPlaced) {
       $scope.getLocationFromAddress(finish);
     } else {
@@ -248,7 +249,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       lDojo.endTime = moment($scope.times.endTime).isValid() ? moment($scope.times.endTime).format('HH:mm') : null;
       cdDojoService.save(lDojo, function (response) {
         if ($scope.founder && ($scope.founder.id !== ($scope.prevFounder && $scope.prevFounder.id))) {
-          cdDojoService.updateFounder($scope.founder, function (response) {
+          cdDojoService.updateFounder({ id: $scope.founder.id, previousFounderId: $scope.founder.previousFounderId, dojoId: $scope.founder.dojoId },
+            function (response) {
             alertService.showAlert($translate.instant('Your Dojo has been successfully saved'), function () {
               deleteLocalStorage('editDojoListing');
               $state.go('manage-dojos');

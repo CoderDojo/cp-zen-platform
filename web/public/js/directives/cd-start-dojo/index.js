@@ -25,13 +25,6 @@ angular
             tabTitle: $translate.instant('Champion Registration')
           },
           {
-            name: 'dojo',
-            state: 'start-dojo.information',
-            status: setStatusIcon,
-            validity: '',
-            tabTitle: $translate.instant('Dojo Information')
-          },
-          {
             name: 'venue',
             state: 'start-dojo.venue',
             status: setStatusIcon,
@@ -44,6 +37,13 @@ angular
             status: setStatusIcon,
             validity: '',
             tabTitle: $translate.instant('Gather your Team')
+          },
+          {
+            name: 'dojo',
+            state: 'start-dojo.information',
+            status: setStatusIcon,
+            validity: '',
+            tabTitle: $translate.instant('Dojo Information')
           },
           {
             name: 'charter',
@@ -230,7 +230,11 @@ angular
           if ($state.params.id) {
             ctrl.leadId = $state.params.id;
             // By passing an id, we allow ourselves to bypass the restriction regarding the completion
-            leadQuery = {id: ctrl.leadId};
+            if (ctrl.currentUser.roles.includes('cdf-admin')) {
+              leadQuery = {id: ctrl.leadId};
+            } else {
+              leadQuery.id = ctrl.leadId;
+            }
           }
           // We use the generic version of search as we don't know yet who's the owner for sure
           // It can be a CDF viewing, which means we don't want to overwrite the owner of the lead
@@ -319,7 +323,7 @@ angular
                   isValid: false,
                   visited: false
                 },
-                dojo: {startTime: moment({minutes: 0}).format('HH:mm'), endTime: moment({minutes: 0}).format('HH:mm'), visited: false, isValid: false},
+                dojo: {startTime: moment({minutes: 0}).format('HH:mm'), endTime: moment({minutes: 0}).format('HH:mm'), requestEmail: true, visited: false, isValid: false},
                 venue: {private: 0, visited: false, isValid: false},
                 team: {visited: false, isValid: false}
               });

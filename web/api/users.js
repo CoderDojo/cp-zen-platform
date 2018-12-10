@@ -4,7 +4,9 @@ const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
+const joiValidator = require('./validations/dojos')();
 const Boom = require('boom');
+const Joi = require('joi');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
@@ -79,6 +81,9 @@ exports.register = function (server, eOptions, next) {
       if (err) return reply(err);
       request.cookieAuth.clear();
       delete request.user;
+      if (resp.user) {
+        resp.user = cleanUser(resp.user);
+      }
       return reply(resp);
     });
   }
@@ -141,6 +146,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Login',
       notes: 'Log passed user',
       tags: ['api'],
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+        },
+      },
     },
   },
   {
@@ -151,6 +162,12 @@ exports.register = function (server, eOptions, next) {
       description: 'Login',
       notes: 'Log passed user',
       tags: ['api'],
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -166,6 +183,9 @@ exports.register = function (server, eOptions, next) {
             { code: 200, message: 'OK' },
           ],
         },
+      },
+      validate: {
+        payload: {},
       },
     },
   }, {
@@ -216,21 +236,28 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
-    },
-  }, {
-    method: 'PUT',
-    path: `${options.basePath}/promote/{id}`,
-    handler: handlers.actHandlerNeedsUser('promote', 'id'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Promote an user',
-      tags: ['api'],
-      plugins: {
-        'hapi-swagger': {
-          responseMessages: [
-            { code: 200, message: 'OK' },
-          ],
-        },
+      validate: {
+        payload: Joi.object({
+          user: Joi.object({
+            email: Joi.string().email().required(),
+            emailSubject: Joi.string().valid('Welcome to Zen, the CoderDojo community platform.').required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            password: Joi.string().required(),
+            'g-recaptcha-response': Joi.string().required(),
+            initUserType: Joi.object({
+              title: Joi.string().valid('Parent/Guardian').valid('Youth Over 13').required(),
+              name: Joi.string().valid('parent-guardian').valid('attendee-o13').required(),
+            }),
+            termsConditionsAccepted: Joi.boolean().valid(true).required(),
+            mailingList: Joi.boolean().optional(),
+          }),
+          profile: Joi.object({
+            dob: Joi.date().required(),
+            country: joiValidator.country().required(),
+          }),
+          recaptchaResponse: Joi.string(),
+        }),
       },
     },
   }, {
@@ -246,6 +273,11 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        payload: {
+          email: Joi.string(),
         },
       },
     },
@@ -269,22 +301,6 @@ exports.register = function (server, eOptions, next) {
     },
   }, {
     method: 'POST',
-    path: `${options.basePath}/is-champion`,
-    handler: handlers.actHandlerNeedsUser('is_champion'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Check if the user is a champion',
-      tags: ['api'],
-      plugins: {
-        'hapi-swagger': {
-          responseMessages: [
-            { code: 200, message: 'OK' },
-          ],
-        },
-      },
-    },
-  }, {
-    method: 'POST',
     path: `${options.basePath}/reset-password`,
     handler: handlers.actHandler('reset_password'),
     config: {
@@ -295,6 +311,12 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        payload: {
+          email: Joi.string().email().required(),
+          emailSubject: Joi.string().valid('CoderDojo Zen Password Reset Request').required(),
         },
       },
     },
@@ -310,6 +332,13 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        payload: {
+          token: Joi.string().guid().required(),
+          password: Joi.string().required(),
+          repeat: Joi.string().required(),
         },
       },
     },
@@ -342,6 +371,11 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
         },
       },
     },
@@ -406,6 +440,11 @@ exports.register = function (server, eOptions, next) {
           responseMessages: [
             { code: 200, message: 'OK' },
           ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
         },
       },
     },

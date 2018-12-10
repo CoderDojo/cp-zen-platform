@@ -73,7 +73,6 @@ module.exports = [
         params: {
           eventId: Joi.string().guid().required(),
         },
-        query: validation.base,
         payload: validation.base.keys({
           applications,
         }),

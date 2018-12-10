@@ -14,7 +14,7 @@
     scriptTag = doc.createElement('script');
     scriptTag.id = scriptId;
     scriptTag.setAttribute('src',
-      'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=mapReady&key=AIzaSyC3xF9XV91bS2R14Gjmx3UQaKbGgAfHbE4');
+      'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=mapReady&key=AIzaSyA4Ih0ykeVb_W79W6Z1Ey-2DsM9b5KcQBM');
     doc.head.appendChild(scriptTag);
     $window.mapReady = (function(dfd) {
       return function() {
@@ -330,6 +330,14 @@
           params: {
             pageTitle: 'Manage Dojo Pending Users'
           }
+        })
+        .state("find-dojos", {
+          url: "/find",
+          template: '<div></div>',
+          params: {
+            pageTitle: 'Dojo'
+          },
+          controller: reloadPage
         })
         .state("dojo-list", {
           url: "/dojo-list?search",
@@ -1080,9 +1088,16 @@
       };
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (embedder.isEmbedded(fromState)) {
+          var url = $state.href(toState, toParams);
+          window.open(url, '_blank');
+          event.preventDefault();
+          return;
+        }
         if (toState.redirectTo) {
           event.preventDefault();
           $state.go(toState.redirectTo, toParams, {location: 'replace'});
+          return ;
         }
       });
 
@@ -1108,13 +1123,6 @@
         }
       });
 
-      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        if (embedder.isEmbedded(fromState)) {
-          var url = $state.href(toState, toParams);
-          window.open(url, '_blank');
-          event.preventDefault();
-        }
-      });
       var firstLoad = true;
       //listen for navigations and accept cookie policy on navigation
       var cookieAcceptListener = $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){

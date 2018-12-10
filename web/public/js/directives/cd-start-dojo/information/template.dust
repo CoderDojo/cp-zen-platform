@@ -1,5 +1,5 @@
 <form class="cd-sad-information" name="$ctrl.dojoForm" no-validate="" ng-class="{'cd-validate': $ctrl.dojo.visited}" focus-invalid>
-  <p class="help-block text-center">
+  <p class="cd-sad-information__intro text-center">
     {@i18n key="This information will be used to populate your Dojo's public profile page"/}
   </p>
   <div class="form-group">
@@ -68,19 +68,11 @@
       </div>
       <div class="cd-sad-information__time-date-session">
         <label for="firstDate">{@i18n key="When will your first session be?"/}</label>
-        <div class="input-group">
-          <input id="firstDate" type="text" class="form-control" readonly uib-datepicker-popup="{{ $ctrl.dateFormat }}"
-            datepicker-options="$ctrl.firstDateOptions" min-date="'1900-01-01'" max-date="today"
-            ng-model="$ctrl.dojo.firstSession" name="firstSession"
-            required required-message="'{@i18n key="First date is empty"/}'" is-open="$ctrl.picker.opened"
-            current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
-            close-text="{@i18n key="Done"/}"
-            ng-click="$ctrl.toggle($event)"/>
-          </p>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </div>
+        <select id="firstDate" type="select" class="form-control"
+          ng-model="$ctrl.dojo.firstSession" name="firstSession"
+          ng-options="value.id as value.name for (key, value) in $ctrl.nextDateOptions">
+            <option value="" disabled>{@i18n key="Indicate your first session"/}</option>
+        </select>
       </div>
     </div>
   </div>
@@ -93,22 +85,7 @@
     </p>
     <div class="cd-sad-information__email-choice-group">
       <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false && $ctrl.dojo.requestEmail != undefined }"
-        ng-click="$ctrl.setEmail()">
-        <span class="radio cd-sad-information__email-choice-selector">
-          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
-            name="requestEmail"
-            ng-change="$ctrl.setEmail()"
-            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
-          <label for="requestEmail"></label>
-        </span>
-        <div class="cd-sad-information__email-choice-action">
-          <i class="fa fa-at fa-2x"></i>
-          <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
-        </div>
-      </div>
-      <div class="cd-sad-information__email-choice"
-        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail == true, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != true}"
+        ng-class="{'cd-sad-information__email-choice-selected':$ctrl.dojo.requestEmail !== false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail == false}"
         ng-click="$ctrl.requestEmail()">
         <span class="radio cd-sad-information__email-choice-selector">
           <input type="radio" ng-model="$ctrl.dojo.requestEmail"
@@ -120,6 +97,21 @@
         <div class="cd-sad-information__email-choice-action">
           <i class="fa fa-magic fa-2x"></i>
           <p>{@i18n key="I want a coderdojo.com email set up"/}</p>
+        </div>
+      </div>
+      <div class="cd-sad-information__email-choice"
+        ng-class="{'cd-sad-information__email-choice-selected' : $ctrl.dojo.requestEmail == false, 'cd-sad-information__email-choice-not-selected': $ctrl.dojo.requestEmail != false }"
+        ng-click="$ctrl.setEmail()">
+        <span class="radio cd-sad-information__email-choice-selector">
+          <input type="radio" ng-model="$ctrl.dojo.requestEmail"
+            name="requestEmail"
+            ng-change="$ctrl.setEmail()"
+            ng-required="$ctrl.dojo.requestEmail === undefined" ng-value="false"/>
+          <label for="requestEmail"></label>
+        </span>
+        <div class="cd-sad-information__email-choice-action">
+          <i class="fa fa-at fa-2x"></i>
+          <p>{@i18n key="I have an email account setup for my Dojo"/}</p>
         </div>
       </div>
     </div>
@@ -135,13 +127,10 @@
         <p class="help-block">{@i18n key="You'll receive the credentials once the Dojo has been verified"/}</p>
       </div>
     </div>
-    <p class="help-block">
-      {@i18n key="Once you have your email set up we advise you set up an auto-responder to all emails with more information about your Dojo so that parents know you are still active. Otherwise you can set up an auto-forwarder to your personal email so you don’t miss anything coming into your Dojo email."/}
-    </p>
   </div>
 
   <div class="form-group">
-    <label for="notes">{@i18n key="Notes"/}</label>
+    <label for="notes">{@i18n key="Dojo description"/}</label>
     <textarea ng-if="$ctrl.editorOptions" ckeditor="editorOptions"
       ng-model="$ctrl.dojo.notes" id="dojoNotes" class="form-control"
       name="notes"
@@ -155,8 +144,8 @@
   </div>
   <div class="cd-sad-information__social-network cd-simple-flex-grid">
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="twitter">Twitter</label>
-      <span class="pull-right">{@i18n key="(optional)"/}</span>
+      <label for="twitter">{@i18n key="Dojo's Twitter"/}</label>
+      <span> {@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">
           https://www.twitter.com/
@@ -173,8 +162,8 @@
       </div>
     </div>
     <div class="form-group cd-simple-flex-grid__flex-1">
-      <label for="phone">Facebook</label>
-      <span class="pull-right">{@i18n key="(optional)"/}</span>
+      <label for="phone">{@i18n key="Dojo's Facebook"/}</label>
+      <span> {@i18n key="(optional)"/}</span>
       <span class="input-group">
         <span class="input-group-addon">
           https://www.facebook.com/

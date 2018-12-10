@@ -2,12 +2,6 @@
   <div class="cd-sad-champion__intro text-center">
     <p>{@i18n key="Please answer the following questions correctly so that our community team can verify all new Champions are real people."/}</p>
   </div>
-  <div class="cd-sad-champion__video" >
-    <iframe class="cd-sad-champion__video-container" width="560" height="315" src="https://www.youtube.com/embed/qWU4hObrgq0?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-    <p class="help-block">{@i18n key="Congratulations on registering as a CoderDojo Champion!"/}</p>
-    <p class="help-block">{@i18n key="A Champion is an individual who volunteers to take charge of setting up, running and maintaining a Dojo."/}</p>
-    <p class="help-block">{@i18n key="As a Champion you care about your community enough to take the initiative to start a Dojo and give youth the opportunity to learn to code and be creative with technology!"/}</p>
-  </div>
   <div class="cd-sad-champion__side-form">
     <div class="form-group">
       <label for="firstName">{@i18n key="First name"/}</label>
@@ -28,24 +22,14 @@
         required="required"
         placeholder="{@i18n key="Email"/}" ng-model="$ctrl.champion.email">
     </div>
-    <div class="form-group">
-      <label for="dob">{@i18n key="Date of birth"/}</label>
       <div class="input-group">
-        <input type="text" class="form-control"
+        <input type="hidden" class="form-control"
           name="dateOfBirth" ng-readonly="true"
-          min-date="'1900-01-01'" max-date="today"
-          uib-datepicker-popup="{{ $ctrl.dateFormat }}" ng-model="$ctrl.champion.dob"
-          is-open="$ctrl.picker.opened" datepicker-options="$ctrl.dobDateOptions"
-          ng-required="true" required-message="'{@i18n key="Date of birth is empty"/}'"
-          ng-click="$ctrl.toggle($event)"
-          current-text="{@i18n key="Today"/}" clear-text="{@i18n key="Clear"/}"
-          close-text="{@i18n key="Done"/}" />
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="$ctrl.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
+          ng-model="$ctrl.champion.dob"
+          ng-required="true" />
       </div>
     </div>
-    <div ng-show="$ctrl.champion.dob && $ctrl.getAge()">
+    <div ng-show="$ctrl.champion.dob && $ctrl.getAge()" class="cd-sad-champion__side-form-parent">
       <div class="form-group">
         <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
         <input type="text" class="form-control" id="parentEmail"
@@ -63,7 +47,7 @@
     </div>
   </div>
   <div class="cd-sad-champion__bottom-form">
-    <h3>{@i18n key="Contact"/}</h3>
+    <h3>{@i18n key="Contact details to help us verify your Dojo"/}</h3>
     <div class="form-group">
       <label for="phone">{@i18n key="Phone number"/}</label>
       <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
@@ -76,7 +60,7 @@
     <div class="cd-sad-champion__social-network cd-simple-flex-grid">
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="twitter">Twitter</label>
-        <span class="pull-right">{@i18n key="(optional)"/}</span>
+        <span> {@i18n key="(optional)"/}</span>
         <span class="input-group">
           <span class="input-group-addon">
             https://www.twitter.com/
@@ -94,7 +78,7 @@
       </div>
       <div class="form-group cd-simple-flex-grid__flex-1">
         <label for="phone">LinkedIn</label>
-        <span class="pull-right">{@i18n key="(optional)"/}</span>
+        <span> {@i18n key="(optional)"/}</span>
         <span class="input-group">
           <span class="input-group-addon">
             https://www.linkedin.com/in/
@@ -111,23 +95,7 @@
         </div>
       </div>
     </div>
-
-    <h3>{@i18n key="Tell us your skills"/}</h3>
-    <p class="help-block">
-      {@i18n key="To become a Champion you do not need to have technical skills as you can find other volunteers with these skills or use our awesome learning content."/} &nbsp;
-      {@i18n key="Tell us how confident you feel in the following areas;" /}
-    </p>
-    <div class="cd-simple-flex-grid cd-sad-champion__sliders">
-      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <p>{@i18n key="How confident are you in mentoring young people?"/}</p>
-        <rzslider rz-slider-model="$ctrl.champion.confidentMentoring" rz-slider-options="$ctrl.sliderOptions"></rzslider>
-      </div>
-      <div class="form-group cd-simple-flex-grid_flex-1 cd-sad-champion__slider">
-        <p>{@i18n key="How confident are you in your coding and technology skills?"/}</p>
-        <rzslider rz-slider-model="$ctrl.champion.confidentCoding" rz-slider-options="$ctrl.sliderOptions"></rzslider>
-      </div>
-    </div>
-    <div class="form-group">
+    <div class="form-group cd-sad-champion__reference">
       <label for="reference" class="cd-sad-champion__reference-label">{@i18n key="How did you hear about CoderDojo?"/}</label>
       <div class="col-xs-12 col-md-6 cd-sad-champion__reference-choice">
         <select ng-model="$ctrl.champion.reference" name="reference"

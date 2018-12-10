@@ -4,6 +4,7 @@ const _ = require('lodash');
 const auth = require('../lib/authentications');
 const Joi = require('joi');
 const handlerFactory = require('./handlers.js');
+const joiValidator = require('./validations/dojos')();
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
@@ -12,11 +13,41 @@ exports.register = function (server, eOptions, next) {
   server.route([{
     method: 'POST',
     path: `${options.basePath}/events/save`,
-    handler: handlers.actHandlerNeedsUser('saveEvent', ['eventInfo', 'eventId']),
+    handler: handlers.actHandlerNeedsUser('saveEvent'),
     config: {
       auth: auth.apiUser,
       description: 'Save an event',
       tags: ['api', 'events'],
+      validate: {
+        payload: {
+          eventInfo: Joi.object({
+            id: Joi.string().guid().optional(),
+            address: Joi.string(),
+            city: joiValidator.place(),
+            country: joiValidator.country(),
+            position: Joi.object().optional().allow(null),
+            dates: Joi.array().items(Joi.object({
+              startTime: Joi.date().required(),
+              endTime: Joi.date().required(),
+            })).allow(''),
+            description: Joi.string().required(),
+            dojoId: Joi.string().guid().required(),
+            name: Joi.string().required(),
+            public: Joi.boolean().required(),
+            recurringType: Joi.string().valid('weekly').valid('biweekly').required(),
+            type: Joi.string().valid('recurring').valid('one-off').required(),
+            status: Joi.string()
+              .valid('saved').valid('published').valid('cancelled')
+              .required(),
+            sessions: Joi.array().items(Joi.object()).allow(''),
+            ticketApproval: Joi.boolean().allow(null), // can be null due to copy
+            useDojoAddress: Joi.boolean(),
+            notifyOnApplicant: Joi.boolean().allow(null),
+            notifyOnPublish: Joi.boolean().allow(null),
+            emailSubject: Joi.string(),
+          }),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -27,6 +58,11 @@ exports.register = function (server, eOptions, next) {
       description: 'Load event',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -38,18 +74,9 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'events'],
       validate: {
         params: {
-          id: Joi.string().guid(),
+          id: Joi.string().guid().required(),
         },
       },
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/events`,
-    handler: handlers.actHandler('listEvents'),
-    config: {
-      description: 'List events',
-      cors: { origin: ['*'], credentials: false },
-      tags: ['api', 'events'],
     },
   }, {
     method: 'POST',
@@ -59,6 +86,18 @@ exports.register = function (server, eOptions, next) {
       description: 'Search events',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object({
+          query: {
+            dojoId: Joi.string(),
+            status: Joi.string(),
+            filterPastEvents: Joi.boolean(),
+            sort$: Joi.any(),
+            limit$: Joi.any(),
+            skip$: Joi.any(),
+          },
+        }),
+      },
     },
   }, {
     method: 'GET',
@@ -68,6 +107,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Load event applications',
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -91,6 +135,25 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Search applications',
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object({
+          query: {
+            eventId: Joi.string().guid(),
+            dojoId: Joi.string().guid(),
+            userId: Joi.string().guid(),
+            name: Joi.string().allow(null),
+            ticketType: Joi.string(),
+            sessionId: Joi.string(),
+            deleted: Joi.boolean(),
+            status: Joi.object({
+              ne$: Joi.string().valid('cancelled'),
+            }).optional(),
+            limit$: Joi.any(),
+            skip$: Joi.any(),
+            sort$: Joi.any(),
+          },
+        }),
+      },
     },
   }, {
     method: 'DELETE',
@@ -100,24 +163,12 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Remove an application of an event',
       tags: ['api', 'events'],
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/events/application`,
-    handler: handlers.actHandlerNeedsUser('saveApplication'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Save an application',
-      tags: ['api', 'events'],
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/events/user-dojos-events`,
-    handler: handlers.actHandlerNeedsUser('userDojosEvents'),
-    config: {
-      auth: auth.apiUser,
-      description: 'User\'s events',
-      tags: ['api', 'events'],
+      validate: {
+        params: {
+          eventId: Joi.string().guid().required(),
+          applicationId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -136,6 +187,16 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Export user list by event and status',
       tags: ['api', 'events'],
+      validate: {
+        params: {
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+          status: Joi.string().required()
+            .valid('guest')
+            .valid('waiting')
+            .valid('full'),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -146,6 +207,14 @@ exports.register = function (server, eOptions, next) {
       description: 'Search a session',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'events'],
+      validate: {
+        payload: Joi.object({
+          query: {
+            eventId: Joi.string().guid().required(),
+            status: Joi.string(),
+          },
+        }),
+      },
     },
   }, {
     method: 'POST',
@@ -155,6 +224,54 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Update applications by bulk',
       tags: ['api', 'events'],
+      validate: {
+        payload: {
+          applications: Joi.array().items(Joi.object({
+            id: Joi.string().guid().optional(),
+            entity$: Joi.string().optional(),
+            name: Joi.string().optional(),
+            $$hashKey: Joi.string().optional(),
+            dojoId: Joi.string().guid().required(),
+            parentEmailSubject: Joi.object({
+              approved: Joi.string().valid('A ticket has been booked for your child for %1$s').valid('A ticket has been booked for your child for %1$s'),
+              pending: Joi.string().valid('Your childs ticket request for %1$s is pending approval').valid('Your childs ticket status for %1$s has been changed to pending'),
+              cancelled: Joi.string().valid('A ticket for your child for %1$s has been cancelled').optional(),
+            }),
+            emailSubject: Joi.object({
+              received: Joi.string().valid('Your ticket request for %1$s has been received'),
+              approved: Joi.string().valid('Your ticket for %1$s has been booked').valid('Your ticket request for %1$s has been approved'),
+              pending: Joi.string().valid('Your ticket request for %1$s is pending approval').valid('Your ticket status for %1$s has been changed to pending'),
+              cancelled: Joi.string().valid('Your ticket request for %1$s has been cancelled').optional(),
+            }),
+            dojoEmailSubject: Joi.object({
+              approved: Joi.string().valid('A ticket has been booked for %1$s'),
+              pending: Joi.string().valid('A ticket request has been made for %1$s'),
+            }),
+            eventId: Joi.string().guid().required(),
+            sessionId: Joi.string().guid().required(),
+            ticketName: Joi.string().required(),
+            ticketType: Joi.string().required(),
+            ticketId: Joi.string().guid().required(),
+            userId: Joi.string().guid().required(),
+            notes: Joi.string().optional().allow(null),
+            // Update
+            attendance: Joi.array(),
+            created: Joi.date(),
+            dateOfBirth: Joi.date(),
+            deleted: Joi.boolean(),
+            orderId: Joi.string().guid().allow(null),
+            status: Joi.string()
+              .valid('approved')
+              .valid('pending')
+              .valid('cancelled'),
+            updateAction: Joi.string().optional()
+              .valid('approve')
+              .valid('disapprove')
+              .valid('checkin')
+              .valid('delete'),
+          })),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -164,6 +281,16 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Update attendance of an application',
       tags: ['api', 'events'],
+      validate: {
+        payload: {
+          data: {
+            applicationId: Joi.string().guid().required(),
+            attended: Joi.boolean().required(),
+            date: Joi.date().required(),
+            dojoId: Joi.string().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -173,6 +300,14 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Cancel an event',
       tags: ['api', 'events'],
+      validate: {
+        payload: {
+          session: Joi.object({
+            id: Joi.string().required(),
+            emailSubject: Joi.string().required().valid('Your ticket request for %1$s has been cancelled'),
+          }),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -182,6 +317,23 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Validate an invitation',
       tags: ['api', 'events'],
+      validate: {
+        payload: {
+          invitation: {
+            ticketId: Joi.string().guid().required(),
+            userId: Joi.string().guid().required(),
+            emailSubject: Joi.object({
+              received: Joi.string().valid('Your ticket request for %1$s has been received'),
+              approved: Joi.string().valid('Your ticket for %1$s has been booked'),
+              pending: Joi.string().valid('Your ticket request for %1$s is pending approval'),
+            }),
+          },
+        },
+        params: {
+          ticketId: Joi.string().guid().required(),
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }]);
 

@@ -29,12 +29,6 @@ angular.module('cpZenPlatform').factory('userUtils',
     delete userFormData.passwordConfirm;
     var isAdult = false;
 
-    // We need to know if the user is registering as a champion to create a dojo.
-    // This is primarily for Salesforce on the backend.
-    if (userFormData.user.initUserType && userFormData.user.initUserType.name ===  'champion') {
-      userFormData.user.isChampion = true;
-    }
-
     userFormData.user['g-recaptcha-response'] = userFormData.recaptchaResponse;
     userFormData.user.emailSubject = 'Welcome to Zen, the CoderDojo community platform.';
 
@@ -47,11 +41,11 @@ angular.module('cpZenPlatform').factory('userUtils',
       return alertService.showError($translate.instant('Sorry only users over 13 can signup, but your parent or guardian can sign up and create you an account'));
     }
     var user = userFormData.user;
-    auth.register(userFormData, function(data) {
+    auth.register(_.omit(userFormData, 'referer'), function(data) {
       Analytics.trackEvent($state.current.name, 'click', 'register' + (isAdult ? '_adult' : '_kid'));
       userFormData.referer = userFormData.referer && userFormData.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + userFormData.referer : userFormData.referer;
       if(data.ok) {
-        auth.login(user, function(data) {
+        auth.login({ email: user.email, password: user.password }, function(data) {
           var initUserTypeStr = data.user && data.user.initUserType;
           var initUserType = JSON.parse(initUserTypeStr);
           if($state.current.name === 'start-dojo'){

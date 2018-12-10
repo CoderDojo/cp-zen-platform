@@ -11,7 +11,7 @@ angular
       },
       restrict: 'E',
       templateUrl: '/directives/tpl/cd-expanding-dojo-card',
-      controller: ['cdDojoService', 'dojoUtils', function (cdDojoService, dojoUtils) {
+      controller: ['cdDojoService', 'dojoUtils', '$translate', '$state', function (cdDojoService, dojoUtils, $translate, $state) {
         var ctrl = this;
         var dojo = ctrl.dojo;
         var user = ctrl.user;
@@ -36,6 +36,7 @@ angular
           });
         cdDojoService.getUsersDojos(usersDojosQuery)
           .then(function (usersDojos) {
+            ctrl.relationship = usersDojos.data[0];
             dojoUtils.isHavingPerm(user, dojo.id, 'dojo-admin', usersDojos.data[0])
               .then(function(isDojoAdmin) {
                 ctrl.isDojoAdmin = isDojoAdmin;
@@ -45,6 +46,16 @@ angular
                 ctrl.isTicketingAdmin = isTicketingAdmin;
               });
           });
+        ctrl.leaveDojo = function(dojoId) {
+          if (confirm($translate.instant('Are you sure you want to leave this Dojo?') + '\n' +
+              $translate.instant('You and your kids will stop being members of this Dojo and will not be notified of further events.'))) {
+            cdDojoService.removeUsersDojosLink({ dojoId: dojoId, userId: user.id, emailSubject: $translate.instant('A user has left your Dojo') })
+            .then(function (res) {
+              if (res.data.error) return alert($translate.instant(res.data.error));
+              return $state.go('my-dojos', $state.params, { reload: true });
+            });
+          }
+        }
       }]
     });
 }());

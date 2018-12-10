@@ -73,8 +73,7 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       validate: {
         payload: Joi.object({ query: {
-          dojoLeadId: joiValidator.guid(),
-          urlSlug: Joi.string(),
+          urlSlug: Joi.string().required(),
         } }),
       },
     },
@@ -171,6 +170,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.any().required(),
+        params: {
+          dojoId: Joi.string().guid().required(),
+        },
       },
     },
 
@@ -192,7 +194,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         },
       },
     },
@@ -215,8 +217,8 @@ exports.register = function (server, eOptions, next) {
       cors: { origin: ['*'], credentials: false },
       validate: {
         payload: Joi.object({ query: {
-          verified: Joi.number().valid(0).valid(1),
-          deleted: Joi.number().valid(0).valid(1),
+          verified: Joi.number().valid(0).valid(1).required(),
+          deleted: Joi.number().valid(0).valid(1).required(),
           stage: Joi.alternatives(Joi.object(), Joi.number().integer()),
           alpha2: joiValidator.alpha2(),
           continent: joiValidator.continent(),
@@ -241,15 +243,38 @@ exports.register = function (server, eOptions, next) {
       },
       cors: { origin: ['*'], credentials: false },
       validate: {
-        payload: Joi.alternatives().try(Joi.any(), Joi.object({ query: {
-          id: Joi.alternatives(Joi.string().guid(), Joi.object()),
+        payload: Joi.object({ query: {
+          id: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
+          mysqlDojoId: Joi.alternatives(Joi.string(), Joi.number()),
+          ids: Joi.array().items(Joi.string().guid()),
           name: Joi.string(),
           verified: Joi.number().valid(0).valid(1),
-          stage: Joi.number().integer(),
+          stage: Joi.alternatives(
+            Joi.number().integer(),
+            Joi.object({
+              ne$: Joi.number(),
+            }),
+          ),
           deleted: Joi.number().valid(0).valid(1),
           alpha2: joiValidator.alpha2(),
-          fields$: Joi.array(),
-        } })),
+          fields$: Joi.array().items(Joi.string()),
+          dojoLeadId: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
+          sort$: Joi.object({
+            name: Joi.number().valid(-1).valid(1),
+          }).optional(),
+        } }),
       },
     },
   }, {
@@ -346,6 +371,9 @@ exports.register = function (server, eOptions, next) {
           ],
         },
       },
+      validate: {
+        payload: {},
+      },
     },
   }, {
     method: 'POST',
@@ -366,7 +394,14 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          dojoId: Joi.alternatives().try(joiValidator.guid(), Joi.object(), Joi.string().valid('')),
+          dojoId: Joi.alternatives().try(
+            joiValidator.guid(),
+            Joi.string().valid(''),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
           userId: joiValidator.guid(),
           deleted: Joi.number().valid(0).valid(1),
           owner: Joi.number().valid(1).valid(0),
@@ -394,7 +429,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          dojoId: joiValidator.guid(),
+          dojoId: joiValidator.guid().required(),
           deleted: Joi.number().valid(0).valid(1),
           limit$: Joi.alternatives().try(Joi.number().integer().min(0), Joi.string()),
           skip$: Joi.number().integer().min(0).optional(),
@@ -402,6 +437,7 @@ exports.register = function (server, eOptions, next) {
             name: Joi.number().valid(-1).valid(1).optional(),
             email: Joi.number().valid(-1).valid(1).optional(),
           }),
+          fields: Joi.array().items('gender').optional(),
           userType: Joi.string(),
           name: Joi.string(),
         } }),
@@ -425,10 +461,10 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({
-          email: joiValidator.mail().required(),
-          emailSubject: Joi.string(),
-          userType: Joi.string(),
-          dojoId: joiValidator.guid().required(),
+          email: Joi.string().email().required(),
+          emailSubject: Joi.string().valid('New Dojo Invitation').required(),
+          userType: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         }),
       },
     },
@@ -441,6 +477,16 @@ exports.register = function (server, eOptions, next) {
       description: 'accept invite',
       notes: 'accept invite',
       tags: ['api', 'dojos'],
+      validate: {
+        payload: {
+          data: {
+            currentUserId: Joi.string().guid().required(),
+            currentUserEmail: Joi.string().email().allow(null).optional(), // unused
+            inviteToken: Joi.string().required(),
+            dojoId: Joi.string().guid().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -468,8 +514,8 @@ exports.register = function (server, eOptions, next) {
         payload: Joi.object({ data: {
           user: joiValidator.user().required(),
           dojoId: joiValidator.guid().required(),
-          userType: Joi.string(),
-          emailSubject: Joi.string(),
+          userType: Joi.string().required(),
+          emailSubject: Joi.string().valid('New Request to join your Dojo').required(),
         } }),
       },
     },
@@ -484,7 +530,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'dojos'],
       validate: {
         params: {
-          dojoId: Joi.string(),
+          dojoId: Joi.string().guid().allow('null'),
           requestedByUser: Joi.string().required(),
           inviteToken: Joi.string().required(),
         },
@@ -502,7 +548,7 @@ exports.register = function (server, eOptions, next) {
       tags: ['api', 'dojos'],
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
           requestedByUser: Joi.string().required(),
           inviteToken: Joi.string().required(),
         },
@@ -526,7 +572,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          id: Joi.string().required(),
+          id: Joi.string().guid().required(),
         },
       },
     },
@@ -583,8 +629,16 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          userId: joiValidator.guid().required(),
-          dojoId: joiValidator.guid().required(),
+          userId: Joi.string().guid().required(),
+          dojoId: Joi.string().guid().required(),
+        },
+        payload: {
+          data: {
+            // userId and dojoId are required, but ignored. Only the params are being used
+            userId: Joi.string().guid().required(),
+            dojoId: Joi.string().guid().required(),
+            emailSubject: Joi.string().required(),
+          },
         },
       },
     },
@@ -630,6 +684,15 @@ exports.register = function (server, eOptions, next) {
       description: 'update founder',
       notes: 'update founder',
       tags: ['api', 'dojos'],
+      validate: {
+        payload: {
+          founder: Joi.object({
+            id: Joi.string().guid().required(),
+            previousFounderId: Joi.string().guid().required(),
+            dojoId: Joi.string().guid().required(),
+          }),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -756,9 +819,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ data: {
-          dojoId: Joi.alternatives().try(joiValidator.guid(), Joi.string().valid('')),
-          eventId: Joi.alternatives().try(joiValidator.guid(), Joi.string().valid('')),
-          emailSubject: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
+          eventId: Joi.string().guid().required(),
+          emailSubject: Joi.string().valid('Tickets Now Available for %1$s').required(),
         } }),
       },
     },
@@ -779,7 +842,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({
-          userIds: Joi.array().items(Joi.string()),
+          userIds: Joi.array().items(Joi.string()).required(),
           data: {
             subject: Joi.string().required(),
             content: Joi.string().required(),
@@ -805,7 +868,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
         },
       },
     },
@@ -829,7 +892,9 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          dojoId: Joi.string().required(),
+          dojoId: Joi.string().guid().required(),
+        },
+        query: {
           userType: Joi.string(),
           name: Joi.string(),
         },

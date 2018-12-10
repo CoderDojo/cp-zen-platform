@@ -161,8 +161,6 @@
           </thead>
           <tbody>
             <tr>
-              <td class="cd-dojo-lead__title-cell">Champion Skills</td>
-              <td></td>
               <td>Team</td>
               <td>
                 <div ng-if="$ctrl.lead.application.team.status === 'solo'">
@@ -177,10 +175,6 @@
                   <p class="help-block" ng-show="!$ctrl.lead.application.team.src"> No sources specified</p>
                 </div>
               </td>
-            </tr>
-            <tr>
-              <td>Technical confidence</td>
-              <td> {{ $ctrl.champion.confidentCoding }} / 5 </td>
               <td>Frequency</td>
               <td>
                 <span ng-if="$ctrl.dojo.frequency !== 'other'">
@@ -191,8 +185,8 @@
               </td>
             </tr>
             <tr>
-              <td>Mentoring confidence</td>
-              <td> {{ $ctrl.champion.confidentMentoring }} / 5 </td>
+              <td></td>
+              <td></td>
               <td>Day</td>
               <td>
                 <span ng-if="$ctrl.dojo.alternativeFrequency && $ctrl.dojo.frequency='1/m'" ng-bind="::$ctrl.dojo.alternativeFrequency"></span>
@@ -221,7 +215,7 @@
                 </div>
               </td>
               <td>Date of first session</td>
-              <td ng-bind="::$ctrl.lead.application.dojo.firstSession | date: 'MM/dd/yyyy'"></td>
+              <td> <span ng-bind="::$ctrl.getFirstSessionValue($ctrl.lead.application.dojo.firstSession)"></span></td>
             </tr>
             <tr>
               <td>Notes</td>

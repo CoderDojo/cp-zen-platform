@@ -21,14 +21,5 @@ angular.module('cpZenPlatform').factory('embedder', ['$rootScope', '$state', '$w
     return returned;
   };
 
-  embedder.redirectWrapper = function (callback){
-    if ( embedder.isEmbedded() ){
-      window.open(embedder.disEmbed(), '_blank');
-    }
-    if(callback){
-      callback();
-    }
-  };
-
   return embedder;
 }]);

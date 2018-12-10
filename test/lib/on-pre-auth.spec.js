@@ -4,7 +4,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const languages = require('../../web/config/languages.js');
 const locale = require('locale');
-const _ = require('lodash');
 const fn = require('../../web/lib/on-pre-auth.js');
 
 const expect = chai.expect;
@@ -14,7 +13,7 @@ lab.describe('onPreAuth', () => {
   const server = {};
   lab.before((done) => {
     server.app = {
-      availableLocales: new locale.Locales(_.pluck(languages, 'code'), 'en_US'),
+      availableLocales: new locale.Locales(languages.map(l => l.code), 'en_US'),
     };
     done();
   });

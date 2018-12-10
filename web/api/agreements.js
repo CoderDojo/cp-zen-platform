@@ -30,14 +30,23 @@ exports.register = function (server, eOptions, next) {
     path: `${options.basePath}/agreements/count`,
     handler: handlers.actHandler('count'),
     config: {
+      auth: authentications.apiUser,
       description: 'Count the number of agreements',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          query: {
+            agreement_version: Joi.number().required(),
+          },
+        },
+      },
     },
   }, {
     method: 'GET',
     path: `${options.basePath}/agreements/version/{version}/users/{userId}`,
     handler: handlers.actHandler('loadUserAgreement', ['version', 'userId']),
     config: {
+      auth: authentications.apiUser,
       description: 'Load user agreement',
       tags: ['api', 'users'],
       validate: {
@@ -64,15 +73,23 @@ exports.register = function (server, eOptions, next) {
   }, {
     method: 'POST',
     path: `${options.basePath}/agreements/search`,
-    handler: handlers.actHandler('list', ['id']),
+    handler: handlers.actHandler('list'),
     config: {
       auth: authentications.apiUser,
       description: 'Search users agreements',
       tags: ['api', 'users'],
       validate: {
-        params: {
-          userId: Joi.alternatives(Joi.object(), Joi.string().guid()).optional(),
-          agreementVersion: Joi.number(),
+        payload: {
+          query: {
+            userId: Joi.alternatives(
+              Joi.object().keys({
+                nin$: Joi.array().items(Joi.string().guid()),
+                in$: Joi.array().items(Joi.string().guid()),
+              }),
+              Joi.string().guid(),
+            ),
+            agreementVersion: Joi.number(),
+          },
         },
       },
     },

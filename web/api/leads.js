@@ -58,6 +58,9 @@ exports.register = function (server, eOptions, next) {
           userId: joiValidator.guid().required(),
           completed: Joi.boolean().valid(true),
         } }),
+        params: {
+          leadId: Joi.string().guid().required(),
+        },
       },
     },
   }, {
@@ -78,7 +81,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          id: Joi.string().required(),
+          id: Joi.string().guid().required(),
         },
       },
     },
@@ -100,7 +103,7 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         params: {
-          id: Joi.string().required(),
+          id: Joi.string().guid().required(),
         },
       },
     },
@@ -123,7 +126,13 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          id: Joi.alternatives(Joi.string().guid(), Joi.object()),
+          id: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
           userId: joiValidator.guid(), // used for validation is-self
           email: Joi.string(), // to allow regex
           dojoEmail: Joi.string(), // to allow regex
@@ -158,7 +167,13 @@ exports.register = function (server, eOptions, next) {
       },
       validate: {
         payload: Joi.object({ query: {
-          id: Joi.alternatives(Joi.string().guid(), Joi.object()),
+          id: Joi.alternatives(
+            Joi.string().guid(),
+            Joi.object().keys({
+              nin$: Joi.array().items(Joi.string().guid()),
+              in$: Joi.array().items(Joi.string().guid()),
+            }),
+          ),
           userId: joiValidator.guid(), // used for validation is-self
           email: Joi.string(),
           completed: Joi.boolean(),

@@ -38,10 +38,18 @@ module.exports = function (server, role) {
     let msg = { cmd, role, locality: server.methods.locality(request) };
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
     const covered = ['cd-users', 'cd-profiles', 'cd-dojos', 'cd-badges',
-      'cd-events', 'cd-eventbrite', 'cp-organisations'];
+      'cd-events', 'cd-agreements', 'cd-eventbrite', 'cd-organisations'];
 
     if (msgDefault) _.extend(msg, msgDefault);
     debug('handlers.doAct', request.url.path);
+
+    // User must be set first, or the payload could overwrite it
+    if (user) {
+      msg = _.defaults(msg, user);
+    } else if (request.user) {
+      msg = _.defaults(msg, request.user);
+    }
+
     if (request.payload) {
       msg = _.defaults(msg, request.payload);
     }
@@ -58,11 +66,6 @@ module.exports = function (server, role) {
       msg = _.defaults(msg, paramsMsg);
     }
 
-    if (user) {
-      msg = _.defaults(msg, user);
-    } else if (request.user) {
-      msg = _.defaults(msg, request.user);
-    }
 
     debug('handlers.doAct', msg);
     if (_.includes(covered, msg.role)) {
@@ -101,7 +104,7 @@ module.exports = function (server, role) {
 
       if (opts && opts.checkCdfAdmin === true) {
         const roles = _.deepHas(user, 'user.roles') ? user.user.roles : [];
-        if (!_.contains(roles, 'cdf-admin')) {
+        if (!_.includes(roles, 'cdf-admin')) {
           // Note: a 200 status code is still returned here (should be 403 by right)
           return reply({ ok: false, why: 'You must be a cdf admin to access this data' });
         }
@@ -137,6 +140,12 @@ module.exports = function (server, role) {
         locality: server.methods.locality(request),
       };
 
+      if (user) {
+        msg = _.defaults(msg, user);
+      } else if (request.user) {
+        msg = _.defaults(msg, request.user);
+      }
+
       if (request.payload) {
         msg = _.defaults(msg, request.payload);
       }
@@ -153,18 +162,12 @@ module.exports = function (server, role) {
         msg = _.defaults(msg, paramsMsg);
       }
 
-      if (user) {
-        msg = _.defaults(msg, user);
-      } else if (request.user) {
-        msg = _.defaults(msg, request.user);
-      }
-
       request.seneca.act(msg, (err, resp) => {
         if (err) return reply(Boom.badImplementation());
         let isCDFAdmin = false;
         let code = 200;
         const roles = _.deepHas(user, 'user.roles') ? request.user.user.roles : [];
-        if (_.contains(roles, 'cdf-admin')) {
+        if (_.includes(roles, 'cdf-admin')) {
           isCDFAdmin = true;
         }
         if (!resp.userIsDojoAdmin && !isCDFAdmin) {

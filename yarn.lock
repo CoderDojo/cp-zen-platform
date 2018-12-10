@@ -1160,21 +1160,21 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.107:
-  version "1.0.107"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.107.tgz#cf38c7589ee42e4b5ed6f969ae10855adafc934c"
+cp-translations@1.0.120:
+  version "1.0.120"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.120.tgz#70a44d2fbf3a0618497d97545b731c100a974bfc"
 
-cp-translations@1.0.108:
-  version "1.0.108"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.108.tgz#9c6e89cb97742cdb60e2680dfac2c419e60129e9"
+cp-translations@1.0.121:
+  version "1.0.121"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.121.tgz#fd8da1f9c84ce10ab5279334da7bfdc8182aa822"
 
-cp-zen-frontend@1.0.50:
-  version "1.0.50"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.50.tgz#c1ce30e7ab757577dee7094e41170668a2f1eb11"
+cp-zen-frontend@1.0.84:
+  version "1.0.84"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.84.tgz#d3932a5712176d37659d51ca813d860b360f4434"
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
-    cp-translations "1.0.108"
+    cp-translations "1.0.121"
     font-awesome "^4.7.0"
     handlebars "^4.0.10"
     js-cookie "^2.1.4"
@@ -4116,13 +4116,17 @@ lodash@3.10.0:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.0.tgz#93d51c672828a4416a12af57220ba8a8737e2fbb"
 
-lodash@3.7.0, lodash@3.7.x:
+lodash@3.7.x:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.7.0.tgz#3678bd8ab995057c07ade836ed2ef087da811d45"
 
 lodash@4.11.2:
   version "4.11.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.2.tgz#d6b4338b110a58e21dae5cebcfdbbfd2bc4cdb3b"
+
+lodash@4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 lodash@>=2.4.1, lodash@^4.0.0, lodash@^4.12.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.8.0, lodash@~4.17.4:
   version "4.17.4"

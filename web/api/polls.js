@@ -4,9 +4,7 @@ const _ = require('lodash');
 const Joi = require('joi');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
-/* NOTE: Remember that every of those calls NEED a permission model defined in the associated µs
-    otherwise it'll be freely available by anyone
-*/
+
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
   const handlers = handlerFactory(server, 'cd-dojos');
@@ -51,7 +49,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({ poll: {
-            id: Joi.string().optional(),
+            id: Joi.string().guid().optional(),
             question: Joi.string().required(),
             valueUnity: Joi.string().required(),
             maxAnswers: Joi.number().required(),
@@ -63,9 +61,9 @@ exports.register = function (server, eOptions, next) {
     {
       method: 'POST',
       path: `${options.basePath}/poll`,
-      handler: handlers.actHandler('get_poll_setup'),
+      handler: handlers.actHandlerNeedsCdfAdmin('get_poll_setup'),
       config: {
-        auth: auth.userIfPossible,
+        auth: auth.apiUser,
         description: 'search polls setups',
         notes: 'Returns the polls setups',
         tags: ['api', 'dojos', 'polls'],
@@ -78,7 +76,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({ query: {
-            pollId: Joi.string().optional(),
+            id: Joi.string().optional(),
           } }),
         },
       },
@@ -125,10 +123,10 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({ poll: {
-            id: Joi.string().optional(),
-            pollId: Joi.string(),
-            dojoId: Joi.string(),
-            value: Joi.number(),
+            id: Joi.string().guid().optional(),
+            pollId: Joi.string().guid().required(),
+            dojoId: Joi.string().required(),
+            value: Joi.number().required(),
           } }),
         },
       },
@@ -171,7 +169,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           params: {
-            pollId: Joi.string(),
+            pollId: Joi.string().guid().required(),
           },
         },
       },
@@ -194,7 +192,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           params: {
-            pollId: Joi.string(),
+            pollId: Joi.string().guid().required(),
           },
           payload: {
             dryRun: Joi.boolean().invalid(false),
@@ -240,8 +238,8 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: {
-            pollId: Joi.string().required(),
-            email: Joi.string().required(),
+            pollId: Joi.string().guid().required(),
+            email: Joi.string().email().required(),
           },
         },
       },
@@ -265,10 +263,10 @@ exports.register = function (server, eOptions, next) {
         validate: {
           payload: {
             query: {
-              id: Joi.string().required(),
+              id: Joi.string().guid().required(),
               limit$: Joi.number().required().max(1),
             },
-            pollId: Joi.string().required(),
+            pollId: Joi.string().guid().required(),
           },
         },
       },
@@ -291,7 +289,7 @@ exports.register = function (server, eOptions, next) {
         },
         validate: {
           payload: {
-            pollId: Joi.string().required(),
+            pollId: Joi.string().guid().required(),
             query: Joi.object().optional(),
           },
         },

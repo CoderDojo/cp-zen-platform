@@ -139,6 +139,7 @@
 
     $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.date;
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
+    $scope.eventInfo.notifyOnPublish = false;
 
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
@@ -377,6 +378,7 @@
           moment([lastDate.year(), lastDate.month(), lastDate.date(), lastDate.hour(), lastDate.minute(), 0, 0]);
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;
+        delete $scope.eventInfo.city.$$hashKey;
         $scope.eventInfo.position = event.position;
 
         //Care : it seems that _.defaults doesn't necessarly trigger angular's digest
@@ -412,6 +414,7 @@
         delete $scope.eventInfo.id;
         delete $scope.eventInfo.createdAt;
         delete $scope.eventInfo.createdBy;
+        delete $scope.eventInfo.publishedAt;
       });
     };
 
@@ -550,7 +553,27 @@
       }
       if ($scope.dojoInfo.stage !== 4) {
         cdEventsService.saveEvent(
-          eventInfo,
+          {
+            id: eventInfo.id,
+            address: eventInfo.address,
+            city: eventInfo.city,
+            country: eventInfo.country,
+            description: eventInfo.description,
+            dojoId: eventInfo.dojoId,
+            name: eventInfo.name,
+            position: eventInfo.country,
+            public: eventInfo.public,
+            status: eventInfo.status,
+            type: eventInfo.type,
+            useDojoAddress: eventInfo.useDojoAddress,
+            recurringType: eventInfo.recurringType,
+            ticketApproval: eventInfo.ticketApproval,
+            notifyOnApplicant: eventInfo.notifyOnApplicant,
+            dates: eventInfo.dates,
+            sessions: eventInfo.sessions,
+            emailSubject: eventInfo.emailSubject,
+            notifyOnPublish: eventInfo.notifyOnPublish,
+          },
           function (response) {
             if(response.ok === false) {
               alertService.showError($translate.instant(response.why));
@@ -748,6 +771,7 @@
         $scope.eventInfo = _.assign($scope.eventInfo, event);
         $scope.eventInfo.userType = _.filter($scope.eventInfo.userTypes, {name: $scope.eventInfo.userType})[0];
         $scope.pastEvent = eventUtils.isEventInPast(_.last(event.dates));
+        $scope.eventInfo.notifyOnPublish = !$scope.eventInfo.publishedAt && $scope.eventInfo.status !== 'published';
 
         done(null, event);
       }, done);
@@ -829,6 +853,7 @@
         }
       });
     } else {
+      $scope.eventInfo.notifyOnPublish = true;
       cdEventsService.search({dojoId: dojoId, sort$: {createdAt: -1}, limit$: 1}).then(function (events) {
         var latestEvent = events[0];
         if(latestEvent) $scope.eventInfo.ticketApproval = latestEvent.ticketApproval;

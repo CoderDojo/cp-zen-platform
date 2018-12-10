@@ -16,6 +16,9 @@ angular
       ctrl.getReferenceValue = function (id) {
         return _.find(dojoUtils.startingDojoSrcs, {'id': id}).name;
       };
+      ctrl.getFirstSessionValue= function (id) {
+        return _.find(dojoUtils.nextDateOptions, {'id': id}).name;
+      };
       ctrl.verify = function () {
         cdDojoService.verify(ctrl.dojo.id, 1)
         .then(function (res) {
@@ -23,7 +26,7 @@ angular
           atomicNotifyService.info('Verified !', 1000);
         })
         .catch(function (err) {
-          atomicNotifyService.error('Oops : ' + err, 3000);
+          atomicNotifyService.error('Oops : ' + err.data.message, 3000);
         });
       };
       function getDojo () {
@@ -41,7 +44,7 @@ angular
         }
       }
       function getCharter () {
-        if (ctrl.lead.application.charter) {
+        if (ctrl.lead.application.charter && ctrl.lead.application.charter.id) {
           return cdAgreementsService.load(ctrl.lead.application.charter.id)
           .then(function (res) {
             ctrl.charter = res.data;

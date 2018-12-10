@@ -1,6 +1,5 @@
 const env = process.env.NODE_ENV || 'development';
 if (process.env.NEW_RELIC_ENABLED === 'true') require('newrelic'); // eslint-disable-line global-require
-const _ = require('lodash');
 const hapi = require('hapi');
 // Plugins
 const inert = require('inert');
@@ -42,7 +41,7 @@ exports.start = () => {
   const server = new hapi.Server(options.hapi);
   server.app.defaultLanguage = 'en_US';
   server.app.availableLocales = new locale.Locales(
-    _.pluck(languages, 'code'),
+    languages.map(l => l.code),
     server.app.defaultLanguage,
   );
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;

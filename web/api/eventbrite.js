@@ -16,6 +16,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       description: 'Handle webhook events from EventBrite',
       tags: ['api', 'events', 'eventbrite'],
+      // Validation handled at the µs level
     },
   }, {
     method: 'POST',
@@ -69,6 +70,7 @@ exports.register = function (server, eOptions, next) {
     config: {
       description: 'Recover public token for Eventbrite generic App',
       tags: ['api', 'dojos', 'eventbrite'],
+      auth: auth.apiUser,
       plugins: {
         'hapi-swagger': {
           responseMessages: [

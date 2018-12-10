@@ -28,7 +28,10 @@
             .then(function () {
               usSpinnerService.spin('manage-dojo-users-spinner');
               var applicationData = {
-                user: ctrl.user,
+                user: {
+                  id: ctrl.user.id,
+                  types: ctrl.user.types
+                },
                 badge: ctrl.selectedBadge,
                 emailSubject: 'You have been awarded a new CoderDojo digital badge!',
                 evidence: ctrl.evidence

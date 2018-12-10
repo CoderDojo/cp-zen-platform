@@ -635,7 +635,6 @@ angular.module('cpZenPlatform')
       "Maybe you'd like to check out some of the following fun sections of our site:": "Maybe you'd like to check out some of the following fun sections of our site:",
       "Find your local Dojo": "Find your local Dojo",
       "Community Forums": "Community Forums",
-      "Kata, our community wiki": "Kata, our community wiki",
       "CoderDojo community news": "CoderDojo community news",
       "Founder": "Founder",
       "Error setting up event": "Error setting up event",

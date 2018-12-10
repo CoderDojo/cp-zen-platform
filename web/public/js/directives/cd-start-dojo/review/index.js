@@ -17,10 +17,6 @@ angular
             state: 'start-dojo.champion',
             name: $translate.instant('Champion Registration')
           },
-          dojo: {
-            state: 'start-dojo.information',
-            name: $translate.instant('Dojo Information')
-          },
           venue: {
             state: 'start-dojo.venue',
             name: $translate.instant('Venue Details')
@@ -28,6 +24,10 @@ angular
           team: {
             state: 'start-dojo.team',
             name: $translate.instant('Gather your Team')
+          },
+          dojo: {
+            state: 'start-dojo.information',
+            name: $translate.instant('Dojo Information')
           },
           charter: {
             state: 'start-dojo.charter',

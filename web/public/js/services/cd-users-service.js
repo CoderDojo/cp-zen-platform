@@ -6,9 +6,6 @@ function cdUsersService(cdApi, $q){
   }
 
   return {
-    promote: function(id, roles, win, fail) {
-      cdApi.put('users/promote/' + id, {roles:roles}, win, fail || topfail);
-    },
     getUsersByEmails: function(email, win, fail) {
       return cdApi.post('users/emails', {email: email}, win, fail || topfail);
     },

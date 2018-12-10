@@ -13,7 +13,7 @@
 
   <div class="row" ng-enter="noop()">
     <div ng-class="size? size : 'col-sm-offset-2 col-sm-8'">
-      <input type="email" class="form-control form-group" name="emailAddress"  required required-message="'{@i18n key="Email is empty"/}'" ng-model="formData.user.email" placeholder="{@i18n key="Email"/}">
+      <input type="email" class="form-control form-group" name="emailAddress"  required required-message="'{@i18n key="Email is empty"/}'" ng-model="formData.user.email" placeholder="{@i18n key="Personal email"/}">
     </div>
   </div>
 

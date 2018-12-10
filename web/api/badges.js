@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
+const Joi = require('joi');
 
 exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
@@ -25,6 +26,11 @@ exports.register = function (server, eOptions, next) {
       description: 'Get badge by slug',
       cors: { origin: ['*'], credentials: false },
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          slug: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -34,15 +40,19 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Create badge application',
       tags: ['api', 'users'],
-    },
-  }, {
-    method: 'POST',
-    path: `${options.basePath}/badges/accept`,
-    handler: handlers.actHandlerNeedsUser('acceptBadge'),
-    config: {
-      auth: auth.apiUser,
-      description: 'Accept badge',
-      tags: ['api', 'users'],
+      validate: {
+        payload: {
+          applicationData: {
+            user: Joi.object().keys({
+              id: Joi.string().guid().required(),
+              types: Joi.array().items(Joi.string()).optional(),
+            }),
+            badge: Joi.object().required(),
+            emailSubject: Joi.string().valid('You have been awarded a new CoderDojo digital badge!').required(),
+            evidence: Joi.string().optional(),
+          },
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -52,6 +62,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Load user badges',
       tags: ['api', 'users'],
+      validate: {
+        params: {
+          userId: Joi.string().guid().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -70,6 +85,11 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Get Badge by Id',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          code: Joi.string().required(),
+        },
+      },
     },
   }, {
     method: 'POST',
@@ -79,6 +99,12 @@ exports.register = function (server, eOptions, next) {
       auth: auth.apiUser,
       description: 'Request a badge',
       tags: ['api', 'users'],
+      validate: {
+        payload: {
+          userId: Joi.string().guid().optional(),
+          badge: Joi.object().required(),
+        },
+      },
     },
   }, {
     method: 'GET',
@@ -89,11 +115,7 @@ exports.register = function (server, eOptions, next) {
       description: 'Export User\'s badges',
       tags: ['api', 'users'],
     },
-  }, /* {  // TODO - this looks like it's not used - safe to remove?
-    method: 'GET',
-    path: options.basePath + '/verify_badge/{userId}/{badgeId}/assertion',
-    handler: handlers.actHandlerNeedsUser('verifyBadge', ['userId', 'badgeId'])
-  }, */{
+  }, {
     method: 'GET',
     path: `${options.basePath}/badges/kpi/number-of-badges-awarded`,
     handler: handlers.actHandlerNeedsCdfAdmin('kpiNumberOfBadgesAwarded'),
