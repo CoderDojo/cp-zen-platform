@@ -137,7 +137,9 @@
 
   };
 
-
+  function reloadPage() {
+    window.location.reload(true);
+  }
 
 
   angular.module('cpZenPlatform')
@@ -196,6 +198,11 @@
           parent: 'dashboard',
           url: "/polls/:pollId/results",
           template: '<cdf-poll-details></cdf-poll-details>',
+        })
+        .state("users", {
+          parent: 'dashboard',
+          url: "/users",
+          controller: reloadPage,
         })
         .state("orgs", {
           parent: 'dashboard',
