@@ -9,7 +9,7 @@ module.exports = [
   {
     method: 'GET',
     path: `${basePath}/users`,
-    handler: userHandlers.get(),
+    handler: userHandlers.search(),
     config: {
       auth: auth.cdfAdmin,
       description: 'Search for users',
@@ -80,6 +80,8 @@ module.exports = [
       validate: {
         params: {
           userId: Joi.string().guid().required(),
+        },
+        payload: {
           soft: Joi.boolean(),
           cascade: Joi.boolean(),
         },

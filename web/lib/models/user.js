@@ -8,7 +8,7 @@ class User {
       json: true,
     });
   }
-  get(query) {
+  search(query) {
     return this.transport.get('users', { qs: query });
   }
   load(userId, query) {

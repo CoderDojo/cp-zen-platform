@@ -3,12 +3,12 @@ const User = require('../models/user');
 const Applications = require('../models/application');
 const Memberships = require('../models/membership');
 
-const get = params => // eslint-disable-line no-unused-vars
+const search = params => // eslint-disable-line no-unused-vars
   mastermind([
     // eslint-disable-next-line no-unused-vars
     async (req, reply, cb) => {
       const related = `[${req.query.related}]`;
-      const users = await User.get({ ...req.query, related });
+      const users = await User.search({ ...req.query, related });
       return reply(users).code(200);
     },
   ]);
@@ -63,7 +63,7 @@ const load = params => // eslint-disable-line no-unused-vars
     },
   ]);
 module.exports = {
-  get,
+  search,
   delete: remove,
   load,
 };

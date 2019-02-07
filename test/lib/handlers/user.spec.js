@@ -10,7 +10,7 @@ exports.lab = lab;
 lab.describe('user handler', () => {
   const sandbox = sinon.sandbox.create();
   const User = {
-    get: sandbox.stub(),
+    search: sandbox.stub(),
     load: sandbox.stub(),
     delete: sandbox.stub(),
   };
@@ -48,19 +48,19 @@ lab.describe('user handler', () => {
       done();
     });
     lab.test('it should return the user', async () => {
-      User.get.resolves({ id: 1 });
+      User.search.resolves({ results: [{ id: 1 }], total: 1 });
       req = {
         query: {
           email: 'banana@example.com',
           related: 'profile',
         },
       };
-      await fn.get()[0](req, reply);
-      expect(User.get).to.have.been.calledWith({
+      await fn.search()[0](req, reply);
+      expect(User.search).to.have.been.calledWith({
         email: 'banana@example.com',
         related: '[profile]',
       });
-      expect(reply).to.have.been.calledOnce.and.calledWith({ id: 1 });
+      expect(reply).to.have.been.calledOnce.and.calledWith({ results: [{ id: 1 }], total: 1 });
       expect(code).to.have.been.calledOnce.and.calledWith(200);
     });
     lab.test('it should call cb on error', async () => {
@@ -71,11 +71,11 @@ lab.describe('user handler', () => {
           related: 'profile',
         },
       };
-      User.get.rejects(err);
+      User.search.rejects(err);
       try {
-        await fn.get()[0](req, reply);
+        await fn.search()[0](req, reply);
       } catch (e) {
-        expect(User.get).to.have.been.calledWith({
+        expect(User.search).to.have.been.calledWith({
           email: 'banana@example.com',
           related: '[profile]',
         });
