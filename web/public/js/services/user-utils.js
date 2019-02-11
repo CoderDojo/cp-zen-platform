@@ -59,8 +59,10 @@ angular.module('cpZenPlatform').factory('userUtils',
             } else if (userFormData.referer) {
               params.referer = userFormData.referer;
             }
-
-            $window.location.href = $state.href('edit-user-profile', params);
+            // Note GFE 2019/02/08: replace default navigation to home
+            // eventId can be ignored as all flows goes through Vuejs 
+            // Other referers might be in use: accepting an invite
+            $window.location.href = params.referer ? params.referer : '/home'; 
           }
         });
       } else {
