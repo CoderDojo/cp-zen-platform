@@ -253,28 +253,24 @@
           controller: 'login'
         })
         .state("register-account.require", {
-          url: "/account",
+          url: "/account?referer",
           template: '<div class="col-xs-12 col-md-6">'+
             '<cd-register-user ng-init="size=\'col-xs-12\'; buttonSize=\'col-xs-4\'"></cd-register-user></div>' +
           '<div class="col-xs-12 col-md-6">' +
             '<cd-login ng-init="size=\'col-xs-12\';"></cd-login></div>',
           params: {
             pageTitle: 'Register',
+            referer: null,
           }
         })
         .state("register-account.user", {
           url: "/user",
           template:
           '<cd-register-user></cd-register-user>',
-          params: {
-            referer:null,
-          }
         })
         .state("register-account.profile", {
           url: "/profile",
           template: '<cd-register-profile></cd-register-profile>',
-          params: {
-          }
         })
         .state("stats", {
           url: "/stats",
@@ -932,7 +928,10 @@
           }
         });
       $urlRouterProvider.when('', '/');
-      $urlRouterProvider.when('/register', '/register/user');
+      $urlRouterProvider.when('/register?referer', ['$state', '$location', function($state, $location) {
+        // For some reasons, abstract states don't capture the query params
+        $state.go('register-account.user', $location.search());
+      }]);
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');
