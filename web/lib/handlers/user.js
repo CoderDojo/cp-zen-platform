@@ -17,7 +17,7 @@ const remove = params => // eslint-disable-line no-unused-vars
     async (req, reply, next) => {
       const user = await User.load(req.params.userId, { related: '[profile, children]' });
       req.app.users = [user.id];
-      if (req.payload.cascade && user.profile.children && user.profile.children > 0) {
+      if (req.payload.cascade && user.profile.children && user.profile.children.length > 0) {
         req.app.users = req.app.users.concat(user.profile.children);
       }
       try {
@@ -30,7 +30,7 @@ const remove = params => // eslint-disable-line no-unused-vars
     async (req, reply, next) => {
       await Promise.all(req.app.users.map(async (u) => {
         try {
-          await Applications.forUser.delete(u, { soft: req.payload.soft });
+          await Applications.forUser.delete(u, { soft: !!req.payload.soft });
         } catch (e) {
           // 404 means the user didn't have any applications.. Which is fine
           if (e.statusCode !== 404) {
@@ -44,7 +44,7 @@ const remove = params => // eslint-disable-line no-unused-vars
     async (req, reply) => {
       await Promise.all(req.app.users.map(async (u) => {
         try {
-          await Memberships.delete(u, { soft: req.payload.soft });
+          await Memberships.delete(u, { soft: !!req.payload.soft });
         } catch (e) {
           // 404 means the user didn't have any membership.. Which is fine
           if (e.statusCode !== 404) {
