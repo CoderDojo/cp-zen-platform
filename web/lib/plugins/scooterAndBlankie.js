@@ -8,7 +8,7 @@ exports.register = (server, options, next) => {
       register: blankie,
       options: {
         childSrc: "'none'",
-        connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com https://www.eventbrite.com https://coderdojo.com https://learning-admin.raspberrypi.org",
+        connectSrc: "'self' https://*.intercom.io wss://*.intercom.io https://api-ping.intercom.io https://*.amazonaws.com https://www.eventbrite.com https://coderdojo.com https://learning-admin.raspberrypi.org https://forums.coderdojo.com",
         defaultSrc: "'none'",
         fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
         frameSrc: 'https://www.google.com https://www.youtube.com',
