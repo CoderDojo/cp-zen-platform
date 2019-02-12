@@ -96,10 +96,28 @@ angular
         //the extend is a hack for backward compat
         utilsService.getLocationFromAddress(_.cloneDeep(ctrl.ngModel))
         .then(function (data) {
+          var match = data[0];
           ctrl.ngModel.geoPoint = {
-            lat: data.lat,
-            lon: data.lng
+            lat: match.geometry.location.lat(),
+            lon: match.geometry.location.lng()
           };
+          // Ensure we don't keep previous's location data when nothing is found
+          ctrl.ngModel.state = {};
+          ctrl.ngModel.county = {};
+          // Set the new county/state
+          var state = match.address_components.find(function(addressPart) {
+            return addressPart.types.indexOf('administrative_area_level_1') > -1;
+          });
+          var county = match.address_components.find(function(addressPart) {
+            return addressPart.types.indexOf('administrative_area_level_2') > -1;
+          });
+          if (state) {
+            ctrl.ngModel.state = { name: state.short_name };
+          }
+          if (county) {
+            ctrl.ngModel.county = { name: county.short_name };
+          }
+
           ctrl.setPoint(ctrl.ngModel.geoPoint, zoom);
         }, function (err) {
           //Ask user to add location manually if google geocoding can't find location.

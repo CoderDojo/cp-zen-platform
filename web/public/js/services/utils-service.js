@@ -126,7 +126,7 @@ angular.module('cpZenPlatform').factory('utilsService', ['cdDojoService', '$q', 
       }
       var addr1 = (typeof obj.address1 !== 'undefined') ? obj.address1 + ', ' : "";
       address = address + ', ' + country;
-      Geocoder.latLngForAddress(addr1 + address).then(function (data) {
+      Geocoder.geocode(addr1 + address, country).then(function (data) {
         deferred.resolve(data);
       }, function (err) {
         deferred.reject('Error geocoding');

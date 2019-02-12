@@ -36,6 +36,11 @@ module.exports = function () {
     optionalUri() {
       return Joi.alternatives().try(joiValidator.uri(), Joi.string().valid(null), Joi.string().allow(''));
     },
+    area() {
+      return Joi.object({
+        name: Joi.string(),
+      });
+    },
     country() {
       return Joi.object().keys({
         countryName: Joi.string().required(),
@@ -133,6 +138,8 @@ module.exports = function () {
         }),
         address1: Joi.string(),
         type: Joi.string().only(['office', 'public_space', 'tech_hub', 'library', 'maker_space', 'school', 'university', 'other']).allow(null),
+        county: joiValidator.area(),
+        state: joiValidator.area(),
         alternativeType: Joi.string().optional(),
         corporate: Joi.string(),
         alternativeCorporate: Joi.string().optional(),
