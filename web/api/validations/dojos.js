@@ -75,7 +75,7 @@ module.exports = function () {
         linkedin: joiValidator.linkedin(),
         confidentMentoring: Joi.number(), // deprecated, GFE 15/08/2018
         confidentCoding: Joi.number(), // deprecated, GFE 15/08/2018
-        reference: Joi.string().only(['search_engine', 'volunteers', 'organisations', 'future_learn', 'developpers', 'events', 'word_of_mouth', 'family', 'media', 'other']),
+        reference: Joi.string().only(['search_engine', 'volunteers', 'foundation', 'social', 'future_learn', 'employer', 'events', 'library', 'word_of_mouth', 'other']),
         alternativeReference: Joi.string().optional(),
         isValid: Joi.boolean().required(),
         visited: Joi.boolean().required(),
