@@ -112,10 +112,14 @@ angular
             return addressPart.types.indexOf('administrative_area_level_2') > -1;
           });
           if (state) {
-            ctrl.ngModel.state = { name: state.short_name };
+            if (!county) {
+              ctrl.ngModel.county= { name: state.long_name, shortCode: state.short_name };
+            } else {
+              ctrl.ngModel.state = { name: state.long_name, shortCode: state.short_name };
+            }
           }
           if (county) {
-            ctrl.ngModel.county = { name: county.short_name };
+            ctrl.ngModel.county = { name: county.long_name };
           }
 
           ctrl.setPoint(ctrl.ngModel.geoPoint, zoom);

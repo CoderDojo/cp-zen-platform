@@ -39,6 +39,7 @@ module.exports = function () {
     area() {
       return Joi.object({
         name: Joi.string(),
+        shortCode: Joi.string(),
       });
     },
     country() {
