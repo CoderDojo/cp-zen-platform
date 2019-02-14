@@ -14,7 +14,7 @@ angular
       var ctrl = this;
       ctrl.days = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       ctrl.getReferenceValue = function (id) {
-        return _.find(dojoUtils.startingDojoSrcs, {'id': id}).name;
+        return _.find(dojoUtils.startingDojoSrcsWithDeprecated, {'id': id}).name;
       };
       ctrl.getFirstSessionValue= function (id) {
         return _.find(dojoUtils.nextDateOptions, {'id': id}).name;
