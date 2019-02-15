@@ -153,6 +153,38 @@ angular.module('cpZenPlatform').factory('dojoUtils', ['$location', '$translate',
     { id: 'other',
       name: $translate.instant('Other (comment field)')}
   ];
+
+  dojoUtils.startingDojoSrcsWithDeprecated = [
+    { id: 'search_engine',
+      name: $translate.instant('Search Engine')},
+    { id: 'volunteers',
+      name: $translate.instant('CoderDojo Volunteers')},
+    { id: 'foundation',
+      name: $translate.instant('Raspberry Pi Foundation / CoderDojo Foundation outreach')},
+    { id: 'social',
+      name: $translate.instant('Social media')},
+    { id: 'future_learn',
+      name: 'Future Learn'},
+    { id: 'employer',
+      name: $translate.instant('My employer (CSR scheme at work)')},
+    { id: 'events',
+      name: $translate.instant('Event / Conference / Training')},
+    { id: 'library',
+      name: $translate.instant('Library or youth group')},
+    { id: 'word_of_mouth',
+      name: $translate.instant('Word of Mouth')},
+    { id: 'other',
+      name: $translate.instant('Other (comment field)')}
+    { id: 'organisations',
+      name: $translate.instant('Other Coding Organisations (no longer used)')},
+    { id: 'developpers',
+      name: $translate.instant('Development Community (no longer used)')},
+    { id: 'family',
+      name: $translate.instant('Family/Friends (no longer used)')},
+    { id: 'media',
+      name: $translate.instant('Media (newspaper/radio) (no longer used)')},
+  ];
+
   dojoUtils.nextDateOptions = [
     { id: 'already-did', name: $translate.instant('We already had a session') },
     { id: 'next-3-months', name: $translate.instant('In the next three months') },
