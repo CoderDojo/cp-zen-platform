@@ -101,9 +101,20 @@ angular
             lat: match.geometry.location.lat(),
             lon: match.geometry.location.lng()
           };
+          ctrl.ngModel.coordinates = match.geometry.location.lat() + ', ' + match.geometry.location.lng();
+
           // Ensure we don't keep previous's location data when nothing is found
+          ctrl.ngModel.admin1Code = undefined;
+          ctrl.ngModel.admin1Name = undefined;
+          ctrl.ngModel.admin2Code = undefined;
+          ctrl.ngModel.admin2Name = undefined;
+          ctrl.ngModel.admin3Code = undefined;
+          ctrl.ngModel.admin3Name = undefined;
+          ctrl.ngModel.admin4Code = undefined;
+          ctrl.ngModel.admin4Name = undefined;
           ctrl.ngModel.state = {};
           ctrl.ngModel.county = {};
+          ctrl.ngModel.city = {};
           // Set the new county/state
           var state = match.address_components.find(function(addressPart) {
             return addressPart.types.indexOf('administrative_area_level_1') > -1;
@@ -111,6 +122,20 @@ angular
           var county = match.address_components.find(function(addressPart) {
             return addressPart.types.indexOf('administrative_area_level_2') > -1;
           });
+          var city = match.address_components.find(function(addressPart) {
+            return addressPart.types.indexOf('locality') > -1;
+          });
+          if (!city) {
+            city = match.address_components.find(function(addressPart) {
+              return addressPart.types.indexOf('sublocality') > -1;
+            });
+            if (!city) {
+              city = match.address_components.find(function(addressPart) {
+                return addressPart.types.indexOf('neighborhood') > -1;
+              });
+            }
+          }
+
           if (state) {
             if (!county) {
               ctrl.ngModel.county= { name: state.long_name, shortCode: state.short_name };
@@ -121,7 +146,9 @@ angular
           if (county) {
             ctrl.ngModel.county = { name: county.long_name };
           }
-
+          if (city) {
+            ctrl.ngModel.city = { name: city.long_name };
+          }
           ctrl.setPoint(ctrl.ngModel.geoPoint, zoom);
         }, function (err) {
           //Ask user to add location manually if google geocoding can't find location.
