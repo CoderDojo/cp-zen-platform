@@ -140,6 +140,8 @@ module.exports = function () {
         address1: Joi.string(),
         type: Joi.string().only(['office', 'public_space', 'tech_hub', 'library', 'maker_space', 'school', 'university', 'other']).allow(null),
         county: joiValidator.area(),
+        city: joiValidator.area(),
+        coordinates: Joi.string(),
         state: joiValidator.area(),
         alternativeType: Joi.string().optional(),
         corporate: Joi.string(),
