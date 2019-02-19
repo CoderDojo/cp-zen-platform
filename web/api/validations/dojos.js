@@ -186,11 +186,6 @@ module.exports = function() {
           lon: Joi.number(),
         }),
         address1: Joi.string(),
-<<<<<<< HEAD
-        county: joiValidator.area(),
-        city: joiValidator.area(),
-        coordinates: Joi.string(),
-        state: joiValidator.area(),
         type: Joi.string()
           .only([
             'office',
