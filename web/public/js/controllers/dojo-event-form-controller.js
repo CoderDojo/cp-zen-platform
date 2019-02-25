@@ -141,6 +141,7 @@
     $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.toDate;
     $scope.eventInfo.notifyOnPublish = false;
 
+    $scope.saving = false;
     $scope.datepicker = {};
     $scope.datepicker.minDate = now;
     $scope.hasAccess = true;
@@ -499,6 +500,7 @@
 
     $scope.submit = function(eventInfo) {
       usSpinnerService.spin('create-event-spinner');
+      $scope.saving = true;
 
       if($scope.googleMaps && $scope.googleMaps.marker) {
         var eventPosition = {
@@ -549,6 +551,7 @@
       if (_.isEmpty(eventInfo.dates)) {
         alertService.showError($translate.instant('Day selected doesn\'t exist in date range, please check your date range.'));
         usSpinnerService.stop('create-event-spinner');
+        $scope.saving = false;
         return;
       }
       if ($scope.dojoInfo.stage !== 4) {
@@ -575,6 +578,7 @@
             notifyOnPublish: eventInfo.notifyOnPublish,
           },
           function (response) {
+            $scope.saving = false;
             if(response.ok === false) {
               alertService.showError($translate.instant(response.why));
             } else {
@@ -596,11 +600,13 @@
           },
           function (err){
             alertService.showError($translate.instant('Error setting up event') + ' ' + err);
+            $scope.saving = false;
             goToMyDojos($state, usSpinnerService, dojoId)
           }
         );
       } else {
         alertService.showError($translate.instant('Error setting up event'));
+        $scope.saving = false;
         goToMyDojos($state, usSpinnerService, dojoId)
       }
     };
