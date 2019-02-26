@@ -44,7 +44,7 @@
     "debug": "2.2.0",
     "dustjs-helpers": "1.6.1",
     "dustjs-linkedin": "2.7.5",
-    "glob": "4.5.3",
+    "glob": "7.0",
     "good": "6.3.0",
     "good-file": "5.0.1",
     "good-http": "5.0.x",
