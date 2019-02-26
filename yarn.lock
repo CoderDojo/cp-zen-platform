@@ -1431,12 +1431,10 @@ cp-translations@1.0.121:
 cp-translations@1.0.123:
   version "1.0.123"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.123.tgz#aa0fbd2e8bf35ff344f5e28f1d311edeb3ce65f3"
-  integrity sha512-RnrpTnShOXSNaVvwVh4IRm351JRtL9yLc1dcUZNb8CniKtHK4lHEDQf+KLVOUYY+NxG4e74VS27ToCvIakmgGA==
 
 cp-zen-frontend@1.0.89:
   version "1.0.89"
   resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.89.tgz#fb46f81826643ebb999800f91fa6c39df8166e46"
-  integrity sha512-2u6dc77y5GI0j6zJsUmeaQu+xY/wXZk88tH4hPNVQJIHNjmg78J7sjtpgw2lDE1WhftzDIcFrJKVYcSpWts0Zw==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.3.7"
@@ -2124,7 +2122,6 @@ eslint-config-hapi@10.x.x:
 eslint-config-prettier@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.0.0.tgz#16cedeea0a56e74de60dcbbe3be0ab2c645405b9"
-  integrity sha512-kWuiJxzV5NwOwZcpyozTzDT5KJhBw292bbYro9Is7BWnbNMg15Gmpluc1CTetiCatF8DRkNvgPAOaSyg+bYr3g==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -2185,7 +2182,6 @@ eslint-plugin-jsx-a11y@^5.1.1:
 eslint-plugin-prettier@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.0.1.tgz#19d521e3981f69dd6d14f64aec8c6a6ac6eb0b0d"
-  integrity sha512-/PMttrarPAY78PLvV3xfWibMOdMDl57hmlQ2XqFeA37wd+CJ7WSxV7txqjVPHi/AAFKd2lX0ZqfsOc/i5yFCSQ==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -2208,48 +2204,6 @@ eslint-scope@^3.7.1:
   dependencies:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
-
-eslint@4.5.x:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.5.0.tgz#bb75d3b8bde97fb5e13efcd539744677feb019c3"
-  dependencies:
-    ajv "^5.2.0"
-    babel-code-frame "^6.22.0"
-    chalk "^2.1.0"
-    concat-stream "^1.6.0"
-    cross-spawn "^5.1.0"
-    debug "^2.6.8"
-    doctrine "^2.0.0"
-    eslint-scope "^3.7.1"
-    espree "^3.5.0"
-    esquery "^1.0.0"
-    estraverse "^4.2.0"
-    esutils "^2.0.2"
-    file-entry-cache "^2.0.0"
-    functional-red-black-tree "^1.0.1"
-    glob "^7.1.2"
-    globals "^9.17.0"
-    ignore "^3.3.3"
-    imurmurhash "^0.1.4"
-    inquirer "^3.0.6"
-    is-resolvable "^1.0.0"
-    js-yaml "^3.9.1"
-    json-stable-stringify "^1.0.1"
-    levn "^0.3.0"
-    lodash "^4.17.4"
-    minimatch "^3.0.2"
-    mkdirp "^0.5.1"
-    natural-compare "^1.4.0"
-    optionator "^0.8.2"
-    path-is-inside "^1.0.2"
-    pluralize "^4.0.0"
-    progress "^2.0.0"
-    require-uncached "^1.0.3"
-    semver "^5.3.0"
-    strip-ansi "^4.0.0"
-    strip-json-comments "~2.0.1"
-    table "^4.0.1"
-    text-table "~0.2.0"
 
 eslint@4.7.x:
   version "4.7.2"
@@ -2335,7 +2289,7 @@ eslint@^4.0.0, eslint@^4.5.0:
     table "^4.0.1"
     text-table "~0.2.0"
 
-espree@3.5.x, espree@^3.5.0:
+espree@3.5.x:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/espree/-/espree-3.5.0.tgz#98358625bdd055861ea27e2867ea729faf463d8d"
   dependencies:
@@ -2538,7 +2492,6 @@ fast-deep-equal@^1.0.0:
 fast-diff@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
-  integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -2547,6 +2500,10 @@ fast-json-stable-stringify@^2.0.0:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
+fast-safe-stringify@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-1.2.3.tgz#9fe22c37fb2f7f86f06b8f004377dbf8f1ee7bc1"
 
 fbjs@^0.8.9:
   version "0.8.15"
@@ -2871,10 +2828,6 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
 
-g@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/g/-/g-2.0.1.tgz#0b5963ebd0ca70e3bc8c6766934a021821c8b857"
-
 gate-executor@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/gate-executor/-/gate-executor-0.2.3.tgz#c98e114d803f262cd7573294a81182cce41d3c65"
@@ -2919,7 +2872,6 @@ get-func-name@^2.0.0:
 get-stdin@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
-  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 get-stream@^3.0.0:
   version "3.0.0"
@@ -3478,18 +3430,17 @@ hapi-scope-start@2.x.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/hapi-scope-start/-/hapi-scope-start-2.1.1.tgz#7495a726fe72b7bca8de2cdcc1d87cd8ce6ab4f2"
 
-hapi-swagger@7.x:
-  version "7.7.1"
-  resolved "https://registry.yarnpkg.com/hapi-swagger/-/hapi-swagger-7.7.1.tgz#ddcee31f3d769237e3fd915ca2217261b39a5e52"
+hapi-swagger@7.9.1:
+  version "7.9.1"
+  resolved "https://registry.yarnpkg.com/hapi-swagger/-/hapi-swagger-7.9.1.tgz#b36bca5fab014a217e8ec3c60d40a819315cb559"
   dependencies:
     boom "^5.2.0"
-    g "^2.0.1"
+    fast-safe-stringify "^1.2.0"
     handlebars "^4.0.10"
     hoek "^4.2.0"
     http-status "^1.0.1"
-    joi "10.6.0"
+    joi "11.0.2"
     json-schema-ref-parser "^3.3.1"
-    lab "^14.2.0"
     swagger-parser "^3.4.2"
 
 hapi@16.x:
@@ -4251,6 +4202,12 @@ isemail@3.x:
   dependencies:
     punycode "2.x.x"
 
+isemail@3.x.x:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/isemail/-/isemail-3.2.0.tgz#59310a021931a9fb06bbb51e155ce0b3f236832c"
+  dependencies:
+    punycode "2.x.x"
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -4299,12 +4256,21 @@ jed@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/jed/-/jed-1.1.1.tgz#7a549bbd9ffe1585b0cd0a191e203055bee574b4"
 
-joi@10.6.0, joi@10.x, joi@10.x.x, joi@^10.6.0:
+joi@10.x, joi@10.x.x, joi@^10.6.0:
   version "10.6.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-10.6.0.tgz#52587f02d52b8b75cdb0c74f0b164a191a0e1fc2"
   dependencies:
     hoek "4.x.x"
     isemail "2.x.x"
+    items "2.x.x"
+    topo "2.x.x"
+
+joi@11.0.2:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-11.0.2.tgz#5345ccf26f070e00b91add74ecbf3356df38e364"
+  dependencies:
+    hoek "4.x.x"
+    isemail "3.x.x"
     items "2.x.x"
     topo "2.x.x"
 
@@ -4486,29 +4452,6 @@ kind-of@^5.0.0, kind-of@^5.0.2:
 kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
-
-lab@^14.2.0:
-  version "14.2.2"
-  resolved "https://registry.yarnpkg.com/lab/-/lab-14.2.2.tgz#9f8bf3a1c87fd7e5bf06ae20a7e15d064e8893aa"
-  dependencies:
-    bossy "3.x.x"
-    code "4.1.x"
-    diff "3.3.x"
-    eslint "4.5.x"
-    eslint-config-hapi "10.x.x"
-    eslint-plugin-hapi "4.x.x"
-    espree "3.5.x"
-    find-rc "3.0.x"
-    handlebars "4.x.x"
-    hoek "4.x.x"
-    items "2.x.x"
-    json-stable-stringify "1.x.x"
-    json-stringify-safe "5.x.x"
-    mkdirp "0.5.x"
-    seedrandom "2.4.x"
-    source-map "0.5.x"
-    source-map-support "0.4.x"
-    supports-color "4.4.x"
 
 lab@^14.3.2:
   version "14.3.2"
@@ -6078,10 +6021,6 @@ pkg-dir@^1.0.0:
   dependencies:
     find-up "^1.0.0"
 
-pluralize@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-4.0.0.tgz#59b708c1c0190a2f692f1c7618c446b052fd1762"
-
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
@@ -6141,14 +6080,12 @@ preserve@^0.2.0:
 prettier-linter-helpers@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
-  integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
 
 prettier@^1.16.4:
   version "1.16.4"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
-  integrity sha512-ZzWuos7TI5CKUeQAtFd6Zhm2s6EpAD/ZLApIhsF9pRvRtM1RFo61dM/4MSRUA0SuLugA/zgrZD8m0BaY46Og7g==
 
 pretty-hrtime@^1.0.0:
   version "1.0.3"
@@ -7210,10 +7147,6 @@ source-map-url@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.3.0.tgz#7ecaf13b57bcd09da8a40c5d269db33799d4aaf9"
 
-source-map@0.5.x, source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
-
 source-map@0.6.x, source-map@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
@@ -7229,6 +7162,10 @@ source-map@^0.4.4:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
   dependencies:
     amdefine ">=0.0.4"
+
+source-map@^0.5.1, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
 sparkles@^1.0.0:
   version "1.0.0"

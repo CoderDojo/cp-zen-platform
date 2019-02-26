@@ -53,7 +53,7 @@
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
     "hapi-ip2country-plugin": "^1.0.1",
-    "hapi-swagger": "7.x",
+    "hapi-swagger": "7.9.1",
     "inert": "4.x",
     "isemail": "3.x",
     "jed": "1.0.2",
