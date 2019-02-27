@@ -64,7 +64,7 @@
     "lodash": "4.17.10",
     "lodash-deep": "1.6.0",
     "moment": "^2.18.1",
-    "newrelic": "^2.3",
+    "newrelic": "5.5.0",
     "po2json": "0.4.1",
     "proxyquire": "^1.8.0",
     "request": "^2.87.0",
