@@ -332,11 +332,9 @@ angular
           // The user may already have signed the charter, we load this separatly
           .then(function () {
             var agreement = {};
-            cdAgreementsService.getCurrentCharterVersion()
+            return cdAgreementsService.getCurrentCharterVersion()
             .then(function (response) {
               agreement.version = response.data.version;
-            })
-            .then(function () {
               return cdAgreementsService.loadUserAgreement(agreement.version, ctrl.profile.userId)
               .then(function (response) {
                 if (response.data) {
@@ -346,7 +344,9 @@ angular
                   agreement = ctrl.application.charter || {};
                 }
               })
-              .finally(function () { ctrl.setCharterStatus(agreement); });
+              .finally(function () {
+                ctrl.setCharterStatus(agreement);
+              });
             });
           })
           .then(function () {
