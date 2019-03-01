@@ -3,7 +3,6 @@
   'use strict';
 
   function getEveryTargetWeekdayInDateRange(startDateTime, endDateTime, targetWeekday, eventType) {
-    endDateTime = moment.utc(endDateTime).add(1, 'days');
     var startTimeHour = moment(startDateTime.toDate()).hour();
     var startTimeMin = moment(startDateTime.toDate()).minute();
     var endTimeHour = moment(endDateTime.toDate()).hour();
