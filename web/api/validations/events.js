@@ -10,6 +10,7 @@ const definitions = {
   isPublic: Joi.number().valid(0, 1),
   related: Joi.string().valid('sessions', 'sessions.tickets'),
   utcOffset: Joi.number().integer(),
+  zone: Joi.string().regex(/^[a-zA-Z]+\/[a-zA-Z]+$/),
 };
 module.exports = {
   base: query.base,
