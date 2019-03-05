@@ -35,7 +35,6 @@ module.exports = [
           'query[beforeDate]': beforeDate,
           'query[afterDate]': afterDate,
           'query[utcOffset]': utcOffset,
-          'query[zone]': zone,
           related,
         }),
       },
