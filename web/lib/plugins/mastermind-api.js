@@ -4,6 +4,7 @@ const dojo = require('../../api/mastermind/dojo.js');
 const event = require('../../api/mastermind/event.js');
 const user = require('../../api/mastermind/user.js');
 const order = require('../../api/mastermind/order.js');
+const lead = require('../../api/mastermind/lead.js');
 
 exports.register = (server, options, next) => {
   server.ext('onPreResponse', senecaWebErrorHandler, { sandbox: 'plugin' });
@@ -16,6 +17,7 @@ exports.register = (server, options, next) => {
   event.forEach(registerRoute);
   order.forEach(registerRoute);
   user.forEach(registerRoute);
+  lead.forEach(registerRoute);
   next();
 };
 
