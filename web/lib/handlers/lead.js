@@ -3,7 +3,7 @@ const Lead = require('../models/lead');
 
 const list = params => // eslint-disable-line no-unused-vars
   mastermind([
-    async (req, reply, cb) => {
+    async (req, reply) => {
       const leads = await Lead.list(req.query);
       return reply(leads).code(200);
     },

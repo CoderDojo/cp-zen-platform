@@ -28,7 +28,7 @@ lab.describe('lead handler', () => {
     sandbox.reset();
     done();
   });
-  lab.describe.only('GET', () => {
+  lab.describe('GET', () => {
     const user = { id: 'user1' };
     const req = {
       query: { userId: 'user1' },
