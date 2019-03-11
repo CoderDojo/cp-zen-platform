@@ -28,6 +28,9 @@ jobs:
       - run:
           name: Tests
           command: yarn test
+      - run:
+          name: Linting
+          command: yarn lint
   deploy:
     working_directory: ~/cp-zen-platform
     docker:
