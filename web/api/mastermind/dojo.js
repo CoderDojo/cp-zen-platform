@@ -1,9 +1,11 @@
 const Joi = require('joi');
 const auth = require('../../lib/authentications');
 const dojoHandlers = require('../../lib/handlers/dojo');
+const membershipHandlers = require('../../lib/handlers/membership');
 const joiValidator = require('../validations/dojos')();
 
 const basePath = '/api/2.0';
+const basePath3 = '/api/3.0';
 
 module.exports = [
   {
@@ -147,4 +149,37 @@ module.exports = [
       },
     },
   },
+  {
+    method: 'POST',
+    path: `${basePath3}/dojos/{id}/membership-request`,
+    handler: membershipHandlers.request(), 
+    config: {
+      auth: auth.apiUser,
+      description: 'Request to join a Dojo',
+      notes: 'Saves in the user profile and send an email to the Dojo owner',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [
+            { role: 'basic-user' },
+          ],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+        },
+        payload: Joi.object({
+          userType: joiValidator.userTypes().required(),
+        }),
+      },
+    },
+  },
+
 ];

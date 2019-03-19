@@ -310,6 +310,9 @@ module.exports = function() {
     guid() {
       return Joi.alternatives().try(Joi.string().guid(), Joi.string());
     },
+    userTypes() {
+      return Joi.string().valid('champion', 'mentor', 'parent-guardian', 'attendee-o13', 'attendee-u13');
+    },
   };
   return joiValidator;
 };

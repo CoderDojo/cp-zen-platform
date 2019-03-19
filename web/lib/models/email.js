@@ -10,6 +10,8 @@ class Email {
       json: true,
     });
     this.options = options;
+    this.defaultAddress = 'info@coderdojo.org';
+    this.defaultEmail = `The CoderDojo Team <${this.defaultAddress}>`;
   }
   // eslint-disable-next-line class-methods-use-this
   formatTime(date) {
