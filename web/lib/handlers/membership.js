@@ -32,7 +32,7 @@ const request = params => // eslint-disable-line no-unused-vars
   ]);
 const loadPending = params => // eslint-disable-line no-unused-vars
   mastermind([
-    async (req, reply, next) => {
+    async (req, reply) => {
       const { requestId } = req.params;
       const membershipRequest = await MembershipRequests.load(requestId);
 			reply(membershipRequest);
@@ -51,7 +51,7 @@ const accept = params => // eslint-disable-line no-unused-vars
       req.app.membership = await Membership.create(userId, dojoId, userType);
       next();
     },
-    async (req, reply, next) => {
+    async (req, reply) => {
       const { requestId } = req.params;
       await MembershipRequests.delete(requestId, req.app.membershipRequest.userId);
       reply(req.app.membership).code(200);
@@ -64,7 +64,7 @@ const refuse = params => // eslint-disable-line no-unused-vars
       req.app.membershipRequest = await MembershipRequests.load(requestId);
       next();
     },
-    async (req, reply, next) => {
+    async (req, reply) => {
       const { requestId } = req.params;
       await MembershipRequests.delete(requestId, req.app.membershipRequest.userId);
       reply().code(200);
