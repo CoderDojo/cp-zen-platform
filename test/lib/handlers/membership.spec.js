@@ -12,7 +12,12 @@ lab.describe('membership handler', () => {
   const Memberships = {
     create: sandbox.stub(),
   };
-    const Dojos = {
+  const MembershipRequests = {
+    create: sandbox.stub(),
+    load: sandbox.stub(),
+    delete: sandbox.stub(),
+  };
+  const Dojos = {
     load: sandbox.stub(),
   };
   const Users = {
@@ -24,7 +29,8 @@ lab.describe('membership handler', () => {
 
   const fn = proxy('../../../web/lib/handlers/membership.js', {
     '../mastermind': cbs => cbs,
-    '../models/membership-request': Memberships,
+    '../models/membership-request': MembershipRequests,
+    '../models/membership': Memberships,
     '../models/dojo': Dojos,
     '../models/user': Users,
     '../models/membership-emails': Notifications,
@@ -60,7 +66,7 @@ lab.describe('membership handler', () => {
     lab.test('it should create the membership', async () => {
       Memberships.create.resolves({ id: 'm1', userType: 'mentor', dojoId: 'd1', userId: 'u1' });
       await fn.request()[0](req, reply, next); 
-      expect(Memberships.create).to.have.been.calledWith(
+      expect(MembershipRequests.create).to.have.been.calledWith(
         'u1',
         'mentor',
         'd1',
@@ -92,5 +98,55 @@ lab.describe('membership handler', () => {
       expect(code).to.have.been.calledOnce.and
         .calledWith(200);
     });
- });
+  });
+  lab.describe('PUT', () => {
+    const next = sandbox.stub();
+    const req = {
+      params: { requestId: 'rq1' },
+      user: { user: { id: 'u1' } },
+      app: { },
+    };
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should load the existing join request', async () => {
+      const response = { id: 'rq1', userType: 'mentor', dojoId: 'd1', userId: 'u1' };
+      MembershipRequests.load.resolves(response);
+      await fn.accept()[0](req, reply, next);
+      expect(MembershipRequests.load).to.have.been.calledWith('rq1');
+      expect(req.app.membershipRequest).to.eql(response);
+      expect(next).to.have.been.calledOnce;
+    });
+    lab.test('it should create the membership', async () => {
+      req.app.membershipRequest = { id: 'rq1', userType: 'mentor', dojoId: 'd1', userId: 'u1' };
+      Memberships.create.resolves({ id: 'm1', userTypes: ['mentor'], dojoId: 'd1', userId: 'u1' });
+      await fn.accept()[1](req, reply, next);
+      expect(Memberships.create).to.have.been.calledWith('u1', 'd1', 'mentor');
+    });
+    lab.test('it should remove the join request', async () => {
+      req.app.membershipRequest = { id: 'rq1', userType: 'mentor', dojoId: 'd1', userId: 'u1' };
+      MembershipRequests.delete.resolves({});
+      await fn.accept()[2](req, reply, next);
+      expect(MembershipRequests.delete).to.have.been.calledWith('rq1', 'u1');
+    });
+  });
+  lab.describe('GET', () => {
+    const next = sandbox.stub();
+    const req = {
+      params: { requestId: 'rq1' },
+      user: { user: { id: 'u1' } },
+    };
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should load the existing join request', async () => {
+      MembershipRequests.load.resolves({ id: 'rq1' });
+      await fn.loadPending()[0](req, reply, next);
+      expect(MembershipRequests.load).to.have.been.calledOnce.and.calledWith('rq1');
+      expect(next).to.not.have.been.called;
+      expect(reply).to.have.been.calledOnce.and.calledWith({ id: 'rq1' });
+    });
+  });
 });

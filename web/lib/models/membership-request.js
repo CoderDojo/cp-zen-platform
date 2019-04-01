@@ -13,6 +13,13 @@ class MembershipRequest {
       body: { userType, dojoId },
     });
   }
+  load(requestId) {
+    return this.transport.get(`/join_requests/${requestId}`);
+  }
+  delete(requestId, userId) {
+    return this.transport.delete(`/users/${userId}/join_requests/${requestId}`);
+  }
+
 }
 
 module.exports = new MembershipRequest();

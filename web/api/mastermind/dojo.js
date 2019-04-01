@@ -151,8 +151,8 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: `${basePath3}/dojos/{id}/membership-request`,
-    handler: membershipHandlers.request(), 
+    path: `${basePath3}/dojos/{id}/membership-requests`,
+    handler: membershipHandlers.request(),
     config: {
       auth: auth.apiUser,
       description: 'Request to join a Dojo',
@@ -181,5 +181,113 @@ module.exports = [
       },
     },
   },
-
+  {
+    method: 'GET',
+    path: `${basePath3}/dojos/{id}/membership-requests/{requestId}`,
+    handler: membershipHandlers.loadPending(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Load a membership request',
+      notes: 'Return a specific membership request',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [
+            { role: 'basic-user',
+              customValidator: [{
+                role: 'cd-users',
+                cmd: 'can_accept_join_request',
+              }],
+            },
+          ],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+          requestId: Joi.string().required(),
+        },
+      },
+    },
+  },
+  {
+    method: 'PUT',
+    path: `${basePath3}/dojos/{id}/membership-requests/{requestId}`,
+    handler: membershipHandlers.accept(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Transform a request to join into a membership',
+      notes: 'Modify a request to join into a membership from the users list to the dojo memberships table',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [
+            { role: 'basic-user',
+              // We don't use the dojoId and have_permissions_on_dojo
+              // because the dojoId could be different from the one of the join_request
+              customValidator: [{
+                role: 'cd-users',
+                cmd: 'can_accept_join_request',
+              }],
+            },
+          ],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+          requestId: Joi.string().required(), // not a guid, a shortId
+        },
+      },
+    },
+  },
+  {
+    method: 'DELETE',
+    path: `${basePath3}/dojos/{id}/membership-requests/{requestId}`,
+    handler: membershipHandlers.refuse(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Remove a request to join',
+      notes: 'Remove a request to join a club from the users list of join requests',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [
+            { role: 'basic-user',
+              // We don't use the dojoId and have_permissions_on_dojo
+              // because the dojoId could be different from the one of the join_request
+              customValidator: [{
+                role: 'cd-users',
+                cmd: 'can_accept_join_request',
+              }],
+            },
+          ],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string().guid().required(),
+          requestId: Joi.string().required(), // not a guid, a shortId
+        },
+      },
+    },
+  },
 ];
