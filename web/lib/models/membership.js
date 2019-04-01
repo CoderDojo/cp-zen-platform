@@ -11,6 +11,12 @@ class Membership {
   delete(userId, { soft }) {
     return this.transport.delete(`members/${userId}`, { body: { soft } });
   }
+  create(userId, dojoId, userType) {
+    return this.transport.post(`clubs/${dojoId}/members`, { body: {
+      userId,
+      userType,
+    } });
+  }
 }
 
 module.exports = new Membership();

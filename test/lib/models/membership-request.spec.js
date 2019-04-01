@@ -11,6 +11,8 @@ lab.describe('Membership-request transport model', () => {
   const sandbox = sinon.sandbox.create();
   const transport = {
     post: sandbox.stub(),
+    get: sandbox.stub(),
+    delete: sandbox.stub(),
   };
   const transportFactory = sandbox.stub().returns(transport);
 
@@ -41,4 +43,27 @@ lab.describe('Membership-request transport model', () => {
       });
     });
   });
+  lab.describe('load', () => {
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should proxy the GET call', async () => {
+      transport.get.resolves({});
+      await fn.load('1');
+      expect(transport.get).to.have.been.calledWith('/join_requests/1');
+    });
+  });
+  lab.describe('delete', () => {
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should proxy the DELETE call', async () => {
+      transport.delete.resolves({});
+      await fn.delete('r1','u1');
+      expect(transport.delete).to.have.been.calledWith('/users/u1/join_requests/r1');
+    });
+  });
+
 });
