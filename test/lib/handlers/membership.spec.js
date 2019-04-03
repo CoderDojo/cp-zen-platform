@@ -64,7 +64,7 @@ lab.describe('membership handler', () => {
       done();
     });
     lab.test('it should create the membership', async () => {
-      Memberships.create.resolves({ id: 'm1', userType: 'mentor', dojoId: 'd1', userId: 'u1' });
+      MembershipRequests.create.resolves({ id: 'm1', userType: 'mentor', dojoId: 'd1', userId: 'u1' });
       await fn.request()[0](req, reply, next); 
       expect(MembershipRequests.create).to.have.been.calledWith(
         'u1',
