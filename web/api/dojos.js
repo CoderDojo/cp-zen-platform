@@ -492,11 +492,7 @@ exports.register = function (server, eOptions, next) {
     method: 'POST',
     path: `${options.basePath}/dojos/request-user-invite`,
     handler(request, response) {
-      // Hotfix for joining Dojo as a Mentor/Champion
-      // TODO: Discover where else this is a problem, and fix it on a more global scale.
-      delete request.payload.data.user.lmsId;
-      delete request.payload.data.user.profileId;
-      return handlers.actHandlerNeedsUser('request_user_invite')(request, response);
+      return response().code(410);
     },
     config: {
       auth: auth.apiUser,
@@ -522,7 +518,9 @@ exports.register = function (server, eOptions, next) {
   }, {
     method: 'PUT',
     path: `${options.basePath}/dojos/{dojoId}/request/{inviteToken}/user/{requestedByUser}`,
-    handler: handlers.actHandlerNeedsUser('accept_user_request', ['dojoId', 'inviteToken', 'requestedByUser']),
+    handler(request, response) {
+      return response().code(410);
+    },
     config: {
       auth: auth.apiUser,
       description: 'Accept request from a user to join the dojo',
@@ -540,7 +538,9 @@ exports.register = function (server, eOptions, next) {
   {
     method: 'DELETE',
     path: `${options.basePath}/dojos/{dojoId}/request/{inviteToken}/user/{requestedByUser}`,
-    handler: handlers.actHandlerNeedsUser('decline_join_request', ['dojoId', 'inviteToken', 'requestedByUser']),
+    handler(request, response) {
+      return response().code(410);
+    },
     config: {
       auth: auth.apiUser,
       description: 'Decline request from a user to join the dojo',

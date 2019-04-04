@@ -209,8 +209,10 @@ module.exports = [
         },
       },
       validate: {
-        params: {
-          id: Joi.string().guid().required(),
+        params: { 
+          // Optional for retro-compat behavior
+          // Nothing is being validated through it, only the membership request Id is being used
+          id: Joi.string().guid().required().valid('undefined'),
           requestId: Joi.string().required(),
         },
       },
