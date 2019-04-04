@@ -188,6 +188,8 @@
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider',
         function($stateProvider, $urlRouterProvider, $locationProvider, $urlMatcherFactoryProvider) {
       $locationProvider.html5Mode(true);
+      // NOTE: this needs to be used if a state is redirecting with params to Vuejs
+      // elsewhat params gets parsed twice
       function valToString(val)   { return val !== null ? val.toString() : val; }
       function valFromString(val) { return val !== null ? val.toString() : val; }
       $urlMatcherFactoryProvider.type('nonURIEncoded', {
@@ -210,7 +212,7 @@
           abstract: true
         })
         .state("login", {
-          url: "/login?referer&referrer",
+          url: "/login?{referer:nonURIEncoded}&{referrer:nonURIEncoded}",
           template: '<div></div>',
           controller: reloadPage, 
         })
