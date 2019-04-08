@@ -178,11 +178,13 @@
       return cdEventsService.searchSessionsPromise({eventId: $stateParams.eventId, status: 'active'}).then(winCb, failCb);
     }
   };
-
+  // NOTE : GFE 2019/04/08
+  // Ensure that your state is loaded before reloading
+  // or you might end up in a navigation race condition
+  // See https://github.com/CoderDojo/community-platform/issues/1255
   function reloadPage() {
     window.location.reload(true);
   }
-
 
   angular.module('cpZenPlatform')
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$urlMatcherFactoryProvider',
@@ -593,7 +595,8 @@
           },
           controller: function (currentUser, $scope, $state) {
             if (!currentUser.data) {
-              return $state.go('login', _.extend($state.current.params, {referer: '/start-dojo'}), {replace: true});
+              var next = $state.href('login', { referer: $state.href('start-dojo', $state.current.params) });
+              return window.location.assign(next);
             }
             $scope.currentUser = currentUser.data;
             return $state.go('start-dojo.champion', $state.current.params, {replace: true});
