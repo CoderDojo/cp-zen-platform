@@ -8,8 +8,15 @@ const get = params => // eslint-disable-line no-unused-vars
     asyncify(async (req, reply, cb) => {
       const { dojoId } = req.params;
       const query = Object.assign({}, req.query, { 'query[dojoId]': dojoId });
-      const events = await Event.get(query);
-      return reply(events).code(200);
+      let events;
+      let contentType = 'application/json';
+      if (req.params.format && req.params.format === '.ics') {
+        events = await Event.getICS(query);
+        contentType = 'text/calendar';
+      } else {
+        events = await Event.get(query);
+      }
+      return reply(events).header('Content-type', contentType).code(200);
     }),
   ]);
 
