@@ -4,7 +4,7 @@ const validation = require('../validations/events');
 const eventHandlers = require('../../lib/handlers/event');
 
 const basePath = '/api/3.0';
-const { beforeDate, afterDate, status, isPublic, utcOffset, zone, related } = validation.definitions;
+const { beforeDate, afterDate, status, isPublic, utcOffset, related } = validation.definitions;
 
 module.exports = [
   {
