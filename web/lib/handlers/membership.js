@@ -47,7 +47,6 @@ const accept = params => // eslint-disable-line no-unused-vars
     },
     async (req, reply, next ) => {
       const { userId, dojoId, userType } = req.app.membershipRequest;
-      // TODO: handle 409 to update instead of create
       req.app.membership = await Membership.create(userId, dojoId, userType);
       next();
     },
