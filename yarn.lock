@@ -1432,19 +1432,19 @@ cp-translations@1.0.123:
   version "1.0.123"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.123.tgz#aa0fbd2e8bf35ff344f5e28f1d311edeb3ce65f3"
 
-cp-translations@1.0.126:
-  version "1.0.126"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.126.tgz#1f3be1afa4838a854701ad7c893ad3b9cf18680d"
-  integrity sha512-OL1g2z+7qniZC+tawAgOir8qyiJkmYCcDALiFIB+hG+GJAzOY/Bm9KmtMqhf7ZesCCDqyyCdJ18m6vvBsVLEuQ==
+cp-translations@1.0.127:
+  version "1.0.127"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.127.tgz#098101b97e42a060bf4bbbbeaa3ca320fc25f86b"
+  integrity sha512-ytwYky4bg36D9gIPPkz5IXKp6w20umBtaMp05E+DTKgDaNgO0rEZZQQ1oLLlF0cAyKssk6zkr0EG4ab8vDv+Dg==
 
-cp-zen-frontend@1.0.94:
-  version "1.0.94"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.94.tgz#d41df4a1323eeb61705cb38630de6afafc78efb7"
-  integrity sha512-wY9CwAWu5ldBkgyTJZtja+AaEzvpOgxu1tW5mXcyQx4dg4WatAFBHFuNGZe1bD5fsoKj1ZTEMI8CKh6nG50shg==
+cp-zen-frontend@1.0.95:
+  version "1.0.95"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.95.tgz#a3b21ba8243019b52b8fa0a56602ba9f97996539"
+  integrity sha512-Vr4Cpy6GO1VoQ9ef5IJ5rH5H+6GJyg18Nx32rEkH7qnOSSVEYklrwNeuPBh8HEb/mfJRbJ+6mL72Vm+daTnQRw==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
-    cp-translations "1.0.126"
+    cp-translations "1.0.127"
     font-awesome "^4.7.0"
     handlebars "^4.1.0"
     js-cookie "^2.1.4"
@@ -4264,9 +4264,17 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@^3.1.0, js-yaml@^3.4.6, js-yaml@^3.9.1:
+js-yaml@^3.1.0:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.9.1.tgz#08775cebdfdd359209f0d2acd383c8f86a6904a0"
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
+js-yaml@^3.13, js-yaml@^3.4.6, js-yaml@^3.9.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
+  integrity sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"

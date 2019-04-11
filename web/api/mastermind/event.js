@@ -9,7 +9,7 @@ const { beforeDate, afterDate, status, isPublic, utcOffset, related } = validati
 module.exports = [
   {
     method: 'GET',
-    path: `${basePath}/dojos/{dojoId}/events`,
+    path: `${basePath}/dojos/{dojoId}/events{format?}`,
     handler: eventHandlers.get(),
     config: {
       auth: auth.userIfPossible,
@@ -27,6 +27,7 @@ module.exports = [
       validate: {
         params: {
           dojoId: Joi.string().guid().required(),
+          format: Joi.string().valid('.ics').allow('', null),
         },
         query: validation.base.keys({
           'query[status]': status,

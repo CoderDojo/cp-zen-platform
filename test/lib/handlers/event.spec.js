@@ -8,9 +8,11 @@ const expect = chai.expect;
 chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('event handler', () => {
+  const user = { id: 'user1' };
   const sandbox = sinon.sandbox.create();
   const Event = {
     get: sandbox.stub(),
+    getICS: sandbox.stub(),
     load: sandbox.stub(),
   };
   const fn = proxy('../../../web/lib/handlers/event.js', {
@@ -19,8 +21,19 @@ lab.describe('event handler', () => {
   });
   const reply = sandbox.stub();
   const code = sandbox.stub();
+  const header = sandbox.stub();
+  let req;
   lab.beforeEach((done) => {
+    req = {
+      params: { dojoId: 1 },
+      query: { 'query[status]': 'published' },
+      user,
+    };
     reply.returns({
+      header,
+      code,
+    });
+    header.returns({
       code,
     });
     done();
@@ -30,12 +43,6 @@ lab.describe('event handler', () => {
     done();
   });
   lab.describe('GET', () => {
-    const user = { id: 'user1' };
-    const req = {
-      params: { dojoId: 1 },
-      query: { 'query[status]': 'published' },
-      user,
-    };
     lab.afterEach((done) => {
       sandbox.reset();
       done();
@@ -47,13 +54,27 @@ lab.describe('event handler', () => {
           'query[dojoId]': 1,
           'query[status]': 'published',
         });
-        expect(reply).to.have.been.calledOnce;
-        expect(reply).to.have.been.calledWith([]);
-        expect(code).to.have.been.calledOnce;
-        expect(code).to.have.been.calledWith(200);
+        expect(reply).to.have.been.calledOnce.and.calledWith([]);
+        expect(header).to.have.been.calledOnce.and.calledWith('Content-type', 'application/json');
+        expect(code).to.have.been.calledOnce.and.calledWith(200);
         done();
       });
     });
+    lab.test('it should return the events as ICS', (done) => {
+      Event.getICS.resolves([]);
+      req.params.format = '.ics';
+      fn.get()[0](req, reply, () => {
+        expect(Event.getICS).to.have.been.calledWith({
+          'query[dojoId]': 1,
+          'query[status]': 'published',
+        });
+        expect(reply).to.have.been.calledOnce.and.calledWith([]);
+        expect(header).to.have.been.calledOnce.and.calledWith('Content-type', 'text/calendar');
+        expect(code).to.have.been.calledOnce.and.calledWith(200);
+        done();
+      });
+    });
+
     lab.test('it should call cb on error', (done) => {
       const err = new Error('fake err');
       Event.get.rejects(err);
