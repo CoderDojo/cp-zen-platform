@@ -39,7 +39,8 @@ lab.describe('Membership email handler', () => {
         userType: 'mentor',
         name: 'User 1',
         email: 'user@example.com',
-        link: 'http://localhost:8000/dashboard/accept_dojo_user_request/user1/membership1',
+        acceptLink: 'http://localhost:8000/dashboard/dojos/dojo1/join-requests/membership1/status/accept',
+        refuseLink: 'http://localhost:8000/dashboard/dojos/dojo1/join-requests/membership1/status/refuse',
         year: new Date().getFullYear(),
       });
       expect(spy.getCall(0).args[0].emailOptions).to.eql({

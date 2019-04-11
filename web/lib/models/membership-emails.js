@@ -15,7 +15,8 @@ class MembershipEmail extends Email {
         userType: membership.userType,
         name: user.name,
         email: user.email,
-        link: `${protocol}://${host}:${port}/dashboard/accept_dojo_user_request/${user.id}/${membership.id}`,
+        acceptLink: `${protocol}://${host}:${port}/dashboard/dojos/${dojo.id}/join-requests/${membership.id}/status/accept`,
+        refuseLink: `${protocol}://${host}:${port}/dashboard/dojos/${dojo.id}/join-requests/${membership.id}/status/refuse`,
         year: new Date().getFullYear(),
       },
       emailOptions: {

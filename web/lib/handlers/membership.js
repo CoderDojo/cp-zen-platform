@@ -1,5 +1,6 @@
 const mastermind = require('../mastermind');
 const MembershipRequests = require('../models/membership-request');
+const Membership = require('../models/membership');
 const Dojos = require('../models/dojo');
 const Users = require('../models/user');
 const MembershipNotifications = require('../models/membership-emails');
@@ -29,6 +30,49 @@ const request = params => // eslint-disable-line no-unused-vars
       reply(req.app.membershipRequest).code(200);
     },
   ]);
+const loadPending = params => // eslint-disable-line no-unused-vars
+  mastermind([
+    async (req, reply) => {
+      const { requestId } = req.params;
+      const membershipRequest = await MembershipRequests.load(requestId);
+			reply(membershipRequest);
+    },
+  ]);
+const accept = params => // eslint-disable-line no-unused-vars
+  mastermind([
+    async (req, reply, next) => {
+      const { requestId } = req.params;
+      req.app.membershipRequest = await MembershipRequests.load(requestId);
+      next();
+    },
+    async (req, reply, next ) => {
+      const { userId, dojoId, userType } = req.app.membershipRequest;
+      req.app.membership = await Membership.create(userId, dojoId, userType);
+      next();
+    },
+    async (req, reply) => {
+      const { requestId } = req.params;
+      await MembershipRequests.delete(requestId, req.app.membershipRequest.userId);
+      reply(req.app.membership).code(200);
+    }
+  ]);
+const refuse = params => // eslint-disable-line no-unused-vars
+  mastermind([
+    async (req, reply, next) => {
+      const { requestId } = req.params;
+      req.app.membershipRequest = await MembershipRequests.load(requestId);
+      next();
+    },
+    async (req, reply) => {
+      const { requestId } = req.params;
+      await MembershipRequests.delete(requestId, req.app.membershipRequest.userId);
+      reply().code(200);
+    },
+  ]);
+
 module.exports = {
   request,
+  accept,
+  refuse,
+  loadPending,
 };

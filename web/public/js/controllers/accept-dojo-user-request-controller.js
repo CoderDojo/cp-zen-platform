@@ -9,24 +9,7 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
     if($location.url === '/accept_dojo_user_request/:userId/:userInviteToken') {
       $window.location.href = '/dashboard' + currentPath;
     } else {
-      usSpinnerService.spin('user-request-spinner');
-      $scope.user = user;
-      cdDojoService.acceptUserRequest(null, inviteToken, userId)
-      .then(function (response) {
-        usSpinnerService.stop('user-request-spinner');
-        if(!response.error) {
-          alertService.showAlert($translate.instant('User Successfully Validated'), function () {
-            $state.go('my-dojos');
-          });
-        } else {
-          alertService.showError($translate.instant(response.error), function () {
-            $state.go('my-dojos');
-          });
-        }
-      }, function (err) {
-        usSpinnerService.stop('user-request-spinner');
-        alertService.showError($translate.instant('Error validating user request'));
-      });
+      $window.location.href = '/dashboard/dojos/undefined/join-requests/' + inviteToken + '/status/accept';
     }
 
   }, function () {

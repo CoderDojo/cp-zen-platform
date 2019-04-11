@@ -11,6 +11,7 @@ lab.describe('Membership transport model', () => {
   const sandbox = sinon.sandbox.create();
   const transport = {
     delete: sandbox.stub(),
+    post: sandbox.stub(),
   };
   const transportFactory = sandbox.stub().returns(transport);
 
@@ -34,6 +35,20 @@ lab.describe('Membership transport model', () => {
         json: true,
       });
       expect(transport.delete).to.have.been.calledWith('members/1', { body: { soft: true } });
+    });
+  });
+  lab.describe('POST', () => {
+    lab.afterEach((done) => {
+      sandbox.reset();
+      done();
+    });
+    lab.test('it should proxy the POST call', async () => {
+      transport.post.resolves([]);
+      await fn.create('u1', 'd1', 'mentor');
+      expect(transport.post).to.have.been.calledWith('clubs/d1/members', { body: {
+        userId: 'u1',
+        userType: 'mentor',
+      } });
     });
   });
 });
