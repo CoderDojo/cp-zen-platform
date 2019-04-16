@@ -247,8 +247,8 @@ exports.register = function (server, eOptions, next) {
           id: Joi.alternatives(
             Joi.string().guid(),
             Joi.object().keys({
-              nin$: Joi.array().items(Joi.string().guid()),
-              in$: Joi.array().items(Joi.string().guid()),
+              nin$: Joi.array().items(Joi.string().guid()).min(1),
+              in$: Joi.array().items(Joi.string().guid()).min(1),
             }),
           ),
           mysqlDojoId: Joi.alternatives(Joi.string(), Joi.number()),
@@ -267,8 +267,8 @@ exports.register = function (server, eOptions, next) {
           dojoLeadId: Joi.alternatives(
             Joi.string().guid(),
             Joi.object().keys({
-              nin$: Joi.array().items(Joi.string().guid()),
-              in$: Joi.array().items(Joi.string().guid()),
+              nin$: Joi.array().items(Joi.string().guid()).min(1),
+              in$: Joi.array().items(Joi.string().guid()).min(1),
             }),
           ),
           sort$: Joi.object({
