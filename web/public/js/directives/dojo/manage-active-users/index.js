@@ -32,6 +32,10 @@
           $scope.filter = {};
           $scope.filterUserTypes = [];
           $scope.queryModel = {};
+          if ($state.params.name) {
+            $scope.filter.name = $state.params.name;
+            $scope.queryModel.name = $scope.filter.name;
+          }
           $scope.pagination = {itemsPerPage: 30};
           $scope.badgeSelection = {};
           $scope.actionBarConfig = {
