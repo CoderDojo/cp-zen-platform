@@ -118,7 +118,7 @@
                 .catch(function (err) {
                   usSpinnerService.stop('manage-dojo-users-spinner');
                   if(err.status === 400) {
-                    alertService.showError($translate.instant('This user is already part of your Dojo, change tab to modify the user\'s role.'));
+                    alertService.showError($translate.instant('This user is already part of your Dojo, go to the Active Users tab and change their role.'));
                   } else {
                     alertService.showError($translate.instant(translationKeys.ERROR_ACCEPT_JOIN_REQUEST) + JSON.stringify(err));
                   }
