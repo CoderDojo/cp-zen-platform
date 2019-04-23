@@ -108,14 +108,7 @@ module.exports = [
     method: 'GET',
     path: '/event/{eventId}',
     handler(request, reply) {
-      reply.view('index', request.app);
-    },
-    config: {
-      plugins: {
-        senecaPreloader: {
-          handler: 'seneca-event-preloader',
-        },
-      },
+      reply.redirect(`/events/${request.params.eventId}`);
     },
   },
 
