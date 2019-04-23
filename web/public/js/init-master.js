@@ -297,7 +297,7 @@
           }
         })
         .state("manage-dojo-users", {
-          url: "/my-dojos/:id/users",
+          url: "/my-dojos/:id/users?name",
           parent: 'dashboard',
           // abstract: true, // Dropped to support redirection to default state, supported in uiRouter 1.0
           redirectTo: 'manage-dojo-active-users',
@@ -308,7 +308,7 @@
               $scope.currentUser = currentUser.data;
           }],
           params: {
-            pageTitle: 'Manage Dojo Users'
+            pageTitle: 'Manage Dojo Users',
           },
           resolve: {
             initUserTypes: resolves.initUserTypes,
@@ -320,7 +320,7 @@
           parent: 'manage-dojo-users',
           template: '<cd-dojo-manage-active-users></cd-dojo-manage-active-users>',
           params: {
-            pageTitle: 'Manage Dojo Active Users'
+            pageTitle: 'Manage Dojo Active Users',
           }
         })
         .state("manage-dojo-pending-users", {
