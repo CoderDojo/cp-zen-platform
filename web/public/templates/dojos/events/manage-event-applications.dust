@@ -6,7 +6,7 @@
       <span class="col-md-4"><b>{@i18n key="Total waitlist"/}:</b> {{ eventStats.totalWaitlist }}</span>
     </div>
     <div class="col-md-3 pull-right">
-        <a ui-sref="edit-dojo-event({dojoId: dojoId, eventId: event.id})" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
+        <a ng-href="/dashboard/dojos/{{ event.dojoId }}/events/{{ event.id }}/edit" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
           <button type="button" class="btn btn-primary dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {@i18n key="Export to CSV"/}<span class="caret"></span>
           </button>

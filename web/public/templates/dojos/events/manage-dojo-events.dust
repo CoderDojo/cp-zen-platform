@@ -32,7 +32,7 @@
                   <td><span ng-if="!event.eventbriteId">{{ event.eventStats.totalAttending }}</span></td>
                   <td>{{ event.status }}</td>
                   <td class="pointer">
-                    <a ui-sref="edit-dojo-event({eventId:event.id, dojoId: dojoId})" ng-if="!event.eventbriteId">{@i18n key="Edit"/}</a>
+                    <a ng-href="/dashboard/dojos/{{ dojoId }}/events/{{ event.id }}/edit" ng-if="!event.eventbriteId">{@i18n key="Edit"/}</a>
                     <a ng-href="https://www.eventbrite.com/edit?eid={{ event.eventbriteId }}" ng-if="event.eventbriteId">{@i18n key="Edit"/}</a>
                   </td>
                   <td class="pointer">
@@ -61,7 +61,7 @@
             <button class="btn btn-warning margin-right-10" ng-click="showNotifyAllMembers()" ng-disabled="!dojo.verified">
                 {@i18n key="Notify all Members"/}</button>
           </div>
-          <button class="btn btn-primary pull-right" ng-click="createEvent()">{@i18n key="Create Event"/}</button>
+          <a class="btn btn-primary pull-right" ng-href="/dashboard/dojos/{{ dojo.id }}/events/new">{@i18n key="Create Event"/}</a>
         </div>
       </div>
     </div>

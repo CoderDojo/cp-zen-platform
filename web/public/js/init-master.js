@@ -455,6 +455,16 @@
             event: resolves.event
           }
         })
+        .state("vue-create-dojo-event", {
+          url: "/dojos/:dojoId/events/new",
+          parent: 'dashboard',
+          controller: reloadPage,
+        })
+        .state("vue-edit-dojo-event", {
+          url: "/dojos/:dojoId/events/:eventId/edit",
+          parent: 'dashboard',
+          controller: reloadPage,
+        })
         .state("create-dojo-event", {
           url: "/dojo/:dojoId/event-form",
           parent: 'dashboard',

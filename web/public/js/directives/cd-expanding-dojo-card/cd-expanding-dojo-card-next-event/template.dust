@@ -8,7 +8,7 @@
   <div class="cd-expanding-dojo-card__placeholder" ng-if="!$ctrl.event && $ctrl.isTicketingAdmin">
     <p class="lead">{@i18n key="Your dojo currently has no events planned."/}</p>
     <p class="lead cd-lead-sml">{@i18n key="Listing your events on the CoderDojo community platform will help potential mentors and ninjas book into and attend your dojos."/}</p>
-    <a ui-sref="create-dojo-event({dojoId: $ctrl.dojo.id})" name="{{ $ctrl.dojo.verified ? 'create_event': 'create_first_event' }}"
+    <a ng-href="/dashboard/dojos/{{ $ctrl.dojo.id }}/events/new" name="{{ $ctrl.dojo.verified ? 'create_event': 'create_first_event' }}"
      class="cd-expanding-dojo-card-next-event btn btn-primary">{{ $ctrl.createButtonLabel }}</a>
   </div>
   <div class="cd-expanding-dojo-card__placeholder" ng-if="!$ctrl.event && !$ctrl.isTicketingAdmin">

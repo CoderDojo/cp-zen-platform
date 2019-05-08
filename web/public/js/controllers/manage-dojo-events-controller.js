@@ -47,10 +47,6 @@
       $scope.loadPage($scope.filter, false);
     };
 
-    $scope.createEvent = function () {
-      $state.go('create-dojo-event', {dojoId: $scope.dojoId});
-    };
-
     $scope.updateEventStatus = function (event, status) {
       delete event.formattedDate;
       event.status = status;
