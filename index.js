@@ -11,7 +11,7 @@ const bin = require('./web/index.js');
 
 // clean shut down - note cb is optional here (used in testsuite)
 function cleanShutdown() {
-  console.log(`Worker: ${process.id} exiting`);
+  console.log(`Process: ${process.pid} exiting`);
   process.exit(0);
 }
 
@@ -41,7 +41,7 @@ process.on('unhandledRejection', r => console.log(r));
 // handle process signals
 process.on('SIGTERM', cleanShutdown);
 process.on('SIGHUP', cleanShutdown);
-process.on('INT', cleanShutdown);
+process.on('SIGINT', cleanShutdown);
 process.on('SIGUSR2', cleanShutdown);
 
 bin.start();
