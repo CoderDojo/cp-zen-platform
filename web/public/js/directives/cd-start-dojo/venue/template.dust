@@ -51,8 +51,8 @@
           map-options="$ctrl.mapOptions" add-marker="$ctrl.addMarker" set-location="$ctrl.setLocation"></cd-dojo-form-map>
       </div>
       <div class="form-group">
-        <div class="cd-simple-flex-grid">
-          <div class="cd-simple-flex-grid__flex-1">
+        <div class="cd-simple-flex-grid cd-sad-venue__type">
+          <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__type_choices">
             <label for="venueType">{@i18n key="What type of venue will you run a Dojo in?"/} </label>
             <select ng-model="$ctrl.venue.type" name="venueType" class="form-control"
               required="true" ng-change="$ctrl.emptyOtherFields()">
@@ -61,11 +61,21 @@
               </option>
             </select>
           </div>
-          <div class="cd-simple-flex-grid__flex-1 checkbox cd-checkbox checkbox-primary cd-sad-venue__private">
-            <input type="checkbox" name="private"
-              ng-model="$ctrl.venue.private" class="form-control" ng-true-value="1" ng-false-value="0"></input>
-            <label for="private"> {@i18n key="Will your dojo be private?"/}</label>
-            <p class="help-block"> {@i18n key="Private Dojos are ones which are only open to specific people within an organisation. e.g. Dojo hosted in a school and only open to pupils of the school."/}</label>
+          <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__private">
+            <p class="help-block">{@i18n key="CoderDojo aims to be open and accessible to everyone. This means the majority of our Dojos, programs and features are made to be public and open. We allow the private option for clubs that definitely need to be limited to only current members of the venue."/}</p>
+            <span class="cd-sad-venue__private_label"> {@i18n key="This Dojo will be: "/}</span>
+            <div class="radio-inline">
+              <input type="radio" id="public_dojo" ng-model="$ctrl.venue.private"
+                name="private"
+                ng-value="0"/>
+              <label for="public_dojo">{@i18n key="Public and open"/}</label>
+            </div>
+            <div class="radio-inline">
+              <input type="radio" id="private_dojo" ng-model="$ctrl.venue.private"
+                name="private"
+                ng-value="1">
+              <label for="private_dojo">{@i18n key="Private"/}</input>
+            </div>
           </div>
         </div>
         <div ng-show="($ctrl.venue.type === 'other')">
