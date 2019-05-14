@@ -23,5 +23,9 @@ class Event {
   load(id, query) {
     return this.transport.get(`events/${id}`, { qs: query });
   }
+
+  create(body) {
+    return this.transport.post(`events/`, { body });
+  }
 }
 module.exports = new Event();

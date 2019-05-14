@@ -2,7 +2,9 @@ const { asyncify } = require('async');
 const mastermind = require('../mastermind');
 const Event = require('../models/event');
 
-const get = params => // eslint-disable-line no-unused-vars
+const get = (
+  params // eslint-disable-line no-unused-vars
+) =>
   mastermind([
     // eslint-disable-next-line no-unused-vars
     asyncify(async (req, reply, cb) => {
@@ -16,11 +18,15 @@ const get = params => // eslint-disable-line no-unused-vars
       } else {
         events = await Event.get(query);
       }
-      return reply(events).header('Content-type', contentType).code(200);
+      return reply(events)
+        .header('Content-type', contentType)
+        .code(200);
     }),
   ]);
 
-const load = params => // eslint-disable-line no-unused-vars
+const load = (
+  params // eslint-disable-line no-unused-vars
+) =>
   mastermind([
     // eslint-disable-next-line no-unused-vars
     asyncify(async (req, reply, cb) => {
@@ -31,7 +37,18 @@ const load = params => // eslint-disable-line no-unused-vars
     }),
   ]);
 
+const create = () =>
+  mastermind([
+    // eslint-disable-next-line no-unused-vars
+    asyncify(async (req, reply, cb) => {
+      const { payload } = req;
+      const event = await Event.create(payload);
+      return reply(event).code(200);
+    }),
+  ]);
+
 module.exports = {
   get,
   load,
+  create,
 };
