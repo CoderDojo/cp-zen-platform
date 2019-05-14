@@ -1,5 +1,5 @@
 (function() {
-'use strict';
+  'use strict';
 
   angular.module('cpZenPlatform', [
     'pascalprecht.translate',
@@ -25,7 +25,6 @@
     'ngFileUpload',
     'ng-slide-down',
     'atomic-notify',
-    'internationalPhoneNumber',
     'ngIdle',
     'tmh.dynamicLocale',
     'angularjs-dropdown-multiselect',
@@ -33,6 +32,6 @@
     'ngGeolocation',
     'angular-google-analytics',
     'ngAria',
-    'ngAnimate'
+    'ngAnimate',
   ]);
 })();
