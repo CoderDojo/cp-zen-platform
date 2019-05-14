@@ -31,6 +31,9 @@ jobs:
       - run:
           name: Linting
           command: yarn lint
+      - run:
+          name: Lint-Hinting
+          command: yarn jshint
   deploy:
     working_directory: ~/cp-zen-platform
     docker:
