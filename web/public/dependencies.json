@@ -51,7 +51,6 @@
   "./web/public/components/ng-slide-down/dist/ng-slide-down.min.js",
   "./web/public/components/angular-atomic-notify/src/angular-atomic-notify.js",
   "./web/public/components/intl-tel-input/build/js/intlTelInput.min.js",
-  "./web/public/components/international-phone-number/releases/international-phone-number.min.js",
   "./web/public/components/ng-idle/angular-idle.min.js",
   "./web/public/components/angular-dynamic-locale/tmhDynamicLocale.min.js",
   "./web/public/components/angularjs-dropdown-multiselect/dist/angularjs-dropdown-multiselect.min.js",

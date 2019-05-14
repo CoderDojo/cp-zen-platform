@@ -50,11 +50,9 @@
     <h3>{@i18n key="Contact details to help us verify your Dojo"/}</h3>
     <div class="form-group">
       <label for="phone">{@i18n key="Phone number"/}</label>
-      <input type="tel" name="phone" id="phone" autocomplete="off" class="form-control"
-        utils-script="/components/intl-tel-input/lib/libphonenumber/build/utils.js"
-         required cd-phone-validator international-phone-number ng-model="$ctrl.champion.phone">
+      <input type="tel" name="phone" id="phone" class="form-control" required ng-model="$ctrl.champion.phone">
         <div ng-messages="$ctrl.championForm.phone.$error" ng-show="$ctrl.championForm.phone.$touched && !$ctrl.championForm.phone.$valid">
-          <label class="control-label has-error validationMessage">{@i18n key="Telephone number is not valid"/}</label>
+          <label class="control-label has-error validationMessage">{@i18n key="Telephone Number is empty"/}</label>
         </div>
     </div>
     <div class="cd-sad-champion__social-network cd-simple-flex-grid">
