@@ -1428,24 +1428,24 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.130:
-  version "1.0.130"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.130.tgz#0b0063ba53e398d56005de30b58bc216f8c03f18"
-  integrity sha512-nRdYKAjo5BZXs0iJtyubgdlZEDaD8rt1XPfzFjv6Z2lllszhcoOiW0LyF+VPAJBvbh8rlQceUQXdMlhgAXwf6w==
+cp-translations@1.0.132:
+  version "1.0.132"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.132.tgz#71885b0e243961f77add1e27533874ac735103e0"
+  integrity sha512-A8tHX2iHdEcXXgnfU8dxyBkladJRjBlMhjkXYL/Sq7cX3Ut1hf5EgMV0USI5rr9E2Z9yA015VxD/EpD9CE1rKQ==
 
-cp-translations@1.0.131:
-  version "1.0.131"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.131.tgz#aa4bd466eccb8d62b78e7a8f8013d0797f0858c5"
-  integrity sha512-a46XXfKNilSnfraQhtOvMetmFK8hr5g6FPpBV0em5OkB8ftMiM4rctkqVvEgwblgWBG7+1leSNBYoV541ioQqg==
+cp-translations@1.0.133:
+  version "1.0.133"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.133.tgz#d89e4d24d9ee4c45eaded9d75614a34f7eaa2219"
+  integrity sha512-8VtAZDHLEC9YUw6TBxXOvRgog5xtTwASHEytmzdmywlggYVbgLrRMMnA9x3NCinES5PtYHyUqueeOaqOZgUOFw==
 
-cp-zen-frontend@1.0.101:
-  version "1.0.101"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.101.tgz#cf95cea00a9b1425d851a555dce22a4cbe8d5bc4"
-  integrity sha512-WFDJwNBjjsNxNv4dYmh1Ntjnw+5GRLZIxlUXfaChsOa1BM3qTzfNgiSe7h5dPXj9LSVdEjArVLQHIgaqGvraew==
+cp-zen-frontend@1.0.102:
+  version "1.0.102"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.102.tgz#f40792070f443ee08233ae1b749b1fddf03f2378"
+  integrity sha512-n5k32FLnORu3T0tJsJNw7+Oxc8/a2h98y6Qi4hKCuyN6tgGZfbAz/xCVHVPIZQO0I1zi4p9j5y0HvceIxXXhug==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
-    cp-translations "1.0.130"
+    cp-translations "1.0.133"
     font-awesome "^4.7.0"
     handlebars "^4.1.0"
     js-cookie "^2.1.4"
