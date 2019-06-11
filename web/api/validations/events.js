@@ -20,7 +20,7 @@ const modelDefinitions = {
   name: Joi.string(),
   dojoId: Joi.string().guid(),
   type: Joi.string().valid('one-off', 'recurring'),
-  description: Joi.string().allow(''),
+  description: Joi.string(),
   public: Joi.boolean(),
   // draft status is actually 'saved' string underneath
   status: Joi.string().valid('saved', 'published', 'canceled'),
