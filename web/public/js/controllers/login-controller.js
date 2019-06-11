@@ -268,8 +268,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
       repeat:$scope.reset.confirmNewPassword
     }, function (response) {
       if(response.ok) {
-        alertService.showAlert($translate.instant('Successfully updated password.'));
-        $state.go('login');
+        $window.location.href = 'login?pwr=true';
       } else {
         alertService.showError($translate.instant('Error') + ':' + $translate.instant(response.why));
       }
