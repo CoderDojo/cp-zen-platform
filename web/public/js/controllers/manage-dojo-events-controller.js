@@ -48,7 +48,7 @@
     };
 
     $scope.createEvent = function () {
-      $state.go('create-dojo-event', {dojoId: $scope.dojoId});
+      $state.go('create-event', {dojoId: $scope.dojoId});
     };
 
     $scope.updateEventStatus = function (event, status) {

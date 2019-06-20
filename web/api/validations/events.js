@@ -36,6 +36,7 @@ const modelDefinitions = {
   ticketApproval: Joi.boolean().optional(),
   notifyOnApplicant: Joi.boolean().optional(),
   useDojoAddress: Joi.boolean(),
+  sendEmails: Joi.boolean(),
   country: Joi.object({
     countryName: Joi.string(),
     countryNumber: Joi.number().integer(),

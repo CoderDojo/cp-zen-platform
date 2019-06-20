@@ -183,7 +183,7 @@
   // or you might end up in a navigation race condition
   // See https://github.com/CoderDojo/community-platform/issues/1255
   function reloadPage() {
-    window.location.reload(true);
+    setTimeout(function(){ window.location.reload(true); }, 0);
   }
 
   angular.module('cpZenPlatform')
@@ -468,6 +468,11 @@
             pageTitle: 'Create Event'
           },
           controller: 'dojo-event-form-controller'
+        })
+        .state("create-event", {
+          url: "/dojos/:dojoId/events/new",
+          parent: 'dashboard',
+          controller: reloadPage
         })
         .state("edit-dojo-event", {
           url: "/dojo/:dojoId/event-form/:eventId",
