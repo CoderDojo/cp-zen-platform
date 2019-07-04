@@ -474,6 +474,11 @@
           parent: 'dashboard',
           controller: reloadPage
         })
+        .state("edit-event", {
+          url: "/dojos/:dojoId/events/:eventId/edit",
+          parent: 'dashboard',
+          controller: reloadPage
+        })
         .state("edit-dojo-event", {
           url: "/dojo/:dojoId/event-form/:eventId",
           parent: 'dashboard',

@@ -105,4 +105,26 @@ module.exports = [
       },
     },
   },
+  {
+    method: 'PUT',
+    path: `${basePath}/events/{eventId}`,
+    handler: eventHandlers.update(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Update an event',
+      notes: 'Updates an event',
+      tags: ['api', 'events'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        payload: validation.updateModelDefinitions,
+      },
+    },
+  },
 ];

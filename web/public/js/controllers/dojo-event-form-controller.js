@@ -371,10 +371,10 @@
           lastDate = offsetedLastDate;
         }
         $scope.eventInfo.date = firstDate.toDate();
-        $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime = 
+        $scope.eventInfo.fixedStartDateTime = $scope.eventInfo.startTime =
           moment([firstDate.year(), firstDate.month(), firstDate.date(), firstDate.hour(), firstDate.minute(), 0, 0]);
         $scope.eventInfo.toDate = lastDate.toDate();
-        $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime = 
+        $scope.eventInfo.fixedEndDateTime = $scope.eventInfo.endTime =
           moment([lastDate.year(), lastDate.month(), lastDate.date(), lastDate.hour(), lastDate.minute(), 0, 0]);
         $scope.eventInfo.address = event.address;
         $scope.eventInfo.city = event.city;

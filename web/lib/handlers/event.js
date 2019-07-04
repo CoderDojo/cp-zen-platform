@@ -53,6 +53,23 @@ const create = () =>
     ...sendDojoEmails,
   ]);
 
+const update = () =>
+  mastermind([
+    // eslint-disable-next-line no-unused-vars
+    async (req, reply, next) => {
+      const { payload } = req;
+      const eventId = payload.id
+      req.sendEmails = payload.sendEmails;
+      delete payload.sendEmails;
+      const event = await Event.update(eventId, payload);
+      req.eventId = event.id;
+      req.dojoId = event.dojoId;
+      reply(event).code(200);
+      return next();
+    },
+    ...sendDojoEmails,
+  ]);
+
 const sendDojoEmails = [
   async(req, reply, next) => {
     if (req.sendEmails) {
@@ -76,4 +93,5 @@ module.exports = {
   get,
   load,
   create,
+  update,
 };
