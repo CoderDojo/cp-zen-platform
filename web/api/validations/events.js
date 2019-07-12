@@ -19,6 +19,7 @@ const definitions = {
 const modelDefinitions = {
   name: Joi.string(),
   dojoId: Joi.string().guid(),
+  createdBy: Joi.string().guid(),
   type: Joi.string().valid('one-off', 'recurring'),
   description: Joi.string(),
   public: Joi.boolean(),
@@ -75,48 +76,8 @@ const modelDefinitions = {
 };
 
 const updateModelDefinitions = {
+  ...modelDefinitions,
   id: Joi.string().guid(),
-  name: Joi.string(),
-  dojoId: Joi.string().guid(),
-  type: Joi.string().valid('one-off', 'recurring'),
-  description: Joi.string(),
-  public: Joi.boolean(),
-  // draft status is actually 'saved' string underneath
-  status: Joi.string().valid('saved', 'published', 'canceled'),
-  recurringType: Joi.string()
-    .valid('biweekly', 'weekly')
-    .optional(),
-  dates: Joi.array().items(
-    Joi.object({
-      startTime: Joi.date(),
-      endTime: Joi.date(),
-    })
-  ),
-  ticketApproval: Joi.boolean().optional(),
-  notifyOnApplicant: Joi.boolean().optional(),
-  useDojoAddress: Joi.boolean(),
-  sendEmails: Joi.boolean(),
-  country: Joi.object({
-    countryName: Joi.string(),
-    countryNumber: Joi.number().integer(),
-    continent: Joi.string(),
-    alpha2: Joi.string().length(2),
-    alpha3: Joi.string().length(3),
-  }).optional(),
-  city: Joi.alternatives()
-    .try(
-      Joi.object({
-        nameWithHierarchy: Joi.string(),
-      }),
-      Joi.object({
-        toponymName: Joi.string(),
-      }),
-      Joi.object({
-        name: Joi.string(),
-      })
-    )
-    .optional(),
-  address: Joi.string(),
   sessions: Joi.array().items(
     Joi.object({
       id: Joi.string()
@@ -149,7 +110,6 @@ const updateModelDefinitions = {
       ),
     })
   ),
-  newForm: Joi.boolean(),
 };
 
 module.exports = {
