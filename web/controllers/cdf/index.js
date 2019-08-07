@@ -1,5 +1,3 @@
-
-
 const cacheTimes = require('../../config/cache-times');
 const auth = require('../../lib/authentications');
 
@@ -12,32 +10,34 @@ const overrideAuth = {
   },
 };
 
-module.exports = [{
-  method: 'GET',
-  path: '/cdf/dashboard/{anything*}',
-  config: {
-    auth: auth.cdfAdmin,
-    plugins: overrideAuth,
+module.exports = [
+  {
+    method: 'GET',
+    path: '/cdf/dashboard/{anything*}',
+    config: {
+      auth: auth.cdfAdmin,
+      plugins: overrideAuth,
+    },
+    handler,
   },
-  handler,
-},
-{
-  method: 'GET',
-  path: '/cdf/login',
-  config: {
-    cache: {
-      expiresIn: cacheTimes.short,
+  {
+    method: 'GET',
+    path: '/cdf/login',
+    config: {
+      cache: {
+        expiresIn: cacheTimes.short,
+      },
+    },
+    handler(request, reply) {
+      reply.view('cdf', request.app);
     },
   },
-  handler(request, reply) {
-    reply.view('cdf', request.app);
+  {
+    method: 'GET',
+    path: '/cdf',
+    config: { cache: { expiresIn: cacheTimes.short } },
+    handler(request, reply) {
+      reply.redirect('/cdf/login');
+    },
   },
-},
-{
-  method: 'GET',
-  path: '/cdf',
-  config: { cache: { expiresIn: cacheTimes.short } },
-  handler(request, reply) {
-    reply.redirect('/cdf/login');
-  },
-}];
+];

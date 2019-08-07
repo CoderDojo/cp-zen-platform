@@ -20,7 +20,7 @@ const lessFiles = [
 ];
 
 function relativePath(paths) {
-  const buildPath = (arg) => {
+  const buildPath = arg => {
     let depPath = arg;
     const excluded = depPath[0] === '!';
     if (excluded) depPath = depPath.substring(1);
@@ -46,11 +46,11 @@ gulp.task('jshint', () =>
         './web/public/js/**/*.js',
         '!./web/public/components/**',
         '!./web/public/dist/**',
-      ]),
+      ])
     )
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail')),
+    .pipe(jshint.reporter('fail'))
 );
 
 gulp.task('lint', () =>
@@ -58,7 +58,7 @@ gulp.task('lint', () =>
     .src(relativePath(['**/*.js', '!node_modules/**', '!web/public/**']))
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError()),
+    .pipe(eslint.failAfterError())
 );
 
 gulp.task('validateHTML', () => {
@@ -67,34 +67,42 @@ gulp.task('validateHTML', () => {
   return gulp
     .src(relativePath(['./web/public/**/*.dust']))
     .pipe(
-      tap((file) => {
+      tap(file => {
         currentFile = file.path;
-      }),
+      })
     )
     .pipe(
-      qdom(($) => {
+      qdom($ => {
         const clickables = $('button, *[ng-click], *.btn');
-        for (let clickableIndex = 0; clickableIndex < clickables.length; clickableIndex += 1) {
+        for (
+          let clickableIndex = 0;
+          clickableIndex < clickables.length;
+          clickableIndex += 1
+        ) {
           const clickable = $(clickables[clickableIndex]);
           console.log(clickable); // eslint-disable-line no-console
           if (!errors[currentFile]) errors[currentFile] = [];
           if (clickable['aria-label'] !== '') {
             errors[currentFile].push(
-              `${clickable[0].name} ${clickable.text()} should have an aria-label`,
+              `${
+                clickable[0].name
+              } ${clickable.text()} should have an aria-label`
             );
           }
           if (clickable['data-name'] !== '') {
             errors[currentFile].push(
-              `${clickable[0].name} ${clickable.text()} should have an data-name for analytics`,
+              `${
+                clickable[0].name
+              } ${clickable.text()} should have an data-name for analytics`
             );
           }
         }
-      }),
+      })
     )
     .on('end', () => {
-      errors.forEach((fileName) => {
+      errors.forEach(fileName => {
         console.warn(`in ${fileName}`); // eslint-disable-line no-console
-        fileName.forEach((err) => {
+        fileName.forEach(err => {
           console.warn(err); // eslint-disable-line no-console
         });
       });
@@ -107,7 +115,7 @@ gulp.task('build-dependencies', ['clean'], () =>
     .pipe(ngAnnotate())
     .pipe(concat('dependencies.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(relativePath('./web/public/dist/'))),
+    .pipe(gulp.dest(relativePath('./web/public/dist/')))
 );
 
 gulp.task('build-less', ['clean'], () =>
@@ -118,9 +126,9 @@ gulp.task('build-less', ['clean'], () =>
       less({
         compress: true,
         paths: relativePath('./web/public/css/'),
-      }),
+      })
     )
-    .pipe(gulp.dest(relativePath('./web/public/dist/css/'))),
+    .pipe(gulp.dest(relativePath('./web/public/dist/css/')))
 );
 
 gulp.task('build-cdf', ['build'], () => {
@@ -132,7 +140,7 @@ gulp.task('build-cdf', ['build'], () => {
     }
   });
   // Append cdf sources
-  cdfApp.forEach((appLocal) => {
+  cdfApp.forEach(appLocal => {
     appArray.push(appLocal);
   });
   return (
@@ -147,7 +155,7 @@ gulp.task('build-cdf', ['build'], () => {
 
 gulp.task('build', ['clean', 'build-less', 'build-dependencies'], () => {
   const appArray = Array.from(app);
-  cdfApp.forEach((appLocal) => {
+  cdfApp.forEach(appLocal => {
     appArray.push(`!${appLocal}`);
   });
   return (
@@ -166,8 +174,8 @@ gulp.task('watch-less', ['build-cdf'], () =>
       relativePath('./web/public/css/**/*.less'),
       relativePath('./web/public/js/directives/**/*.less'),
     ],
-    ['build-less'],
-  ),
+    ['build-less']
+  )
 );
 
 gulp.task('dev', ['watch-less'], () => {

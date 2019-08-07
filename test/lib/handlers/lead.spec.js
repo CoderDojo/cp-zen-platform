@@ -18,13 +18,13 @@ lab.describe('lead handler', () => {
   });
   const reply = sandbox.stub();
   const code = sandbox.stub();
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     reply.returns({
       code,
     });
     done();
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
@@ -34,13 +34,13 @@ lab.describe('lead handler', () => {
       query: { userId: 'user1' },
       user,
     };
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
     lab.test('it should return the leads', async () => {
       Lead.list.resolves([]);
-      await fn.list()[0](req, reply)
+      await fn.list()[0](req, reply);
       expect(Lead.list).to.have.been.calledWith({
         userId: 'user1',
       });

@@ -19,24 +19,27 @@ lab.describe('auth', () => {
   sandbox.spy(serverStub, 'register');
   const getUser = fn.register.attributes.fns.getUser;
   const validateFunc = fn.register.attributes.fns.validateFunc;
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     sandbox.reset();
     done();
   });
-  lab.test('should register hapi-auth-cookie', (done) => {
+  lab.test('should register hapi-auth-cookie', done => {
     fn.register(serverStub, {}, nextStub);
     expect(serverStub.register).to.have.been.calledOnce;
     done();
   });
 
-  lab.test('should create an authentication strategy', (done) => {
+  lab.test('should create an authentication strategy', done => {
     fn.register(serverStub, {}, nextStub);
-    expect(serverStub.auth.strategy).to.have.been
-      .calledWith('seneca-login', 'cookie', sinon.match.object);
+    expect(serverStub.auth.strategy).to.have.been.calledWith(
+      'seneca-login',
+      'cookie',
+      sinon.match.object
+    );
     expect(nextStub).to.have.been.calledOnce;
     done();
   });
-  lab.test('should get the user if there is a token', (done) => {
+  lab.test('should get the user if there is a token', done => {
     const reqMock = {
       seneca: {
         act: (args, cb) => cb(null, { ok: true }),
@@ -45,13 +48,15 @@ lab.describe('auth', () => {
     const senecaActSpy = sinon.spy(reqMock.seneca, 'act');
     const cbSpy = sinon.spy();
     getUser(reqMock, 'tokenMock', cbSpy);
-    expect(senecaActSpy).to.have.been
-      .calledWith({ role: 'user', cmd: 'auth', token: 'tokenMock' }, sinon.match.func);
+    expect(senecaActSpy).to.have.been.calledWith(
+      { role: 'user', cmd: 'auth', token: 'tokenMock' },
+      sinon.match.func
+    );
     expect(cbSpy).to.have.been.calledWith(null, { ok: true });
     done();
   });
 
-  lab.test('should fail if the token doesnt exists', (done) => {
+  lab.test('should fail if the token doesnt exists', done => {
     const reqMock = {
       seneca: {
         act: (args, cb) => cb(null, { ok: false }),
@@ -60,13 +65,15 @@ lab.describe('auth', () => {
     const senecaActSpy = sinon.spy(reqMock.seneca, 'act');
     const cbSpy = sinon.spy();
     getUser(reqMock, 'tokenMock', cbSpy);
-    expect(senecaActSpy).to.have.been
-      .calledWith({ role: 'user', cmd: 'auth', token: 'tokenMock' }, sinon.match.func);
+    expect(senecaActSpy).to.have.been.calledWith(
+      { role: 'user', cmd: 'auth', token: 'tokenMock' },
+      sinon.match.func
+    );
     expect(cbSpy).to.have.been.calledWith('login not ok');
     done();
   });
 
-  lab.test('should skip the retrieval of user if there is no token', (done) => {
+  lab.test('should skip the retrieval of user if there is no token', done => {
     const reqMock = {
       seneca: {
         act: (args, cb) => cb(),
@@ -79,7 +86,7 @@ lab.describe('auth', () => {
       done();
     });
   });
-  lab.test('should validate a token and set the cdf scope', (done) => {
+  lab.test('should validate a token and set the cdf scope', done => {
     const serverMock = {};
     const reqMock = {
       seneca: { act: sinon.stub() },
@@ -97,56 +104,68 @@ lab.describe('auth', () => {
     };
     const cbSpy = sinon.spy();
     validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
-    reqMock.seneca.act.callArgWith(1, null,
-      { ok: true, user: { roles: ['cdf-admin'] } });
+    reqMock.seneca.act.callArgWith(1, null, {
+      ok: true,
+      user: { roles: ['cdf-admin'] },
+    });
     expect(cbSpy).to.have.been.calledWith(null, true, { scope: 'cdf-admin' });
     done();
   });
-  lab.test('should validate a token and set the basic-user scope for anything else', (done) => {
-    const serverMock = {};
-    const reqMock = {
-      seneca: { act: sinon.stub() },
-      route: {
-        settings: {
-          auth: {
-            access: [{ scope: { selection: ['gloubiboulga'] } }],
+  lab.test(
+    'should validate a token and set the basic-user scope for anything else',
+    done => {
+      const serverMock = {};
+      const reqMock = {
+        seneca: { act: sinon.stub() },
+        route: {
+          settings: {
+            auth: {
+              access: [{ scope: { selection: ['gloubiboulga'] } }],
+            },
           },
         },
-      },
-    };
-    const sessionMock = {
-      token: 'token',
-      target: 'bananas',
-    };
-    const cbSpy = sinon.spy();
-    validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
-    reqMock.seneca.act.callArgWith(1, null,
-      { ok: true, user: { roles: ['cdf-admin'] } });
-    expect(cbSpy).to.have.been.calledWith(null, true, { scope: 'basic-user' });
-    done();
-  });
-  lab.test('should validate a token and set the basic-user scope for anything else', (done) => {
-    const serverMock = { app: { hostUid: '' } };
-    const reqMock = {
-      seneca: { act: sinon.stub() },
-      route: {
-        settings: {
-          auth: {
-            access: [{ scope: { selection: ['gloubiboulga'] } }],
+      };
+      const sessionMock = {
+        token: 'token',
+        target: 'bananas',
+      };
+      const cbSpy = sinon.spy();
+      validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
+      reqMock.seneca.act.callArgWith(1, null, {
+        ok: true,
+        user: { roles: ['cdf-admin'] },
+      });
+      expect(cbSpy).to.have.been.calledWith(null, true, {
+        scope: 'basic-user',
+      });
+      done();
+    }
+  );
+  lab.test(
+    'should validate a token and set the basic-user scope for anything else',
+    done => {
+      const serverMock = { app: { hostUid: '' } };
+      const reqMock = {
+        seneca: { act: sinon.stub() },
+        route: {
+          settings: {
+            auth: {
+              access: [{ scope: { selection: ['gloubiboulga'] } }],
+            },
           },
         },
-      },
-      log: sinon.spy(),
-    };
-    const sessionMock = {
-      token: 'token',
-      target: 'bananas',
-    };
-    const cbSpy = sinon.spy();
-    validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
-    reqMock.seneca.act.callArgWith(1, null, { ok: false });
-    expect(reqMock.log).to.have.been.calledOnce;
-    expect(cbSpy).to.have.been.calledWith(null, false);
-    done();
-  });
+        log: sinon.spy(),
+      };
+      const sessionMock = {
+        token: 'token',
+        target: 'bananas',
+      };
+      const cbSpy = sinon.spy();
+      validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
+      reqMock.seneca.act.callArgWith(1, null, { ok: false });
+      expect(reqMock.log).to.have.been.calledOnce;
+      expect(cbSpy).to.have.been.calledWith(null, false);
+      done();
+    }
+  );
 });

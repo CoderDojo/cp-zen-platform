@@ -58,7 +58,7 @@ const update = () =>
     // eslint-disable-next-line no-unused-vars
     async (req, reply, next) => {
       const { payload } = req;
-      const eventId = payload.id
+      const eventId = payload.id;
       req.sendEmails = payload.sendEmails;
       delete payload.sendEmails;
       const event = await Event.update(eventId, payload);
@@ -71,21 +71,24 @@ const update = () =>
   ]);
 
 const sendDojoEmails = [
-  async(req, reply, next) => {
+  async (req, reply, next) => {
     if (req.sendEmails) {
-      return req.seneca.act({ role: 'cd-dojos',
-        cmd: 'notify_all_members',
-        data: {
-          dojoId: req.dojoId,
-          eventId: req.eventId,
-          emailSubject: 'Tickets Now Available for %1$s',
+      return req.seneca.act(
+        {
+          role: 'cd-dojos',
+          cmd: 'notify_all_members',
+          data: {
+            dojoId: req.dojoId,
+            eventId: req.eventId,
+            emailSubject: 'Tickets Now Available for %1$s',
+          },
+        },
+        err => {
+          if (err) return next(err);
+          return next();
         }
-      },
-      (err, res) => {
-        if (err) return next(err);
-        return next();
-      });
-    };
+      );
+    }
   },
 ];
 

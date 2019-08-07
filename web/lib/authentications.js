@@ -1,4 +1,3 @@
-
 //  NOTE : Permissions post-auth is handled by the act itself, not by hapijs
 module.exports = {
   //  Navigation

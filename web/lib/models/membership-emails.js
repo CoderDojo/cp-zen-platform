@@ -15,8 +15,12 @@ class MembershipEmail extends Email {
         userType: membership.userType,
         name: user.name,
         email: user.email,
-        acceptLink: `${protocol}://${host}:${port}/dashboard/dojos/${dojo.id}/join-requests/${membership.id}/status/accept`,
-        refuseLink: `${protocol}://${host}:${port}/dashboard/dojos/${dojo.id}/join-requests/${membership.id}/status/refuse`,
+        acceptLink: `${protocol}://${host}:${port}/dashboard/dojos/${
+          dojo.id
+        }/join-requests/${membership.id}/status/accept`,
+        refuseLink: `${protocol}://${host}:${port}/dashboard/dojos/${
+          dojo.id
+        }/join-requests/${membership.id}/status/refuse`,
         year: new Date().getFullYear(),
       },
       emailOptions: {
@@ -26,4 +30,6 @@ class MembershipEmail extends Email {
     });
   }
 }
-module.exports = new MembershipEmail({ headers: { 'x-smtpapi': { category: ['clubs-service'] } } });
+module.exports = new MembershipEmail({
+  headers: { 'x-smtpapi': { category: ['clubs-service'] } },
+});

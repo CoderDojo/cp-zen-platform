@@ -11,10 +11,10 @@ const pkg = require('./package');
 // Remove package.json, it's not a controller.  All other non-index files/directories should be.
 delete controllers.package;
 
-exports.register = function (server, options, next) {
+exports.register = function(server, options, next) {
   // Add all the server routes from the controllers.
 
-  _.each(controllers, (controller) => {
+  _.each(controllers, controller => {
     server.route(controller);
   });
 
@@ -66,7 +66,10 @@ exports.register = function (server, options, next) {
     method: 'GET',
     path: '/directives/tpl/{name*}',
     handler(request, reply) {
-      reply.view(`directives/${request.params.name}/template.dust`, request.app);
+      reply.view(
+        `directives/${request.params.name}/template.dust`,
+        request.app
+      );
     },
   });
 

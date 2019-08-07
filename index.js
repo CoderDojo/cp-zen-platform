@@ -21,13 +21,15 @@ starting += `Master: ${process.pid}`;
 console.log(starting);
 
 // handle uncaught exceptions
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', err => {
   if (err !== undefined) {
     const error = {
       date: new Date().toString(),
       msg:
         err.stack !== undefined
-          ? `FATAL: UncaughtException, please report: ${util.inspect(err.stack)}`
+          ? `FATAL: UncaughtException, please report: ${util.inspect(
+              err.stack
+            )}`
           : 'FATAL: UncaughtException, no stack trace',
       err: util.inspect(err),
     };
@@ -45,4 +47,3 @@ process.on('SIGINT', cleanShutdown);
 process.on('SIGUSR2', cleanShutdown);
 
 bin.start();
-

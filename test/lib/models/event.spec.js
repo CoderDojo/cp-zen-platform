@@ -17,12 +17,12 @@ lab.describe('event handler', () => {
   const fn = proxy('../../../web/lib/models/event.js', {
     '../transports/http': transportFactory,
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('GET', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -41,7 +41,7 @@ lab.describe('event handler', () => {
     });
   });
   lab.describe('GET /:eventId', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });

@@ -11,13 +11,13 @@ chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('onPreAuth', () => {
   const server = {};
-  lab.before((done) => {
+  lab.before(done => {
     server.app = {
       availableLocales: new locale.Locales(languages.map(l => l.code), 'en_US'),
     };
     done();
   });
-  lab.test('should set locale by default of en_US', (done) => {
+  lab.test('should set locale by default of en_US', done => {
     const reqMock = {
       app: { context: {} },
       headers: {},
@@ -29,7 +29,7 @@ lab.describe('onPreAuth', () => {
     expect(reqMock.app.context.locality).to.equal('en_US');
     done();
   });
-  lab.test('should set locale based on cookie', (done) => {
+  lab.test('should set locale based on cookie', done => {
     const reqMock = {
       app: { context: {} },
       state: { NG_TRANSLATE_LANG_KEY: 'it_IT' },
@@ -42,7 +42,7 @@ lab.describe('onPreAuth', () => {
     expect(reqMock.app.context.locality).to.equal('it_IT');
     done();
   });
-  lab.test('should set locale based on header', (done) => {
+  lab.test('should set locale based on header', done => {
     const reqMock = {
       app: { context: {} },
       headers: { 'accept-language': 'fr_FR' },
@@ -54,7 +54,7 @@ lab.describe('onPreAuth', () => {
     expect(reqMock.app.context.locality).to.equal('fr_FR');
     done();
   });
-  lab.test('should pick the cookie in priority', (done) => {
+  lab.test('should pick the cookie in priority', done => {
     const reqMock = {
       app: { context: {} },
       state: { NG_TRANSLATE_LANG_KEY: 'de_DE' },

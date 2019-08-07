@@ -14,9 +14,13 @@ class EventEmail extends Email {
         weekly: 'Weekly',
       };
       moment.locale(locale);
-      const dayName = moment(event.dates[0].startTime).utc().format('dddd');
+      const dayName = moment(event.dates[0].startTime)
+        .utc()
+        .format('dddd');
       const recurrence = recurrences[event.recurringType];
-      return `${i18n(locale, { key: recurrence })} ${i18n(locale, { key: 'on' })} ${dayName}`;
+      return `${i18n(locale, { key: recurrence })} ${i18n(locale, {
+        key: 'on',
+      })} ${dayName}`;
     }
     return `${this.formatDate(event.dates[0].startTime, locale)}`;
   }
@@ -47,28 +51,40 @@ class EventEmail extends Email {
     });
   }
   sendDojoNotification(locale, event, order, dojo) {
-    const templateName = `ticket-application-${event.ticketApproval ? 'received' : 'approved'}-to-dojo`;
-    const application = order.applications.length > 1 ? order.applications.find(s => s.ticketType === 'parent-guardian' || s.ticketType === 'mentor') : order.applications[0];
+    const templateName = `ticket-application-${
+      event.ticketApproval ? 'received' : 'approved'
+    }-to-dojo`;
+    const application =
+      order.applications.length > 1
+        ? order.applications.find(
+            s => s.ticketType === 'parent-guardian' || s.ticketType === 'mentor'
+          )
+        : order.applications[0];
     this.post({
       language: locale,
       templateName,
       templateOptions: {
         applicationDate: this.formatDate(order.createdAt, locale),
-        sessionName: event.sessions.find(s => s.id === application.sessionId).name,
+        sessionName: event.sessions.find(s => s.id === application.sessionId)
+          .name,
         dojoName: dojo.name,
         dojoId: dojo.id,
         eventId: event.id,
         eventDate: this.formatEventDate(event, locale),
         applicationsLinkBase: `${protocol}://${host}:${port}/dashboard/my-dojos`,
-        tickets: Object.values(order.applications.reduce((acc, appl) => {
-          acc[appl.ticketId] = acc[appl.ticketId] ? acc[appl.ticketId] : {
-            quantity: 0,
-            ticketType: appl.ticketType,
-            ticketName: appl.ticketName,
-          };
-          acc[appl.ticketId].quantity += 1;
-          return acc;
-        }, {})),
+        tickets: Object.values(
+          order.applications.reduce((acc, appl) => {
+            acc[appl.ticketId] = acc[appl.ticketId]
+              ? acc[appl.ticketId]
+              : {
+                  quantity: 0,
+                  ticketType: appl.ticketType,
+                  ticketName: appl.ticketName,
+                };
+            acc[appl.ticketId].quantity += 1;
+            return acc;
+          }, {})
+        ),
         status: order.applications[0].status,
         event,
         dojo,
@@ -81,4 +97,6 @@ class EventEmail extends Email {
     });
   }
 }
-module.exports = new EventEmail({ headers: { 'x-smtpapi': { category: ['events-service'] } } });
+module.exports = new EventEmail({
+  headers: { 'x-smtpapi': { category: ['events-service'] } },
+});

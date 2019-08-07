@@ -10,11 +10,11 @@ chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('HTTP transport', () => {
   const sandbox = sinon.sandbox.create();
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
-  lab.it('should initialize a transport with params from the model', (done) => {
+  lab.it('should initialize a transport with params from the model', done => {
     const spy = sinon.spy(request, 'defaults');
     const payload = {
       baseUrl: 'http://google.com',

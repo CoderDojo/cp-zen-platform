@@ -18,12 +18,12 @@ lab.describe('order handler', () => {
   const fn = proxy('../../../web/lib/models/order.js', {
     '../transports/http': transportFactory,
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('GET', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -41,7 +41,7 @@ lab.describe('order handler', () => {
     });
   });
   lab.describe('POST', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });

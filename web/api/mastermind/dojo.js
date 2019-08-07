@@ -19,9 +19,7 @@ module.exports = [
       tags: ['api', 'dojos', 'verification'],
       plugins: {
         cpPermissions: {
-          profiles: [
-            { role: 'cdf-admin' },
-          ],
+          profiles: [{ role: 'cdf-admin' }],
         },
         'hapi-swagger': {
           responseMessages: [
@@ -32,10 +30,14 @@ module.exports = [
       },
       validate: {
         params: {
-          id: Joi.string().guid().required(),
+          id: Joi.string()
+            .guid()
+            .required(),
         },
         payload: Joi.object({
-          verified: Joi.number().valid(0).valid(1),
+          verified: Joi.number()
+            .valid(0)
+            .valid(1),
         }),
       },
     },
@@ -54,11 +56,13 @@ module.exports = [
           profiles: [
             {
               role: 'basic-user',
-              customValidator: [{
-                role: 'cd-dojos',
-                cmd: 'have_permissions_on_dojo',
-                perm: 'dojo-admin',
-              }],
+              customValidator: [
+                {
+                  role: 'cd-dojos',
+                  cmd: 'have_permissions_on_dojo',
+                  perm: 'dojo-admin',
+                },
+              ],
             },
           ],
         },
@@ -82,11 +86,23 @@ module.exports = [
             name: Joi.string(),
             creator: joiValidator.guid(),
             created: Joi.date(),
-            verifiedAt: Joi.alternatives().try(Joi.date(), Joi.string().valid(null)),
-            verifiedBy: Joi.alternatives().try(joiValidator.guid(), Joi.string().valid(null)),
-            verified: Joi.number().valid(0).valid(1),
-            needMentors: Joi.number().valid(0).valid(1),
-            taoVerified: Joi.number().valid(0).valid(1),
+            verifiedAt: Joi.alternatives().try(
+              Joi.date(),
+              Joi.string().valid(null)
+            ),
+            verifiedBy: Joi.alternatives().try(
+              joiValidator.guid(),
+              Joi.string().valid(null)
+            ),
+            verified: Joi.number()
+              .valid(0)
+              .valid(1),
+            needMentors: Joi.number()
+              .valid(0)
+              .valid(1),
+            taoVerified: Joi.number()
+              .valid(0)
+              .valid(1),
             stage: Joi.number().integer(),
             mailingList: Joi.number().integer(),
             day: joiValidator.day().allow(null),
@@ -104,8 +120,15 @@ module.exports = [
               lat: joiValidator.latitude(),
               lon: joiValidator.longitude(),
             }),
-            notes: Joi.string().allow('').allow(null),
-            email: Joi.alternatives().try(joiValidator.mail(), Joi.string().valid(null).valid('')),
+            notes: Joi.string()
+              .allow('')
+              .allow(null),
+            email: Joi.alternatives().try(
+              joiValidator.mail(),
+              Joi.string()
+                .valid(null)
+                .valid('')
+            ),
             googleGroup: joiValidator.optionalUri(),
             expectedAttendees: Joi.number().allow(null),
             website: joiValidator.optionalUri(),
@@ -113,10 +136,14 @@ module.exports = [
             facebook: joiValidator.facebook(),
             ebId: Joi.any(),
             supporterImage: joiValidator.optionalUri(),
-            deleted: Joi.number().valid(0).valid(1),
+            deleted: Joi.number()
+              .valid(0)
+              .valid(1),
             deletedBy: Joi.any(),
             deletedAt: Joi.any(),
-            private: Joi.number().valid(0).valid(1),
+            private: Joi.number()
+              .valid(0)
+              .valid(1),
             urlSlug: Joi.string(),
             continent: joiValidator.continent(),
             alpha2: joiValidator.alpha2(),
@@ -135,12 +162,17 @@ module.exports = [
             admin4Name: Joi.any(),
             placeGeonameId: Joi.any(),
             placeName: Joi.string(),
-            userInvites: Joi.alternatives().try(Joi.array().items(Joi.object().keys({
-              id: Joi.string(),
-              email: joiValidator.mail(),
-              userType: Joi.string(),
-              timestamp: Joi.date(),
-            })), Joi.string().valid(null)),
+            userInvites: Joi.alternatives().try(
+              Joi.array().items(
+                Joi.object().keys({
+                  id: Joi.string(),
+                  email: joiValidator.mail(),
+                  userType: Joi.string(),
+                  timestamp: Joi.date(),
+                })
+              ),
+              Joi.string().valid(null)
+            ),
             creatorEmail: joiValidator.mail(),
             emailSubject: Joi.string(),
             editDojoFlag: Joi.boolean(),
@@ -160,9 +192,7 @@ module.exports = [
       tags: ['api', 'dojos', 'membership'],
       plugins: {
         cpPermissions: {
-          profiles: [
-            { role: 'basic-user' },
-          ],
+          profiles: [{ role: 'basic-user' }],
         },
         'hapi-swagger': {
           responseMessages: [
@@ -173,7 +203,9 @@ module.exports = [
       },
       validate: {
         params: {
-          id: Joi.string().guid().required(),
+          id: Joi.string()
+            .guid()
+            .required(),
         },
         payload: Joi.object({
           userType: joiValidator.userTypes().required(),
@@ -193,11 +225,14 @@ module.exports = [
       plugins: {
         cpPermissions: {
           profiles: [
-            { role: 'basic-user',
-              customValidator: [{
-                role: 'cd-users',
-                cmd: 'can_accept_join_request',
-              }],
+            {
+              role: 'basic-user',
+              customValidator: [
+                {
+                  role: 'cd-users',
+                  cmd: 'can_accept_join_request',
+                },
+              ],
             },
           ],
         },
@@ -209,10 +244,13 @@ module.exports = [
         },
       },
       validate: {
-        params: { 
+        params: {
           // Optional for retro-compat behavior
           // Nothing is being validated through it, only the membership request Id is being used
-          id: Joi.string().guid().required().allow('undefined'),
+          id: Joi.string()
+            .guid()
+            .required()
+            .allow('undefined'),
           requestId: Joi.string().required(),
         },
       },
@@ -225,18 +263,22 @@ module.exports = [
     config: {
       auth: auth.apiUser,
       description: 'Transform a request to join into a membership',
-      notes: 'Modify a request to join into a membership from the users list to the dojo memberships table',
+      notes:
+        'Modify a request to join into a membership from the users list to the dojo memberships table',
       tags: ['api', 'dojos', 'membership'],
       plugins: {
         cpPermissions: {
           profiles: [
-            { role: 'basic-user',
+            {
+              role: 'basic-user',
               // We don't use the dojoId and have_permissions_on_dojo
               // because the dojoId could be different from the one of the join_request
-              customValidator: [{
-                role: 'cd-users',
-                cmd: 'can_accept_join_request',
-              }],
+              customValidator: [
+                {
+                  role: 'cd-users',
+                  cmd: 'can_accept_join_request',
+                },
+              ],
             },
           ],
         },
@@ -249,7 +291,9 @@ module.exports = [
       },
       validate: {
         params: {
-          id: Joi.string().guid().required(),
+          id: Joi.string()
+            .guid()
+            .required(),
           requestId: Joi.string().required(), // not a guid, a shortId
         },
       },
@@ -262,18 +306,22 @@ module.exports = [
     config: {
       auth: auth.apiUser,
       description: 'Remove a request to join',
-      notes: 'Remove a request to join a club from the users list of join requests',
+      notes:
+        'Remove a request to join a club from the users list of join requests',
       tags: ['api', 'dojos', 'membership'],
       plugins: {
         cpPermissions: {
           profiles: [
-            { role: 'basic-user',
+            {
+              role: 'basic-user',
               // We don't use the dojoId and have_permissions_on_dojo
               // because the dojoId could be different from the one of the join_request
-              customValidator: [{
-                role: 'cd-users',
-                cmd: 'can_accept_join_request',
-              }],
+              customValidator: [
+                {
+                  role: 'cd-users',
+                  cmd: 'can_accept_join_request',
+                },
+              ],
             },
           ],
         },
@@ -286,7 +334,9 @@ module.exports = [
       },
       validate: {
         params: {
-          id: Joi.string().guid().required(),
+          id: Joi.string()
+            .guid()
+            .required(),
           requestId: Joi.string().required(), // not a guid, a shortId
         },
       },

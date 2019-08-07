@@ -19,7 +19,7 @@ lab.describe('cp-permissions preHandler', () => {
   const logMock = sandbox.stub();
   let req;
 
-  lab.before((done) => {
+  lab.before(done => {
     fn = proxy('../../web/lib/cp-permissions-pre-handler.js', {
       boom: BoomMock,
       'cp-permissions-plugin': { checkProfiles: checkProfilesMock },
@@ -27,7 +27,7 @@ lab.describe('cp-permissions preHandler', () => {
     done();
   });
 
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     req = {
       seneca: {},
       log: logMock,
@@ -56,12 +56,12 @@ lab.describe('cp-permissions preHandler', () => {
     done();
   });
 
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
 
-  lab.test('should continue if no permisConfig it present', (done) => {
+  lab.test('should continue if no permisConfig it present', done => {
     // ARRANGE
     req.route.settings.plugins = {};
 
@@ -73,123 +73,139 @@ lab.describe('cp-permissions preHandler', () => {
     done();
   });
 
-  lab.test('should include query, payload and parms in the checkProfiles call', (done) => {
-    // ARRANGE
-    req = Object.assign(req, {
-      query: {
-        key1: 'qval1',
-        key2: 'qval2',
-      },
-      payload: {
-        key2: 'payload_val2',
-        key3: 'payload_val3',
-        key4: 'payload_val4',
-      },
-      params: {
-        key4: 'params_val4',
-        key5: 'params_val5',
-      },
-    });
-    const expectedMsg = {
-      params: {
-        key1: 'qval1',
-        key2: 'payload_val2',
-        key3: 'payload_val3',
-        key4: 'payload_val4',
-        key5: 'params_val5',
-      },
-      user: {
-        name: 'some user',
-      },
-    };
-
-    // ACT
-    fn(req, reply);
-
-    // ASSERT
-    expect(checkProfilesMock).to.have.been.calledOnce;
-    expect(checkProfilesMock).to.have.been.calledWith([], expectedMsg, sinon.match.func);
-    done();
-  });
-
-  lab.test('should reply with forbidden if checkProfiles throws an error', (done) => {
-    // ARRANGE
-    const err = new Error();
-    checkProfilesMock.callsFake((profiles, msg, cb) => {
-      cb(err);
-    });
-
-    // ACT
-    fn(req, reply);
-
-    // ASSERT
-    expect(logMock).to.have.been.calledOnce;
-    expect(logMock).to.have.been.calledWith(
-      ['error', '50x'],
-      {
-        status: '403',
-        host: 'foo',
-        payload: {},
-        params: {},
-        url: 'some url',
-        user: {
-          user: { name: 'some user' },
+  lab.test(
+    'should include query, payload and parms in the checkProfiles call',
+    done => {
+      // ARRANGE
+      req = Object.assign(req, {
+        query: {
+          key1: 'qval1',
+          key2: 'qval2',
         },
-        error: err,
-      },
-      sinon.match.number,
-    );
-    expect(reply).to.have.been.calledOnce;
-    expect(reply).to.have.been.calledWith('Verboten');
-    done();
-  });
-
-  lab.test('should reply with forbidden if checkProfiles responds with allowed: false', (done) => {
-    // ARRANGE
-    checkProfilesMock.callsFake((profiles, msg, cb) => {
-      cb(null, { allowed: false });
-    });
-
-    // ACT
-    fn(req, reply);
-
-    // ASSERT
-    expect(logMock).to.have.been.calledOnce;
-    expect(logMock).to.have.been.calledWith(
-      ['error', '40x'],
-      {
-        status: '403',
-        host: 'foo',
-        payload: {},
-        params: {},
-        url: 'some url',
-        user: {
-          user: { name: 'some user' },
+        payload: {
+          key2: 'payload_val2',
+          key3: 'payload_val3',
+          key4: 'payload_val4',
         },
-        error: { allowed: false },
-      },
-      sinon.match.number,
-    );
-    expect(reply).to.have.been.calledOnce;
-    expect(reply).to.have.been.calledWith('Verboten');
-    done();
-  });
+        params: {
+          key4: 'params_val4',
+          key5: 'params_val5',
+        },
+      });
+      const expectedMsg = {
+        params: {
+          key1: 'qval1',
+          key2: 'payload_val2',
+          key3: 'payload_val3',
+          key4: 'payload_val4',
+          key5: 'params_val5',
+        },
+        user: {
+          name: 'some user',
+        },
+      };
 
-  lab.test('should continue if checkProfiles responds with allowed: true', (done) => {
-    // ARRANGE
-    checkProfilesMock.callsFake((profiles, msg, cb) => {
-      cb(null, { allowed: true });
-    });
+      // ACT
+      fn(req, reply);
 
-    // ACT
-    fn(req, reply);
+      // ASSERT
+      expect(checkProfilesMock).to.have.been.calledOnce;
+      expect(checkProfilesMock).to.have.been.calledWith(
+        [],
+        expectedMsg,
+        sinon.match.func
+      );
+      done();
+    }
+  );
 
-    // ASSERT
-    expect(reply.continue).to.have.been.calledOnce;
-    done();
-  });
+  lab.test(
+    'should reply with forbidden if checkProfiles throws an error',
+    done => {
+      // ARRANGE
+      const err = new Error();
+      checkProfilesMock.callsFake((profiles, msg, cb) => {
+        cb(err);
+      });
 
-  lab.test('should remove disallowed params', (done) => {
+      // ACT
+      fn(req, reply);
+
+      // ASSERT
+      expect(logMock).to.have.been.calledOnce;
+      expect(logMock).to.have.been.calledWith(
+        ['error', '50x'],
+        {
+          status: '403',
+          host: 'foo',
+          payload: {},
+          params: {},
+          url: 'some url',
+          user: {
+            user: { name: 'some user' },
+          },
+          error: err,
+        },
+        sinon.match.number
+      );
+      expect(reply).to.have.been.calledOnce;
+      expect(reply).to.have.been.calledWith('Verboten');
+      done();
+    }
+  );
+
+  lab.test(
+    'should reply with forbidden if checkProfiles responds with allowed: false',
+    done => {
+      // ARRANGE
+      checkProfilesMock.callsFake((profiles, msg, cb) => {
+        cb(null, { allowed: false });
+      });
+
+      // ACT
+      fn(req, reply);
+
+      // ASSERT
+      expect(logMock).to.have.been.calledOnce;
+      expect(logMock).to.have.been.calledWith(
+        ['error', '40x'],
+        {
+          status: '403',
+          host: 'foo',
+          payload: {},
+          params: {},
+          url: 'some url',
+          user: {
+            user: { name: 'some user' },
+          },
+          error: { allowed: false },
+        },
+        sinon.match.number
+      );
+      expect(reply).to.have.been.calledOnce;
+      expect(reply).to.have.been.calledWith('Verboten');
+      done();
+    }
+  );
+
+  lab.test(
+    'should continue if checkProfiles responds with allowed: true',
+    done => {
+      // ARRANGE
+      checkProfilesMock.callsFake((profiles, msg, cb) => {
+        cb(null, { allowed: true });
+      });
+
+      // ACT
+      fn(req, reply);
+
+      // ASSERT
+      expect(reply.continue).to.have.been.calledOnce;
+      done();
+    }
+  );
+
+  lab.test('should remove disallowed params', done => {
     // ARRANGE
     req = Object.assign(req, {
       query: {
@@ -225,7 +241,11 @@ lab.describe('cp-permissions preHandler', () => {
 
     // ASSERT
     expect(checkProfilesMock).to.have.been.calledOnce;
-    expect(checkProfilesMock).to.have.been.calledWith([], expectedMsg, sinon.match.func);
+    expect(checkProfilesMock).to.have.been.calledWith(
+      [],
+      expectedMsg,
+      sinon.match.func
+    );
     done();
   });
 });

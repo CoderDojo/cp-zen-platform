@@ -32,18 +32,18 @@ lab.describe('user handler', () => {
   const code = sandbox.stub();
   const next = sandbox.stub();
   let req = {};
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     reply.returns({
       code,
     });
     done();
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('GET: search', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -60,7 +60,10 @@ lab.describe('user handler', () => {
         email: 'banana@example.com',
         related: '[profile]',
       });
-      expect(reply).to.have.been.calledOnce.and.calledWith({ results: [{ id: 1 }], total: 1 });
+      expect(reply).to.have.been.calledOnce.and.calledWith({
+        results: [{ id: 1 }],
+        total: 1,
+      });
       expect(code).to.have.been.calledOnce.and.calledWith(200);
     });
     lab.test('it should call cb on error', async () => {
@@ -87,7 +90,7 @@ lab.describe('user handler', () => {
   });
 
   lab.describe('GET: load', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -128,7 +131,7 @@ lab.describe('user handler', () => {
     });
   });
   lab.describe('DELETE', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -142,7 +145,9 @@ lab.describe('user handler', () => {
         app: {},
       };
       await fn.delete()[0](req, reply, next);
-      expect(User.load).to.have.been.calledWith(1, { related: '[profile, children]' });
+      expect(User.load).to.have.been.calledWith(1, {
+        related: '[profile, children]',
+      });
       expect(User.delete).to.have.been.calledWith(1, {});
       expect(next).to.have.been.calledOnce.and.calledWith();
       expect(req.app.users).to.eql([1]);
@@ -158,25 +163,38 @@ lab.describe('user handler', () => {
       await fn.delete()[1](req, reply, next);
       expect(next).to.have.been.calledOnce.and.calledWith();
       expect(Application.forUser.delete).to.have.been.calledTwice;
-      expect(Application.forUser.delete.getCall(0)).to.have.been.calledWith(1, { soft: false });
-      expect(Application.forUser.delete.getCall(1)).to.have.been.calledWith(3, { soft: false });
-    });
-    lab.test('it should ignore 404 when deleting the applications', async () => {
-      const err = new Error();
-      err.statusCode = 404;
-      Application.forUser.delete.rejects(err);
-      req.app = {
-        users: [1, 3],
-      };
-      req.payload = {
+      expect(Application.forUser.delete.getCall(0)).to.have.been.calledWith(1, {
         soft: false,
-      };
-      await fn.delete()[1](req, reply, next);
-      expect(next).to.have.been.called.and.calledWith();
-      expect(Application.forUser.delete).to.have.been.calledTwice;
-      expect(Application.forUser.delete.getCall(0)).to.have.been.calledWith(1, { soft: false });
-      expect(Application.forUser.delete.getCall(1)).to.have.been.calledWith(3, { soft: false });
+      });
+      expect(Application.forUser.delete.getCall(1)).to.have.been.calledWith(3, {
+        soft: false,
+      });
     });
+    lab.test(
+      'it should ignore 404 when deleting the applications',
+      async () => {
+        const err = new Error();
+        err.statusCode = 404;
+        Application.forUser.delete.rejects(err);
+        req.app = {
+          users: [1, 3],
+        };
+        req.payload = {
+          soft: false,
+        };
+        await fn.delete()[1](req, reply, next);
+        expect(next).to.have.been.called.and.calledWith();
+        expect(Application.forUser.delete).to.have.been.calledTwice;
+        expect(Application.forUser.delete.getCall(0)).to.have.been.calledWith(
+          1,
+          { soft: false }
+        );
+        expect(Application.forUser.delete.getCall(1)).to.have.been.calledWith(
+          3,
+          { soft: false }
+        );
+      }
+    );
 
     lab.test('it should delete the memberships', async () => {
       Membership.delete.resolves();
@@ -190,8 +208,12 @@ lab.describe('user handler', () => {
       expect(next).to.not.have.been.called;
       expect(code).to.have.been.calledWith(204);
       expect(Membership.delete).to.have.been.calledTwice;
-      expect(Membership.delete.getCall(0)).to.have.been.calledWith(1, { soft: false });
-      expect(Membership.delete.getCall(1)).to.have.been.calledWith(3, { soft: false });
+      expect(Membership.delete.getCall(0)).to.have.been.calledWith(1, {
+        soft: false,
+      });
+      expect(Membership.delete.getCall(1)).to.have.been.calledWith(3, {
+        soft: false,
+      });
     });
     lab.test('it should ignore 404 when deleting the memberships', async () => {
       const err = new Error();
@@ -207,8 +229,12 @@ lab.describe('user handler', () => {
       expect(next).to.not.have.been.called;
       expect(code).to.have.been.calledWith(204);
       expect(Membership.delete).to.have.been.calledTwice;
-      expect(Membership.delete.getCall(0)).to.have.been.calledWith(1, { soft: false });
-      expect(Membership.delete.getCall(1)).to.have.been.calledWith(3, { soft: false });
+      expect(Membership.delete.getCall(0)).to.have.been.calledWith(1, {
+        soft: false,
+      });
+      expect(Membership.delete.getCall(1)).to.have.been.calledWith(3, {
+        soft: false,
+      });
     });
   });
 });

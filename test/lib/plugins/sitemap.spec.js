@@ -23,10 +23,7 @@ lab.describe('sitemap', () => {
   };
   const sitemapCreateSpy = sandbox.spy(sitemap, 'createSitemap');
   const nextStub = sandbox.stub();
-  const dojoList = [
-    { urlSlug: 'fr/Lyon' },
-    { urlSlug: 'ie/Dublin' },
-  ];
+  const dojoList = [{ urlSlug: 'fr/Lyon' }, { urlSlug: 'ie/Dublin' }];
   const host = 'http://127.0.0.1:8000';
   const staticUrls = [
     {
@@ -53,24 +50,28 @@ lab.describe('sitemap', () => {
   let refresh;
   let fetch;
 
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     sandbox.reset();
     done();
   });
 
-  lab.test('should expose refresh and fetch', (done) => {
+  lab.test('should expose refresh and fetch', done => {
     fn.register(serverStub, null, nextStub);
-    expect(serverStub.expose).to.have.been
-      .calledWith('refresh', sinon.match.func);
+    expect(serverStub.expose).to.have.been.calledWith(
+      'refresh',
+      sinon.match.func
+    );
     refresh = serverStub.expose.getCall(0).args[1];
-    expect(serverStub.expose).to.have.been
-      .calledWith('fetch', sinon.match.func);
+    expect(serverStub.expose).to.have.been.calledWith(
+      'fetch',
+      sinon.match.func
+    );
     fetch = serverStub.expose.getCall(1).args[1];
     expect(nextStub).to.have.been.calledOnce;
     done();
   });
 
-  lab.test('should register the route', (done) => {
+  lab.test('should register the route', done => {
     fn.register(serverStub, null, nextStub);
     expect(serverStub.route).to.have.been.calledOnce;
     expect(serverStub.route).to.have.been.calledWith({
@@ -83,7 +84,7 @@ lab.describe('sitemap', () => {
   });
 
   lab.describe('refresh', () => {
-    lab.test('should prepare the sitemap XML with dojo data', (done) => {
+    lab.test('should prepare the sitemap XML with dojo data', done => {
       serverStub.seneca.act.callsFake((params, cb) => cb(null, dojoList));
       refresh();
       expect(serverStub.seneca.act).to.have.been.calledOnce;
@@ -91,7 +92,12 @@ lab.describe('sitemap', () => {
         role: 'cd-dojos',
         cmd: 'list',
         entity: 'dojo',
-        query: { verified: 1, stage: { ne$: 4 }, deleted: 0, fields$: ['url_slug'] },
+        query: {
+          verified: 1,
+          stage: { ne$: 4 },
+          deleted: 0,
+          fields$: ['url_slug'],
+        },
       });
       expect(sitemapCreateSpy).to.have.been.calledOnce;
       expect(sitemapCreateSpy).to.have.been.calledWith({
@@ -113,7 +119,7 @@ lab.describe('sitemap', () => {
       done();
     });
 
-    lab.test('should set static Urls if no Dojos nor error', (done) => {
+    lab.test('should set static Urls if no Dojos nor error', done => {
       serverStub.seneca.act.callsFake((params, cb) => cb(null, []));
       refresh();
       expect(serverStub.seneca.act).to.have.been.calledOnce;
@@ -121,7 +127,12 @@ lab.describe('sitemap', () => {
         role: 'cd-dojos',
         cmd: 'list',
         entity: 'dojo',
-        query: { verified: 1, stage: { ne$: 4 }, deleted: 0, fields$: ['url_slug'] },
+        query: {
+          verified: 1,
+          stage: { ne$: 4 },
+          deleted: 0,
+          fields$: ['url_slug'],
+        },
       });
       expect(sitemapCreateSpy).to.have.been.calledOnce;
       expect(sitemapCreateSpy).to.have.been.calledWith({
@@ -132,7 +143,7 @@ lab.describe('sitemap', () => {
       done();
     });
 
-    lab.test('should call the logger on error', (done) => {
+    lab.test('should call the logger on error', done => {
       const err = new Error('dubidu');
       serverStub.seneca.act.callsFake((params, cb) => cb(err));
       refresh();
@@ -141,14 +152,19 @@ lab.describe('sitemap', () => {
         role: 'cd-dojos',
         cmd: 'list',
         entity: 'dojo',
-        query: { verified: 1, stage: { ne$: 4 }, deleted: 0, fields$: ['url_slug'] },
+        query: {
+          verified: 1,
+          stage: { ne$: 4 },
+          deleted: 0,
+          fields$: ['url_slug'],
+        },
       });
       expect(serverStub.log).to.have.been.calledOnce;
       expect(sitemapCreateSpy).to.not.have.been.called;
       done();
     });
 
-    lab.test('should call cb when provided at the end', (done) => {
+    lab.test('should call cb when provided at the end', done => {
       const cbStub = sandbox.stub();
       serverStub.seneca.act.callsFake((params, cb) => cb(null, dojoList));
       refresh(cbStub);
@@ -157,7 +173,12 @@ lab.describe('sitemap', () => {
         role: 'cd-dojos',
         cmd: 'list',
         entity: 'dojo',
-        query: { verified: 1, stage: { ne$: 4 }, deleted: 0, fields$: ['url_slug'] },
+        query: {
+          verified: 1,
+          stage: { ne$: 4 },
+          deleted: 0,
+          fields$: ['url_slug'],
+        },
       });
       expect(sitemapCreateSpy).to.have.been.calledOnce;
       expect(sitemapCreateSpy).to.have.been.calledWith({
@@ -182,7 +203,7 @@ lab.describe('sitemap', () => {
   });
 
   lab.describe('fetch', () => {
-    lab.test('should call refresh until there is no error', (done) => {
+    lab.test('should call refresh until there is no error', done => {
       const err = new Error('dubidu');
       const assert = () => {
         expect(serverStub.seneca.act).to.have.been.calledThrice;
@@ -190,7 +211,10 @@ lab.describe('sitemap', () => {
       };
       serverStub.seneca.act.onCall(0).callsFake((params, cb) => cb(err));
       serverStub.seneca.act.onCall(1).callsFake((params, cb) => cb(err));
-      serverStub.seneca.act.onCall(2).callsFake((params, cb) => { cb(null); assert(); });
+      serverStub.seneca.act.onCall(2).callsFake((params, cb) => {
+        cb(null);
+        assert();
+      });
       fetch();
     });
   });

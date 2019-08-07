@@ -6,29 +6,41 @@
 const translater = require('../fn/i18n-translate');
 const languages = require('country-language');
 
-module.exports = function (request, cb) {
+module.exports = function(request, cb) {
   const preloaded = {};
   const defaultLanguage = 'en_US';
   if (!request.params.id.startsWith('id')) {
-    request.seneca.act({ role: 'cd-dojos',
-      cmd: 'find',
-      query: { urlSlug: `${request.params.id}/${request.params.alpha2}` } },
-    (err, dojo) => {
-      // If metadata fails to load, continue loading the page normally
-      if (err || !dojo) return cb(err);
-      const localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
-      let locale = (localesFromCountry && localesFromCountry[0].langCultureName) || defaultLanguage;
-      locale = locale.replace('-', '_');
-      preloaded.title = translater(locale, { key: '%1s | CoderDojo',
-        var: dojo.name });
-      preloaded.description = translater(locale, { key: '%1s in %2s',
-        var: [dojo.name, dojo.countryName] });
-      preloaded.image = [];
-      preloaded.image.push(`https://s3-eu-west-1.amazonaws.com/zen-dojo-images/${dojo.id}`);
-      preloaded['image:width'] = 300;
-      preloaded['image:height'] = 300;
-      return cb(null, preloaded);
-    });
+    request.seneca.act(
+      {
+        role: 'cd-dojos',
+        cmd: 'find',
+        query: { urlSlug: `${request.params.id}/${request.params.alpha2}` },
+      },
+      (err, dojo) => {
+        // If metadata fails to load, continue loading the page normally
+        if (err || !dojo) return cb(err);
+        const localesFromCountry = languages.getCountryMsLocales(dojo.alpha2);
+        let locale =
+          (localesFromCountry && localesFromCountry[0].langCultureName) ||
+          defaultLanguage;
+        locale = locale.replace('-', '_');
+        preloaded.title = translater(locale, {
+          key: '%1s | CoderDojo',
+          var: dojo.name,
+        });
+        preloaded.description = translater(locale, {
+          key: '%1s in %2s',
+          var: [dojo.name, dojo.countryName],
+        });
+        preloaded.image = [];
+        preloaded.image.push(
+          `https://s3-eu-west-1.amazonaws.com/zen-dojo-images/${dojo.id}`
+        );
+        preloaded['image:width'] = 300;
+        preloaded['image:height'] = 300;
+        return cb(null, preloaded);
+      }
+    );
   } else {
     return cb(null);
   }

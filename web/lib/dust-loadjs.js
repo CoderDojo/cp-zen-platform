@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const glob = require('glob');
 const dust = require('dustjs-linkedin');
@@ -15,7 +13,6 @@ const confs = {};
 confs.production = require('../config/web-production.js');
 confs.staging = require('../config/web-staging.js');
 confs.development = require('../config/web-development.js');
-
 
 function preparePaths(globs) {
   let localScripts = [];
@@ -42,7 +39,8 @@ if (process.env.UIDEBUG === 'true') {
   scripts = preparePaths(appGlobs);
   let cloneAppGlobs = appGlobs.slice(0);
   cloneAppGlobs = cloneAppGlobs.concat(cdfAppGlobs);
-  for (const appIndex in cloneAppGlobs) { // eslint-disable-line no-restricted-syntax
+  for (const appIndex in cloneAppGlobs) {
+    // eslint-disable-line no-restricted-syntax
     if (cloneAppGlobs[appIndex].indexOf('init-master') > -1) {
       cloneAppGlobs.splice(appIndex, 1);
     }
@@ -50,7 +48,7 @@ if (process.env.UIDEBUG === 'true') {
   cdfScripts = preparePaths(cloneAppGlobs);
 }
 
-dust.helpers.loadJS = function (chunk, context, bodies, params) {
+dust.helpers.loadJS = function(chunk, context, bodies, params) {
   let scriptTags = '';
   let conf;
   let js = 'window.zenConf = {};';
@@ -62,7 +60,8 @@ dust.helpers.loadJS = function (chunk, context, bodies, params) {
     conf = confs.development;
   }
   // eslint-disable-next-line guard-for-in
-  for (const variable in conf) { // eslint-disable-line no-restricted-syntax
+  for (const variable in conf) {
+    // eslint-disable-line no-restricted-syntax
     js += `window.zenConf.${variable} = '${conf[variable]}';`;
   }
   scriptTags = `<script>${js}</script>`;

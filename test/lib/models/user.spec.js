@@ -19,12 +19,12 @@ lab.describe('order handler', () => {
   const fn = proxy('../../../web/lib/models/user.js', {
     '../transports/http': transportFactory,
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('GET: search', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -43,7 +43,7 @@ lab.describe('order handler', () => {
     });
   });
   lab.describe('GET: load', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -58,7 +58,7 @@ lab.describe('order handler', () => {
     });
   });
   lab.describe('DELETE', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -69,7 +69,9 @@ lab.describe('order handler', () => {
       const uid = 1;
       transport.delete.resolves([]);
       await fn.delete(uid, payload);
-      expect(transport.delete).to.have.been.calledWith('users/1', { body: { soft: true } });
+      expect(transport.delete).to.have.been.calledWith('users/1', {
+        body: { soft: true },
+      });
     });
   });
 });

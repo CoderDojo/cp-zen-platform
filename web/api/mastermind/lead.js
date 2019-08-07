@@ -17,11 +17,14 @@ module.exports = [
       plugins: {
         cpPermissions: {
           profiles: [
-            { role: 'basic-user',
-              customValidator: [{
-                role: 'cd-users',
-                cmd: 'is_self',
-              }]
+            {
+              role: 'basic-user',
+              customValidator: [
+                {
+                  role: 'cd-users',
+                  cmd: 'is_self',
+                },
+              ],
             },
           ],
         },
@@ -34,8 +37,12 @@ module.exports = [
       },
       validate: {
         query: {
-          userId: Joi.string().guid().required(),
-          deleted: Joi.number().integer().valid(0, 1),
+          userId: Joi.string()
+            .guid()
+            .required(),
+          deleted: Joi.number()
+            .integer()
+            .valid(0, 1),
         },
       },
     },

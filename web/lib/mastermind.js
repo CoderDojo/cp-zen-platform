@@ -29,6 +29,6 @@ module.exports = (cbs, formatter) => {
     eachSeries(
       cbs,
       partialRight(stepHandler, req, reply),
-      partialRight(finalCb, partialRight.placeholder, reply),
+      partialRight(finalCb, partialRight.placeholder, reply)
     );
 };

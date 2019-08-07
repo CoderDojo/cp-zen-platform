@@ -16,22 +16,30 @@ lab.describe('mastermind-api', () => {
     ext: sandbox.stub(),
   };
   const next = sandbox.stub();
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
-  lab.test('should register the api routes', (done) => {
+  lab.test('should register the api routes', done => {
     fn.register(server, null, next);
     expect(server.route).to.have.been.called;
     expect(next).to.have.been.calledOnce;
     done();
   });
 
-  lab.test('should register a scoped postResponse', (done) => {
+  lab.test('should register a scoped postResponse', done => {
     fn.register(server, null, next);
     expect(server.ext).to.have.been.calledTwice;
-    expect(server.ext).to.have.been.calledWith('onPreResponse', senecaHttpErrorHandler, { sandbox: 'plugin' });
-    expect(server.ext).to.have.been.calledWith('onPreHandler', cpPermissionsPreHandler, { sandbox: 'plugin' });
+    expect(server.ext).to.have.been.calledWith(
+      'onPreResponse',
+      senecaHttpErrorHandler,
+      { sandbox: 'plugin' }
+    );
+    expect(server.ext).to.have.been.calledWith(
+      'onPreHandler',
+      cpPermissionsPreHandler,
+      { sandbox: 'plugin' }
+    );
     expect(next).to.have.been.calledOnce;
     done();
   });

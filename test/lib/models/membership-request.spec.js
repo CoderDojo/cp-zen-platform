@@ -19,12 +19,12 @@ lab.describe('Membership-request transport model', () => {
   const fn = proxy('../../../web/lib/models/membership-request.js', {
     '../transports/http': transportFactory,
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('create', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -35,7 +35,7 @@ lab.describe('Membership-request transport model', () => {
         baseUrl: 'http://users:3000/',
         json: true,
       });
-      expect(transport.post).to.have.been.calledWith('/users/1/join_requests', { 
+      expect(transport.post).to.have.been.calledWith('/users/1/join_requests', {
         body: {
           userType: 'mentor',
           dojoId: 'd1',
@@ -44,7 +44,7 @@ lab.describe('Membership-request transport model', () => {
     });
   });
   lab.describe('load', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -55,15 +55,16 @@ lab.describe('Membership-request transport model', () => {
     });
   });
   lab.describe('delete', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
     lab.test('it should proxy the DELETE call', async () => {
       transport.delete.resolves({});
-      await fn.delete('r1','u1');
-      expect(transport.delete).to.have.been.calledWith('/users/u1/join_requests/r1');
+      await fn.delete('r1', 'u1');
+      expect(transport.delete).to.have.been.calledWith(
+        '/users/u1/join_requests/r1'
+      );
     });
   });
-
 });

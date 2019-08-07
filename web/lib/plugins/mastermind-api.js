@@ -10,7 +10,7 @@ exports.register = (server, options, next) => {
   server.ext('onPreResponse', senecaWebErrorHandler, { sandbox: 'plugin' });
   server.ext('onPreHandler', cpPermissionsPreHandler, { sandbox: 'plugin' });
 
-  const registerRoute = (route) => {
+  const registerRoute = route => {
     server.route(route);
   };
   dojo.forEach(registerRoute);
