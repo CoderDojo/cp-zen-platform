@@ -1433,19 +1433,19 @@ cp-translations@1.0.132:
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.132.tgz#71885b0e243961f77add1e27533874ac735103e0"
   integrity sha512-A8tHX2iHdEcXXgnfU8dxyBkladJRjBlMhjkXYL/Sq7cX3Ut1hf5EgMV0USI5rr9E2Z9yA015VxD/EpD9CE1rKQ==
 
-cp-translations@1.0.133:
-  version "1.0.133"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.133.tgz#d89e4d24d9ee4c45eaded9d75614a34f7eaa2219"
-  integrity sha512-8VtAZDHLEC9YUw6TBxXOvRgog5xtTwASHEytmzdmywlggYVbgLrRMMnA9x3NCinES5PtYHyUqueeOaqOZgUOFw==
+cp-translations@1.0.137:
+  version "1.0.137"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.137.tgz#c36d6448e1fa50687f9d9f3c911a6aa3dbca67ca"
+  integrity sha512-ixLhpXSltTEwBSDsfbXS/r1V3K4LM9nCgoDsSDFmcN6asejbINVeOzgXMQVcDUg7w9ynUau3bxtwYIKvgmo0Qg==
 
-cp-zen-frontend@1.0.104:
-  version "1.0.104"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.104.tgz#eab7b2f0095abba1480a3729043de62c9c918c70"
-  integrity sha512-5l1znkQK3tOrDSj6SWLmHpUnXl8ifaHWxp5HaaRFEF3gt6X+bX0+vFCklrKvzkjbvZ1K+JPaTEPCZ+Qt+MGoQw==
+cp-zen-frontend@1.0.105:
+  version "1.0.105"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.105.tgz#d59ea6247f5cb758cda61e300b84756a50cec7af"
+  integrity sha512-5ngR4DvEMt11YIoVFfgeZxCrWqCdAwWvIYDGutRuuXHsindaApITg8szW3LbZrrzPtLqU9IUQWw8F9fjkRSj6g==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
-    cp-translations "1.0.133"
+    cp-translations "1.0.137"
     font-awesome "^4.7.0"
     handlebars "^4.1.0"
     js-cookie "^2.1.4"
@@ -1453,10 +1453,11 @@ cp-zen-frontend@1.0.104:
     moment "^2.18.1"
     sanitize-html "^1.15.0"
     uuid "^3.2.1"
-    vee-validate "^2.0.6"
+    vee-validate "^2.2.7"
     vue "^2.2.6"
     vue-analytics "^4.1.3"
     vue-awesome "^2.3.1"
+    vue-ctk-date-time-picker "^2.1.1"
     vue-dob-picker "^1.0.9"
     vue-i18n "^7.0.3"
     vue-multiselect "^2.1.0"
@@ -1466,6 +1467,7 @@ cp-zen-frontend@1.0.104:
     vue-router "^2.5.3"
     vue-router-multiguard "^1.0.3"
     vue-static-map "^2.0.0"
+    vue-trix "^0.8.1"
     vue2-google-maps "^0.7.9"
     vuex "^2.3.1"
 
@@ -2036,7 +2038,7 @@ es6-promisify@^5.0.0:
   dependencies:
     es6-promise "^4.0.3"
 
-es6-symbol@^3.1, es6-symbol@^3.1.1, es6-symbol@~3.1, es6-symbol@~3.1.1:
+es6-symbol@^3.1, es6-symbol@^3.1.0, es6-symbol@^3.1.1, es6-symbol@~3.1, es6-symbol@~3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
   dependencies:
@@ -5177,6 +5179,13 @@ module-not-found-error@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/module-not-found-error/-/module-not-found-error-1.0.1.tgz#cf8b4ff4f29640674d6cdd02b0e3bc523c2bbdc0"
 
+moment-range@^4.0.1:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/moment-range/-/moment-range-4.0.2.tgz#f7c3863df2a1ed7fd1822ba5a7bcf53a78701be9"
+  integrity sha512-n8sceWwSTjmz++nFHzeNEUsYtDqjgXgcOBzsHi+BoXQU2FW+eU92LUaK8gqOiSu5PG57Q9sYj1Fz4LRDj4FtKA==
+  dependencies:
+    es6-symbol "^3.1.0"
+
 moment@2.8.x:
   version "2.8.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.8.4.tgz#cc174aabb19223efff5699a9467805a2789838bf"
@@ -5188,6 +5197,11 @@ moment@2.x.x, moment@^2.18.1:
 moment@^2.10.6:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 mout@^0.11.0:
   version "0.11.1"
@@ -7677,6 +7691,11 @@ traverse@0.6.6:
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
 
+trix@^1.1.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-1.2.0.tgz#b314101abd1d8d3d5da22ae5b866a719a73a6e21"
+  integrity sha512-gJ7edoWzcnc9DBjsgeGkmotVpyVhFQTlSOmUYjwFn71NlGixAhNgsu8pVIq/jkIkbk6om0PSetc9cRJm+qU3+A==
+
 tryit@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tryit/-/tryit-1.0.3.tgz#393be730a9446fd1ead6da59a014308f36c289cb"
@@ -7966,6 +7985,11 @@ uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
+v-click-outside@^2.0.2:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-2.1.3.tgz#b7297abe833a439dc0895e6418a494381e64b5e7"
+  integrity sha512-8d11/fN+nkSPeor87K8OtGc/lDbRwbUiFwdzxQEGidlXt6eko3gIgRM7ghgi4p/zohF3Ja9hAaydAajV3gnlPQ==
+
 v8flags@^2.0.2:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-2.1.1.tgz#aab1a1fa30d45f88dd321148875ac02c0b55e5b4"
@@ -7993,9 +8017,10 @@ value-or-function@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/value-or-function/-/value-or-function-3.0.0.tgz#1c243a50b595c1be54a754bfece8563b9ff8d813"
 
-vee-validate@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.6.tgz#0a28046e3c80fb5b9b944da5f7771c7404f90a6a"
+vee-validate@^2.2.7:
+  version "2.2.14"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.14.tgz#94f914cd30db5928887be98eee4eb635ad617b08"
+  integrity sha512-EDiEk8/PthLn9/1FISLCcviCzjvsc9Jv9B4wmyz0GoGqa0DT8yiTWuTORjSFQQ+UW0GLhXcPNfRhG3EdEOx0gw==
 
 verror@1.10.0:
   version "1.10.0"
@@ -8118,6 +8143,16 @@ vue-awesome@^2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-2.3.3.tgz#e83f976fe5c7f86d207c24ca33731bdc6e9906a9"
 
+vue-ctk-date-time-picker@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vue-ctk-date-time-picker/-/vue-ctk-date-time-picker-2.1.1.tgz#c608aef70bf9eb8efb2bda8e0ef4586e6384c0d9"
+  integrity sha512-gJqac6Dm6finp1hdeHsaCiCPSWQEa/0oH29hi4IMkidLznhbMMS/xm3Q9fgnF1YcCZy0HzOehUYjh3NLespECA==
+  dependencies:
+    moment "^2.24.0"
+    moment-range "^4.0.1"
+    v-click-outside "^2.0.2"
+    vue "^2.5.22"
+
 vue-dob-picker@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/vue-dob-picker/-/vue-dob-picker-1.0.9.tgz#2c6e9736a0b2d08e0accd3458b23bcddc515696d"
@@ -8161,6 +8196,13 @@ vue-static-map@^2.0.0:
   dependencies:
     vue "^2.3.3"
 
+vue-trix@^0.8.1:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/vue-trix/-/vue-trix-0.8.4.tgz#b23c262f9c0ce939330ed0740309ad2b27850fc1"
+  integrity sha512-2WwDHuBzwt2Z2AbBSlmheaWCIEG69MmOWq44w7JXfx/dR029P5lYD9CWejm+mURSjHFaUYVd6jPyGCcozKRrIw==
+  dependencies:
+    trix "^1.1.1"
+
 vue2-google-maps@^0.7.9:
   version "0.7.10"
   resolved "https://registry.yarnpkg.com/vue2-google-maps/-/vue2-google-maps-0.7.10.tgz#4f746ccd87aaeb6f2bf72f81ffa1c8d7fdc754f2"
@@ -8176,6 +8218,11 @@ vue@>=2.0.0:
 vue@^2.2.6, vue@^2.3.3:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
+
+vue@^2.5.22:
+  version "2.6.10"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
 vuex@^2.0.0, vuex@^2.3.1:
   version "2.5.0"
