@@ -42,7 +42,7 @@ exports.start = () => {
   server.app.defaultLanguage = 'en_US';
   server.app.availableLocales = new locale.Locales(
     languages.map(l => l.code),
-    server.app.defaultLanguage,
+    server.app.defaultLanguage
   );
   server.app.hostUid = `${hasher.digest('hex')}-${uid}`;
   // Set up HAPI
@@ -71,7 +71,10 @@ exports.start = () => {
         },
       },
       { register: cdAuth },
-      { register: hapiEtags, options: { varieties: ['plain', 'buffer', 'stream'] } },
+      {
+        register: hapiEtags,
+        options: { varieties: ['plain', 'buffer', 'stream'] },
+      },
       { register: scooterAndBlankie },
       { register: logging },
       { register: swagger },
@@ -80,7 +83,9 @@ exports.start = () => {
       { register: mastermindApis },
       {
         register: senecaPreloaders,
-        options: { handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'] },
+        options: {
+          handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'],
+        },
       },
       { register: controllers },
       { register: cpZenFrontend },
@@ -93,9 +98,9 @@ exports.start = () => {
         }
         server.plugins.sitemap.fetch();
         console.log('[%s] Listening on http://localhost:%d', env, port); // eslint-disable-line no-console
-      }),
+      })
     )
-    .catch((err) => {
+    .catch(err => {
       throw err;
     });
 

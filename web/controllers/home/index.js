@@ -1,4 +1,3 @@
-
 const auth = require('../../lib/authentications');
 
 module.exports = [
@@ -146,7 +145,8 @@ module.exports = [
 
   {
     method: 'GET',
-    path: '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}',
+    path:
+      '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}',
     config: {
       auth: auth.basicUser,
       plugins: {

@@ -1,7 +1,7 @@
 const service = process.env.EVENTS_SERVICE;
 const Transport = require('../transports/http');
 
-// Note : Order is a better superset 
+// Note : Order is a better superset
 // but we need it for backward compat (deletion of account)
 class Application {
   constructor() {

@@ -1,11 +1,9 @@
-
-
 const _ = require('lodash');
 const Joi = require('joi');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
 
-exports.register = function (server, eOptions, next) {
+exports.register = function(server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
   const handlers = handlerFactory(server, 'cd-dojos');
 
@@ -20,9 +18,7 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
@@ -32,7 +28,8 @@ exports.register = function (server, eOptions, next) {
         },
       },
     },
-    { method: 'POST',
+    {
+      method: 'POST',
       path: `${options.basePath}/poll/save`,
       handler: handlers.actHandlerNeedsUser('save_poll_setup'),
       config: {
@@ -42,19 +39,21 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
-          payload: Joi.object({ poll: {
-            id: Joi.string().guid().optional(),
-            question: Joi.string().required(),
-            valueUnity: Joi.string().required(),
-            maxAnswers: Joi.number().required(),
-            endDate: Joi.date().optional(),
-          } }),
+          payload: Joi.object({
+            poll: {
+              id: Joi.string()
+                .guid()
+                .optional(),
+              question: Joi.string().required(),
+              valueUnity: Joi.string().required(),
+              maxAnswers: Joi.number().required(),
+              endDate: Joi.date().optional(),
+            },
+          }),
         },
       },
     },
@@ -69,15 +68,15 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
-          payload: Joi.object({ query: {
-            id: Joi.string().optional(),
-          } }),
+          payload: Joi.object({
+            query: {
+              id: Joi.string().optional(),
+            },
+          }),
         },
       },
     },
@@ -91,17 +90,17 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
-          payload: Joi.object({ query: {
-            pollId: Joi.string(),
-            dojoId: Joi.string().optional(),
-            createdAt: Joi.alternatives().try(Joi.object(), Joi.date()),
-          } }),
+          payload: Joi.object({
+            query: {
+              pollId: Joi.string(),
+              dojoId: Joi.string().optional(),
+              createdAt: Joi.alternatives().try(Joi.object(), Joi.date()),
+            },
+          }),
         },
       },
     },
@@ -116,18 +115,22 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
-          payload: Joi.object({ poll: {
-            id: Joi.string().guid().optional(),
-            pollId: Joi.string().guid().required(),
-            dojoId: Joi.string().required(),
-            value: Joi.number().required(),
-          } }),
+          payload: Joi.object({
+            poll: {
+              id: Joi.string()
+                .guid()
+                .optional(),
+              pollId: Joi.string()
+                .guid()
+                .required(),
+              dojoId: Joi.string().required(),
+              value: Joi.number().required(),
+            },
+          }),
         },
       },
     },
@@ -142,9 +145,7 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
@@ -162,14 +163,14 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
           params: {
-            pollId: Joi.string().guid().required(),
+            pollId: Joi.string()
+              .guid()
+              .required(),
           },
         },
       },
@@ -185,14 +186,14 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
           params: {
-            pollId: Joi.string().guid().required(),
+            pollId: Joi.string()
+              .guid()
+              .required(),
           },
           payload: {
             dryRun: Joi.boolean().invalid(false),
@@ -210,9 +211,7 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
@@ -231,15 +230,17 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
           payload: {
-            pollId: Joi.string().guid().required(),
-            email: Joi.string().email().required(),
+            pollId: Joi.string()
+              .guid()
+              .required(),
+            email: Joi.string()
+              .email()
+              .required(),
           },
         },
       },
@@ -255,18 +256,22 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
           payload: {
             query: {
-              id: Joi.string().guid().required(),
-              limit$: Joi.number().required().max(1),
+              id: Joi.string()
+                .guid()
+                .required(),
+              limit$: Joi.number()
+                .required()
+                .max(1),
             },
-            pollId: Joi.string().guid().required(),
+            pollId: Joi.string()
+              .guid()
+              .required(),
           },
         },
       },
@@ -282,14 +287,14 @@ exports.register = function (server, eOptions, next) {
         tags: ['api', 'dojos', 'polls'],
         plugins: {
           'hapi-swagger': {
-            responseMessages: [
-              { code: 200, message: 'OK' },
-            ],
+            responseMessages: [{ code: 200, message: 'OK' }],
           },
         },
         validate: {
           payload: {
-            pollId: Joi.string().guid().required(),
+            pollId: Joi.string()
+              .guid()
+              .required(),
             query: Joi.object().optional(),
           },
         },

@@ -10,17 +10,17 @@ exports.lab = lab;
 lab.describe('dust-i18n', () => {
   const translaterSpy = sinon.stub().returns('a');
   let fn;
-  lab.before((done) => {
+  lab.before(done => {
     fn = proxy('../../web/lib/dust-i18n', {
       './fn/i18n-translate': translaterSpy,
     });
     done();
   });
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     translaterSpy.resetHistory();
     done();
   });
-  lab.test('should get default locale', (done) => {
+  lab.test('should get default locale', done => {
     const chunk = {
       write: sinon.spy(),
     };
@@ -33,7 +33,7 @@ lab.describe('dust-i18n', () => {
     done();
   });
 
-  lab.test('should get locale off context head', (done) => {
+  lab.test('should get locale off context head', done => {
     const chunk = {
       write: sinon.spy(),
     };
@@ -46,7 +46,7 @@ lab.describe('dust-i18n', () => {
     done();
   });
 
-  lab.test('should get locale off context stack tail\'s head', (done) => {
+  lab.test("should get locale off context stack tail's head", done => {
     const chunk = {
       write: sinon.spy(),
     };
@@ -59,7 +59,7 @@ lab.describe('dust-i18n', () => {
     done();
   });
 
-  lab.test('should get locale off context stack tail\'s tail\'s head', (done) => {
+  lab.test("should get locale off context stack tail's tail's head", done => {
     const chunk = {
       write: sinon.spy(),
     };
@@ -71,7 +71,7 @@ lab.describe('dust-i18n', () => {
     expect(chunk.write).to.have.been.calledWith('a');
     done();
   });
-  lab.test('should pass down params to translater', (done) => {
+  lab.test('should pass down params to translater', done => {
     const params = 'b';
     const chunk = {
       write: sinon.spy(),

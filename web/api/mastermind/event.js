@@ -4,7 +4,14 @@ const validation = require('../validations/events');
 const eventHandlers = require('../../lib/handlers/event');
 
 const basePath = '/api/3.0';
-const { beforeDate, afterDate, status, isPublic, utcOffset, related } = validation.definitions;
+const {
+  beforeDate,
+  afterDate,
+  status,
+  isPublic,
+  utcOffset,
+  related,
+} = validation.definitions;
 
 module.exports = [
   {
@@ -14,7 +21,7 @@ module.exports = [
     config: {
       auth: auth.userIfPossible,
       description: 'List events of a Dojo',
-      notes: 'Dojo\'s events',
+      notes: "Dojo's events",
       tags: ['api', 'events'],
       plugins: {
         'hapi-swagger': {
@@ -26,8 +33,12 @@ module.exports = [
       },
       validate: {
         params: {
-          dojoId: Joi.string().guid().required(),
-          format: Joi.string().valid('.ics').allow('', null),
+          dojoId: Joi.string()
+            .guid()
+            .required(),
+          format: Joi.string()
+            .valid('.ics')
+            .allow('', null),
         },
         query: validation.base.keys({
           'query[status]': status,
@@ -59,7 +70,9 @@ module.exports = [
       },
       validate: {
         params: {
-          eventId: Joi.string().guid().required(),
+          eventId: Joi.string()
+            .guid()
+            .required(),
         },
         query: validation.base.keys({
           'query[beforeDate]': beforeDate,
@@ -67,6 +80,50 @@ module.exports = [
           'query[utcOffset]': utcOffset,
           related,
         }),
+      },
+    },
+  },
+  {
+    method: 'POST',
+    path: `${basePath}/events`,
+    handler: eventHandlers.create(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Create an event',
+      notes: 'Creates an event',
+      tags: ['api', 'events'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        payload: validation.modelDefinitions,
+      },
+    },
+  },
+  {
+    method: 'PUT',
+    path: `${basePath}/events/{eventId}`,
+    handler: eventHandlers.update(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Update an event',
+      notes: 'Updates an event',
+      tags: ['api', 'events'],
+      plugins: {
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        payload: validation.updateModelDefinitions,
       },
     },
   },

@@ -32,7 +32,7 @@
                   <td><span ng-if="!event.eventbriteId">{{ event.eventStats.totalAttending }}</span></td>
                   <td>{{ event.status }}</td>
                   <td class="pointer">
-                    <a ui-sref="edit-dojo-event({eventId:event.id, dojoId: dojoId})" ng-if="!event.eventbriteId">{@i18n key="Edit"/}</a>
+                    <a ui-sref="edit-event({eventId:event.id, dojoId: dojoId})" ng-if="event.status !== 'cancelled' && !event.eventbriteId">{@i18n key="Edit"/}</a>
                     <a ng-href="https://www.eventbrite.com/edit?eid={{ event.eventbriteId }}" ng-if="event.eventbriteId">{@i18n key="Edit"/}</a>
                   </td>
                   <td class="pointer">

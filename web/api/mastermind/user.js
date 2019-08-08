@@ -32,7 +32,8 @@ module.exports = [
         }),
       },
     },
-  }, {
+  },
+  {
     method: 'GET',
     path: `${basePath}/users/{userId}`,
     handler: userHandlers.load(),
@@ -53,14 +54,17 @@ module.exports = [
       },
       validate: {
         params: validation.base.keys({
-          userId: Joi.string().guid().required(),
+          userId: Joi.string()
+            .guid()
+            .required(),
         }),
         query: validation.base.keys({
           related: Joi.string().valid('profile', 'children'),
         }),
       },
     },
-  }, {
+  },
+  {
     method: 'DELETE',
     path: `${basePath}/users/{userId}`,
     handler: userHandlers.delete(),
@@ -79,7 +83,9 @@ module.exports = [
       },
       validate: {
         params: {
-          userId: Joi.string().guid().required(),
+          userId: Joi.string()
+            .guid()
+            .required(),
         },
         payload: {
           soft: Joi.boolean(),
@@ -87,4 +93,5 @@ module.exports = [
         },
       },
     },
-  }];
+  },
+];

@@ -19,12 +19,12 @@ lab.describe('order handler', () => {
   const fn = proxy('../../../web/lib/models/application.js', {
     '../transports/http': transportFactory,
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('DELETE', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
@@ -39,7 +39,9 @@ lab.describe('order handler', () => {
         baseUrl: 'http://events2:3000/',
         json: true,
       });
-      expect(transport.delete).to.have.been.calledWith('users/1/applications', { body: { soft: true } });
+      expect(transport.delete).to.have.been.calledWith('users/1/applications', {
+        body: { soft: true },
+      });
     });
   });
 });

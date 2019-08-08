@@ -23,7 +23,7 @@ lab.describe('event handler', () => {
   const code = sandbox.stub();
   const header = sandbox.stub();
   let req;
-  lab.beforeEach((done) => {
+  lab.beforeEach(done => {
     req = {
       params: { dojoId: 1 },
       query: { 'query[status]': 'published' },
@@ -38,16 +38,16 @@ lab.describe('event handler', () => {
     });
     done();
   });
-  lab.afterEach((done) => {
+  lab.afterEach(done => {
     sandbox.reset();
     done();
   });
   lab.describe('GET', () => {
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
-    lab.test('it should return the events', (done) => {
+    lab.test('it should return the events', done => {
       Event.get.resolves([]);
       fn.get()[0](req, reply, () => {
         expect(Event.get).to.have.been.calledWith({
@@ -55,12 +55,15 @@ lab.describe('event handler', () => {
           'query[status]': 'published',
         });
         expect(reply).to.have.been.calledOnce.and.calledWith([]);
-        expect(header).to.have.been.calledOnce.and.calledWith('Content-type', 'application/json');
+        expect(header).to.have.been.calledOnce.and.calledWith(
+          'Content-type',
+          'application/json'
+        );
         expect(code).to.have.been.calledOnce.and.calledWith(200);
         done();
       });
     });
-    lab.test('it should return the events as ICS', (done) => {
+    lab.test('it should return the events as ICS', done => {
       Event.getICS.resolves([]);
       req.params.format = '.ics';
       fn.get()[0](req, reply, () => {
@@ -69,16 +72,19 @@ lab.describe('event handler', () => {
           'query[status]': 'published',
         });
         expect(reply).to.have.been.calledOnce.and.calledWith([]);
-        expect(header).to.have.been.calledOnce.and.calledWith('Content-type', 'text/calendar');
+        expect(header).to.have.been.calledOnce.and.calledWith(
+          'Content-type',
+          'text/calendar'
+        );
         expect(code).to.have.been.calledOnce.and.calledWith(200);
         done();
       });
     });
 
-    lab.test('it should call cb on error', (done) => {
+    lab.test('it should call cb on error', done => {
       const err = new Error('fake err');
       Event.get.rejects(err);
-      fn.get()[0](req, reply, (_err) => {
+      fn.get()[0](req, reply, _err => {
         expect(Event.get).to.have.been.calledWith({
           'query[dojoId]': 1,
           'query[status]': 'published',
@@ -94,14 +100,14 @@ lab.describe('event handler', () => {
     const user = { id: 'user1' };
     const req = {
       params: { eventId: 1 },
-      query: { },
+      query: {},
       user,
     };
-    lab.afterEach((done) => {
+    lab.afterEach(done => {
       sandbox.reset();
       done();
     });
-    lab.test('it should return the event', (done) => {
+    lab.test('it should return the event', done => {
       Event.load.resolves({});
       fn.load()[0](req, reply, () => {
         expect(Event.load).to.have.been.calledWith(1, {});

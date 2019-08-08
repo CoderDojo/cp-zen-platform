@@ -19,12 +19,16 @@ exports.register = (server, options, next) => {
         },
         {
           name: 'events',
-        }],
+        },
+      ],
     };
-    server.register({
-      register: hapiSwagger,
-      options: swaggerOptions,
-    }, next);
+    server.register(
+      {
+        register: hapiSwagger,
+        options: swaggerOptions,
+      },
+      next
+    );
   }
 };
 

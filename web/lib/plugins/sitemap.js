@@ -27,7 +27,8 @@ exports.register = (server, options, next) => {
   });
 
   // Route handler for /sitemap.xml
-  const handler = (req, reply) => reply(currentSitemap).header('Content-Type', 'application/xml');
+  const handler = (req, reply) =>
+    reply(currentSitemap).header('Content-Type', 'application/xml');
 
   // format a Dojo into a sitemap url
   const dojoToSitemapUrl = ({ urlSlug }) => ({
@@ -36,29 +37,42 @@ exports.register = (server, options, next) => {
     priority: 0.5,
   });
   // Reload the list of Dojo and format it as XML
-  const refresh = (cb) => {
-    const query = { verified: 1, stage: { ne$: 4 }, deleted: 0, fields$: ['url_slug'] };
-    server.seneca.act({ role: 'cd-dojos', entity: 'dojo', cmd: 'list', query },
+  const refresh = cb => {
+    const query = {
+      verified: 1,
+      stage: { ne$: 4 },
+      deleted: 0,
+      fields$: ['url_slug'],
+    };
+    server.seneca.act(
+      { role: 'cd-dojos', entity: 'dojo', cmd: 'list', query },
       (err, res) => {
         if (err) {
-          server.log(['error', 500], {
-            status: 500,
-            host: server.app.hostUid,
-            params: query,
-            error: err,
-          }, Date.now());
+          server.log(
+            ['error', 500],
+            {
+              status: 500,
+              host: server.app.hostUid,
+              params: query,
+              error: err,
+            },
+            Date.now()
+          );
         } else {
           const urls = res && res.length ? res.map(dojoToSitemapUrl) : [];
           currentSitemap = sitemap
-            .createSitemap(Object.assign({}, skeleton, { urls: urls.concat(staticUrls) }))
+            .createSitemap(
+              Object.assign({}, skeleton, { urls: urls.concat(staticUrls) })
+            )
             .toString();
         }
         if (cb) return cb(err);
-      });
+      }
+    );
   };
   // Tries to load the sitemap until it has a non-erronous result
   const fetch = () => {
-    const cb = (err) => {
+    const cb = err => {
       if (err) {
         setImmediate(() => fetch(cb));
       }

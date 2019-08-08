@@ -19,7 +19,6 @@ class MembershipRequest {
   delete(requestId, userId) {
     return this.transport.delete(`/users/${userId}/join_requests/${requestId}`);
   }
-
 }
 
 module.exports = new MembershipRequest();

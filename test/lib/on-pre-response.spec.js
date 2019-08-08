@@ -9,14 +9,14 @@ chai.use(sinonChai);
 exports.lab = lab;
 lab.describe('onPreResponse', () => {
   const server = {};
-  lab.before((done) => {
+  lab.before(done => {
     server.app = {
       hostUid: 1,
     };
     done();
   });
   // TODO : integration test, not sure the field are still up to date
-  lab.test('should set headers for cp-host for response', (done) => {
+  lab.test('should set headers for cp-host for response', done => {
     const reqMock = {
       url: { path: '' },
       response: {
@@ -30,10 +30,13 @@ lab.describe('onPreResponse', () => {
     };
 
     fn(server)(reqMock, replyMock);
-    expect(reqMock.response.header).to.have.been.calledWith('cp-host', server.app.hostUid);
+    expect(reqMock.response.header).to.have.been.calledWith(
+      'cp-host',
+      server.app.hostUid
+    );
     done();
   });
-  lab.test('should set headers for cp-host for error', (done) => {
+  lab.test('should set headers for cp-host for error', done => {
     const reqMock = {
       url: { path: '' },
       response: {
@@ -49,11 +52,13 @@ lab.describe('onPreResponse', () => {
     };
 
     fn(server)(reqMock, replyMock);
-    expect(reqMock.response.output.headers['cp-host']).to.equal(server.app.hostUid);
+    expect(reqMock.response.output.headers['cp-host']).to.equal(
+      server.app.hostUid
+    );
     done();
   });
 
-  lab.test('should specifically log on 400', (done) => {
+  lab.test('should specifically log on 400', done => {
     const reqMock = {
       url: { path: '' },
       response: {
@@ -74,7 +79,8 @@ lab.describe('onPreResponse', () => {
     };
 
     fn(server)(reqMock, replyMock);
-    expect(reqMock.log).to.have.been.calledWith(['error', '400'],
+    expect(reqMock.log).to.have.been.calledWith(
+      ['error', '400'],
       {
         status: 400,
         host: server.app.hostUid,
@@ -84,12 +90,13 @@ lab.describe('onPreResponse', () => {
         user: reqMock.user,
         error: { headers: { 'cp-host': 1 }, statusCode: 400 },
       },
-      sinon.match.number);
+      sinon.match.number
+    );
     expect(replyMock.continue).to.have.been.calledOnce;
     done();
   });
 
-  lab.test('should continue for any api 2.0 endpoint', (done) => {
+  lab.test('should continue for any api 2.0 endpoint', done => {
     const reqMock = {
       url: { path: '/api/2.0/dojos' },
       response: {
@@ -111,7 +118,7 @@ lab.describe('onPreResponse', () => {
     done();
   });
 
-  lab.test('should continue for any api 3.0 endpoint', (done) => {
+  lab.test('should continue for any api 3.0 endpoint', done => {
     const reqMock = {
       url: { path: '/api/3.0/dojos' },
       response: {
@@ -133,7 +140,7 @@ lab.describe('onPreResponse', () => {
     done();
   });
 
-  lab.test('should redirect to cdf login on auth error for cdf pages', (done) => {
+  lab.test('should redirect to cdf login on auth error for cdf pages', done => {
     const reqMock = {
       url: { path: '/' },
       response: {
@@ -142,7 +149,11 @@ lab.describe('onPreResponse', () => {
           headers: {},
         },
       },
-      route: { settings: { auth: { access: [{ scope: { selection: ['cdf-admin'] } }] } } },
+      route: {
+        settings: {
+          auth: { access: [{ scope: { selection: ['cdf-admin'] } }] },
+        },
+      },
       app: { context: {} },
       headers: {},
     };
@@ -159,7 +170,7 @@ lab.describe('onPreResponse', () => {
     done();
   });
 
-  lab.test('should continue for anything that is not a 404 or a 401', (done) => {
+  lab.test('should continue for anything that is not a 404 or a 401', done => {
     const reqMock = {
       url: { path: '' },
       response: {
@@ -180,7 +191,7 @@ lab.describe('onPreResponse', () => {
     done();
   });
 
-  lab.test('ultimately should render the index view', (done) => {
+  lab.test('ultimately should render the index view', done => {
     const reqMock = {
       url: { path: '' },
       response: {

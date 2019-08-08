@@ -1,4 +1,3 @@
-
 const times = {};
 times.msec = 1;
 times.sec = 1000 * times.msec;

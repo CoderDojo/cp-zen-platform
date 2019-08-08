@@ -27,7 +27,10 @@ class Email {
     options.headers['x-smtpapi'].category.push(payload.templateName);
     options.headers['x-smtpapi'] = JSON.stringify(options.headers['x-smtpapi']);
     options.replyTo = payload.emailOptions.from;
-    const body = { ...payload, emailOptions: { ...payload.emailOptions, ...options } };
+    const body = {
+      ...payload,
+      emailOptions: { ...payload.emailOptions, ...options },
+    };
     return this.transport.post('email/send', { body });
   }
 }

@@ -1,10 +1,8 @@
-
-
 const _ = require('lodash');
 const joi = require('joi');
 const Boom = require('boom');
 
-exports.register = function (server, eOptions, next) {
+exports.register = function(server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0' }, eOptions);
 
   function getConfigHandler(request, reply) {
@@ -18,18 +16,20 @@ exports.register = function (server, eOptions, next) {
     }
   }
 
-  server.route([{
-    method: 'GET',
-    path: `${options.basePath}/config/get`,
-    handler: getConfigHandler,
-    config: {
-      validate: {
-        query: {
-          key: joi.string(),
+  server.route([
+    {
+      method: 'GET',
+      path: `${options.basePath}/config/get`,
+      handler: getConfigHandler,
+      config: {
+        validate: {
+          query: {
+            key: joi.string(),
+          },
         },
       },
     },
-  }]);
+  ]);
 
   next();
 };

@@ -13,14 +13,26 @@ const eventbrite = require('../../api/eventbrite.js');
 const polls = require('../../api/polls.js');
 const orgs = require('../../api/organisations.js');
 
-exports.register = function (server, options, next) {
-  const apis = [sys, { register: configRoute, options: options.webclient },
-    dojos, leads, users, profiles, oauth2, agreements,
-    badges, events, eventbrite, polls, orgs];
+exports.register = function(server, options, next) {
+  const apis = [
+    sys,
+    { register: configRoute, options: options.webclient },
+    dojos,
+    leads,
+    users,
+    profiles,
+    oauth2,
+    agreements,
+    badges,
+    events,
+    eventbrite,
+    polls,
+    orgs,
+  ];
   function errHandler(err) {
     next(err);
   }
-  apis.forEach((api) => {
+  apis.forEach(api => {
     server.register(api, errHandler);
   });
   next();
