@@ -82,6 +82,7 @@ const sendDojoEmails = [
             eventId: req.eventId,
             emailSubject: 'Tickets Now Available for %1$s',
           },
+          user: req.user.user,
         },
         err => {
           if (err) return next(err);
