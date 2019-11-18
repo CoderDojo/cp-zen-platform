@@ -217,7 +217,7 @@ exports.register = function(server, eOptions, next) {
           },
         },
         payload: {
-          output: 'stream',
+          output: 'data',
           parse: true,
           allow: 'multipart/form-data',
         },
