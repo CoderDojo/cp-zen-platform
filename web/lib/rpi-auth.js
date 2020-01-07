@@ -1,10 +1,11 @@
 const oauth2 = require('simple-oauth2');
+const jwt = require('jsonwebtoken');
 
 const homeServer = process.env.HOSTED_URL;
 const homeCallbackPath = '/rpi/cb';
 const authServer = process.env.RPI_AUTH_URL;
-const tokenServer = process.env.RPI_TOKEN_URL || authServer;
 const authPath = '/oauth2/auth';
+const tokenServer = process.env.RPI_TOKEN_URL || authServer;
 const tokenPath = '/oauth2/token';
 const clientId = process.env.RPI_CLIENT_ID;
 const clientSecret = process.env.RPI_CLIENT_SECRET;
@@ -36,15 +37,22 @@ function getRedirectUri(state = dummyState) {
   });
 }
 
-function getToken(code) {
+function getIdToken(code) {
   return oauth2Rpi.authorizationCode
     .getToken({ code, redirect_uri: callbackUri })
-    .then(function(result) {
-      return oauth2Rpi.accessToken.create(result);
+    .then(function(result) { 
+      const tokenResult = oauth2Rpi.accessToken.create(result);
+      return tokenResult && tokenResult.token && tokenResult.token.id_token;
     });
 }
 
+function decodeIdToken(idToken) {
+  return jwt.decode(idToken);
+}
+
 module.exports = {
+  decodeIdToken,
   getRedirectUri,
+  getIdToken,
   getToken,
 };
