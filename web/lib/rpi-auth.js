@@ -1,12 +1,16 @@
 const oauth2 = require('simple-oauth2');
 const jwt = require('jsonwebtoken');
+const { URLSearchParams } = require('url');
 
 const homeServer = process.env.HOSTED_URL;
+const homeRpiPath = '/rpi';
 const homeCallbackPath = '/rpi/cb';
 const authServer = process.env.RPI_AUTH_URL;
 const authPath = '/oauth2/auth';
 const tokenServer = process.env.RPI_TOKEN_URL || authServer;
 const tokenPath = '/oauth2/token';
+const profileServer = process.env.RPI_PROFILE_URL;
+const profileSignupPath = '/signup';
 const clientId = process.env.RPI_CLIENT_ID;
 const clientSecret = process.env.RPI_CLIENT_SECRET;
 const brand = 'coderdojo';
@@ -27,6 +31,13 @@ const oauth2Rpi = oauth2.create({
     tokenPath: tokenPath,
   },
 });
+
+function getRegisterRedirectUri() {
+  const params = new URLSearchParams();
+  params.set('brand', 'coderdojo');
+  params.set('returnTo', `${homeServer}${homeRpiPath}`);
+  return `${profileServer}${profileSignupPath}?${params}`;
+}
 
 function getRedirectUri(state = dummyState) {
   return oauth2Rpi.authorizationCode.authorizeURL({
@@ -54,5 +65,5 @@ module.exports = {
   decodeIdToken,
   getRedirectUri,
   getIdToken,
-  getToken,
+  getRegisterRedirectUri,
 };
