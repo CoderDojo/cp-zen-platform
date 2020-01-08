@@ -1,7 +1,7 @@
 const _ = require('lodash');
-const Boom = require('boom');
 const {
   getRedirectUri,
+  getRegisterRedirectUri,
   getIdToken,
   decodeIdToken,
 } = require('../../lib/rpi-auth');
@@ -9,8 +9,21 @@ const {
 // Look at Seneca auth docs/code to find password bypass
 const rpiPassword = 'N6HgPWXpDAnVvCBkVaYHaGKHJAqg5VLY';
 
-function handleRPIAuth(request, reply) {
+function handleRPILogin(request, reply) {
+  const session = request.state['seneca-login'];
+  if (session && session.token) {
+    return reply.redirect('/');
+  }
   const redirectUri = getRedirectUri();
+  reply.redirect(redirectUri);
+}
+
+function handleRPIRegister(request, reply) {
+  const session = request.state['seneca-login'];
+  if (session && session.token) {
+    return reply.redirect('/');
+  }
+  const redirectUri = getRegisterRedirectUri();
   reply.redirect(redirectUri);
 }
 
@@ -123,8 +136,15 @@ function handleCb(request, reply) {
 module.exports = [
   {
     method: 'GET',
+    path: '/rpi/login',
+    handler: handleRPILogin,
+  },
     path: '/rpi',
     handler: handleRPIAuth,
+  {
+    method: 'GET',
+    path: '/rpi/register',
+    handler: handleRPIRegister,
   },
   {
     method: 'GET',

@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const { URLSearchParams } = require('url');
 
 const homeServer = process.env.HOSTED_URL;
-const homeRpiPath = '/rpi';
-const homeCallbackPath = '/rpi/cb';
+const loginPath = '/rpi/login';
+const callbackPath = '/rpi/cb';
 const authServer = process.env.RPI_AUTH_URL;
 const authPath = '/oauth2/auth';
 const tokenServer = process.env.RPI_TOKEN_URL || authServer;
@@ -16,7 +16,7 @@ const clientSecret = process.env.RPI_CLIENT_SECRET;
 const brand = 'coderdojo';
 const dummyState = '503aae3cf962412076589a264694606118ac63667deae839'; // use to persist state at point of return, need to add param to redirect url following sign up?
 const scope = 'openid email profile force-consent';
-const callbackUri = `${homeServer}${homeCallbackPath}`;
+const callbackUri = `${homeServer}${callbackPath}`;
 
 // Initialize the OAuth2 Library
 const oauth2Rpi = oauth2.create({
@@ -35,7 +35,7 @@ const oauth2Rpi = oauth2.create({
 function getRegisterRedirectUri() {
   const params = new URLSearchParams();
   params.set('brand', 'coderdojo');
-  params.set('returnTo', `${homeServer}${homeRpiPath}`);
+  params.set('returnTo', `${homeServer}${loginPath}`);
   return `${profileServer}${profileSignupPath}?${params}`;
 }
 

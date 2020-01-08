@@ -19,7 +19,7 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
   var profileAuthFlag = $window.localStorage.getItem('profileAuth');
 
   if (profileAuthFlag === 'true') {
-    var profileAuthPath = '/rpi';
+    var profileAuthPath = $window.location.pathname === '/register/user' ? '/rpi/register' : '/rpi/login';
     profileAuthPath += '?origin=' + encodeURIComponent($window.location.pathname);
     if ($scope.redirect) {
       profileAuthPath += '&redirect=' + encodeURIComponent($scope.redirect);
