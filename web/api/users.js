@@ -6,21 +6,23 @@ const joiValidator = require('./validations/dojos')();
 const Boom = require('boom');
 const Joi = require('joi');
 
+function cleanUser(_user) {
+  const user = _user;
+  if (user) {
+    delete user.pass;
+    delete user.salt;
+    delete user.active;
+    delete user.accounts;
+    delete user.confirmcode;
+    delete user.profilePassword;
+  }
+  return user;
+}
+
 exports.register = function(server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
   const handlers = handlerFactory(server, 'cd-users');
 
-  function cleanUser(_user) {
-    const user = _user;
-    if (user) {
-      delete user.pass;
-      delete user.salt;
-      delete user.active;
-      delete user.accounts;
-      delete user.confirmcode;
-    }
-    return user;
-  }
 
   function handleLogin(target) {
     return function(request, reply) {
