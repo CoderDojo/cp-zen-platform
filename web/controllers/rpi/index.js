@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const Boom = require('boom');
 const {
   getRedirectUri,
   getRegisterRedirectUri,
@@ -27,7 +28,7 @@ function handleRPILogout(request, reply) {
 
   const msg = { role: 'user', cmd: 'logout', token: session.token };
   return request.seneca.act(msg, err => {
-    if (err) return reply(err);
+    if (err) return reply(Boom.badImplementation(err));
     request.cookieAuth.clear();
     delete request.user;
     const redirectUri = getLogoutRedirectUri();
@@ -68,6 +69,11 @@ function getZenRegisterPayload(decodedIdToken) {
 }
 
 function handleCb(request, reply) {
+  if (request.query.error) {
+    request.log(['error', 'rpi', 'callback'], request.query);
+    return reply(Boom.badImplementation('callback error'));
+  }
+
   const login = (email, idToken) => {
     request.seneca.act(
       {
@@ -78,9 +84,8 @@ function handleCb(request, reply) {
       },
       (err, res) => {
         if (err) {
-          // TODO: display error message to user
-          // eslint-disable-next-line no-console
-          console.error(err);
+          // TODO: Graceful error display
+          return reply(Boom.badImplementation(err));
         }
         request.cookieAuth.set({
           token: res.login.token,
@@ -91,16 +96,10 @@ function handleCb(request, reply) {
       }
     );
   };
-  // eslint-disable-next-line no-console
-  console.log('cb', request.query);
+
   getIdToken(request.query.code)
     .then(idToken => {
-      // eslint-disable-next-line no-console
-      console.log({ idToken });
       const rpiProfile = decodeIdToken(idToken);
-      // eslint-disable-next-line no-console
-      console.log({ rpiProfile });
-
       request.seneca.act(
         {
           role: 'cd-users',
@@ -114,27 +113,21 @@ function handleCb(request, reply) {
           } else {
             const zenRegisterPayload = getZenRegisterPayload(rpiProfile);
 
-            // eslint-disable-next-line no-console
-            console.log({ zenRegisterPayload });
-
             const msg = _.defaults(
               { role: 'cd-users', cmd: 'register' },
               zenRegisterPayload
             );
             return request.seneca.act(msg, (err, resp) => {
               if (err) {
-                // eslint-disable-next-line no-console
-                console.error(err);
-                // TODO: display error message to user
-                return reply.redirect('/');
+                // TODO: Graceful error display
+                return reply(Boom.badImplementation(err));
               }
               if (!resp.user) {
-                // TODO: display error message to user
-                // eslint-disable-next-line no-console
-                console.error(new Error('No user on registerResponse'));
-                // eslint-disable-next-line no-console
-                // TODO: redirect to redirect/refer page
-                return reply.redirect('/');
+                // TODO: Graceful error display
+                // Observed error reason: nick is already used
+                return reply(
+                  Boom.badImplementation('No user on registerResponse')
+                );
               }
               return login(resp.user.email, idToken);
             });
@@ -143,10 +136,8 @@ function handleCb(request, reply) {
       );
     })
     .catch(error => {
-      // TODO: display error message to user
-      // eslint-disable-next-line no-console
-      console.error(error);
-      return reply.redirect('/');
+      // TODO: Graceful error display
+      return reply(Boom.badImplementation(error));
     });
 }
 
