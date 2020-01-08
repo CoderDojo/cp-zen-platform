@@ -2,6 +2,7 @@ const _ = require('lodash');
 const {
   getRedirectUri,
   getRegisterRedirectUri,
+  getLogoutRedirectUri,
   getIdToken,
   decodeIdToken,
 } = require('../../lib/rpi-auth');
@@ -16,6 +17,22 @@ function handleRPILogin(request, reply) {
   }
   const redirectUri = getRedirectUri();
   reply.redirect(redirectUri);
+}
+
+function handleRPILogout(request, reply) {
+  const session = request.state['seneca-login'];
+  if (!session || (session && !session.token)) {
+    return reply.redirect('/');
+  }
+
+  const msg = { role: 'user', cmd: 'logout', token: session.token };
+  return request.seneca.act(msg, err => {
+    if (err) return reply(err);
+    request.cookieAuth.clear();
+    delete request.user;
+    const redirectUri = getLogoutRedirectUri();
+    return reply.redirect(redirectUri);
+  });
 }
 
 function handleRPIRegister(request, reply) {
@@ -139,8 +156,11 @@ module.exports = [
     path: '/rpi/login',
     handler: handleRPILogin,
   },
-    path: '/rpi',
-    handler: handleRPIAuth,
+  {
+    method: 'GET',
+    path: '/rpi/logout',
+    handler: handleRPILogout,
+  },
   {
     method: 'GET',
     path: '/rpi/register',

@@ -11,6 +11,7 @@ const tokenServer = process.env.RPI_TOKEN_URL || authServer;
 const tokenPath = '/oauth2/token';
 const profileServer = process.env.RPI_PROFILE_URL;
 const profileSignupPath = '/signup';
+const profileLogoutPath = '/logout';
 const clientId = process.env.RPI_CLIENT_ID;
 const clientSecret = process.env.RPI_CLIENT_SECRET;
 const brand = 'coderdojo';
@@ -31,6 +32,12 @@ const oauth2Rpi = oauth2.create({
     tokenPath: tokenPath,
   },
 });
+
+function getLogoutRedirectUri() {
+  const params = new URLSearchParams();
+  params.set('returnTo', homeServer);
+  return `${profileServer}${profileLogoutPath}?${params}`;
+}
 
 function getRegisterRedirectUri() {
   const params = new URLSearchParams();
@@ -66,4 +73,5 @@ module.exports = {
   getRedirectUri,
   getIdToken,
   getRegisterRedirectUri,
+  getLogoutRedirectUri,
 };
