@@ -50,7 +50,7 @@ function getZenRegisterPayload(decodedIdToken) {
     isTrusted: true,
     user: {
       id: decodedIdToken.uuid,
-      name: decodedIdToken.name,
+      name: decodedIdToken.nickname,
       firstName: decodedIdToken.name,
       lastName: '',
       email: decodedIdToken.email,
@@ -58,7 +58,7 @@ function getZenRegisterPayload(decodedIdToken) {
       termsConditionsAccepted: true,
       initUserType: { name: 'parent-guardian' },
       profileId: decodedIdToken.uuid,
-      nick: decodedIdToken.nickname,
+      nick: decodedIdToken.email,
     },
     profile: {
       country: {
