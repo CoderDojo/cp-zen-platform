@@ -6,10 +6,8 @@ const {
   getLogoutRedirectUri,
   getIdToken,
   decodeIdToken,
+  rpiZenAccountPassword,
 } = require('../../lib/rpi-auth');
-
-// Look at Seneca auth docs/code to find password bypass
-const rpiPassword = 'N6HgPWXpDAnVvCBkVaYHaGKHJAqg5VLY';
 
 function handleRPILogin(request, reply) {
   const session = request.state['seneca-login'];
@@ -54,7 +52,7 @@ function getZenRegisterPayload(decodedIdToken) {
       firstName: decodedIdToken.name,
       lastName: '',
       email: decodedIdToken.email,
-      password: rpiPassword,
+      password: rpiZenAccountPassword,
       termsConditionsAccepted: true,
       initUserType: { name: 'parent-guardian' },
       profileId: decodedIdToken.uuid,
@@ -80,7 +78,7 @@ function handleCb(request, reply) {
         role: 'user',
         cmd: 'login',
         email: email,
-        password: rpiPassword,
+        password: rpiZenAccountPassword,
       },
       (err, res) => {
         if (err) {

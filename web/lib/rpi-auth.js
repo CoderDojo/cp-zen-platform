@@ -18,6 +18,7 @@ const brand = 'coderdojo';
 const dummyState = '503aae3cf962412076589a264694606118ac63667deae839'; // use to persist state at point of return, need to add param to redirect url following sign up?
 const scope = 'openid email profile force-consent';
 const callbackUri = `${homeServer}${callbackPath}`;
+const rpiZenAccountPassword = process.env.RPI_ZEN_ACCOUNT_PWORD;
 
 // Initialize the OAuth2 Library
 const oauth2Rpi = oauth2.create({
@@ -74,4 +75,5 @@ module.exports = {
   getIdToken,
   getRegisterRedirectUri,
   getLogoutRedirectUri,
+  rpiZenAccountPassword,
 };
