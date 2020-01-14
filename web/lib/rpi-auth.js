@@ -59,7 +59,7 @@ function getRedirectUri(state = dummyState) {
 function getIdToken(code) {
   return oauth2Rpi.authorizationCode
     .getToken({ code, redirect_uri: callbackUri })
-    .then(function(result) { 
+    .then(function(result) {
       const tokenResult = oauth2Rpi.accessToken.create(result);
       return tokenResult && tokenResult.token && tokenResult.token.id_token;
     });

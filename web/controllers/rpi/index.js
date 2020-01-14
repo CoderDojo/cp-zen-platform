@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const _ = require('lodash');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const Boom = require('boom');
 const {
   getRedirectUri,

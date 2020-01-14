@@ -18,7 +18,7 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', '$window', 'cdAp
     },
 
     logout: function(win,fail){
-      const profileAuthFlag = $window.localStorage.getItem('profileAuth');
+      var profileAuthFlag = $window.localStorage.getItem('profileAuth');
       if (profileAuthFlag === 'true') {
         $window.location.href = '/rpi/logout'
       } else {
