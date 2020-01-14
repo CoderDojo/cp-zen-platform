@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpZenPlatform').service('auth', ['$http', '$q', 'cdApi', function($http, $q, cdApi) {
+angular.module('cpZenPlatform').service('auth', ['$http', '$q', '$window', 'cdApi', function($http, $q, $window, cdApi) {
   var loggedin_user = null;
   function topfail( data ) {
     console.log(data)
@@ -18,8 +18,13 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', 'cdApi', functio
     },
 
     logout: function(win,fail){
-      $http({method:'POST', url: '/api/2.0/users/logout', data:{}, cache:false}).
-        success(win).error(fail||topfail)
+      var profileAuthFlag = $window.localStorage.getItem('profileAuth');
+      if (profileAuthFlag === 'true') {
+        $window.location.href = '/rpi/logout'
+      } else {
+        $http({method:'POST', url: '/api/2.0/users/logout', data:{}, cache:false}).
+          success(win).error(fail||topfail)
+      }
     },
 
     instance: function(win,fail){

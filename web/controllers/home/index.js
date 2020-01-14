@@ -1,4 +1,7 @@
 const auth = require('../../lib/authentications');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const Joi = require('joi');
+const { getRegisterRedirectUri } = require('../../lib/rpi-auth');
 
 module.exports = [
   {
@@ -8,12 +11,21 @@ module.exports = [
       reply.view('index', request.app);
     },
   },
-
   {
     method: 'GET',
     path: '/register',
     handler(request, reply) {
+      if (request.query.profileAuth) {
+        return reply.redirect(getRegisterRedirectUri());
+      }
       reply.view('index', request.app);
+    },
+    config: {
+      validate: {
+        query: {
+          profileAuth: Joi.bool(),
+        },
+      },
     },
   },
 

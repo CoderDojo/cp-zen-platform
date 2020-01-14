@@ -16,6 +16,20 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.redirect = $location.search().redirect;
   }
 
+  var profileAuthFlag = $window.localStorage.getItem('profileAuth');
+
+  if (profileAuthFlag === 'true') {
+    var profileAuthPath = $window.location.pathname === '/register/user' ? '/rpi/register' : '/rpi/login';
+    profileAuthPath += '?origin=' + encodeURIComponent($window.location.pathname);
+    if ($scope.redirect) {
+      profileAuthPath += '&redirect=' + encodeURIComponent($scope.redirect);
+    }
+    if ($state.current && $state.current.name) {
+      profileAuthPath += '&appState=' + encodeURIComponent($state.current.name);
+    }
+    return $window.location.href = profileAuthPath;
+  }
+
   var msgmap = {
     'unknown': $translate.instant('Unable to perform your request at this time - please try again later.'),
     'user-not-found': $translate.instant('Email address is not recognized.'),
