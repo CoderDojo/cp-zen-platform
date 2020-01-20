@@ -2,6 +2,7 @@
 const _ = require('lodash');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Boom = require('boom');
+const { URLSearchParams } = require('url');
 const {
   getRedirectUri,
   getRegisterRedirectUri,
@@ -10,6 +11,13 @@ const {
   decodeIdToken,
   rpiZenAccountPassword,
 } = require('../../lib/rpi-auth');
+
+const oauthErrorMessage = 'Raspberry Pi Authentication Failed';
+
+function getErrorRedirectUrl(message = oauthErrorMessage) {
+  const errorUrlQueryParams = new URLSearchParams({ error: message });
+  return `/?${errorUrlQueryParams}`;
+}
 
 function handleRPILogin(request, reply) {
   const session = request.state['seneca-login'];
@@ -70,8 +78,11 @@ function getZenRegisterPayload(decodedIdToken) {
 
 function handleCb(request, reply) {
   if (request.query.error) {
-    request.log(['error', 'rpi', 'callback'], request.query);
-    return reply(Boom.badImplementation('callback error'));
+    request.log(['error', '40x'], request.query);
+    return reply.redirect(
+      // TODO: use generic user friendly error
+      getErrorRedirectUrl(`rpi callback error: ${request.query.error}`)
+    );
   }
 
   const login = (email, idToken) => {
@@ -84,8 +95,18 @@ function handleCb(request, reply) {
       },
       (err, res) => {
         if (err) {
-          // TODO: Graceful error display
-          return reply(Boom.badImplementation(err));
+          request.log(['error', '50x'], err);
+          // TODO: use generic user friendly error
+          return reply.redirect(
+            getErrorRedirectUrl('Zen Login Failed - Seneca error.')
+          );
+        }
+        if (!res.login || !res.login.token) {
+          request.log(['error', '50x'], 'Zen Login Failed - No token.');
+          // TODO: use generic user friendly error
+          return reply.redirect(
+            getErrorRedirectUrl('Zen Login Failed - No token.')
+          );
         }
         request.cookieAuth.set({
           token: res.login.token,
@@ -107,8 +128,14 @@ function handleCb(request, reply) {
           profileId: rpiProfile.uuid,
         },
         (err, resp) => {
+          if (err) {
+            request.log(['error', '50x'], err);
+            // TODO: use generic user friendly error
+            return reply.redirect(
+              getErrorRedirectUrl('Get Profile User Failed - Seneca error.')
+            );
+          }
           if (resp.email) {
-            // TODO: update email if not matching
             return login(resp.email, idToken);
           } else {
             const zenRegisterPayload = getZenRegisterPayload(rpiProfile);
@@ -119,14 +146,20 @@ function handleCb(request, reply) {
             );
             return request.seneca.act(msg, (err, resp) => {
               if (err) {
-                // TODO: Graceful error display
-                return reply(Boom.badImplementation(err));
+                request.log(['error', '50x'], err);
+                // TODO: use generic user friendly error
+                return reply.redirect(
+                  getErrorRedirectUrl('Zen Registration Failed - Seneca error.')
+                );
               }
               if (!resp.user) {
-                // TODO: Graceful error display
-                // Observed error reason: nick is already used
-                return reply(
-                  Boom.badImplementation('No user on registerResponse')
+                request.log(
+                  ['error', '50x'],
+                  'Zen Registration Failed - No user.'
+                );
+                return reply.redirect(
+                  // TODO: use generic user friendly error
+                  getErrorRedirectUrl('Zen Registration Failed - No user.')
                 );
               }
               return login(resp.user.email, idToken);
@@ -136,8 +169,13 @@ function handleCb(request, reply) {
       );
     })
     .catch(error => {
-      // TODO: Graceful error display
-      return reply(Boom.badImplementation(error));
+      request.log(['error', '40x'], error.data.payload);
+      return reply.redirect(
+        // TODO: use generic user friendly error
+        getErrorRedirectUrl(
+          `rpi id token error: ${error.data.payload.error_description}`
+        )
+      );
     });
 }
 
