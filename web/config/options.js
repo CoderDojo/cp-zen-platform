@@ -27,6 +27,10 @@ module.exports = {
   },
 
   hapi: {
+    debug:
+      process.env.NODE_ENV === 'development'
+        ? { log: ['error'], request: ['error'] }
+        : false,
     connections: {
       routes: {
         security: {
