@@ -1497,10 +1497,10 @@ cp-translations@1.0.138:
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.138.tgz#c3faad27432eea021683c43878525d4a174f2bf9"
   integrity sha512-QemfGPRFxTK5Id+g93AwMkxwgJYiLmtKhDV+a9rfaYpannOoEbcIsBMyAwjc6OK+UAE54KBMUwy3SVYcpBw74w==
 
-cp-zen-frontend@1.0.111:
-  version "1.0.111"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.111.tgz#55fb5c7acee75709072315a273cdf54ffcc812fe"
-  integrity sha512-02cQ8bLWTX0Igb/IaPNBc+1hgusQd2M1syEarFu4XFMmPBndqlrfgZuyYvVgF1NaN3sQC7MZr6yGEqCY3MXbjA==
+cp-zen-frontend@1.0.112:
+  version "1.0.112"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.112.tgz#f7a675e7ff969cb3a3ea539a3aec2a4fc960b23a"
+  integrity sha512-KUhqH6gzTFMpNS1cteeUUVwagvyjRLn98YgTFmmy9pkS0i5bidyPuL6yF1OKay37abFvPV8lNSc8T8wlbyY6PQ==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
@@ -1526,6 +1526,7 @@ cp-zen-frontend@1.0.111:
     vue-router "^2.5.3"
     vue-router-multiguard "^1.0.3"
     vue-static-map "^2.0.0"
+    vue-toasted "^1.1.27"
     vue-trix "^1.1.0"
     vue2-google-maps "^0.7.9"
     vuex "^2.3.1"
@@ -8347,6 +8348,11 @@ vue-static-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/vue-static-map/-/vue-static-map-2.0.0.tgz#877e6cf697eeb839fb86f74b256d8b82988883cb"
   dependencies:
     vue "^2.3.3"
+
+vue-toasted@^1.1.27:
+  version "1.1.27"
+  resolved "https://registry.yarnpkg.com/vue-toasted/-/vue-toasted-1.1.27.tgz#ce0a74b875f90c2e4a9e163cce6d5fc37d78a07c"
+  integrity sha512-GVbwInwnqkVxQ4GU/XYeQt1e0dAXL8sF5Hr1H/coCBbYUan5xP0G2mEz/HRDf1lt73rFQAN/bJcLTOKkqiM6tg==
 
 vue-trix@^1.1.0:
   version "1.1.0"
