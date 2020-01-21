@@ -11,6 +11,7 @@ const tokenServer = process.env.RPI_TOKEN_URL || authServer;
 const tokenPath = '/oauth2/token';
 const profileServer = process.env.RPI_PROFILE_URL;
 const profileSignupPath = '/signup';
+const profileEditPath = '/profile/edit';
 const profileLogoutPath = '/logout';
 const clientId = process.env.RPI_CLIENT_ID;
 const clientSecret = process.env.RPI_CLIENT_SECRET;
@@ -42,9 +43,16 @@ function getLogoutRedirectUri() {
 
 function getRegisterRedirectUri() {
   const params = new URLSearchParams();
-  params.set('brand', 'coderdojo');
+  params.set('brand', brand);
   params.set('returnTo', `${homeServer}${loginPath}`);
   return `${profileServer}${profileSignupPath}?${params}`;
+}
+
+function getEditRedirectUri() {
+  const params = new URLSearchParams();
+  params.set('brand', brand);
+  params.set('returnTo', `${homeServer}${loginPath}`);
+  return `${profileServer}${profileEditPath}?${params}`;
 }
 
 function getRedirectUri(state = dummyState) {
@@ -76,4 +84,5 @@ module.exports = {
   getRegisterRedirectUri,
   getLogoutRedirectUri,
   rpiZenAccountPassword,
+  getEditRedirectUri,
 };

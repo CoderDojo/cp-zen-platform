@@ -6,6 +6,7 @@ const { URLSearchParams } = require('url');
 const {
   getRedirectUri,
   getRegisterRedirectUri,
+  getEditRedirectUri,
   getLogoutRedirectUri,
   getIdToken,
   decodeIdToken,
@@ -50,6 +51,11 @@ function handleRPIRegister(request, reply) {
     return reply.redirect('/');
   }
   const redirectUri = getRegisterRedirectUri();
+  reply.redirect(redirectUri);
+}
+
+function handleRPIEdit(request, reply) {
+  const redirectUri = getEditRedirectUri();
   reply.redirect(redirectUri);
 }
 
@@ -194,6 +200,11 @@ module.exports = [
     method: 'GET',
     path: '/rpi/register',
     handler: handleRPIRegister,
+  },
+  {
+    method: 'GET',
+    path: '/rpi/edit',
+    handler: handleRPIEdit,
   },
   {
     method: 'GET',
