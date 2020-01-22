@@ -1,255 +1,256 @@
-const auth = require("../../lib/authentications");
+const auth = require('../../lib/authentications');
 // eslint-disable-next-line import/no-extraneous-dependencies
-const Joi = require("joi");
-const { getRegisterRedirectUri } = require("../../lib/rpi-auth");
+const Joi = require('joi');
+const { getRegisterRedirectUri } = require('../../lib/rpi-auth');
 
 module.exports = [
   {
-    method: "GET",
-    path: "/reset",
+    method: 'GET',
+    path: '/reset',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
   {
-    method: "GET",
-    path: "/register",
+    method: 'GET',
+    path: '/register',
     handler(request, reply) {
       if (request.query.profileAuth) {
         return reply.redirect(getRegisterRedirectUri());
       }
-      reply.view("index", request.app);
+      reply.view('index', request.app);
     },
     config: {
       validate: {
         query: {
           profileAuth: Joi.bool(),
-          referer: Joi.string()
-        }
-      }
-    }
+	  referer: Joi.string()
+        },
+      },
+    },
   },
 
   {
-    method: "GET",
-    path: "/create-dojo",
+    method: 'GET',
+    path: '/create-dojo',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/start-dojo",
+    method: 'GET',
+    path: '/start-dojo',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/charter",
+    method: 'GET',
+    path: '/charter',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/dojo-list-index",
+    method: 'GET',
+    path: '/dojo-list-index',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/terms-and-conditions",
+    method: 'GET',
+    path: '/terms-and-conditions',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/privacy-statement",
+    method: 'GET',
+    path: '/privacy-statement',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/dojo/{id}/{alpha2*}",
+    method: 'GET',
+    path: '/dojo/{id}/{alpha2*}',
     handler(request, reply) {
       reply.redirect(`/dojos/${request.params.id}/${request.params.alpha2}`);
     },
     config: {
       plugins: {
         senecaPreloader: {
-          handler: "seneca-dojo-preloader"
-        }
-      }
-    }
+          handler: 'seneca-dojo-preloader',
+        },
+      },
+    },
   },
 
   {
-    method: "GET",
-    path: "/dojo/{id}",
+    method: 'GET',
+    path: '/dojo/{id}',
     handler(request, reply) {
       reply.redirect(`/dojos/${request.params.id}`);
-    }
+    },
   },
 
   {
-    method: "GET",
-    path: "/dojo/{dojoId}/event/{eventId}",
+    method: 'GET',
+    path: '/dojo/{dojoId}/event/{eventId}',
     handler(request, reply) {
-      reply.view("index", request.app);
+      reply.view('index', request.app);
     },
     config: {
       plugins: {
         senecaPreloader: {
-          handler: "seneca-event-preloader"
-        }
-      }
-    }
+          handler: 'seneca-event-preloader',
+        },
+      },
+    },
   },
 
   {
-    method: "GET",
-    path: "/event/{eventId}",
+    method: 'GET',
+    path: '/event/{eventId}',
     handler(request, reply) {
       reply.redirect(`/events/${request.params.eventId}`);
-    }
+    },
   },
 
   {
-    method: "GET",
-    path: "/accept_dojo_user_invitation/{dojoId}/{userInviteToken}",
+    method: 'GET',
+    path: '/accept_dojo_user_invitation/{dojoId}/{userInviteToken}',
     config: {
       auth: auth.basicUser,
       plugins: {
-        "hapi-auth-cookie": {
-          redirectTo: "/login"
-        }
-      }
+        'hapi-auth-cookie': {
+          redirectTo: '/login',
+        },
+      },
     },
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/accept_dojo_user_request/{userId}/{userInviteToken}",
+    method: 'GET',
+    path: '/accept_dojo_user_request/{userId}/{userInviteToken}',
     config: {
       auth: auth.basicUser,
       plugins: {
-        "hapi-auth-cookie": {
-          redirectTo: "/login"
-        }
-      }
+        'hapi-auth-cookie': {
+          redirectTo: '/login',
+        },
+      },
     },
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
+    method: 'GET',
     path:
-      "/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}",
+      '/accept-parent-guardian-request/{parentProfileId}/{childProfileId}/{inviteToken}',
     config: {
       auth: auth.basicUser,
       plugins: {
-        "hapi-auth-cookie": {
-          redirectTo: "/login"
-        }
-      }
+        'hapi-auth-cookie': {
+          redirectTo: '/login',
+        },
+      },
     },
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/profile/{userId}",
+    method: 'GET',
+    path: '/profile/{userId}',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/reset_password/{token}",
+    method: 'GET',
+    path: '/reset_password/{token}',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/badges",
+    method: 'GET',
+    path: '/badges',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/poll/{pollId}",
+    method: 'GET',
+    path: '/poll/{pollId}',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/poll/{pollId}/dojo/{dojoId}",
+    method: 'GET',
+    path: '/poll/{pollId}/dojo/{dojoId}',
     handler(request, reply) {
-      reply.view("index", request.app);
-    }
+      reply.view('index', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/templates/login",
+    method: 'GET',
+    path: '/templates/login',
     handler(request, reply) {
-      reply.view("accounts/login", request.app);
-    }
+      reply.view('accounts/login', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/templates/register",
+    method: 'GET',
+    path: '/templates/register',
     handler(request, reply) {
-      reply.view("accounts/register", request.app);
-    }
+      reply.view('accounts/register', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/templates/terms-and-conditions",
+    method: 'GET',
+    path: '/templates/terms-and-conditions',
     handler(request, reply) {
-      reply.view("accounts/terms-and-conditions", request.app);
-    }
+      reply.view('accounts/terms-and-conditions', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/templates/privacy-statement",
+    method: 'GET',
+    path: '/templates/privacy-statement',
     handler(request, reply) {
-      reply.view("privacy-statement/privacy-statement", request.app);
-    }
+      reply.view('privacy-statement/privacy-statement', request.app);
+    },
   },
 
   {
-    method: "GET",
-    path: "/templates/reset_password",
+    method: 'GET',
+    path: '/templates/reset_password',
     handler(request, reply) {
-      reply.view("accounts/reset_password", request.app);
-    }
-  }
+      reply.view('accounts/reset_password', request.app);
+    },
+  },
 ];
+
