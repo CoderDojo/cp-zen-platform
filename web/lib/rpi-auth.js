@@ -2,24 +2,25 @@ const oauth2 = require('simple-oauth2');
 const jwt = require('jsonwebtoken');
 const { URLSearchParams } = require('url');
 
-const homeServer = process.env.HOSTED_URL;
-const loginPath = '/rpi/login';
-const callbackPath = '/rpi/cb';
 const authServer = process.env.RPI_AUTH_URL;
-const authPath = '/oauth2/auth';
+const homeServer = process.env.HOSTED_URL;
 const tokenServer = process.env.RPI_TOKEN_URL || authServer;
-const tokenPath = '/oauth2/token';
 const profileServer = process.env.RPI_PROFILE_URL;
+const clientSecret = process.env.RPI_CLIENT_SECRET;
+const clientId = process.env.RPI_CLIENT_ID;
+const rpiZenAccountPassword = process.env.RPI_ZEN_ACCOUNT_PWORD;
+
+const profileOauthPath = '/oauth2/auth';
+const profileTokenPath = '/oauth2/token';
 const profileSignupPath = '/signup';
 const profileEditPath = '/profile/edit';
 const profileLogoutPath = '/logout';
-const clientId = process.env.RPI_CLIENT_ID;
-const clientSecret = process.env.RPI_CLIENT_SECRET;
+const loginPath = '/rpi/login';
+const callbackPath = '/rpi/cb';
+
 const brand = 'coderdojo';
 const dummyState = '503aae3cf962412076589a264694606118ac63667deae839'; // use to persist state at point of return, need to add param to redirect url following sign up?
 const scope = 'openid email profile force-consent';
-const callbackUri = `${homeServer}${callbackPath}`;
-const rpiZenAccountPassword = process.env.RPI_ZEN_ACCOUNT_PWORD;
 
 // Initialize the OAuth2 Library
 const oauth2Rpi = oauth2.create({
@@ -29,9 +30,9 @@ const oauth2Rpi = oauth2.create({
   },
   auth: {
     authorizeHost: authServer,
-    authorizePath: authPath,
+    authorizePath: profileOauthPath,
     tokenHost: tokenServer,
-    tokenPath: tokenPath,
+    tokenPath: profileTokenPath,
   },
 });
 
@@ -57,7 +58,7 @@ function getEditRedirectUri() {
 
 function getRedirectUri(state = dummyState) {
   return oauth2Rpi.authorizationCode.authorizeURL({
-    redirect_uri: callbackUri,
+    redirect_uri: `${homeServer}${callbackPath}`,
     scope,
     state,
     brand,
@@ -66,7 +67,7 @@ function getRedirectUri(state = dummyState) {
 
 function getIdToken(code) {
   return oauth2Rpi.authorizationCode
-    .getToken({ code, redirect_uri: callbackUri })
+    .getToken({ code, redirect_uri: `${homeServer}${callbackPath}` })
     .then(function(result) {
       const tokenResult = oauth2Rpi.accessToken.create(result);
       return tokenResult && tokenResult.token && tokenResult.token.id_token;
