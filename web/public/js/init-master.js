@@ -951,9 +951,11 @@
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');
           var url = $location.url();
-          if ( url.indexOf('dashboard') > -1  ) {
+          if ( url.indexOf('/rpi/') > -1  ) {
+            $window.location.href = url;
+          } else if ( url.indexOf('dashboard') > -1  ) {
             $window.location.href = url.replace('/dashboard', '');
-          }else{
+          } else {
             $state.go('error-404-no-headers');
           }
       });
