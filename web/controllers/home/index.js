@@ -24,6 +24,7 @@ module.exports = [
       validate: {
         query: {
           profileAuth: Joi.bool(),
+	        referer: Joi.string()
         },
       },
     },
@@ -252,3 +253,4 @@ module.exports = [
     },
   },
 ];
+
