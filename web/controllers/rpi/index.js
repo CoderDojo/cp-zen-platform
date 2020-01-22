@@ -69,7 +69,7 @@ function getZenRegisterPayload(decodedIdToken) {
       termsConditionsAccepted: true,
       // TODO: determine approach for o13 and u13 user types reg flows
       initUserType: { name: 'parent-guardian' },
-      profileId: decodedIdToken.uuid,
+      raspberryId: decodedIdToken.uuid,
       nick: decodedIdToken.email,
     },
     profile: {
@@ -171,8 +171,8 @@ function handleCb(request, reply) {
     request.seneca.act(
       {
         role: 'cd-users',
-        cmd: 'get_user_by_profile_id',
-        profileId: rpiProfile.uuid,
+        cmd: 'get_user_by_raspberry_id',
+        raspberryId: rpiProfile.uuid,
       },
       callback
     );
