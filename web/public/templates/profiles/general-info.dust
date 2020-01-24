@@ -209,6 +209,17 @@
             <label for="mailingList">{@i18n key="Subscribe to newsletter"/} </label>
           </div>
         </div>
+        <div class="margin-left-35-percent">
+          <div class="checkbox terms-conditions">
+            <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.termsConditionsAccepted.$error.required}" ng-model="profile.user.termsConditionsAccepted" required id="termsAndConditionsCheckbox">
+            <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"/}
+            </label>
+            <div>
+              <label class="control-label has-error validationMessage" id="terms-required-error"
+              ng-show="forms.generalInfoForm.$submitted && forms.generalInfoForm.termsConditionsAccepted.$error.required">{@i18n key="You must accept the Terms and Conditions"/}</label>
+            </div>
+          </div>
+        </div>
 
         <h4 ng-if="abilityToAddChildren()" ng-show="afterForm()" >{@i18n key="Got a child? Add them below"/}</h4>
         <div ng-show="afterForm()">
