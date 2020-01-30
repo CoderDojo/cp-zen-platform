@@ -66,7 +66,7 @@ function getZenRegisterPayload(decodedIdToken) {
       email: decodedIdToken.email,
       password: rpiZenAccountPassword,
       // TODO: prompt for zen conditions acceptance
-      termsConditionsAccepted: true,
+      termsConditionsAccepted: false,
       // TODO: determine approach for o13 and u13 user types reg flows
       initUserType: { name: 'parent-guardian' },
       raspberryId: decodedIdToken.uuid,

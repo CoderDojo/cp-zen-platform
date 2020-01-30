@@ -3,6 +3,10 @@
     padding-top: 7px;
     height: 20px;
   }
+  /* hides unwanted required error, can't figure out where it coes from! */
+  .terms-conditions label.has-error:not(#terms-required-error) {
+    display: none;
+  }
   &__general-info {
     &-linkedin, &-twitter {
       & .has-error .input-group-addon {
