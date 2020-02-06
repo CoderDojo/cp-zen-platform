@@ -585,6 +585,13 @@ backoff@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/backoff/-/backoff-2.3.0.tgz#ee7c7e38093f92e472859db635e7652454fc21ea"
 
+backoff@~2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/backoff/-/backoff-2.5.0.tgz#f616eda9d3e4b66b8ca7fca79f695722c5f8e26f"
+  integrity sha1-9hbtqdPktmuMp/ynn2lXIsX44m8=
+  dependencies:
+    precond "0.2"
+
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -2035,6 +2042,20 @@ eraro@0.4.1, eraro@~0.4.1:
   dependencies:
     lodash "~2.4.1"
 
+eraro@1.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eraro/-/eraro-1.0.0.tgz#8a2167f0bc6f964200a2fcde7a386d2d5dbbf912"
+  integrity sha512-JeEqKyNgOxZNji2otWWDCDu1sWqGkrIBBhoGQH0LrPZObccQW8CoD94xkOtpmmlHeY/frG8IwR+jeCS8SQA/Xw==
+  dependencies:
+    lodash "4.17"
+
+eraro@^1.0.0, eraro@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/eraro/-/eraro-1.1.0.tgz#f53674a14aba33e5cdd89d1a72adb5fc4ed29fcb"
+  integrity sha512-Iniul1qlKYp4XHkf4H6+qGUkRYLjE6xwhIyZU6D5q5DiMgjU8uUBkOT9Y8856GkNPJ1Zw5GYN9bvER5HCN6alQ==
+  dependencies:
+    lodash "4"
+
 errno@^0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.4.tgz#b896e23a9e5e8ba33871fc996abd3635fc9a1c7d"
@@ -2909,6 +2930,11 @@ gate-executor@0.2.3:
     eraro "0.4.1"
     lodash "2.4.2"
 
+gate-executor@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/gate-executor/-/gate-executor-1.1.1.tgz#667f677284a0dbe86b6c48a0b4afe8c484812caf"
+  integrity sha1-Zn9ncoSg2+hrbEigtK/oxISBLK8=
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -2971,6 +2997,13 @@ gex@0.2.2, gex@~0.2.0:
   resolved "https://registry.yarnpkg.com/gex/-/gex-0.2.2.tgz#2d409d2430959708da55cf56294c64f6d8973487"
   dependencies:
     lodash "3.10.0"
+
+gex@0.3, gex@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/gex/-/gex-0.3.0.tgz#217324ccd6e5c61d2485c913eb7614b21358b97f"
+  integrity sha512-A1F2DMZUAnieFmVowt1QHcH7AJQZApRThR+z4C0GlzMGi6VYUAf9UvQdxODiCajGPGSRso86YJQ48E8+b5CBAQ==
+  dependencies:
+    lodash "4.17"
 
 github@^0.2.3:
   version "0.2.4"
@@ -3686,6 +3719,11 @@ hoek@2.x.x, hoek@^2.12.0, hoek@^2.13.0, hoek@^2.14.x, hoek@^2.2.x, hoek@^2.9.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
+hoek@4.2:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
+  integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
+
 hoek@4.x.x, hoek@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
@@ -4316,6 +4354,15 @@ joi@11.0.2:
     items "2.x.x"
     topo "2.x.x"
 
+joi@12.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-12.0.0.tgz#46f55e68f4d9628f01bbb695902c8b307ad8d33a"
+  integrity sha512-z0FNlV4NGgjQN1fdtHYXf5kmgludM65fG/JlXzU6+rwkt9U5UWuXVYnXa2FpK0u6+qBuCmrm5byPNuiiddAHvQ==
+  dependencies:
+    hoek "4.x.x"
+    isemail "3.x.x"
+    topo "2.x.x"
+
 joi@5.x.x:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-5.1.0.tgz#152ad07db8ee9c6401997ff5fd2c12896070bf58"
@@ -4430,7 +4477,7 @@ json-stable-stringify@1.x.x, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@5.0.1, json-stringify-safe@5.0.x, json-stringify-safe@5.x.x, json-stringify-safe@^5.0.0, json-stringify-safe@~5.0.0, json-stringify-safe@~5.0.1:
+json-stringify-safe@5.0.1, json-stringify-safe@5.0.x, json-stringify-safe@5.x.x, json-stringify-safe@^5.0.0, json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.0, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -4451,6 +4498,11 @@ jsonic@0.2.0:
 jsonic@0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/jsonic/-/jsonic-0.2.1.tgz#8918901f42daf8a7646c3852e4ab5df12ba457df"
+
+jsonic@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/jsonic/-/jsonic-0.3.1.tgz#da306185dc635b649ad934e3f6826188cad73bdb"
+  integrity sha512-5Md4EK3vPAMvP2sXY6M3/vQEPeX3LxEQBJuF979uypddXjsUlEoAI9/Nojh8tbw+YU5FjMoqSElO6oyjrAuprw==
 
 jsonify@~0.0.0:
   version "0.0.0"
@@ -4975,6 +5027,11 @@ lodash@3.7.x:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.7.0.tgz#3678bd8ab995057c07ade836ed2ef087da811d45"
 
+lodash@4, lodash@4.17, lodash@>=2.4.1, lodash@^4.0.0, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
 lodash@4.11.2:
   version "4.11.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.2.tgz#d6b4338b110a58e21dae5cebcfdbbfd2bc4cdb3b"
@@ -4983,22 +5040,9 @@ lodash@4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
-lodash@>=2.4.1, lodash@^4.0.0, lodash@^4.12.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
 lodash@^3.10.1, lodash@^3.3.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-
-lodash@^4.13.1:
-  version "4.17.5"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
-
-lodash@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
-  integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
 lodash@~1.0.1:
   version "1.0.2"
@@ -5038,9 +5082,10 @@ lru-cache@2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.6.4.tgz#2675190ccd1b0701ec2f652a4d0d3d400d76c0dd"
 
-lru-cache@4.1.x, lru-cache@^4.0.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
+lru-cache@4.1.x, lru-cache@^4.0.1, lru-cache@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
+  integrity sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
@@ -5435,6 +5480,16 @@ ncp@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ncp/-/ncp-1.0.1.tgz#d15367e5cb87432ba117d2bf80fdf45aecfb4246"
 
+ndjson@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/ndjson/-/ndjson-1.5.0.tgz#ae603b36b134bcec347b452422b0bf98d5832ec8"
+  integrity sha1-rmA7NrE0vOw0e0UkIrC/mNWDLsg=
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    minimist "^1.2.0"
+    split2 "^2.1.0"
+    through2 "^2.0.3"
+
 needle@0.9.2:
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/needle/-/needle-0.9.2.tgz#e0f9a2cb3e2dc90e93e32e6eb9e201b190ee0eaf"
@@ -5497,7 +5552,7 @@ ng-annotate@^1.2.1:
     stringset "~0.2.1"
     tryor "~0.1.2"
 
-nid@0.3.2, nid@~0.3.2:
+nid@0.3.2, nid@^0.3.2, nid@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/nid/-/nid-0.3.2.tgz#977a9318ed5c2a38edd66263f3eafd8143f2251a"
 
@@ -5628,6 +5683,14 @@ norma@0.3.0, norma@~0.3.0:
   dependencies:
     eraro "~0.4.1"
     lodash "~2.4.1"
+
+norma@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/norma/-/norma-0.4.1.tgz#0be2f05bba4c034c6ce5bac9844e1241699d6585"
+  integrity sha512-BSnU+B35GzJgkEcNqiMIm79507Qg68O5L7gRVKATRSx17BHyDn0gVJsi3YzoANC1NbBoKRExwd3KsEZSUox63Q==
+  dependencies:
+    eraro "1.0"
+    lodash "4.17"
 
 normalize-package-data@^2.3.2:
   version "2.4.0"
@@ -5847,6 +5910,14 @@ optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
+optioner@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/optioner/-/optioner-3.0.0.tgz#286c557afe37280980a92076bdeea91543aef05c"
+  integrity sha512-zKovfSvZ9yV8y8ulv3xLoo4qlT3HsphAglZWNHaKC36lAsjmt7febKS0OorB/g74nYU4KN3mXrTIRq4kDmHdWQ==
+  dependencies:
+    hoek "4.2"
+    joi "12.0"
+
 orchestrator@^0.3.0:
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/orchestrator/-/orchestrator-0.3.8.tgz#14e7e9e2764f7315fbac184e506c7aa6df94ad7e"
@@ -5874,6 +5945,11 @@ ordered-read-streams@^1.0.0:
   resolved "https://registry.yarnpkg.com/ordered-read-streams/-/ordered-read-streams-1.0.1.tgz#77c0cb37c41525d64166d990ffad7ec6a0e1363e"
   dependencies:
     readable-stream "^2.0.1"
+
+ordu@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/ordu/-/ordu-0.1.1.tgz#9c8109493693caf08299fca84c596aeb860baeaa"
+  integrity sha1-nIEJSTaTyvCCmfyoTFlq64YLrqo=
 
 os-homedir@^1.0.0, os-homedir@^1.0.1:
   version "1.0.2"
@@ -6102,6 +6178,14 @@ patrun@0.5.0:
     gex "0.2.2"
     lodash "3.10.0"
 
+patrun@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/patrun/-/patrun-1.0.0.tgz#c50a2174e3e02afe7fbc35d16e658d21c66a1e66"
+  integrity sha512-oemWSuxjb27nPkREl88BxZ2EFDFUKSPace+zYZjFKj2xFn6w/LgDFGptgQvme384As2gpEFIv4WMVE1cb9lDXQ==
+  dependencies:
+    gex "0.3"
+    lodash "4.17"
+
 pause-stream@0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
@@ -6193,6 +6277,11 @@ pre-commit@1.0.7:
   resolved "https://registry.yarnpkg.com/pre-commit/-/pre-commit-1.0.7.tgz#074344cf346ebc21877cca89ba6485345a5de865"
   dependencies:
     shelljs "0.3.x"
+
+precond@0.2:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/precond/-/precond-0.2.3.tgz#aa9591bcaa24923f1e0f4849d240f47efc1075ac"
+  integrity sha1-qpWRvKokkj8eD0hJ0kD0fvwQdaw=
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -6326,6 +6415,11 @@ q@~0.9.2:
 qs@0.6.5:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/qs/-/qs-0.6.5.tgz#294b268e4b0d4250f6dde19b3b8b34935dff14ef"
+
+qs@^6.5.2, qs@^6.7.0:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.1.tgz#20082c65cb78223635ab1a9eaca8875a29bf8ec9"
+  integrity sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==
 
 qs@~1.1.0:
   version "1.1.0"
@@ -6523,6 +6617,13 @@ rechoir@^0.6.2:
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
   dependencies:
     resolve "^1.1.6"
+
+reconnect-core@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/reconnect-core/-/reconnect-core-1.3.0.tgz#fbae52919a7877d844e3246d01a2f26701c833c8"
+  integrity sha1-+65SkZp4d9hE4yRtAaLyZwHIM8g=
+  dependencies:
+    backoff "~2.5.0"
 
 reconnect-core@~0.0.0:
   version "0.0.1"
@@ -6844,7 +6945,7 @@ rimraf@~2.2.0:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
-rolling-stats@0.1.1:
+rolling-stats@0.1.1, rolling-stats@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/rolling-stats/-/rolling-stats-0.1.1.tgz#cd5af774a8893b30a674832fa2f4abaa478cfc80"
 
@@ -7009,6 +7110,23 @@ seneca-transport@0.7.2:
     patrun "0.4.3"
     reconnect-net "0.0.0"
 
+seneca-transport@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/seneca-transport/-/seneca-transport-3.0.0.tgz#9598481a711339571fdddc5b219db2a1ead03a48"
+  integrity sha512-W9td5m07WCXAsneUhsLNwy2aZhjFcETOhfy2HaJib6+2Lqnaa2HaFCaVjFE5vvc9DFJA6JWaNAnbqUR3hxYhCw==
+  dependencies:
+    eraro "^1.1.0"
+    gex "^0.3.0"
+    jsonic "^0.3.1"
+    lodash "^4.17.11"
+    lru-cache "^4.1.5"
+    ndjson "^1.5.0"
+    nid "^0.3.2"
+    patrun "^1.0.0"
+    qs "^6.5.2"
+    reconnect-core "^1.3.0"
+    wreck "^12.5.1"
+
 seneca-web@0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/seneca-web/-/seneca-web-0.4.3.tgz#4267b25e809eb43ff7452a2dd4db7a57de1837f0"
@@ -7024,7 +7142,7 @@ seneca-web@0.4.3:
     rolling-stats "0.1.1"
     serve-static "1.9.3"
 
-seneca@0.7.2, seneca@0.7.x:
+seneca@0.7.x:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/seneca/-/seneca-0.7.2.tgz#a3251be814891e6745057cd9ebfeca1667be13da"
   dependencies:
@@ -7047,6 +7165,29 @@ seneca@0.7.2, seneca@0.7.x:
     seneca-web "0.4.3"
     use-plugin "0.3.1"
     zig "0.1.1"
+
+seneca@3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/seneca/-/seneca-3.9.0.tgz#fd4a7d4e71fbdd8e0743c7803a8e79c05ca6e4bf"
+  integrity sha512-QheDkhJq5ZnUDrUUlrb9h9HbGgcUcg6AwcjpIq0wjeeDHQRHNjw5qrbXdYPLeZnp5aXDuz/BaXoheDdz2u9ixQ==
+  dependencies:
+    archy "^1.0.0"
+    eraro "^1.1.0"
+    gate-executor "^1.1.1"
+    gex "^0.3.0"
+    json-stringify-safe "^5.0.1"
+    jsonic "^0.3.1"
+    lodash "^4.17.11"
+    minimist "^1.2.0"
+    nid "^0.3.2"
+    norma "^0.4.1"
+    ordu "^0.1.1"
+    patrun "^1.0.0"
+    qs "^6.7.0"
+    rolling-stats "^0.1.1"
+    seneca-transport "^3.0.0"
+    use-plugin "^4.0.0"
+    wreck "^12"
 
 sequencify@~0.0.7:
   version "0.0.7"
@@ -7298,6 +7439,13 @@ split-string@^3.0.1, split-string@^3.0.2:
   resolved "https://registry.yarnpkg.com/split-string/-/split-string-3.1.0.tgz#7cb09dda3a86585705c64b39a6466038682e8fe2"
   dependencies:
     extend-shallow "^3.0.0"
+
+split2@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/split2/-/split2-2.2.0.tgz#186b2575bcf83e85b7d18465756238ee4ee42493"
+  integrity sha512-RAb22TG39LhI31MbreBgIuKiIKhVsawfTgEGqKHTK87aG+ul/PB8Sqoi3I7kVdRWiCfrKxK3uo4/YUkpNvhPbw==
+  dependencies:
+    through2 "^2.0.2"
 
 split@0.2:
   version "0.2.10"
@@ -7699,7 +7847,7 @@ through2@^2.0.0, through2@^2.0.1, through2@latest:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-through2@^2.0.3, through2@~2.0.0:
+through2@^2.0.2, through2@^2.0.3, through2@~2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
   dependencies:
@@ -8104,6 +8252,16 @@ use-plugin@0.3.1:
     nid "~0.3.2"
     norma "~0.3.0"
 
+use-plugin@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/use-plugin/-/use-plugin-4.0.0.tgz#dfe973a248038d42c9096ca28ef2f762aab78a3d"
+  integrity sha512-xSYPDkFFmg6qVPB7falq3upKA/GB7cwn3Z85V9TMn0Ye8jizPvFPetkjo9UDZtOEyYf3qZWaBxc5U87fMQ7iXg==
+  dependencies:
+    eraro "^1.0.0"
+    nid "^0.3.2"
+    norma "^0.4.1"
+    optioner "^3.0.0"
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
@@ -8460,9 +8618,10 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-wreck@12.x.x:
-  version "12.4.0"
-  resolved "https://registry.yarnpkg.com/wreck/-/wreck-12.4.0.tgz#bd931e1de059f1390f6c67bc29b91053cc479d3f"
+wreck@12.x.x, wreck@^12, wreck@^12.5.1:
+  version "12.5.1"
+  resolved "https://registry.yarnpkg.com/wreck/-/wreck-12.5.1.tgz#cd2ffce167449e1f0242ed9cf80552e20fb6902a"
+  integrity sha512-l5DUGrc+yDyIflpty1x9XuMj1ehVjC/dTbF3/BasOO77xk0EdEa4M/DuOY8W88MQDAD0fEDqyjc8bkIMHd2E9A==
   dependencies:
     boom "5.x.x"
     hoek "4.x.x"
