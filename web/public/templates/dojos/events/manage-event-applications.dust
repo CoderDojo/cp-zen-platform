@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <span class="col-md-4"><b>{@i18n key="Total event capacity"/}:</b> {{ event.capacity }}</span>
       <span class="col-md-4"><b>{@i18n key="Total attending"/}:</b> {{ eventStats.totalAttending }}</span>
-      <span class="col-md-4"><b>{@i18n key="Total waitlist"/}:</b> {{ eventStats.totalWaitlist }}</span>
+      <span class="col-md-4"><b>{@i18n key="Total awaiting approval"/}:</b> {{ eventStats.totalWaitlist }}</span>
     </div>
     <div class="col-md-3 pull-right">
         <a ui-sref="edit-dojo-event({dojoId: dojoId, eventId: event.id})" class="btn btn-primary white-text">{@i18n key="Edit Event"/}</a>
@@ -37,7 +37,7 @@
         </div>
         <span class="col-md-2"><b>{@i18n key="Session capacity"/}:</b> {{ sessionStats[session.id].capacity }}</span>
         <span class="col-md-2"><b>{@i18n key="Attending"/}:</b> {{ sessionStats[session.id].attending }}</span>
-        <span class="col-md-2"><b>{@i18n key="Waitlist"/}:</b> {{ sessionStats[session.id].waitlist }}</span>
+        <span class="col-md-2"><b>{@i18n key="Awaiting approval"/}:</b> {{ sessionStats[session.id].waitlist }}</span>
         <div class="col-md-2 text-center" tooltip-enable="!dojo.verified" uib-tooltip="{@i18n key="Your Dojo must ve verified in order to use that functionnality"/}" ng-class="!dojo.verified? 'btn-wrapper-tooltip': ''">
           <button type="button" ng-disabled="session.status === 'cancelled' || !dojo.verified"
             class="btn btn-primary" ng-click="showNewApplicantForm(session)">{@i18n key="New Applicant"/}</button>

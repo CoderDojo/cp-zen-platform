@@ -1042,7 +1042,9 @@ angular.module('cpZenPlatform')
       NUM_OF_ATTENDEES: "{{ numAttendees }} Attendees",
       NUM_OF_MENTORS: "{{ numMentors }} Mentors",
       APPLICATION_CREATED: "Created on {{ date }}",
-      APPLICATION_UPDATED: "Last updated on {{ date }}"
+      APPLICATION_UPDATED: "Last updated on {{ date }}",
+      "Awaiting approval": "Awaiting approval",
+      "Total awaiting approval": "Total awaiting approval"
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {
