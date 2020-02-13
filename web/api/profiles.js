@@ -83,7 +83,9 @@ exports.register = function(server, eOptions, next) {
                 .email()
                 .required(),
               firstName: Joi.string().required(),
-              lastName: Joi.string().required(),
+              lastName: Joi.string()
+                .allow(null)
+                .allow(''),
               alias: Joi.string().allow(null),
               gender: Joi.string().allow(null),
               languagesSpoken: Joi.array()
@@ -112,6 +114,7 @@ exports.register = function(server, eOptions, next) {
                   .valid(1)
                   .valid(0)
                   .allow(null),
+                termsConditionsAccepted: Joi.boolean().allow(null),
               },
               projects: Joi.string()
                 .allow(null)
