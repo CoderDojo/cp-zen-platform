@@ -57,9 +57,16 @@ function cdUserProfileCtrl(
     return false;
   };
 
-  if ($stateParams.showBannerMessage) {
+  if (profile && profile.data && !profile.data.requiredFieldsComplete) {
     atomicNotifyService.info(
       $translate.instant('Please complete your profile before continuing.'),
+      5000
+    );
+  }
+
+  if (loggedInUser && loggedInUser.data && !loggedInUser.data.termsConditionsAccepted) {
+    atomicNotifyService.info(
+      $translate.instant('Please review and accept the terms & conditions to continue.'),
       5000
     );
   }
