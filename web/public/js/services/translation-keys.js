@@ -577,6 +577,7 @@ angular.module('cpZenPlatform')
       "Every two weeks": "Every two weeks",
       "An error has occured verifying your profile.": "An error has occured verifying your profile.",
       "Please complete your profile before continuing.": "Please complete your profile before continuing.",
+      "Please review and accept the terms & conditions before continuing.": "Please review and accept the terms & conditions before continuing.",
       "An error has occured verifying the charter agreement.": "An error has occured verifying the charter agreement.",
       "error.general": "There was an error on this page. Our technical staff have been notified",
       "Find a Venue": "Find a Venue",
