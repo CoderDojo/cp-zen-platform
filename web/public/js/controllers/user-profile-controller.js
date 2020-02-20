@@ -33,9 +33,7 @@ function cdUserProfileCtrl(
   userUtils,
   $uibModal
 ) {
-  $scope.referer = $state.params.referer
-    ? decodeURIComponent($state.params.referer)
-    : $state.params.referer;
+  $scope.referer = $state.params.referer ? decodeURIComponent($state.params.referer) : $state.params.referer;
   if (
     profile.err ||
     loggedInUser.err ||
