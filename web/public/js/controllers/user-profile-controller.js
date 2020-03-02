@@ -62,13 +62,6 @@ function cdUserProfileCtrl(
     );
   }
 
-  if (loggedInUser && loggedInUser.data && !loggedInUser.data.termsConditionsAccepted) {
-    atomicNotifyService.info(
-      $translate.instant('Please review and accept the terms & conditions to continue.'),
-      5000
-    );
-  }
-
   $scope.$on('$destroy', function() {
     atomicNotifyService.dismissAll();
   });
@@ -82,6 +75,14 @@ function cdUserProfileCtrl(
   var profileUserId = $state.params.userId;
   var loggedInUserId = loggedInUser.data && loggedInUser.data.id;
   var getHighestUserType = utilsService.getHighestUserType;
+  $scope.ownProfileFlag = profileUserId === loggedInUserId;
+
+  if ($scope.ownProfileFlag && loggedInUser && loggedInUser.data && !loggedInUser.data.termsConditionsAccepted) {
+    atomicNotifyService.info(
+      $translate.instant('Please review and accept the terms & conditions to continue.'),
+      5000
+    );
+  }
 
   if ($state.current.name === 'edit-user-profile') {
     if (profileUserId === loggedInUserId || loggedInUserIsParent()) {
@@ -242,7 +243,6 @@ function cdUserProfileCtrl(
 
   $scope.profile = profile.data;
   $scope.myChild = loggedInUserIsParent();
-  $scope.ownProfileFlag = profileUserId === loggedInUserId;
   $scope.canEdit =
     $scope.ownProfileFlag ||
     $scope.myChild ||
