@@ -207,7 +207,7 @@ function handleCb(request, reply) {
         role: 'user',
         cmd: 'login',
         email: email,
-        password: rpiZenAccountPassword,
+        auto: true,
       },
       (err, res) => {
         if (err) {
