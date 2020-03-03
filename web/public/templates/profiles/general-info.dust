@@ -209,7 +209,7 @@
             <label for="mailingList">{@i18n key="Subscribe to newsletter"/} </label>
           </div>
         </div>
-        <div class="margin-left-35-percent">
+        <div class="margin-left-35-percent" ng-if="ownProfileFlag">
           <div class="checkbox terms-conditions">
             <input type="checkbox" name="termsConditionsAccepted" ng-class="{'has-error': forms.generalInfoForm.$submitted && forms.generalInfoForm.termsConditionsAccepted.$error.required}" ng-model="profile.user.termsConditionsAccepted" required id="termsAndConditionsCheckbox">
             <label for="termsAndConditionsCheckbox">{@i18n key="I have read and accept the <a ui-sref=\"terms-and-conditions\" target=\"_blank\"><b>Terms and Conditions here</b></a>"/}

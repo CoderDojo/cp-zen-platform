@@ -1180,7 +1180,7 @@
         auth.get_loggedin_user_promise().then(function (user) {
           if(user && user.id) {
             cdUsersService.userProfileDataPromise({userId: user.id}).then(function (profile) {
-              deferred.resolve({complete: profile.requiredFieldsComplete && !!user.termsConditionsAccepted, userId: user.id});
+              deferred.resolve({complete: profile.requiredFieldsComplete, userId: user.id});
             }, function (err) {
               deferred.reject(err);
             });
