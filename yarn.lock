@@ -1502,10 +1502,10 @@ cp-translations@1.0.139:
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.139.tgz#7d3ea79e295f75f59051f2b42666ed27e358cd3d"
   integrity sha512-4YFu7qQA37ZQlOr7Qi7h6kVDdYE9tsnajnFuBv2bxI89EXK+R1NdfrKFp4QDokRWvbcXWf0HDkaL5TeRoWWRUg==
 
-cp-zen-frontend@1.0.114:
-  version "1.0.114"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.114.tgz#5d0c117bb1fe68f32d9ffe0e83d0c25fa4530d03"
-  integrity sha512-RzQOkC/VIgRPiVqqjndyOyr3Y/AAD2t1zHGsas9+nTVkruC7p2nDE/vYX3pWQ01nb05O1jtoFLjEQC2DxeKv/g==
+cp-zen-frontend@1.0.115:
+  version "1.0.115"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.115.tgz#f77ed7f160b2ff3c2acad89780b37b11e0b68182"
+  integrity sha512-m0qHFk1vGLF7YX9eRIzyezZRGQQs6aHfsKN4t4iq3Uq3VUDMLRnr24HzR4ixXj4hoZp4kA19g3redGrJBEmpzg==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
