@@ -1492,11 +1492,6 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@1.0.139:
-  version "1.0.139"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.139.tgz#7d3ea79e295f75f59051f2b42666ed27e358cd3d"
-  integrity sha512-4YFu7qQA37ZQlOr7Qi7h6kVDdYE9tsnajnFuBv2bxI89EXK+R1NdfrKFp4QDokRWvbcXWf0HDkaL5TeRoWWRUg==
-
 cp-translations@1.0.140:
   version "1.0.140"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.140.tgz#ee8b175748d224a89558abe1228e3b2049767b61"
