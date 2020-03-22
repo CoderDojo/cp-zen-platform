@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const _ = require('lodash');
+var crypto = require('crypto');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Boom = require('boom');
 const { URLSearchParams } = require('url');
@@ -11,6 +12,8 @@ const {
   getIdToken,
   decodeIdToken,
   rpiZenAccountPassword,
+  setRpiStateCookie,
+  getRpiStateCookie,
 } = require('../../lib/rpi-auth');
 
 const oauthErrorMessage = 'Raspberry Pi Authentication Failed';
@@ -21,7 +24,9 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply) {
-  const redirectUri = getRedirectUri();
+  const state = crypto.randomBytes(20).toString('hex');
+  setRpiStateCookie(reply, state);
+  const redirectUri = getRedirectUri(state);
   reply.redirect(redirectUri);
 }
 
@@ -107,6 +112,17 @@ function handleCb(request, reply) {
     return reply.redirect(
       // TODO: use generic user friendly error
       getErrorRedirectUrl(`rpi callback error: ${request.query.error}`)
+    );
+  }
+
+  const expectedState = getRpiStateCookie(request);
+
+  if (request.query.state !== expectedState) {
+    // eslint-disable-next-line no-console
+    request.log(['error', '40x'], new Error(''));
+    // TODO: use generic user friendly error
+    return reply.redirect(
+      getErrorRedirectUrl('RPI State Mismatch - CSRF error.')
     );
   }
 

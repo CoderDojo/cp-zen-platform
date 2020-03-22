@@ -9,6 +9,7 @@ const hapiEtags = require('hapi-etags');
 const ip2country = require('hapi-ip2country-plugin');
 const vision = require('./lib/plugins/vision');
 const cdAuth = require('./lib/plugins/auth');
+const rpiAuth = require('./lib/plugins/rpi-auth');
 const scooterAndBlankie = require('./lib/plugins/scooterAndBlankie');
 const controllers = require('./controllers');
 const senecaPreloaders = require('./lib/plugins/seneca-preloader-dustjs');
@@ -87,6 +88,7 @@ exports.start = () => {
           handlers: ['seneca-event-preloader', 'seneca-dojo-preloader'],
         },
       },
+      { register: rpiAuth },
       { register: controllers },
       { register: cpZenFrontend },
       { register: sitemap },

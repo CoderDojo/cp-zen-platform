@@ -78,6 +78,27 @@ function decodeIdToken(idToken) {
   return jwt.decode(idToken);
 }
 
+function registerRpiStateCookie(server) {
+  server.state('rpi-state', {
+    ttl: 600000,
+    isSecure: process.env.NODE_ENV === 'production',
+    isHttpOnly: true,
+    isSameSite: 'Lax',
+    encoding: 'none',
+    clearInvalid: true,
+    strictHeader: true,
+    path: '/',
+  });
+}
+
+function setRpiStateCookie(reply, state) {
+  reply.state('rpi-state', state);
+}
+
+function getRpiStateCookie(request) {
+  return request.state['rpi-state'];
+}
+
 module.exports = {
   decodeIdToken,
   getRedirectUri,
@@ -86,4 +107,7 @@ module.exports = {
   getLogoutRedirectUri,
   rpiZenAccountPassword,
   getEditRedirectUri,
+  registerRpiStateCookie,
+  setRpiStateCookie,
+  getRpiStateCookie,
 };
