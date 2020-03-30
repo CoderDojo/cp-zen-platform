@@ -17,9 +17,9 @@ const profileEditPath = '/profile/edit';
 const profileLogoutPath = '/logout';
 const loginPath = '/rpi/login';
 const callbackPath = '/rpi/cb';
+const accountTypePath = '/account-type';
 
 const brand = 'coderdojo';
-const dummyState = '503aae3cf962412076589a264694606118ac63667deae839'; // use to persist state at point of return, need to add param to redirect url following sign up?
 const scope = 'openid email profile force-consent';
 
 // Initialize the OAuth2 Library
@@ -56,7 +56,7 @@ function getEditRedirectUri() {
   return `${profileServer}${profileEditPath}?${params}`;
 }
 
-function getRedirectUri(state = dummyState) {
+function getRedirectUri(state) {
   return oauth2Rpi.authorizationCode.authorizeURL({
     redirect_uri: `${homeServer}${callbackPath}`,
     scope,
@@ -80,11 +80,14 @@ function decodeIdToken(idToken) {
 
 function registerRpiStateCookie(server) {
   server.state('rpi-state', {
-    ttl: 600000,
+    ttl: 600000, // 10 minutes
     isSecure: process.env.NODE_ENV === 'production',
     isHttpOnly: true,
     isSameSite: 'Lax',
-    encoding: 'none',
+    encoding: 'iron',
+    password:
+      process.env.COOKIE_SECRET ||
+      'SecretsNeverLastLongAndThisOneNeedsToBe32Char',
     clearInvalid: true,
     strictHeader: true,
     path: '/',
@@ -99,6 +102,15 @@ function getRpiStateCookie(request) {
   return request.state['rpi-state'];
 }
 
+function clearRpiStateCookie(reply) {
+  return reply.unstate('rpi-state');
+}
+
+function getAccountTypeRedirectUrl(incomingQuery) {
+  const incomingParams = new URLSearchParams(incomingQuery);
+  return `${accountTypePath}?${incomingParams}`;
+}
+
 module.exports = {
   decodeIdToken,
   getRedirectUri,
@@ -110,4 +122,6 @@ module.exports = {
   registerRpiStateCookie,
   setRpiStateCookie,
   getRpiStateCookie,
+  clearRpiStateCookie,
+  getAccountTypeRedirectUrl,
 };

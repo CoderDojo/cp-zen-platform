@@ -14,6 +14,8 @@ const {
   rpiZenAccountPassword,
   setRpiStateCookie,
   getRpiStateCookie,
+  clearRpiStateCookie,
+  getAccountTypeRedirectUrl,
 } = require('../../lib/rpi-auth');
 
 const oauthErrorMessage = 'Raspberry Pi Authentication Failed';
@@ -25,7 +27,7 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 
 function handleRPILogin(request, reply) {
   const state = crypto.randomBytes(20).toString('hex');
-  setRpiStateCookie(reply, state);
+  setRpiStateCookie(reply, { state });
   const redirectUri = getRedirectUri(state);
   reply.redirect(redirectUri);
 }
@@ -40,6 +42,7 @@ function handleRPILogout(request, reply) {
   return request.seneca.act(msg, err => {
     if (err) return reply(Boom.badImplementation(err));
     request.cookieAuth.clear();
+    clearRpiStateCookie(reply);
     delete request.user;
     const redirectUri = getLogoutRedirectUri();
     return reply.redirect(redirectUri);
@@ -60,7 +63,7 @@ function handleRPIEdit(request, reply) {
   reply.redirect(redirectUri);
 }
 
-function getZenRegisterPayload(decodedIdToken) {
+function getZenRegisterPayload(decodedIdToken, isAttendee) {
   return {
     isTrusted: true,
     user: {
@@ -73,7 +76,7 @@ function getZenRegisterPayload(decodedIdToken) {
       // TODO: prompt for zen conditions acceptance
       termsConditionsAccepted: false,
       // TODO: determine approach for o13 and u13 user types reg flows
-      initUserType: { name: 'parent-guardian' },
+      initUserType: { name: isAttendee ? 'attendee-o13' : 'parent-guardian' },
       raspberryId: decodedIdToken.uuid,
       nick: decodedIdToken.email,
     },
@@ -115,9 +118,9 @@ function handleCb(request, reply) {
     );
   }
 
-  const expectedState = getRpiStateCookie(request);
+  const rpiCookie = getRpiStateCookie(request);
 
-  if (request.query.state !== expectedState) {
+  if (!rpiCookie || request.query.state !== rpiCookie.state) {
     // eslint-disable-next-line no-console
     request.log(['error', '40x'], new Error(''));
     // TODO: use generic user friendly error
@@ -126,9 +129,13 @@ function handleCb(request, reply) {
     );
   }
 
-  getIdToken(request.query.code)
+  (request.query.code
+    ? getIdToken(request.query.code)
+    : Promise.resolve(rpiCookie && rpiCookie.idToken)
+  )
     .then(idToken => {
       const rpiProfile = decodeIdToken(idToken);
+      // eslint-disable-next-line no-console
       getZenUser(rpiProfile, (err, zenUser) => {
         if (err) {
           request.log(['error', '50x'], err);
@@ -150,7 +157,14 @@ function handleCb(request, reply) {
             }
           });
         } else {
-          registerZenUser(rpiProfile, (err, registerResponse) => {
+          if (!request.query.type) {
+            setRpiStateCookie(reply, { state: rpiCookie.state, idToken })
+            return reply.redirect(
+              getAccountTypeRedirectUrl({ state: rpiCookie.state })
+            );
+          }
+          const isAttendee = request.query.type === 'attendee';
+          registerZenUser(rpiProfile, isAttendee, (err, registerResponse) => {
             if (err) {
               request.log(['error', '50x'], err);
               // TODO: use generic user friendly error
@@ -209,10 +223,10 @@ function handleCb(request, reply) {
   };
 
 
-  const registerZenUser = (rpiProfile, callback) => {
+  const registerZenUser = (rpiProfile, isAttendee, callback) => {
     const senecaRegisterMsg = _.defaults(
       { role: 'cd-users', cmd: 'register' },
-      getZenRegisterPayload(rpiProfile)
+      getZenRegisterPayload(rpiProfile, isAttendee)
     );
     request.seneca.act(senecaRegisterMsg, callback);
   };
