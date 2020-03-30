@@ -78,9 +78,17 @@ function decodeIdToken(idToken) {
   return jwt.decode(idToken);
 }
 
+function verifyIdTokenPayload(idTokenPayload) {
+  const epochSeconds = Math.floor(new Date().getTime() / 1000);
+  const isIssueTimeValid = idTokenPayload.iat <= epochSeconds;
+  const isNotExpired = idTokenPayload.exp > epochSeconds;
+  const isIssuerValid = idTokenPayload.iss === process.env.RPI_AUTH_URL;
+  return isIssueTimeValid && isNotExpired && isIssuerValid;
+}
+
 function registerRpiStateCookie(server) {
   server.state('rpi-state', {
-    ttl: 600000, // 10 minutes
+    ttl: 10 * 60 * 1000, // 10 minutes
     isSecure: process.env.NODE_ENV === 'production',
     isHttpOnly: true,
     isSameSite: 'Lax',
@@ -124,4 +132,5 @@ module.exports = {
   getRpiStateCookie,
   clearRpiStateCookie,
   getAccountTypeRedirectUrl,
+  verifyIdTokenPayload,
 };

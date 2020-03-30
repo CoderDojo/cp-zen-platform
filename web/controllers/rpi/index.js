@@ -16,6 +16,7 @@ const {
   getRpiStateCookie,
   clearRpiStateCookie,
   getAccountTypeRedirectUrl,
+  verifyIdTokenPayload,
 } = require('../../lib/rpi-auth');
 
 const oauthErrorMessage = 'Raspberry Pi Authentication Failed';
@@ -121,7 +122,6 @@ function handleCb(request, reply) {
   const rpiCookie = getRpiStateCookie(request);
 
   if (!rpiCookie || request.query.state !== rpiCookie.state) {
-    // eslint-disable-next-line no-console
     request.log(['error', '40x'], new Error(''));
     // TODO: use generic user friendly error
     return reply.redirect(
@@ -134,9 +134,16 @@ function handleCb(request, reply) {
     : Promise.resolve(rpiCookie && rpiCookie.idToken)
   )
     .then(idToken => {
-      const rpiProfile = decodeIdToken(idToken);
-      // eslint-disable-next-line no-console
-      getZenUser(rpiProfile, (err, zenUser) => {
+      const idTokenPayload = decodeIdToken(idToken);
+      const isTokenValid = verifyIdTokenPayload(idTokenPayload);
+      if (!isTokenValid) {
+        request.log(['error', '40x'], 'Invalid idToken.');
+        // TODO: use generic user friendly error
+        return reply.redirect(
+          getErrorRedirectUrl('Expired or invalid rpi idToken')
+        );
+      }
+      getZenUser(idTokenPayload, (err, zenUser) => {
         if (err) {
           request.log(['error', '50x'], err);
           // TODO: use generic user friendly error
@@ -145,7 +152,7 @@ function handleCb(request, reply) {
           );
         }
         if (zenUser.email) {
-          updateZenUser(rpiProfile, zenUser, err => {
+          updateZenUser(idTokenPayload, zenUser, err => {
             if (err) {
               request.log(['error'], err);
               // TODO: use generic user friendly error
@@ -153,37 +160,41 @@ function handleCb(request, reply) {
                 getErrorRedirectUrl('Update zen user failed - Seneca error.')
               );
             } else {
-              return login(rpiProfile.email, idToken);
+              return login(idTokenPayload.email, idToken);
             }
           });
         } else {
           if (!request.query.type) {
-            setRpiStateCookie(reply, { state: rpiCookie.state, idToken })
+            setRpiStateCookie(reply, { state: rpiCookie.state, idToken });
             return reply.redirect(
               getAccountTypeRedirectUrl({ state: rpiCookie.state })
             );
           }
           const isAttendee = request.query.type === 'attendee';
-          registerZenUser(rpiProfile, isAttendee, (err, registerResponse) => {
-            if (err) {
-              request.log(['error', '50x'], err);
-              // TODO: use generic user friendly error
-              return reply.redirect(
-                getErrorRedirectUrl('Zen Registration Failed - Seneca error.')
-              );
-            }
-            if (!registerResponse.user) {
-              request.log(
-                ['error', '50x'],
-                'Zen Registration Failed - No user.'
-              );
-              return reply.redirect(
+          registerZenUser(
+            idTokenPayload,
+            isAttendee,
+            (err, registerResponse) => {
+              if (err) {
+                request.log(['error', '50x'], err);
                 // TODO: use generic user friendly error
-                getErrorRedirectUrl('Zen Registration Failed - No user.')
-              );
+                return reply.redirect(
+                  getErrorRedirectUrl('Zen Registration Failed - Seneca error.')
+                );
+              }
+              if (!registerResponse.user) {
+                request.log(
+                  ['error', '50x'],
+                  'Zen Registration Failed - No user.'
+                );
+                return reply.redirect(
+                  // TODO: use generic user friendly error
+                  getErrorRedirectUrl('Zen Registration Failed - No user.')
+                );
+              }
+              return login(registerResponse.user.email, idToken);
             }
-            return login(registerResponse.user.email, idToken);
-          });
+          );
         }
       });
     })
@@ -222,7 +233,6 @@ function handleCb(request, reply) {
     });
   };
 
-
   const registerZenUser = (rpiProfile, isAttendee, callback) => {
     const senecaRegisterMsg = _.defaults(
       { role: 'cd-users', cmd: 'register' },
@@ -259,6 +269,7 @@ function handleCb(request, reply) {
           target: 'login',
           idToken,
         });
+        clearRpiStateCookie(reply);
         return reply.redirect('/');
       }
     );
