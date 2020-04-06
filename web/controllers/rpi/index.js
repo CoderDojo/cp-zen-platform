@@ -74,9 +74,7 @@ function getZenRegisterPayload(decodedIdToken, isAttendee) {
       lastName: '',
       email: decodedIdToken.email,
       password: rpiZenAccountPassword,
-      // TODO: prompt for zen conditions acceptance
-      termsConditionsAccepted: false,
-      // TODO: determine approach for o13 and u13 user types reg flows
+      termsConditionsAccepted: true,
       initUserType: { name: isAttendee ? 'attendee-o13' : 'parent-guardian' },
       raspberryId: decodedIdToken.uuid,
       nick: decodedIdToken.email,
