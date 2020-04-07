@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const _ = require('lodash');
+var crypto = require('crypto');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Boom = require('boom');
 const { URLSearchParams } = require('url');
@@ -11,6 +12,11 @@ const {
   getIdToken,
   decodeIdToken,
   rpiZenAccountPassword,
+  setRpiStateCookie,
+  getRpiStateCookie,
+  clearRpiStateCookie,
+  getAccountTypeRedirectUrl,
+  verifyIdTokenPayload,
 } = require('../../lib/rpi-auth');
 
 const oauthErrorMessage = 'Raspberry Pi Authentication Failed';
@@ -21,7 +27,9 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply) {
-  const redirectUri = getRedirectUri();
+  const state = crypto.randomBytes(20).toString('hex');
+  setRpiStateCookie(reply, { state });
+  const redirectUri = getRedirectUri(state);
   reply.redirect(redirectUri);
 }
 
@@ -35,6 +43,7 @@ function handleRPILogout(request, reply) {
   return request.seneca.act(msg, err => {
     if (err) return reply(Boom.badImplementation(err));
     request.cookieAuth.clear();
+    clearRpiStateCookie(reply);
     delete request.user;
     const redirectUri = getLogoutRedirectUri();
     return reply.redirect(redirectUri);
@@ -55,7 +64,7 @@ function handleRPIEdit(request, reply) {
   reply.redirect(redirectUri);
 }
 
-function getZenRegisterPayload(decodedIdToken) {
+function getZenRegisterPayload(decodedIdToken, isAttendee) {
   return {
     isTrusted: true,
     user: {
@@ -65,10 +74,8 @@ function getZenRegisterPayload(decodedIdToken) {
       lastName: '',
       email: decodedIdToken.email,
       password: rpiZenAccountPassword,
-      // TODO: prompt for zen conditions acceptance
-      termsConditionsAccepted: false,
-      // TODO: determine approach for o13 and u13 user types reg flows
-      initUserType: { name: 'parent-guardian' },
+      termsConditionsAccepted: true,
+      initUserType: { name: isAttendee ? 'attendee-o13' : 'parent-guardian' },
       raspberryId: decodedIdToken.uuid,
       nick: decodedIdToken.email,
     },
@@ -110,10 +117,31 @@ function handleCb(request, reply) {
     );
   }
 
-  getIdToken(request.query.code)
+  const rpiCookie = getRpiStateCookie(request);
+
+  if (!rpiCookie || request.query.state !== rpiCookie.state) {
+    request.log(['error', '40x'], new Error(''));
+    // TODO: use generic user friendly error
+    return reply.redirect(
+      getErrorRedirectUrl('RPI State Mismatch - CSRF error.')
+    );
+  }
+
+  (request.query.code
+    ? getIdToken(request.query.code)
+    : Promise.resolve(rpiCookie && rpiCookie.idToken)
+  )
     .then(idToken => {
-      const rpiProfile = decodeIdToken(idToken);
-      getZenUser(rpiProfile, (err, zenUser) => {
+      const idTokenPayload = decodeIdToken(idToken);
+      const isTokenValid = verifyIdTokenPayload(idTokenPayload);
+      if (!isTokenValid) {
+        request.log(['error', '40x'], 'Invalid idToken.');
+        // TODO: use generic user friendly error
+        return reply.redirect(
+          getErrorRedirectUrl('Expired or invalid rpi idToken')
+        );
+      }
+      getZenUser(idTokenPayload, (err, zenUser) => {
         if (err) {
           request.log(['error', '50x'], err);
           // TODO: use generic user friendly error
@@ -122,7 +150,7 @@ function handleCb(request, reply) {
           );
         }
         if (zenUser.email) {
-          updateZenUser(rpiProfile, zenUser, err => {
+          updateZenUser(idTokenPayload, zenUser, err => {
             if (err) {
               request.log(['error'], err);
               // TODO: use generic user friendly error
@@ -130,30 +158,41 @@ function handleCb(request, reply) {
                 getErrorRedirectUrl('Update zen user failed - Seneca error.')
               );
             } else {
-              return login(rpiProfile.email, idToken);
+              return login(idTokenPayload.email, idToken);
             }
           });
         } else {
-          registerZenUser(rpiProfile, (err, registerResponse) => {
-            if (err) {
-              request.log(['error', '50x'], err);
-              // TODO: use generic user friendly error
-              return reply.redirect(
-                getErrorRedirectUrl('Zen Registration Failed - Seneca error.')
-              );
-            }
-            if (!registerResponse.user) {
-              request.log(
-                ['error', '50x'],
-                'Zen Registration Failed - No user.'
-              );
-              return reply.redirect(
+          if (!request.query.type) {
+            setRpiStateCookie(reply, { state: rpiCookie.state, idToken });
+            return reply.redirect(
+              getAccountTypeRedirectUrl({ state: rpiCookie.state })
+            );
+          }
+          const isAttendee = request.query.type === 'attendee';
+          registerZenUser(
+            idTokenPayload,
+            isAttendee,
+            (err, registerResponse) => {
+              if (err) {
+                request.log(['error', '50x'], err);
                 // TODO: use generic user friendly error
-                getErrorRedirectUrl('Zen Registration Failed - No user.')
-              );
+                return reply.redirect(
+                  getErrorRedirectUrl('Zen Registration Failed - Seneca error.')
+                );
+              }
+              if (!registerResponse.user) {
+                request.log(
+                  ['error', '50x'],
+                  'Zen Registration Failed - No user.'
+                );
+                return reply.redirect(
+                  // TODO: use generic user friendly error
+                  getErrorRedirectUrl('Zen Registration Failed - No user.')
+                );
+              }
+              return login(registerResponse.user.email, idToken);
             }
-            return login(registerResponse.user.email, idToken);
-          });
+          );
         }
       });
     })
@@ -192,11 +231,10 @@ function handleCb(request, reply) {
     });
   };
 
-
-  const registerZenUser = (rpiProfile, callback) => {
+  const registerZenUser = (rpiProfile, isAttendee, callback) => {
     const senecaRegisterMsg = _.defaults(
       { role: 'cd-users', cmd: 'register' },
-      getZenRegisterPayload(rpiProfile)
+      getZenRegisterPayload(rpiProfile, isAttendee)
     );
     request.seneca.act(senecaRegisterMsg, callback);
   };
@@ -229,6 +267,7 @@ function handleCb(request, reply) {
           target: 'login',
           idToken,
         });
+        clearRpiStateCookie(reply);
         return reply.redirect('/');
       }
     );
