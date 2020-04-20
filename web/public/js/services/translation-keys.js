@@ -1045,7 +1045,12 @@ angular.module('cpZenPlatform')
       APPLICATION_CREATED: "Created on {{ date }}",
       APPLICATION_UPDATED: "Last updated on {{ date }}",
       "Awaiting approval": "Awaiting approval",
-      "Total awaiting approval": "Total awaiting approval"
+      "Total awaiting approval": "Total awaiting approval",
+      "Thank you for your interest in joining the CoderDojo community!": "Thank you for your interest in joining the CoderDojo community!",
+      "Due to the coronavirus pandemic, we have paused the Dojo verification process.": "Due to the coronavirus pandemic, we have paused the Dojo verification process.",
+      "In the meantime, we’re providing exciting opportunities for young people, parents, volunteers, and educators to get creative with tech through": "In the meantime, we’re providing exciting opportunities for young people, parents, volunteers, and educators to get creative with tech through",
+      "Digital Making at Home": "Digital Making at Home",
+      "from the Raspberry Pi Foundation.": "from the Raspberry Pi Foundation."
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {

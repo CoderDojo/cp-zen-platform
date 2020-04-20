@@ -1,3 +1,9 @@
+<div class="cd-banner">
+  <p>{@i18n key="Thank you for your interest in joining the CoderDojo community!"/}</p>
+  <p>{@i18n key="Due to the coronavirus pandemic, we have paused the Dojo verification process."/}</p>
+  <p>{@i18n key="In the meantime, we’re providing exciting opportunities for young people, parents, volunteers, and educators to get creative with tech through"/} <a class="cd-banner-link" href="https://www.raspberrypi.org/at-home/">{@i18n key="Digital Making at Home"/}</a> {@i18n key="from the Raspberry Pi Foundation."/}
+  </p>
+</div>
 <div ng-show="$ctrl.loading" style="height: 300px; position: relative;">
   <cd-loading-scrim></cd-loading-scrim>
 </div>
