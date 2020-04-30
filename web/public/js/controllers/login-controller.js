@@ -16,18 +16,18 @@ function loginCtrl($state, $stateParams, $scope, $rootScope, $location, $window,
     $scope.redirect = $location.search().redirect;
   }
 
-  var profileAuthFlag = $window.localStorage.getItem('profileAuth');
+  var rpiAuthFlag = $window.localStorage.getItem('rpiAuth');
 
-  if (profileAuthFlag === 'true') {
-    var profileAuthPath = $window.location.pathname === '/register/user' ? '/rpi/register' : '/rpi/login';
-    profileAuthPath += '?origin=' + encodeURIComponent($window.location.pathname);
+  if (rpiAuthFlag === 'true') {
+    var rpiAuthPath = $window.location.pathname === '/register/user' ? '/rpi/register' : '/rpi/login';
+    rpiAuthPath += '?origin=' + encodeURIComponent($window.location.pathname);
     if ($scope.redirect) {
-      profileAuthPath += '&redirect=' + encodeURIComponent($scope.redirect);
+      rpiAuthPath += '&redirect=' + encodeURIComponent($scope.redirect);
     }
     if ($state.current && $state.current.name) {
-      profileAuthPath += '&appState=' + encodeURIComponent($state.current.name);
+      rpiAuthPath += '&appState=' + encodeURIComponent($state.current.name);
     }
-    return $window.location.href = profileAuthPath;
+    return $window.location.href = rpiAuthPath;
   }
 
   var msgmap = {

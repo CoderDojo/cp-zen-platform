@@ -8,8 +8,8 @@
       <div class="cd-menu__nav-right">
         <a class="emphasis" href="https://help.coderdojo.com">{@i18n key="Help"/}</a>
         <div class="cd-menu__account">
-          <a href="/register/user">{@i18n key="Register"/}</a>
-          <a href="/login">{@i18n key="Login"/}</a>
+          <a href="/register/user" id="register-anchor">{@i18n key="Register"/}</a>
+          <a href="/login" id="login-anchor">{@i18n key="Login"/}</a>
         </div>
         <div class="cd-menu__profile">
           <div class="cd-menu__profile-pic"></div>
@@ -138,4 +138,12 @@
     </div>
   </nav>
   <ng-atomic-notify></ng-atomic-notify>
+  <!-- TODO replace in header when full migration is run! -->
+  <script>
+    if (window.localStorage.getItem('rpiAuth') === 'true') {
+      document.querySelector('a[href="/login"]').href = "/rpi/login";
+      document.querySelector('a[href="/logout"]').href = "/rpi/logout";
+      document.querySelector('a[href="/register/user"]').href = "/rpi/register";
+    }
+  </script>
 </header>

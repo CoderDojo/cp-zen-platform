@@ -18,8 +18,8 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', '$window', 'cdAp
     },
 
     logout: function(win,fail){
-      var profileAuthFlag = $window.localStorage.getItem('profileAuth');
-      if (profileAuthFlag === 'true') {
+      var rpiAuthFlag = $window.localStorage.getItem('rpiAuth');
+      if (rpiAuthFlag === 'true') {
         $window.location.href = '/rpi/logout'
       } else {
         $http({method:'POST', url: '/api/2.0/users/logout', data:{}, cache:false}).
