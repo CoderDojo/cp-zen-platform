@@ -16,11 +16,7 @@ function validateFunc(server) {
         // Allows to use the seneca-cdf-login token to browse normal zen,
         // but not the other way around
         request.user = loggedInUser;
-        if (
-          loggedInUser.user.roles.indexOf('cdf-admin') > -1 &&
-          cdfPath &&
-          session.target === 'cdf'
-        ) {
+        if (loggedInUser.user.roles.indexOf('cdf-admin') > -1 && cdfPath) {
           return callback(null, true, { scope: 'cdf-admin' });
         }
         return callback(null, true, { scope: 'basic-user' }); // They're a `user`

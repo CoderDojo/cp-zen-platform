@@ -100,7 +100,6 @@ lab.describe('auth', () => {
     };
     const sessionMock = {
       token: 'token',
-      target: 'cdf',
     };
     const cbSpy = sinon.spy();
     validateFunc(serverMock)(reqMock, sessionMock, cbSpy);
