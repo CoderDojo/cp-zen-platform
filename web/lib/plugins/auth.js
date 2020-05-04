@@ -18,8 +18,7 @@ function validateFunc(server) {
         request.user = loggedInUser;
         if (
           loggedInUser.user.roles.indexOf('cdf-admin') > -1 &&
-          cdfPath &&
-          session.target === 'cdf'
+          cdfPath
         ) {
           return callback(null, true, { scope: 'cdf-admin' });
         }

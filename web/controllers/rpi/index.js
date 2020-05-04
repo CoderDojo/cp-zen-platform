@@ -264,7 +264,6 @@ function handleCb(request, reply) {
         }
         request.cookieAuth.set({
           token: res.login.token,
-          target: 'login',
           idToken,
         });
         clearRpiStateCookie(reply);

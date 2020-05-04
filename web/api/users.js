@@ -24,19 +24,18 @@ exports.register = function(server, eOptions, next) {
   const handlers = handlerFactory(server, 'cd-users');
 
 
-  function handleLogin(target) {
-    return function(request, reply) {
+  function handleLogin() {
+    return function (request, reply) {
       const args = {
         email: request.payload.email,
         password: request.payload.password,
       };
-      const cmd = target ? `${target}_login` : 'login';
-      const msg = _.defaults({ role: 'user', cmd }, args);
+      const msg = _.defaults({ role: 'user', cmd: 'login' }, args);
       return request.seneca.act(msg, (err, res) => {
         if (err) return reply(err);
         if (res.ok) {
           res.login = cleanUser(res.login);
-          request.cookieAuth.set({ token: res.login.token, target });
+          request.cookieAuth.set({ token: res.login.token });
         }
         return reply(res);
       });
@@ -177,7 +176,7 @@ exports.register = function(server, eOptions, next) {
     {
       method: 'POST',
       path: `${options.basePath}/cdf/login`,
-      handler: handleLogin('cdf'),
+      handler: handleLogin(),
       config: {
         description: 'Login',
         notes: 'Log passed user',
