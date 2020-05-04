@@ -181,9 +181,10 @@ function handleCb(request, reply) {
                 );
               }
               if (!registerResponse.user) {
+                console.log({registerResponse})
                 request.log(
                   ['error', '50x'],
-                  'Zen Registration Failed - No user.'
+                  registerResponse.why
                 );
                 return reply.redirect(
                   // TODO: use generic user friendly error
@@ -236,6 +237,7 @@ function handleCb(request, reply) {
       { role: 'cd-users', cmd: 'register' },
       getZenRegisterPayload(rpiProfile, isAttendee)
     );
+    console.log({senecaRegisterMsg});
     request.seneca.act(senecaRegisterMsg, callback);
   };
 
