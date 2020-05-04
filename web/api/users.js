@@ -23,14 +23,14 @@ exports.register = function(server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
   const handlers = handlerFactory(server, 'cd-users');
 
-
-  function handleLogin() {
-    return function (request, reply) {
+  function handleLogin(isCdf) {
+    return function(request, reply) {
       const args = {
         email: request.payload.email,
         password: request.payload.password,
       };
-      const msg = _.defaults({ role: 'user', cmd: 'login' }, args);
+      const cmd = isCdf ? 'cdf_login' : 'login';
+      const msg = _.defaults({ role: 'user', cmd }, args);
       return request.seneca.act(msg, (err, res) => {
         if (err) return reply(err);
         if (res.ok) {
@@ -176,7 +176,7 @@ exports.register = function(server, eOptions, next) {
     {
       method: 'POST',
       path: `${options.basePath}/cdf/login`,
-      handler: handleLogin(),
+      handler: handleLogin(true),
       config: {
         description: 'Login',
         notes: 'Log passed user',

@@ -27,9 +27,11 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply) {
+  // TODO: add token for migration meta
+  const redirectQueryParams = {};
   const state = crypto.randomBytes(20).toString('hex');
   setRpiStateCookie(reply, { state });
-  const redirectUri = getRedirectUri(state);
+  const redirectUri = getRedirectUri(state, redirectQueryParams);
   reply.redirect(redirectUri);
 }
 
@@ -181,11 +183,7 @@ function handleCb(request, reply) {
                 );
               }
               if (!registerResponse.user) {
-                console.log({registerResponse})
-                request.log(
-                  ['error', '50x'],
-                  registerResponse.why
-                );
+                request.log(['error', '50x'], registerResponse.why);
                 return reply.redirect(
                   // TODO: use generic user friendly error
                   getErrorRedirectUrl('Zen Registration Failed - No user.')
@@ -237,7 +235,6 @@ function handleCb(request, reply) {
       { role: 'cd-users', cmd: 'register' },
       getZenRegisterPayload(rpiProfile, isAttendee)
     );
-    console.log({senecaRegisterMsg});
     request.seneca.act(senecaRegisterMsg, callback);
   };
 

@@ -56,12 +56,14 @@ function getEditRedirectUri() {
   return `${profileServer}${profileEditPath}?${params}`;
 }
 
-function getRedirectUri(state) {
+function getRedirectUri(state, queryParams = {}) {
+  // opts are added as query params by oauth2 library
   return oauth2Rpi.authorizationCode.authorizeURL({
     redirect_uri: `${homeServer}${callbackPath}`,
     scope,
     state,
     brand,
+    ...queryParams,
   });
 }
 
