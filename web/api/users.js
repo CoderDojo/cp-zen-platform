@@ -2,7 +2,6 @@ const _ = require('lodash');
 const cacheTimes = require('../config/cache-times');
 const auth = require('../lib/authentications');
 const handlerFactory = require('./handlers.js');
-const joiValidator = require('./validations/dojos')();
 const Boom = require('boom');
 const Joi = require('joi');
 
@@ -19,31 +18,12 @@ function cleanUser(_user) {
   return user;
 }
 
-exports.register = function(server, eOptions, next) {
+exports.register = function (server, eOptions, next) {
   const options = _.extend({ basePath: '/api/2.0/users' }, eOptions);
   const handlers = handlerFactory(server, 'cd-users');
 
-  function handleLogin(isCdf) {
-    return function(request, reply) {
-      const args = {
-        email: request.payload.email,
-        password: request.payload.password,
-      };
-      const cmd = isCdf ? 'cdf_login' : 'login';
-      const msg = _.defaults({ role: 'user', cmd }, args);
-      return request.seneca.act(msg, (err, res) => {
-        if (err) return reply(err);
-        if (res.ok) {
-          res.login = cleanUser(res.login);
-          request.cookieAuth.set({ token: res.login.token });
-        }
-        return reply(res);
-      });
-    };
-  }
-
   function handleInstance(userType) {
-    return function(request, reply) {
+    return function (request, reply) {
       if (!request.user) {
         return reply({ user: null, login: null, ok: true });
       }
@@ -77,38 +57,6 @@ exports.register = function(server, eOptions, next) {
         }
       );
     };
-  }
-
-  function handleLogout(request, reply) {
-    const session = request.state['seneca-login'];
-    if (!session || (session && !session.token)) {
-      return reply({ ok: true });
-    }
-
-    const msg = { role: 'user', cmd: 'logout', token: session.token };
-    return request.seneca.act(msg, (err, resp) => {
-      if (err) return reply(err);
-      request.cookieAuth.clear();
-      delete request.user;
-      if (resp.user) {
-        resp.user = cleanUser(resp.user);
-      }
-      return reply(resp);
-    });
-  }
-
-  function handleRegister(request, reply) {
-    const msg = _.defaults(
-      { role: 'cd-users', cmd: 'register' },
-      request.payload
-    );
-    return request.seneca.act(msg, (err, resp) => {
-      if (err) return reply(Boom.badImplementation(err));
-      if (resp.user) {
-        resp.user = cleanUser(resp.user);
-      }
-      return reply(resp);
-    });
   }
 
   /**
@@ -156,60 +104,6 @@ exports.register = function(server, eOptions, next) {
 
   server.route([
     {
-      method: 'POST',
-      path: `${options.basePath}/login`,
-      handler: handleLogin(),
-      config: {
-        description: 'Login',
-        notes: 'Log passed user',
-        tags: ['api'],
-        validate: {
-          payload: {
-            email: Joi.string()
-              .email()
-              .required(),
-            password: Joi.string().required(),
-          },
-        },
-      },
-    },
-    {
-      method: 'POST',
-      path: `${options.basePath}/cdf/login`,
-      handler: handleLogin(true),
-      config: {
-        description: 'Login',
-        notes: 'Log passed user',
-        tags: ['api'],
-        validate: {
-          payload: {
-            email: Joi.string()
-              .email()
-              .required(),
-            password: Joi.string().required(),
-          },
-        },
-      },
-    },
-    {
-      method: 'POST',
-      path: `${options.basePath}/logout`,
-      handler: handleLogout,
-      config: {
-        description: 'Logout',
-        notes: 'Logout',
-        tags: ['api'],
-        plugins: {
-          'hapi-swagger': {
-            responseMessages: [{ code: 200, message: 'OK' }],
-          },
-        },
-        validate: {
-          payload: {},
-        },
-      },
-    },
-    {
       method: 'GET',
       path: `${options.basePath}/instance`,
       handler: handleInstance(),
@@ -237,55 +131,6 @@ exports.register = function(server, eOptions, next) {
           'hapi-swagger': {
             responseMessages: [{ code: 200, message: 'OK' }],
           },
-        },
-      },
-    },
-    {
-      method: 'POST',
-      path: `${options.basePath}/register`,
-      handler: handleRegister,
-      config: {
-        description: 'Register an user',
-        tags: ['api'],
-        plugins: {
-          'hapi-swagger': {
-            responseMessages: [{ code: 200, message: 'OK' }],
-          },
-        },
-        validate: {
-          payload: Joi.object({
-            user: Joi.object({
-              email: Joi.string()
-                .email()
-                .required(),
-              emailSubject: Joi.string()
-                .valid('Welcome to Zen, the CoderDojo community platform.')
-                .required(),
-              firstName: Joi.string().required(),
-              lastName: Joi.string().required(),
-              password: Joi.string().required(),
-              'g-recaptcha-response': Joi.string().required(),
-              initUserType: Joi.object({
-                title: Joi.string()
-                  .valid('Parent/Guardian')
-                  .valid('Youth Over 13')
-                  .required(),
-                name: Joi.string()
-                  .valid('parent-guardian')
-                  .valid('attendee-o13')
-                  .required(),
-              }),
-              termsConditionsAccepted: Joi.boolean()
-                .valid(true)
-                .required(),
-              mailingList: Joi.boolean().optional(),
-            }),
-            profile: Joi.object({
-              dob: Joi.date().required(),
-              country: joiValidator.country().required(),
-            }),
-            recaptchaResponse: Joi.string(),
-          }),
         },
       },
     },
@@ -322,53 +167,6 @@ exports.register = function(server, eOptions, next) {
         plugins: {
           'hapi-swagger': {
             responseMessages: [{ code: 200, message: 'OK' }],
-          },
-        },
-      },
-    },
-    {
-      method: 'POST',
-      path: `${options.basePath}/reset-password`,
-      handler: handlers.actHandler('reset_password'),
-      config: {
-        description: 'Reset user password',
-        tags: ['api'],
-        plugins: {
-          'hapi-swagger': {
-            responseMessages: [{ code: 200, message: 'OK' }],
-          },
-        },
-        validate: {
-          payload: {
-            email: Joi.string()
-              .email()
-              .required(),
-            emailSubject: Joi.string()
-              .valid('CoderDojo Zen Password Reset Request')
-              .required(),
-          },
-        },
-      },
-    },
-    {
-      method: 'POST',
-      path: `${options.basePath}/execute-reset`,
-      handler: handlers.actHandler('execute_reset'),
-      config: {
-        description: 'Reset the password',
-        tags: ['api'],
-        plugins: {
-          'hapi-swagger': {
-            responseMessages: [{ code: 200, message: 'OK' }],
-          },
-        },
-        validate: {
-          payload: {
-            token: Joi.string()
-              .guid()
-              .required(),
-            password: Joi.string().required(),
-            repeat: Joi.string().required(),
           },
         },
       },
@@ -435,7 +233,7 @@ exports.register = function(server, eOptions, next) {
       method: 'GET',
       path: `${
         options.basePath
-      }/kpi/number-of-champions-and-mentors-registered`,
+        }/kpi/number-of-champions-and-mentors-registered`,
       handler: handlers.actHandlerNeedsUser(
         'kpi_number_of_champions_and_mentors_registered'
       ),

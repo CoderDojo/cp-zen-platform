@@ -218,64 +218,6 @@
           template: '<div></div>',
           controller: reloadPage,
         })
-        .state("logout", {
-          url: "/logout?referer",
-          template: '<span us-spinner="{radius:30, width:8, length: 16}"></span>',
-          controller: 'logout',
-          params: {
-            referer: null,
-            pageTitle: 'Logout'
-          }
-        })
-        .state("reset", {
-          url: "/reset?referer",
-          template: '<cd-reset></cd-reset>',
-          controller: 'login',
-          params: {
-            referer: null,
-            pageTitle: 'Password Reset'
-          }
-        })
-        .state("reset-password", {
-          url: "/reset_password/:token",
-          template: '<cd-reset-password></cd-reset-password>',
-          controller: 'login',
-          params: {
-            pageTitle: 'Reset Password'
-          }
-        })
-        .state("register-account", {
-          url: "/register?referer",
-          template: '<cd-register class="row"></cd-register>',
-          abstract: true,
-          params: {
-            referer: null,
-            userType: null,
-            eventId: null,
-            pageTitle: 'Register'
-          },
-          controller: 'login'
-        })
-        .state("register-account.require", {
-          url: "/account?referer",
-          template: '<div class="col-xs-12 col-md-6">'+
-            '<cd-register-user ng-init="size=\'col-xs-12\'; buttonSize=\'col-xs-4\'"></cd-register-user></div>' +
-          '<div class="col-xs-12 col-md-6">' +
-            '<cd-login ng-init="size=\'col-xs-12\';"></cd-login></div>',
-          params: {
-            pageTitle: 'Register',
-            referer: null,
-          }
-        })
-        .state("register-account.user", {
-          url: "/user",
-          template:
-          '<cd-register-user></cd-register-user>',
-        })
-        .state("register-account.profile", {
-          url: "/profile",
-          template: '<cd-register-profile></cd-register-profile>',
-        })
         .state("stats", {
           url: "/stats",
           parent: 'dashboard',
