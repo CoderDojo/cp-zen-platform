@@ -94,7 +94,7 @@
           }
         }, null);
       } else {
-        $state.go('register-account.require', { referer: $location.url(), eventId: session.eventId });
+        $location.path('/register').search({ referer: $location.url(), eventId: session.eventId });
       }
     };
   }

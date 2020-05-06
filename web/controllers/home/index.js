@@ -1,34 +1,6 @@
 const auth = require('../../lib/authentications');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const Joi = require('joi');
-const { getRegisterRedirectUri } = require('../../lib/rpi-auth');
 
 module.exports = [
-  {
-    method: 'GET',
-    path: '/reset',
-    handler(request, reply) {
-      reply.view('index', request.app);
-    },
-  },
-  {
-    method: 'GET',
-    path: '/register',
-    handler(request, reply) {
-      if (request.query.profileAuth) {
-        return reply.redirect(getRegisterRedirectUri());
-      }
-      reply.view('index', request.app);
-    },
-    config: {
-      validate: {
-        query: {
-          profileAuth: Joi.bool(),
-          referer: Joi.string(),
-        },
-      },
-    },
-  },
 
   {
     method: 'GET',
@@ -183,14 +155,6 @@ module.exports = [
 
   {
     method: 'GET',
-    path: '/reset_password/{token}',
-    handler(request, reply) {
-      reply.view('index', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
     path: '/badges',
     handler(request, reply) {
       reply.view('index', request.app);
@@ -215,41 +179,9 @@ module.exports = [
 
   {
     method: 'GET',
-    path: '/templates/login',
-    handler(request, reply) {
-      reply.view('accounts/login', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
-    path: '/templates/register',
-    handler(request, reply) {
-      reply.view('accounts/register', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
-    path: '/templates/terms-and-conditions',
-    handler(request, reply) {
-      reply.view('accounts/terms-and-conditions', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
     path: '/templates/privacy-statement',
     handler(request, reply) {
       reply.view('privacy-statement/privacy-statement', request.app);
-    },
-  },
-
-  {
-    method: 'GET',
-    path: '/templates/reset_password',
-    handler(request, reply) {
-      reply.view('accounts/reset_password', request.app);
     },
   },
 ];

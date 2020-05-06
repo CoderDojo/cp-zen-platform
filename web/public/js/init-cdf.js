@@ -176,7 +176,7 @@
           },
           controller: ['isSessionValid', '$state', function(isSessionValid, $state) {
             if (!isSessionValid) {
-              $state.go('login');
+              $location.path('/login');
             }
           }]
         })

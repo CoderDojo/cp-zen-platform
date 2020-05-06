@@ -81,7 +81,7 @@ angular.module('cpZenPlatform').factory('dojoUtils', [
           },
           function() {
             //Not logged in
-            $state.go('register-account.require', {
+            $location.path('/register').search({
               referer: $location.url(),
               userType: userType,
             });

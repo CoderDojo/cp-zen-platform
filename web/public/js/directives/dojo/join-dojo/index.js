@@ -175,7 +175,10 @@ angular
                     }
                   }, function () {
                     //Not logged in
-                    $state.go('register-account.require', {referer: $location.url(), userType: userType});
+                    $location.path('/register').search({
+                      referer: $location.url(),
+                      userType: userType,
+                    });
                   });
                 }
               });

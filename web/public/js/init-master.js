@@ -885,10 +885,6 @@
           }
         });
       $urlRouterProvider.when('', '/');
-      $urlRouterProvider.when('/register?referer', ['$state', '$location', function($state, $location) {
-        // For some reasons, abstract states don't capture the query params
-        $state.go('register-account.user', $location.search());
-      }]);
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
           var $window = $injector.get('$window');

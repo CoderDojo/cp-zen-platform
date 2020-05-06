@@ -100,7 +100,9 @@ function cdBadgesDashboardCtrl($scope, $state, $location, cdBadgesService, utils
 
   $scope.previewBadge = function (badgeClaimNumber) {
     if(!$scope.loggedIn) {
-      $state.go('login', {referer: $location.url()});
+      $location.path('/login').search({
+        referer: $location.url()
+      });
     } else {
       cdBadgesService.loadBadgeByCode(badgeClaimNumber, function (response) {
         if(response.error) return alertService.showError(errorMsg);
