@@ -27,8 +27,8 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply) {
-  // TODO: add token for migration meta
-  const redirectQueryParams = {};
+  let redirectQueryParams = {};
+  if (request.query.mgrt) redirectQueryParams = { mgrt: request.query.mgrt };
   const state = crypto.randomBytes(20).toString('hex');
   setRpiStateCookie(reply, { state });
   const redirectUri = getRedirectUri(state, redirectQueryParams);
