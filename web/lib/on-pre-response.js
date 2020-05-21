@@ -50,7 +50,7 @@ module.exports = server => (request, reply) => {
           'cdf-admin'
         ) > -1;
       if (cdfPath) {
-        return reply.redirect(`/cdf/login?referer=${request.url.path}`);
+        return reply.redirect(`/login?referer=${request.url.path}`);
       }
     }
   }
