@@ -252,4 +252,20 @@ module.exports = [
       reply.view('accounts/reset_password', request.app);
     },
   },
+
+  {
+    method: 'GET',
+    path: '/maintenance',
+    handler(request, reply) {
+      reply.view('index', request.app);
+    },
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/maintenance',
+    handler(request, reply) {
+      reply.view('maintenance/maintenance', request.app);
+    },
+  },
 ];
