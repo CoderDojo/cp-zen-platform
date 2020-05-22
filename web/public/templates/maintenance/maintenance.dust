@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="container">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center page-not-found">
+      <div class="ninja"></div>
+      <p>{@i18n key="The site is currently undergoing maintenance."/}</p>
+      <p>{@i18n key="Please be paitent, the site will be available again shortly."/}</p>
+    </div>
+  </div>
+</div>
