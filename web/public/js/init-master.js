@@ -941,7 +941,15 @@
           params: {
             pageTitle: 'Page not found',
           }
-        });
+        })
+        .state("maintenance", {
+          url: "/maintenance",
+          templateUrl: '/templates/maintenance',
+          controller: 'maintenance-controller',
+          params: {
+            pageTitle: 'Undergoing maintenance',
+          }
+        })
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.when('/register?referer', ['$state', '$location', function($state, $location) {
         // For some reasons, abstract states don't capture the query params

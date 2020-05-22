@@ -1050,7 +1050,9 @@ angular.module('cpZenPlatform')
       "Due to the coronavirus pandemic, we have paused the Dojo verification process.": "Due to the coronavirus pandemic, we have paused the Dojo verification process.",
       "In the meantime, we’re providing exciting opportunities for young people, parents, volunteers, and educators to get creative with tech through": "In the meantime, we’re providing exciting opportunities for young people, parents, volunteers, and educators to get creative with tech through",
       "Digital Making at Home": "Digital Making at Home",
-      "from the Raspberry Pi Foundation.": "from the Raspberry Pi Foundation."
+      "from the Raspberry Pi Foundation.": "from the Raspberry Pi Foundation.",
+      "The site is currently undergoing maintenance.": "The site is currently undergoing maintenance.",
+      "Please be paitent, the site will be available again shortly.": "Please be paitent, the site will be available again shortly."
     };
   })
   .filter('translateFromKey', ['$translate', 'translationKeys', function ($translate, translationKeys) {
