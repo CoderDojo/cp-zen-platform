@@ -7,24 +7,9 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', '$window', 'cdAp
   }
 
   return {
-    login: function(creds,win,fail){
-      $http({method:'POST', url: '/api/2.0/users/login', data:creds, cache:false}).
-        success(win).error(fail||topfail)
-    },
 
-    cdfLogin: function(creds, win, fail){
-      $http({method:'POST', url: '/api/2.0/users/cdf/login', data:creds, cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    logout: function(win,fail){
-      var rpiAuthFlag = $window.localStorage.getItem('rpiAuth');
-      if (rpiAuthFlag === 'true') {
-        $window.location.href = '/rpi/logout'
-      } else {
-        $http({method:'POST', url: '/api/2.0/users/logout', data:{}, cache:false}).
-          success(win).error(fail||topfail)
-      }
+    logout: function(){
+      $window.location.href = '/rpi/logout'
     },
 
     instance: function(win,fail){
@@ -33,26 +18,6 @@ angular.module('cpZenPlatform').service('auth', ['$http', '$q', '$window', 'cdAp
 
     cdfInstance: function(win,fail){
       $http({method:'GET', url: '/api/2.0/users/cdf/instance', cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    register: function(details,win,fail){
-      $http({method:'POST', url: '/api/2.0/users/register', data:details, cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    reset: function (creds, win, fail) {
-      $http({method: 'POST', url: '/api/2.0/users/reset-password', data: creds, cache: false}).
-        success(win).error(fail||topfail);
-    },
-
-    execute_reset: function(creds,win,fail){
-      $http({method:'POST', url: '/api/2.0/users/execute-reset', data:creds, cache:false}).
-        success(win).error(fail||topfail)
-    },
-
-    confirm: function(creds,win,fail){
-      $http({method:'POST', url: 'api/2.0/auth/confirm', data:creds, cache:false}).
         success(win).error(fail||topfail)
     },
 

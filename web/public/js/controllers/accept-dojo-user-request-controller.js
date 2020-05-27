@@ -14,11 +14,9 @@ function cdAcceptDojoUserRequestCtrl($scope, $window, $state, $stateParams, $loc
 
   }, function () {
     //Not logged in
-    if(!$state.get('login')){
-      $window.location.href = '/login?referer=' + $location.url();
-    } else {
-      $state.go('login', {referer: $location.url()});
-    }
+    $location.path('/login').search({
+      referer: $location.url()
+    });
   });
 }
 

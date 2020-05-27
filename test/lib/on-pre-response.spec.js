@@ -164,7 +164,7 @@ lab.describe('onPreResponse', () => {
 
     fn(server)(reqMock, replyMock);
     expect(replyMock.redirect).to.have.been.calledOnce;
-    expect(replyMock.redirect).to.have.been.calledWith('/cdf/login?referer=/');
+    expect(replyMock.redirect).to.have.been.calledWith('/login?referer=/');
     expect(replyMock.redirect).to.have.returned(sinon.match.any);
     expect(replyMock.continue).to.not.have.been.called;
     done();

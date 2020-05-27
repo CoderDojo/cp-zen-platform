@@ -19,8 +19,6 @@ function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
 
     //master states
     'home': '/',
-    'login': '/login',
-    'register-account':'/register',
     'start-dojo': '/start-dojo',
     'charter': '/charter'
   };

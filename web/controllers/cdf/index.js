@@ -6,7 +6,7 @@ function handler(request, reply) {
 }
 const overrideAuth = {
   'hapi-auth-cookie': {
-    redirectTo: '/cdf/login',
+    redirectTo: '/login',
   },
 };
 
@@ -22,22 +22,10 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/cdf/login',
-    config: {
-      cache: {
-        expiresIn: cacheTimes.short,
-      },
-    },
-    handler(request, reply) {
-      reply.view('cdf', request.app);
-    },
-  },
-  {
-    method: 'GET',
     path: '/cdf',
     config: { cache: { expiresIn: cacheTimes.short } },
     handler(request, reply) {
-      reply.redirect('/cdf/login');
+      reply.redirect('/cdf/dashboard');
     },
   },
 ];

@@ -159,26 +159,9 @@
             pageTitle: 'Home'
           }
         })
-        .state("login", {
-          url: "/login?referer&next",
-          template: '<cdf-login></cdf-login>',
-          params: {
-            referer: null,
-            next: null,
-            pageTitle: 'Login'
-          }
-        })
         .state("dashboard", {
           url: "/dashboard",
           template: '<cdf-dashboard></cdf-dashboard>',
-          resolve: {
-            isSessionValid: resolves.isSessionValid
-          },
-          controller: ['isSessionValid', '$state', function(isSessionValid, $state) {
-            if (!isSessionValid) {
-              $state.go('login');
-            }
-          }]
         })
         .state("stats", {
           parent: 'dashboard',

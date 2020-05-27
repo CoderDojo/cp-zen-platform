@@ -24,65 +24,6 @@ angular.module('cpZenPlatform').factory('userUtils',
     }
   };
 
-  userUtils.doRegister = function (userFormData) {
-    if(!userFormData.recaptchaResponse) return alertService.showError($translate.instant('Please resolve the captcha'));
-    delete userFormData.passwordConfirm;
-    var isAdult = false;
-
-    userFormData.user['g-recaptcha-response'] = userFormData.recaptchaResponse;
-    userFormData.user.emailSubject = 'Welcome to Zen, the CoderDojo community platform.';
-
-    if (this.getAge(userFormData.profile.dob) >= 18) {
-      userFormData.user.initUserType = {'title':'Parent/Guardian','name':'parent-guardian'};
-      isAdult = true;
-    } else if (this.getAge(userFormData.profile.dob) >= 13) {
-      userFormData.user.initUserType = {'title':'Youth Over 13','name':'attendee-o13'};
-    } else {
-      return alertService.showError($translate.instant('Sorry only users over 13 can signup, but your parent or guardian can sign up and create you an account'));
-    }
-    var user = userFormData.user;
-    auth.register(_.omit(userFormData, 'referer'), function(data) {
-      Analytics.trackEvent($state.current.name, 'click', 'register' + (isAdult ? '_adult' : '_kid'));
-      userFormData.referer = userFormData.referer && userFormData.referer.indexOf("/dashboard/") === -1 ? '/dashboard' + userFormData.referer : userFormData.referer;
-      if(data.ok) {
-        auth.login({ email: user.email, password: user.password }, function(data) {
-          var initUserTypeStr = data.user && data.user.initUserType;
-          var initUserType = JSON.parse(initUserTypeStr);
-          if($state.current.name === 'start-dojo'){
-            $window.location.href = $state.href('start-dojo');
-          } else {
-            // We cannot use $state.go until we find a solution to update the user menu
-            // EventId is having its own redirection, don't cumulate w/ referer
-            var params = {userId: data.user.id};
-            if ($state.params.eventId) {
-              params.eventId = $state.params.eventId;
-            } else if (userFormData.referer) {
-              params.referer = userFormData.referer;
-            }
-            // Note GFE 2019/02/08: replace default navigation to home
-            // eventId can be ignored as all flows goes through Vuejs 
-            // Other referers might be in use: accepting an invite
-            $window.location.href = params.referer ? params.referer : '/home'; 
-          }
-        });
-      } else {
-        var reason;
-
-        if(data.why === 'nick-exists'){
-          reason = $translate.instant('user name already exists');
-        }
-
-        if(data.error === 'captcha-failed'){
-          reason = $translate.instant('captcha error');
-        }
-
-        alertService.showAlert($translate.instant('There was a problem registering your account:') + ' ' + reason);
-      }
-    }, function(err) {
-      alertService.showError(JSON.stringify(err));
-    });
-  };
-
   userUtils.defaultAvatar = function (usertype, sex) {
     var overallDefault = '/img/avatars/avatar.png';
     var defaults = {

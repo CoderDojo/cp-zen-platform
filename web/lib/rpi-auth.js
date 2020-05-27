@@ -14,8 +14,8 @@ const profileOauthPath = '/oauth2/auth';
 const profileTokenPath = '/oauth2/token';
 const profileSignupPath = '/signup';
 const profileEditPath = '/profile/edit';
-const profileLogoutPath = '/logout';
-const loginPath = '/rpi/login';
+const logoutPath = '/logout';
+const loginPath = '/login';
 const callbackPath = '/rpi/cb';
 const accountTypePath = '/account-type';
 
@@ -39,7 +39,7 @@ const oauth2Rpi = oauth2.create({
 function getLogoutRedirectUri() {
   const params = new URLSearchParams();
   params.set('returnTo', homeServer);
-  return `${profileServer}${profileLogoutPath}?${params}`;
+  return `${profileServer}${logoutPath}?${params}`;
 }
 
 function getRegisterRedirectUri() {

@@ -275,17 +275,17 @@ function handleCb(request, reply) {
 module.exports = [
   {
     method: 'GET',
-    path: '/rpi/login',
+    path: '/login',
     handler: handleRPILogin,
   },
   {
     method: 'GET',
-    path: '/rpi/logout',
+    path: '/logout',
     handler: handleRPILogout,
   },
   {
     method: 'GET',
-    path: '/rpi/register',
+    path: '/register',
     handler: handleRPIRegister,
   },
   {
