@@ -1,7 +1,6 @@
 const auth = require('../../lib/authentications');
 
 module.exports = [
-
   {
     method: 'GET',
     path: '/create-dojo',
@@ -182,6 +181,30 @@ module.exports = [
     path: '/templates/privacy-statement',
     handler(request, reply) {
       reply.view('privacy-statement/privacy-statement', request.app);
+    },
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/reset_password',
+    handler(request, reply) {
+      reply.view('accounts/reset_password', request.app);
+    },
+  },
+
+  {
+    method: 'GET',
+    path: '/maintenance',
+    handler(request, reply) {
+      reply.view('index', request.app);
+    },
+  },
+
+  {
+    method: 'GET',
+    path: '/templates/maintenance',
+    handler(request, reply) {
+      reply.view('maintenance/maintenance', request.app);
     },
   },
 ];

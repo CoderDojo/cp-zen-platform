@@ -883,7 +883,15 @@
           params: {
             pageTitle: 'Page not found',
           }
-        });
+        })
+        .state("maintenance", {
+          url: "/maintenance",
+          templateUrl: '/templates/maintenance',
+          controller: 'maintenance-controller',
+          params: {
+            pageTitle: 'Undergoing maintenance',
+          }
+        })
       $urlRouterProvider.when('', '/');
       $urlRouterProvider.otherwise(function ($injector, $location) {
           var $state = $injector.get('$state');
