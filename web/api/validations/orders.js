@@ -8,7 +8,7 @@ const definitions = {
     Joi.object().keys({
       id: Joi.string().guid(),
       name: Joi.string(),
-      dateOfBirth: Joi.date(),
+      dateOfBirth: Joi.date().allow(null),
       eventId: Joi.string().guid(),
       userId: Joi.string().guid(),
       sessionId: Joi.string().guid(),

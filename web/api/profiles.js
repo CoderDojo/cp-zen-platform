@@ -78,7 +78,7 @@ exports.register = function(server, eOptions, next) {
                 .guid()
                 .required(),
               country: Joi.object().allow(null),
-              dob: Joi.date().required(),
+              dob: Joi.date().allow(null),
               email: Joi.string()
                 .email()
                 .required(),
