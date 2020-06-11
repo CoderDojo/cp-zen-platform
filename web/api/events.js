@@ -359,7 +359,7 @@ exports.register = function(server, eOptions, next) {
                 // Update
                 attendance: Joi.array(),
                 created: Joi.date(),
-                dateOfBirth: Joi.date(),
+                dateOfBirth: Joi.date().allow(null),
                 deleted: Joi.boolean(),
                 orderId: Joi.string()
                   .guid()
