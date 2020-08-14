@@ -128,10 +128,12 @@ module.exports = [
     name: 'اُردُو‬‎',
     code: 'ur_PK',
     country: 'پاکستان',
+    dir: 'rtl',
   },
   {
     name: 'اَلْعَرَبِيَّةُ',
     code: 'ar_SA',
     country: 'ٱلْمَمْلَكَة ٱلْعَرَبِيَّة ٱلسَّعُوْدِيَّة',
+    dir: 'rtl',
   },
 ];
