@@ -20,6 +20,12 @@
                 <i class="fa" ng-class="dojo.private === 1? 'fa-lock': 'fa-child'"
                   aria-hidden="true"></i>
               </div>
+              <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.onlineSessions === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'"
+                ng-attr-title="{{ ribbons.onlineSessions }}">
+                <img src="/img/tao.svg" class="img-responsive"
+                ng-attr-alt="{{ ribbons.onlineSessions }}"
+                aria-hidden="true"/>
+              </div>
               <div class="cd-dojo-detail__ribbon--vertical-right" ng-class="dojo.taoVerified === 1? 'cd-dojo-detail__ribbon--success': 'cd-dojo-detail__ribbon--info'"
                 ng-attr-title="{{ ribbons.taoVerified }}">
                 <img src="/img/tao.svg" class="img-responsive"

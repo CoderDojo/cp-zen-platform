@@ -52,6 +52,24 @@
       </div>
     </div>
   </div>
+  
+  <div class="row cd-input-row" ng-show="noop()">
+    <div class="form-group">
+        <label class="col-lg-4 cd-form-label1 with-checkbox">{@i18n key="Online sessions"/}</label>
+        <div class="col-lg-8">
+          <div class="checkbox cd-checkbox checkbox-primary">
+            <input type="checkbox"
+                  ng-model="dojo.onlineSessions"
+                  id="onlineSessionsCheckbox"
+                  ng-true-value="1"
+                  ng-false-value="0"
+                  ng-change="updateLocalStorage('dojoListing','onlineSessions', dojo.onlineSessions)"
+                >
+                <label class="cd-checkbox-label1" for="onlineSessions"></label>
+          </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row cd-input-row" ng-show="isCDFAdmin">
     <div class="form-group">
