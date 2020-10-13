@@ -78,6 +78,19 @@
             </div>
           </div>
         </div>
+        <div class="cd-simple-flex-grid cd-sad-venue__online">
+          <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__online">
+            <div class="checkbox-inline">
+              <input type="checkbox" id="online_dojo" ng-model="$ctrl.venue.onlineSessions"
+                name="onlineSessions"
+                ng-false-value="0"
+                ng-true-value="1"
+                ng-checked="$ctrl.venue.onlineSessions == 1">
+              <label for="online_dojo">{@i18n key="Online sessions"/}</input>
+            </div>
+            <p class="help-block">{@i18n key="This Dojo will run online (partially or completely) Check this box if your club runs online all or some of the time."/}</p>
+          </div>
+        </div>
         <div ng-show="($ctrl.venue.type === 'other')">
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control" name="alternativeType"

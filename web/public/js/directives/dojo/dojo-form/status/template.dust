@@ -65,7 +65,7 @@
                   ng-false-value="0"
                   ng-change="updateLocalStorage('dojoListing','onlineSessions', dojo.onlineSessions)"
                 >
-                <label class="cd-checkbox-label1" for="onlineSessions"></label>
+                <label class="cd-checkbox-label1" for="onlineSessionsCheckbox">{@i18n key="My club runs online (partially or completely) Check this box if your club runs online all or some of the time."/}</label>
           </div>
       </div>
     </div>
