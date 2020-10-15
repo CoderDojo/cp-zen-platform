@@ -100,6 +100,9 @@ module.exports = [
             needMentors: Joi.number()
               .valid(0)
               .valid(1),
+            onlineSessions: Joi.number()
+              .valid(0)
+              .valid(1),
             taoVerified: Joi.number()
               .valid(0)
               .valid(1),
