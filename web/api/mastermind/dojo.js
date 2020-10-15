@@ -179,6 +179,8 @@ module.exports = [
             creatorEmail: joiValidator.mail(),
             emailSubject: Joi.string(),
             editDojoFlag: Joi.boolean(),
+            safeguardingSponsorName: Joi.string(),
+            safeguardingSponsorEmail: joiValidator.mail(),
           },
         }),
       },

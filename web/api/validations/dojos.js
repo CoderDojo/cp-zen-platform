@@ -38,7 +38,7 @@ module.exports = function() {
     },
     facebook() {
       return Joi.string()
-        .regex(/^[a-z0-9.]{1,}$/i)
+        .regex(/^[a-z0-9\.-]{1,}$/i)
         .allow('')
         .allow(null);
     },
@@ -209,6 +209,8 @@ module.exports = function() {
         isValid: Joi.boolean().required(),
         visited: Joi.boolean().required(),
         onlineSessions: Joi.number().only(0, 1),
+        safeguardingSponsorName: Joi.string().optional(),
+        safeguardingSponsorEmail: Joi.string().optional(),
       };
       let schema = Joi.object().keys(valid);
       const keys = [
