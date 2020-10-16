@@ -209,6 +209,8 @@ module.exports = function() {
         isValid: Joi.boolean().required(),
         visited: Joi.boolean().required(),
         onlineSessions: Joi.number().only(0, 1),
+        safeguardingSponsorName: Joi.string().optional().allow(null),
+        safeguardingSponsorEmail: Joi.string().optional().allow(null),
       };
       let schema = Joi.object().keys(valid);
       const keys = [

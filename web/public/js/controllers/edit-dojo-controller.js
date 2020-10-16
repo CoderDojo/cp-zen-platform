@@ -195,6 +195,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       if (lsed.supporterImage) $scope.dojo.supporterImage = lsed.supporterImage;
       if (lsed.mailingList) $scope.dojo.mailingList = lsed.mailingList;
       if (lsed.markerPlaced) $scope.markerPlaced = lsed.markerPlaced;
+      if (lsed.safeguardingSponsorName) $scope.dojo.safeguardingSponsorName = lsed.safeguardingSponsorName;
+      if (lsed.safeguardingSponsorEmail) $scope.dojo.safeguardingSponsorEmail = lsed.safeguardingSponsorEmail;
     }
   }
 
