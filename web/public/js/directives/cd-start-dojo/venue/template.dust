@@ -91,6 +91,22 @@
             <p class="help-block">{@i18n key="Check this box if your club runs online all or some of the time."/}</p>
           </div>
         </div>
+        <div class="cd-simple-flex-grid cd-sad-venue__safeguarding">
+          <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__safeguarding">
+            <div class="form-group">
+              <label for="safeguardingSponsorName">{@i18n key="Safeguarding Sponsor's Name"/}</label>
+              <input type="text" class="form-control" name="safeguardingSponsorName" id="safeguardingSponsorName"
+                required="required"
+                placeholder="{@i18n key="Safeguarding Sponsor's Name"/}" ng-model="$ctrl.venue.safeguardingSponsorName">
+            </div>
+            <div class="form-group">
+              <label for="safeguardingSponsorEmail">{@i18n key="Safeguarding Sponsor's Email"/}</label>
+              <input type="text" class="form-control" name="safeguardingSponsorEmail" id="safeguardingSponsorEmail"
+                required="required"
+                placeholder="{@i18n key="Safeguarding Sponsor's Email"/}" ng-model="$ctrl.venue.safeguardingSponsorEmail">
+            </div>
+          </div>
+        </div>
         <div ng-show="($ctrl.venue.type === 'other')">
           {@i18n key="Other (please detail)"/}
           <input type="text" class="form-control" name="alternativeType"
