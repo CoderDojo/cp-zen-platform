@@ -93,6 +93,15 @@
         </div>
         <div class="cd-simple-flex-grid cd-sad-venue__safeguarding">
           <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__safeguarding">
+            <h3>{@i18n key="Keeping your Dojo safe"/}</h3>
+            <p>
+              {@i18n key="To ensure the safety of young people at Dojos, we require the email address of a safeguarding sponsor."/} &nbsp;
+              {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a corporate or non-profit organisation or a senior member of a school."/} &nbsp;
+              {@i18n key="This sponsor will help ensure that your club operates in accordance with our safeguarding policy and that all your volunteers have the appropriate background checks."/}
+            </p>
+            <p>
+              {@i18n key="Please fill in the details of your safeguarding sponsor below so that we can contact them."/}
+            </p>
             <div class="form-group">
               <label for="safeguardingSponsorName">{@i18n key="Safeguarding Sponsor's Name"/}</label>
               <input type="text" class="form-control" name="safeguardingSponsorName" id="safeguardingSponsorName"
