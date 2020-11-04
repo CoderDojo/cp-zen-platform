@@ -96,7 +96,7 @@
             <h3>{@i18n key="Keeping your Dojo safe"/}</h3>
             <p>
               {@i18n key="To ensure the safety of young people at Dojos, we require the email address of a safeguarding sponsor."/} &nbsp;
-              {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a corporate or non-profit organisation or a senior member of a school."/} &nbsp;
+              {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a corporate or non-profit organisation."/} &nbsp;
               {@i18n key="This sponsor will help ensure that your club operates in accordance with our safeguarding policy and that all your volunteers have the appropriate background checks."/}
             </p>
             <p>
