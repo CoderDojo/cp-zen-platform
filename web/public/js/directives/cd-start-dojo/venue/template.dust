@@ -120,7 +120,9 @@
           <p>
             {@i18n key="To ensure the safety of young people at Dojos, we require the email address of a safeguarding sponsor."/} &nbsp;
             {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a corporate or non-profit organisation."/} &nbsp;
-            {@i18n key="This sponsor will help ensure that your club operates in accordance with our safeguarding policy and that all your volunteers have the appropriate background checks."/}
+            {@i18n key="This sponsor will help ensure that your club operates in accordance with our"/}&nbsp;
+            <a href="https://www.raspberrypi.org/safeguarding/">{@i18n key="safeguarding policy"/}</a>&nbsp;
+            {@i18n key="and that all your volunteers have the appropriate background checks."/}
           </p>
           <p>
             {@i18n key="Please fill in the details of your safeguarding sponsor below so that we can contact them."/}
