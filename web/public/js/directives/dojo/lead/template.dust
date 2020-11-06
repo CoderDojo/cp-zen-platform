@@ -157,6 +157,22 @@
             </tr>
           </tbody>
           <thead>
+            <th colspan="4"><h4>Safeguarding Sponsor</h4></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td ng-bind="::$ctrl.lead.application.venue.safeguardingSponsorName"></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td ng-bind="::$ctrl.lead.application.venue.safeguardingSponsorEmail"></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <thead>
             <th colspan="4"><h4>Dojo information</h4></th>
           </thead>
           <tbody>
