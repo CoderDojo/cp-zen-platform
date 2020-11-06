@@ -1048,8 +1048,7 @@ angular.module('cpZenPlatform')
       "Total awaiting approval": "Total awaiting approval",
       "Thank you for your interest in CoderDojo! ": "Thank you for your interest in CoderDojo!",
       "The coronavirus pandemic continues to impact all our lives, including how Dojos can run.": "The coronavirus pandemic continues to impact all our lives, including how Dojos can run.",
-      "See": "See",
-      " our resources and guidance on the creative ways Dojos are running.": " our resources and guidance on the creative ways Dojos are running.",
+      "our resources and guidance on the creative ways Dojos are running.": "our resources and guidance on the creative ways Dojos are running.",
       "The site is currently undergoing maintenance.": "The site is currently undergoing maintenance.",
       "Please be paitent, the site will be available again shortly.": "Please be paitent, the site will be available again shortly."
     };
