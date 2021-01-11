@@ -1498,9 +1498,9 @@ cp-translations@~1.0.155:
   integrity sha512-/FZ0PA/5BqcL1680eCBXb8ifO92JF5U3kunMoXLesX4/cJ71SeBLu+muYGTNc7PHo2WueT7OQ7P1SZ8wnKdVFQ==
 
 cp-translations@~1.0.156:
-  version "1.0.156"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.156.tgz#62aa9faee50403aba6e5ab6bf04786f6012c80c8"
-  integrity sha512-7DlSsaUmR4b8TF/AxQdAjkJkPZ75HSjqFAiGH5xsEWyrWo2OdxyjQOZuCr1RXE7KHZGftBCf5RtoQrmMPX5P4g==
+  version "1.0.157"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.157.tgz#3482ce8468f2f78a48d7fa82334d82cc5dd8deb4"
+  integrity sha512-n7L8B7qKt06W6kCs+tUdrZUH/phQQvfjOoEgbEPA9kmzdBvHQG7I2e5L7me6qbCragKWQ5wJKbLhimGiRABeLg==
 
 cp-zen-frontend@~1.0.146:
   version "1.0.146"
