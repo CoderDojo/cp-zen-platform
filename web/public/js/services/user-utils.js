@@ -10,6 +10,10 @@ angular.module('cpZenPlatform').factory('userUtils',
   var approvalRequired = ['mentor', 'champion'];
 
   userUtils.getAge = function (birthDate) {
+    if (birthDate === null) {
+      return 0;
+    }
+
     return moment.utc().diff(moment(birthDate), 'years');
   };
 
