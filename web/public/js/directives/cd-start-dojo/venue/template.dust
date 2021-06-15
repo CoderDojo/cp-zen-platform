@@ -101,6 +101,47 @@
             ng-model="$ctrl.venue.alternativeCorporate"></input>
         </div>
       </div>
+      <div class="cd-simple-flex-grid cd-sad-venue__online">
+        <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__online">
+          <div class="checkbox-inline">
+            <input type="checkbox" id="online_dojo" ng-model="$ctrl.venue.onlineSessions"
+              name="onlineSessions"
+              ng-false-value="0"
+              ng-true-value="1"
+              ng-checked="$ctrl.venue.onlineSessions == 1">
+            <label for="online_dojo">{@i18n key="This Dojo will run online (partially or completely)"/}</input>
+          </div>
+          <p class="help-block">{@i18n key="Check this box if your club runs online all or some of the time."/}</p>
+        </div>
+      </div>
+      <div class="cd-simple-flex-grid cd-sad-venue__safeguarding">
+        <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__safeguarding">
+          <h3>{@i18n key="Keeping your Dojo safe"/}</h3>
+          <p>
+            {@i18n key="To ensure the safety of young people at Dojos, we require a second adult to act as a safeguarding sponsor for your Dojo."/} &nbsp;
+            {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a school, library, corporate or non-profit organisation."/} &nbsp;
+            {@i18n key="The Dojo sponsor and the Dojo champion cannot be the same person."/} &nbsp;
+            {@i18n key="This sponsor will help ensure that your Dojo operates in accordance with our"/}&nbsp;
+            <a href="https://www.raspberrypi.org/safeguarding/">{@i18n key="safeguarding policy"/}</a>&nbsp;
+            {@i18n key="and that all your volunteers have the appropriate background checks."/}
+          </p>
+          <p>
+            {@i18n key="Please fill in the details of your safeguarding sponsor below so that we can contact them."/}
+          </p>
+          <div class="form-group">
+            <label for="safeguardingSponsorName">{@i18n key="Safeguarding Sponsor's Name"/}</label>
+            <input type="text" class="form-control" name="safeguardingSponsorName" id="safeguardingSponsorName"
+              required="required"
+              placeholder="{@i18n key="Safeguarding Sponsor's Name"/}" ng-model="$ctrl.venue.safeguardingSponsorName">
+          </div>
+          <div class="form-group">
+            <label for="safeguardingSponsorEmail">{@i18n key="Safeguarding Sponsor's Email"/}</label>
+            <input type="text" class="form-control" name="safeguardingSponsorEmail" id="safeguardingSponsorEmail"
+              required="required"
+              placeholder="{@i18n key="Safeguarding Sponsor's Email"/}" ng-model="$ctrl.venue.safeguardingSponsorEmail">
+          </div>
+        </div>
+      </div>
       <div class="form-group">
         <cd-dojo-map model="$ctrl.model" map="$ctrl.gmap"
         set-location="$ctrl.setLocation"

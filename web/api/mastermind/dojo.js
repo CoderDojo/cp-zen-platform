@@ -100,6 +100,9 @@ module.exports = [
             needMentors: Joi.number()
               .valid(0)
               .valid(1),
+            onlineSessions: Joi.number()
+              .valid(0)
+              .valid(1),
             taoVerified: Joi.number()
               .valid(0)
               .valid(1),
@@ -176,6 +179,8 @@ module.exports = [
             creatorEmail: joiValidator.mail(),
             emailSubject: Joi.string(),
             editDojoFlag: Joi.boolean(),
+            safeguardingSponsorName: Joi.string().optional().allow(null),
+            safeguardingSponsorEmail: joiValidator.mail().optional().allow(null),
           },
         }),
       },

@@ -78,7 +78,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
     if (_.isEmpty(prevFounder) || !$scope.isCDFAdmin) {
       return done();
     }
-    
+
     cdUsersService.loadPrevFounder(prevFounder.userId, function(response){
       prevFounder.email = response.email;
       prevFounder.name = response.name;
@@ -187,6 +187,7 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       if (lsed.needMentors) $scope.dojo.needMentors = lsed.needMentors;
       if (lsed.stage) $scope.dojo.stage = lsed.stage;
       if (lsed.private) $scope.dojo.private = lsed.private;
+      if (lsed.onlineSessions) $scope.dojo.onlineSessions = lsed.onlineSessions;
       if (lsed.googleGroup) $scope.dojo.googleGroup = lsed.googleGroup;
       if (lsed.website) $scope.dojo.website = lsed.website;
       if (lsed.twitter) $scope.dojo.twitter = lsed.twitter;
@@ -194,6 +195,8 @@ function cdEditDojoCtrl ($scope, dojo, cdDojoService, alertService, gmap, auth,
       if (lsed.supporterImage) $scope.dojo.supporterImage = lsed.supporterImage;
       if (lsed.mailingList) $scope.dojo.mailingList = lsed.mailingList;
       if (lsed.markerPlaced) $scope.markerPlaced = lsed.markerPlaced;
+      if (lsed.safeguardingSponsorName) $scope.dojo.safeguardingSponsorName = lsed.safeguardingSponsorName;
+      if (lsed.safeguardingSponsorEmail) $scope.dojo.safeguardingSponsorEmail = lsed.safeguardingSponsorEmail;
     }
   }
 

@@ -7,6 +7,7 @@ function cdDojoDetailCtrl ($scope, $state, $location, cdDojoService, cdUsersServ
   $scope.ribbons = {};
   $scope.ribbons.verified = $translate.instant($scope.dojo.verified === 1 ? 'Verified!' : 'Not verified');
   $scope.ribbons.private = $scope.dojo.private === 1 ? $translate.instant('Private Dojo') + '\n' + $translate.instant('This means this Dojo is only open to specific people (for example, students in a school). Please do not contact this Dojo.') : $translate.instant('Public Dojo');
+  $scope.ribbons.onlineSessions = $translate.instant($scope.dojo.onlineSessions === 1 ? 'Online sessions' : 'No online sessions');
   $scope.ribbons.taoVerified = $translate.instant($scope.dojo.taoVerified === 1 ? 'Tao verified' : 'Tao unverified');
   $scope.model = {};
   $scope.markers = [];
