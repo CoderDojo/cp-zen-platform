@@ -9,7 +9,7 @@
         <p class="lead cd-lead-sml">{@i18n key="Expect a response within 48 hours from our community team."/}</p>
         <span ng-if="$ctrl.timesUp">
           <p>{@i18n key="No response yet?"/}</p>
-          <button ng-click="$ctrl.openIntercom()" class="btn btn-xs btn-secondary">Click here to contact us</button>
+          <a href="mailto:info@coderdojo.com" class="btn btn-xs btn-secondary">Contact us</a>
         </span>
         <a class="cd-application-card__timing-link btn btn-secondary" ui-sref="start-dojo({id: $ctrl.id})">{@i18n key="Edit your application"/}</a>
       </span>
