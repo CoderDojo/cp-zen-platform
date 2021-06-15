@@ -1,6 +1,6 @@
 'use strict';
 
-function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
+function headerCtrl($window, $scope, $location, $state, auth) {
 
   var currentUser;
   auth.get_loggedin_user(function (user) {
@@ -52,8 +52,7 @@ function headerCtrl($window, $scope, $location, $state, intercomService, auth) {
       $state.go(state);
   };
 
-  intercomService.InitIntercom();
 }
 
 angular.module('cpZenPlatform')
-  .controller('header', ['$window', '$scope', '$location', '$state', 'intercomService', 'auth', headerCtrl]);
+  .controller('header', ['$window', '$scope', '$location', '$state', 'auth', headerCtrl]);
