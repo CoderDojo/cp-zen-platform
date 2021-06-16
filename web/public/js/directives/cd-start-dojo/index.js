@@ -11,10 +11,10 @@ angular
       templateUrl: '/directives/tpl/cd-start-dojo',
       controller: [ '$rootScope', '$translate', 'usSpinnerService',
         'atomicNotifyService', '$state', '$window', '$q', '$sce', 'cdDojoService', 'alertService',
-        'cdAgreementsService', 'cdUsersService', 'intercomService', 'cdOrganisationsService',
+        'cdAgreementsService', 'cdUsersService', 'cdOrganisationsService',
       function ($rootScope, $translate, usSpinnerService,
         atomicNotifyService, $state, $window, $q, $sce, cdDojoService, alertService,
-        cdAgreementsService, cdUsersService, intercomService, cdOrganisationsService) {
+        cdAgreementsService, cdUsersService, cdOrganisationsService) {
         var ctrl = this;
         ctrl.tabs = [
           {
@@ -98,7 +98,6 @@ angular
             // This should not happen and be caught by the front before submitting
             ctrl.loading = false;
             alertService.showError($translate.instant('Something went wrong while submitting your application, please contact support'));
-            intercomService.show();
           });
         };
         ctrl.actions.save = function () {
@@ -106,10 +105,7 @@ angular
           .then(function (lead) { ctrl.setCharterStatus(ctrl.application.charter); })
           .then(function (lead) {
             if (ctrl.application.dojo.id) {
-              cdDojoService.getUsersDojos({userId: ctrl.userId})
-              .then(function (res) {
-                intercomService.update(_.map(res.data, 'id'));
-              });
+              cdDojoService.getUsersDojos({userId: ctrl.userId});
             }
           })
           .then(function (lead) {
@@ -276,7 +272,6 @@ angular
                 ctrl.userId = ctrl.leads[0].userId;
                 if (!ctrl.orgs || ctrl.orgs.length === 0 ) {
                   alertService.showError($translate.instant('Multiple ongoing lead, please contact support'));
-                  intercomService.show();
                   return $q.reject();
                 }
               }
@@ -351,7 +346,6 @@ angular
           })
           .then(function () {
             ctrl.loading = false;
-            intercomService.InitIntercom();
             // We go to the next invalid step when the application has been previously started
             if (ctrl.leadId) ctrl.goToNextStep();
           });

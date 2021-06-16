@@ -5,7 +5,7 @@
   </div>
   <div class="cd-application-card__info" ng-if="!$ctrl.lead.completed">
     <h3 class="cd-application-card__info-title">{@i18n key="Your application is incomplete"/}</h3>
-    <button ng-click="$ctrl.openIntercom()" class="btn btn-sm btn-secondary">{@i18n key="Contact us if you have a question"/}</button>
+    <a href="mailto:info@coderdojo.com" class="btn btn-sm btn-secondary">{@i18n key="Contact us if you have a question"/}</a>
   </div>
   <cd-application-card-status date="$ctrl.lead.updatedAt" completed="false" lead-id="$ctrl.lead.id" class="cd-application-card__status"></cd-application-card-status>
 </div>

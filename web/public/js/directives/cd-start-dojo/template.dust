@@ -1,7 +1,11 @@
 <div class="cd-banner">
-  <p>{@i18n key="Thank you for your interest in CoderDojo!"/} &nbsp;
-     {@i18n key="The coronavirus pandemic continues to impact all our lives, including how Dojos can run."/} &nbsp;
+  <p>
+    {@i18n key="Thank you for your interest in CoderDojo!"/} &nbsp;
+    {@i18n key="The coronavirus pandemic continues to impact all our lives, including how Dojos can run."/} &nbsp;
     {@i18n key="See"/} <a class="cd-banner-link" href="https://coderdojo.com/ways-to-run/">{@i18n key="our resources and guidance on the creative ways Dojos are running."/}</a> 
+  </p>
+  <p>
+    {@i18n key="If you have any issues or queries about your application, please contact our support team at"/} <a class="cd-banner-link" href="mailto:info@coderdojo.org">info@coderdojo.org</a> 
   </p>
 </div>
 <div ng-show="$ctrl.loading" style="height: 300px; position: relative;">
