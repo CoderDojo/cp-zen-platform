@@ -73,7 +73,7 @@
     "requireindex": "1.1.0",
     "scooter": "3.x",
     "seneca": "0.7.2",
-    "serve-static": "1.4.0",
+    "serve-static": "1.6.5",
     "simple-oauth2": "^3.1.0",
     "sitemap": "^1.13.0",
     "slug": "0.9.1",
