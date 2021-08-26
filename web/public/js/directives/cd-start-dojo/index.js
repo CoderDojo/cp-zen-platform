@@ -181,6 +181,15 @@ angular
           return _.every(validities);
         };
 
+        ctrl.stepIsValid = ctrl.actions.stepIsValid = function () {
+          if(!ctrl.application) {
+            return false
+          }
+          var currentStep = _.find(ctrl.tabs, {state: $state.current.name});
+          var step = ctrl.application[currentStep.name]
+          return !_.isUndefined(step.formValidity) ? step.formValidity : step.isValid
+        };
+
         ctrl.updateTabsStatus = function () {
           _.each(ctrl.application, function (step, key) {
             var index = _.findKey(ctrl.tabs, {name: key});

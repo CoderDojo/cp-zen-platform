@@ -7,6 +7,7 @@
       bindings: {
         save: '=',
         saveVisible: '=',
+        saveDisabled: '=',
         submit: '<',
         submitVisible: '='
       },
