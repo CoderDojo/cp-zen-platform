@@ -4,19 +4,19 @@
   </div>
   <div class="cd-sad-champion__side-form">
     <div class="form-group">
-      <label for="firstName">{@i18n key="First name"/}</label>
+      <label for="firstName">{@i18n key="First name"/}<sup>*</sup></label>
       <input type="text" class="form-control" name="firstName" id="firstName"
         required="required"
         placeholder="{@i18n key="First Name"/}" ng-model="$ctrl.champion.firstName">
     </div>
     <div class="form-group">
-      <label for="lastName">{@i18n key="Last name"/}</label>
+      <label for="lastName">{@i18n key="Last name"/}<sup>*</sup></label>
       <input type="text" class="form-control" name="lastName" id="lastName"
         required="required"
         placeholder="{@i18n key="Last Name"/}" ng-model="$ctrl.champion.lastName">
     </div>
     <div class="form-group">
-      <label for="email">{@i18n key="Personal/Work email address"/}</label>
+      <label for="email">{@i18n key="Personal/Work email address"/}<sup>*</sup></label>
       <input type="text" class="form-control" id="email" readonly=""
         name="email"
         required="required"
@@ -31,14 +31,14 @@
     </div>
     <div ng-show="$ctrl.champion.dob && $ctrl.getAge()" class="cd-sad-champion__side-form-parent">
       <div class="form-group">
-        <label for="parentEmail">{@i18n key="Parent Email address"/}</label>
+        <label for="parentEmail">{@i18n key="Parent Email address"/}<sup>*</sup></label>
         <input type="text" class="form-control" id="parentEmail"
           name="parentEmail"
           ng-required="$ctrl.isKid"
           ng-model="$ctrl.champion.parentEmail" placeholder="{@i18n key="Parent Email address"/}">
       </div>
       <div class="form-group">
-        <label for="parentName">{@i18n key="Parent Name"/}</label>
+        <label for="parentName">{@i18n key="Parent Name"/}<sup>*</sup></label>
         <input type="text" class="form-control" id="parentName"
           name="parentName"
           ng-required="$ctrl.isKid"
@@ -49,7 +49,7 @@
   <div class="cd-sad-champion__bottom-form">
     <h3>{@i18n key="Contact details to help us verify your Dojo"/}</h3>
     <div class="form-group">
-      <label for="phone">{@i18n key="Phone number"/}</label>
+      <label for="phone">{@i18n key="Phone number"/}<sup>*</sup></label>
       <input type="tel" name="phone" id="phone" class="form-control" required ng-model="$ctrl.champion.phone">
         <div ng-messages="$ctrl.championForm.phone.$error" ng-show="$ctrl.championForm.phone.$touched && !$ctrl.championForm.phone.$valid">
           <label class="control-label has-error validationMessage">{@i18n key="Telephone Number is empty"/}</label>
@@ -94,7 +94,7 @@
       </div>
     </div>
     <div class="form-group cd-sad-champion__reference">
-      <label for="reference" class="cd-sad-champion__reference-label">{@i18n key="How did you hear about CoderDojo?"/}</label>
+      <label for="reference" class="cd-sad-champion__reference-label">{@i18n key="How did you hear about CoderDojo?"/}<sup>*</sup></label>
       <div class="col-xs-12 col-md-6 cd-sad-champion__reference-choice">
         <select ng-model="$ctrl.champion.reference" name="reference"
           class="form-control"
