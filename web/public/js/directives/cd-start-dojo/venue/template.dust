@@ -118,7 +118,11 @@
         <div class="cd-simple-flex-grid__flex-1 cd-sad-venue__safeguarding">
           <h3>{@i18n key="Keeping your Dojo safe"/}</h3>
           <p>
-            {@i18n key="To ensure the safety of young people at Dojos, we require a second adult to act as a safeguarding sponsor for your Dojo."/} &nbsp;
+            {@i18n key="To ensure the safety of young people at Dojos,"/} &nbsp;
+            <strong>{@i18n key="we require"/}</strong>&nbsp;
+            {@i18n key="a second adult to act as a"/} &nbsp;
+            <a href="https://help.coderdojo.com/hc/en-us/articles/360054065411-What-is-a-Safeguarding-Sponsor-">{@i18n key="safeguarding sponsor"/}</a>&nbsp;
+            {@i18n key="for your Dojo."/} &nbsp;
             {@i18n key="An appropriate sponsor would be a person holding a manager-level position within a school, library, corporate or non-profit organisation."/} &nbsp;
             {@i18n key="The Dojo sponsor and the Dojo champion cannot be the same person."/} &nbsp;
             {@i18n key="This sponsor will help ensure that your Dojo operates in accordance with our"/}&nbsp;
