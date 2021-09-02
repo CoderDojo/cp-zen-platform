@@ -3,16 +3,19 @@
   <div class="cd-sign-charter__final" ng-show="$ctrl.ngModel">
     <p class="h4"> On the {{ ($ctrl.currentDate || $ctrl.ngModel.agreementDate) | date }}, I, {{ $ctrl.ngModel.fullName }} agreed to the charter.</p>
   </div>
-  <div class="cd-sign-charter__name" ng-if="!$ctrl.isValid">
-    <label>
-      <input type="checkbox" required required-message="'{@i18n key="You must accept the charter"/}'"
-        ng-model="$ctrl.agreed" name="agreed" class="cd-sign-charter__input">
-      {@i18n key="I have read and accepted the above charter"/}
-    </label>
-    <div class="input-group">
-      <input type="text" name="fullName"
+  <div class="cd-sign-charter__sign" ng-if="!$ctrl.isValid">
+    <div class="cd-sign-charter__sign-checkbox">
+      <label>
+        <input type="checkbox" required required-message="'{@i18n key="You must accept the charter"/}'"
+          ng-model="$ctrl.agreed" name="agreed" class="cd-sign-charter__input">
+        {@i18n key="I have read and accepted the above charter"/}<sup>*</sup>
+      </label>
+    </div>
+    <div class="input-group cd-sign-charter__sign-name">
+      <label for="fullName">{@i18n key="Full Name"/}<sup>*</sup></label>
+      <input type="text" required name="fullName"
         ng-model="$ctrl.ngModel.fullName" class="form-control"
-        placeholder="{@i18n key="Full Name"/}"></input>
+        placeholder='{@i18n key="Full Name"/}'>
       <div class="cd-sign-charter__button-group input-group-btn">
         <button class="btn btn-secondary" ng-click="$ctrl.print()"><i class="fa fa-print"> {@i18n key="Print"/}</i></button>
       </div>

@@ -8,6 +8,9 @@
     <div class="cd-sidebar__tab-header">
       <div class="cd-sidebar__header-title h4">{{ $ctrl.tabHeader }}</div>
     </div>
+    <p class="cd-sidebar__header-message" ng-hide="$ctrl.actions.stepIsValid() || $ctrl.actions.isLastTab()">
+      {@i18n key="Please complete all of the required"/}<sup>*</sup>{@i18n key="fields"/}
+    </p>
     <div ng-transclude="actions" class="cd-sidebar__actions" actions="$ctrl.actions"></div>
   </div>
   <div class="cd-sidebar__body" ng-class="{'cd-sidebar--child-state-active': $ctrl.baseState !== $ctrl.currentState}">

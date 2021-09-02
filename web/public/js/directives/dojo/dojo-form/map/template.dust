@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label for="country">{@i18n key="Country"/}</label>
+  <label for="country">{@i18n key="Country"/}<sup>*</sup></label>
   <ui-select name="country" ng-model="$ctrl.ngModel.country" on-select="$ctrl.setCountry($item)" required>
     <ui-select-match placeholder="{@i18n key="Select a country"/}">{{ $select.selected.countryName }}</ui-select-match>
     <ui-select-choices repeat="country in $ctrl.countries | filter: { countryName: $select.search }">
@@ -9,7 +9,7 @@
 </div>
 
 <div class="form-group">
-  <label for="place">{@i18n key="CityTown"/}</label>
+  <label for="place">{@i18n key="CityTown"/}<sup>*</sup></label>
   <ui-select name="place" ng-model="$ctrl.ngModel.place" on-select="$ctrl.setPlace($item)" required ng-disabled="!$ctrl.ngModel.country">
     <ui-select-match placeholder="{@i18n key="Search for or enter your area"/}">{{ $select.selected.nameWithHierarchy }}</ui-select-match>
     <ui-select-choices repeat="place in $ctrl.places" refresh="$ctrl.getPlaces($select)" refresh-delay="500">
@@ -20,7 +20,7 @@
 </div>
 
 <div class="form-group">
-  <label for="address1">{@i18n key="Building name/number and Street Address"/}</label>
+  <label for="address1">{@i18n key="Building name/number and Street Address"/}<sup>*</sup></label>
   <span ng-show="!$ctrl.geoPointSet && !$ctrl.form.address1.$pristine" class="pull-right">
     <i class="fa" ng-class="$ctrl.ngModel.found ? 'fa-check cd-icon--success': 'fa-times cd-icon--danger'"></i>
     {@i18n key="Location not found, please specify on the map"/}

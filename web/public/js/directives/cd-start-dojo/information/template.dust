@@ -3,7 +3,7 @@
     {@i18n key="This information will be used to populate your Dojo's public profile page"/}
   </p>
   <div class="form-group">
-    <label for="name">{@i18n key="Name your Dojo"/}</label>
+    <label for="name">{@i18n key="Name your Dojo"/}<sup>*</sup></label>
     <input type="text" class="form-control" name="name" ng-model="$ctrl.dojo.name"
       placeholder="{@i18n key="Kings Cross, London @ Microsoft"/}"
       cd-dojo-name required></input>
@@ -20,7 +20,7 @@
     <div class="cd-sad-information__time-date cd-simple-flex-grid">
       <div class="cd-sad-information__time-picker-wrapper cd-simple-flex-grid__flex-1" ng-show="$ctrl.dojo.frequency !== 'other'">
         <div class="cd-sad-information__time-picker-description">
-          <label for="day">{@i18n key="When will your Dojo run?"/}</label>
+          <label for="day">{@i18n key="When will your Dojo run?"/}<sup>*</sup></label>
           <p class="help-block">{@i18n key="Help people searching for Dojos to find one that fits their schedule"/}</p>
         </div>
         <div class="cd-sad-information__time-picker-day cd-simple-flex-grid">
@@ -39,8 +39,8 @@
         </div>
       </div>
       <span class="cd-sad-information__time-date-frequency--main cd-simple-flex-grid__flex-1">
-        <label ng-if="$ctrl.dojo.frequency !== 'other'">{@i18n key="How often will your Dojo run?"/}</label>
-        <label ng-if="$ctrl.dojo.frequency === 'other'">{@i18n key="When will your Dojo run?"/}</label>
+        <label ng-if="$ctrl.dojo.frequency !== 'other'">{@i18n key="How often will your Dojo run?"/}<sup>*</sup></label>
+        <label ng-if="$ctrl.dojo.frequency === 'other'">{@i18n key="When will your Dojo run?"/}<sup>*</sup></label>
         <p class="help-block">
           {@i18n key="Each Dojo can choose how often they run whether it be weekly, once every two weeks, or monthly."/}
         </p>
@@ -121,7 +121,7 @@
           placeholder="dojoname@example.com"
           ng-required="$ctrl.dojo.requestEmail == false"
           ng-model="$ctrl.dojo.email"/>
-        <p class="help-block">{@i18n key="It must be different from your personal email."/}</p>
+        <p class="help-block">{@i18n key="It must be different from your personal email."/}<sup>*</sup></p>
       </div>
       <div ng-show="$ctrl.dojo.requestEmail == true" class="cd-sad-information__email-answer">
         <p class="help-block">{@i18n key="You'll receive the credentials once the Dojo has been verified"/}</p>
@@ -130,7 +130,7 @@
   </div>
 
   <div class="form-group">
-    <label for="notes">{@i18n key="Dojo description"/}</label>
+    <label for="notes">{@i18n key="Dojo description"/}<sup>*</sup></label>
     <textarea ng-if="$ctrl.editorOptions" ckeditor="editorOptions"
       ng-model="$ctrl.dojo.notes" id="dojoNotes" class="form-control"
       name="notes"
