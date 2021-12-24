@@ -88,7 +88,7 @@ angular
           .then(function () {
             atomicNotifyService.info(
               $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '\n' +
-              $translate.instant('We will respond to you within 48 hours, so hang tight while we check the information you have submitted.')
+              $translate.instant('We will be in touch with the next steps and look forward to verifying your new Dojo.')
             );
             saveOnStateChange();
             ctrl.loading = false;
