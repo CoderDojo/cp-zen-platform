@@ -1492,24 +1492,24 @@ cp-permissions-plugin@CoderDojo/cp-permissions-plugin#1.0.5:
     async "^2.0.0-rc.5"
     lodash "^4.13.1"
 
-cp-translations@~1.0.156:
-  version "1.0.157"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.157.tgz#3482ce8468f2f78a48d7fa82334d82cc5dd8deb4"
-  integrity sha512-n7L8B7qKt06W6kCs+tUdrZUH/phQQvfjOoEgbEPA9kmzdBvHQG7I2e5L7me6qbCragKWQ5wJKbLhimGiRABeLg==
-
 cp-translations@~1.0.162:
   version "1.0.162"
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.162.tgz#9867a5a4ad5884a58cce1b5a15d9d091b29997a8"
   integrity sha512-Z5DDsCTOf5QkoFXaZ3MZnD6IU97ScfV8i08EMXR7sZoT1NXo1IMMdGJ/jUwrsBjP+Ps6zqzfPP6zPlGM4JEygA==
 
-cp-zen-frontend@^1.0.149:
-  version "1.0.149"
-  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.149.tgz#ba58ef74603a7a00c667e2e3ec3e002d35bdfd03"
-  integrity sha512-i4Sc8oTDTa6gugcOipk4NWAVGZzsx9AwM1DcJAq2ZYnwJPujzTN93SUYcyo8/O4aLQYclGmlQOAYuH1YVF35vg==
+cp-translations@~1.0.164:
+  version "1.0.164"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.164.tgz#2aaf13986b40aee29a6d9956d441c6bf8a8004eb"
+  integrity sha512-2Ct93WB2QJYrx0j+6iZhBCmjqD+GkVuRcQdyxQBZ99oezPq9HlcisQ+wHwjX495YVX3Ab6hFzuWD7Ykv4LkBqQ==
+
+cp-zen-frontend@^1.0.150:
+  version "1.0.150"
+  resolved "https://registry.yarnpkg.com/cp-zen-frontend/-/cp-zen-frontend-1.0.150.tgz#d76c8b346652b442486f0a4b81818de65757f658"
+  integrity sha512-hHCcsp0Mf3k5GM5GjpKcXnTSwApUw1NyRRYRvYY997ggCwnPLpPYdSQnQzr61OQhRuOs7/zVwSJBjuBw0EzQ5A==
   dependencies:
     "@coderdojo/cd-common" "1.1.11"
     bootstrap "^3.4.1"
-    cp-translations "~1.0.156"
+    cp-translations "~1.0.162"
     font-awesome "^4.7.0"
     handlebars "^4.1.0"
     js-cookie "^2.1.4"
