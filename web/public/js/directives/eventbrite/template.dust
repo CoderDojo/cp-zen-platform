@@ -6,7 +6,7 @@
   <div class="col-lg-8">
     <button type="button" class="btn btn-default"
       name="authorizeOAuthEventBrite"
-      ng-click="$ctrl.authorizeOAuthEventBrite()">{{ $ctrl.eventbriteText }}</button>
+      ng-click="$ctrl.getUserOrganizationIds()">{{ $ctrl.eventbriteText }}</button>
     <button type="button" class="btn btn-danger"
       name="deauthorizeOAuthEventBrite" ng-show="$ctrl.dojo.eventbriteConnected"
       ng-click="$ctrl.removeAuthorization()">{@i18n key="Disconnect"/}</button>

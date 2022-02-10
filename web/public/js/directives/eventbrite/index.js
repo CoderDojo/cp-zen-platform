@@ -51,6 +51,10 @@ var cdEventbriteIntegration = {
         genErrorHandler();
       });
     };
+    cdE.getUserOrganizationIds = function () {
+      console.log('This is hitting here');
+      cdE.authorizeOAuthEventBrite()
+    };
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
