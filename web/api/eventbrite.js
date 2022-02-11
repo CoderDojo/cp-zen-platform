@@ -36,6 +36,7 @@ exports.register = function(server, eOptions, next) {
         validate: {
           payload: Joi.object({
             code: Joi.string().required(),
+            // Add organisation ID here
           }),
           params: {
             dojoId: Joi.string()

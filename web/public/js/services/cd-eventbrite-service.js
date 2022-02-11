@@ -15,6 +15,8 @@ function cdEventbriteService(cdApi, $http, $q) {
       return $http.get('https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=' + clientId);
     },
     getOrganizationId: function(token) {
+      // return cdApi.get('users/me/organisations/?token=' + token);
+      console.log(token)
       return $http.get('https://www.eventbriteapi.com/v3/users/me/organizations/?token=' + token);
     }
   };

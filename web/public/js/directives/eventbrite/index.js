@@ -55,10 +55,11 @@ var cdEventbriteIntegration = {
       if (token) {
         cdEventbriteService.getOrganizationId(token)
         .then(function (response) {
-          console.log(response);
+          console.log('RESPONSE', response);
           debugger;
         })
-        .catch(function () {
+        .catch(function (err) {
+          console.log(err)
           genErrorHandler();
         });
       }
@@ -73,7 +74,7 @@ var cdEventbriteIntegration = {
         delete $localStorage.eventbriteDojo;
         var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
-          cdEventbriteService.authorize(cdE.dojoId, {code: token})
+          cdEventbriteService.authorize(cdE.dojoId, {code: token})//add org Id here to data
           .then(function () {
             $state.go('edit-dojo', {id: cdE.dojoId});
             atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);

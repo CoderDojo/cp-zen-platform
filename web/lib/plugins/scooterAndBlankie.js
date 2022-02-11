@@ -10,7 +10,7 @@ exports.register = (server, options, next) => {
         options: {
           childSrc: "'none'",
           connectSrc:
-            "'self' https://*.amazonaws.com https://www.eventbrite.com https://coderdojo.com https://learning-admin.raspberrypi.org https://forums.coderdojo.com",
+            "'self' https://*.amazonaws.com https://www.eventbrite.com https://www.eventbriteapi.com https://coderdojo.com https://learning-admin.raspberrypi.org https://forums.coderdojo.com",
           defaultSrc: "'none'",
           fontSrc: "'self' http://fonts.gstatic.com https://fonts.gstatic.com",
           frameSrc: 'https://www.google.com https://www.youtube.com',
