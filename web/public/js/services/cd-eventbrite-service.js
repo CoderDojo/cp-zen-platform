@@ -3,7 +3,7 @@
 function cdEventbriteService(cdApi, $http, $q) {
   return {
     getPublicToken: function() {
-      return cdApi.get('eventbrite/ptoken');
+      return cdApi.get('eventbrite/ptoken'); //LOOK AT THIS -> cdApi.get talks to cd-eventbrite-service
     },
     authorize: function(dojoId, data) {
       return cdApi.post('dojos/' + dojoId + '/eventbrite/authorisation', data);
@@ -14,8 +14,8 @@ function cdEventbriteService(cdApi, $http, $q) {
     getToken: function(clientId) {
       return $http.get('https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=' + clientId);
     },
-    getOrganizations: function(userId) {
-      return $http.get('https://www.eventbrite.com/v3/users/' + userId + '/organizations/');
+    getOrganizationId: function(token) {
+      return $http.get('https://www.eventbriteapi.com/v3/users/me/organizations/?token=' + token);
     }
   };
 }

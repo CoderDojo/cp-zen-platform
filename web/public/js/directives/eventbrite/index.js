@@ -51,13 +51,22 @@ var cdEventbriteIntegration = {
         genErrorHandler();
       });
     };
-    cdE.getUserOrganizationIds = function () {
-      console.log('This is hitting here');
-      cdE.authorizeOAuthEventBrite()
+    cdE.getOrganizationId = function (token) {
+      if (token) {
+        cdEventbriteService.getOrganizationId(token)
+        .then(function (response) {
+          console.log(response);
+          debugger;
+        })
+        .catch(function () {
+          genErrorHandler();
+        });
+      }
     };
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
+      cdE.getOrganizationId(token);
       cdE.getConnectButtonText();
       if (!_.isUndefined(token)) {
         cdE.saving = true;
@@ -72,6 +81,7 @@ var cdEventbriteIntegration = {
           .catch(function (err) {
             $state.go('my-dojos');
             if (err.status === 403) {
+              console.log(err)
               errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
             }
             atomicNotifyService.warning($translate.instant(errMsg));
