@@ -82,6 +82,21 @@ exports.register = function(server, eOptions, next) {
         },
       },
     },
+    {
+      method: 'GET',
+      path: `${options.basePath}/users/me/organisations`,
+      handler: handlers.actHandlerNeedsUser('list', null, null, { ctrl: 'auth' }),
+      config: {
+        description: 'Get user organisation',
+        tags: ['api', 'dojos', 'eventbrite', 'organisation'],
+        auth: auth.apiUser,
+        plugins: {
+          'hapi-swagger': {
+            responseMessages: [{ code: 200, message: 'OK' }],
+          },
+        },
+      },
+    },
   ]);
   next();
 };
