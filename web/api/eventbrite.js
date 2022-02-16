@@ -35,8 +35,7 @@ exports.register = function(server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({
-            code: Joi.string().required(),
-            orgId: Joi.string().required() // Add organisation ID here
+            code: Joi.string().required()
           }),
           params: {
             dojoId: Joi.string()
@@ -80,6 +79,28 @@ exports.register = function(server, eOptions, next) {
           'hapi-swagger': {
             responseMessages: [{ code: 200, message: 'OK' }],
           },
+        },
+      },
+    },
+    {
+      method: 'GET',
+      path: `${options.basePath}/eventbrite/organisations/{code}`,
+      handler: handlers.actHandlerNeedsUser('getOrganisations', null, null, {
+        ctrl: 'auth',
+      }),
+      config: {
+        description: "list all user's organisations",
+        tags: ['api', 'dojos', 'eventbrite'],
+        auth: auth.apiUser,
+        plugins: {
+          'hapi-swagger': {
+            responseMessages: [{ code: 200, message: 'OK' }],
+          },
+        },
+        validate: {
+          params: {
+            code: Joi.string().required()
+          }
         },
       },
     },
