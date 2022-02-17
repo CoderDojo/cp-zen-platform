@@ -52,42 +52,38 @@ var cdEventbriteIntegration = {
         genErrorHandler();
       });
     };
+    cdE.eventbriteAuthorization = function (orgId, userToken, token) {
+      cdEventbriteService.authorize(cdE.dojoId, orgId, {code: token, userToken: userToken})
+      .then(function (res) {
+        $state.go('edit-dojo', {id: cdE.dojoId});
+        atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
+      })
+      .catch(function (err) {
+        $state.go('my-dojos');
+        if (err.status === 403) {
+          errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
+        }
+        atomicNotifyService.warning($translate.instant(errMsg));
+      });
+    };
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
-      // cdEventbriteService.getOrganisations();
-      // debugger;
       cdE.getConnectButtonText();
+
       if (!_.isUndefined(token)) {
         cdE.saving = true;
         delete $localStorage.eventbriteDojo;
         var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
-          console.log('Before running getOrganisations')
-          console.log('TOKEN', token);
           cdEventbriteService.getOrganisations(token)
           .then((res) => {
-            console.log('RESPONSE', res)
-            debugger;
+            const orgId = res.data.orgId;
+            const userToken = res.data.token;
+            cdE.eventbriteAuthorization(orgId, userToken, token);
           })
           .catch((err) => {
             console.log('ERROR', err)
-            debugger;
-          });
-
-          cdEventbriteService.authorize(cdE.dojoId, {code: token})
-          .then(function (res) {
-            console.log(res);
-            debugger;
-            $state.go('edit-dojo', {id: cdE.dojoId});
-            atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
-          })
-          .catch(function (err) {
-            $state.go('my-dojos');
-            if (err.status === 403) {
-              errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
-            }
-            atomicNotifyService.warning($translate.instant(errMsg));
           });
         } else {
           $state.go('my-dojos');

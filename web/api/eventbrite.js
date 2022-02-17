@@ -20,8 +20,11 @@ exports.register = function(server, eOptions, next) {
     },
     {
       method: 'POST',
-      path: `${options.basePath}/dojos/{dojoId}/eventbrite/authorisation`,
-      handler: handlers.actHandlerNeedsUser('authorize', 'dojoId', null, {
+      path: `${options.basePath}/dojos/{dojoId}/eventbrite/authorisation/{orgId}`,
+      handler: handlers.actHandlerNeedsUser('authorize', [
+        'dojoId',
+        'orgId',
+      ], null, {
         ctrl: 'auth',
       }),
       config: {
@@ -35,12 +38,14 @@ exports.register = function(server, eOptions, next) {
         },
         validate: {
           payload: Joi.object({
-            code: Joi.string().required()
+            code: Joi.string().required(),
+            userToken: Joi.string().required()
           }),
           params: {
             dojoId: Joi.string()
               .uuid()
               .required(),
+            orgId: Joi.string().required()
           },
         },
       },
@@ -62,7 +67,7 @@ exports.register = function(server, eOptions, next) {
         },
         validate: {
           params: {
-            dojoId: Joi.string().required(),
+            dojoId: Joi.string().required()
           },
         },
       },

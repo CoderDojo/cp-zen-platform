@@ -5,8 +5,8 @@ function cdEventbriteService(cdApi, $http, $q) {
     getPublicToken: function() {
       return cdApi.get('eventbrite/ptoken');
     },
-    authorize: function(dojoId, data) {
-      return cdApi.post('dojos/' + dojoId + '/eventbrite/authorisation', data);
+    authorize: function(dojoId, orgId, data) {
+      return cdApi.post('dojos/' + dojoId + '/eventbrite/authorisation/' + orgId, data);
     },
     deauthorize: function(dojoId) {
       return cdApi.delete('dojos/' + dojoId + '/eventbrite/authorisation');
