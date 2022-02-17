@@ -121,7 +121,6 @@ module.exports = function(server, role) {
   }
 
   function actHandler(cmd, param, type, msgDefault) {
-    console.log('Hitting actHandler');
     return function(request, reply) {
       doAct(request, reply, cmd, param, null, type, msgDefault);
     };

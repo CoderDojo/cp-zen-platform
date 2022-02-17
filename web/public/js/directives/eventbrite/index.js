@@ -7,9 +7,9 @@ var cdEventbriteIntegration = {
   bindings: {
     dojo: '=?'
   },
-  controller: ['$window', 'cdEventbriteService', 'cdOrganisationsService', 'alertService', 'atomicNotifyService',
+  controller: ['$window', 'cdEventbriteService', 'alertService', 'atomicNotifyService',
   '$localStorage', '$stateParams', '$state', '$translate',
-  function ($window, cdEventbriteService, cdOrganisationsService, alertService, atomicNotifyService,
+  function ($window, cdEventbriteService, alertService, atomicNotifyService,
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
@@ -22,7 +22,6 @@ var cdEventbriteIntegration = {
 
     cdE.authorizeOAuthEventBrite = function () {
       cdEventbriteService.getPublicToken()
-      // cdOrganisationsService.loadUserOrgs()
       .then(function (response) {
         $localStorage.eventbriteDojo = cdE.dojo.id;
         if (response.data.token) {
@@ -43,28 +42,28 @@ var cdEventbriteIntegration = {
     };
     cdE.removeAuthorization = function () {
       cdEventbriteService.deauthorize(cdE.dojo.id)
-      .then(function () {
-        cdE.dojo.eventbriteConnected = false;
-        atomicNotifyService.info($translate.instant('Your Eventbrite account has been disconnected'));
-        cdE.getConnectButtonText();
-      })
-      .catch(function () {
-        genErrorHandler();
-      });
+        .then(function () {
+          cdE.dojo.eventbriteConnected = false;
+          atomicNotifyService.info($translate.instant('Your Eventbrite account has been disconnected'));
+          cdE.getConnectButtonText();
+        })
+        .catch(function () {
+          genErrorHandler();
+        });
     };
     cdE.eventbriteAuthorization = function (orgId, userToken, token) {
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: token, userToken: userToken})
-      .then(function (res) {
-        $state.go('edit-dojo', {id: cdE.dojoId});
-        atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
-      })
-      .catch(function (err) {
-        $state.go('my-dojos');
-        if (err.status === 403) {
-          errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
-        }
-        atomicNotifyService.warning($translate.instant(errMsg));
-      });
+        .then(function (res) {
+          $state.go('edit-dojo', {id: cdE.dojoId});
+          atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
+        })
+        .catch(function (err) {
+          $state.go('my-dojos');
+          if (err.status === 403) {
+            errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
+          }
+          atomicNotifyService.warning($translate.instant(errMsg));
+        });
     };
     cdE.$onInit = function () {
       var token = $stateParams.code;
@@ -77,14 +76,14 @@ var cdEventbriteIntegration = {
         var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
           cdEventbriteService.getOrganisations(token)
-          .then((res) => {
-            const orgId = res.data.orgId;
-            const userToken = res.data.token;
-            cdE.eventbriteAuthorization(orgId, userToken, token);
-          })
-          .catch((err) => {
-            console.log('ERROR', err)
-          });
+            .then((res) => {
+              const orgId = res.data.orgId;
+              const userToken = res.data.token;
+              cdE.eventbriteAuthorization(orgId, userToken, token);
+            })
+            .catch((err) => {
+              console.log('ERROR', err)
+            });
         } else {
           $state.go('my-dojos');
           atomicNotifyService.warning($translate.instant(errMsg));
