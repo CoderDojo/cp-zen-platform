@@ -13,6 +13,7 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
+
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
       function () {
@@ -36,10 +37,20 @@ var cdEventbriteIntegration = {
         genErrorHandler();
       });
     };
+
     cdE.getConnectButtonText = function () {
       var text = cdE.dojo && cdE.dojo.eventbriteConnected ? 'Reconnect' : 'Connect';
       cdE.eventbriteText = $translate.instant(text);
     };
+
+    cdE.listOrganisationsText = function (organisations) {
+      $state.go('organisations', {id: cdE.dojoId, organisations: organisations});
+      organisations.forEach((org) => {
+        console.log(org);
+      });
+      debugger;
+    };
+
     cdE.removeAuthorization = function () {
       cdEventbriteService.deauthorize(cdE.dojo.id)
         .then(function () {
@@ -51,6 +62,23 @@ var cdEventbriteIntegration = {
           genErrorHandler();
         });
     };
+
+    cdE.eventbriteOrganisations = function (token) {
+      cdEventbriteService.getOrganisations(token)
+        .then((res) => {
+          console.log(res.data.organisations);
+          console.log(res.data.organisations.length);
+          cdE.organisations = true;
+          cdE.listOrganisationsText(res.data.organisations)
+          const orgId = res.data.orgId;
+          const userToken = res.data.token;
+          // cdE.eventbriteAuthorization(orgId, userToken, token);
+        })
+        .catch((err) => {
+          console.log('ERROR', err)
+        });
+    };
+
     cdE.eventbriteAuthorization = function (orgId, userToken, token) {
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: token, userToken: userToken})
         .then(function (res) {
@@ -65,9 +93,11 @@ var cdEventbriteIntegration = {
           atomicNotifyService.warning($translate.instant(errMsg));
         });
     };
+
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
+      cdE.organisations = false;
       cdE.getConnectButtonText();
 
       if (!_.isUndefined(token)) {
@@ -75,15 +105,7 @@ var cdEventbriteIntegration = {
         delete $localStorage.eventbriteDojo;
         var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
-          cdEventbriteService.getOrganisations(token)
-            .then((res) => {
-              const orgId = res.data.orgId;
-              const userToken = res.data.token;
-              cdE.eventbriteAuthorization(orgId, userToken, token);
-            })
-            .catch((err) => {
-              console.log('ERROR', err)
-            });
+          cdE.eventbriteOrganisations(token);
         } else {
           $state.go('my-dojos');
           atomicNotifyService.warning($translate.instant(errMsg));

@@ -375,6 +375,15 @@
           },
           controller: 'edit-dojo-controller'
         })
+        .state("organisations", {
+          url: "/edit-dojo/:id/eventbrite-organisations",
+          parent: 'dashboard',
+          templateUrl: '/dojos/template/eventbrite/organisation-list',
+          params: {
+            pageTitle: 'EventBrite Organisations'
+          },
+          controller: 'edit-dojo-controller'
+        })
         .state("manage-dojo-events", {
           url: "/my-dojos/:dojoId/events",
           parent: 'dashboard',
