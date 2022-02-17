@@ -85,7 +85,7 @@ exports.register = function(server, eOptions, next) {
     {
       method: 'GET',
       path: `${options.basePath}/eventbrite/organisations/{code}`,
-      handler: handlers.actHandlerNeedsUser('getOrganisations', null, null, {
+      handler: handlers.actHandlerNeedsUser('getOrganisations', 'code', null, {
         ctrl: 'auth',
       }),
       config: {
