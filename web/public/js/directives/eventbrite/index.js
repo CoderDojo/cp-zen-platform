@@ -43,11 +43,18 @@ var cdEventbriteIntegration = {
       cdE.eventbriteText = $translate.instant(text);
     };
 
-    cdE.listOrganisationsText = function (organisations) {
-      $state.go('organisations', {id: cdE.dojoId, organisations: organisations});
-      organisations.forEach((org) => {
-        console.log(org);
-      });
+    cdE.getOrganisationsList = function () {
+      if($localStorage.organisations) {
+        console.log('YOYO');
+        console.log($localStorage.organisations);
+
+        cdE.organisations = $localStorage.organisations;
+
+      }
+    };
+
+    cdE.selectedOrganisation = function (id) {
+      console.log(id);
       debugger;
     };
 
@@ -69,9 +76,11 @@ var cdEventbriteIntegration = {
           console.log(res.data.organisations);
           console.log(res.data.organisations.length);
           cdE.organisations = true;
-          cdE.listOrganisationsText(res.data.organisations)
-          const orgId = res.data.orgId;
-          const userToken = res.data.token;
+          $state.go('edit-dojo', {id: cdE.dojoId});
+          $localStorage.organisations = res.data.organisations;
+          // cdE.listOrganisationsText(res.data.organisations)
+          // const orgId = res.data.orgId;
+          // const userToken = res.data.token;
           // cdE.eventbriteAuthorization(orgId, userToken, token);
         })
         .catch((err) => {
@@ -97,8 +106,8 @@ var cdEventbriteIntegration = {
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
-      cdE.organisations = false;
       cdE.getConnectButtonText();
+      cdE.getOrganisationsList();
 
       if (!_.isUndefined(token)) {
         cdE.saving = true;

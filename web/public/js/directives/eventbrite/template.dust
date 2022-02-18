@@ -3,6 +3,17 @@
 </div>
 
 <div class="row cd-input-row" ng-hide="$ctrl.saving">
+  <label class="col-lg-4 cd-form-label1">EventBrite Organisations</label>
+  <div class="col-lg-8">
+    <span class="help-block">Select which EventBrite Organisation to connect with</span>
+    <div ng-repeat="(key, val) in $ctrl.organisations">
+      <button type="button" class="btn btn-default"
+      ng-click="$ctrl.selectedOrganisation(val.id)">{{ val.name }}</button>
+    </div>
+  </div>
+</div>
+
+<div class="row cd-input-row" ng-hide="$ctrl.saving">
   <label class="col-lg-4 cd-form-label1">EventBrite</label>
   <div class="col-lg-8">
     <button type="button" class="btn btn-default"
