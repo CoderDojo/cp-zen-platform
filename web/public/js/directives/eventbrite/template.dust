@@ -2,13 +2,13 @@
   <i class="fa fa-spinner fa-3x"></i>
 </div>
 
-<div class="row cd-input-row" ng-hide="$ctrl.dojo.eventbriteConnected" ng-show="$ctrl.organisations">
+<div class="row cd-input-row" ng-hide="$ctrl.dojo.eventbriteConnected">
   <label class="col-lg-4 cd-form-label1">EventBrite Organisations</label>
   <div class="col-lg-8">
     <span class="help-block">Select which EventBrite Organisation to connect with</span>
     <div ng-repeat="(key, val) in $ctrl.organisations">
       <button type="button" class="btn btn-default"
-      ng-click="$ctrl.selectedOrganisation(val.id)">{{ val.name }}</button>
+      ng-click="$ctrl.eventbriteAuthorization(val.id)">{{ val.name }}</button>
     </div>
   </div>
 </div>

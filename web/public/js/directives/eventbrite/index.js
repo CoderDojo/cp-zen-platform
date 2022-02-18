@@ -13,7 +13,6 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
-    cdE.organisations = false;
 
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
@@ -48,11 +47,6 @@ var cdEventbriteIntegration = {
       cdE.organisations = $localStorage.organisations;
     };
 
-    cdE.selectedOrganisation = function (orgId) {
-      console.log(orgId);
-      cdE.eventbriteAuthorization(orgId);
-    };
-
     cdE.removeAuthorization = function () {
       cdEventbriteService.deauthorize(cdE.dojo.id)
         .then(function () {
@@ -71,7 +65,6 @@ var cdEventbriteIntegration = {
     cdE.eventbriteOrganisations = function (token) {
       cdEventbriteService.getOrganisations(token)
         .then((res) => {
-          cdE.organisations = true;
 
           // TO-DO: This feels messy!
           $localStorage.organisations = res.data.organisations;
@@ -108,7 +101,6 @@ var cdEventbriteIntegration = {
       cdE.getOrganisationsList();
 
       if (!_.isUndefined(token)) {
-        cdE.organisations = false;
         cdE.saving = true;
         delete $localStorage.eventbriteDojo;
         delete $localStorage.organisations;
