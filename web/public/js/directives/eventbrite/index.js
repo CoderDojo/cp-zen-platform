@@ -71,18 +71,15 @@ var cdEventbriteIntegration = {
     cdE.eventbriteOrganisations = function (token) {
       cdEventbriteService.getOrganisations(token)
         .then((res) => {
-          // console.log(res.data.organisations);
-          // console.log(res.data.organisations.length);
           cdE.organisations = true;
-          console.log('getting orgs');
+
+          // TO-DO: This feels messy!
           $localStorage.organisations = res.data.organisations;
           $localStorage.userToken = res.data.token;
           $localStorage.token = token;
+          $localStorage.eventbriteDojo = cdE.dojoId;
+
           $state.go('edit-dojo', {id: cdE.dojoId});
-          // cdE.listOrganisationsText(res.data.organisations)
-          // const orgId = res.data.orgId;
-          // const userToken = res.data.token;
-          // cdE.eventbriteAuthorization(orgId, userToken, token);
         })
         .catch((err) => {
           console.log('ERROR', err)
@@ -90,8 +87,6 @@ var cdEventbriteIntegration = {
     };
 
     cdE.eventbriteAuthorization = function (orgId) {
-      console.log('Finally getting the auth', orgId, $localStorage.token, $localStorage.userToken);
-      console.log('DOJO', cdE.dojoId);
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: $localStorage.token, userToken: $localStorage.userToken})
         .then(function (res) {
           $state.go('edit-dojo', {id: cdE.dojoId});
