@@ -13,6 +13,7 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
+    cdE.organisations = false;
 
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
@@ -44,24 +45,21 @@ var cdEventbriteIntegration = {
     };
 
     cdE.getOrganisationsList = function () {
-      if($localStorage.organisations) {
-        console.log('YOYO');
-        console.log($localStorage.organisations);
-
-        cdE.organisations = $localStorage.organisations;
-
-      }
+      cdE.organisations = $localStorage.organisations;
     };
 
-    cdE.selectedOrganisation = function (id) {
-      console.log(id);
-      debugger;
+    cdE.selectedOrganisation = function (orgId) {
+      console.log(orgId);
+      cdE.eventbriteAuthorization(orgId);
     };
 
     cdE.removeAuthorization = function () {
       cdEventbriteService.deauthorize(cdE.dojo.id)
         .then(function () {
           cdE.dojo.eventbriteConnected = false;
+          delete $localStorage.organisations;
+          delete $localStorage.userToken;
+          delete $localStorage.token;
           atomicNotifyService.info($translate.instant('Your Eventbrite account has been disconnected'));
           cdE.getConnectButtonText();
         })
@@ -73,11 +71,14 @@ var cdEventbriteIntegration = {
     cdE.eventbriteOrganisations = function (token) {
       cdEventbriteService.getOrganisations(token)
         .then((res) => {
-          console.log(res.data.organisations);
-          console.log(res.data.organisations.length);
+          // console.log(res.data.organisations);
+          // console.log(res.data.organisations.length);
           cdE.organisations = true;
-          $state.go('edit-dojo', {id: cdE.dojoId});
+          console.log('getting orgs');
           $localStorage.organisations = res.data.organisations;
+          $localStorage.userToken = res.data.token;
+          $localStorage.token = token;
+          $state.go('edit-dojo', {id: cdE.dojoId});
           // cdE.listOrganisationsText(res.data.organisations)
           // const orgId = res.data.orgId;
           // const userToken = res.data.token;
@@ -88,8 +89,10 @@ var cdEventbriteIntegration = {
         });
     };
 
-    cdE.eventbriteAuthorization = function (orgId, userToken, token) {
-      cdEventbriteService.authorize(cdE.dojoId, orgId, {code: token, userToken: userToken})
+    cdE.eventbriteAuthorization = function (orgId) {
+      console.log('Finally getting the auth', orgId, $localStorage.token, $localStorage.userToken);
+      console.log('DOJO', cdE.dojoId);
+      cdEventbriteService.authorize(cdE.dojoId, orgId, {code: $localStorage.token, userToken: $localStorage.userToken})
         .then(function (res) {
           $state.go('edit-dojo', {id: cdE.dojoId});
           atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
@@ -110,8 +113,10 @@ var cdEventbriteIntegration = {
       cdE.getOrganisationsList();
 
       if (!_.isUndefined(token)) {
+        cdE.organisations = false;
         cdE.saving = true;
         delete $localStorage.eventbriteDojo;
+        delete $localStorage.organisations;
         var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
           cdE.eventbriteOrganisations(token);
