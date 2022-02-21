@@ -8,9 +8,9 @@ var cdEventbriteIntegration = {
     dojo: '=?'
   },
   controller: ['$window', 'cdEventbriteService', 'alertService', 'atomicNotifyService',
-  '$localStorage', '$stateParams', '$state', '$translate',
+  '$localStorage', '$stateParams', '$state', '$translate', '$anchorScroll', '$location', '$timeout',
   function ($window, cdEventbriteService, alertService, atomicNotifyService,
-  $localStorage, $stateParams, $state, $translate) {
+  $localStorage, $stateParams, $state, $translate, $anchorScroll, $location, $timeout) {
     var cdE = this;
     cdE.saving = false;
 
@@ -67,13 +67,12 @@ var cdEventbriteIntegration = {
       cdEventbriteService.getOrganisations(token)
         .then((res) => {
 
-          // TO-DO: This feels messy!
           $localStorage.organisations = res.data.organisations;
           $localStorage.userToken = res.data.token;
           $localStorage.token = token;
           $localStorage.eventbriteDojo = cdE.dojoId;
 
-          $state.go('edit-dojo', {id: cdE.dojoId});
+          $state.go('edit-dojo', {id: cdE.dojoId, '#': 'contact'});
           atomicNotifyService.info($translate.instant('Please select which Eventbrite organisation to connect with'));
         })
         .catch((err) => {
@@ -85,7 +84,7 @@ var cdEventbriteIntegration = {
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: $localStorage.token, userToken: $localStorage.userToken})
         .then(function (res) {
           $state.go('edit-dojo', {id: cdE.dojoId}, {reload: true});
-          atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
+          atomicNotifyService.success($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
         })
         .catch(function (err) {
           $state.go('my-dojos');
@@ -96,10 +95,24 @@ var cdEventbriteIntegration = {
         });
     };
 
+    cdE.anchorScrollToHash = function (locationHash) {
+      $timeout(() => {
+        const regex = /\#(.*)/;
+        const hash = regex.exec(locationHash);
+
+        $location.hash(hash[1]);
+        $anchorScroll();
+      }, 500);
+    };
+
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
       cdE.organisationsConnected = $localStorage.organisations ? true : false;
+
+      if (window.location.hash) {
+        cdE.anchorScrollToHash(window.location.hash)
+      }
 
       cdE.getConnectButtonText();
       cdE.getOrganisationsList();
