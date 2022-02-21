@@ -13,6 +13,7 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate, $anchorScroll, $location, $timeout) {
     var cdE = this;
     cdE.saving = false;
+    var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
 
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
@@ -82,14 +83,14 @@ var cdEventbriteIntegration = {
 
     cdE.eventbriteAuthorization = function (orgId) {
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: $localStorage.token, userToken: $localStorage.userToken})
-        .then(function (res) {
+        .then(function () {
           $state.go('edit-dojo', {id: cdE.dojoId}, {reload: true});
           atomicNotifyService.success($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
         })
         .catch(function (err) {
           $state.go('my-dojos');
           if (err.status === 403) {
-            var errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
+            errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
           }
           atomicNotifyService.warning($translate.instant(errMsg));
         });
@@ -120,7 +121,6 @@ var cdEventbriteIntegration = {
         cdE.saving = true;
         delete $localStorage.eventbriteDojo;
         delete $localStorage.organisations;
-        var errMsg = 'There was a problem connecting your account to Eventbrite. Please make sure you are not using private browsing and try again. If this error appears again contact info@coderdojo.com and we will try to help you.';
         if (cdE.dojoId) {
           cdE.eventbriteOrganisations(token);
         } else {
