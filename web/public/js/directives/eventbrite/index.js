@@ -74,6 +74,7 @@ var cdEventbriteIntegration = {
           $localStorage.eventbriteDojo = cdE.dojoId;
 
           $state.go('edit-dojo', {id: cdE.dojoId});
+          atomicNotifyService.info($translate.instant('Please select which Eventbrite organisation to connect with'));
         })
         .catch((err) => {
           console.log('ERROR', err)
@@ -100,7 +101,6 @@ var cdEventbriteIntegration = {
       cdE.dojoId = $localStorage.eventbriteDojo;
       cdE.organisationsConnected = $localStorage.organisations ? true : false;
 
-      console.log('orgsConnected:', cdE.organisationsConnected);
       cdE.getConnectButtonText();
       cdE.getOrganisationsList();
 
