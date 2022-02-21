@@ -13,8 +13,6 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
-    console.log(cdE.organisations);
-    console.log($localStorage.organisations);
 
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
@@ -85,7 +83,7 @@ var cdEventbriteIntegration = {
     cdE.eventbriteAuthorization = function (orgId) {
       cdEventbriteService.authorize(cdE.dojoId, orgId, {code: $localStorage.token, userToken: $localStorage.userToken})
         .then(function (res) {
-          $state.go('edit-dojo', {id: cdE.dojoId});
+          $state.go('edit-dojo', {id: cdE.dojoId}, {reload: true});
           atomicNotifyService.info($translate.instant('Your Eventbrite account has been successfully connected'), 5000);
         })
         .catch(function (err) {
