@@ -61,7 +61,7 @@ var cdEventbriteIntegration = {
 
     cdE.eventbriteOrganisations = function (token) {
       cdEventbriteService.getOrganisations(token)
-        .then((res) => {
+        .then(function(res) {
 
           $localStorage.userToken = res.data.token;
           $localStorage.token = token;
@@ -75,7 +75,7 @@ var cdEventbriteIntegration = {
             cdE.eventbriteAuthorization(res.data.organisations[0].id);
           }
         })
-        .catch(() => {
+        .catch(function() {
           genErrorHandler();
         });
     };
@@ -89,16 +89,16 @@ var cdEventbriteIntegration = {
         .catch(function (err) {
           $state.go('my-dojos');
           if (err.status === 403) {
-            errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
+            var errMsg = 'You are trying to use an Eventbrite subuser account to connect your Dojo. Unfortunately we only support connecting a Dojo to an Eventbrite account which manages a single Dojo. If you need help please contact info@coderdojo.com.';
           }
           atomicNotifyService.warning($translate.instant(errMsg));
         });
     };
 
     cdE.anchorScrollToHash = function (locationHash) {
-      $timeout(() => {
-        const regex = /\#(.*)/;
-        const hash = regex.exec(locationHash);
+      $timeout(function() {
+        var regex = /\#(.*)/;
+        var hash = regex.exec(locationHash);
 
         $location.hash(hash[1]);
         $anchorScroll();
