@@ -13,6 +13,8 @@ var cdEventbriteIntegration = {
   $localStorage, $stateParams, $state, $translate) {
     var cdE = this;
     cdE.saving = false;
+    console.log(cdE.organisations);
+    console.log($localStorage.organisations);
 
     var genErrorHandler = function () {
       alertService.showError($translate.instant('There was an error on this page. Our technical staff have been notified'),
@@ -51,6 +53,7 @@ var cdEventbriteIntegration = {
       cdEventbriteService.deauthorize(cdE.dojo.id)
         .then(function () {
           cdE.dojo.eventbriteConnected = false;
+          cdE.organisationsConnected = false;
           delete $localStorage.organisations;
           delete $localStorage.userToken;
           delete $localStorage.token;
@@ -97,6 +100,9 @@ var cdEventbriteIntegration = {
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
+      cdE.organisationsConnected = $localStorage.organisations ? true : false;
+
+      console.log('orgsConnected:', cdE.organisationsConnected);
       cdE.getConnectButtonText();
       cdE.getOrganisationsList();
 
