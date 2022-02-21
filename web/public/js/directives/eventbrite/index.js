@@ -63,13 +63,20 @@ var cdEventbriteIntegration = {
       cdEventbriteService.getOrganisations(token)
         .then((res) => {
 
-          $localStorage.organisations = res.data.organisations;
           $localStorage.userToken = res.data.token;
           $localStorage.token = token;
           $localStorage.eventbriteDojo = cdE.dojoId;
 
-          $state.go('edit-dojo', {id: cdE.dojoId, '#': 'contact'});
-          atomicNotifyService.info($translate.instant('Please select which Eventbrite organisation to connect with'));
+          if (res.data.organisations.length > 1) {
+            $localStorage.organisations = res.data.organisations;
+
+            $state.go('edit-dojo', {id: cdE.dojoId, '#': 'contact'});
+            atomicNotifyService.info($translate.instant('Please select which Eventbrite organisation to connect with'));
+          } else {
+            console.log(res);
+            debugger;
+          }
+
         })
         .catch((err) => {
           console.log('ERROR', err)
