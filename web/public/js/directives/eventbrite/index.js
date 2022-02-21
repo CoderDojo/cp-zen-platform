@@ -69,17 +69,14 @@ var cdEventbriteIntegration = {
 
           if (res.data.organisations.length > 1) {
             $localStorage.organisations = res.data.organisations;
-
             $state.go('edit-dojo', {id: cdE.dojoId, '#': 'contact'});
             atomicNotifyService.info($translate.instant('Please select which Eventbrite organisation to connect with'));
           } else {
-            console.log(res);
-            debugger;
+            cdE.eventbriteAuthorization(res.data.organisations[0].id);
           }
-
         })
-        .catch((err) => {
-          console.log('ERROR', err)
+        .catch(() => {
+          genErrorHandler();
         });
     };
 
