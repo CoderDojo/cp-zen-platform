@@ -43,10 +43,6 @@ var cdEventbriteIntegration = {
       cdE.eventbriteText = $translate.instant(text);
     };
 
-    cdE.getOrganisationsList = function () {
-      cdE.organisations = $localStorage.organisations;
-    };
-
     cdE.removeAuthorization = function () {
       cdEventbriteService.deauthorize(cdE.dojo.id)
         .then(function () {
@@ -108,14 +104,13 @@ var cdEventbriteIntegration = {
     cdE.$onInit = function () {
       var token = $stateParams.code;
       cdE.dojoId = $localStorage.eventbriteDojo;
-      cdE.organisationsConnected = $localStorage.organisations ? true : false;
+      cdE.organisations = $localStorage.organisations;
+      cdE.organisationsConnected = cdE.organisations ? true : false;
+      cdE.getConnectButtonText();
 
       if (window.location.hash) {
         cdE.anchorScrollToHash(window.location.hash)
       }
-
-      cdE.getConnectButtonText();
-      cdE.getOrganisationsList();
 
       if (!_.isUndefined(token)) {
         cdE.saving = true;
