@@ -3,7 +3,7 @@
 </div>
 
 <div class="row cd-input-row" ng-show="$ctrl.organisationsConnected && !$ctrl.dojo.eventbriteConnected">
-  <label class="col-lg-4 cd-form-label1">EventBrite Organisations</label>
+  <label class="col-lg-4 cd-form-label1">{@i18n key="EventBrite Organisations"/}</label>
   <div class="col-lg-8">
     <button 
       type="button"
@@ -13,7 +13,7 @@
       ng-click="$ctrl.eventbriteAuthorization(val.id)">
       {{ val.name }}
     </button>
-    <span class="help-block">Select which EventBrite Organisation to connect with</span>
+    <span class="help-block">{@i18n key="Select which EventBrite Organisation to connect with"/}</span>
   </div>
 </div>
 
