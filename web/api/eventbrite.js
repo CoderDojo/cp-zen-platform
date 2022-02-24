@@ -20,8 +20,11 @@ exports.register = function(server, eOptions, next) {
     },
     {
       method: 'POST',
-      path: `${options.basePath}/dojos/{dojoId}/eventbrite/authorisation`,
-      handler: handlers.actHandlerNeedsUser('authorize', 'dojoId', null, {
+      path: `${options.basePath}/dojos/{dojoId}/eventbrite/authorisation/{orgId}`,
+      handler: handlers.actHandlerNeedsUser('authorize', [
+        'dojoId',
+        'orgId',
+      ], null, {
         ctrl: 'auth',
       }),
       config: {
@@ -36,11 +39,13 @@ exports.register = function(server, eOptions, next) {
         validate: {
           payload: Joi.object({
             code: Joi.string().required(),
+            userToken: Joi.string().required()
           }),
           params: {
             dojoId: Joi.string()
               .uuid()
               .required(),
+            orgId: Joi.string().required()
           },
         },
       },
@@ -62,7 +67,7 @@ exports.register = function(server, eOptions, next) {
         },
         validate: {
           params: {
-            dojoId: Joi.string().required(),
+            dojoId: Joi.string().required()
           },
         },
       },
@@ -79,6 +84,28 @@ exports.register = function(server, eOptions, next) {
           'hapi-swagger': {
             responseMessages: [{ code: 200, message: 'OK' }],
           },
+        },
+      },
+    },
+    {
+      method: 'GET',
+      path: `${options.basePath}/eventbrite/organisations/{code}`,
+      handler: handlers.actHandlerNeedsUser('getOrganisations', 'code', null, {
+        ctrl: 'auth',
+      }),
+      config: {
+        description: "list all user's organisations",
+        tags: ['api', 'dojos', 'eventbrite'],
+        auth: auth.apiUser,
+        plugins: {
+          'hapi-swagger': {
+            responseMessages: [{ code: 200, message: 'OK' }],
+          },
+        },
+        validate: {
+          params: {
+            code: Joi.string().required()
+          }
         },
       },
     },
