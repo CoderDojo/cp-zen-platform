@@ -10,11 +10,11 @@ jobs:
           EVENTS_SERVICE: events2
     steps:
       - checkout
-      - run:
-        name: Use secure GitHub URLs
-        command: git config --global url."git@github.com:".insteadOf git://github.com/
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Use secure GitHub URLs
+          command: git config --global url."git@github.com:".insteadOf git://github.com/
       - run:
           name: Install Dependencies
           command: yarn
