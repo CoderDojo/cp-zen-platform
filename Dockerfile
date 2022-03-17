@@ -9,5 +9,6 @@ RUN yarn && \
     yarn build && \
     apk del make gcc g++ python && \
     rm -rf /tmp/* /root/.npm /root/.node-gyp
+RUN git config --global url."git@github.com:".insteadOf git://github.com/
 EXPOSE 8000
 CMD ["yarn", "start"]
