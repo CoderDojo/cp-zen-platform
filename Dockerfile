@@ -1,6 +1,6 @@
 FROM node:8-alpine
 MAINTAINER butlerx <butlerx@notthe.cloud>
-RUN apk add --update git make gcc g++ python && \
+RUN apk add --update git make gcc g++ python openssh && \
     mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY . /usr/src/app/
