@@ -1,11 +1,4 @@
 <div ng-if="!editMode && !publicChampion && !publicMode && !hideGeneralInfoBlock()" class="cd-profile__contact">
-
-  <div class="row">
-    <div ng-if="profile.formattedDateOfBirth" class="col-xs-12">
-      <b><i class="fa fa-calendar"></i>{@i18n key="Date of Birth"/}</b>
-      <div ng-bind="::profile.formattedDateOfBirth"></div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-xs-12" ng-if="profile.gender">
       <b><i class="fa fa-genderless"></i>{@i18n key="Gender"/}</b>
