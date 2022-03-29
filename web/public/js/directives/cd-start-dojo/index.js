@@ -87,8 +87,8 @@
             return cdDojoService.submitDojoLead(ctrl.leadId, lead)
               .then(function () {
                 atomicNotifyService.info(
-                  $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '\n' +
-                  $translate.instant('Keeping young people safe in your Dojo is vital. You should complete our <a target=\"_blank\" href=\"https://projects.raspberrypi.org/en/projects/safeguarding-module\">safeguarding e-learning module</a> at least once every three years. It explains how safeguarding principles are applied in Dojos. Make sure you log in before starting to receive a certificate on completion of the thirty-minute training.') + '\n' +
+                  $translate.instant('Congratulations! Your Dojo application is being reviewed by a member of the CoderDojo Foundation team.') + '\n\n' +
+                  $translate.instant('Keeping young people safe in your Dojo is vital. You should complete our safeguarding e-learning module at least once every three years: https://projects.raspberrypi.org/en/projects/safeguarding-module. It explains how safeguarding principles are applied in Dojos. Make sure you log in before starting to receive a certificate on completion of the thirty-minute training.') + '\n\n' +
                   $translate.instant("We will be in touch with the next steps of your application and further information about the safeguarding module if you haven't taken it recently.")
                 );
                 saveOnStateChange();
