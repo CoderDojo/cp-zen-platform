@@ -1497,10 +1497,10 @@ cp-translations@~1.0.164:
   resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.164.tgz#2aaf13986b40aee29a6d9956d441c6bf8a8004eb"
   integrity sha512-2Ct93WB2QJYrx0j+6iZhBCmjqD+GkVuRcQdyxQBZ99oezPq9HlcisQ+wHwjX495YVX3Ab6hFzuWD7Ykv4LkBqQ==
 
-cp-translations@~1.0.165:
-  version "1.0.165"
-  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.165.tgz#8f17472d0d7fdec9d9820ae6a137fef87c977712"
-  integrity sha512-Cu055CrC0FsnSxwvWcBG3cgzzaE8gMaqbXQwBz9tAEMnefPHv1P+aKulAdAgjk6cgwQEJeeRrlMBp9vI1uNSNg==
+cp-translations@~1.0.167:
+  version "1.0.167"
+  resolved "https://registry.yarnpkg.com/cp-translations/-/cp-translations-1.0.167.tgz#93755d9eafc15bfedb0394d2852542f2dc08fbba"
+  integrity sha512-EvV6F06SdZw8gLUPqrXYB5KuEz1zb6zogbVuif+7vUT+Ivh5T8aRIZEizoYG0l0B9SusqxGKxgnuEOejRDhvkg==
 
 cp-zen-frontend@^1.0.152:
   version "1.0.152"
