@@ -31,10 +31,10 @@
     </div>
     <ul class="cd-menu__second-row">
       <li><a href="https://coderdojo.com/about/">{@i18n key="About"/}</a></li>
-      <li><a href="https://coderdojo.com/attend-a-dojo/">{@i18n key="Attend a Dojo"/}</a></li>
+      <li><a href="https://coderdojo.com/find/">{@i18n key="Attend a Dojo"/}</a></li>
       <li><a href="https://coderdojo.com/volunteer/">{@i18n key="Volunteer"/}</a></li>
       <li><a href="https://coderdojo.com/start-a-dojo/">{@i18n key="Create a Dojo"/}</a></li>
-      <li><a href="https://coderdojo.com/resources/">{@i18n key="Resources"/}</a></li>
+      <li><a href="https://coderdojo.com/session-resources/">{@i18n key="Resources"/}</a></li>
       <li><a href="https://coderdojo.com/news/">{@i18n key="News"/}</a></li>
       <li class="cd-menu__dropdown">
         <span>
@@ -102,10 +102,10 @@
             </div>
           </li>
           <li><a href="https://coderdojo.com/about/">{@i18n key="About"/}</a></li>
-          <li><a href="https://coderdojo.com/attend-a-dojo/">{@i18n key="Attend a Dojo"/}</a></li>
+          <li><a href="https://coderdojo.com/find/">{@i18n key="Attend a Dojo"/}</a></li>
           <li><a href="https://coderdojo.com/volunteer/">{@i18n key="Volunteer"/}</a></li>
           <li><a href="https://coderdojo.com/start-a-dojo/">{@i18n key="Create a Dojo"/}</a></li>
-          <li><a href="https://coderdojo.com/resources/">{@i18n key="Resources"/}</a></li>
+          <li><a href="https://coderdojo.com/session-resources/">{@i18n key="Resources"/}</a></li>
           <li><a href="https://coderdojo.com/news/">{@i18n key="News"/}</a></li>
           <li>
             <span>
