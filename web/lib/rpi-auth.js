@@ -42,13 +42,6 @@ function getLogoutRedirectUri() {
   return `${profileServer}${logoutPath}?${params}`;
 }
 
-function getRegisterRedirectUri() {
-  const params = new URLSearchParams();
-  params.set('brand', brand);
-  params.set('returnTo', `${homeServer}${loginPath}`);
-  return `${profileServer}${profileSignupPath}?${params}`;
-}
-
 function getEditRedirectUri() {
   const params = new URLSearchParams();
   params.set('brand', brand);
@@ -125,7 +118,6 @@ module.exports = {
   decodeIdToken,
   getRedirectUri,
   getIdToken,
-  getRegisterRedirectUri,
   getLogoutRedirectUri,
   rpiZenAccountPassword,
   getEditRedirectUri,
