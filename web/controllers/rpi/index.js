@@ -6,7 +6,6 @@ const Boom = require('boom');
 const { URLSearchParams } = require('url');
 const {
   getRedirectUri,
-  getRegisterRedirectUri,
   getEditRedirectUri,
   getLogoutRedirectUri,
   getIdToken,
