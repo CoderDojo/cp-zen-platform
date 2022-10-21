@@ -12,7 +12,6 @@ const rpiZenAccountPassword = process.env.RPI_ZEN_ACCOUNT_PWORD;
 
 const profileOauthPath = '/oauth2/auth';
 const profileTokenPath = '/oauth2/token';
-const profileSignupPath = '/signup';
 const profileEditPath = '/profile/edit';
 const logoutPath = '/logout';
 const loginPath = '/login';
@@ -40,13 +39,6 @@ function getLogoutRedirectUri() {
   const params = new URLSearchParams();
   params.set('returnTo', homeServer);
   return `${profileServer}${logoutPath}?${params}`;
-}
-
-function getRegisterRedirectUri() {
-  const params = new URLSearchParams();
-  params.set('brand', brand);
-  params.set('returnTo', `${homeServer}${loginPath}`);
-  return `${profileServer}${profileSignupPath}?${params}`;
 }
 
 function getEditRedirectUri() {
@@ -125,7 +117,6 @@ module.exports = {
   decodeIdToken,
   getRedirectUri,
   getIdToken,
-  getRegisterRedirectUri,
   getLogoutRedirectUri,
   rpiZenAccountPassword,
   getEditRedirectUri,

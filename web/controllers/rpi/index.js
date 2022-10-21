@@ -6,7 +6,6 @@ const Boom = require('boom');
 const { URLSearchParams } = require('url');
 const {
   getRedirectUri,
-  getRegisterRedirectUri,
   getEditRedirectUri,
   getLogoutRedirectUri,
   getIdToken,
@@ -26,9 +25,7 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
   return `/?${errorUrlQueryParams}`;
 }
 
-function handleRPILogin(request, reply) {
-  let redirectQueryParams = {};
-  if (request.query.mgrt) redirectQueryParams = { mgrt: request.query.mgrt };
+function handleRPILogin(request, reply, redirectQueryParams = {}) {
   const state = crypto.randomBytes(20).toString('hex');
   setRpiStateCookie(reply, { state });
   const redirectUri = getRedirectUri(state, redirectQueryParams);
@@ -57,8 +54,8 @@ function handleRPIRegister(request, reply) {
   if (session && session.token) {
     return reply.redirect('/');
   }
-  const redirectUri = getRegisterRedirectUri();
-  reply.redirect(redirectUri);
+
+  handleRPILogin(request, reply, { login_options: 'force_signup' })
 }
 
 function handleRPIEdit(request, reply) {
