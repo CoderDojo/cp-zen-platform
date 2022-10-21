@@ -57,7 +57,13 @@ function handleRPIRegister(request, reply) {
   if (session && session.token) {
     return reply.redirect('/');
   }
-  const redirectUri = getRegisterRedirectUri();
+  
+  let redirectQueryParams = {};
+  if (request.query.mgrt) redirectQueryParams = { mgrt: request.query.mgrt};
+  redirectQueryParams['login_options'] = 'force_signup';
+  const state = crypto.randomBytes(20).toString('hex');
+  setRpiStateCookie(reply, { state });
+  const redirectUri = getRedirectUri(state, redirectQueryParams);
   reply.redirect(redirectUri);
 }
 
