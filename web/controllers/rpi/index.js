@@ -25,9 +25,7 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
   return `/?${errorUrlQueryParams}`;
 }
 
-function handleRPILogin(request, reply) {
-  let redirectQueryParams = {};
-  if (request.query.mgrt) redirectQueryParams = { mgrt: request.query.mgrt };
+function handleRPILogin(request, reply, redirectQueryParams = {}) {
   const state = crypto.randomBytes(20).toString('hex');
   setRpiStateCookie(reply, { state });
   const redirectUri = getRedirectUri(state, redirectQueryParams);
@@ -56,14 +54,8 @@ function handleRPIRegister(request, reply) {
   if (session && session.token) {
     return reply.redirect('/');
   }
-  
-  let redirectQueryParams = {};
-  if (request.query.mgrt) redirectQueryParams = { mgrt: request.query.mgrt};
-  redirectQueryParams['login_options'] = 'force_signup';
-  const state = crypto.randomBytes(20).toString('hex');
-  setRpiStateCookie(reply, { state });
-  const redirectUri = getRedirectUri(state, redirectQueryParams);
-  reply.redirect(redirectUri);
+
+  handleRPILogin(request, reply, { login_options: 'force_signup' })
 }
 
 function handleRPIEdit(request, reply) {
