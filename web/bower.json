@@ -54,7 +54,7 @@
     "angular-dynamic-locale": "0.1.32",
     "angularjs-dropdown-multiselect": "https://github.com/CoderDojo/angularjs-dropdown-multiselect.git#1.6.0",
     "angular-socialshare": "https://github.com/720kb/angular-socialshare.git#2.3.3",
-    "google-maps-utility-library-v3": "c5d65821ee3241460090a159bc712ecbeac985e3",
+    "google-maps-utility-library-v3": "https://github.com/nmccready/google-maps-utility-library-v3-markerwithlabel.git#master",
     "ngGeolocation": ">=0.0.2",
     "angular-google-analytics": "~1.1.7",
     "angular-aria": "1.3.x",
