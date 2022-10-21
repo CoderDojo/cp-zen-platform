@@ -12,7 +12,6 @@ const rpiZenAccountPassword = process.env.RPI_ZEN_ACCOUNT_PWORD;
 
 const profileOauthPath = '/oauth2/auth';
 const profileTokenPath = '/oauth2/token';
-const profileSignupPath = '/signup';
 const profileEditPath = '/profile/edit';
 const logoutPath = '/logout';
 const loginPath = '/login';
