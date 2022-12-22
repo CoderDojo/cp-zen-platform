@@ -58,7 +58,7 @@
     "isemail": "3.x",
     "jed": "1.0.2",
     "joi": "10.x",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "less": "2.7.1",
     "locale": "0.1.0",
     "localizr": "0.1.0",
