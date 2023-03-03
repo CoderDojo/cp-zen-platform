@@ -5,9 +5,9 @@
       <p>{@i18n key="Oops! This is not the page you are looking for."/}</p>
       <p>{@i18n key="Maybe you'd like to check out some of the following fun sections of our site:"/}</p>
       <ul>
-        <li><a href="http://zen.coderdojo.com">{@i18n key="Find your local Dojo"/}</a></li>
-        <li><a href="http://forums.coderdojo.com">{@i18n key="Community Forums"/}</a></li>
-        <li><a href="https://coderdojo.com/news/">{@i18n key="CoderDojo community news"/}</a></li>
+        <li><a href="https://coderdojo.com/find">{@i18n key="Find your local Dojo"/}</a></li>
+        <li><a href="https://help.coderdojo.com/">{@i18n key="Help Center"/}</a></li>
+        <li><a href="https://coderdojo.com/news">{@i18n key="CoderDojo community news"/}</a></li>
       </ul>
     </div>
   </div>
