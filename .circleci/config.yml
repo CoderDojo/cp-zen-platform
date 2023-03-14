@@ -83,7 +83,9 @@ workflows:
     jobs:
       - build
       - deploy:
-          context: bastion-cluster-access
+          context:
+            - docker-hub
+            - bastion-cluster-access
           requires:
             - build
           filters:
