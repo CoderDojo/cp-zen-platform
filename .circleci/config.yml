@@ -83,10 +83,10 @@ workflows:
     jobs:
       - build
       - deploy:
+          context: bastion-cluster-access
           requires:
             - build
           filters:
             branches:
               only:
                 - master
-                - staging
