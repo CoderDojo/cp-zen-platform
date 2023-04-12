@@ -5,6 +5,7 @@ const Boom = require('boom');
 
 module.exports = function(server, role) {
   function checkPerms(request, act, callback) {
+    console.log("IN HANDLERS CHECK PERMS I AM");
     //  TODO : return a token instead to ensure that there is no possible bypass of cp-zen
     const base = ['role', 'zenHostname', 'locality', 'user', 'cmd'];
     const msg = _.pick(act, base);
@@ -15,6 +16,7 @@ module.exports = function(server, role) {
   }
 
   function callAct(request, reply, msg, type) {
+    console.log("IN HANDLERS CALL ACT I AM");
     request.seneca.act(msg, (err, resp) => {
       if (err) return reply(Boom.badImplementation(err));
       let code = 200;
@@ -40,6 +42,17 @@ module.exports = function(server, role) {
 
   function doAct(request, reply, cmd, param, user, type, msgDefault) {
     let msg = { cmd, role, locality: server.methods.locality(request) };
+    console.log("\n-------------------------------------------\n")
+    console.log("IN HANDLERS DO ACT I AM" );
+    console.log("CMD: ", cmd );
+    console.log("ROLE", role );
+    console.log("USER: ", user );
+    console.log("param: ", param );
+    console.log("type: ", type );
+    console.log("msgDefault: ", msgDefault );
+    console.log("\n-------------------------------------------\n")
+
+
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
     const covered = [
       'cd-users',

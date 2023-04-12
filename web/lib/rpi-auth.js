@@ -60,15 +60,18 @@ function getRedirectUri(state, queryParams = {}) {
 }
 
 function getIdToken(code) {
+  console.log("\n\nHERE IS getIdToken. CODE:", code);
   return oauth2Rpi.authorizationCode
     .getToken({ code, redirect_uri: `${homeServer}${callbackPath}` })
     .then(function(result) {
+      console.log("OMG RESULT: ", result)
       const tokenResult = oauth2Rpi.accessToken.create(result);
       return tokenResult && tokenResult.token && tokenResult.token.id_token;
     });
 }
 
 function decodeIdToken(idToken) {
+  console.log("\n\nHERE IS decodeIdToken:", idToken);
   return jwt.decode(idToken);
 }
 

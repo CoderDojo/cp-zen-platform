@@ -10,6 +10,7 @@ const request = (
 ) =>
   mastermind([
     async (req, reply, next) => {
+      console.log("mastermind request is: ", req);
       const dojoId = req.params.id;
       const userType = req.payload.userType;
       const userId = req.user.user.id;
@@ -21,6 +22,7 @@ const request = (
       next();
     },
     async (req, reply) => {
+      console.log("mastermind 2 request is: ", req);
       const dojo = await Dojos.load(req.params.id, {
         fields: 'id,name,email',
         related: 'owner',

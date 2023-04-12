@@ -669,6 +669,13 @@ boom@0.4.x:
   dependencies:
     hoek "0.9.x"
 
+boom@2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/boom/-/boom-2.9.0.tgz#a54b7fd2fee477d351bf9e371680cbea67f12715"
+  integrity sha512-JI8F10X9frXXqjIlTDgXb74OOq2iZgHROk/WvVL/zQziuTJD/M6CMuEgdtptUmXDQsFITJdL9bGr+tiFI7zuTg==
+  dependencies:
+    hoek "2.x.x"
+
 boom@2.x.x, boom@^2.7.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -681,9 +688,10 @@ boom@3.x.x:
   dependencies:
     hoek "4.x.x"
 
-boom@4.x.x:
+boom@4.x.x, boom@^4.1.0:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-4.3.1.tgz#4f8a3005cb4a7e3889f749030fd25b96e01d2e31"
+  integrity sha512-FA8ZqcHBLjyFCPns8EsFTWxARi8iKzLfl3vXS1n1O6mlUpZvjXg9E+0Ys8mh7k/s8mHVpROgeoUmz4HadhPhAQ==
   dependencies:
     hoek "4.x.x"
 
@@ -3465,6 +3473,15 @@ handlebars@^4.1.0:
   optionalDependencies:
     uglify-js "^3.1.4"
 
+hapi-auth-bearer-token@5.x:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/hapi-auth-bearer-token/-/hapi-auth-bearer-token-5.1.0.tgz#8e09d65c63a528e639bb1155d74dfdd5692c310e"
+  integrity sha512-U7uSR2T3c+yu8Tns3Mqxy0EXImRtHF4bQHOXEDBA1NBf6wMoi4kD75ZCHeoBpfvUZV1dzCXBFoGqVKAxQtq1PA==
+  dependencies:
+    boom "^4.1.0"
+    hoek "^4.1.0"
+    joi "^10.0.0"
+
 hapi-auth-cookie@7.x:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/hapi-auth-cookie/-/hapi-auth-cookie-7.0.0.tgz#1bb9130d85ab0efe02f7df518e864867616a49a4"
@@ -3472,6 +3489,14 @@ hapi-auth-cookie@7.x:
     boom "3.x.x"
     hoek "4.x.x"
     joi "8.x.x"
+
+hapi-auth-header@2.x:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/hapi-auth-header/-/hapi-auth-header-2.2.0.tgz#cda56f074abfaee9246cdb1c5c446f5c27b137b2"
+  integrity sha512-qOP44izKNAchA/yChOVtHnqKRX+ibqu8MQI7cpd3di4ptBLOF7CYhGFKm414YhmM4Y3G85+eeaPX7JN4WNh8Dw==
+  dependencies:
+    boom "2.9.0"
+    hoek "2.16.3"
 
 hapi-capitalize-modules@1.x.x:
   version "1.1.6"
@@ -3682,7 +3707,7 @@ hoek@0.9.x:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-0.9.1.tgz#3d322462badf07716ea7eb85baf88079cddce505"
 
-hoek@2.x.x, hoek@^2.12.0, hoek@^2.13.0, hoek@^2.14.x, hoek@^2.2.x, hoek@^2.9.x:
+hoek@2.16.3, hoek@2.x.x, hoek@^2.12.0, hoek@^2.13.0, hoek@^2.14.x, hoek@^2.2.x, hoek@^2.9.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
@@ -3693,6 +3718,11 @@ hoek@4.x.x, hoek@^4.2.0:
 hoek@5.x.x:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-5.0.3.tgz#b71d40d943d0a95da01956b547f83c4a5b4a34ac"
+
+hoek@^4.1.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
+  integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
 
 homedir-polyfill@^1.0.0, homedir-polyfill@^1.0.1:
   version "1.0.1"
@@ -4298,7 +4328,7 @@ jed@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/jed/-/jed-1.1.1.tgz#7a549bbd9ffe1585b0cd0a191e203055bee574b4"
 
-joi@10.x, joi@10.x.x, joi@^10.6.0:
+joi@10.x, joi@10.x.x, joi@^10.0.0, joi@^10.6.0:
   version "10.6.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-10.6.0.tgz#52587f02d52b8b75cdb0c74f0b164a191a0e1fc2"
   dependencies:

@@ -193,6 +193,7 @@ function handleCb(request, reply) {
       });
     })
     .catch(error => {
+      console.log("error here paivi  is:", error)
       request.log(['error', '40x'], error.data.payload);
       return reply.redirect(
         // TODO: use generic user friendly error
@@ -203,6 +204,7 @@ function handleCb(request, reply) {
     });
 
   const getZenUser = (rpiProfile, callback) => {
+    console.log("GET ZEN USER", rpiProfile);
     request.seneca.act(
       {
         role: 'cd-users',
