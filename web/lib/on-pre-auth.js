@@ -19,23 +19,5 @@ module.exports = server => (request, reply) => {
     locality: requestLocales.best(server.app.availableLocales).code,
   };
 
-
-
-  console.log("REQUEST HERE IS ", request.user, request.auth);
-  const authorization = request.headers.authorization
-  console.log("HI THE AUTHORIZAION HEADER IS", authorization);
-  if (authorization) {
-    profileValidator(authorization, request, (user) => {
-      console.log("PROFILE VALIDATOR USER IS: ", user);
-      // TODO: fix here
-      request.user = {id: user, roles:[]};
-      console.log("LEAVING PREAUTH");
-      return reply.continue();
-    });
-
-    // request.user = {"kittens": "cats"};
-  } else {
-    console.log("LEAVING PREAUTH 2");
-    return reply.continue();
-  }
+  return reply.continue();
 };

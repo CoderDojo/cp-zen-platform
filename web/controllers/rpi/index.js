@@ -64,6 +64,7 @@ function handleRPIEdit(request, reply) {
 }
 
 function getZenRegisterPayload(decodedIdToken, isAttendee) {
+  console.log("getZenUpdatePayload", decodedIdToken);
   return {
     isTrusted: true,
     user: {
@@ -140,6 +141,7 @@ function handleCb(request, reply) {
           getErrorRedirectUrl('Expired or invalid rpi idToken')
         );
       }
+      console.log("idTokenPayload:", idTokenPayload);
       getZenUser(idTokenPayload, (err, zenUser) => {
         if (err) {
           request.log(['error', '50x'], err);
@@ -193,7 +195,6 @@ function handleCb(request, reply) {
       });
     })
     .catch(error => {
-      console.log("error here paivi  is:", error)
       request.log(['error', '40x'], error.data.payload);
       return reply.redirect(
         // TODO: use generic user friendly error
