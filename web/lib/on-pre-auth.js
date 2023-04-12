@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const locale = require('locale');
-const profileValidator = require('./utils/profile-validator.js');
 
 module.exports = server => (request, reply) => {
   console.log("IN ON PREAUTH");

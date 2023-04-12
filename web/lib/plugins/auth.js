@@ -21,21 +21,25 @@ function validateBearerFunc(server) {
 
     requestPromise(requestOptions)
       .then((body) => {
-        console.log(body)
         if (body.active && body.sub) {
           return body.sub;
         } else {
           throw new Error('Bad bearer token');
         }
       })
-      .then((user) => {
-        getUserFromProfileId(user, this, (err, zenUser) => {
+      .then((rpiProfileId) => {
+        getUserFromProfileId(rpiProfileId, this, (err, zenUser) => {
           if (err) {
            throw err
-          } else {
+          }
+          if (zenUser.email) {
             request.user = zenUser;
             return callback(null, true, {scope: 'basic-user'});
+          } else {
+            throw new Error('User email not found for rpiProfileId', rpiProfileId)
           }
+        }).catch((err) => {
+          throw err
         })
       })
       .catch((err) => {
@@ -72,14 +76,13 @@ function getUserFromProfileId(rpiProfileId, request, callback) {
 function validateFunc(server) {
   return (request, session, callback) => {
     const token = session.token;
-    console.log("SESSION: ", session)
     const cdfPath =
       request.route.settings.auth && // hasAuth
       request.route.settings.auth.access.length > 0 && // has a rule defined
       request.route.settings.auth.access[0].scope.selection.length > 0 // uses scopes
         ? request.route.settings.auth.access[0].scope.selection.indexOf(
-        'cdf-admin'
-      ) > -1
+            'cdf-admin'
+          ) > -1
         : false;
     getUser(request, token, (uErr, loggedInUser) => {
       if (loggedInUser && !uErr) {

@@ -60,19 +60,15 @@ function getRedirectUri(state, queryParams = {}) {
 }
 
 function getIdToken(code) {
-  console.log("\n\nHERE IS getIdToken. CODE:", code);
   return oauth2Rpi.authorizationCode
     .getToken({ code, redirect_uri: `${homeServer}${callbackPath}` })
     .then(function(result) {
-      console.log("OMG RESULT: ", result)
       const tokenResult = oauth2Rpi.accessToken.create(result);
-      console.log(tokenResult)
       return tokenResult && tokenResult.token && tokenResult.token.id_token;
     });
 }
 
 function decodeIdToken(idToken) {
-  console.log("decodeIdToken", jwt.decode(idToken));
   return jwt.decode(idToken);
 }
 
@@ -81,7 +77,6 @@ function verifyIdTokenPayload(idTokenPayload) {
   const isIssueTimeValid = idTokenPayload.iat <= epochSeconds;
   const isNotExpired = idTokenPayload.exp > epochSeconds;
   const isIssuerValid = idTokenPayload.iss === process.env.RPI_AUTH_URL;
-  console.log(isIssueTimeValid, isNotExpired, isIssuerValid);
   return isIssueTimeValid && isNotExpired && isIssuerValid;
 }
 

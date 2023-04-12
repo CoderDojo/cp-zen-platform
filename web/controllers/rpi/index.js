@@ -64,7 +64,6 @@ function handleRPIEdit(request, reply) {
 }
 
 function getZenRegisterPayload(decodedIdToken, isAttendee) {
-  console.log("getZenUpdatePayload", decodedIdToken);
   return {
     isTrusted: true,
     user: {
@@ -141,7 +140,6 @@ function handleCb(request, reply) {
           getErrorRedirectUrl('Expired or invalid rpi idToken')
         );
       }
-      console.log("idTokenPayload:", idTokenPayload);
       getZenUser(idTokenPayload, (err, zenUser) => {
         if (err) {
           request.log(['error', '50x'], err);
@@ -205,7 +203,6 @@ function handleCb(request, reply) {
     });
 
   const getZenUser = (rpiProfile, callback) => {
-    console.log("GET ZEN USER", rpiProfile);
     request.seneca.act(
       {
         role: 'cd-users',
