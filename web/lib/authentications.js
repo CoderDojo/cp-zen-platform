@@ -3,16 +3,16 @@
 module.exports = {
   //  Navigation
   basicUser: {
-    strategies: ['seneca-login', 'header'],
+    strategies: ['seneca-login'],
     scope: ['basic-user'],
   },
   cdfAdmin: {
-    strategies: ['seneca-login', 'header'],
+    strategies: ['seneca-login'],
     scope: ['cdf-admin'],
   },
   //  Api
   userIfPossible: {
-    strategies: ['seneca-login', 'header'],
+    strategies: ['seneca-login'],
     mode: 'try',
     scope: ['basic-user', 'cdf-admin'],
   },
