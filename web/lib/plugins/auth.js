@@ -1,8 +1,16 @@
 const authCookie = require('hapi-auth-cookie');
-const authHeader = require('hapi-auth-header');
 const authBearer = require('hapi-auth-bearer-token');
 const requestPromise = require('request-promise-native')
 
+// This sets up the function called to verify the "Authorization: Bearer xxxx"
+// token using the Hydra v1 admin interface.  It has to build a request.user
+// object that matches what the "normal" login process produces, which means
+// asking Seneca twice what the user is, once to resolve the Profile user ID
+// into the Zen user ID, and then once to make a user object that is recognised
+// by future calls.
+//
+// This is needed to allow CoderDojo frontend to make authenticated API
+// requests, e.g. to join a dojo.
 function validateBearerFunc(server) {
   return function(token, callback) {
     var request = this;
@@ -10,7 +18,7 @@ function validateBearerFunc(server) {
       url: process.env.RPI_AUTH_ADMIN_URL + 'oauth2/introspect',
       method: 'POST',
       headers: {
-        "apikey": process.env.RPI_ADMIN_API_KEY,
+        "apikey": process.env.RPI_AUTH_ADMIN_KEY,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       formData: {
@@ -24,22 +32,33 @@ function validateBearerFunc(server) {
         if (body.active && body.sub) {
           return body.sub;
         } else {
-          throw new Error('Bad bearer token');
+          return callback(new Error('Bad bearer token'), false, null);
         }
       })
       .then((rpiProfileId) => {
-        getUserFromProfileId(rpiProfileId, this, (err, zenUser) => {
+        getUserFromProfileId(rpiProfileId, request, (err, zenUserFromProfileId) => {
           if (err) {
-           throw err
+           return callback(err, false, null);
           }
-          if (zenUser.email) {
-            request.user = zenUser;
-            return callback(null, true, {scope: 'basic-user'});
-          } else {
-            throw new Error('User email not found for rpiProfileId', rpiProfileId)
+
+          if (zenUserFromProfileId.id) {
+            // Make sure we return at this point so we don't slip into the
+            // default "Id not found" return later.
+            return getUserFromId(zenUserFromProfileId.id, request, (err, zenUser) => {
+              if (err) {
+               return callback(err, false, null);
+              }
+
+              // Set up the request user so future calls know who we are.  The
+              // `ok: true` is needed to say that the user is logged in.
+              request.user = {user: zenUser, ok: true};
+
+              // Make everyone a basic-user here.  Admin functionality can be build if needed.
+              return callback(null, true, {scope: 'basic-user'});
+            })
           }
-        }).catch((err) => {
-          throw err
+
+          return callback(new Error('Zen User Id not found for rpi Profile Id', rpiProfileId), false, null);
         })
       })
       .catch((err) => {
@@ -67,9 +86,20 @@ function getUserFromProfileId(rpiProfileId, request, callback) {
      role: 'cd-users',
      cmd: 'get_user_by_raspberry_id',
      raspberryId: rpiProfileId
-     },
+   },
    callback
- );
+ )
+}
+
+function getUserFromId(userId, request, callback) {
+  request.seneca.act(
+   {
+     role: 'cd-users',
+     cmd: 'load',
+     id: userId
+   },
+   callback
+ )
 }
 
 // Cookie validation
