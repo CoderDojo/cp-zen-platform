@@ -13,17 +13,8 @@ const disallowedParams = [
 ];
 
 module.exports = (request, reply) => {
-  console.log("HI I AM IN CP PERMISSIONS");
-  // console.log("MY REQUEST: ", request);
-  // console.log("\n\nMY REPLY: ", reply);
-  console.log("\n\n------------------------------------------------------------------");
-  console.log("REQUEST USER: ", request.user);
-  console.log("REQUEST AUTH CREDENTIALS: ", request.auth.credentials);
-  console.log("REQUEST ROUTE SETTINGS", request.route.settings.plugins.cpPermissions);
-
   const permsConfig = request.route.settings.plugins.cpPermissions;
   if (permsConfig && permsConfig.profiles) {
-    // console.log("REQUEST SENECA: ", request.seneca);
     const msg = Object.assign(
       {
         params: omit(

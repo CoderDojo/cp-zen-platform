@@ -2,8 +2,6 @@ const _ = require('lodash');
 const locale = require('locale');
 
 module.exports = server => (request, reply) => {
-  console.log("IN ON PREAUTH");
-
   const arrTranslateCookie =
     request.state && request.state.NG_TRANSLATE_LANG_KEY;
   let translateCookie = arrTranslateCookie;

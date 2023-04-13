@@ -669,13 +669,6 @@ boom@0.4.x:
   dependencies:
     hoek "0.9.x"
 
-boom@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/boom/-/boom-2.9.0.tgz#a54b7fd2fee477d351bf9e371680cbea67f12715"
-  integrity sha512-JI8F10X9frXXqjIlTDgXb74OOq2iZgHROk/WvVL/zQziuTJD/M6CMuEgdtptUmXDQsFITJdL9bGr+tiFI7zuTg==
-  dependencies:
-    hoek "2.x.x"
-
 boom@2.x.x, boom@^2.7.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -3490,14 +3483,6 @@ hapi-auth-cookie@7.x:
     hoek "4.x.x"
     joi "8.x.x"
 
-hapi-auth-header@2.x:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/hapi-auth-header/-/hapi-auth-header-2.2.0.tgz#cda56f074abfaee9246cdb1c5c446f5c27b137b2"
-  integrity sha512-qOP44izKNAchA/yChOVtHnqKRX+ibqu8MQI7cpd3di4ptBLOF7CYhGFKm414YhmM4Y3G85+eeaPX7JN4WNh8Dw==
-  dependencies:
-    boom "2.9.0"
-    hoek "2.16.3"
-
 hapi-capitalize-modules@1.x.x:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/hapi-capitalize-modules/-/hapi-capitalize-modules-1.1.6.tgz#7991171415e15e6aa3231e64dda73c8146665318"
@@ -3707,7 +3692,7 @@ hoek@0.9.x:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-0.9.1.tgz#3d322462badf07716ea7eb85baf88079cddce505"
 
-hoek@2.16.3, hoek@2.x.x, hoek@^2.12.0, hoek@^2.13.0, hoek@^2.14.x, hoek@^2.2.x, hoek@^2.9.x:
+hoek@2.x.x, hoek@^2.12.0, hoek@^2.13.0, hoek@^2.14.x, hoek@^2.2.x, hoek@^2.9.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 

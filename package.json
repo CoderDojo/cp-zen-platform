@@ -51,7 +51,6 @@
     "hapi": "16.x",
     "hapi-auth-cookie": "7.x",
     "hapi-auth-bearer-token": "5.x",
-    "hapi-auth-header": "2.x",
     "hapi-dust": "2.0.0",
     "hapi-etags": "0.1.0",
     "hapi-ip2country-plugin": "^1.0.1",

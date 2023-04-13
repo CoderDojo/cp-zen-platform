@@ -1,6 +1,6 @@
 const authCookie = require('hapi-auth-cookie');
 const authBearer = require('hapi-auth-bearer-token');
-const requestPromise = require('request-promise-native')
+const requestPromise = require('request-promise-native');
 
 // This sets up the function called to verify the "Authorization: Bearer xxxx"
 // token using the Hydra v1 admin interface.  It has to build a request.user
@@ -55,11 +55,11 @@ function validateBearerFunc(server) {
 
               // Make everyone a basic-user here.  Admin functionality can be build if needed.
               return callback(null, true, {scope: 'basic-user'});
-            })
+            });
           }
 
           return callback(new Error('Zen User Id not found for rpi Profile Id', rpiProfileId), false, null);
-        })
+        });
       })
       .catch((err) => {
         request.log(
@@ -76,10 +76,11 @@ function validateBearerFunc(server) {
           Date.now()
         );
         return callback(null, false);
-      })
+      });
   }
 }
 
+// finds zen sys_user based on the rpi profile id
 function getUserFromProfileId(rpiProfileId, request, callback) {
   request.seneca.act(
    {
@@ -88,9 +89,10 @@ function getUserFromProfileId(rpiProfileId, request, callback) {
      raspberryId: rpiProfileId
    },
    callback
- )
+ );
 }
 
+// turns the zen user id into an object with user data in format expected further in the chain
 function getUserFromId(userId, request, callback) {
   request.seneca.act(
    {
@@ -99,7 +101,7 @@ function getUserFromId(userId, request, callback) {
      id: userId
    },
    callback
- )
+ );
 }
 
 // Cookie validation
