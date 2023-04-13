@@ -32,7 +32,8 @@ function validateBearerFunc(server) {
         if (body.active && body.sub) {
           return body.sub;
         } else {
-          return callback(new Error('Bad bearer token'), false, null);
+          // don't return an error so we get a 401 with "Bad Token"
+          return callback(null, false);
         }
       })
       .then((rpiProfileId) => {
