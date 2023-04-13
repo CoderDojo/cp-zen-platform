@@ -67,7 +67,7 @@ function getZenRegisterPayload(decodedIdToken, isAttendee) {
   return {
     isTrusted: true,
     user: {
-      id: decodedIdToken.uuid,
+      id: decodedIdToken.sub,
       name: decodedIdToken.nickname,
       firstName: decodedIdToken.name,
       lastName: '',
@@ -75,7 +75,7 @@ function getZenRegisterPayload(decodedIdToken, isAttendee) {
       password: rpiZenAccountPassword,
       termsConditionsAccepted: true,
       initUserType: { name: isAttendee ? 'attendee-o13' : 'parent-guardian' },
-      raspberryId: decodedIdToken.uuid,
+      raspberryId: decodedIdToken.sub,
       nick: decodedIdToken.email,
     },
     profile: {
@@ -207,7 +207,7 @@ function handleCb(request, reply) {
       {
         role: 'cd-users',
         cmd: 'get_user_by_raspberry_id',
-        raspberryId: rpiProfile.uuid,
+        raspberryId: rpiProfile.sub,
       },
       callback
     );
