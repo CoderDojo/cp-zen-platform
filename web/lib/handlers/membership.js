@@ -97,15 +97,19 @@ const joinAsParentGuardian = (
     async (req, reply) => {
       const dojoId = req.params.id;
       const userId = req.user.user.id;
-      req.app.membership = await Membership.create(userId, dojoId, 'parent-guardian');
+      req.app.membership = await Membership.create(
+        userId,
+        dojoId,
+        'parent-guardian'
+      );
       reply(req.app.membership).code(200);
-    }
+    },
   ]);
 
 module.exports = {
   request,
-  loadPending,
   accept,
   refuse,
-  joinAsParentGuardian
+  loadPending,
+  joinAsParentGuardian,
 };
