@@ -188,6 +188,35 @@ module.exports = [
   },
   {
     method: 'POST',
+    path: `${basePath3}/dojos/{id}/join`,
+    handler: membershipHandlers.join(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Join a Dojo as a parent',
+      notes: 'Saves in the user profile and send an email to the Dojo owner',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [{ role: 'basic-user' }],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string()
+            .guid()
+            .required(),
+        },
+      },
+    },
+  },
+  {
+    method: 'POST',
     path: `${basePath3}/dojos/{id}/membership-requests`,
     handler: membershipHandlers.request(),
     config: {
