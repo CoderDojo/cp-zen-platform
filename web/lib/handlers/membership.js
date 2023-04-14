@@ -94,7 +94,7 @@ const joinAsParentGuardian = (
   params // eslint-disable-line no-unused-vars
 ) =>
   mastermind([
-    async (req, reply, next) => {
+    async (req, reply) => {
       const dojoId = req.params.id;
       const userId = req.user.user.id;
       req.app.membership = await Membership.create(userId, dojoId, 'parent-guardian');
