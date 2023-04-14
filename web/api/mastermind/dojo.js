@@ -188,12 +188,12 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: `${basePath3}/dojos/{id}/join`,
-    handler: membershipHandlers.join(),
+    path: `${basePath3}/dojos/{id}/join-as-parent-guardian`,
+    handler: membershipHandlers.joinAsParentGuardian(),
     config: {
       auth: auth.apiUser,
-      description: 'Join a Dojo as a parent',
-      notes: 'Saves in the user profile and send an email to the Dojo owner',
+      description: 'Join a Dojo as a parent-guardian',
+      notes: 'Updates the users dojos role to include parent-guardian',
       tags: ['api', 'dojos', 'membership'],
       plugins: {
         cpPermissions: {

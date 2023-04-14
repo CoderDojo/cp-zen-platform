@@ -90,7 +90,7 @@ const refuse = (
       reply().code(200);
     },
   ]);
-const join = (
+const joinAsParentGuardian = (
   params // eslint-disable-line no-unused-vars
 ) =>
   mastermind([
@@ -107,5 +107,5 @@ module.exports = {
   loadPending,
   accept,
   refuse,
-  join
+  joinAsParentGuardian
 };
