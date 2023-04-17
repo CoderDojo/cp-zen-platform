@@ -15,5 +15,6 @@ module.exports = server => (request, reply) => {
   request.app.context = {
     locality: requestLocales.best(server.app.availableLocales).code,
   };
+
   return reply.continue();
 };

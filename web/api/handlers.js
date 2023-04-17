@@ -40,6 +40,7 @@ module.exports = function(server, role) {
 
   function doAct(request, reply, cmd, param, user, type, msgDefault) {
     let msg = { cmd, role, locality: server.methods.locality(request) };
+
     //  TODO: check others calls to request.seneca.act which doesn't go through doAct
     const covered = [
       'cd-users',
