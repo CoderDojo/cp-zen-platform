@@ -90,10 +90,26 @@ const refuse = (
       reply().code(200);
     },
   ]);
+const joinAsParentGuardian = (
+  params // eslint-disable-line no-unused-vars
+) =>
+  mastermind([
+    async (req, reply) => {
+      const dojoId = req.params.id;
+      const userId = req.user.user.id;
+      req.app.membership = await Membership.create(
+        userId,
+        dojoId,
+        'parent-guardian'
+      );
+      reply(req.app.membership).code(200);
+    },
+  ]);
 
 module.exports = {
   request,
   accept,
   refuse,
   loadPending,
+  joinAsParentGuardian,
 };

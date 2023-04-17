@@ -188,6 +188,35 @@ module.exports = [
   },
   {
     method: 'POST',
+    path: `${basePath3}/dojos/{id}/join-as-parent-guardian`,
+    handler: membershipHandlers.joinAsParentGuardian(),
+    config: {
+      auth: auth.apiUser,
+      description: 'Join a Dojo as a parent-guardian',
+      notes: 'Updates the users dojos role to include parent-guardian',
+      tags: ['api', 'dojos', 'membership'],
+      plugins: {
+        cpPermissions: {
+          profiles: [{ role: 'basic-user' }],
+        },
+        'hapi-swagger': {
+          responseMessages: [
+            { code: 400, message: 'Bad Request' },
+            { code: 200, message: 'OK' },
+          ],
+        },
+      },
+      validate: {
+        params: {
+          id: Joi.string()
+            .guid()
+            .required(),
+        },
+      },
+    },
+  },
+  {
+    method: 'POST',
     path: `${basePath3}/dojos/{id}/membership-requests`,
     handler: membershipHandlers.request(),
     config: {
