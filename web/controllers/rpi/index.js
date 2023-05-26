@@ -29,7 +29,7 @@ function handleRPILogin(request, reply, redirectQueryParams = {}) {
   const returnTo = request.query['returnTo'];
   const state = crypto.randomBytes(20).toString('hex');
 
-  setRpiStateCookie(reply, { "state": state, "returnTo": returnTo });
+  setRpiStateCookie(reply, { state: state, returnTo: returnTo });
   const redirectUri = getRedirectUri(state, redirectQueryParams);
   reply.redirect(redirectUri);
 }
@@ -164,7 +164,7 @@ function handleCb(request, reply) {
           });
         } else {
           if (!request.query.type) {
-            setRpiStateCookie(reply, { state: rpiCookie.state, idToken });
+            setRpiStateCookie(reply, { state: rpiCookie.state, returnTo: rpiCookie.returnTo, idToken });
             return reply.redirect(
               getAccountTypeRedirectUrl({ state: rpiCookie.state })
             );
