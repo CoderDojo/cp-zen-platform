@@ -243,13 +243,11 @@ function handleCb(request, reply) {
       const permittedHosts = ['localhost:3000', 'coderdojo.com']
 
       if(url.host != request.headers.host && !permittedHosts.includes(url.host)) {
-        console.log("Host in returnTo url is not permitted", url.host)
         return '/'
       }
 
       return returnTo
     } catch(err) {
-      console.log("returnTo param doesn't parse as a URL", returnTo, err);
       return '/'
     }
   }
