@@ -8,6 +8,7 @@ jobs:
         environment:
           NODE_ENV: testing
           EVENTS_SERVICE: events2
+          NODE_OPTIONS: --use-openssl-ca
     steps:
       - checkout
       - restore_cache:
@@ -16,7 +17,7 @@ jobs:
           name: Use secure GitHub URLs
           command: git config --global url."git@github.com:".insteadOf git://github.com/
       - run:
-          name: Configure SSL certs
+          name: Fix up SSL certificates
           command: |
             sed -i 's/mozilla\/DST_Root_CA_X3.crt/!mozilla\/DST_Root_CA_X3.crt/g' /etc/ca-certificates.conf
             update-ca-certificates
