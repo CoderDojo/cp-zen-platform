@@ -3,7 +3,7 @@ const _ = require('lodash');
 var crypto = require('crypto');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Boom = require('boom');
-const { URLSearchParams } = require('url');
+const { URL, URLSearchParams } = require('url');
 const {
   getRedirectUri,
   getEditRedirectUri,
@@ -26,8 +26,10 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply, redirectQueryParams = {}) {
+  const returnTo = request.query['returnTo'];
   const state = crypto.randomBytes(20).toString('hex');
-  setRpiStateCookie(reply, { state });
+
+  setRpiStateCookie(reply, { state: state, returnTo: returnTo });
   const redirectUri = getRedirectUri(state, redirectQueryParams);
   reply.redirect(redirectUri);
 }
@@ -162,7 +164,7 @@ function handleCb(request, reply) {
           });
         } else {
           if (!request.query.type) {
-            setRpiStateCookie(reply, { state: rpiCookie.state, idToken });
+            setRpiStateCookie(reply, { state: rpiCookie.state, returnTo: rpiCookie.returnTo, idToken });
             return reply.redirect(
               getAccountTypeRedirectUrl({ state: rpiCookie.state })
             );
@@ -235,6 +237,21 @@ function handleCb(request, reply) {
     request.seneca.act(senecaRegisterMsg, callback);
   };
 
+  const returnToUrl = (request, returnTo) => {
+    try {
+      const url = new URL(returnTo)
+      const permittedHosts = ['localhost:3000', 'staging.coderdojo.com', 'coderdojo.com']
+
+      if(url.host != request.headers.host && !permittedHosts.includes(url.host)) {
+        return '/'
+      }
+
+      return returnTo
+    } catch(err) {
+      return '/'
+    }
+  }
+
   const login = (email, idToken) => {
     request.seneca.act(
       {
@@ -258,12 +275,16 @@ function handleCb(request, reply) {
             getErrorRedirectUrl('Zen Login Failed - No token.')
           );
         }
+
         request.cookieAuth.set({
           token: res.login.token,
           idToken,
         });
+
+        const returnTo = returnToUrl(request, rpiCookie.returnTo);
+
         clearRpiStateCookie(reply);
-        return reply.redirect('/');
+        return reply.redirect(returnTo);
       }
     );
   };
