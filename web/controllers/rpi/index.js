@@ -240,7 +240,7 @@ function handleCb(request, reply) {
   const returnToUrl = (request, returnTo) => {
     try {
       const url = new URL(returnTo)
-      const permittedHosts = ['localhost:3000', 'coderdojo.com']
+      const permittedHosts = ['localhost:3000', 'staging.coderdojo.com', 'coderdojo.com']
 
       if(url.host != request.headers.host && !permittedHosts.includes(url.host)) {
         return '/'
