@@ -4,10 +4,11 @@ jobs:
   build:
     working_directory: ~/cp-zen-platform
     docker:
-      - image: node:carbon
+      - image: node:8-buster
         environment:
           NODE_ENV: testing
           EVENTS_SERVICE: events2
+          NODE_OPTIONS: --use-openssl-ca
     steps:
       - checkout
       - restore_cache:
@@ -15,6 +16,11 @@ jobs:
       - run:
           name: Use secure GitHub URLs
           command: git config --global url."git@github.com:".insteadOf git://github.com/
+      - run:
+          name: Fix up SSL certificates
+          command: |
+            sed -i 's/mozilla\/DST_Root_CA_X3.crt/!mozilla\/DST_Root_CA_X3.crt/g' /etc/ca-certificates.conf
+            update-ca-certificates
       - run:
           name: Install Dependencies
           command: yarn
@@ -58,7 +64,7 @@ jobs:
   update-frontend:
     working_directory: ~/cp-zen-platform
     docker:
-      - image: node:carbon
+      - image: node:8-buster
     steps:
       - add-ssh-keys:
           fingerprints:
