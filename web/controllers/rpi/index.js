@@ -25,7 +25,7 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
   return `/?${errorUrlQueryParams}`;
 }
 
-function handleRPILogin(request, reply, redirectQueryParams = {}) {
+function handleRPILogin(request, reply, redirectQueryParams = { login_options: 'v1_signup' }) {
   const returnTo = request.query['returnTo'];
   const state = crypto.randomBytes(20).toString('hex');
 
@@ -57,7 +57,7 @@ function handleRPIRegister(request, reply) {
     return reply.redirect('/');
   }
 
-  handleRPILogin(request, reply, { login_options: 'force_signup' })
+  handleRPILogin(request, reply, { login_options: 'force_signup,v1_signup' })
 }
 
 function handleRPIEdit(request, reply) {
