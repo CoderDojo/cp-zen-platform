@@ -8,3 +8,7 @@ It also contains our legacy front-end. In case of large PR regarding our front-e
 If you want to get set up to make a contribution, please see the [cp-local-development repository](https://github.com/CoderDojo/cp-local-development).
 
 General documentation is in the [community-platform repository](https://github.com/CoderDojo/community-platform).
+
+## Debugging
+
+You can see HAPI interactions by setting `HAPI_DEBUG` to `true` in `web/config/development.env`.  This then outputs data to `/tmp/hapi-zen-platform.log` inside the zen container.

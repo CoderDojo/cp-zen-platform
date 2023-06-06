@@ -184,6 +184,9 @@ gulp.task('dev', ['watch-less'], () => {
       relativePath('./web/public/components/*'),
       relativePath('./web/public/dist/*'),
     ],
+    execMap: {
+      js: "node --max-http-header-size=81920"
+    },
     script: 'index.js',
     ext: 'js dust json',
     tasks: ['build'],
