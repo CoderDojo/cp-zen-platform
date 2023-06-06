@@ -26,6 +26,8 @@ function getErrorRedirectUrl(message = oauthErrorMessage) {
 }
 
 function handleRPILogin(request, reply, redirectQueryParams = { login_options: 'v1_signup' }) {
+  clearSession(request, reply);
+
   const returnTo = request.query['returnTo'];
   const state = crypto.randomBytes(20).toString('hex');
 
@@ -35,6 +37,8 @@ function handleRPILogin(request, reply, redirectQueryParams = { login_options: '
 }
 
 function handleRPILogout(request, reply) {
+  clearSession(request, reply);
+
   const session = request.state['seneca-login'];
   if (!session || (session && !session.token)) {
     return reply.redirect('/');
@@ -43,9 +47,7 @@ function handleRPILogout(request, reply) {
   const msg = { role: 'user', cmd: 'logout', token: session.token };
   return request.seneca.act(msg, err => {
     if (err) return reply(Boom.badImplementation(err));
-    request.cookieAuth.clear();
-    clearRpiStateCookie(reply);
-    delete request.user;
+
     const redirectUri = getLogoutRedirectUri();
     return reply.redirect(redirectUri);
   });
@@ -63,6 +65,12 @@ function handleRPIRegister(request, reply) {
 function handleRPIEdit(request, reply) {
   const redirectUri = getEditRedirectUri();
   reply.redirect(redirectUri);
+}
+
+function clearSession(request, reply) {
+  request.cookieAuth.clear();
+  clearRpiStateCookie(reply);
+  delete request.user;
 }
 
 function getZenRegisterPayload(decodedIdToken, isAttendee) {
